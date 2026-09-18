@@ -21,3 +21,5 @@ __pycache__/
 .github/node_modules/
 .github/package.json
 .github/package-lock.json
+
+/docs/plans

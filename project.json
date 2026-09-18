@@ -1,0 +1,252 @@
+{
+  "$schema": "./shared/schemas/project.schema.json",
+  "schemaVersion": "1.0.0",
+
+  "project": {
+    "id": "japan-cannabinoid-trends",
+    "name": "Japan Cannabinoid Trends",
+    "description": "A reproducible longitudinal research project for collecting, validating, processing, analyzing, and publishing data about cannabinoid-related trends in Japan.",
+    "status": "active",
+    "type": "longitudinal-research",
+    "visibility": "private"
+  },
+
+  "scope": {
+    "country": "JP",
+    "geographicScope": "Japan",
+    "topic": "Cannabinoid-related trends",
+    "studyType": "longitudinal",
+    "primaryLanguage": "ja",
+    "secondaryLanguage": "en",
+    "population": "Publicly observable cannabinoid-related search, social, web, analytics, and market signals relevant to Japan"
+  },
+
+  "objectives": {
+    "primary": "Build a reproducible longitudinal dataset for observing cannabinoid-related trends in Japan.",
+    "secondary": [
+      "Measure changes in cannabinoid-related interest over time",
+      "Compare signals across multiple platforms and data sources",
+      "Preserve historical observations for longitudinal analysis",
+      "Produce reproducible research reports and datasets",
+      "Separate raw observations from interpretation and publication"
+    ]
+  },
+
+  "workflow": {
+    "currentStage": "collection",
+    "stages": [
+      "source",
+      "collection",
+      "raw",
+      "validation",
+      "interim",
+      "processing",
+      "processed",
+      "analysis",
+      "publication"
+    ]
+  },
+
+  "dataSources": {
+    "x": {
+      "enabled": true,
+      "category": "social",
+      "adapter": "src/collection/x",
+      "status": "active"
+    },
+    "youtube": {
+      "enabled": true,
+      "category": "social",
+      "adapter": "src/collection/youtube",
+      "status": "active"
+    },
+    "instagram": {
+      "enabled": true,
+      "category": "social",
+      "adapter": "src/collection/instagram",
+      "status": "active"
+    },
+    "tiktok": {
+      "enabled": true,
+      "category": "social",
+      "adapter": "src/collection/tiktok",
+      "status": "active"
+    },
+    "googleTrends": {
+      "enabled": true,
+      "category": "search",
+      "adapter": "src/collection/google_trends",
+      "status": "planned"
+    },
+    "googleSearchConsole": {
+      "enabled": true,
+      "category": "first-party-search",
+      "adapter": "src/collection/google_search_console",
+      "status": "active"
+    },
+    "analytics": {
+      "enabled": true,
+      "category": "first-party-analytics",
+      "adapter": "src/collection/analytics",
+      "status": "planned"
+    },
+    "ecommerce": {
+      "enabled": true,
+      "category": "first-party-commerce",
+      "adapter": "src/collection/ecommerce",
+      "status": "planned"
+    },
+    "web": {
+      "enabled": true,
+      "category": "web",
+      "adapter": "src/collection/web",
+      "status": "planned"
+    }
+  },
+
+  "datasets": {
+    "root": "datasets",
+    "structure": {
+      "readme": "README.md",
+      "methodology": "methodology.md",
+      "raw": "data/raw",
+      "interim": "data/interim",
+      "processed": "data/processed",
+      "metadata": "metadata",
+      "analysis": "analysis"
+    },
+    "rawDataImmutable": true,
+    "requireMethodology": true,
+    "requireMetadata": true
+  },
+
+  "research": {
+    "principles": {
+      "reproducible": true,
+      "longitudinal": true,
+      "preserveRawData": true,
+      "preserveProvenance": true,
+      "preserveHistoricalObservations": true,
+      "separateObservationFromInterpretation": true
+    },
+    "sampling": {
+      "methodMustBeDocumented": true,
+      "sampleSizeMustBeDocumented": true,
+      "populationMustBeDefined": true,
+      "collectionLimitsMustBeDocumented": true
+    }
+  },
+
+  "dataGovernance": {
+    "rawData": {
+      "mutable": false,
+      "overwriteAllowed": false,
+      "deleteAutomatically": false
+    },
+    "interimData": {
+      "mutable": true,
+      "derived": true
+    },
+    "processedData": {
+      "mutable": true,
+      "derived": true,
+      "provenanceRequired": true
+    },
+    "historicalData": {
+      "preserve": true,
+      "overwriteAllowed": false
+    }
+  },
+
+  "provenance": {
+    "required": true,
+    "recommendedFields": [
+      "source",
+      "platform",
+      "collectionDate",
+      "observationStart",
+      "observationEnd",
+      "query",
+      "keywords",
+      "collector",
+      "collectionMethod",
+      "tool",
+      "runId",
+      "sampleSize",
+      "filters",
+      "limitations"
+    ]
+  },
+
+  "validation": {
+    "required": true,
+    "checks": [
+      "schema",
+      "provenance",
+      "date-range",
+      "duplicates",
+      "missing-values",
+      "source-identity",
+      "sampling",
+      "collection-integrity"
+    ]
+  },
+
+  "analysis": {
+    "allowCrossSourceAnalysis": true,
+    "preserveSourceIdentity": true,
+    "requireMeasurementPeriod": true,
+    "requireMethodologyReference": true,
+    "causalClaimsRequireEvidence": true
+  },
+
+  "publication": {
+    "enabled": true,
+    "status": "not-ready",
+    "formats": [
+      "dataset",
+      "report",
+      "article"
+    ],
+    "requireMethodology": true,
+    "requireProvenance": true,
+    "requireValidation": true,
+    "requireHumanApproval": true
+  },
+
+  "repository": {
+    "owner": "routeflags",
+    "name": "japan-cannabinoid-trends",
+    "defaultBranch": "main"
+  },
+
+  "automation": {
+    "agentReadable": true,
+    "allowAutomaticCollection": true,
+    "allowAutomaticValidation": true,
+    "allowAutomaticProcessing": true,
+    "allowAutomaticAnalysis": true,
+    "allowAutomaticPublication": false,
+    "allowRawDataModification": false,
+    "allowHistoricalDataDeletion": false
+  },
+
+  "agents": {
+    "librarian": {
+      "enabled": true,
+      "path": ".github/agents/research-data-librarian.agent.md"
+    }
+  },
+
+  "security": {
+    "allowSecretsInRepository": false,
+    "allowCredentialsInRepository": false,
+    "allowPrivatePersonalDataInRepository": false
+  },
+
+  "metadata": {
+    "created": "2026-09-18",
+    "updated": "2026-09-18",
+    "maintainer": "ROUTE FLAGS Co., Ltd."
+  }
+}
