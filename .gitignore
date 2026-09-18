@@ -1,0 +1,17 @@
+# Raw X / Apify data — do not publish by default
+data/raw/*
+!data/raw/.gitkeep
+
+# Secrets
+.env
+.env.*
+*.key
+
+# macOS
+.DS_Store
+
+# Python
+__pycache__/
+.venv/
+*.pyc
+/.opencode/
