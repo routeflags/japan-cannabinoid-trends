@@ -1,0 +1,81 @@
+# Citation File Format (CITATION.cff)
+# https://citation-file-format.github.io/
+
+cff-version: 1.2.0
+message: "If you use this dataset, please cite it as below."
+title: "Japan Cannabinoid Trends: CBX / H4CBH / HHBD Online Trend Dataset 2026"
+version: "1.5"
+date-released: "2026-10-01"
+type: dataset
+license: CC-BY-4.0
+
+authors:
+  - family-names: "店長"
+    name-particle: ""
+    given-names: ""
+    email: ""
+    affiliation: "リキッド通販ショップ"
+
+keywords:
+  - cannabinoid
+  - CBX
+  - H4CBH
+  - HHBD
+  - Google Trends
+  - X (Twitter)
+  - YouTube
+  - Japan
+  - online trends
+  - search interest
+
+abstract: >
+  日本国内におけるカンナビノイド関連トレンドを追跡するロングジューデータセット。
+  Google Trends（CBX / H4CBH / HHBD / CBX リキッド）、X (Twitter) 147件、
+  YouTube 26件、COA 分析結果を収録。
+  カンナビノイド製品の市場動向を研究する第三者により再利用可能な形で公開。
+
+references:
+  - type: dataset
+    title: "CBX Search Trends (Google Trends)"
+    year: 2026
+    authors:
+      - family-names: "店長"
+        affiliation: "リキッド通販ショップ"
+    url: "https://github.com/routeflags/japan-cannabinoid-trends/tree/main/datasets/cbx-search-trends"
+
+  - type: dataset
+    title: "CBX Social Trends (X / YouTube)"
+    year: 2026
+    authors:
+      - family-names: "店長"
+        affiliation: "リキッド通販ショップ"
+    url: "https://github.com/routeflags/japan-cannabinoid-trends/tree/main/datasets/cbx-social-trends"
+
+  - type: dataset
+    title: "CBX Liquid Online Trend (X weekly)"
+    year: 2026
+    authors:
+      - family-names: "店長"
+        affiliation: "リキッド通販ショップ"
+    url: "https://github.com/routeflags/japan-cannabinoid-trends/tree/main/datasets/cbx-liquid-online-trend"
+
+identifiers:
+  - type: url
+    value: "https://github.com/routeflags/japan-cannabinoid-trends"
+    description: "GitHub repository"
+
+preferred-citation:
+  type: dataset
+  title: "CBX Online Trend Dataset 2026"
+  version: "1.5"
+  year: 2026
+  month: 10
+  authors:
+    - family-names: "店長"
+      affiliation: "リキッド通販ショップ"
+  publisher:
+    name: "リキッド通販ショップ"
+    city: "Tokyo"
+    country: "JP"
+  url: "https://www.thch-vape.shop/guide/cbx"
+  doi: "Pending"
