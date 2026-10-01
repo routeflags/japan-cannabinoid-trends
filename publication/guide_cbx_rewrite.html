@@ -468,7 +468,7 @@
 
   <h3>研究質問</h3>
   <p>「2026年7月から10月の日本国内におけるCBXのオンライン上の検索需要・市場動向・規制状況は何か？」</p>
-  <p class="data-note"><strong>最終更新:</strong> 2026-10-01。Google Trends データに差し替え、YouTube 26件データを反映。</p>
+  <p class="data-note"><strong>最終更新:</strong> 2026-10-01。Google Trends データに差し替え、YouTube 24件データを反映（26件から2件除外）。</p>
 
   <h3>データソース</h3>
   <ul>
@@ -478,7 +478,7 @@
     <li><strong>規制資料:</strong> 厚生労働省、環境省、INCB</li>
     <li><strong>学術文献:</strong> Chianese et al. (2011), Millar et al. (2019), Cascio et al. (2010)</li>
     <li><strong>業界メディア:</strong> Mary Jane in Japan, Hanf Magazin, まるいわマガジン, KUSH JP</li>
-    <li><strong>SNS データ:</strong> X (Twitter) 147件、YouTube 26件（2026-10-01 取得）</li>
+    <li><strong>SNS データ:</strong> X (Twitter) 147件、YouTube 24件（2026-10-01 取得、フィルタ済み）</li>
   </ul>
 
   <h3>検索クエリ</h3>
@@ -594,8 +594,74 @@
       </tbody>
     </table>
 
+    <h3>検索需要の出現タイミング（複合分析）</h3>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>データソース</th>
+          <th>最初の検出</th>
+          <th>ピーク</th>
+          <th>備考</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>GSC（当社サイト）</td>
+          <td><strong>2026-07</strong></td>
+          <td>2026-07</td>
+          <td>449 インプレッション</td>
+        </tr>
+        <tr>
+          <td>X (Twitter)</td>
+          <td><strong>2026-08</strong></td>
+          <td>2026-08-17 週 (48件)</td>
+          <td>ソーシャル話題化</td>
+        </tr>
+        <tr>
+          <td>Google Trends（単独）</td>
+          <td><strong>2026-09-13</strong></td>
+          <td>2026-09-20 週 (100)</td>
+          <td>市場全体検索</td>
+        </tr>
+        <tr>
+          <td>Google Trends（判別クエリ）</td>
+          <td><strong>2026-09-13</strong></td>
+          <td>2026-09-20 週 (100)</td>
+          <td>カンナビノイド固有</td>
+        </tr>
+      </tbody>
+    </table>
+
     <p class="data-note">
-      <strong>所見:</strong> 比較クエリでは「CBX」の相対興味度が最も高く（平均 68）、H4CBH（13）、HHBD（7）が続きます。ただし、「CBX」は多義語であり（例: ホンダ CBX400F バイク等）、カンナビノイド製品とは無関係な検索を含む可能性があります。実際、CBX 製品の日本販売開始（2026年7月）<strong>前</strong>の平均既に約 67 であり、カンナビノイド特有の需要とは解釈できません。カンナビノイド固有の検索需要を推定するには「CBX リキッド」等の判別可能なクエリを使用すべきです。Google Trends の値は相対指数であり、絶対検索数ではありません。
+      <strong>所見:</strong> CBX リキッドの Google Trends データは 2026年9月中旬から検出されていますが、<strong>この「出現」は市場全体での検索需要が Google Trends の閾値を超えたタイミングを示すものであり、実際の検索が 9月に始まったことを意味しません</strong>。当社サイトの GSC データでは 2026年7月に既に 449 インプレッションが記録されており、X でも 2026年8月に投稿が急増しています。7月の販売開始 → 8月の SNS 話題化 → 9月の検索需要顕在化という時間差は、Google Trends の閾値効果による可能性が高いです。
+    </p>
+  </div>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>キーワード</th>
+          <th class="num">平均</th>
+          <th>検出週</th>
+          <th>備考</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>CBX 大麻</td>
+          <td class="num">2</td>
+          <td>2026-09-20 の2週間</td>
+          <td>多義性を排除した検索</td>
+        </tr>
+        <tr>
+          <td>CBX カンナビノイド</td>
+          <td class="num">5</td>
+          <td>2026-09-13 の3週間</td>
+          <td>多義性を排除した検索</td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="data-note">
+      <strong>重要な発見:</strong> 判別可能なクエリでも、データは <strong>2026年9月にのみ存在</strong>します。カンナビノイド固有の「CBX」検索も 2026年9月に始まったことを示します。平均値は 2-5 と非常に低く、多義語「CBX」の平均 68-69 と大きく異なります。
     </p>
   </div>
 
@@ -999,9 +1065,9 @@
   <!-- ===== オンライントレンド：YouTube ===== -->
   <div class="data-section">
     <h2 id="data-youtube">独自データ: CBX の YouTube トレンド（2026年10月） <span class="data-badge data-badge--first">一次データ</span></h2>
-    <p class="meta">データソース: Apify YouTube Search / 取得日: 2026-10-01 / クエリ: <code>CBX リキッド</code> / 重複排除後: 26件 / CBX 関連: 26件 (100%)</p>
+    <p class="meta">データソース: Apify YouTube Search / 取得日: 2026-10-01 / クエリ: <code>CBX リキッド</code> / 重複排除後: 26件 → フィルタ後: 24件 / CBX 関連: 24件 (100%)</p>
 
-    <p>YouTube で「CBX リキッド」を検索し、CBX 関連動画を 26 件取得しました。前回（2026-09-07）は 50件中 0件だったが、クエリを <code>CBX リキッド</code> に変更して再取得した結果、全件が CBX 関連となりました。</p>
+    <p>YouTube で「CBX リキッド」を検索し、CBX 関連動画を取得しました。重複排除後 26件のうち、<strong>2026年7月より前の動画 2件を除外</strong>し、24件を分析対象としました。前回（2026-09-07）は 50件中 0件だったが、クエリを <code>CBX リキッド</code> に変更して再取得した結果、全件が CBX 関連となりました。</p>
 
     <h3>上位動画（再生数順）</h3>
     <table class="data-table">
@@ -1265,7 +1331,7 @@
         </tr>
         <tr>
           <td>SNS トレンド</td>
-          <td>2026年8月〜10月（X 147件 / YouTube 26件）</td>
+          <td>2026年8月〜10月（X 147件 / YouTube 24件）</td>
           <td>月次データ更新</td>
           <td>月次</td>
         </tr>
