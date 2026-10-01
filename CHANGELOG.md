@@ -7,6 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.5.1] - 2026-10-02
+
+### Added
+- `.github/workflows/release-zenodo.yml`: GitHub Actions workflow for clean archive release
+- `scripts/release/create-clean-archive.sh`: Manual script for creating clean archives
+- `docs/specs/release-process.md`: Release process guide
+
+### Changed
+- `docs/specs/zenodo-doi-guide.md`: Updated with clean archive information
+- `.gitignore`: Add `.release-archives/`
+
+### Notes
+- This release tests the automated clean archive workflow
+- Clean archives exclude development files (`.github`, `.serena`, `artifacts/`, etc.)
+
+---
+
 ## [1.5.0] - 2026-10-01
 
 **DOI:** [10.5281/zenodo.23085397](https://doi.org/10.5281/zenodo.23085397)
