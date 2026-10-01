@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.6.1] - 2026-10-02
 
+**DOI:** [10.5281/zenodo.23090163](https://doi.org/10.5281/zenodo.23090163)
+
 ### Fixed
 - **P2 Issue 一括修正** (検証レポート対応)
   - ISS-006: X データに小基数効果の警告を追加
