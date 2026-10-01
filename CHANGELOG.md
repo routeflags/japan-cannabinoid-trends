@@ -7,6 +7,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.6.0] - 2026-10-02
+
+### Fixed
+- **バージョン/DOI メタデータの全ファイル同期** (ISS-001)
+  - CITATION.cff: version, DOI, preferred-citation を v1.6.0 に更新
+  - datapackage.json: version, citation, modified を更新
+  - methodology.md: Version 表記を更新
+  - guide_cbx_rewrite.html: 引用ブロックの Version/DOI を更新
+  - README.md: DOI バッジを Concept DOI に更新
+- **自己検出済み文書エラーの修正** (ISS-002)
+  - cbx_x_data_integrity.md: シャドウバン主張を「未検証」に変更
+  - cbx_x_data_integrity.md: 遡及取得不可の主張を「取得可能」に変更
+  - cbx_data_collection_report.md: 古い「101件」参照を147件に修正
+- **COI 開示の矛盾解消** (ISS-003)
+  - 「商品販売が目的ではなく」という否定文言を削除
+  - 商業関係の開示と商品導線の共存を可能に
+
+### Added
+- バージョン/DOI 同期検証スクリプト (`scripts/validation/validate-version-sync.sh`)
+- 検証 Issue 一覧 (`docs/issues/`)
+
+---
+
 ## [1.5.3] - 2026-10-02
 
 **DOI:** [10.5281/zenodo.23087213](https://doi.org/10.5281/zenodo.23087213)
