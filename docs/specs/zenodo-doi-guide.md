@@ -1,8 +1,26 @@
 # Zenodo DOI Registration Guide
 
 **Purpose:** Guide for registering the Japan Cannabinoid Trends dataset on Zenodo
-**Date:** 2026-10-01
+**Date:** 2026-10-02
 **Version:** 1.5.0
+
+---
+
+## Important: Clean Archives
+
+GitHub's automatic release archives include development files (`.github`, `.serena`, etc.) that are not suitable for research citation.
+
+**Use clean archives instead.** See `docs/specs/release-process.md` for details.
+
+### Quick Start
+
+```bash
+# Create clean archive
+./scripts/release/create-clean-archive.sh
+
+# Or let GitHub Actions do it automatically
+# (publish a GitHub Release)
+```
 
 ---
 

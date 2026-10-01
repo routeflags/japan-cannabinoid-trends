@@ -1,0 +1,187 @@
+name: Release Clean Archive
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: read
+
+jobs:
+  create-and-upload:
+    name: Create Clean Archive & Upload to Zenodo
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Create clean archive
+        id: archive
+        run: |
+          # Create clean directory
+          CLEAN_DIR="clean-archive"
+          mkdir -p "${CLEAN_DIR}"
+          
+          # Define paths to include (research-relevant only)
+          INCLUDE_PATHS=(
+            "datasets"
+            "docs/specs"
+            "docs/acceptance-criteria.md"
+            "docs/migration-plan.md"
+            "publication"
+            "src"
+            "metadata"
+            "LICENSE"
+            "CITATION.cff"
+            "CHANGELOG.md"
+            "README.md"
+            "methodology.md"
+            ".gitignore"
+          )
+          
+          # Copy files
+          for path in "${INCLUDE_PATHS[@]}"; do
+            if [ -e "${path}" ]; then
+              mkdir -p "${CLEAN_DIR}/$(dirname "${path}")"
+              cp -r "${path}" "${CLEAN_DIR}/"
+            fi
+          done
+          
+          # Remove any unwanted files
+          rm -rf "${CLEAN_DIR}/.github" \
+                 "${CLEAN_DIR}/.serena" \
+                 "${CLEAN_DIR}/artifacts" \
+                 "${CLEAN_DIR}/.opencode" \
+                 "${CLEAN_DIR}/.env*" 
+          
+          find "${CLEAN_DIR}" -name "*.DS_Store" -delete 2>/dev/null || true
+          find "${CLEAN_DIR}" -name ".DS_Store" -delete 2>/dev/null || true
+          
+          # Create zip
+          VERSION="${GITHUB_REF_NAME}"
+          ZIP_NAME="japan-cannabinoid-trends-${VERSION}-clean.zip"
+          
+          cd "${CLEAN_DIR}"
+          zip -r "../${ZIP_NAME}" . -x "*.DS_Store"
+          cd ..
+          
+          # Verify clean
+          echo "=== Verification ==="
+          if unzip -l "${ZIP_NAME}" | grep -qE "\.github|\.serena|artifacts|\.opencode|agent\.md"; then
+            echo "❌ ERROR: Unwanted files found!"
+            exit 1
+          fi
+          echo "✅ Archive is clean"
+          
+          # Output
+          echo "zip_name=${ZIP_NAME}" >> "$GITHUB_OUTPUT"
+          echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
+          
+          # Show summary
+          echo "=== Archive Summary ==="
+          echo "Name: ${ZIP_NAME}"
+          echo "Size: $(ls -lh "${ZIP_NAME}" | awk '{print $5}')"
+          echo "Files: $(unzip -l "${ZIP_NAME}" | tail -1 | awk '{print $2}')"
+
+      - name: Upload to Zenodo via API
+        env:
+          ZENODO_API_KEY: ${{ secrets.ZENODO_API_KEY }}
+        run: |
+          ZIP_NAME="${{ steps.archive.outputs.zip_name }}"
+          VERSION="${{ steps.archive.outputs.version }}"
+          
+          if [ -z "${ZENODO_API_KEY}" ]; then
+            echo "⚠️  ZENODO_API_KEY not set. Skipping Zenodo upload."
+            echo "To enable, add ZENODO_API_KEY to repository secrets."
+            echo "Archive will be available as workflow artifact."
+            exit 0
+          fi
+          
+          # Create new deposition
+          echo "Creating Zenodo deposition..."
+          
+          DEPOSITION_RESPONSE=$(curl -s -X POST "https://zenodo.org/api/deposit/depositions" \
+            -H "Authorization: Bearer ${ZENODO_API_KEY}" \
+            -H "Content-Type: application/json" \
+            -d '{
+              "metadata": {
+                "title": "CBX Online Trend Dataset 2026",
+                "upload_type": "dataset",
+                "description": "日本国内におけるカンナビノイド関連トレンドを追跡するロングジューデータセット",
+                "creators": [{"name": "Routeflags Co., Ltd.", "affiliation": "Routeflags Co., Ltd."}],
+                "keywords": ["cannabinoid", "CBX", "H4CBH", "HHBD", "Google Trends", "Japan"],
+                "license": "cc-by-4.0",
+                "version": "'"${VERSION}"'"
+              }
+            }')
+          
+          DEPOSITION_ID=$(echo "$DEPOSITION_RESPONSE" | jq -r '.id // empty')
+          
+          if [ -z "${DEPOSITION_ID}" ]; then
+            echo "❌ Failed to create deposition"
+            echo "$DEPOSITION_RESPONSE" | jq . 2>/dev/null || echo "$DEPOSITION_RESPONSE"
+            exit 1
+          fi
+          
+          echo "Created deposition: ${DEPOSITION_ID}"
+          
+          # Upload file
+          echo "Uploading file..."
+          
+          UPLOAD_RESPONSE=$(curl -s -X PUT "https://zenodo.org/api/deposit/depositions/${DEPOSITION_ID}/files" \
+            -H "Authorization: Bearer ${ZENODO_API_KEY}" \
+            -F "file=@${ZIP_NAME}")
+          
+          FILE_ID=$(echo "$UPLOAD_RESPONSE" | jq -r '.id // empty')
+          
+          if [ -z "${FILE_ID}" ]; then
+            echo "❌ Failed to upload file"
+            echo "$UPLOAD_RESPONSE" | jq . 2>/dev/null || echo "$UPLOAD_RESPONSE"
+            exit 1
+          fi
+          
+          echo "Uploaded file: ${FILE_ID}"
+          
+          # Publish deposition
+          echo "Publishing deposition..."
+          
+          PUBLISH_RESPONSE=$(curl -s -X POST "https://zenodo.org/api/deposit/depositions/${DEPOSITION_ID}/actions/publish" \
+            -H "Authorization: Bearer ${ZENODO_API_KEY}")
+          
+          DOI=$(echo "$PUBLISH_RESPONSE" | jq -r '.doi // empty')
+          
+          if [ -n "${DOI}" ]; then
+            echo ""
+            echo "✅ Zenodo Upload Complete!"
+            echo "DOI: ${DOI}"
+            echo "URL: https://doi.org/${DOI}"
+          else
+            echo "⚠️  Deposition created but publish may need manual action"
+            echo "Check: https://zenodo.org/deposit/${DEPOSITION_ID}"
+          fi
+
+      - name: Upload archive as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: clean-archive-${{ steps.archive.outputs.version }}
+          path: ${{ steps.archive.outputs.zip_name }}
+          retention-days: 30
+
+      - name: Summary
+        run: |
+          echo "## Release Archive Summary" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "- **Version:** ${{ steps.archive.outputs.version }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "- **Archive:** ${{ steps.archive.outputs.zip_name }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "- **Clean:** ✅ (.github, .serena, artifacts excluded)" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "### Contents" >> "$GITHUB_STEP_SUMMARY"
+          echo "- datasets/ (research data)" >> "$GITHUB_STEP_SUMMARY"
+          echo "- docs/specs/ (methodology & policies)" >> "$GITHUB_STEP_SUMMARY"
+          echo "- publication/ (guide pages)" >> "$GITHUB_STEP_SUMMARY"
+          echo "- src/ (collection & processing code)" >> "$GITHUB_STEP_SUMMARY"
+          echo "- metadata/ (datapackage.json)" >> "$GITHUB_STEP_SUMMARY"
+          echo "- LICENSE, CITATION.cff, README.md" >> "$GITHUB_STEP_SUMMARY"
