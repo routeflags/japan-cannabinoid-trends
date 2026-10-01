@@ -139,7 +139,7 @@ jobs:
           echo ""
           echo "=== Uploading file ==="
           
-          UPLOAD_RESPONSE=$(curl -s -w "\n%{http_code}" -X PUT "https://zenodo.org/api/deposit/depositions/${DEPOSITION_ID}/files" \
+          UPLOAD_RESPONSE=$(curl -s -w "\n%{http_code}" -X POST "https://zenodo.org/api/deposit/depositions/${DEPOSITION_ID}/files" \
             -H "Authorization: Bearer ${ZENODO_API_KEY}" \
             -F "file=@${ZIP_NAME}")
           
