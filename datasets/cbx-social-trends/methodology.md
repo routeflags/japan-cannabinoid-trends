@@ -19,7 +19,7 @@ What is the volume, composition, and temporal pattern of Japanese-language socia
 | Source | Type | Collection Method | Period | Records | Study |
 |--------|------|-------------------|--------|---------|-------|
 | X (Twitter) — Daily | Social | Apify Twitter Search | 2026-08-01 ~ 2026-09-08 | 2,376 (raw) / 147 (processed) | 本 study |
-| X (Twitter) — 26-week | Social | Apify Twitter Search | 2026-03-19 ~ 2026-09-17 | 381 (raw) | 本 study |
+| X (Twitter) — 26-week | Social | Apify Twitter Search | 2026-03-19 ~ 2026-09-17 | 451 (raw, 空週補完後) | 本 study |
 | YouTube | Video | Apify YouTube Search | 2026-09-07 | 50 (CBX-related: 0) | 本 study |
 | Instagram | Social | Apify Instagram Search | 2026-09-10 | 6 (CBX-related: 0) | 本 study |
 | TikTok | Social | Apify TikTok Search | 2026-09-10 | 20 (description empty) | 本 study |
@@ -168,9 +168,20 @@ tweet_id,createdAt,lang,username,author_name,views,likes,reposts,replies,url,tex
 
 | Platform | Issue | Status |
 |----------|-------|--------|
-| YouTube | Query returned 0 CBX-related results | Needs re-collection with different query |
+| YouTube | Query returned 0 CBX-related results | ✅ Fixed 2026-10-01 (26 unique videos) |
 | Instagram | Shadow ban suspected; results unrelated | Needs re-collection |
 | TikTok | Description fields empty; CBX relevance unclear | Needs re-collection |
+
+### 7.3 26-Week Data Gaps
+
+| Week Range | Status | Explanation |
+|------------|--------|-------------|
+| W01-W07 (2026-03 ~ 2026-04) | ✅ Confirmed empty | Before CBX release (July 2026) |
+| W09-W15 (2026-05 ~ 2026-06) | ✅ Confirmed empty | Before CBX release |
+| W23 (2026-08-20 ~ 08-27) | ✅ Filled (33 items) | Re-collected 2026-10-01 |
+| W26 (2026-09-10 ~ 09-17) | ✅ Filled (37 items) | Re-collected 2026-10-01 |
+
+**Note:** Empty weeks before July 2026 are genuinely empty because CBX was not yet released in the Japanese market. This is an observed_zero, not a collection failure.
 
 ### 7.3 Data Quality
 
