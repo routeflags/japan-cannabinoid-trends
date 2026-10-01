@@ -7,6 +7,34 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.5.3] - 2026-10-02
+
+**DOI:** [10.5281/zenodo.23087213](https://doi.org/10.5281/zenodo.23087213)
+
+### Added
+- ORCID (Kyoji KATO, 0009-0007-5131-0374) を著者に追加
+- Zenodo メタデータに related works (publication + dataset) を追加
+- バージョン/DOI 同期検証スクリプト (`scripts/validation/validate-version-sync.sh`)
+- 検証 Issue 一覧 (`docs/issues/`)
+
+### Changed
+- クリーンアーカイブから除外ファイルを追加: `.opencode/`, `.serena/`, `.gitignore`, `opencode.json`, `project.json`, `project.yml`
+- Zenodo resource_type を `software` → `dataset` に修正
+- 関連識別子の URL を動的バージョン参照に修正 (`releases/tag/${VERSION}`)
+
+### Fixed
+- X データ整合性ドキュメントの自己検出エラーを修正:
+  - シャドウバン主張を「未検証」に変更（実際には `since:`/`until:` で取得可能）
+  - 遡及取得不可の主張を「取得可能」に変更
+  - 9月データの実件数（20件）を追記
+- データ収集レポートの古い「101件」参照を修正（実際は147件）
+
+### Notes
+- v1.5.3 は自動リリースワークフローのテストリリース
+- Zenodo メタデータに ORCID と related works が正しく設定されることを確認
+
+---
+
 ## [1.5.2] - 2026-10-02
 
 **DOI:** [10.5281/zenodo.23086803](https://doi.org/10.5281/zenodo.23086803)
