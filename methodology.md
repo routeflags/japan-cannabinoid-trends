@@ -162,7 +162,7 @@ Citation format is defined in `CITATION.cff`.
 
 Dataset: CBX Online Trend Dataset 2026
 Version: 1.6.0
-DOI: 10.5281/zenodo.23087213
+DOI: 10.5281/zenodo.23089140
 License: CC-BY-4.0
 
 ---
