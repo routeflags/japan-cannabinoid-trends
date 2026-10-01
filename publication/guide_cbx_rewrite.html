@@ -978,17 +978,32 @@
           <th>週</th>
           <th class="num">期間</th>
           <th class="num">投稿数</th>
+          <th class="num">ユニーク著者数</th>
         </tr>
       </thead>
       <tbody>
-        <tr><td>W1</td><td>8/3〜8/9</td><td class="num">12</td></tr>
-        <tr><td>W2</td><td>8/10〜8/16</td><td class="num">10</td></tr>
-        <tr><td>W3</td><td>8/17〜8/23</td><td class="num">48</td></tr>
-        <tr><td>W4</td><td>8/24〜8/30</td><td class="num">28</td></tr>
-        <tr><td>W5</td><td>8/31〜9/6</td><td class="num">36</td></tr>
-        <tr><td>W6</td><td>9/7〜9/8</td><td class="num">13</td></tr>
+        <tr><td>W1</td><td>8/3〜8/9</td><td class="num">12</td><td class="num">7</td></tr>
+        <tr><td>W2</td><td>8/10〜8/16</td><td class="num">10</td><td class="num">9</td></tr>
+        <tr><td>W3</td><td>8/17〜8/23</td><td class="num">48</td><td class="num">22</td></tr>
+        <tr><td>W4</td><td>8/24〜8/30</td><td class="num">28</td><td class="num">17</td></tr>
+        <tr><td>W5</td><td>8/31〜9/6</td><td class="num">33</td><td class="num">18</td></tr>
+        <tr><td>W6</td><td>9/7〜9/8</td><td class="num">13</td><td class="num">8</td></tr>
       </tbody>
     </table>
+
+    <div class="caution-block" style="margin: 12px 0;">
+      <p style="margin: 0; font-size: 13px;">
+        <strong>⚠ 注意:</strong> 7月以前は投稿数がほぼゼロであり、8月以降の急増は
+        <strong>小基数効果（small-base effect）</strong> の可能性があります。
+        分母が小さい場合、パーセンテージ成長率は誇張されて表示されることがあります。
+      </p>
+      <p style="margin: 8px 0 0 0; font-size: 13px;">
+        <strong>⚠ 投稿者の特徴:</strong> 上位投稿者は販売系アカウントが中心です。
+        投稿数の増加が、広範な関心の高まりか、少数の販売アカウントの活動増加かは
+        区別できません。ユニーク著者数の推移（W1: 7人 → W3: 22人 → W6: 8人）を
+        参考にしてください。
+      </p>
+    </div>
 
     <h3>上位投稿者</h3>
     <table class="data-table">
@@ -1015,6 +1030,10 @@
         <tr><td>Reposts</td><td class="num">2</td><td class="num">6</td><td class="num">127</td><td class="num">495</td></tr>
       </tbody>
     </table>
+
+    <p style="font-size: 13px; color: #666;">
+      <strong>データ完全率:</strong> 全フィールド（views, likes, reposts, replies, username, createdAt, text）147件中147件で欠損なし（100%）。
+    </p>
 
     <h3>コンテンツ分類</h3>
     <table class="data-table">

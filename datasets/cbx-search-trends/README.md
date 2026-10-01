@@ -93,7 +93,7 @@
 ```
 datasets/cbx-search-trends/
 ├── README.md
-├── methodology.md      (未作成)
+├── methodology.md
 ├── data/
 │   └── raw/
 │       ├── gsc/

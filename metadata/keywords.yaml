@@ -1,0 +1,186 @@
+# =============================================================================
+# Keywords Dictionary
+# =============================================================================
+# カンナビノイド関連研究で使用するキーワードの定義
+#
+# 各エントリには以下を含む:
+#   - keywords: 検索に使用するキーワード
+#   - polysemy_warning: 多義性に関する警告（該当する場合）
+#   - discriminating_queries: 多義性を排除するための判別クエリ
+#   - notes: 補足情報
+#
+# 更新履歴:
+#   2026-10-02: 初版作成
+# =============================================================================
+
+version: "1.0.0"
+last_updated: "2026-10-02"
+
+compounds:
+
+  # ---------------------------------------------------------------------------
+  # CBX (主対象)
+  # ---------------------------------------------------------------------------
+  CBX:
+    display_name: "CBX"
+    category: "minor_phytocannabinoid"
+    keywords:
+      - "CBX"
+      - "CBX リキッド"
+      - "CBX カンナビノイド"
+      - "CBX 液体"
+      - "CBX オイル"
+    polysemy_warning: |
+      CBX は複数の意味で使用される可能性がある:
+      1. カンナビノイド CBX (本研究の対象)
+      2. ホンダ CBX400F (オートバイ)
+      3. その他のブランド名
+    discriminating_queries:
+      - "CBX 大麻"
+      - "CBX カンナビノイド"
+      - "CBX リキッド 大麻"
+    prelaunch_baseline_note: |
+      2026年7月の製品投入以前でも Google Trends で CBX は高値を示した。
+      これは非カンナビノイド検索（ホンダ CBX400F 等）の存在を示す。
+    search_notes:
+      google_trends:
+        single_query_avg: 68
+        comparison_avg: 13
+        threshold_date: "2026-09-13"
+      x_twitter:
+        primary_query: "CBX リキッド"
+        total_posts: 147
+        unique_authors: 55
+      youtube:
+        query: "CBX リキッド"
+        filtered_count: 24
+        relevance_rate: "100%"
+
+  # ---------------------------------------------------------------------------
+  # H4CBH
+  # ---------------------------------------------------------------------------
+  H4CBH:
+    display_name: "H4CBH"
+    category: "minor_phytocannabinoid"
+    keywords:
+      - "H4CBH"
+      - "H4CBH リキッド"
+      - "H4CBH カンナビノイド"
+    polysemy_warning: null
+    discriminating_queries: []
+    search_notes:
+      google_trends:
+        single_query_avg: 56
+        comparison_avg: 13
+
+  # ---------------------------------------------------------------------------
+  # HHBD
+  # ---------------------------------------------------------------------------
+  HHBD:
+    display_name: "HHBD"
+    category: "minor_phytocannabinoid"
+    keywords:
+      - "HHBD"
+      - "HHBD リキッド"
+      - "HHBD カンナビノイド"
+    polysemy_warning: null
+    discriminating_queries: []
+    search_notes:
+      google_trends:
+        single_query_avg: 33
+        comparison_avg: 7
+        note: "2025年12月にピークあり（要因特定できず）"
+
+  # ---------------------------------------------------------------------------
+  # CBD (比較対象)
+  # ---------------------------------------------------------------------------
+  CBD:
+    display_name: "CBD"
+    category: "major_phytocannabinoid"
+    keywords:
+      - "CBD"
+      - "CBD オイル"
+      - "CBD リキッド"
+      - "CBD ペン"
+    polysemy_warning: null
+    discriminating_queries: []
+    search_notes:
+      role: "比較基準として使用"
+
+  # ---------------------------------------------------------------------------
+  # CBG (比較対象)
+  # ---------------------------------------------------------------------------
+  CBG:
+    display_name: "CBG"
+    category: "minor_phytocannabinoid"
+    keywords:
+      - "CBG"
+      - "CBG オイル"
+    polysemy_warning: null
+    discriminating_queries: []
+
+# =============================================================================
+# 検索クエリ定義
+# =============================================================================
+
+search_queries:
+
+  google_trends:
+    primary:
+      - term: "CBX"
+        geo: "JP"
+        timeframe: "today 12-m"
+      - term: "H4CBH"
+        geo: "JP"
+        timeframe: "today 12-m"
+      - term: "HHBD"
+        geo: "JP"
+        timeframe: "today 12-m"
+      - term: "CBX リキッド"
+        geo: "JP"
+        timeframe: "today 12-m"
+    comparison:
+      terms: ["CBX", "H4CBH", "HHBD", "CBX リキッド"]
+      geo: "JP"
+      timeframe: "today 12-m"
+    discriminating:
+      - term: "CBX 大麻"
+        geo: "JP"
+        timeframe: "today 12-m"
+      - term: "CBX カンナビノイド"
+        geo: "JP"
+        timeframe: "today 12-m"
+
+  x_twitter:
+    primary:
+      query: "CBX リキッド"
+      section: "latest"
+      max_pages: 2
+    weekly:
+      query: "CBX リキッド since:{start_date} until:{end_date}"
+      section: "latest"
+      max_pages: 5
+
+  youtube:
+    primary:
+      search_term: "CBX リキッド"
+      max_videos: 100
+
+  tiktok:
+    primary:
+      keyword: "CBXリキッド"
+      region: "JP"
+      limit: 20
+    re_collection_candidates:
+      - "cannabinoid vape"
+      - "ハーブ リキッド"
+
+# =============================================================================
+# 注意事項
+# =============================================================================
+notes:
+  - "Google Trends の値は相対指数（0-100）であり、絶対検索数ではない"
+  - "CBX の多義性により、単独クエリの解釈には注意が必要"
+  - "判別クエリを使用してカンナビノイド関連検索を特定する"
+  - "X データは単一クエリ（CBX リキッド）に依存している"
+  - "TikTok データは品質未確認のため参考データとして扱う"
