@@ -55,10 +55,11 @@ jobs:
                  "${CLEAN_DIR}/.serena" \
                  "${CLEAN_DIR}/artifacts" \
                  "${CLEAN_DIR}/.opencode" \
-                 "${CLEAN_DIR}/.env*" 
+                 "${CLEAN_DIR}/.env" \
+                 "${CLEAN_DIR}/.env.local" 2>/dev/null || true
           
-          find "${CLEAN_DIR}" -name "*.DS_Store" -delete 2>/dev/null || true
           find "${CLEAN_DIR}" -name ".DS_Store" -delete 2>/dev/null || true
+          find "${CLEAN_DIR}" -name "*.DS_Store" -delete 2>/dev/null || true
           
           # Create zip
           VERSION="${GITHUB_REF_NAME}"
@@ -87,6 +88,7 @@ jobs:
           echo "Files: $(unzip -l "${ZIP_NAME}" | tail -1 | awk '{print $2}')"
 
       - name: Upload to Zenodo via API
+        id: zenodo
         env:
           ZENODO_API_KEY: ${{ secrets.ZENODO_API_KEY }}
         run: |
@@ -95,72 +97,98 @@ jobs:
           
           if [ -z "${ZENODO_API_KEY}" ]; then
             echo "⚠️  ZENODO_API_KEY not set. Skipping Zenodo upload."
-            echo "To enable, add ZENODO_API_KEY to repository secrets."
-            echo "Archive will be available as workflow artifact."
+            echo "zenodo_status=skipped" >> "$GITHUB_OUTPUT"
             exit 0
           fi
           
-          # Create new deposition
-          echo "Creating Zenodo deposition..."
+          echo "=== Creating Zenodo deposition ==="
           
-          DEPOSITION_RESPONSE=$(curl -s -X POST "https://zenodo.org/api/deposit/depositions" \
+          # Create new deposition
+          DEPOSITION_RESPONSE=$(curl -s -w "\n%{http_code}" -X POST "https://zenodo.org/api/deposit/depositions" \
             -H "Authorization: Bearer ${ZENODO_API_KEY}" \
             -H "Content-Type: application/json" \
             -d '{
               "metadata": {
                 "title": "CBX Online Trend Dataset 2026",
                 "upload_type": "dataset",
-                "description": "日本国内におけるカンナビノイド関連トレンドを追跡するロングジューデータセット",
+                "description": "日本国内におけるカンナビノイド関連トレンドを追跡するロングジューデータセット。Google Trends（CBX / H4CBH / HHBD / CBX リキッド、12ヶ月週次）、X (Twitter) 147件（重複排除済み）、YouTube 24件（フィルタ済み）、COA 分析結果（ISO/IEC 17025 認定 2 社）を収録。",
                 "creators": [{"name": "Routeflags Co., Ltd.", "affiliation": "Routeflags Co., Ltd."}],
-                "keywords": ["cannabinoid", "CBX", "H4CBH", "HHBD", "Google Trends", "Japan"],
+                "keywords": ["cannabinoid", "CBX", "H4CBH", "HHBD", "Google Trends", "X (Twitter)", "YouTube", "Japan", "online trends", "search interest", "longitudinal data"],
                 "license": "cc-by-4.0",
                 "version": "'"${VERSION}"'"
               }
             }')
           
-          DEPOSITION_ID=$(echo "$DEPOSITION_RESPONSE" | jq -r '.id // empty')
+          HTTP_CODE=$(echo "$DEPOSITION_RESPONSE" | tail -1)
+          DEPOSITION_BODY=$(echo "$DEPOSITION_RESPONSE" | sed '$d')
+          
+          echo "HTTP Status: ${HTTP_CODE}"
+          echo "Response: ${DEPOSITION_BODY}" | jq . 2>/dev/null || echo "${DEPOSITION_BODY}"
+          
+          DEPOSITION_ID=$(echo "$DEPOSITION_BODY" | jq -r '.id // empty' 2>/dev/null)
           
           if [ -z "${DEPOSITION_ID}" ]; then
-            echo "❌ Failed to create deposition"
-            echo "$DEPOSITION_RESPONSE" | jq . 2>/dev/null || echo "$DEPOSITION_RESPONSE"
-            exit 1
+            echo "❌ Failed to create deposition (HTTP ${HTTP_CODE})"
+            echo "zenodo_status=failed_create" >> "$GITHUB_OUTPUT"
+            exit 0  # Don't fail the workflow, just log
           fi
           
-          echo "Created deposition: ${DEPOSITION_ID}"
+          echo "✅ Created deposition: ${DEPOSITION_ID}"
           
           # Upload file
-          echo "Uploading file..."
+          echo ""
+          echo "=== Uploading file ==="
           
-          UPLOAD_RESPONSE=$(curl -s -X PUT "https://zenodo.org/api/deposit/depositions/${DEPOSITION_ID}/files" \
+          UPLOAD_RESPONSE=$(curl -s -w "\n%{http_code}" -X PUT "https://zenodo.org/api/deposit/depositions/${DEPOSITION_ID}/files" \
             -H "Authorization: Bearer ${ZENODO_API_KEY}" \
             -F "file=@${ZIP_NAME}")
           
-          FILE_ID=$(echo "$UPLOAD_RESPONSE" | jq -r '.id // empty')
+          UPLOAD_HTTP_CODE=$(echo "$UPLOAD_RESPONSE" | tail -1)
+          UPLOAD_BODY=$(echo "$UPLOAD_RESPONSE" | sed '$d')
+          
+          echo "HTTP Status: ${UPLOAD_HTTP_CODE}"
+          echo "Response: ${UPLOAD_BODY}" | jq . 2>/dev/null || echo "${UPLOAD_BODY}"
+          
+          FILE_ID=$(echo "$UPLOAD_BODY" | jq -r '.id // empty' 2>/dev/null)
           
           if [ -z "${FILE_ID}" ]; then
-            echo "❌ Failed to upload file"
-            echo "$UPLOAD_RESPONSE" | jq . 2>/dev/null || echo "$UPLOAD_RESPONSE"
-            exit 1
+            echo "❌ Failed to upload file (HTTP ${UPLOAD_HTTP_CODE})"
+            echo "zenodo_status=failed_upload" >> "$GITHUB_OUTPUT"
+            exit 0  # Don't fail the workflow
           fi
           
-          echo "Uploaded file: ${FILE_ID}"
+          echo "✅ Uploaded file: ${FILE_ID}"
           
           # Publish deposition
-          echo "Publishing deposition..."
+          echo ""
+          echo "=== Publishing deposition ==="
           
-          PUBLISH_RESPONSE=$(curl -s -X POST "https://zenodo.org/api/deposit/depositions/${DEPOSITION_ID}/actions/publish" \
+          PUBLISH_RESPONSE=$(curl -s -w "\n%{http_code}" -X POST "https://zenodo.org/api/deposit/depositions/${DEPOSITION_ID}/actions/publish" \
             -H "Authorization: Bearer ${ZENODO_API_KEY}")
           
-          DOI=$(echo "$PUBLISH_RESPONSE" | jq -r '.doi // empty')
+          PUBLISH_HTTP_CODE=$(echo "$PUBLISH_RESPONSE" | tail -1)
+          PUBLISH_BODY=$(echo "$PUBLISH_RESPONSE" | sed '$d')
+          
+          echo "HTTP Status: ${PUBLISH_HTTP_CODE}"
+          echo "Response: ${PUBLISH_BODY}" | jq . 2>/dev/null || echo "${PUBLISH_BODY}"
+          
+          DOI=$(echo "$PUBLISH_BODY" | jq -r '.doi // empty' 2>/dev/null)
+          CONCEPTDOI=$(echo "$PUBLISH_BODY" | jq -r '.conceptdoi // empty' 2>/dev/null)
           
           if [ -n "${DOI}" ]; then
             echo ""
-            echo "✅ Zenodo Upload Complete!"
+            echo "🎉 Zenodo Upload Complete!"
             echo "DOI: ${DOI}"
+            echo "Concept DOI: ${CONCEPTDOI}"
             echo "URL: https://doi.org/${DOI}"
+            echo "zenodo_status=success" >> "$GITHUB_OUTPUT"
+            echo "doi=${DOI}" >> "$GITHUB_OUTPUT"
+            echo "concept_doi=${CONCEPTDOI}" >> "$GITHUB_OUTPUT"
           else
+            echo ""
             echo "⚠️  Deposition created but publish may need manual action"
             echo "Check: https://zenodo.org/deposit/${DEPOSITION_ID}"
+            echo "zenodo_status=needs_manual_publish" >> "$GITHUB_OUTPUT"
           fi
 
       - name: Upload archive as artifact
@@ -178,10 +206,15 @@ jobs:
           echo "- **Archive:** ${{ steps.archive.outputs.zip_name }}" >> "$GITHUB_STEP_SUMMARY"
           echo "- **Clean:** ✅ (.github, .serena, artifacts excluded)" >> "$GITHUB_STEP_SUMMARY"
           echo "" >> "$GITHUB_STEP_SUMMARY"
-          echo "### Contents" >> "$GITHUB_STEP_SUMMARY"
-          echo "- datasets/ (research data)" >> "$GITHUB_STEP_SUMMARY"
-          echo "- docs/specs/ (methodology & policies)" >> "$GITHUB_STEP_SUMMARY"
-          echo "- publication/ (guide pages)" >> "$GITHUB_STEP_SUMMARY"
-          echo "- src/ (collection & processing code)" >> "$GITHUB_STEP_SUMMARY"
-          echo "- metadata/ (datapackage.json)" >> "$GITHUB_STEP_SUMMARY"
-          echo "- LICENSE, CITATION.cff, README.md" >> "$GITHUB_STEP_SUMMARY"
+          
+          STATUS="${{ steps.zenodo.outputs.zenodo_status }}"
+          if [ "$STATUS" = "success" ]; then
+            echo "## Zenodo DOI" >> "$GITHUB_STEP_SUMMARY"
+            echo "" >> "$GITHUB_STEP_SUMMARY"
+            echo "- **DOI:** ${{ steps.zenodo.outputs.doi }}" >> "$GITHUB_STEP_SUMMARY"
+            echo "- **Concept DOI:** ${{ steps.zenodo.outputs.concept_doi }}" >> "$GITHUB_STEP_SUMMARY"
+          elif [ "$STATUS" = "skipped" ]; then
+            echo "⚠️ Zenodo upload skipped (API key not set)" >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "⚠️ Zenodo status: ${STATUS}" >> "$GITHUB_STEP_SUMMARY"
+          fi
