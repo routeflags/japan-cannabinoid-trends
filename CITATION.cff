@@ -3,18 +3,17 @@
 
 cff-version: 1.2.0
 message: "If you use this dataset, please cite it as below."
-title: "Japan Cannabinoid Trends: CBX / H4CBH / HHBD Online Trend Dataset 2026"
-version: "1.5"
+title: "CBX Online Trend Dataset 2026: Google Trends, Social Media, and COA Data from Japan"
+version: "1.5.0"
 date-released: "2026-10-01"
 type: dataset
 license: CC-BY-4.0
+language: ja
 
 authors:
-  - family-names: "店長"
-    name-particle: ""
-    given-names: ""
-    email: ""
-    affiliation: "リキッド通販ショップ"
+  - name: "Routeflags Co., Ltd."
+    alias: "リキッド通販ショップ"
+    website: "https://www.thch-vape.shop/"
 
 keywords:
   - cannabinoid
@@ -27,37 +26,36 @@ keywords:
   - Japan
   - online trends
   - search interest
+  - longitudinal data
+
+geo-locations:
+  - country: JP
+    latitude: 35.6762
+    longitude: 139.6503
 
 abstract: >
   日本国内におけるカンナビノイド関連トレンドを追跡するロングジューデータセット。
-  Google Trends（CBX / H4CBH / HHBD / CBX リキッド）、X (Twitter) 147件、
-  YouTube 26件、COA 分析結果を収録。
+  Google Trends（CBX / H4CBH / HHBD / CBX リキッド、12ヶ月週次）、
+  X (Twitter) 147件（重複排除済み）、YouTube 24件（フィルタ済み）、
+  COA 分析結果（ISO/IEC 17025 認定 2 社）を収録。
   カンナビノイド製品の市場動向を研究する第三者により再利用可能な形で公開。
 
 references:
   - type: dataset
-    title: "CBX Search Trends (Google Trends)"
+    title: "CBX Search Trends (Google Trends + GSC)"
     year: 2026
+    version: "1.5.0"
     authors:
-      - family-names: "店長"
-        affiliation: "リキッド通販ショップ"
+      - name: "Routeflags Co., Ltd."
     url: "https://github.com/routeflags/japan-cannabinoid-trends/tree/main/datasets/cbx-search-trends"
 
   - type: dataset
     title: "CBX Social Trends (X / YouTube)"
     year: 2026
+    version: "1.5.0"
     authors:
-      - family-names: "店長"
-        affiliation: "リキッド通販ショップ"
+      - name: "Routeflags Co., Ltd."
     url: "https://github.com/routeflags/japan-cannabinoid-trends/tree/main/datasets/cbx-social-trends"
-
-  - type: dataset
-    title: "CBX Liquid Online Trend (X weekly)"
-    year: 2026
-    authors:
-      - family-names: "店長"
-        affiliation: "リキッド通販ショップ"
-    url: "https://github.com/routeflags/japan-cannabinoid-trends/tree/main/datasets/cbx-liquid-online-trend"
 
 identifiers:
   - type: url
@@ -67,15 +65,14 @@ identifiers:
 preferred-citation:
   type: dataset
   title: "CBX Online Trend Dataset 2026"
-  version: "1.5"
+  version: "1.5.0"
   year: 2026
   month: 10
   authors:
-    - family-names: "店長"
-      affiliation: "リキッド通販ショップ"
+    - name: "Routeflags Co., Ltd."
   publisher:
-    name: "リキッド通販ショップ"
+    name: "Routeflags Co., Ltd."
     city: "Tokyo"
     country: "JP"
-  url: "https://www.thch-vape.shop/guide/cbx"
+  url: "https://github.com/routeflags/japan-cannabinoid-trends"
   doi: "Pending"

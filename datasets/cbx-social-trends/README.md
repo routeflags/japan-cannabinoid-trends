@@ -22,7 +22,7 @@ X (Twitter)、YouTube、Instagram、TikTok における CBX 関連コンテン�
 |--------|----------|------|------|
 | X (Twitter) — 日別 | `cPYLH3QT9GyzKhB4S` | 2,376 (raw) / 147 (processed) | 2026-08-01~09-08 |
 | X (Twitter) — 26週 | `cPYLH3QT9GyzKhB4S` | 381 (raw) | 2026-03-19~09-17 |
-| YouTube | `gJvjeCYNraSfhIaNd` | **26件 (CBX関連: 26件)** | ✅ 再取得成功 2026-10-01 |
+| YouTube | `gJvjeCYNraSfhIaNd` | **24件 (フィルタ後、CBX関連: 24件)** | ✅ 再取得成功 2026-10-01 |
 | Instagram | `TxU0ZBQIHdR20dr9C` | 6 (CBX関連: 0) | 要再取得 |
 | TikTok | `jQfZ1h9FrcWcliKZX` | 20 (description空) | 要再取得 |
 
@@ -63,7 +63,7 @@ datasets/cbx-social-trends/
 
 ## 現在のリリース
 
-- v1.2.1 (2026-10-01): YouTube 全件取得（26件ユニーク、重複排除済み）
+- v1.2.1 (2026-10-01): YouTube 全件取得（26件ユニーク → フィルタ後24件）
 - v1.2.0 (2026-10-01): YouTube 再取得成功（CBX リキッド クエリ、19/20件がCBX関連）
 - v1.1.0 (2026-10-01): Study ID を `cbx-x-trends` → `cbx-social-trends` に改名。GSC/COA データを分離。
 - v1.0.0 (2026-09-18): 初期データ収集
