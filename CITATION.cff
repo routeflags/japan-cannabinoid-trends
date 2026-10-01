@@ -4,17 +4,13 @@
 cff-version: 1.2.0
 message: "If you use this dataset, please cite it as below."
 title: "CBX Online Trend Dataset 2026: Google Trends, Social Media, and COA Data from Japan"
-version: "1.5.1"
+version: "1.5.3"
 date-released: "2026-10-02"
 type: dataset
 license: CC-BY-4.0
 language: ja
 
 authors:
-  - name: "Routeflags Co., Ltd."
-    alias: "リキッド通販ショップ"
-    website: "https://www.thch-vape.shop/"
-  
   - family-names: "KATO"
     given-names: "Kyoji"
     orcid: "https://orcid.org/0009-0007-5131-0374"
@@ -49,22 +45,26 @@ references:
   - type: dataset
     title: "CBX Search Trends (Google Trends + GSC)"
     year: 2026
-    version: "1.5.0"
+    version: "1.5.3"
     authors:
-      - name: "Routeflags Co., Ltd."
+      - family-names: "KATO"
+        given-names: "Kyoji"
+        orcid: "https://orcid.org/0009-0007-5131-0374"
     url: "https://github.com/routeflags/japan-cannabinoid-trends/tree/main/datasets/cbx-search-trends"
 
   - type: dataset
     title: "CBX Social Trends (X / YouTube)"
     year: 2026
-    version: "1.5.0"
+    version: "1.5.3"
     authors:
-      - name: "Routeflags Co., Ltd."
+      - family-names: "KATO"
+        given-names: "Kyoji"
+        orcid: "https://orcid.org/0009-0007-5131-0374"
     url: "https://github.com/routeflags/japan-cannabinoid-trends/tree/main/datasets/cbx-social-trends"
 
 identifiers:
   - type: doi
-    value: "10.5281/zenodo.23086803"
+    value: "10.5281/zenodo.23087213"
     description: "Zenodo DOI"
   - type: url
     value: "https://github.com/routeflags/japan-cannabinoid-trends"
@@ -73,7 +73,7 @@ identifiers:
 preferred-citation:
   type: dataset
   title: "CBX Online Trend Dataset 2026"
-  version: "1.5.2"
+  version: "1.5.3"
   year: 2026
   month: 10
   authors:
@@ -81,10 +81,9 @@ preferred-citation:
       given-names: "Kyoji"
       orcid: "https://orcid.org/0009-0007-5131-0374"
       affiliation: "Routeflags Co., Ltd."
-    - name: "Routeflags Co., Ltd."
   publisher:
     name: "Routeflags Co., Ltd."
     city: "Tokyo"
     country: "JP"
-  url: "https://doi.org/10.5281/zenodo.23086803"
-  doi: "10.5281/zenodo.23086803"
+  url: "https://doi.org/10.5281/zenodo.23087213"
+  doi: "10.5281/zenodo.23087213"

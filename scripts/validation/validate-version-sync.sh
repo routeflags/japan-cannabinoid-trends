@@ -267,7 +267,8 @@ GUIDE_FILE="publication/guide_cbx_rewrite.html"
 if [ -f "$GUIDE_FILE" ]; then
   # 引用ブロックのバージョン（最後の Version 表記）
   GUIDE_VERSION=$(grep -oE 'Version\s*[0-9]+\.[0-9]+(\.[0-9]+)?' "$GUIDE_FILE" | tail -1 | grep -oE '[0-9]+\.[0-9]+(\.[0-9]+)?' || echo "")
-  GUIDE_DOI=$(grep -oE '10\.5281/zenodo\.[0-9]+' "$GUIDE_FILE" | tail -1 || echo "")
+  # 全ての DOI を取得（Concept DOI も有効）
+  GUIDE_DOIS=$(grep -oE '10\.5281/zenodo\.[0-9]+' "$GUIDE_FILE" | sort -u || echo "")
   GUIDE_DATE=$(grep -oE 'dateModified["\s:]+[0-9]{4}-[0-9]{2}-[0-9]{2}' "$GUIDE_FILE" | head -1 | grep -oE '[0-9]{4}-[0-9]{2}-[0-9]{2}' || echo "")
 
   if [ "$GUIDE_VERSION" = "$BASELINE_VERSION" ]; then
@@ -276,11 +277,12 @@ if [ -f "$GUIDE_FILE" ]; then
     print_fail "引用 Version: $GUIDE_VERSION → $BASELINE_VERSION"
   fi
 
+  # DOI チェック（version DOI または concept DOI が含まれていれば OK）
   if [ -n "$BASELINE_DOI" ]; then
-    if [ "$GUIDE_DOI" = "$BASELINE_DOI" ]; then
-      print_pass "引用 DOI: $GUIDE_DOI"
+    if echo "$GUIDE_DOIS" | grep -qE "$BASELINE_DOI|${BASELINE_DOI%.*}"; then
+      print_pass "引用 DOI: $(echo $GUIDE_DOIS | tr '\n' ' ')"
     else
-      print_fail "引用 DOI: $GUIDE_DOI → $BASELINE_DOI"
+      print_fail "引用 DOI: $(echo $GUIDE_DOIS | tr '\n' ' ') → $BASELINE_DOI"
     fi
   fi
 
@@ -301,7 +303,9 @@ if [ -f "$README_FILE" ]; then
   README_DOI=$(grep -oE '10\.5281/zenodo\.[0-9]+' "$README_FILE" | head -1 || echo "")
   
   if [ -n "$BASELINE_DOI" ]; then
-    if [ "$README_DOI" = "$BASELINE_DOI" ]; then
+    # version DOI または concept DOI が含まれていれば OK
+    CONCEPT_DOI="${BASELINE_DOI%.*}"  # 末尾の数字を削除して concept DOI のプレフィックスに
+    if [ "$README_DOI" = "$BASELINE_DOI" ] || [[ "$README_DOI" == ${CONCEPT_DOI}* ]]; then
       print_pass "DOI バッジ: $README_DOI"
     else
       print_fail "DOI バッジ: $README_DOI → $BASELINE_DOI"

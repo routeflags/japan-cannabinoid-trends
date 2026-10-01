@@ -161,7 +161,8 @@ Google Trends は非決定的なため、同一日内で複数回収集してば
 Citation format is defined in `CITATION.cff`.
 
 Dataset: CBX Online Trend Dataset 2026
-Version: 1.5.0
+Version: 1.5.3
+DOI: 10.5281/zenodo.23087213
 License: CC-BY-4.0
 
 ---
