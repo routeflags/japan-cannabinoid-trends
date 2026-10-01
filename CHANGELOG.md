@@ -13,7 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **publication/guide_cbx_rewrite.html**: GSC → Google Trends に主要検索データを差し替え
   - GSC を「参考データ」に降格（サイト依存のため信頼性が低い）
   - Google Trends データ（CBX / H4CBH / HHBD / CBX リキッド）を追加
-  - YouTube セクションを 0件 → 26件に更新
+  - YouTube セクションを 0件 → 24件に更新（26件から2件フィルタ）
   - CBX 多義性の注記を追加（ホンダ CBX400F 等との混在可能性）
   - COA 規制値の矛盾を修正（原料10ppm vs 成品1ppm の区別を明記）
   - 日付の不整合を修正（dateModified = 2026-10-01 に統一）
@@ -36,7 +36,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - H4CBH: 単独平均 56, 比較平均 13, ピーク 100 (2026-07-26)
   - HHBD: 単独平均 33, 比較平均 7, ピーク 100 (2025-12-07)
   - CBX リキッド: 単独 44-92, 比較 0, ピーク 100 (2026-09-20)
-- YouTube 再取得（2026-10-01）: 26件（全件 CBX 関連）
+- YouTube 再取得（2026-10-01）: 24件（26件から2件フィルタ、全件 CBX 関連）
 
 ---
 
