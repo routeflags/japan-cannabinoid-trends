@@ -138,7 +138,7 @@ jobs:
                     "scheme": "url"
                   },
                   {
-                    "identifier": "https://github.com/routeflags/japan-cannabinoid-trends/tree/" "'"${VERSION}"'",
+                    "identifier": "https://github.com/routeflags/japan-cannabinoid-trends/releases/tag/${VERSION}",
                     "relation": "isSupplementTo",
                     "resource_type": "software",
                     "scheme": "url"
