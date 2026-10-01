@@ -121,10 +121,6 @@ jobs:
                     "name": "KATO, Kyoji",
                     "orcid": "0009-0007-5131-0374",
                     "affiliation": "Routeflags Co., Ltd."
-                  },
-                  {
-                    "name": "Routeflags Co., Ltd.",
-                    "affiliation": "Routeflags Co., Ltd."
                   }
                 ],
                 "keywords": ["cannabinoid", "CBX", "H4CBH", "HHBD", "Google Trends", "X (Twitter)", "YouTube", "Japan", "online trends", "search interest", "longitudinal data"],
@@ -140,7 +136,7 @@ jobs:
                   {
                     "identifier": "https://github.com/routeflags/japan-cannabinoid-trends/releases/tag/${VERSION}",
                     "relation": "isSupplementTo",
-                    "resource_type": "software",
+                    "resource_type": "dataset",
                     "scheme": "url"
                   }
                 ]
