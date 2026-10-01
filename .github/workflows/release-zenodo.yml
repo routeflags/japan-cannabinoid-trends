@@ -39,7 +39,6 @@ jobs:
             "CHANGELOG.md"
             "README.md"
             "methodology.md"
-            ".gitignore"
           )
           
           # Copy files
@@ -55,11 +54,16 @@ jobs:
                  "${CLEAN_DIR}/.serena" \
                  "${CLEAN_DIR}/artifacts" \
                  "${CLEAN_DIR}/.opencode" \
+                 "${CLEAN_DIR}/.gitignore" \
                  "${CLEAN_DIR}/.env" \
-                 "${CLEAN_DIR}/.env.local" 2>/dev/null || true
+                 "${CLEAN_DIR}/.env.local" \
+                 "${CLEAN_DIR}/opencode.json" \
+                 "${CLEAN_DIR}/project.json" \
+                 "${CLEAN_DIR}/project.yml" 2>/dev/null || true
           
           find "${CLEAN_DIR}" -name ".DS_Store" -delete 2>/dev/null || true
           find "${CLEAN_DIR}" -name "*.DS_Store" -delete 2>/dev/null || true
+          find "${CLEAN_DIR}" -name "project.yml" -delete 2>/dev/null || true
           
           # Create zip
           VERSION="${GITHUB_REF_NAME}"
