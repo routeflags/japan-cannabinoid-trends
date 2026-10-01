@@ -7,6 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.5.2] - 2026-10-02
+
+**DOI:** [10.5281/zenodo.23086803](https://doi.org/10.5281/zenodo.23086803)
+
+### Fixed
+- Zenodo file upload endpoint (PUT → POST)
+- Improved error handling and logging in release workflow
+
+### Notes
+- This release successfully tested the automated clean archive workflow
+- Clean archive uploaded to Zenodo with DOI
+
+---
+
 ## [1.5.1] - 2026-10-02
 
 ### Added
