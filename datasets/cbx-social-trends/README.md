@@ -22,7 +22,7 @@ X (Twitter)、YouTube、Instagram、TikTok における CBX 関連コンテン�
 |--------|----------|------|------|
 | X (Twitter) — 日別 | `cPYLH3QT9GyzKhB4S` | 2,376 (raw) / 147 (processed) | 2026-08-01~09-08 |
 | X (Twitter) — 26週 | `cPYLH3QT9GyzKhB4S` | 381 (raw) | 2026-03-19~09-17 |
-| YouTube | `gJvjeCYNraSfhIaNd` | 50 (CBX関連: 0) | 要再取得 |
+| YouTube | `gJvjeCYNraSfhIaNd` | **20件 (CBX関連: 19件)** | ✅ 再取得成功 2026-10-01 |
 | Instagram | `TxU0ZBQIHdR20dr9C` | 6 (CBX関連: 0) | 要再取得 |
 | TikTok | `jQfZ1h9FrcWcliKZX` | 20 (description空) | 要再取得 |
 
@@ -54,14 +54,15 @@ datasets/cbx-social-trends/
 
 ## 既知の問題
 
-| 問題 | 影響 | 対策 |
-|------|------|------|
-| YouTube が CBX 非関連 | クロスプラットフォーム分析不可 | クエリ修正で再取得 |
-| Instagram が CBX 非関連 | 同上 | 同上 |
-| TikTok description 空 | データ品質低下 | 同上 |
-| 26週データに空週多数 | 長期トレンド分析困難 | 空週の再取得 |
+| 問題 | 影響 | 対策 | 状態 |
+|------|------|------|------|
+| ~~YouTube が CBX 非関連~~ | ~~クロスプラットフォーム分析不可~~ | クエリ修正で再取得 | ✅ **解決済み** (2026-10-01) |
+| Instagram が CBX 非関連 | クロスプラットフォーム分析不可 | クエリ修正で再取得 | ⏳ 未対応 |
+| TikTok description 空 | データ品質低下 | クエリ修正で再取得 | ⏳ 未対応 |
+| 26週データに空週多数 | 長期トレンド分析困難 | 空週の再取得 | ⏳ 未対応 |
 
 ## 現在のリリース
 
+- v1.2.0 (2026-10-01): YouTube 再取得成功（CBX リキッド クエリ、19/20件がCBX関連）
 - v1.1.0 (2026-10-01): Study ID を `cbx-x-trends` → `cbx-social-trends` に改名。GSC/COA データを分離。
 - v1.0.0 (2026-09-18): 初期データ収集
