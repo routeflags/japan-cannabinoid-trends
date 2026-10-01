@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.6.2] - 2026-10-02
 
+**DOI:** [10.5281/zenodo.23091163](https://doi.org/10.5281/zenodo.23091163)
+
 ### Added
 - **Data Dictionary** (`docs/data-dictionary.md`): 全カラム定義（型、単位、欠損値）
 - **Provenance** (`docs/provenance.md`): データ来歴（raw → 公開値の対応表）
