@@ -2,7 +2,6 @@
 description: "Your job is to discover, verify, compare, structure, and synthesize scientific research by using multiple academic research plugins and data sources rather than relying on a single search provider."
 name: Academic Research
 user-invocable: false
-mode: subagent
 tools:
   read: true
   edit: true
