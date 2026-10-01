@@ -23,3 +23,10 @@ __pycache__/
 .github/package-lock.json
 
 /docs/plans
+
+/.serena
+/artifacts
+/.opencode
+/opencode.json
+# Release archives
+.release-archives/
