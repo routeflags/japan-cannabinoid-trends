@@ -2,7 +2,7 @@
 name: cbx-youtube-search
 description: |
   CBX リキッド研究用の YouTube 検索スキル。
-  指定された研究計画に従い、CBX リキッド関連の動画を収集する。
+  キーワードを指定して、YouTube 動画を収集する。
   「CBXのYouTubeデータ取って」「cbx-social-trendsのYouTube収集」などで使う。
 ---
 
@@ -22,15 +22,13 @@ CBX リキッド研究のための YouTube データ収集スキル。
 
 ---
 
-## 研究パラメータ（固定）
+## 入力パラメータ
 
-| 項目 | 値 | 備考 |
-|------|-----|------|
-| 研究 ID | `cbx-social-trends` | |
-| 検索クエリ | `CBX リキッド` | 固定（変更不可） |
-| プラットフォーム | YouTube | |
-| Actor | `gJvjeCYNraSfhIaNd` | danek/youtube-search |
-| max_videos | `100` | 最大取得数 |
+| パラメータ | 型 | 必須 | デフォルト | 説明 |
+|-----------|-----|------|-----------|------|
+| `keyword` | string | ✅ | `CBX リキッド` | 検索キーワード |
+| `max_videos` | integer | — | `100` | 最大取得数 |
+| `output_dir` | string | — | `datasets/cbx-social-trends/data/raw/youtube/` | 保存先 |
 
 ---
 
@@ -49,19 +47,24 @@ CBX リキッド研究のための YouTube データ収集スキル。
 ```bash
 source /Users/bookair18/OS/media/06_symphony/symphony_workspaces/.env.d/apify.env
 
+# パラメータ設定
+KEYWORD="${1:-CBX リキッド}"
+MAX_VIDEOS="${2:-100}"
+OUTPUT_DIR="${3:-datasets/cbx-social-trends/data/raw/youtube}"
+
 # 収集実行
 R=$(curl -s -X POST "https://api.apify.com/v2/acts/gJvjeCYNraSfhIaNd/runs?waitForFinish=60" \
   -H "Authorization: Bearer $APIFY_TOKEN" \
   -H "Content-Type: application/json" \
-  -d '{"search_term":"CBX リキッド","max_videos":100}')
+  -d "{\"search_term\":\"$KEYWORD\",\"max_videos\":$MAX_VIDEOS}")
 
 DS=$(echo "$R" | jq -r '.data.defaultDatasetId')
 RUN_ID=$(echo "$R" | jq -r '.data.id')
 TIMESTAMP=$(date -u +"%Y%m%dT%H%M%SZ")
-SAVE_RUN_ID="${TIMESTAMP}-youtube-cbx-liquid"
+SAVE_RUN_ID="${TIMESTAMP}-youtube-$(echo "$KEYWORD" | tr ' ' '-' | tr '[:upper:]' '[:lower:]')"
 
 # 保存先
-SAVE_DIR="datasets/cbx-social-trends/data/raw/youtube/${SAVE_RUN_ID}"
+SAVE_DIR="${OUTPUT_DIR}/${SAVE_RUN_ID}"
 mkdir -p "$SAVE_DIR"
 
 # データ取得
@@ -70,11 +73,14 @@ curl -s "https://api.apify.com/v2/datasets/$DS/items?clean=true&format=json" \
 
 # メタデータ取得
 curl -s "https://api.apify.com/v2/actor-runs/$RUN_ID" \
-  -H "Authorization: Bearer $APIFY_TOKEN" | jq '.data | {id, status, usageTotalUsd, startedAt, finishedAt}' \
+  -H "Authorization: Bearer $APIFY_TOKEN" | jq --arg keyword "$KEYWORD" '.data | {id, status, usageTotalUsd, startedAt, finishedAt, keyword: $keyword}' \
   > "$SAVE_DIR/run_metadata.json"
 
-echo "保存完了: $SAVE_DIR"
+echo "========================================="
+echo "キーワード: $KEYWORD"
+echo "保存先: $SAVE_DIR"
 echo "Cost: $(jq -r '.usageTotalUsd' "$SAVE_DIR/run_metadata.json")"
+echo "========================================="
 ```
 
 ### 重複排除（必須）
@@ -82,7 +88,7 @@ echo "Cost: $(jq -r '.usageTotalUsd' "$SAVE_DIR/run_metadata.json")"
 YouTube 検索はページングで重複を返す。**必ず重複排除する。**
 
 ```bash
-SAVE_DIR="datasets/cbx-social-trends/data/raw/youtube/<run-id>"
+SAVE_DIR="<保存先パス>"
 
 python3 -c "
 import json
@@ -136,6 +142,22 @@ print(f'CSV保存完了: {len(rows)}件')
 "
 ```
 
+### 使用例
+
+```bash
+# 1. デフォルト（CBX リキッド）
+bash cbx-youtube-search.sh
+
+# 2. キーワード指定
+bash cbx-youtube-search.sh "CBD リキッド"
+
+# 3. キーワード + 件数指定
+bash cbx-youtube-search.sh "カンナビノイド リキッド" "50"
+
+# 4. キーワード + 件数 + 保存先
+bash cbx-youtube-search.sh "CBX リキッド" "100" "datasets/cbx-social-trends/data/raw/youtube"
+```
+
 ---
 
 ## データ品質チェック
@@ -143,15 +165,16 @@ print(f'CSV保存完了: {len(rows)}件')
 収集後、必ず以下を確認:
 
 ```bash
-SAVE_DIR="datasets/cbx-social-trends/data/raw/youtube/<run-id>"
+SAVE_DIR="<保存先パス>"
+KEYWORD="<使用したキーワード>"
 
 # 1. 重複排除後の件数確認
 echo "=== ユニーク件数 ==="
 jq 'length' "$SAVE_DIR/records.json"
 
 # 2. CBX 関連件数確認
-echo "=== CBX/CBD 関連件数 ==="
-jq -r '.[].snippet.title' "$SAVE_DIR/records.json" | grep -ci 'cbx\|cbd\|カンナビノイド\|hemp\|大麻\|リキッド\|vape' || echo "0"
+echo "=== キーワード関連件数 ==="
+jq -r '.[].snippet.title' "$SAVE_DIR/records.json" | grep -ci "$KEYWORD\|cbx\|cbd\|カンナビノイド\|hemp\|大麻\|リキッド\|vape" || echo "0"
 
 # 3. チャンネル分布
 echo "=== チャンネル分布 ==="
@@ -168,15 +191,15 @@ jq -r '.[] | "\(.snippet.views) \(.snippet.title)"' "$SAVE_DIR/records.json" | s
 
 ```
 datasets/cbx-social-trends/data/raw/youtube/
-└── {YYYYMMDDTHHMMSSZ}-youtube-cbx-liquid/
+└── {YYYYMMDDTHHMMSSZ}-youtube-{keyword}/
     ├── records_raw.json      ← 生データ（重複あり）
     ├── records.json          ← 重複排除後
     ├── records.csv           ← CSV 形式
     └── run_metadata.json     ← 実行メタデータ
 ```
 
-**run-id 形式:** `YYYYMMDDTHHMMSSZ-youtube-cbx-liquid`
-**例:** `20261001T120000Z-youtube-cbx-liquid`
+**run-id 形式:** `YYYYMMDDTHHMMSSZ-youtube-{keyword}`
+**例:** `20261001T120000Z-youtube-cbx-rikiddo`
 
 ---
 
@@ -196,9 +219,9 @@ datasets/cbx-social-trends/data/raw/youtube/
 | 制約 | 対策 |
 |------|------|
 | ページング重複 | 必ず videoId で重複排除 |
-| max_videos 上限 | 100 件で制限（26 件ユニークが実績） |
+| max_videos 上限 | 100 件で制限 |
 | 検索結果の非決定性 | 複数回収集、run-id で区別 |
-| 一般動画の混入 | タイトルで CBX 関連を手動フィルタ |
+| 一般動画の混入 | タイトルでキーワード関連を手動フィルタ |
 
 ---
 
@@ -206,7 +229,7 @@ datasets/cbx-social-trends/data/raw/youtube/
 
 | 症状 | 原因 | 対処 |
 |------|------|------|
-| CBX 関連 0 件 | クエリが一般動画に回避 | `CBX リキッド` を確認、別クエリ試行 |
+| 関連 0 件 | クエリが一般動画に回避 | キーワードを確認、別クエリ試行 |
 | 重複が多い | YouTube 検索の仕様 | records_raw.json から重複排除 |
 | 401 Unauthorized | APIFY_TOKEN 無効 | `.env.d/apify.env` を確認 |
 | max_videos 超過 | 上限 100 | 100 で制限 |
