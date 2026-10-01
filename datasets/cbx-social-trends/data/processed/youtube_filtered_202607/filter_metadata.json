@@ -1,0 +1,31 @@
+{
+  "filter_date": "2026-10-01",
+  "source_run": "20261001T075500Z-youtube-cbx-rikiddo-v2",
+  "original_count": 26,
+  "filtered_count": 24,
+  "excluded_count": 2,
+  "exclusion_criteria": [
+    "timestamp contains 'years ago' (2年以上前)"
+  ],
+  "excluded_videos": [
+    {
+      "videoId": "",
+      "title": "You've been waiting for this! The all-new CBX is finally here!!",
+      "channel": "みんなのパイセン",
+      "timestamp": "3 years ago",
+      "reason": "2023年頃の動画。2026年のカンナビノイド CBX とは無関係の可能性"
+    },
+    {
+      "videoId": "",
+      "title": "How to refill e-liquid",
+      "channel": "【日本で吸いたい】チャンネル",
+      "timestamp": "2 years ago",
+      "reason": "2024年頃の動画。CBX 製品の販売開始（2026年7月）前の動画"
+    }
+  ],
+  "inclusion_criteria": [
+    "timestamp does not contain 'years ago'",
+    "title or channel contains CBX in cannabinoid context (manual review recommended)"
+  ],
+  "note": "24件中、全件が CBX タイトルを含む。ただし、全件がカンナビノイド CBX であることを保証するものではない。"
+}
