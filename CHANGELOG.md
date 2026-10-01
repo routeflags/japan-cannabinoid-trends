@@ -7,6 +7,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.6.1] - 2026-10-02
+
+### Fixed
+- **P2 Issue 一括修正** (検証レポート対応)
+  - ISS-006: X データに小基数効果の警告を追加
+  - ISS-007: ユニーク著者時系列を追加（W1:7人 → W3:22人 → W6:8人）
+  - ISS-009: データ完全率を公開（全フィールド100%）
+  - ISS-012: .gitignore に Google Trends raw データの例外を追加
+  - ISS-014: README の古い「未作成」記載を修正
+
+### Added
+- **ISS-013:** `metadata/keywords.yaml` — カンナビノイドキーワード辞書
+- **ISS-015:** `research/citation-tracker.md` — 引用トラッカー
+
+### Notes
+- ISS-004 (コンテンツ分類の検証) は保留
+- ISS-008 (データ件数の不整合) と ISS-010 (バリアンス評価の拡張) は追加分析が必要
+
+---
+
 ## [1.6.0] - 2026-10-02
 
 **DOI:** [10.5281/zenodo.23089140](https://doi.org/10.5281/zenodo.23089140)
