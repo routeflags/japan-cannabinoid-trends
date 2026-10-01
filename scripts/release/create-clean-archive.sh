@@ -31,7 +31,6 @@ INCLUDE_PATHS=(
   "CHANGELOG.md"
   "README.md"
   "methodology.md"
-  ".gitignore"
 )
 
 # Create output directory
@@ -60,12 +59,17 @@ rm -rf "${CLEAN_DIR}/.github" \
        "${CLEAN_DIR}/.serena" \
        "${CLEAN_DIR}/artifacts" \
        "${CLEAN_DIR}/.opencode" \
+       "${CLEAN_DIR}/.gitignore" \
        "${CLEAN_DIR}/.env" \
-       "${CLEAN_DIR}/.env.local" 2>/dev/null || true
+       "${CLEAN_DIR}/.env.local" \
+       "${CLEAN_DIR}/opencode.json" \
+       "${CLEAN_DIR}/project.json" \
+       "${CLEAN_DIR}/project.yml" 2>/dev/null || true
 
-# Remove DS_Store files
+# Remove DS_Store and project.yml files
 find "${CLEAN_DIR}" -name ".DS_Store" -delete 2>/dev/null || true
 find "${CLEAN_DIR}" -name "*.DS_Store" -delete 2>/dev/null || true
+find "${CLEAN_DIR}" -name "project.yml" -delete 2>/dev/null || true
 
 # Create zip
 ZIP_NAME="japan-cannabinoid-trends-${VERSION}-clean.zip"
