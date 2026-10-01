@@ -7,7 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-## [1.5] - 2026-10-01
+## [1.5.0] - 2026-10-01
+
+**DOI:** [10.5281/zenodo.23085397](https://doi.org/10.5281/zenodo.23085397)
+
+### Added
+- LICENSE file (CC-BY-4.0)
+- docs/specs/sns-redistribution-assessment.md
+- docs/specs/raw-data-policy.md
+- docs/specs/zenodo-doi-guide.md
+- datasets/cbx-search-trends/methodology.md
+- datasets/cbx-search-trends/analysis/ (HHBD peak investigation, CBX リキッド emergence analysis)
 
 ### Changed
 - **publication/guide_cbx_rewrite.html**: GSC → Google Trends に主要検索データを差し替え

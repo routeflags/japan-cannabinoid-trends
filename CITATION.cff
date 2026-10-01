@@ -58,6 +58,9 @@ references:
     url: "https://github.com/routeflags/japan-cannabinoid-trends/tree/main/datasets/cbx-social-trends"
 
 identifiers:
+  - type: doi
+    value: "10.5281/zenodo.23085397"
+    description: "Zenodo DOI"
   - type: url
     value: "https://github.com/routeflags/japan-cannabinoid-trends"
     description: "GitHub repository"
@@ -74,5 +77,5 @@ preferred-citation:
     name: "Routeflags Co., Ltd."
     city: "Tokyo"
     country: "JP"
-  url: "https://github.com/routeflags/japan-cannabinoid-trends"
-  doi: "Pending"
+  url: "https://doi.org/10.5281/zenodo.23085397"
+  doi: "10.5281/zenodo.23085397"

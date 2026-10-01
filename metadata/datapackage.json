@@ -81,6 +81,6 @@
       "description": "X (Twitter) + YouTube ソーシャルデータ"
     }
   ],
-  "doi": "Pending",
-  "citation": "Routeflags Co., Ltd. (2026). CBX Online Trend Dataset 2026: Google Trends, Social Media, and COA Data from Japan. Version 1.5.0. Routeflags Co., Ltd. [Dataset]. https://github.com/routeflags/japan-cannabinoid-trends"
+  "doi": "10.5281/zenodo.23085397",
+  "citation": "Routeflags Co., Ltd. (2026). CBX Online Trend Dataset 2026: Google Trends, Social Media, and COA Data from Japan. Version 1.5.0. Routeflags Co., Ltd. [Dataset]. DOI: 10.5281/zenodo.23085397"
 }
