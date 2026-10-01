@@ -76,7 +76,9 @@
       "enabled": true,
       "category": "search",
       "adapter": "src/collection/google_trends",
-      "status": "planned"
+      "status": "active",
+      "mcp": "google-trends",
+      "notes": "MCP server: google-trends-mcp (npm, no API key). Skill: research-google-trends"
     },
     "googleSearchConsole": {
       "enabled": true,
