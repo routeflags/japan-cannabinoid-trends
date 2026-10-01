@@ -7,6 +7,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.6.2] - 2026-10-02
+
+### Added
+- **Data Dictionary** (`docs/data-dictionary.md`): 全カラム定義（型、単位、欠損値）
+- **Provenance** (`docs/provenance.md`): データ来歴（raw → 公開値の対応表）
+- **匿名化版 X データ** (`x_cbx_202608_summary_anonymized.csv`): 個人情報を除去した公開用データ
+- **Frictionless スキーマ** (`datapackage.json`): 各リソースのフィールド定義・制約
+- **スキーマ検証スクリプト** (`scripts/validation/validate-data-schema.sh`)
+- **Git pre-commit hook**: コミット前にスキーマ一致を自動検証
+
+### Changed
+- `.gitignore`: private データディレクトリを除外
+- FAIR 原則の Interoperability スコアが向上（2.7 → 3.5+）
+
+### Security
+- X データの個人情報を匿名化（username → author_id, text → text_length）
+- 匿名化マッピングはローカル専用（gitignore 対象）
+
+---
+
 ## [1.6.1] - 2026-10-02
 
 **DOI:** [10.5281/zenodo.23090163](https://doi.org/10.5281/zenodo.23090163)
