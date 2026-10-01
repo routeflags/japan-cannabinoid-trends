@@ -18,13 +18,27 @@ What is the volume, composition, and temporal pattern of Japanese-language socia
 
 | Source | Type | Collection Method | Period | Records | Study |
 |--------|------|-------------------|--------|---------|-------|
-| X (Twitter) — Daily | Social | Apify Twitter Search | 2026-08-01 ~ 2026-09-08 | 2,376 (raw) / 147 (processed) | 本 study |
-| X (Twitter) — 26-week | Social | Apify Twitter Search | 2026-03-19 ~ 2026-09-17 | 451 (raw, 空週補完後) | 本 study |
+| X (Twitter) — Daily | Social | Apify Twitter Search | 2026-08-01 ~ 2026-09-08 | 2,376 (raw) → 147 (processed) | 本 study |
+| X (Twitter) — 26-week | Social | Apify Twitter Search | 2026-03-19 ~ 2026-09-17 | 321 (weekly files) / 451 (all files) → 291 (unique) | 本 study |
 | YouTube | Video | Apify YouTube Search | 2026-09-07 | 50 (CBX-related: 0) | 本 study |
 | Instagram | Social | Apify Instagram Search | 2026-09-10 | 6 (CBX-related: 0) | 本 study |
 | TikTok | Social | Apify TikTok Search | 2026-09-10 | 20 (description empty) | 本 study |
 | ~~Google Search Console~~ | ~~Search~~ | ~~GSC CSV export~~ | ~~2026-07~~ | ~~200 queries~~ | `cbx-search-trends/` へ分離 |
-| ~~COA~~ | ~~Lab report~~ | ~~KCA Labs + Anresco~~ | ~~2026-05~06~~ | ~~2 PDFs~~ | `cbx-product-coa/` へ分離 |
+| ~~COA~~ | ~~Lab report~~ | ~~KCA Labs + Anresco~~ | ~~2025-05~06~~ | ~~2 PDFs~~ | `cbx-product-coa/` へ分離 |
+
+### 2.1 X データ件数の説明
+
+X データには複数の集計値があるため、整理する:
+
+| 集計値 | 意味 | 場所 |
+|--------|------|------|
+| **2,376** | 日別収集の raw データ（重複多数） | `data/raw/x/202608/` |
+| **147** | 日別収集の processed データ（tweet_id で重複排除済み） | `data/processed/x_cbx_202608_summary.csv` |
+| **321** | 26週収集の主要週別ファイル合計（W01-W26） | `data/raw/x/26week/W*.json` |
+| **451** | 26週収集の全ファイル合計（detail/full 含む） | `data/raw/x/26week/` |
+| **291** | 26週収集のユニーク tweet_id 数（重複排除後） | 算出値 |
+
+> **注:** 26週データはまだ processed ファイルに統合されていない。将来的に重複排除した processed ファイルを作成予定。
 
 ---
 
@@ -112,10 +126,14 @@ curl -s -X POST "https://api.apify.com/v2/acts/cPYLH3QT9GyzKhB4S/runs?waitForFin
 
 | Source | Key Field | Rule | Raw Count | Deduplicated |
 |--------|-----------|------|-----------|--------------|
-| X (Twitter) | `tweet_id` | Exact match, keep first occurrence | 2,376 (daily) / 381 (26-week) | 147 (processed CSV) |
+| X (Twitter) — Daily | `tweet_id` | Exact match, keep first occurrence | 2,376 | 147 (processed CSV) |
+| X (Twitter) — 26-week | `tweet_id` | Exact match, keep first occurrence | 321 (weekly) / 451 (all files) | 291 (unique) |
 | GSC | `query` | Exact match | 200 | 200 (no duplicates) |
 
-**Note:** The processed CSV (147 rows) represents deduplicated tweets from the August daily collection. The 26-week raw data (381 items) has not yet been deduplicated into a single processed file.
+**Note:** 
+- 日別収集データ（147件）は processed CSV に重複排除済み
+- 26週収集データ（291ユニーク）はまだ processed ファイルに統合されていない
+- 26週データの raw ファイルは detail/full ファイルを含むため 451 件になるが、主要週別ファイルのみでは 321 件
 
 ---
 
@@ -199,11 +217,11 @@ tweet_id,createdAt,lang,username,author_name,views,likes,reposts,replies,url,tex
 | Collection | Actor | Items | Cost (USD) |
 |------------|-------|-------|------------|
 | X daily (August) | cPYLH3QT9GyzKhB4S | ~2,376 | ~$5.94 |
-| X 26-week | cPYLH3QT9GyzKhB4S | 381 | ~$0.95 |
+| X 26-week | cPYLH3QT9GyzKhB4S | 451 | ~$1.13 |
 | YouTube | gJvjeCYNraSfhIaNd | 50 | ~$0.025 |
 | Instagram | TxU0ZBQIHdR20dr9C | 6 | ~$0.017 |
 | TikTok | jQfZ1h9FrcWcliKZX | 20 | ~$0.008 |
-| **Total** | | | **~$6.94** |
+| **Total** | | | **~$7.12** |
 
 ---
 
