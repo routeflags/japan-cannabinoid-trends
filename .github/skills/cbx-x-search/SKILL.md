@@ -2,7 +2,7 @@
 name: cbx-x-search
 description: |
   CBX リキッド研究用の X (Twitter) 検索スキル。
-  指定された研究計画に従い、CBX リキッド関連の投稿を収集する。
+  キーワードと期間を指定して、X (Twitter) の投稿を収集する。
   「CBXのXデータ取って」「cbx-liquid-online-trendの収集」「XでCBX調べて」などで使う。
 ---
 
@@ -23,16 +23,16 @@ CBX リキッド研究のための X (Twitter) データ収集スキル。
 
 ---
 
-## 研究パラメータ（固定）
+## 入力パラメータ
 
-| 項目 | 値 | 備考 |
-|------|-----|------|
-| 研究 ID | `cbx-liquid-online-trend` | |
-| 検索クエリ | `CBX リキッド` | 固定（変更不可） |
-| プラットフォーム | X (Twitter) のみ | |
-| Actor | `cPYLH3QT9GyzKhB4S` | patient_discovery/twitter-search |
-| section | `latest` | 新着順 |
-| maxPages | `2` | 約40件/回 |
+| パラメータ | 型 | 必須 | デフォルト | 説明 |
+|-----------|-----|------|-----------|------|
+| `keyword` | string | ✅ | `CBX リキッド` | 検索キーワード |
+| `section` | string | — | `latest` | top / latest |
+| `maxPages` | integer | — | `2` | 取得ページ数 |
+| `start_date` | string | — | なし | 開始日 (YYYY-MM-DD) |
+| `end_date` | string | — | なし | 終了日 (YYYY-MM-DD) |
+| `output_dir` | string | — | `datasets/cbx-liquid-online-trend/data/raw/x/` | 保存先 |
 
 ---
 
@@ -46,24 +46,38 @@ CBX リキッド研究のための X (Twitter) データ収集スキル。
 
 ## 実行コマンド
 
-### 基本収集（週次）
+### 基本収集（キーワード指定）
 
 ```bash
 source /Users/bookair18/OS/media/06_symphony/symphony_workspaces/.env.d/apify.env
+
+# パラメータ設定
+KEYWORD="${1:-CBX リキッド}"
+SECTION="${2:-latest}"
+MAX_PAGES="${3:-2}"
+OUTPUT_DIR="${4:-datasets/cbx-liquid-online-trend/data/raw/x}"
+
+# クエリ構築
+QUERY="$KEYWORD"
+if [ -n "$5" ] && [ -n "$6" ]; then
+  QUERY="${KEYWORD} since:$5 until:$6"
+fi
+
+# タイムスタンプと run-id
+TIMESTAMP=$(date -u +"%Y%m%dT%H%M%SZ")
+SAVE_RUN_ID="${TIMESTAMP}-x-$(echo "$KEYWORD" | tr ' ' '-' | tr '[:upper:]' '[:lower:]')"
 
 # 収集実行
 R=$(curl -s -X POST "https://api.apify.com/v2/acts/cPYLH3QT9GyzKhB4S/runs?waitForFinish=60" \
   -H "Authorization: Bearer $APIFY_TOKEN" \
   -H "Content-Type: application/json" \
-  -d '{"query":"CBX リキッド","section":"latest","maxPages":2}')
+  -d "{\"query\":\"$QUERY\",\"section\":\"$SECTION\",\"maxPages\":$MAX_PAGES}")
 
 DS=$(echo "$R" | jq -r '.data.defaultDatasetId')
 RUN_ID=$(echo "$R" | jq -r '.data.id')
-TIMESTAMP=$(date -u +"%Y%m%dT%H%M%SZ")
-SAVE_RUN_ID="${TIMESTAMP}-x-cbx-liquid"
 
 # 保存先
-SAVE_DIR="datasets/cbx-liquid-online-trend/data/raw/x/${SAVE_RUN_ID}"
+SAVE_DIR="${OUTPUT_DIR}/${SAVE_RUN_ID}"
 mkdir -p "$SAVE_DIR"
 
 # データ取得
@@ -72,47 +86,40 @@ curl -s "https://api.apify.com/v2/datasets/$DS/items?clean=true&format=json" \
 
 # メタデータ取得
 curl -s "https://api.apify.com/v2/actor-runs/$RUN_ID" \
-  -H "Authorization: Bearer $APIFY_TOKEN" | jq '.data | {id, status, usageTotalUsd, startedAt, finishedAt}' \
+  -H "Authorization: Bearer $APIFY_TOKEN" | jq --arg query "$QUERY" --arg keyword "$KEYWORD" '.data | {id, status, usageTotalUsd, startedAt, finishedAt, query: $query, keyword: $keyword}' \
   > "$SAVE_DIR/run_metadata.json"
 
 # 件数確認
 COUNT=$(jq 'length' "$SAVE_DIR/records.json")
-echo "保存完了: $SAVE_DIR"
+echo "========================================="
+echo "キーワード: $KEYWORD"
+echo "クエリ: $QUERY"
+echo "期間: ${5:-指定なし} 〜 ${6:-指定なし}"
+echo "保存先: $SAVE_DIR"
 echo "件数: ${COUNT}"
 echo "Cost: $(jq -r '.usageTotalUsd' "$SAVE_DIR/run_metadata.json")"
+echo "========================================="
 ```
 
-### 日付指定収集（過去データ）
+### 使用例
 
 ```bash
-source /Users/bookair18/OS/media/06_symphony/symphony_workspaces/.env.d/apify.env
+# 1. デフォルト（CBX リキッド、最新）
+bash cbx-x-search.sh
 
-START="2026-08-01"
-END="2026-08-08"
-TIMESTAMP=$(date -u +"%Y%m%dT%H%M%SZ")
-SAVE_RUN_ID="${TIMESTAMP}-x-cbx-liquid-${START}"
+# 2. キーワード指定
+bash cbx-x-search.sh "CBD リキッド"
 
-R=$(curl -s -X POST "https://api.apify.com/v2/acts/cPYLH3QT9GyzKhB4S/runs?waitForFinish=60" \
-  -H "Authorization: Bearer $APIFY_TOKEN" \
-  -H "Content-Type: application/json" \
-  -d "{\"query\":\"CBX リキッド since:${START} until:${END}\",\"section\":\"latest\",\"maxPages\":5}")
+# 3. キーワード + セクション
+bash cbx-x-search.sh "CBX リキッド" "latest" "5"
 
-DS=$(echo "$R" | jq -r '.data.defaultDatasetId')
-RUN_ID=$(echo "$R" | jq -r '.data.id')
+# 4. キーワード + 期間指定
+bash cbx-x-search.sh "CBX リキッド" "latest" "5" "datasets/cbx-liquid-online-trend/data/raw/x" "2026-08-01" "2026-08-08"
 
-SAVE_DIR="datasets/cbx-liquid-online-trend/data/raw/x/${SAVE_RUN_ID}"
-mkdir -p "$SAVE_DIR"
-
-curl -s "https://api.apify.com/v2/datasets/$DS/items?clean=true&format=json" \
-  -H "Authorization: Bearer $APIFY_TOKEN" > "$SAVE_DIR/records.json"
-
-curl -s "https://api.apify.com/v2/actor-runs/$RUN_ID" \
-  -H "Authorization: Bearer $APIFY_TOKEN" | jq '.data | {id, status, usageTotalUsd, startedAt, finishedAt}' \
-  > "$SAVE_DIR/run_metadata.json"
-
-COUNT=$(jq 'length' "$SAVE_DIR/records.json")
-echo "保存完了: $SAVE_DIR"
-echo "件数: ${COUNT}"
+# 5. 週次収集（現在の週）
+START=$(date -u -d "7 days ago" +"%Y-%m-%d" 2>/dev/null || date -u -v-7d +"%Y-%m-%d")
+END=$(date -u +"%Y-%m-%d")
+bash cbx-x-search.sh "CBX リキッド" "latest" "2" "datasets/cbx-liquid-online-trend/data/raw/x" "$START" "$END"
 ```
 
 ---
@@ -122,7 +129,7 @@ echo "件数: ${COUNT}"
 収集後、必ず以下を確認:
 
 ```bash
-SAVE_DIR="datasets/cbx-liquid-online-trend/data/raw/x/<run-id>"
+SAVE_DIR="<保存先パス>"
 
 # 1. 件数確認
 echo "=== 件数 ==="
@@ -141,9 +148,9 @@ echo "終了: $(jq -r '.[].created_at' "$SAVE_DIR/records.json" | sort | tail -1
 echo "=== ユニーク tweet_id ==="
 jq -r '.[].tweet_id' "$SAVE_DIR/records.json" | sort -u | wc -l
 
-# 5. CBX 関連確認
-echo "=== CBX 関連キーワード含有 ==="
-jq -r '.[].text' "$SAVE_DIR/records.json" | grep -ci 'cbx\|リキッド' || echo "0"
+# 5. キーワード関連確認
+echo "=== キーワード含有 ==="
+jq -r '.[].text' "$SAVE_DIR/records.json" | grep -ci "${KEYWORD}" || echo "0"
 ```
 
 ---
@@ -152,13 +159,13 @@ jq -r '.[].text' "$SAVE_DIR/records.json" | grep -ci 'cbx\|リキッド' || echo
 
 ```
 datasets/cbx-liquid-online-trend/data/raw/x/
-└── {YYYYMMDDTHHMMSSZ}-x-cbx-liquid/
+└── {YYYYMMDDTHHMMSSZ}-x-{keyword}/
     ├── records.json          ← 取得データ
     └── run_metadata.json     ← 実行メタデータ
 ```
 
-**run-id 形式:** `YYYYMMDDTHHMMSSZ-x-cbx-liquid`
-**例:** `20261001T120000Z-x-cbx-liquid`
+**run-id 形式:** `YYYYMMDDTHHMMSSZ-x-{keyword}`
+**例:** `20261001T120000Z-x-cbx-rikiddo`
 
 ---
 
