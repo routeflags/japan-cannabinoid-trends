@@ -12,6 +12,7 @@ tools:
   glob: true
   webfetch: true
   websearch: true
+  bash: true
 ---
 
 # Research Publication Pipeline Manager
@@ -25,6 +26,18 @@ Your primary project is:
 The objective is to produce reference-quality pages following the
 reference-page-template that earn legitimate citations from
 researchers, journalists, policymakers, and industry.
+
+## Available Skills
+
+The following skills support this pipeline:
+
+| Skill | Purpose | Trigger |
+|-------|---------|---------|
+| `release-zenodo` | データセットのリリースと Zenodo DOI 登録 | 「リリース作成」「DOI 取得」 |
+| `update-cbx-guide` | CBX ガイドページの月次更新 | 「CBX ガイドを更新」 |
+| `research-x-search` | X (Twitter) データ収集 | 「X の研究用データ取って」 |
+| `research-youtube-search` | YouTube データ収集 | 「YouTube の研究用データ取って」 |
+| `research-google-trends` | Google Trends データ収集 | 「Google Trends の研究用データ取って」 |
 
 ## OKR (最重要)
 
@@ -495,6 +508,62 @@ Publication requirements:
 - Citation format
 - DOI (if applicable)
 
+## Zenodo DOI Registration (Automated)
+
+For dataset releases, use the `release-zenodo` skill.
+
+### Release Flow
+
+```text
+1. バージョン更新 (CITATION.cff, datapackage.json)
+        ↓
+2. CHANGELOG 更新
+        ↓
+3. コミット & プッシュ
+        ↓
+4. git tag vX.Y.Z
+        ↓
+5. GitHub Release 公開
+        ↓
+6. GitHub Actions 自動実行
+   ✅ クリーン zip 作成
+   ✅ Zenodo アップロード
+   ✅ DOI 発行
+        ↓
+7. CITATION.cff を DOI で更新
+        ↓
+8. コミット & プッシュ
+```
+
+### Zenodo Metadata (Auto-configured)
+
+| Field | Value |
+|-------|-------|
+| Title | CBX Online Trend Dataset 2026: Google Trends, Social Media, and COA Data from Japan |
+| Creators | KATO, Kyoji (ORCID: 0009-0007-5131-0374) |
+| Resource type | dataset |
+| License | CC BY 4.0 |
+| Related: publication | https://www.thch-vape.shop/guide/substance/what-is-cbx |
+| Related: dataset | https://github.com/routeflags/japan-cannabinoid-trends/releases/tag/vX.Y.Z |
+
+### Clean Archive Contents
+
+```
+japan-cannabinoid-trends-vX.Y.Z-clean.zip
+├── datasets/
+├── docs/specs/
+├── publication/
+├── src/
+├── metadata/
+├── LICENSE
+├── CITATION.cff
+├── CHANGELOG.md
+├── README.md
+└── methodology.md
+```
+
+**Excluded:** `.github/`, `.serena/`, `.opencode/`, `artifacts/`, `.gitignore`, `opencode.json`, `project.json`, `project.yml`, `.env*`, raw social data
+
 
 # STAGE 6 — Citation Setup
 
@@ -630,6 +699,36 @@ v1.0.0 — initial release
 v1.1.0 — data refresh
 v1.2.0 — additional data sources
 v2.0.0 — template/methodology changes
+
+## Release Process
+
+Use the `release-zenodo` skill for each version update.
+
+### Quick Reference
+
+```bash
+# 1. バージョン更新後、タグ作成
+git tag -a vX.Y.Z -m "Release vX.Y.Z"
+git push origin vX.Y.Z
+
+# 2. GitHub Release 公開
+gh release create vX.Y.Z --title "..." --notes "..." --verify-tag
+
+# 3. Actions 実行確認
+sleep 20 && gh run list --limit 2
+
+# 4. DOI 確認
+gh run view <run-id> --log 2>&1 | grep -E "DOI:|Concept DOI:"
+
+# 5. CITATION.cff 更新 & プッシュ
+```
+
+### Current DOI Status
+
+| Version | DOI | Status |
+|---------|-----|--------|
+| v1.5.3 | 10.5281/zenodo.23087213 | Latest |
+| Concept DOI | 10.5281/zenodo.23087212 | — |
 
 
 # Cross-Pipeline Validation
