@@ -104,18 +104,6 @@
         "@upstash/context7-mcp@latest"
       ],
       "enabled": true
-    },
-    "serena": {
-      "type": "local",
-      "command": [
-        "/Users/bookair18/.local/bin/serena-agent",
-        "start-mcp-server",
-        "--project",
-        "/Users/bookair18/OS/home/Codes/github.com/routeflags/japan-cannabinoid-trends",
-        "--context",
-        "agent"
-      ],
-      "enabled": true
     }
  },
   "skills": {
