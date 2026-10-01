@@ -4,6 +4,18 @@ CBX / カンナビノイド関連ガイドページの公開用アーティフ�
 
 ---
 
+## 更新方法
+
+月次更新はスキル `update-cbx-guide` を使用します。
+
+```
+「CBX ガイドを更新」
+```
+
+詳細: `.github/skills/update-cbx-guide/SKILL.md`
+
+---
+
 ## guide_cbx_rewrite.html
 
 | 項目 | 内容 |
