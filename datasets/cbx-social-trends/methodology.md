@@ -1,29 +1,30 @@
-# CBX X (Twitter) Trends — Methodology
+# CBX Social Media Trends — Methodology
 
-**Study ID:** cbx-x-trends
+**Study ID:** cbx-social-trends
 **Created:** 2026-09-18
-**Last Updated:** 2026-09-18
+**Last Updated:** 2026-10-01
 **Status:** ACTIVE
+**Note:** 本 study は複数 SNS プラットフォームの CBX トレンドを横断的に収集する。GSC 検索データは `cbx-search-trends/`、COA 分析データは `cbx-product-coa/` に分離。
 
 ---
 
 ## 1. Research Question
 
-What is the volume, composition, and temporal pattern of Japanese-language X (Twitter) posts referencing CBX (cannabioxepane) vape liquid, and how does this compare with other cannabinoid search and social data sources in the Japanese market?
+What is the volume, composition, and temporal pattern of Japanese-language social media posts referencing CBX (cannabioxepane) across X (Twitter), YouTube, Instagram, and TikTok?
 
 ---
 
 ## 2. Data Sources
 
-| Source | Type | Collection Method | Period | Records |
-|--------|------|-------------------|--------|---------|
-| X (Twitter) — Daily | Social | Apify Twitter Search | 2026-08-01 ~ 2026-09-08 | 2,376 (raw) / 147 (processed) |
-| X (Twitter) — 26-week | Social | Apify Twitter Search | 2026-03-19 ~ 2026-09-17 | 381 (raw) |
-| Google Search Console | Search | GSC CSV export | 2026-07 (monthly) | 200 queries |
-| YouTube | Video | Apify YouTube Search | 2026-09-07 | 50 (CBX-related: 0) |
-| Instagram | Social | Apify Instagram Search | 2026-09-10 | 6 (CBX-related: 0) |
-| TikTok | Social | Apify TikTok Search | 2026-09-10 | 20 (description empty) |
-| COA (Certificate of Analysis) | Lab report | KCA Labs + Anresco | 2026-05 ~ 2026-06 | 2 PDFs |
+| Source | Type | Collection Method | Period | Records | Study |
+|--------|------|-------------------|--------|---------|-------|
+| X (Twitter) — Daily | Social | Apify Twitter Search | 2026-08-01 ~ 2026-09-08 | 2,376 (raw) / 147 (processed) | 本 study |
+| X (Twitter) — 26-week | Social | Apify Twitter Search | 2026-03-19 ~ 2026-09-17 | 381 (raw) | 本 study |
+| YouTube | Video | Apify YouTube Search | 2026-09-07 | 50 (CBX-related: 0) | 本 study |
+| Instagram | Social | Apify Instagram Search | 2026-09-10 | 6 (CBX-related: 0) | 本 study |
+| TikTok | Social | Apify TikTok Search | 2026-09-10 | 20 (description empty) | 本 study |
+| ~~Google Search Console~~ | ~~Search~~ | ~~GSC CSV export~~ | ~~2026-07~~ | ~~200 queries~~ | `cbx-search-trends/` へ分離 |
+| ~~COA~~ | ~~Lab report~~ | ~~KCA Labs + Anresco~~ | ~~2026-05~06~~ | ~~2 PDFs~~ | `cbx-product-coa/` へ分離 |
 
 ---
 
