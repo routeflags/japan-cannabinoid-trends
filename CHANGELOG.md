@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.6.0] - 2026-10-02
 
+**DOI:** [10.5281/zenodo.23089140](https://doi.org/10.5281/zenodo.23089140)
+
 ### Fixed
 - **バージョン/DOI メタデータの全ファイル同期** (ISS-001)
   - CITATION.cff: version, DOI, preferred-citation を v1.6.0 に更新
