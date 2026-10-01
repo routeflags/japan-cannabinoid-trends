@@ -4,7 +4,8 @@
 **優先度:** P1 (High)
 **検出日:** 2026-10-02
 **検出方法:** 独立検証 (Cannabinoid Trend Whitepaper Validator)
-**ステータス:** OPEN
+**ステータス:** RESOLVED (2026-10-02)
+**対応:** Option A — ラベルを「参考データ」に変更
 
 ---
 
