@@ -104,8 +104,17 @@
         "@upstash/context7-mcp@latest"
       ],
       "enabled": true
+    },
+    "google-trends": {
+      "type": "local",
+      "command": [
+        "/Users/bookair18/.anyenv/envs/nodenv/versions/24.13.1/bin/npx",
+        "-y",
+        "google-trends-mcp"
+      ],
+      "enabled": true
     }
- },
+  },
   "skills": {
     "paths": [
       ".github/skills"
