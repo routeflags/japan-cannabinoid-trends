@@ -34,3 +34,6 @@ __pycache__/
 /opencode.json
 # Release archives
 .release-archives/
+
+# Private data (anonymization mappings, etc.)
+datasets/*/data/private/

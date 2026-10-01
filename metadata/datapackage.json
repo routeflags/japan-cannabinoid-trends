@@ -73,13 +73,229 @@
       "name": "cbx-search-trends",
       "path": "datasets/cbx-search-trends/",
       "format": "csv,json",
-      "description": "Google Trends + GSC 検索データ"
+      "description": "Google Trends + GSC 検索データ",
+      "schema": {
+        "fields": [
+          {
+            "name": "query",
+            "type": "string",
+            "description": "検索クエリ"
+          },
+          {
+            "name": "geo",
+            "type": "string",
+            "description": "地域コード (JP = 日本)"
+          },
+          {
+            "name": "timeframe",
+            "type": "string",
+            "description": "観測期間 (例: today 12-m)"
+          },
+          {
+            "name": "collected_at",
+            "type": "datetime",
+            "description": "収集日時 (UTC)"
+          },
+          {
+            "name": "source",
+            "type": "string",
+            "description": "データソース"
+          },
+          {
+            "name": "data",
+            "type": "array",
+            "description": "週次データポイントの配列"
+          }
+        ]
+      }
     },
     {
       "name": "cbx-social-trends",
       "path": "datasets/cbx-social-trends/",
       "format": "csv,json",
-      "description": "X (Twitter) + YouTube ソーシャルデータ"
+      "description": "X (Twitter) + YouTube ソーシャルデータ",
+      "schema": {
+        "fields": [
+          {
+            "name": "tweet_id_hash",
+            "type": "string",
+            "description": "ツイート ID の SHA256 ハッシュ（先頭16文字）",
+            "constraints": {
+              "minLength": 16,
+              "maxLength": 16
+            }
+          },
+          {
+            "name": "createdAt",
+            "type": "datetime",
+            "description": "ツイート投稿日時 (ISO 8601, UTC)"
+          },
+          {
+            "name": "week",
+            "type": "string",
+            "description": "週分類 (W1-W6)",
+            "constraints": {
+              "enum": ["W1", "W2", "W3", "W4", "W5", "W6", "unknown"]
+            }
+          },
+          {
+            "name": "lang",
+            "type": "string",
+            "description": "言語コード (ja = 日本語)"
+          },
+          {
+            "name": "author_id",
+            "type": "string",
+            "description": "匿名化された著者 ID (author_001 等)",
+            "constraints": {
+              "pattern": "^author_[0-9]{3}$"
+            }
+          },
+          {
+            "name": "views",
+            "type": "integer",
+            "description": "表示回数",
+            "constraints": {
+              "minimum": 0
+            }
+          },
+          {
+            "name": "likes",
+            "type": "integer",
+            "description": "いいね数",
+            "constraints": {
+              "minimum": 0
+            }
+          },
+          {
+            "name": "reposts",
+            "type": "integer",
+            "description": "リポスト数",
+            "constraints": {
+              "minimum": 0
+            }
+          },
+          {
+            "name": "replies",
+            "type": "integer",
+            "description": "返信数",
+            "constraints": {
+              "minimum": 0
+            }
+          },
+          {
+            "name": "has_text",
+            "type": "string",
+            "description": "本文が存在するか (yes/no)",
+            "constraints": {
+              "enum": ["yes", "no"]
+            }
+          },
+          {
+            "name": "text_length",
+            "type": "integer",
+            "description": "本文の文字数",
+            "constraints": {
+              "minimum": 0
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "x_cbx_202608_summary_anonymized",
+      "path": "datasets/cbx-social-trends/data/processed/x_cbx_202608_summary_anonymized.csv",
+      "format": "csv",
+      "description": "X (Twitter) データの匿名化版（公開用）",
+      "mediatype": "text/csv",
+      "encoding": "utf-8",
+      "schema": {
+        "fields": [
+          {
+            "name": "tweet_id_hash",
+            "type": "string",
+            "description": "ツイート ID の SHA256 ハッシュ（先頭16文字）",
+            "constraints": {
+              "minLength": 16,
+              "maxLength": 16
+            }
+          },
+          {
+            "name": "createdAt",
+            "type": "datetime",
+            "description": "ツイート投稿日時 (ISO 8601, UTC)"
+          },
+          {
+            "name": "week",
+            "type": "string",
+            "description": "週分類 (W1-W6)",
+            "constraints": {
+              "enum": ["W1", "W2", "W3", "W4", "W5", "W6", "unknown"]
+            }
+          },
+          {
+            "name": "lang",
+            "type": "string",
+            "description": "言語コード (ja = 日本語)"
+          },
+          {
+            "name": "author_id",
+            "type": "string",
+            "description": "匿名化された著者 ID (author_001 等)",
+            "constraints": {
+              "pattern": "^author_[0-9]{3}$"
+            }
+          },
+          {
+            "name": "views",
+            "type": "integer",
+            "description": "表示回数",
+            "constraints": {
+              "minimum": 0
+            }
+          },
+          {
+            "name": "likes",
+            "type": "integer",
+            "description": "いいね数",
+            "constraints": {
+              "minimum": 0
+            }
+          },
+          {
+            "name": "reposts",
+            "type": "integer",
+            "description": "リポスト数",
+            "constraints": {
+              "minimum": 0
+            }
+          },
+          {
+            "name": "replies",
+            "type": "integer",
+            "description": "返信数",
+            "constraints": {
+              "minimum": 0
+            }
+          },
+          {
+            "name": "has_text",
+            "type": "string",
+            "description": "本文が存在するか (yes/no)",
+            "constraints": {
+              "enum": ["yes", "no"]
+            }
+          },
+          {
+            "name": "text_length",
+            "type": "integer",
+            "description": "本文の文字数",
+            "constraints": {
+              "minimum": 0
+            }
+          }
+        ]
+      }
     }
   ],
   "doi": "10.5281/zenodo.23090163",
