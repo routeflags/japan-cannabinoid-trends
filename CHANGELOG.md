@@ -7,6 +7,40 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.7.0] - 2026-10-02
+
+### Added
+- **技術標準対応** (W3C SKOS, IPTC, Schema.org)
+  - `metadata/taxonomy/content-taxonomy.skos.jsonld`: コンテンツ分類タクソノミー (W3C SKOS)
+  - `metadata/taxonomy/compound-taxonomy.skos.jsonld`: 化合物タクソノミー (W3C SKOS)
+  - `metadata/taxonomy/iptc-mapping.yaml`: IPTC Media Topics 対応表
+  - `metadata/taxonomy/classification-rules.yaml`: 分類ルール定義
+  - `metadata/schema/socialmediaposting.jsonld`: Schema.org マッピング
+- **コンテンツ分類** (ISS-004 解決)
+  - X データに topic_id, intent_id, format_id, platform, language フィールドを追加
+  - ルールベース分類器で 147 件を分類
+  - 分類結果: 配合/成分 67.3%, 情報提供 64.6%, テキスト 98.0%
+- **エクスポートスクリプト**
+  - `scripts/export/skos-to-rdf.py`: RDF/Turtle エクスポート
+  - `scripts/export/skos-to-schema-jsonld.py`: Schema.org JSON-LD エクスポート
+  - `scripts/export/export-taxonomy.sh`: 統合エクスポート
+- **検証スクリプト更新**
+  - SKOS タクソノミー検証
+  - Concept ID 妥当性検証
+  - プロパティ完全性検証
+- **技術標準対応スキル** (`.github/skills/standards-compliance/SKILL.md`)
+
+### Changed
+- データスキーマを 11 カラム → 16 カラムに拡張
+- 検証スクリプトを SKOS 準拠検証に対応
+
+### Notes
+- 分類器はルールベース（キーワードマッチ）— 将来的に LLM / BERT へ交換可能
+- Concept ID は固定のため、分類器の交換時も Taxonomy を維持
+- ISS-004 (コンテンツ分類の未検証) を実質的に解決
+
+---
+
 ## [1.6.2] - 2026-10-02
 
 **DOI:** [10.5281/zenodo.23091163](https://doi.org/10.5281/zenodo.23091163)
