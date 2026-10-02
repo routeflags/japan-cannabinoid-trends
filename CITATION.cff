@@ -4,7 +4,7 @@
 cff-version: 1.2.0
 message: "If you use this dataset, please cite it as below."
 title: "CBX Online Trend Dataset 2026: Google Trends, Social Media, and COA Data from Japan"
-version: "1.7.1"
+version: "1.8.0"
 date-released: "2026-10-02"
 type: dataset
 license: CC-BY-4.0
@@ -80,7 +80,7 @@ identifiers:
 preferred-citation:
   type: dataset
   title: "CBX Online Trend Dataset 2026"
-  version: "1.7.1"
+  version: "1.8.0"
   year: 2026
   month: 10
   authors:

@@ -7,6 +7,49 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.8.0] - 2026-10-02
+
+### Added
+- **Early Warning Index v1** (JCEI-20261002)
+  - 新規データセット: `early-warning-index-v1.csv`
+  - 12化合物の出現追跡と規制状況
+  - Emergence Score システム (ES 0-4)
+  - Finding ID システム (JCEI-F001〜F007)
+  - Baseline/Emerging コホート分類
+  - 英語ランディングページ (`publication/early-warning-index/`)
+  - 方法論・制約事項ドキュメント
+
+- **規制状況調査** (REG-20261002)
+  - 12化合物の日本法規制を調査
+  - `research/regulatory-status/` に個別レポート作成
+  - HHC: 2022-03-17 指定薬物化
+  - THC-O: 2023-03-20 指定薬物化
+  - THCH: 2023-08-04 個別指定 + 2023-09-10 包括指定
+  - HHCH: 2023-12-02 指定薬物化
+  - CBN: 2026-06-01 指定薬物化
+
+- **HHCH キーワード調査**
+  - Google Trends データ収集 (12ヶ月 + 5年)
+  - 初出時期: 2023-03-26
+  - 規制効果のケーススタディ (post-regulation decline)
+
+- **スキル: research-keyword-trends**
+  - 任意のキーワードで Google Trends 調査を再利用可能に
+
+### Changed
+- **Citation Tracker 更新**
+  - Asset Register に Early Warning Index v1 を追加
+  - Citation Unit Log テーブルを追加
+  - Citation Health Funnel を追加
+  - 監視クエリを拡張
+
+- **規制データの正確性修正**
+  - THC-O: 麻薬 → 指定薬物 (2023-03-20)
+  - THCH: 包括指定日を追加 (2023-09-10)
+  - THC: 規制モデルを3列に分割
+
+---
+
 ## [1.7.1] - 2026-10-02
 
 **DOI:** [10.5281/zenodo.23097769](https://doi.org/10.5281/zenodo.23097769)
