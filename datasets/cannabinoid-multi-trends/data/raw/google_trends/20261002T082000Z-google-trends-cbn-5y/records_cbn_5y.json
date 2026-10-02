@@ -1,0 +1,16 @@
+{
+  "keyword": "CBN",
+  "geo": "JP",
+  "timeframe": "today 5-y",
+  "collected_at": "2026-10-02",
+  "note": "5年データ。5年ウィンドウ起点時点ですでに存在、通年安定",
+  "first_mention": "2021-09-26以前",
+  "first_value": 20,
+  "peak": {"date": "2025-04-20", "value": 100},
+  "data_summary": {
+    "period_with_data": "2021-09-26 〜 2026-10-03 (通年)",
+    "data_points_nonzero": 261,
+    "data_points_zero": 0,
+    "note": "全期間でデータあり（低ボリュームだが継続的）"
+  }
+}
