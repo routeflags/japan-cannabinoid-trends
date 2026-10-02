@@ -3,7 +3,7 @@
 
 cff-version: 1.2.0
 message: "If you use this dataset, please cite it as below."
-title: "CBX Online Trend Dataset 2026: Google Trends, Social Media, and COA Data from Japan"
+title: "Japan Cannabinoid Trends Dataset 2026: Google Trends, Social Media, Regulatory Status, and Early Warning Index"
 version: "1.8.0"
 date-released: "2026-10-02"
 type: dataset
@@ -71,15 +71,15 @@ references:
 
 identifiers:
   - type: doi
-    value: "10.5281/zenodo.23097769"
-    description: "Zenodo DOI"
+    value: "10.5281/zenodo.23101318"
+    description: "Zenodo DOI for v1.8.0"
   - type: url
     value: "https://github.com/routeflags/japan-cannabinoid-trends"
     description: "GitHub repository"
 
 preferred-citation:
   type: dataset
-  title: "CBX Online Trend Dataset 2026"
+  title: "Japan Cannabinoid Trends Dataset 2026"
   version: "1.8.0"
   year: 2026
   month: 10
@@ -92,5 +92,5 @@ preferred-citation:
     name: "Routeflags Co., Ltd."
     city: "Tokyo"
     country: "JP"
-  url: "https://doi.org/10.5281/zenodo.23097769"
-  doi: "10.5281/zenodo.23097769"
+  url: "https://doi.org/10.5281/zenodo.23101318"
+  doi: "10.5281/zenodo.23101318"
