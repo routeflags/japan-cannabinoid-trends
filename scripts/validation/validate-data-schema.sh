@@ -3,11 +3,14 @@
 # validate-data-schema.sh
 #
 # Data Dictionary (datapackage.json) と実際のデータスキーマの一致検証
+# SKOS タクソノミーの準拠検証
 #
 # 検証内容:
 #   1. CSV ファイルのカラムが datapackage.json のスキーマと一致するか
 #   2. データ型がスキーマで定義された型と整合するか
 #   3. 制約（enum, pattern, minimum 等）が満たされているか
+#   4. SKOS タクソノミーファイルの存在と内容
+#   5. 分類フィールドの Concept ID がタクソノミーと一致するか
 #
 # 使用方法:
 #   bash scripts/validation/validate-data-schema.sh
@@ -324,16 +327,161 @@ PYTHON
 fi
 
 # =============================================================================
-# 3. ファイル存在確認
+# 3. SKOS タクソノミー検証
 # =============================================================================
 
-print_header "3. 必要ファイルの存在確認"
+print_header "3. SKOS タクソノミー検証"
+
+# SKOS ファイルの存在確認
+SKOS_FILES=(
+  "metadata/taxonomy/content-taxonomy.skos.jsonld"
+  "metadata/taxonomy/compound-taxonomy.skos.jsonld"
+  "metadata/taxonomy/iptc-mapping.yaml"
+  "metadata/taxonomy/classification-rules.yaml"
+  "metadata/schema/socialmediaposting.jsonld"
+)
+
+for file in "${SKOS_FILES[@]}"; do
+  if [ -f "$file" ]; then
+    print_pass "$file"
+  else
+    print_fail "$file が存在しません"
+  fi
+done
+
+# SKOS ファイルの内容検証
+echo ""
+echo "  SKOS コンテンツ検証:"
+
+for skos_file in "metadata/taxonomy/content-taxonomy.skos.jsonld" "metadata/taxonomy/compound-taxonomy.skos.jsonld"; do
+  if [ -f "$skos_file" ]; then
+    python3 << PYTHON
+import json
+
+with open("$skos_file") as f:
+    data = json.load(f)
+
+filename = "$skos_file"
+graph = data.get('@graph', [])
+context = data.get('@context', {})
+
+# ConceptScheme の確認
+schemes = [item for item in graph if item.get('@type') == 'skos:ConceptScheme']
+concepts = [item for item in graph if item.get('@type') == 'skos:Concept']
+
+if schemes:
+    print(f"  ✅ PASS  {filename}: ConceptScheme {len(schemes)}件")
+else:
+    print(f"  ❌ FAIL  {filename}: ConceptScheme が見つかりません")
+
+if concepts:
+    print(f"  ✅ PASS  {filename}: Concept {len(concepts)}件")
+else:
+    print(f"  ❌ FAIL  {filename}: Concept が見つかりません")
+
+# 各 Concept の必須プロパティを確認
+required_props = ['skos:prefLabel', 'skos:notation']
+missing_props = []
+
+for concept in concepts:
+    concept_id = concept.get('@id', 'unknown')
+    for prop in required_props:
+        if prop not in concept:
+            missing_props.append(f"{concept_id}: {prop}")
+
+if missing_props:
+    print(f"  ⚠️  WARN  {filename}: 必須プロパティ欠落 {len(missing_props)}件")
+    for mp in missing_props[:3]:
+        print(f"         {mp}")
+else:
+    print(f"  ✅ PASS  {filename}: 全 Concept に必須プロパティあり")
+
+# inScheme の確認
+concepts_without_scheme = []
+for concept in concepts:
+    if 'skos:inScheme' not in concept:
+        concepts_without_scheme.append(concept.get('@id', 'unknown'))
+
+if concepts_without_scheme:
+    print(f"  ⚠️  WARN  {filename}: inScheme 未定義 Concept {len(concepts_without_scheme)}件")
+else:
+    print(f"  ✅ PASS  {filename}: 全 Concept に inScheme あり")
+
+PYTHON
+  fi
+done
+
+# CSV の分類フィールドがスキーマ Concept ID と一致するか確認
+echo ""
+echo "  分類フィールドの Concept ID 検証:"
+
+X_CSV="datasets/cbx-social-trends/data/processed/x_cbx_202608_summary_anonymized.csv"
+SKOS_TAXONOMY="metadata/taxonomy/content-taxonomy.skos.jsonld"
+
+if [ -f "$X_CSV" ] && [ -f "$SKOS_TAXONOMY" ]; then
+  python3 << PYTHON
+import csv
+import json
+
+# SKOS タクソノミーから有効な Concept ID を取得
+with open("$SKOS_TAXONOMY") as f:
+    skos_data = json.load(f)
+
+valid_notations = set()
+for item in skos_data.get('@graph', []):
+    if item.get('@type') == 'skos:Concept':
+        notation = item.get('skos:notation', '')
+        if notation:
+            valid_notations.add(notation)
+
+# CSV から分類フィールドの値を取得
+with open("$X_CSV") as f:
+    reader = csv.DictReader(f)
+    rows = list(reader)
+
+# topic_id の検証
+topic_values = set(row.get('topic_id', '') for row in rows)
+invalid_topics = topic_values - valid_notations - {'unclassified'}
+
+if invalid_topics:
+    print(f"  ❌ FAIL  無効な topic_id: {invalid_topics}")
+else:
+    print(f"  ✅ PASS  topic_id: 全値が有効な Concept ID または unclassified")
+
+# intent_id の検証
+intent_values = set(row.get('intent_id', '') for row in rows)
+invalid_intents = intent_values - valid_notations - {'unclassified'}
+
+if invalid_intents:
+    print(f"  ❌ FAIL  無効な intent_id: {invalid_intents}")
+else:
+    print(f"  ✅ PASS  intent_id: 全値が有効な Concept ID または unclassified")
+
+# format_id の検証
+format_values = set(row.get('format_id', '') for row in rows)
+invalid_formats = format_values - valid_notations - {'unclassified'}
+
+if invalid_formats:
+    print(f"  ❌ FAIL  無効な format_id: {invalid_formats}")
+else:
+    print(f"  ✅ PASS  format_id: 全値が有効な Concept ID または unclassified")
+
+PYTHON
+fi
+
+# =============================================================================
+# 4. ファイル存在確認
+# =============================================================================
+
+print_header "4. 必要ファイルの存在確認"
 
 REQUIRED_FILES=(
   "metadata/datapackage.json"
   "docs/data-dictionary.md"
   "docs/provenance.md"
   "datasets/cbx-social-trends/data/processed/x_cbx_202608_summary_anonymized.csv"
+  "metadata/taxonomy/content-taxonomy.skos.jsonld"
+  "metadata/taxonomy/compound-taxonomy.skos.jsonld"
 )
 
 for file in "${REQUIRED_FILES[@]}"; do
