@@ -1,0 +1,476 @@
+{
+  "@context": {
+    "skos": "http://www.w3.org/2004/02/skos/core#",
+    "dct": "http://purl.org/dc/terms/",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "iptc": "http://cv.iptc.org/newscodes/mediatopic/",
+    "jptr": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/"
+  },
+  "@graph": [
+    {
+      "@id": "jptr:content-taxonomy",
+      "@type": "skos:ConceptScheme",
+      "dct:title": {
+        "@value": "CBX Social Media Content Taxonomy",
+        "@language": "en"
+      },
+      "dct:title": {
+        "@value": "CBX ソーシャルメディア コンテンツ分類タクソノミー",
+        "@language": "ja"
+      },
+      "dct:description": {
+        "@value": "Taxonomy for classifying social media posts about cannabinoids in Japan. Based on W3C SKOS, mapped to IPTC Media Topics.",
+        "@language": "en"
+      },
+      "dct:creator": "Routeflags Co., Ltd.",
+      "dct:created": "2026-10-02",
+      "dct:modified": "2026-10-02",
+      "dct:license": "https://creativecommons.org/licenses/by/4.0/",
+      "rdfs:comment": {
+        "@value": "This taxonomy is designed to be classifier-agnostic. Any classification model (LLM, BERT, SetFit, etc.) can output these Concept IDs.",
+        "@language": "en"
+      }
+    },
+    {
+      "@id": "jptr:topic-scheme",
+      "@type": "skos:ConceptScheme",
+      "dct:title": {
+        "@value": "Topic Taxonomy (話題分類)",
+        "@language": "en"
+      },
+      "dct:description": {
+        "@value": "Classification of post topics/content themes",
+        "@language": "en"
+      },
+      "skos:hasTopConcept": [
+        "jptr:topic-ingredient",
+        "jptr:topic-product",
+        "jptr:topic-effect",
+        "jptr:topic-promotion",
+        "jptr:topic-review",
+        "jptr:topic-store"
+      ]
+    },
+    {
+      "@id": "jptr:intent-scheme",
+      "@type": "skos:ConceptScheme",
+      "dct:title": {
+        "@value": "Intent Taxonomy (投稿意図分類)",
+        "@language": "en"
+      },
+      "dct:description": {
+        "@value": "Classification of the poster's intent",
+        "@language": "en"
+      },
+      "skos:hasTopConcept": [
+        "jptr:intent-informational",
+        "jptr:intent-commercial",
+        "jptr:intent-experiential",
+        "jptr:intent-harm-report"
+      ]
+    },
+    {
+      "@id": "jptr:format-scheme",
+      "@type": "skos:ConceptScheme",
+      "dct:title": {
+        "@value": "Format Taxonomy (投稿形式分類)",
+        "@language": "en"
+      },
+      "dct:description": {
+        "@value": "Classification of post format/type",
+        "@language": "en"
+      },
+      "skos:hasTopConcept": [
+        "jptr:format-text",
+        "jptr:format-image",
+        "jptr:format-video",
+        "jptr:format-link"
+      ]
+    },
+
+    {
+      "@id": "jptr:topic-ingredient",
+      "@type": "skos:Concept",
+      "skos:inScheme": "jptr:topic-scheme",
+      "skos:topConceptOf": "jptr:topic-scheme",
+      "skos:prefLabel": {
+        "@value": "Ingredient/Composition Discussion",
+        "@language": "en"
+      },
+      "skos:prefLabel": {
+        "@value": "配合/成分",
+        "@language": "ja"
+      },
+      "skos:altLabel": [
+        { "@value": "成分", "@language": "ja" },
+        { "@value": "配合比", "@language": "ja" },
+        { "@value": "カンナビノイド含量", "@language": "ja" },
+        { "@value": "ingredient", "@language": "en" },
+        { "@value": "composition", "@language": "en" },
+        { "@value": "potency", "@language": "en" }
+      ],
+      "skos:notation": "topic_ingredient",
+      "skos:scopeNote": {
+        "@value": "Posts discussing cannabinoid composition, ingredient ratios, potency, or chemical makeup of products.",
+        "@language": "en"
+      },
+      "skos:scopeNote": {
+        "@value": "カンナビノイドの組成、配合比、濃度、化学的構成についての投稿。",
+        "@language": "ja"
+      },
+      "skos:example": [
+        "CBG 30%, CBD 5% の配合比",
+        "Total Cannabinoids 36%",
+        "Δ9-THC 0.45 ppm"
+      ],
+      "skos:closeMatch": "iptc:20000347",
+      "skos:related": ["jptr:topic-product", "jptr:topic-effect"]
+    },
+    {
+      "@id": "jptr:topic-product",
+      "@type": "skos:Concept",
+      "skos:inScheme": "jptr:topic-scheme",
+      "skos:topConceptOf": "jptr:topic-scheme",
+      "skos:prefLabel": {
+        "@value": "New Product/Arrival",
+        "@language": "en"
+      },
+      "skos:prefLabel": {
+        "@value": "新商品/入荷",
+        "@language": "ja"
+      },
+      "skos:altLabel": [
+        { "@value": "新商品", "@language": "ja" },
+        { "@value": "入荷情報", "@language": "ja" },
+        { "@value": "製品発表", "@language": "ja" },
+        { "@value": "new product", "@language": "en" },
+        { "@value": "product launch", "@language": "en" },
+        { "@value": "restock", "@language": "en" }
+      ],
+      "skos:notation": "topic_product",
+      "skos:scopeNote": {
+        "@value": "Posts announcing new products, product arrivals, or restocks.",
+        "@language": "en"
+      },
+      "skos:scopeNote": {
+        "@value": "新製品の発表、入荷情報、再入荷に関する投稿。",
+        "@language": "ja"
+      },
+      "skos:example": [
+        "CBX リキッド新作発売",
+        "H4CBH 入荷しました",
+        "HHBD 新商品ラインナップ"
+      ],
+      "skos:closeMatch": "iptc:20000323",
+      "skos:related": ["jptr:topic-ingredient", "jptr:topic-promotion"]
+    },
+    {
+      "@id": "jptr:topic-effect",
+      "@type": "skos:Concept",
+      "skos:inScheme": "jptr:topic-scheme",
+      "skos:topConceptOf": "jptr:topic-scheme",
+      "skos:prefLabel": {
+        "@value": "Effect/Experience",
+        "@language": "en"
+      },
+      "skos:prefLabel": {
+        "@value": "体感/効果",
+        "@language": "ja"
+      },
+      "skos:altLabel": [
+        { "@value": "体感", "@language": "ja" },
+        { "@value": "効果", "@language": "ja" },
+        { "@value": "使用感", "@language": "ja" },
+        { "@value": "effect", "@language": "en" },
+        { "@value": "experience", "@language": "en" },
+        { "@value": "sensation", "@language": "en" }
+      ],
+      "skos:notation": "topic_effect",
+      "skos:scopeNote": {
+        "@value": "Posts discussing subjective effects, experiences, or sensations from cannabinoid products. NOTE: These are subjective reports, not medical claims.",
+        "@language": "en"
+      },
+      "skos:scopeNote": {
+        "@value": "カンナビノイド製品の主観的効果・体感・感覚に関する投稿。※ これは主観的報告であり、医療的主張ではない。",
+        "@language": "ja"
+      },
+      "skos:example": [
+        "リラックス効果を感じた",
+        "体感が穏やか",
+        "フィニッシュが明瞭"
+      ],
+      "skos:closeMatch": "iptc:20000329",
+      "skos:related": ["jptr:topic-ingredient", "jptr:topic-review"]
+    },
+    {
+      "@id": "jptr:topic-promotion",
+      "@type": "skos:Concept",
+      "skos:inScheme": "jptr:topic-scheme",
+      "skos:topConceptOf": "jptr:topic-scheme",
+      "skos:prefLabel": {
+        "@value": "Sale/Campaign",
+        "@language": "en"
+      },
+      "skos:prefLabel": {
+        "@value": "セール/キャンペーン",
+        "@language": "ja"
+      },
+      "skos:altLabel": [
+        { "@value": "セール", "@language": "ja" },
+        { "@value": "キャンペーン", "@language": "ja" },
+        { "@value": "割引", "@language": "ja" },
+        { "@value": "sale", "@language": "en" },
+        { "@value": "promotion", "@language": "en" },
+        { "@value": "discount", "@language": "en" }
+      ],
+      "skos:notation": "topic_promotion",
+      "skos:scopeNote": {
+        "@value": "Posts promoting sales, discounts, or marketing campaigns.",
+        "@language": "en"
+      },
+      "skos:scopeNote": {
+        "@value": "セール、割引、マーケティングキャンペーンを宣伝する投稿。",
+        "@language": "ja"
+      },
+      "skos:example": [
+        "CBX 20% OFF キャンペーン",
+        "期間限定セール実施中",
+        "新規会員様限定割引"
+      ],
+      "skos:closeMatch": "iptc:20000322",
+      "skos:related": ["jptr:topic-product", "jptr:topic-store"]
+    },
+    {
+      "@id": "jptr:topic-review",
+      "@type": "skos:Concept",
+      "skos:inScheme": "jptr:topic-scheme",
+      "skos:topConceptOf": "jptr:topic-scheme",
+      "skos:prefLabel": {
+        "@value": "Review",
+        "@language": "en"
+      },
+      "skos:prefLabel": {
+        "@value": "レビュー",
+        "@language": "ja"
+      },
+      "skos:altLabel": [
+        { "@value": "レビュー", "@language": "ja" },
+        { "@value": "評価", "@language": "ja" },
+        { "@value": "感想", "@language": "ja" },
+        { "@value": "review", "@language": "en" },
+        { "@value": "evaluation", "@language": "en" },
+        { "@value": "feedback", "@language": "en" }
+      ],
+      "skos:notation": "topic_review",
+      "skos:scopeNote": {
+        "@value": "Posts providing product reviews, evaluations, or feedback.",
+        "@language": "en"
+      },
+      "skos:scopeNote": {
+        "@value": "製品レビュー、評価、フィードバックを提供する投稿。",
+        "@language": "ja"
+      },
+      "skos:example": [
+        "CBX リキッドを試してみた",
+        "この製品のレビュー",
+        "使用感レポート"
+      ],
+      "skos:closeMatch": "iptc:20000349",
+      "skos:related": ["jptr:topic-effect", "jptr:topic-ingredient"]
+    },
+    {
+      "@id": "jptr:topic-store",
+      "@type": "skos:Concept",
+      "skos:inScheme": "jptr:topic-scheme",
+      "skos:topConceptOf": "jptr:topic-scheme",
+      "skos:prefLabel": {
+        "@value": "Store Information",
+        "@language": "en"
+      },
+      "skos:prefLabel": {
+        "@value": "店舗情報",
+        "@language": "ja"
+      },
+      "skos:altLabel": [
+        { "@value": "店舗", "@language": "ja" },
+        { "@value": "店舗案内", "@language": "ja" },
+        { "@value": "所在地", "@language": "ja" },
+        { "@value": "store", "@language": "en" },
+        { "@value": "shop", "@language": "en" },
+        { "@value": "location", "@language": "en" }
+      ],
+      "skos:notation": "topic_store",
+      "skos:scopeNote": {
+        "@value": "Posts providing store information, locations, or business details.",
+        "@language": "en"
+      },
+      "skos:scopeNote": {
+        "@value": "店舗情報、所在地、事業者情報に関する投稿。",
+        "@language": "ja"
+      },
+      "skos:example": [
+        "麻布十番店舗案内",
+        "営業時間のお知らせ",
+        "店舗アクセス情報"
+      ],
+      "skos:closeMatch": "iptc:20000325",
+      "skos:related": ["jptr:topic-promotion", "jptr:topic-product"]
+    },
+
+    {
+      "@id": "jptr:intent-informational",
+      "@type": "skos:Concept",
+      "skos:inScheme": "jptr:intent-scheme",
+      "skos:topConceptOf": "jptr:intent-scheme",
+      "skos:prefLabel": {
+        "@value": "Informational",
+        "@language": "en"
+      },
+      "skos:prefLabel": {
+        "@value": "情報提供",
+        "@language": "ja"
+      },
+      "skos:altLabel": [
+        { "@value": "情報", "@language": "ja" },
+        { "@value": "知識共有", "@language": "ja" },
+        { "@value": "informational", "@language": "en" },
+        { "@value": "educational", "@language": "en" }
+      ],
+      "skos:notation": "intent_informational",
+      "skos:scopeNote": {
+        "@value": "Posts intended to share information or knowledge.",
+        "@language": "en"
+      }
+    },
+    {
+      "@id": "jptr:intent-commercial",
+      "@type": "skos:Concept",
+      "skos:inScheme": "jptr:intent-scheme",
+      "skos:topConceptOf": "jptr:intent-scheme",
+      "skos:prefLabel": {
+        "@value": "Commercial",
+        "@language": "en"
+      },
+      "skos:prefLabel": {
+        "@value": "商業目的",
+        "@language": "ja"
+      },
+      "skos:altLabel": [
+        { "@value": "販売", "@language": "ja" },
+        { "@value": "宣伝", "@language": "ja" },
+        { "@value": "commercial", "@language": "en" },
+        { "@value": "promotional", "@language": "en" },
+        { "@value": "sales", "@language": "en" }
+      ],
+      "skos:notation": "intent_commercial",
+      "skos:scopeNote": {
+        "@value": "Posts with commercial intent (sales, promotion, advertising).",
+        "@language": "en"
+      }
+    },
+    {
+      "@id": "jptr:intent-experiential",
+      "@type": "skos:Concept",
+      "skos:inScheme": "jptr:intent-scheme",
+      "skos:topConceptOf": "jptr:intent-scheme",
+      "skos:prefLabel": {
+        "@value": "Experiential",
+        "@language": "en"
+      },
+      "skos:prefLabel": {
+        "@value": "体験報告",
+        "@language": "ja"
+      },
+      "skos:altLabel": [
+        { "@value": "体験", "@language": "ja" },
+        { "@value": "報告", "@language": "ja" },
+        { "@value": "experiential", "@language": "en" },
+        { "@value": "personal report", "@language": "en" }
+      ],
+      "skos:notation": "intent_experiential",
+      "skos:scopeNote": {
+        "@value": "Posts sharing personal experiences or testimonials.",
+        "@language": "en"
+      }
+    },
+    {
+      "@id": "jptr:intent-harm-report",
+      "@type": "skos:Concept",
+      "skos:inScheme": "jptr:intent-scheme",
+      "skos:topConceptOf": "jptr:intent-scheme",
+      "skos:prefLabel": {
+        "@value": "Harm Report",
+        "@language": "en"
+      },
+      "skos:prefLabel": {
+        "@value": "有害報告",
+        "@language": "ja"
+      },
+      "skos:altLabel": [
+        { "@value": "有害情報", "@language": "ja" },
+        { "@value": "被害報告", "@language": "ja" },
+        { "@value": "adverse event", "@language": "en" },
+        { "@value": "harm report", "@language": "en" }
+      ],
+      "skos:notation": "intent_harm_report",
+      "skos:scopeNote": {
+        "@value": "Posts reporting adverse effects, harm, or negative experiences.",
+        "@language": "en"
+      }
+    },
+
+    {
+      "@id": "jptr:format-text",
+      "@type": "skos:Concept",
+      "skos:inScheme": "jptr:format-scheme",
+      "skos:topConceptOf": "jptr:format-scheme",
+      "skos:prefLabel": { "@value": "Text", "@language": "en" },
+      "skos:prefLabel": { "@value": "テキスト", "@language": "ja" },
+      "skos:notation": "format_text",
+      "skos:scopeNote": {
+        "@value": "Text-only posts.",
+        "@language": "en"
+      }
+    },
+    {
+      "@id": "jptr:format-image",
+      "@type": "skos:Concept",
+      "skos:inScheme": "jptr:format-scheme",
+      "skos:topConceptOf": "jptr:format-scheme",
+      "skos:prefLabel": { "@value": "Image", "@language": "en" },
+      "skos:prefLabel": { "@value": "画像", "@language": "ja" },
+      "skos:notation": "format_image",
+      "skos:scopeNote": {
+        "@value": "Posts with image(s).",
+        "@language": "en"
+      }
+    },
+    {
+      "@id": "jptr:format-video",
+      "@type": "skos:Concept",
+      "skos:inScheme": "jptr:format-scheme",
+      "skos:topConceptOf": "jptr:format-scheme",
+      "skos:prefLabel": { "@value": "Video", "@language": "en" },
+      "skos:prefLabel": { "@value": "動画", "@language": "ja" },
+      "skos:notation": "format_video",
+      "skos:scopeNote": {
+        "@value": "Posts with video content.",
+        "@language": "en"
+      }
+    },
+    {
+      "@id": "jptr:format-link",
+      "@type": "skos:Concept",
+      "skos:inScheme": "jptr:format-scheme",
+      "skos:topConceptOf": "jptr:format-scheme",
+      "skos:prefLabel": { "@value": "Link", "@language": "en" },
+      "skos:prefLabel": { "@value": "リンク", "@language": "ja" },
+      "skos:notation": "format_link",
+      "skos:scopeNote": {
+        "@value": "Posts sharing external links.",
+        "@language": "en"
+      }
+    }
+  ]
+}

@@ -1,0 +1,205 @@
+# =============================================================================
+# IPTC Media Topics Mapping
+# =============================================================================
+# 独自 SKOS Concept と IPTC Media Topics の対応表
+#
+# IPTC Media Topics: https://cv.iptc.org/newscodes/mediatopic/
+# NewsCodes: https://cv.iptc.org/newscodes/
+#
+# マッピング種別:
+#   exactMatch: 完全に同一の概念
+#   closeMatch: 近い概念（微妙な差異あり）
+#   related: 関連するが同一ではない
+#
+# 注意: IPTC Media Topics はニュース記事向けの語彙であり、
+#       SNS コンテンツ分類には完全に適用できない場合がある。
+#       closeMatch を使用している場合は、マッピングの限界を認識すること。
+#
+# 更新履歴:
+#   2026-10-02: 初版作成
+# =============================================================================
+
+version: "1.0.0"
+last_updated: "2026-10-02"
+
+# IPTC Media Topics の URI スキーム
+iptc_uri_scheme: "http://cv.iptc.org/newscodes/mediatopic/"
+
+# =============================================================================
+# コンテンツ分類マッピング
+# =============================================================================
+
+content_mapping:
+
+  - skos_id: "jptr:topic-ingredient"
+    skos_prefLabel_en: "Ingredient/Composition Discussion"
+    skos_prefLabel_ja: "配合/成分"
+    iptc_topic_id: "20000347"
+    iptc_topic_name: "Chemistry"
+    iptc_topic_uri: "http://cv.iptc.org/newscodes/mediatopic/20000347"
+    mapping_type: "closeMatch"
+    confidence: "medium"
+    notes: |
+      IPTC Chemistry は化学全般をカバーするが、
+      カンナビノイドの配合比議論には限定的。
+      最も近いマッピング。
+
+  - skos_id: "jptr:topic-product"
+    skos_prefLabel_en: "New Product/Arrival"
+    skos_prefLabel_ja: "新商品/入荷"
+    iptc_topic_id: "20000323"
+    iptc_topic_name: "Products and Services"
+    iptc_topic_uri: "http://cv.iptc.org/newscodes/mediatopic/20000323"
+    mapping_type: "closeMatch"
+    confidence: "high"
+    notes: |
+      製品発表・入荷情報は Products and Services に近い。
+
+  - skos_id: "jptr:topic-effect"
+    skos_prefLabel_en: "Effect/Experience"
+    skos_prefLabel_ja: "体感/効果"
+    iptc_topic_id: "20000329"
+    iptc_topic_name: "Health and Fitness"
+    iptc_topic_uri: "http://cv.iptc.org/newscodes/mediatopic/20000329"
+    mapping_type: "closeMatch"
+    confidence: "medium"
+    notes: |
+      体感・効果は Health and Fitness に近いが、
+      医療的主張ではなく主観的報告である点に注意。
+
+  - skos_id: "jptr:topic-promotion"
+    skos_prefLabel_en: "Sale/Campaign"
+    skos_prefLabel_ja: "セール/キャンペーン"
+    iptc_topic_id: "20000322"
+    iptc_topic_name: "Marketing"
+    iptc_topic_uri: "http://cv.iptc.org/newscodes/mediatopic/20000322"
+    mapping_type: "closeMatch"
+    confidence: "high"
+    notes: |
+      セール・キャンペーンは Marketing に近い。
+
+  - skos_id: "jptr:topic-review"
+    skos_prefLabel_en: "Review"
+    skos_prefLabel_ja: "レビュー"
+    iptc_topic_id: "20000349"
+    iptc_topic_name: "Reviews"
+    iptc_topic_uri: "http://cv.iptc.org/newscodes/mediatopic/20000349"
+    mapping_type: "closeMatch"
+    confidence: "high"
+    notes: |
+      レビューは Reviews に近い。
+
+  - skos_id: "jptr:topic-store"
+    skos_prefLabel_en: "Store Information"
+    skos_prefLabel_ja: "店舗情報"
+    iptc_topic_id: "20000325"
+    iptc_topic_name: "Retail"
+    iptc_topic_uri: "http://cv.iptc.org/newscodes/mediatopic/20000325"
+    mapping_type: "closeMatch"
+    confidence: "high"
+    notes: |
+      店舗情報は Retail に近い。
+
+# =============================================================================
+# 化合物分類マッピング
+# =============================================================================
+
+compound_mapping:
+
+  - skos_id: "jptr:compound-cbd"
+    skos_prefLabel_en: "Cannabidiol (CBD)"
+    chebi_id: "33669"
+    chebi_uri: "http://purl.obolibrary.org/obo/chebi_33669"
+    wikidata_id: "Q141452"
+    wikidata_uri: "http://www.wikidata.org/entity/Q141452"
+    mapping_type: "exactMatch"
+    confidence: "high"
+
+  - skos_id: "jptr:compound-thc"
+    skos_prefLabel_en: "Δ9-Tetrahydrocannabinol (THC)"
+    chebi_id: "32927"
+    chebi_uri: "http://purl.obolibrary.org/obo/chebi_32927"
+    wikidata_id: "Q141629"
+    wikidata_uri: "http://www.wikidata.org/entity/Q141629"
+    mapping_type: "exactMatch"
+    confidence: "high"
+
+  - skos_id: "jptr:compound-cbg"
+    skos_prefLabel_en: "Cannabigerol (CBG)"
+    wikidata_id: "Q422432"
+    wikidata_uri: "http://www.wikidata.org/entity/Q422432"
+    mapping_type: "exactMatch"
+    confidence: "medium"
+    notes: "ChEBI ID 未確認"
+
+  - skos_id: "jptr:compound-cbn"
+    skos_prefLabel_en: "Cannabinol (CBN)"
+    wikidata_id: "Q415237"
+    wikidata_uri: "http://www.wikidata.org/entity/Q415237"
+    mapping_type: "exactMatch"
+    confidence: "medium"
+    notes: "ChEBI ID 未確認"
+
+  - skos_id: "jptr:compound-anandamide"
+    skos_prefLabel_en: "Anandamide (AEA)"
+    chebi_id: "52384"
+    chebi_uri: "http://purl.obolibrary.org/obo/chebi_52384"
+    wikidata_id: "Q409339"
+    wikidata_uri: "http://www.wikidata.org/entity/Q409339"
+    mapping_type: "exactMatch"
+    confidence: "high"
+
+  - skos_id: "jptr:compound-2ag"
+    skos_prefLabel_en: "2-Arachidonoylglycerol (2-AG)"
+    chebi_id: "64901"
+    chebi_uri: "http://purl.obolibrary.org/obo/chebi_64901"
+    wikidata_id: "Q295793"
+    wikidata_uri: "http://www.wikidata.org/entity/Q295793"
+    mapping_type: "exactMatch"
+    confidence: "high"
+
+  - skos_id: "jptr:compound-cbx"
+    skos_prefLabel_en: "CBX (Cannabinoid)"
+    notes: |
+      CBX は ChEBI / Wikidata に直接対応するエントリが
+      確認されていない。多義性（ホンダ CBX400F）のため、
+      化学的識別子の割り当てには注意が必要。
+    mapping_type: "none"
+    confidence: "low"
+
+  - skos_id: "jptr:compound-h4cbh"
+    skos_prefLabel_en: "H4CBH"
+    notes: |
+      H4CBH は ChEBI / Wikidata に直接対応するエントリが
+      確認されていない。
+    mapping_type: "none"
+    confidence: "low"
+
+  - skos_id: "jptr:compound-hhbd"
+    skos_prefLabel_en: "HHBD"
+    notes: |
+      HHBD は ChEBI / Wikidata に直接対応するエントリが
+      確認されていない。
+    mapping_type: "none"
+    confidence: "low"
+
+# =============================================================================
+# マッピングの限界
+# =============================================================================
+
+limitations:
+  - "IPTC Media Topics はニュース記事向けの語彙であり、SNS コンテンツ分類には完全に適用できない場合がある"
+  - "closeMatch マッピングは概念的に近いが完全に同一ではない"
+  - "一部のカンナビノイド化合物（CBX, H4CBH, HHBD）は ChEBI / Wikidata に対応エントリがない"
+  - "IPTC Topic ID は変更される可能性があるため、定期的な検証が必要"
+
+# =============================================================================
+# 検証情報
+# =============================================================================
+
+verification:
+  last_verified: "2026-10-02"
+  verified_by: "Routeflags Co., Ltd."
+  iptc_source: "https://cv.iptc.org/newscodes/mediatopic/"
+  chebi_source: "https://www.ebi.ac.uk/chebi/"
+  wikidata_source: "https://www.wikidata.org/"

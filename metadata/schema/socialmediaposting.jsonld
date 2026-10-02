@@ -1,0 +1,213 @@
+{
+  "@context": {
+    "schema": "https://schema.org/",
+    "skos": "http://www.w3.org/2004/02/skos/core#",
+    "jptr": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/"
+  },
+  "@id": "jptr:socialmediaposting-mapping",
+  "@type": "schema:DefinedTermSet",
+  "schema:name": "Schema.org SocialMediaPosting Mapping",
+  "schema:description": "Mapping between internal data model and Schema.org SocialMediaPosting vocabulary",
+  "schema:dateCreated": "2026-10-02",
+  "schema:license": "https://creativecommons.org/licenses/by/4.0/",
+  "schema:creator": {
+    "@type": "schema:Organization",
+    "schema:name": "Routeflags Co., Ltd."
+  },
+
+  "schema:hasDefinedTerm": [
+    {
+      "@id": "jptr:mapping-text",
+      "@type": "schema:DefinedTerm",
+      "schema:name": "text",
+      "schema:description": "Post text content",
+      "schema:inDefinedTermSet": "jptr:socialmediaposting-mapping",
+      "schema:termCode": "text",
+      "internal_field": "text",
+      "schema_property": "schema:text",
+      "data_type": "string",
+      "example": "CBX リキッドのレビューです"
+    },
+    {
+      "@id": "jptr:mapping-author",
+      "@type": "schema:DefinedTerm",
+      "schema:name": "author",
+      "schema:description": "Post author",
+      "schema:inDefinedTermSet": "jptr:socialmediaposting-mapping",
+      "schema:termCode": "author",
+      "internal_field": "author_id",
+      "schema_property": "schema:author",
+      "data_type": "string",
+      "example": "author_001",
+      "note": "Anonymized in public data"
+    },
+    {
+      "@id": "jptr:mapping-datePublished",
+      "@type": "schema:DefinedTerm",
+      "schema:name": "datePublished",
+      "schema:description": "Publication date",
+      "schema:inDefinedTermSet": "jptr:socialmediaposting-mapping",
+      "schema:termCode": "datePublished",
+      "internal_field": "createdAt",
+      "schema_property": "schema:datePublished",
+      "data_type": "datetime",
+      "example": "2026-09-03T03:38:02.000Z"
+    },
+    {
+      "@id": "jptr:mapping-url",
+      "@type": "schema:DefinedTerm",
+      "schema:name": "url",
+      "schema:description": "Post URL",
+      "schema:inDefinedTermSet": "jptr:socialmediaposting-mapping",
+      "schema:termCode": "url",
+      "internal_field": "url",
+      "schema_property": "schema:url",
+      "data_type": "string",
+      "example": "https://x.com/user/status/1234567890",
+      "note": "Removed in anonymized data"
+    },
+    {
+      "@id": "jptr:mapping-inLanguage",
+      "@type": "schema:DefinedTerm",
+      "schema:name": "inLanguage",
+      "schema:description": "Language of the post",
+      "schema:inDefinedTermSet": "jptr:socialmediaposting-mapping",
+      "schema:termCode": "inLanguage",
+      "internal_field": "lang",
+      "schema_property": "schema:inLanguage",
+      "data_type": "string",
+      "example": "ja",
+      "format": "BCP 47"
+    },
+    {
+      "@id": "jptr:mapping-isPartOf",
+      "@type": "schema:DefinedTerm",
+      "schema:name": "isPartOf",
+      "schema:description": "Platform the post is part of",
+      "schema:inDefinedTermSet": "jptr:socialmediaposting-mapping",
+      "schema:termCode": "isPartOf",
+      "internal_field": "platform",
+      "schema_property": "schema:isPartOf",
+      "data_type": "string",
+      "example": "https://twitter.com/",
+      "schema_class": "schema:Platform"
+    },
+    {
+      "@id": "jptr:mapping-keywords",
+      "@type": "schema:DefinedTerm",
+      "schema:name": "keywords",
+      "schema:description": "Keywords/tags associated with the post",
+      "schema:inDefinedTermSet": "jptr:socialmediaposting-mapping",
+      "schema:termCode": "keywords",
+      "internal_field": "topic_id, intent_id, format_id",
+      "schema_property": "schema:keywords",
+      "data_type": "string[]",
+      "example": ["topic_ingredient", "intent_commercial"],
+      "note": "Maps to SKOS Concept notations"
+    },
+    {
+      "@id": "jptr:mapping-about",
+      "@type": "schema:DefinedTerm",
+      "schema:name": "about",
+      "schema:description": "The subject matter of the post",
+      "schema:inDefinedTermSet": "jptr:socialmediaposting-mapping",
+      "schema:termCode": "about",
+      "internal_field": "topic_id",
+      "schema_property": "schema:about",
+      "data_type": "string",
+      "example": "topic_ingredient",
+      "schema_class": "schema:Thing",
+      "note": "Maps to SKOS Concept URI"
+    },
+    {
+      "@id": "jptr:mapping-interactionStatistic",
+      "@type": "schema:DefinedTerm",
+      "schema:name": "interactionStatistic",
+      "schema:description": "Engagement metrics",
+      "schema:inDefinedTermSet": "jptr:socialmediaposting-mapping",
+      "schema:termCode": "interactionStatistic",
+      "internal_field": "views, likes, reposts, replies",
+      "schema_property": "schema:interactionStatistic",
+      "data_type": "schema:InteractionCounter[]",
+      "schema_class": "schema:InteractionCounter",
+      "properties": {
+        "views": {
+          "schema_property": "schema:interactionType",
+          "schema_value": "schema:ViewAction",
+          "internal_field": "views"
+        },
+        "likes": {
+          "schema_property": "schema:interactionType",
+          "schema_value": "schema:LikeAction",
+          "internal_field": "likes"
+        },
+        "reposts": {
+          "schema_property": "schema:interactionType",
+          "schema_value": "schema:ShareAction",
+          "internal_field": "reposts"
+        },
+        "replies": {
+          "schema_property": "schema:interactionType",
+          "schema_value": "schema:CommentAction",
+          "internal_field": "replies"
+        }
+      }
+    }
+  ],
+
+  "schema:example": {
+    "@context": {
+      "schema": "https://schema.org/",
+      "jptr": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/"
+    },
+    "@type": "schema:SocialMediaPosting",
+    "@id": "https://x.com/user/status/1234567890",
+    "schema:text": "CBX リキッドのレビューです",
+    "schema:author": {
+      "@type": "schema:Person",
+      "schema:identifier": "author_001"
+    },
+    "schema:datePublished": "2026-09-03T03:38:02.000Z",
+    "schema:url": "https://x.com/user/status/1234567890",
+    "schema:inLanguage": "ja",
+    "schema:isPartOf": {
+      "@type": "schema:Platform",
+      "schema:name": "X (Twitter)",
+      "schema:url": "https://twitter.com/"
+    },
+    "schema:about": {
+      "@type": "schema:Thing",
+      "@id": "jptr:topic-review",
+      "schema:name": "レビュー"
+    },
+    "schema:keywords": ["topic_review", "intent_experiential", "format_text"],
+    "schema:interactionStatistic": [
+      {
+        "@type": "schema:InteractionCounter",
+        "schema:interactionType": "schema:ViewAction",
+        "schema:userInteractionCount": 963
+      },
+      {
+        "@type": "schema:InteractionCounter",
+        "schema:interactionType": "schema:LikeAction",
+        "schema:userInteractionCount": 7
+      },
+      {
+        "@type": "schema:InteractionCounter",
+        "schema:interactionType": "schema:ShareAction",
+        "schema:userInteractionCount": 2
+      },
+      {
+        "@type": "schema:InteractionCounter",
+        "schema:interactionType": "schema:CommentAction",
+        "schema:userInteractionCount": 1
+      }
+    ]
+  },
+
+  "schema:maintainer": {
+    "@type": "schema:Organization",
+    "schema:name": "Routeflags Co., Ltd.",
+    "schema:url": "https://www.thch-vape.shop/"
+  }
+}
