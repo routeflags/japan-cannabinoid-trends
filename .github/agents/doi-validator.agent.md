@@ -197,6 +197,9 @@ README.md
 LICENSE
 CITATION.cff
 CHANGELOG.md
+metadata/datapackage.json
+docs/data-dictionary.md
+docs/provenance.md
 
 For derived statistics, require enough documentation to reconstruct
 the analysis where legally and commercially possible.
@@ -205,6 +208,25 @@ Sensitive customer data must NOT be published merely for
 reproducibility.
 
 Aggregated or anonymized outputs should be used where appropriate.
+
+### FAIR Principles Evaluation
+
+Evaluate the dataset against FAIR principles:
+
+| Principle | Description | Key Indicators |
+|-----------|-------------|----------------|
+| **F**indable | Globally unique persistent identifier | DOI, CITATION.cff, registered in searchable resource |
+| **A**ccessible | Retrievable by identifier using standard protocol | HTTPS, open access, metadata accessible after data unavailability |
+| **I**nteroperable | Formal, shared knowledge representation language | Machine-readable schemas, linked vocabularies, qualified references |
+| **R**eusable | Richly described, clear license, detailed provenance | Data Dictionary, Provenance documentation, community standards |
+
+### Validation Scripts
+
+Check whether the project includes:
+
+- `scripts/validation/validate-version-sync.sh`: Version/DOI consistency
+- `scripts/validation/validate-data-schema.sh`: Data schema validation
+- Git pre-commit hook: Automated validation before commits
 
 ---
 

@@ -39,6 +39,15 @@ The following skills support this pipeline:
 | `research-youtube-search` | YouTube データ収集 | 「YouTube の研究用データ取って」 |
 | `research-google-trends` | Google Trends データ収集 | 「Google Trends の研究用データ取って」 |
 
+## Available Validation Scripts
+
+| Script | Purpose |
+|--------|---------|
+| `scripts/validation/validate-version-sync.sh` | バージョン/DOI 同期検証 |
+| `scripts/validation/validate-data-schema.sh` | データスキーマ検証 |
+
+**Git Pre-commit Hook:** データ関連ファイル変更時に自動でスキーマ検証が実行される。
+
 ## OKR (最重要)
 
 **Objective:**
@@ -727,8 +736,25 @@ gh run view <run-id> --log 2>&1 | grep -E "DOI:|Concept DOI:"
 
 | Version | DOI | Status |
 |---------|-----|--------|
-| v1.5.3 | 10.5281/zenodo.23087213 | Latest |
-| Concept DOI | 10.5281/zenodo.23087212 | — |
+| v1.6.2 | 10.5281/zenodo.23091163 | Latest |
+| Concept DOI | 10.5281/zenodo.23091162 | — |
+
+### FAIR Compliance
+
+| Dimension | Score | Status |
+|-----------|:-----:|--------|
+| Findable | 5.0/5 | ✅ Excellent |
+| Accessible | 5.0/5 | ✅ Excellent |
+| Interoperable | 3.5+/5 | ✅ Good (improved) |
+| Reusable | 4.5+/5 | ✅ Good (improved) |
+| **Overall** | **4.5+/5** | **FAIR-compliant** |
+
+**FAIR Improvements (v1.6.2):**
+- Data Dictionary (`docs/data-dictionary.md`)
+- Provenance documentation (`docs/provenance.md`)
+- Anonymized X data for public use
+- Frictionless Data Package schema
+- Automated schema validation
 
 
 # Cross-Pipeline Validation
