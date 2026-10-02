@@ -174,10 +174,21 @@ repository/
 ├── schemas/
 │
 ├── docs/
+│   ├── data-dictionary.md    # カラム定義
+│   ├── provenance.md         # データ来歴
+│   └── specs/                # 仕様書
+│
+├── metadata/
+│   ├── datapackage.json      # Frictionless スキーマ
+│   └── keywords.yaml         # キーワード辞書
 │
 ├── config/
 │
 ├── scripts/
+│   └── validation/           # 検証スクリプト
+│
+├── research/
+│   └── citation-tracker.md   # 引用トラッカー
 │
 ├── tests/
 │
@@ -300,6 +311,41 @@ May contain:
 * aggregation
 * limitations
 * methodological decisions
+
+---
+
+## data-dictionary.md (docs/)
+
+Purpose:
+
+```text
+What does each column mean?
+```
+
+May contain:
+
+* column names and descriptions
+* data types and units
+* permissible values
+* missing value conventions
+* derivation methods
+
+---
+
+## provenance.md (docs/)
+
+Purpose:
+
+```text
+Where did each value come from?
+```
+
+May contain:
+
+* data lineage (raw → processed → published)
+* transformation steps
+* source-to-output mapping
+* reproduction procedures
 
 ---
 

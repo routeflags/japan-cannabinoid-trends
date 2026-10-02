@@ -39,19 +39,23 @@ Step 1: バージョン更新
         ↓
 Step 2: CHANGELOG 更新
         ↓
-Step 3: コミット
+Step 3: 検証実行
+   ✅ バージョン/DOI 同期検証
+   ✅ データスキーマ検証
         ↓
-Step 4: git タグ作成
+Step 4: コミット（pre-commit hook 自動実行）
         ↓
-Step 5: GitHub Release 公開
+Step 5: git タグ作成
         ↓
-Step 6: Actions 実行確認
+Step 6: GitHub Release 公開
         ↓
-Step 7: DOI 確認
+Step 7: Actions 実行確認
         ↓
-Step 8: CITATION.cff 更新
+Step 8: DOI 確認
         ↓
-Step 9: コミット・プッシュ
+Step 9: CITATION.cff 更新
+        ↓
+Step 10: コミット・プッシュ
 ```
 
 ---
@@ -100,7 +104,40 @@ date-released: "2026-11-01"
 
 ---
 
-## Step 3: コミット
+## Step 3: 検証実行
+
+コミット前に検証スクリプトを実行して、整合性を確認する。
+
+### 3.1 バージョン/DOI 同期検証
+
+```bash
+bash scripts/validation/validate-version-sync.sh
+```
+
+**期待される結果:** 全 PASS（FAIL 0件）
+
+### 3.2 データスキーマ検証
+
+```bash
+bash scripts/validation/validate-data-schema.sh
+```
+
+**期待される結果:** 全 PASS（FAIL 0件）
+
+### 3.3 検証が失敗した場合
+
+```bash
+# 修正案を表示
+bash scripts/validation/validate-version-sync.sh --fix
+
+# 問題を修正してから再実行
+```
+
+**注意:** Git pre-commit hook が自動で検証を実行するが、事前確認推奨。
+
+---
+
+## Step 4: コミット
 
 ```bash
 cd /Users/bookair18/OS/home/Codes/github.com/routeflags/japan-cannabinoid-trends
@@ -110,9 +147,11 @@ git commit -m "Bump version to X.Y.Z"
 git push
 ```
 
+**注意:** pre-commit hook が自動で検証を実行する。
+
 ---
 
-## Step 4: git タグ作成
+## Step 5: git タグ作成
 
 ```bash
 git tag -a vX.Y.Z -m "Release vX.Y.Z
@@ -123,7 +162,7 @@ git push origin vX.Y.Z
 
 ---
 
-## Step 5: GitHub Release 公開
+## Step 6: GitHub Release 公開
 
 ```bash
 gh release create vX.Y.Z \
@@ -142,7 +181,7 @@ This release will be automatically uploaded to Zenodo." \
 
 ---
 
-## Step 6: Actions 実行確認
+## Step 7: Actions 実行確認
 
 ```bash
 # 実行結果を確認（20秒待機）
@@ -166,7 +205,7 @@ gh run view <run-id> --log 2>&1 | grep -E "✅|❌|DOI|Error"
 
 ---
 
-## Step 7: DOI 確認
+## Step 8: DOI 確認
 
 ```bash
 gh run view <run-id> --log 2>&1 | grep -E "DOI:|Concept DOI:"
@@ -194,7 +233,7 @@ curl -s "https://zenodo.org/api/records/<record-id>" | jq '{
 
 ---
 
-## Step 8: CITATION.cff 更新
+## Step 9: CITATION.cff 更新
 
 取得した DOI で `CITATION.cff` を更新。
 
@@ -222,7 +261,7 @@ preferred-citation:
 
 ---
 
-## Step 9: コミット・プッシュ
+## Step 10: コミット・プッシュ
 
 ```bash
 git add CITATION.cff README.md metadata/datapackage.json
@@ -333,16 +372,53 @@ japan-cannabinoid-trends-vX.Y.Z-clean.zip
 
 ## 使用例
 
-### 例: v1.6.0 リリース
+### 例: v1.7.0 リリース
 
 ```
-1. CITATION.cff の version を 1.6.0 に更新
-2. CHANGELOG.md に 1.6.0 エントリを追加
-3. コミット: "Bump version to 1.6.0"
-4. タグ: git tag -a v1.6.0 -m "Release v1.6.0"
-5. リリース: gh release create v1.6.0
-6. Actions 実行確認
-7. DOI 確認: 10.5281/zenodo.XXXXXXX
-8. CITATION.cff を DOI で更新
-9. コミット・プッシュ
+1. CITATION.cff の version を 1.7.0 に更新
+2. CHANGELOG.md に 1.7.0 エントリを追加
+3. 検証実行:
+   - bash scripts/validation/validate-version-sync.sh
+   - bash scripts/validation/validate-data-schema.sh
+4. コミット: "Bump version to 1.7.0"
+   (pre-commit hook が自動で検証)
+5. タグ: git tag -a v1.7.0 -m "Release v1.7.0"
+6. リリース: gh release create v1.7.0
+7. Actions 実行確認
+8. DOI 確認: 10.5281/zenodo.XXXXXXX
+9. CITATION.cff を DOI で更新
+10. コミット・プッシュ
+```
+
+---
+
+## 現在の DOI ステータス
+
+| バージョン | DOI | Concept DOI | リリース日 |
+|-----------|-----|-------------|-----------|
+| v1.6.2 | 10.5281/zenodo.23091163 | 10.5281/zenodo.23091162 | 2026-10-02 |
+| v1.6.1 | 10.5281/zenodo.23090163 | 10.5281/zenodo.23090162 | 2026-10-02 |
+| v1.6.0 | 10.5281/zenodo.23089140 | 10.5281/zenodo.23089139 | 2026-10-02 |
+| v1.5.3 | 10.5281/zenodo.23087213 | 10.5281/zenodo.23087212 | 2026-10-02 |
+| v1.5.2 | 10.5281/zenodo.23086803 | 10.5281/zenodo.23086802 | 2026-10-02 |
+
+---
+
+## 検証スクリプト
+
+| スクリプト | 用途 |
+|-----------|------|
+| `scripts/validation/validate-version-sync.sh` | バージョン/DOI 同期検証 |
+| `scripts/validation/validate-data-schema.sh` | データスキーマ検証 |
+
+### Git Pre-commit Hook
+
+データ関連ファイルが変更された場合、コミット前に自動でスキーマ検証が実行される。
+
+```bash
+# 検証をスキップ
+git commit --no-verify
+
+# hook を無効化
+mv .git/hooks/pre-commit .git/hooks/pre-commit.disabled
 ```
