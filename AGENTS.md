@@ -464,6 +464,8 @@ Before moving data into a public release, verify:
 8. redistribution conditions have been reviewed
 9. secrets are absent
 10. release metadata is complete
+11. technical standards compliance (SKOS/IPTC/Schema.org where applicable)
+12. version/DOI consistency validated
 
 Failure of a publication gate must block release until resolved or explicitly documented.
 
@@ -526,6 +528,48 @@ license information
 When DOI archiving is enabled, GitHub releases should correspond to identifiable dataset versions.
 
 Do not place a DOI in metadata until it has actually been assigned.
+
+---
+
+# Technical Standards
+
+Social media content classification must comply with open standards.
+
+## Required Standards
+
+| Standard | Purpose |
+|----------|---------|
+| W3C SKOS | Taxonomy / Controlled Vocabulary |
+| IPTC Media Topics | Topic classification vocabulary |
+| Schema.org | Web-linked data (SocialMediaPosting) |
+
+## Design Principles
+
+- Separate classification logic from taxonomy definition
+- Taxonomy must be classifier-agnostic (LLM/BERT/SetFit compatible)
+- Use Concept IDs (notation) for portable classification
+- Maintain mapping to external standards (IPTC, ChEBI, Wikidata)
+
+## Repository Locations
+
+```text
+metadata/
+├── taxonomy/
+│   ├── *.skos.jsonld          # W3C SKOS compliant taxonomies
+│   ├── iptc-mapping.yaml      # IPTC Media Topics mapping
+│   └── classification-rules.yaml
+└── schema/
+    └── socialmediaposting.jsonld  # Schema.org mapping
+```
+
+## Export Scripts
+
+```text
+scripts/export/
+├── skos-to-rdf.py             # RDF/Turtle export
+├── skos-to-schema-jsonld.py   # Schema.org JSON-LD export
+└── export-taxonomy.sh         # Unified export runner
+```
 
 ---
 
