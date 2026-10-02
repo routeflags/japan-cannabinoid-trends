@@ -1,0 +1,15 @@
+{
+  "run_id": "20261002T064236Z-google-trends-comparison-setA",
+  "study_id": "cannabinoid-multi-trends",
+  "source": "google-trends",
+  "mcp_server": "google-trends-mcp",
+  "collection_timestamp": "2026-10-02T06:42:36Z",
+  "queries": [
+    {
+      "terms": ["CBD", "THC", "CBG", "HHC", "THCH"],
+      "geo": "JP",
+      "timeframe": "today 12-m",
+      "type": "compare_terms"
+    }
+  ]
+}

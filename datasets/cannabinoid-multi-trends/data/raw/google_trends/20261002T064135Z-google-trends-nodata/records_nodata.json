@@ -1,0 +1,17 @@
+{
+  "collected_at": "2026-10-02",
+  "geo": "JP",
+  "timeframe": "today 12-m",
+  "no_data_keywords": [
+    {
+      "keyword": "THCV",
+      "status": "no_data",
+      "note": "Google Trends が日本地域でデータを返さない。検索ボリュームが閾値未満の可能性"
+    },
+    {
+      "keyword": "THC-O",
+      "status": "no_data",
+      "note": "Google Trends が日本地域でデータを返さない。検索ボリュームが閾値未満の可能性"
+    }
+  ]
+}
