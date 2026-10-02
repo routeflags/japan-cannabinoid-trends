@@ -1,0 +1,8 @@
+{
+  "queries": [
+    {"term": "H4CBH", "geo": "JP", "timeframe": "today 12-m", "result": "No related queries found"},
+    {"term": "HHBD", "geo": "JP", "timeframe": "today 12-m", "result": "Rate limited (HTTP 429)"}
+  ],
+  "collected_at": "2026-10-01T12:19:49Z",
+  "source": "google-trends-mcp"
+}
