@@ -1,0 +1,15 @@
+{
+  "run_id": "20261002T085359Z-google-trends-crdp-5y",
+  "study_id": "cannabinoid-multi-trends",
+  "source": "google-trends",
+  "mcp_server": "google-trends-mcp",
+  "collection_timestamp": "2026-10-02T08:53:59Z",
+  "queries": [
+    {
+      "term": "CRDP",
+      "geo": "JP",
+      "timeframe": "today 5-y",
+      "type": "interest_over_time"
+    }
+  ]
+}
