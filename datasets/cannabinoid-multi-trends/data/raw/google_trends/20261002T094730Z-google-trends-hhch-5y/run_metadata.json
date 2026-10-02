@@ -1,0 +1,15 @@
+{
+  "run_id": "20261002T094730Z-google-trends-hhch-5y",
+  "study_id": "cannabinoid-multi-trends",
+  "source": "google-trends",
+  "mcp_server": "google-trends-mcp",
+  "collection_timestamp": "2026-10-02T09:47:30Z",
+  "queries": [
+    {
+      "term": "HHCH",
+      "geo": "JP",
+      "timeframe": "today 5-y",
+      "type": "interest_over_time"
+    }
+  ]
+}
