@@ -1,0 +1,8 @@
+{
+  "run_id": "20261002T064135Z-google-trends-nodata",
+  "study_id": "cannabinoid-multi-trends",
+  "source": "google-trends",
+  "mcp_server": "google-trends-mcp",
+  "collection_timestamp": "2026-10-02T06:41:35Z",
+  "note": "THCV, THC-O は日本で Google Trends データなし"
+}

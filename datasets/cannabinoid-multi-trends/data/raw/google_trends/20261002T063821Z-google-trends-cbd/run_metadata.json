@@ -1,0 +1,15 @@
+{
+  "run_id": "20261002T063821Z-google-trends-cbd",
+  "study_id": "cannabinoid-multi-trends",
+  "source": "google-trends",
+  "mcp_server": "google-trends-mcp",
+  "collection_timestamp": "2026-10-02T06:38:21Z",
+  "queries": [
+    {
+      "term": "CBD",
+      "geo": "JP",
+      "timeframe": "today 12-m",
+      "type": "interest_over_time"
+    }
+  ]
+}
