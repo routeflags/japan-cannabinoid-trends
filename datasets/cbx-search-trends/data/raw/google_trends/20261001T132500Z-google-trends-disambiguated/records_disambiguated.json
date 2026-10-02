@@ -1,0 +1,26 @@
+{
+  "queries": ["CBX 大麻", "CBX カンナビノイド"],
+  "geo": "JP",
+  "timeframe": "today 12-m",
+  "collected_at": "2026-10-01T13:25:00Z",
+  "source": "google-trends-mcp",
+  "purpose": "多義性を排除したカンナビノイド固有 CBX 検索需要の測定",
+  "data": {
+    "CBX 大麻": {
+      "average": 2,
+      "nonzero_weeks": [
+        {"date": "2026-09-20/2026-09-26", "interest": 77},
+        {"date": "2026-09-27/2026-10-03", "interest": 48}
+      ]
+    },
+    "CBX カンナビノイド": {
+      "average": 5,
+      "nonzero_weeks": [
+        {"date": "2026-09-13/2026-09-19", "interest": 64},
+        {"date": "2026-09-20/2026-09-26", "interest": 100},
+        {"date": "2026-09-27/2026-10-03", "interest": 83}
+      ]
+    }
+  },
+  "key_finding": "判別可能なクエリ（CBX 大麻, CBX カンナビノイド）では、データが2026年9月にのみ存在する。平均値は2-5と非常に低い。一方、多義語「CBX」の平均は68-69であり、その大半がカンナビノイドと無関係な検索であることを示唆する。"
+}

@@ -1,0 +1,11 @@
+{
+  "run_id": "disambiguated_queries",
+  "study_id": "cbx-search-trends",
+  "source": "google-trends",
+  "mcp_server": "google-trends-mcp",
+  "collection_timestamp": "2026-10-01T13:25:00Z",
+  "queries": [
+    {"terms": ["CBX 大麻", "CBX カンナビノイド"], "geo": "JP", "timeframe": "today 12-m"}
+  ],
+  "purpose": "多義性を排除したカンナビノイド固有 CBX 検索需要の測定"
+}

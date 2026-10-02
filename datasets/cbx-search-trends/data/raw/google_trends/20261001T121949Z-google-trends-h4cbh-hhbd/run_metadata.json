@@ -1,0 +1,27 @@
+{
+  "run_id": "20261001T121949Z-google-trends-h4cbh-hhbd",
+  "study_id": "cbx-search-trends",
+  "source": "google-trends",
+  "mcp_server": "google-trends-mcp",
+  "mcp_version": "0.1.1",
+  "collection_timestamp": "2026-10-01T12:19:49Z",
+  "queries": [
+    {"term": "H4CBH", "geo": "JP", "timeframe": "today 12-m", "type": "interest_over_time"},
+    {"term": "HHBD", "geo": "JP", "timeframe": "today 12-m", "type": "interest_over_time"},
+    {"terms": ["CBX", "H4CBH", "HHBD", "CBX リキッド"], "geo": "JP", "timeframe": "today 12-m", "type": "compare_terms"},
+    {"term": "H4CBH", "geo": "JP", "timeframe": "today 12-m", "type": "related_queries"},
+    {"term": "HHBD", "geo": "JP", "timeframe": "today 12-m", "type": "related_queries"}
+  ],
+  "results": {
+    "h4cbh_interest_over_time": "success",
+    "hhbd_interest_over_time": "success",
+    "comparison": "success",
+    "h4cbh_related_queries": "no_data",
+    "hhbd_related_queries": "rate_limited"
+  },
+  "summary": {
+    "H4CBH": "通年でデータあり。単独平均56、ピーク100 (2026-07-26週)。比較では平均13",
+    "HHBD": "2025-12からデータあり。単独平均33、ピーク100 (2025-12-07週)。比較では平均7",
+    "ranking_comparison": "CBX (68) > H4CBH (13) > HHBD (7) > CBX リキッド (0)"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "run_id": "variance_check",
+  "study_id": "cbx-search-trends",
+  "source": "google-trends",
+  "mcp_server": "google-trends-mcp",
+  "mcp_version": "0.1.1",
+  "collection_timestamp": "2026-10-01T13:15:00Z",
+  "run_type": "variance_check",
+  "purpose": "1回目収集（2026-10-01T11:59:59Z）との比較によるばらつき評価",
+  "queries": [
+    {"terms": ["CBX", "H4CBH", "HHBD", "CBD リキッド"], "geo": "JP", "timeframe": "today 12-m", "type": "compare_terms", "note": "CBD リキッドは比較クエリとして追加。CBX リキッド単独は別途 interest_over_time で収集"},
+    {"terms": ["CBX リキッド"], "geo": "JP", "timeframe": "today 12-m", "type": "interest_over_time"}
+  ],
+  "rate_limit_events": 2,
+  "notes": "レート制限（429）を2回経験。待機後に再収集成功。CBD リキッドは比較クエリとして追加したが、CBX リキッド単独のばらつき評価は interest_over_time で実施。",
+  "clarification": "2026-10-01T13:15 の compare_terms では CBD リキッドを使用。CBX リキッド単独の 2回目収集は 2026-10-01T13:18 に実施。"
+}

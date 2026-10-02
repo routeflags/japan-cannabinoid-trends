@@ -1,0 +1,14 @@
+{
+  "query": "CBX リキッド",
+  "geo": "JP",
+  "timeframe": "today 12-m",
+  "collected_at": "2026-10-01T13:18:00Z",
+  "source": "google-trends-mcp",
+  "run_type": "variance_check",
+  "nonzero_data": [
+    {"date": "2026-09-13/2026-09-19", "interest": 46},
+    {"date": "2026-09-20/2026-09-26", "interest": 100},
+    {"date": "2026-09-27/2026-10-03", "interest": 95}
+  ],
+  "note": "2回目の収集。1回目（44, 100, 92）と比較して小幅な変動。"
+}

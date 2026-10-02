@@ -1,0 +1,15 @@
+{
+  "terms": ["CBX", "H4CBH", "HHBD", "CBD リキッド"],
+  "geo": "JP",
+  "timeframe": "today 12-m",
+  "collected_at": "2026-10-01T13:15:00Z",
+  "source": "google-trends-mcp",
+  "run_type": "variance_check",
+  "averages": {
+    "CBX": 69,
+    "H4CBH": 13,
+    "HHBD": 7,
+    "CBD リキッド": 13
+  },
+  "note": "2回目の収集。1回目（CBX:68, H4CBH:13, HHBD:7）と比較して小幅な変動。CBD リキッドを追加。"
+}

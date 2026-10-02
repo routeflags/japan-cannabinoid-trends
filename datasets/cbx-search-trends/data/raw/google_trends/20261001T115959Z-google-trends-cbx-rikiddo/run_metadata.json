@@ -1,0 +1,19 @@
+{
+  "run_id": "20261001T115959Z-google-trends-cbx-rikiddo",
+  "study_id": "cbx-search-trends",
+  "source": "google-trends",
+  "mcp_server": "google-trends-mcp",
+  "mcp_version": "0.1.1",
+  "collection_timestamp": "2026-10-01T11:59:59Z",
+  "queries": [
+    {"term": "CBX リキッド", "geo": "JP", "timeframe": "today 12-m", "type": "interest_over_time"},
+    {"terms": ["CBX", "CBX リキッド", "CBD リキッド"], "geo": "JP", "timeframe": "today 12-m", "type": "interest_over_time_comparison"},
+    {"term": "CBX", "geo": "JP", "timeframe": "today 12-m", "type": "related_queries"}
+  ],
+  "results": {
+    "interest_over_time": "success",
+    "comparison": "success",
+    "related_queries": "no_data"
+  },
+  "notes": "CBX リキッド の検索興味度は 2026-09-13 から急上昇。関連クエリは取得不可。"
+}
