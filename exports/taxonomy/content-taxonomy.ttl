@@ -1,0 +1,253 @@
+# RDF/Turtle export
+# Generated: 2026-10-02T04:34:44.444847Z
+# Source: SKOS JSON-LD
+
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+@prefix iptc: <http://cv.iptc.org/newscodes/mediatopic/> .
+@prefix jptr: <https://japan-cannabinoid-trends.routeflags.com/taxonomy/> .
+
+
+<https://japan-cannabinoid-trends.routeflags.com/taxonomy/content-taxonomy>
+    rdf:type <http://www.w3.org/2004/02/skos/core#ConceptScheme> ;
+    <http://purl.org/dc/terms/title> "CBX ソーシャルメディア コンテンツ分類タクソノミー"@ja ;
+    <http://purl.org/dc/terms/description> "Taxonomy for classifying social media posts about cannabinoids in Japan. Based on W3C SKOS, mapped to IPTC Media Topics."@en ;
+    <http://purl.org/dc/terms/creator> "Routeflags Co., Ltd." ;
+    <http://purl.org/dc/terms/created> "2026-10-02" ;
+    <http://purl.org/dc/terms/modified> "2026-10-02" ;
+    <http://purl.org/dc/terms/license> <https://creativecommons.org/licenses/by/4.0/> ;
+    <http://www.w3.org/2000/01/rdf-schema#comment> "This taxonomy is designed to be classifier-agnostic. Any classification model (LLM, BERT, SetFit, etc.) can output these Concept IDs."@en .
+
+<https://japan-cannabinoid-trends.routeflags.com/taxonomy/topic-scheme>
+    rdf:type <http://www.w3.org/2004/02/skos/core#ConceptScheme> ;
+    <http://purl.org/dc/terms/title> "Topic Taxonomy (話題分類)"@en ;
+    <http://purl.org/dc/terms/description> "Classification of post topics/content themes"@en ;
+    <http://www.w3.org/2004/02/skos/core#hasTopConcept> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/topic-ingredient> ;
+    <http://www.w3.org/2004/02/skos/core#hasTopConcept> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/topic-product> ;
+    <http://www.w3.org/2004/02/skos/core#hasTopConcept> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/topic-effect> ;
+    <http://www.w3.org/2004/02/skos/core#hasTopConcept> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/topic-promotion> ;
+    <http://www.w3.org/2004/02/skos/core#hasTopConcept> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/topic-review> ;
+    <http://www.w3.org/2004/02/skos/core#hasTopConcept> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/topic-store> .
+
+<https://japan-cannabinoid-trends.routeflags.com/taxonomy/intent-scheme>
+    rdf:type <http://www.w3.org/2004/02/skos/core#ConceptScheme> ;
+    <http://purl.org/dc/terms/title> "Intent Taxonomy (投稿意図分類)"@en ;
+    <http://purl.org/dc/terms/description> "Classification of the poster's intent"@en ;
+    <http://www.w3.org/2004/02/skos/core#hasTopConcept> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/intent-informational> ;
+    <http://www.w3.org/2004/02/skos/core#hasTopConcept> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/intent-commercial> ;
+    <http://www.w3.org/2004/02/skos/core#hasTopConcept> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/intent-experiential> ;
+    <http://www.w3.org/2004/02/skos/core#hasTopConcept> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/intent-harm-report> .
+
+<https://japan-cannabinoid-trends.routeflags.com/taxonomy/format-scheme>
+    rdf:type <http://www.w3.org/2004/02/skos/core#ConceptScheme> ;
+    <http://purl.org/dc/terms/title> "Format Taxonomy (投稿形式分類)"@en ;
+    <http://purl.org/dc/terms/description> "Classification of post format/type"@en ;
+    <http://www.w3.org/2004/02/skos/core#hasTopConcept> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/format-text> ;
+    <http://www.w3.org/2004/02/skos/core#hasTopConcept> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/format-image> ;
+    <http://www.w3.org/2004/02/skos/core#hasTopConcept> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/format-video> ;
+    <http://www.w3.org/2004/02/skos/core#hasTopConcept> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/format-link> .
+
+<https://japan-cannabinoid-trends.routeflags.com/taxonomy/topic-ingredient>
+    rdf:type <http://www.w3.org/2004/02/skos/core#Concept> ;
+    <http://www.w3.org/2004/02/skos/core#inScheme> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/topic-scheme> ;
+    <http://www.w3.org/2004/02/skos/core#topConceptOf> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/topic-scheme> ;
+    <http://www.w3.org/2004/02/skos/core#prefLabel> "配合/成分"@ja ;
+    <http://www.w3.org/2004/02/skos/core#altLabel> "成分"@ja ;
+    <http://www.w3.org/2004/02/skos/core#altLabel> "配合比"@ja ;
+    <http://www.w3.org/2004/02/skos/core#altLabel> "カンナビノイド含量"@ja ;
+    <http://www.w3.org/2004/02/skos/core#altLabel> "ingredient"@en ;
+    <http://www.w3.org/2004/02/skos/core#altLabel> "composition"@en ;
+    <http://www.w3.org/2004/02/skos/core#altLabel> "potency"@en ;
+    <http://www.w3.org/2004/02/skos/core#notation> "topic_ingredient" ;
+    <http://www.w3.org/2004/02/skos/core#scopeNote> "カンナビノイドの組成、配合比、濃度、化学的構成についての投稿。"@ja ;
+    <http://www.w3.org/2004/02/skos/core#example> "CBG 30%, CBD 5% の配合比" ;
+    <http://www.w3.org/2004/02/skos/core#example> "Total Cannabinoids 36%" ;
+    <http://www.w3.org/2004/02/skos/core#example> "Δ9-THC 0.45 ppm" ;
+    <http://www.w3.org/2004/02/skos/core#closeMatch> <http://cv.iptc.org/newscodes/mediatopic/20000347> ;
+    <http://www.w3.org/2004/02/skos/core#related> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/topic-product> ;
+    <http://www.w3.org/2004/02/skos/core#related> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/topic-effect> .
+
+<https://japan-cannabinoid-trends.routeflags.com/taxonomy/topic-product>
+    rdf:type <http://www.w3.org/2004/02/skos/core#Concept> ;
+    <http://www.w3.org/2004/02/skos/core#inScheme> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/topic-scheme> ;
+    <http://www.w3.org/2004/02/skos/core#topConceptOf> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/topic-scheme> ;
+    <http://www.w3.org/2004/02/skos/core#prefLabel> "新商品/入荷"@ja ;
+    <http://www.w3.org/2004/02/skos/core#altLabel> "新商品"@ja ;
+    <http://www.w3.org/2004/02/skos/core#altLabel> "入荷情報"@ja ;
+    <http://www.w3.org/2004/02/skos/core#altLabel> "製品発表"@ja ;
+    <http://www.w3.org/2004/02/skos/core#altLabel> "new product"@en ;
+    <http://www.w3.org/2004/02/skos/core#altLabel> "product launch"@en ;
+    <http://www.w3.org/2004/02/skos/core#altLabel> "restock"@en ;
+    <http://www.w3.org/2004/02/skos/core#notation> "topic_product" ;
+    <http://www.w3.org/2004/02/skos/core#scopeNote> "新製品の発表、入荷情報、再入荷に関する投稿。"@ja ;
+    <http://www.w3.org/2004/02/skos/core#example> "CBX リキッド新作発売" ;
+    <http://www.w3.org/2004/02/skos/core#example> "H4CBH 入荷しました" ;
+    <http://www.w3.org/2004/02/skos/core#example> "HHBD 新商品ラインナップ" ;
+    <http://www.w3.org/2004/02/skos/core#closeMatch> <http://cv.iptc.org/newscodes/mediatopic/20000323> ;
+    <http://www.w3.org/2004/02/skos/core#related> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/topic-ingredient> ;
+    <http://www.w3.org/2004/02/skos/core#related> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/topic-promotion> .
+
+<https://japan-cannabinoid-trends.routeflags.com/taxonomy/topic-effect>
+    rdf:type <http://www.w3.org/2004/02/skos/core#Concept> ;
+    <http://www.w3.org/2004/02/skos/core#inScheme> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/topic-scheme> ;
+    <http://www.w3.org/2004/02/skos/core#topConceptOf> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/topic-scheme> ;
+    <http://www.w3.org/2004/02/skos/core#prefLabel> "体感/効果"@ja ;
+    <http://www.w3.org/2004/02/skos/core#altLabel> "体感"@ja ;
+    <http://www.w3.org/2004/02/skos/core#altLabel> "効果"@ja ;
+    <http://www.w3.org/2004/02/skos/core#altLabel> "使用感"@ja ;
+    <http://www.w3.org/2004/02/skos/core#altLabel> "effect"@en ;
+    <http://www.w3.org/2004/02/skos/core#altLabel> "experience"@en ;
+    <http://www.w3.org/2004/02/skos/core#altLabel> "sensation"@en ;
+    <http://www.w3.org/2004/02/skos/core#notation> "topic_effect" ;
+    <http://www.w3.org/2004/02/skos/core#scopeNote> "カンナビノイド製品の主観的効果・体感・感覚に関する投稿。※ これは主観的報告であり、医療的主張ではない。"@ja ;
+    <http://www.w3.org/2004/02/skos/core#example> "リラックス効果を感じた" ;
+    <http://www.w3.org/2004/02/skos/core#example> "体感が穏やか" ;
+    <http://www.w3.org/2004/02/skos/core#example> "フィニッシュが明瞭" ;
+    <http://www.w3.org/2004/02/skos/core#closeMatch> <http://cv.iptc.org/newscodes/mediatopic/20000329> ;
+    <http://www.w3.org/2004/02/skos/core#related> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/topic-ingredient> ;
+    <http://www.w3.org/2004/02/skos/core#related> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/topic-review> .
+
+<https://japan-cannabinoid-trends.routeflags.com/taxonomy/topic-promotion>
+    rdf:type <http://www.w3.org/2004/02/skos/core#Concept> ;
+    <http://www.w3.org/2004/02/skos/core#inScheme> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/topic-scheme> ;
+    <http://www.w3.org/2004/02/skos/core#topConceptOf> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/topic-scheme> ;
+    <http://www.w3.org/2004/02/skos/core#prefLabel> "セール/キャンペーン"@ja ;
+    <http://www.w3.org/2004/02/skos/core#altLabel> "セール"@ja ;
+    <http://www.w3.org/2004/02/skos/core#altLabel> "キャンペーン"@ja ;
+    <http://www.w3.org/2004/02/skos/core#altLabel> "割引"@ja ;
+    <http://www.w3.org/2004/02/skos/core#altLabel> "sale"@en ;
+    <http://www.w3.org/2004/02/skos/core#altLabel> "promotion"@en ;
+    <http://www.w3.org/2004/02/skos/core#altLabel> "discount"@en ;
+    <http://www.w3.org/2004/02/skos/core#notation> "topic_promotion" ;
+    <http://www.w3.org/2004/02/skos/core#scopeNote> "セール、割引、マーケティングキャンペーンを宣伝する投稿。"@ja ;
+    <http://www.w3.org/2004/02/skos/core#example> "CBX 20% OFF キャンペーン" ;
+    <http://www.w3.org/2004/02/skos/core#example> "期間限定セール実施中" ;
+    <http://www.w3.org/2004/02/skos/core#example> "新規会員様限定割引" ;
+    <http://www.w3.org/2004/02/skos/core#closeMatch> <http://cv.iptc.org/newscodes/mediatopic/20000322> ;
+    <http://www.w3.org/2004/02/skos/core#related> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/topic-product> ;
+    <http://www.w3.org/2004/02/skos/core#related> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/topic-store> .
+
+<https://japan-cannabinoid-trends.routeflags.com/taxonomy/topic-review>
+    rdf:type <http://www.w3.org/2004/02/skos/core#Concept> ;
+    <http://www.w3.org/2004/02/skos/core#inScheme> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/topic-scheme> ;
+    <http://www.w3.org/2004/02/skos/core#topConceptOf> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/topic-scheme> ;
+    <http://www.w3.org/2004/02/skos/core#prefLabel> "レビュー"@ja ;
+    <http://www.w3.org/2004/02/skos/core#altLabel> "レビュー"@ja ;
+    <http://www.w3.org/2004/02/skos/core#altLabel> "評価"@ja ;
+    <http://www.w3.org/2004/02/skos/core#altLabel> "感想"@ja ;
+    <http://www.w3.org/2004/02/skos/core#altLabel> "review"@en ;
+    <http://www.w3.org/2004/02/skos/core#altLabel> "evaluation"@en ;
+    <http://www.w3.org/2004/02/skos/core#altLabel> "feedback"@en ;
+    <http://www.w3.org/2004/02/skos/core#notation> "topic_review" ;
+    <http://www.w3.org/2004/02/skos/core#scopeNote> "製品レビュー、評価、フィードバックを提供する投稿。"@ja ;
+    <http://www.w3.org/2004/02/skos/core#example> "CBX リキッドを試してみた" ;
+    <http://www.w3.org/2004/02/skos/core#example> "この製品のレビュー" ;
+    <http://www.w3.org/2004/02/skos/core#example> "使用感レポート" ;
+    <http://www.w3.org/2004/02/skos/core#closeMatch> <http://cv.iptc.org/newscodes/mediatopic/20000349> ;
+    <http://www.w3.org/2004/02/skos/core#related> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/topic-effect> ;
+    <http://www.w3.org/2004/02/skos/core#related> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/topic-ingredient> .
+
+<https://japan-cannabinoid-trends.routeflags.com/taxonomy/topic-store>
+    rdf:type <http://www.w3.org/2004/02/skos/core#Concept> ;
+    <http://www.w3.org/2004/02/skos/core#inScheme> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/topic-scheme> ;
+    <http://www.w3.org/2004/02/skos/core#topConceptOf> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/topic-scheme> ;
+    <http://www.w3.org/2004/02/skos/core#prefLabel> "店舗情報"@ja ;
+    <http://www.w3.org/2004/02/skos/core#altLabel> "店舗"@ja ;
+    <http://www.w3.org/2004/02/skos/core#altLabel> "店舗案内"@ja ;
+    <http://www.w3.org/2004/02/skos/core#altLabel> "所在地"@ja ;
+    <http://www.w3.org/2004/02/skos/core#altLabel> "store"@en ;
+    <http://www.w3.org/2004/02/skos/core#altLabel> "shop"@en ;
+    <http://www.w3.org/2004/02/skos/core#altLabel> "location"@en ;
+    <http://www.w3.org/2004/02/skos/core#notation> "topic_store" ;
+    <http://www.w3.org/2004/02/skos/core#scopeNote> "店舗情報、所在地、事業者情報に関する投稿。"@ja ;
+    <http://www.w3.org/2004/02/skos/core#example> "麻布十番店舗案内" ;
+    <http://www.w3.org/2004/02/skos/core#example> "営業時間のお知らせ" ;
+    <http://www.w3.org/2004/02/skos/core#example> "店舗アクセス情報" ;
+    <http://www.w3.org/2004/02/skos/core#closeMatch> <http://cv.iptc.org/newscodes/mediatopic/20000325> ;
+    <http://www.w3.org/2004/02/skos/core#related> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/topic-promotion> ;
+    <http://www.w3.org/2004/02/skos/core#related> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/topic-product> .
+
+<https://japan-cannabinoid-trends.routeflags.com/taxonomy/intent-informational>
+    rdf:type <http://www.w3.org/2004/02/skos/core#Concept> ;
+    <http://www.w3.org/2004/02/skos/core#inScheme> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/intent-scheme> ;
+    <http://www.w3.org/2004/02/skos/core#topConceptOf> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/intent-scheme> ;
+    <http://www.w3.org/2004/02/skos/core#prefLabel> "情報提供"@ja ;
+    <http://www.w3.org/2004/02/skos/core#altLabel> "情報"@ja ;
+    <http://www.w3.org/2004/02/skos/core#altLabel> "知識共有"@ja ;
+    <http://www.w3.org/2004/02/skos/core#altLabel> "informational"@en ;
+    <http://www.w3.org/2004/02/skos/core#altLabel> "educational"@en ;
+    <http://www.w3.org/2004/02/skos/core#notation> "intent_informational" ;
+    <http://www.w3.org/2004/02/skos/core#scopeNote> "Posts intended to share information or knowledge."@en .
+
+<https://japan-cannabinoid-trends.routeflags.com/taxonomy/intent-commercial>
+    rdf:type <http://www.w3.org/2004/02/skos/core#Concept> ;
+    <http://www.w3.org/2004/02/skos/core#inScheme> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/intent-scheme> ;
+    <http://www.w3.org/2004/02/skos/core#topConceptOf> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/intent-scheme> ;
+    <http://www.w3.org/2004/02/skos/core#prefLabel> "商業目的"@ja ;
+    <http://www.w3.org/2004/02/skos/core#altLabel> "販売"@ja ;
+    <http://www.w3.org/2004/02/skos/core#altLabel> "宣伝"@ja ;
+    <http://www.w3.org/2004/02/skos/core#altLabel> "commercial"@en ;
+    <http://www.w3.org/2004/02/skos/core#altLabel> "promotional"@en ;
+    <http://www.w3.org/2004/02/skos/core#altLabel> "sales"@en ;
+    <http://www.w3.org/2004/02/skos/core#notation> "intent_commercial" ;
+    <http://www.w3.org/2004/02/skos/core#scopeNote> "Posts with commercial intent (sales, promotion, advertising)."@en .
+
+<https://japan-cannabinoid-trends.routeflags.com/taxonomy/intent-experiential>
+    rdf:type <http://www.w3.org/2004/02/skos/core#Concept> ;
+    <http://www.w3.org/2004/02/skos/core#inScheme> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/intent-scheme> ;
+    <http://www.w3.org/2004/02/skos/core#topConceptOf> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/intent-scheme> ;
+    <http://www.w3.org/2004/02/skos/core#prefLabel> "体験報告"@ja ;
+    <http://www.w3.org/2004/02/skos/core#altLabel> "体験"@ja ;
+    <http://www.w3.org/2004/02/skos/core#altLabel> "報告"@ja ;
+    <http://www.w3.org/2004/02/skos/core#altLabel> "experiential"@en ;
+    <http://www.w3.org/2004/02/skos/core#altLabel> "personal report"@en ;
+    <http://www.w3.org/2004/02/skos/core#notation> "intent_experiential" ;
+    <http://www.w3.org/2004/02/skos/core#scopeNote> "Posts sharing personal experiences or testimonials."@en .
+
+<https://japan-cannabinoid-trends.routeflags.com/taxonomy/intent-harm-report>
+    rdf:type <http://www.w3.org/2004/02/skos/core#Concept> ;
+    <http://www.w3.org/2004/02/skos/core#inScheme> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/intent-scheme> ;
+    <http://www.w3.org/2004/02/skos/core#topConceptOf> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/intent-scheme> ;
+    <http://www.w3.org/2004/02/skos/core#prefLabel> "有害報告"@ja ;
+    <http://www.w3.org/2004/02/skos/core#altLabel> "有害情報"@ja ;
+    <http://www.w3.org/2004/02/skos/core#altLabel> "被害報告"@ja ;
+    <http://www.w3.org/2004/02/skos/core#altLabel> "adverse event"@en ;
+    <http://www.w3.org/2004/02/skos/core#altLabel> "harm report"@en ;
+    <http://www.w3.org/2004/02/skos/core#notation> "intent_harm_report" ;
+    <http://www.w3.org/2004/02/skos/core#scopeNote> "Posts reporting adverse effects, harm, or negative experiences."@en .
+
+<https://japan-cannabinoid-trends.routeflags.com/taxonomy/format-text>
+    rdf:type <http://www.w3.org/2004/02/skos/core#Concept> ;
+    <http://www.w3.org/2004/02/skos/core#inScheme> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/format-scheme> ;
+    <http://www.w3.org/2004/02/skos/core#topConceptOf> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/format-scheme> ;
+    <http://www.w3.org/2004/02/skos/core#prefLabel> "テキスト"@ja ;
+    <http://www.w3.org/2004/02/skos/core#notation> "format_text" ;
+    <http://www.w3.org/2004/02/skos/core#scopeNote> "Text-only posts."@en .
+
+<https://japan-cannabinoid-trends.routeflags.com/taxonomy/format-image>
+    rdf:type <http://www.w3.org/2004/02/skos/core#Concept> ;
+    <http://www.w3.org/2004/02/skos/core#inScheme> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/format-scheme> ;
+    <http://www.w3.org/2004/02/skos/core#topConceptOf> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/format-scheme> ;
+    <http://www.w3.org/2004/02/skos/core#prefLabel> "画像"@ja ;
+    <http://www.w3.org/2004/02/skos/core#notation> "format_image" ;
+    <http://www.w3.org/2004/02/skos/core#scopeNote> "Posts with image(s)."@en .
+
+<https://japan-cannabinoid-trends.routeflags.com/taxonomy/format-video>
+    rdf:type <http://www.w3.org/2004/02/skos/core#Concept> ;
+    <http://www.w3.org/2004/02/skos/core#inScheme> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/format-scheme> ;
+    <http://www.w3.org/2004/02/skos/core#topConceptOf> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/format-scheme> ;
+    <http://www.w3.org/2004/02/skos/core#prefLabel> "動画"@ja ;
+    <http://www.w3.org/2004/02/skos/core#notation> "format_video" ;
+    <http://www.w3.org/2004/02/skos/core#scopeNote> "Posts with video content."@en .
+
+<https://japan-cannabinoid-trends.routeflags.com/taxonomy/format-link>
+    rdf:type <http://www.w3.org/2004/02/skos/core#Concept> ;
+    <http://www.w3.org/2004/02/skos/core#inScheme> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/format-scheme> ;
+    <http://www.w3.org/2004/02/skos/core#topConceptOf> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/format-scheme> ;
+    <http://www.w3.org/2004/02/skos/core#prefLabel> "リンク"@ja ;
+    <http://www.w3.org/2004/02/skos/core#notation> "format_link" ;
+    <http://www.w3.org/2004/02/skos/core#scopeNote> "Posts sharing external links."@en .
