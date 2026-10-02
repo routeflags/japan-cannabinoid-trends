@@ -34,6 +34,7 @@ The following skills support this pipeline:
 | Skill | Purpose | Trigger |
 |-------|---------|---------|
 | `release-zenodo` | データセットのリリースと Zenodo DOI 登録 | 「リリース作成」「DOI 取得」 |
+| `standards-compliance` | 技術標準対応 (SKOS, IPTC, Schema.org) | 「タクソノミー作成」「SKOS 準拠」 |
 | `update-cbx-guide` | CBX ガイドページの月次更新 | 「CBX ガイドを更新」 |
 | `research-x-search` | X (Twitter) データ収集 | 「X の研究用データ取って」 |
 | `research-youtube-search` | YouTube データ収集 | 「YouTube の研究用データ取って」 |
@@ -736,8 +737,8 @@ gh run view <run-id> --log 2>&1 | grep -E "DOI:|Concept DOI:"
 
 | Version | DOI | Status |
 |---------|-----|--------|
-| v1.6.2 | 10.5281/zenodo.23091163 | Latest |
-| Concept DOI | 10.5281/zenodo.23091162 | — |
+| v1.7.0 | 10.5281/zenodo.23095153 | Latest |
+| Concept DOI | 10.5281/zenodo.23095152 | — |
 
 ### FAIR Compliance
 
@@ -745,16 +746,19 @@ gh run view <run-id> --log 2>&1 | grep -E "DOI:|Concept DOI:"
 |-----------|:-----:|--------|
 | Findable | 5.0/5 | ✅ Excellent |
 | Accessible | 5.0/5 | ✅ Excellent |
-| Interoperable | 3.5+/5 | ✅ Good (improved) |
-| Reusable | 4.5+/5 | ✅ Good (improved) |
+| Interoperable | 4.0+/5 | ✅ Good (SKOS/IPTC/Schema.org) |
+| Reusable | 4.5+/5 | ✅ Good |
 | **Overall** | **4.5+/5** | **FAIR-compliant** |
 
-**FAIR Improvements (v1.6.2):**
-- Data Dictionary (`docs/data-dictionary.md`)
-- Provenance documentation (`docs/provenance.md`)
-- Anonymized X data for public use
-- Frictionless Data Package schema
-- Automated schema validation
+### Technical Standards Compliance (v1.7.0)
+
+| Standard | Status | Artifacts |
+|----------|:------:|-----------|
+| W3C SKOS | ✅ | content-taxonomy.skos.jsonld, compound-taxonomy.skos.jsonld |
+| IPTC Media Topics | ✅ | iptc-mapping.yaml |
+| Schema.org | ✅ | socialmediaposting.jsonld |
+| RDF/Turtle | ✅ | skos-to-rdf.py |
+| JSON-LD | ✅ | skos-to-schema-jsonld.py |
 
 
 # Cross-Pipeline Validation

@@ -220,12 +220,25 @@ Evaluate the dataset against FAIR principles:
 | **I**nteroperable | Formal, shared knowledge representation language | Machine-readable schemas, linked vocabularies, qualified references |
 | **R**eusable | Richly described, clear license, detailed provenance | Data Dictionary, Provenance documentation, community standards |
 
+### Technical Standards Compliance
+
+Evaluate compliance with technical standards for research data:
+
+| Standard | Purpose | Key Indicators |
+|----------|---------|----------------|
+| **W3C SKOS** | Taxonomy / Controlled Vocabulary | ConceptScheme, Concept, prefLabel, broader/narrower, notation |
+| **IPTC Media Topics** | Topic classification vocabulary | Mapping to IPTC NewsCodes, closeMatch/exactMatch |
+| **Schema.org** | Web-linked data | SocialMediaPosting, DefinedTerm, JSON-LD |
+| **Frictionless Data** | Data package specification | datapackage.json, schema definitions, field constraints |
+| **RDF/Turtle** | Knowledge graph representation | Export scripts, triple store compatibility |
+
 ### Validation Scripts
 
 Check whether the project includes:
 
 - `scripts/validation/validate-version-sync.sh`: Version/DOI consistency
-- `scripts/validation/validate-data-schema.sh`: Data schema validation
+- `scripts/validation/validate-data-schema.sh`: Data schema + SKOS taxonomy validation
+- `scripts/export/export-taxonomy.sh`: Standards export (RDF/Turtle, JSON-LD)
 - Git pre-commit hook: Automated validation before commits
 
 ---
