@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.7.1] - 2026-10-02
 
+**DOI:** [10.5281/zenodo.23097769](https://doi.org/10.5281/zenodo.23097769)
+
 ### Added
 - **キーワードカバレッジ拡張** (EXP-20261002)
   - 新 Study: `cannabinoid-multi-trends`
