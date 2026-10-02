@@ -1,0 +1,16 @@
+{
+  "keyword": "THC-O",
+  "geo": "JP",
+  "timeframe": "today 5-y",
+  "collected_at": "2026-10-02",
+  "note": "5年データ。2022年3-6月に一時的な検索需要、以降ほぼデータなし",
+  "first_mention": "2022-03-13",
+  "first_value": 71,
+  "peak": {"date": "2022-04-10", "value": 100},
+  "data_summary": {
+    "period_with_data": "2022-03-13 〜 2023-06-17 (断続的)",
+    "period_without_data": "2021-09-26 〜 2022-03-12, 2023-06-25 〜 2026-10-03",
+    "data_points_nonzero": 22,
+    "data_points_zero": 240
+  }
+}
