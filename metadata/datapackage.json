@@ -293,6 +293,85 @@
             "constraints": {
               "minimum": 0
             }
+          },
+          {
+            "name": "topic_id",
+            "type": "string",
+            "description": "話題分類 ID (SKOS Concept notation)",
+            "constraints": {
+              "enum": [
+                "topic_ingredient",
+                "topic_product",
+                "topic_effect",
+                "topic_promotion",
+                "topic_review",
+                "topic_store",
+                "unclassified"
+              ]
+            },
+            "references": {
+              "taxonomy": "metadata/taxonomy/content-taxonomy.skos.jsonld",
+              "skos_scheme": "jptr:topic-scheme"
+            }
+          },
+          {
+            "name": "intent_id",
+            "type": "string",
+            "description": "投稿意図 ID (SKOS Concept notation)",
+            "constraints": {
+              "enum": [
+                "intent_informational",
+                "intent_commercial",
+                "intent_experiential",
+                "intent_harm_report",
+                "unclassified"
+              ]
+            },
+            "references": {
+              "taxonomy": "metadata/taxonomy/content-taxonomy.skos.jsonld",
+              "skos_scheme": "jptr:intent-scheme"
+            }
+          },
+          {
+            "name": "format_id",
+            "type": "string",
+            "description": "投稿形式 ID (SKOS Concept notation)",
+            "constraints": {
+              "enum": [
+                "format_text",
+                "format_image",
+                "format_video",
+                "format_link",
+                "unclassified"
+              ]
+            },
+            "references": {
+              "taxonomy": "metadata/taxonomy/content-taxonomy.skos.jsonld",
+              "skos_scheme": "jptr:format-scheme"
+            }
+          },
+          {
+            "name": "platform",
+            "type": "string",
+            "description": "プラットフォーム名",
+            "constraints": {
+              "enum": ["x_twitter"]
+            },
+            "references": {
+              "schema_property": "schema:isPartOf",
+              "schema_class": "schema:Platform"
+            }
+          },
+          {
+            "name": "language",
+            "type": "string",
+            "description": "言語コード (BCP 47)",
+            "constraints": {
+              "pattern": "^[a-z]{2}(-[A-Z]{2})?$"
+            },
+            "references": {
+              "schema_property": "schema:inLanguage"
+            }
           }
         ]
       }

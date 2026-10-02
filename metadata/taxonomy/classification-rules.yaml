@@ -1,0 +1,226 @@
+# =============================================================================
+# Content Classification Rules
+# =============================================================================
+# X データのコンテンツ分類に使用するルールベース分類器の定義
+#
+# 注意: これは分類器の一例。将来的に LLM / BERT / SetFit に交換可能。
+#       Concept ID (notation) は固定なので、分類器の交換時に Taxonomy を維持できる。
+#
+# タクソノミー: metadata/taxonomy/content-taxonomy.skos.jsonld
+#
+# 更新履歴:
+#   2026-10-02: 初版作成
+# =============================================================================
+
+version: "1.0.0"
+classifier_type: "rule_based"
+classifier_version: "1.0.0"
+taxonomy_reference: "metadata/taxonomy/content-taxonomy.skos.jsonld"
+
+# =============================================================================
+# トピック分類キーワード
+# =============================================================================
+
+topic_keywords:
+
+  topic_ingredient:
+    - "成分"
+    - "配合"
+    - "配合比"
+    - "濃度"
+    - "含量"
+    - "CBG"
+    - "CBD"
+    - "THC"
+    - "カンナビノイド"
+    - "total cannabinoid"
+    - "mg"
+    - "ppm"
+    - "%"
+    - "カンナビジ"
+    - "カンナビゲロール"
+    - "カンナビノール"
+
+  topic_product:
+    - "新作"
+    - "新商品"
+    - "入荷"
+    - "再入荷"
+    - "発売"
+    - "新登場"
+    - "リリース"
+    - "ラインナップ"
+    - "追加"
+    - "新パッケージ"
+    - "限定品"
+
+  topic_effect:
+    - "効果"
+    - "体感"
+    - "感じ"
+    - "リラックス"
+    - "効く"
+    - "効いた"
+    - "穏やか"
+    - "明瞭"
+    - "フィニッシュ"
+    - "酔い"
+    - "気分"
+
+  topic_promotion:
+    - "セール"
+    - "キャンペーン"
+    - "割引"
+    - "OFF"
+    - "%off"
+    - "クーポン"
+    - "ポイント"
+    - "送料無料"
+    - "限定価格"
+    - "特価"
+    - "バーゲン"
+
+  topic_review:
+    - "レビュー"
+    - "評価"
+    - "感想"
+    - "試して"
+    - "使ってみ"
+    - "使用感"
+    - "おすすめ"
+    - "個人的な意見"
+    - "率直な感想"
+
+  topic_store:
+    - "店舗"
+    - "店頭"
+    - "所在地"
+    - "営業時間"
+    - "アクセス"
+    - "〒"
+    - "東京"
+    - "大阪"
+    - "名古屋"
+    - "福岡"
+    - "店舗案内"
+    - "ショップ"
+
+# =============================================================================
+# 意図分類キーワード
+# =============================================================================
+
+intent_keywords:
+
+  intent_informational:
+    - "です"
+    - "ます"
+    - "という"
+    - "とは"
+    - "説明"
+    - "紹介"
+    - "解説"
+    - "知識"
+    - "情報"
+    - "お知らせ"
+
+  intent_commercial:
+    - "購入"
+    - "注文"
+    - "通販"
+    - "送料"
+    - "クーポン"
+    - "セール"
+    - "DM"
+    - "問い合わせ"
+    - "在庫"
+    - "発送"
+    - "Amazon"
+    - "楽天"
+    - "ショップ"
+    - "店舗"
+
+  intent_experiential:
+    - "体感"
+    - "感じ"
+    - "使用"
+    - "試し"
+    - "吸っ"
+    - "vape"
+    - "レビュー"
+    - "感想"
+    - "個人的"
+
+  intent_harm_report:
+    - "副作用"
+    - "有害"
+    - "被害"
+    - "事故"
+    - "危険"
+    - "注意"
+    - "警告"
+    - "健康被害"
+    - "体調不良"
+
+# =============================================================================
+# 分類ロジック
+# =============================================================================
+
+classification_logic:
+  topic:
+    method: "keyword_matching"
+    rule: "キーワードマッチ数が最大のトピックを選択"
+    fallback: "unclassified"
+    case_sensitive: false
+
+  intent:
+    method: "keyword_matching"
+    rule: "キーワードマッチ数が最大の意図を選択"
+    fallback: "unclassified"
+    case_sensitive: false
+
+  format:
+    method: "rule_based"
+    rules:
+      - condition: "text に URL を含む AND text_length < 100"
+        result: "format_link"
+      - condition: "上記以外"
+        result: "format_text"
+
+# =============================================================================
+# 分類結果サマリー (2026-10-02 実行)
+# =============================================================================
+
+classification_results:
+  date: "2026-10-02"
+  total_records: 147
+  classifier: "rule_based v1.0.0"
+
+  topic_distribution:
+    topic_ingredient: { count: 99, percentage: 67.3 }
+    unclassified: { count: 18, percentage: 12.2 }
+    topic_product: { count: 11, percentage: 7.5 }
+    topic_effect: { count: 10, percentage: 6.8 }
+    topic_promotion: { count: 5, percentage: 3.4 }
+    topic_review: { count: 4, percentage: 2.7 }
+
+  intent_distribution:
+    intent_informational: { count: 95, percentage: 64.6 }
+    intent_experiential: { count: 26, percentage: 17.7 }
+    intent_commercial: { count: 14, percentage: 9.5 }
+    unclassified: { count: 11, percentage: 7.5 }
+    intent_harm_report: { count: 1, percentage: 0.7 }
+
+  format_distribution:
+    format_text: { count: 144, percentage: 98.0 }
+    format_link: { count: 3, percentage: 2.0 }
+
+# =============================================================================
+# 既知の制約
+# =============================================================================
+
+limitations:
+  - "ルールベース分類は文脈を理解できない"
+  - "キーワードマッチは誤分類を引き起こす可能性がある"
+  - "unclassified の割合が高い（12.2%）"
+  - "人手検証（inter-rater reliability）は未実施"
+  - "将来的に LLM / BERT への交換を推奨"

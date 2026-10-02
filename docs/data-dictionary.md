@@ -48,8 +48,31 @@
 | `replies` | integer | 個 | 返信数 | 欠損なし |
 | `has_text` | string | — | 本文が存在するか（yes/no） | 欠損なし |
 | `text_length` | integer | 文字 | 本文の文字数 | 欠損なし |
+| `topic_id` | string | — | 話題分類 ID（SKOS Concept notation） | `unclassified` |
+| `intent_id` | string | — | 投稿意図 ID（SKOS Concept notation） | `unclassified` |
+| `format_id` | string | — | 投稿形式 ID（SKOS Concept notation） | `unclassified` |
+| `platform` | string | — | プラットフォーム名 | `x_twitter` |
+| `language` | string | — | 言語コード（BCP 47） | `ja` |
 
 **データ完全率:** 全カラム 147/147 (100%)
+
+**分類フィールドの値:**
+
+| フィールド | 許容値 | タクソノミー |
+|-----------|--------|-------------|
+| `topic_id` | `topic_ingredient`, `topic_product`, `topic_effect`, `topic_promotion`, `topic_review`, `topic_store`, `unclassified` | `metadata/taxonomy/content-taxonomy.skos.jsonld` |
+| `intent_id` | `intent_informational`, `intent_commercial`, `intent_experiential`, `intent_harm_report`, `unclassified` | 同上 |
+| `format_id` | `format_text`, `format_image`, `format_video`, `format_link`, `unclassified` | 同上 |
+
+**分類フィールドの参考:**
+
+| フィールド | Schema.org 対応 | SKOS 対応 |
+|-----------|----------------|-----------|
+| `topic_id` | `schema:about` | `skos:notation` |
+| `intent_id` | カスタム | `skos:notation` |
+| `format_id` | カスタム | `skos:notation` |
+| `platform` | `schema:isPartOf` | — |
+| `language` | `schema:inLanguage` | — |
 
 **匿名化内容:**
 
