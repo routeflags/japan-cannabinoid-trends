@@ -853,13 +853,13 @@ research_backlog:
   high_priority:
 
     - id: CBR-001
-      topic: CBX Online Trend Dataset - v1.7.0 released
+      topic: CBX Online Trend Dataset - v1.7.1 released
       status: completed
-      doi: 10.5281/zenodo.23095153
+      doi: 10.5281/zenodo.23097769
       notes: |
-        Technical standards compliance (W3C SKOS, IPTC, Schema.org)
-        Content classification for X data (ISS-004 resolved)
-        Export scripts (RDF/Turtle, JSON-LD)
+        Keyword coverage expansion (7 cannabinoids)
+        First-mention timeline research
+        Documentation updates
 
     - id: CBR-002
       topic: Japan Cannabinoid Product Transparency Survey 2027
@@ -894,6 +894,14 @@ research_backlog:
         Phase 1-7 completed
         SKOS taxonomy, IPTC mapping, Schema.org mapping
         Export scripts, validation scripts
+
+    - id: CBR-008
+      topic: Keyword coverage expansion (EXP-20261002)
+      status: completed
+      notes: |
+        7 cannabinoids added: CBD, THC, CBG, HHC, THCV, THC-O, THCH
+        Google Trends, X, YouTube data collected
+        First-mention timeline research completed
 
     - id: CBR-006
       topic: FAIR principles evaluation and improvement
