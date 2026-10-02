@@ -1,0 +1,19 @@
+{
+  "keyword": "HHCH",
+  "geo": "JP",
+  "timeframe": "today 5-y",
+  "collected_at": "2026-10-02",
+  "note": "5年データ。2023-03初出、2023-11にピーク（規制前）、規制後はほぼゼロ",
+  "first_mention": "2023-03-26",
+  "first_value": 1,
+  "peak": {"date": "2023-11-12", "value": 100},
+  "data_summary": {
+    "period_with_data": "2023-03-26 〜 2024-03-17 (主に)",
+    "period_without_data": "2021-09-26 〜 2023-03-19 + 2024-03-31以降",
+    "data_points_nonzero": 48,
+    "data_points_zero": 213,
+    "peak_period": "2023-11-12 (規制1ヶ月前)",
+    "regulation_effect": "2023-12-02規制後、検索需要がほぼ消滅",
+    "note": "規制効果を示す興味深いケーススタディ"
+  }
+}
