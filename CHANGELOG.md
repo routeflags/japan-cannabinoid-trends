@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.7.0] - 2026-10-02
 
+**DOI:** [10.5281/zenodo.23095153](https://doi.org/10.5281/zenodo.23095153)
+
 ### Added
 - **技術標準対応** (W3C SKOS, IPTC, Schema.org)
   - `metadata/taxonomy/content-taxonomy.skos.jsonld`: コンテンツ分類タクソノミー (W3C SKOS)
