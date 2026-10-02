@@ -14,11 +14,11 @@ CBX Online Trend Dataset 2026: Google Trends, Social Media, and COA Data from Ja
 Version 1.6.2.
 Routeflags Co., Ltd.
 [Dataset].
-DOI: 10.5281/zenodo.23091163
+DOI: 10.5281/zenodo.23095153
 ```
 
-**DOI (Concept):** https://doi.org/10.5281/zenodo.23091162
-**DOI (Version):** https://doi.org/10.5281/zenodo.23091163
+**DOI (Concept):** https://doi.org/10.5281/zenodo.23095152
+**DOI (Version):** https://doi.org/10.5281/zenodo.23095153
 **GitHub:** https://github.com/routeflags/japan-cannabinoid-trends
 **Guide Page:** https://www.thch-vape.shop/guide/substance/what-is-cbx
 
@@ -53,7 +53,7 @@ DOI: 10.5281/zenodo.23091163
 
 | Version | Release Date | DOI | Academic | Media | Policy | Industry | Web | Total |
 |---------|-------------|-----|:--------:|:-----:|:------:|:--------:|:---:|:-----:|
-| v1.6.2 | 2026-10-02 | 10.5281/zenodo.23091163 | 0 | 0 | 0 | 0 | 0 | **0** |
+| v1.6.2 | 2026-10-02 | 10.5281/zenodo.23095153 | 0 | 0 | 0 | 0 | 0 | **0** |
 
 ### By Quarter
 
