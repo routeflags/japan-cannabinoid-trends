@@ -1,0 +1,18 @@
+{
+  "keyword": "CRDP",
+  "geo": "JP",
+  "timeframe": "today 5-y",
+  "collected_at": "2026-10-02",
+  "note": "5年データ。2022-07に初出、以降断続的、2025-05〜08に安定期間",
+  "first_mention": "2022-07-31",
+  "first_value": 29,
+  "peak": {"date": "2025-06-08", "value": 100},
+  "data_summary": {
+    "period_with_data": "2022-07-31 〜 2026-10-03 (断続的)",
+    "period_without_data": "2021-09-26 〜 2022-07-24 + 多数のゼロ週",
+    "data_points_nonzero": 48,
+    "data_points_zero": 213,
+    "stable_period": "2025-05-11 〜 2025-08-16 (16週連続データあり)",
+    "note": "低ボリュームクエリ、断続的検索需要"
+  }
+}
