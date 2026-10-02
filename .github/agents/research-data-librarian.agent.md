@@ -180,12 +180,19 @@ repository/
 │
 ├── metadata/
 │   ├── datapackage.json      # Frictionless スキーマ
-│   └── keywords.yaml         # キーワード辞書
+│   ├── keywords.yaml         # キーワード辞書
+│   ├── taxonomy/             # SKOS タクソノミー
+│   │   ├── *.skos.jsonld     # W3C SKOS 準拠
+│   │   ├── iptc-mapping.yaml # IPTC 対応表
+│   │   └── classification-rules.yaml
+│   └── schema/               # Schema.org マッピング
+│       └── socialmediaposting.jsonld
 │
 ├── config/
 │
 ├── scripts/
-│   └── validation/           # 検証スクリプト
+│   ├── validation/           # 検証スクリプト
+│   └── export/               # エクスポートスクリプト
 │
 ├── research/
 │   └── citation-tracker.md   # 引用トラッカー
