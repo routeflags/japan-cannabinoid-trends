@@ -2,7 +2,7 @@
   "name": "japan-cannabinoid-trends",
   "title": "CBX Online Trend Dataset 2026: Google Trends, Social Media, and COA Data from Japan",
   "version": "1.7.0",
-  "description": "日本国内におけるカンナビノイド関連トレンドを追跡するロングジューデータセット。Google Trends（CBX / H4CBH / HHBD / CBX リキッド、12ヶ月週次）、X (Twitter) 147件（重複排除済み）、YouTube 24件（フィルタ済み）、COA 分析結果（ISO/IEC 17025 認定 2 社）を収録。",
+  "description": "日本国内におけるカンナビノイド関連トレンドを追跡するロングジューデータセット。Google Trends（CBX / H4CBH / HHBD / CBX リキッド / CBD / THC / CBG / HHC / THCV / THC-O / THCH）、X (Twitter)、YouTube、COA 分析結果（ISO/IEC 17025 認定 2 社）を収録。",
   "homepage": "https://github.com/routeflags/japan-cannabinoid-trends",
   "license": "CC-BY-4.0",
   "created": "2026-09-16",
@@ -20,6 +20,13 @@
     "CBX",
     "H4CBH",
     "HHBD",
+    "CBD",
+    "THC",
+    "CBG",
+    "HHC",
+    "THCV",
+    "THC-O",
+    "THCH",
     "Google Trends",
     "X (Twitter)",
     "YouTube",
@@ -371,6 +378,84 @@
             },
             "references": {
               "schema_property": "schema:inLanguage"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "cannabinoid-multi-trends",
+      "path": "datasets/cannabinoid-multi-trends/",
+      "format": "json,csv",
+      "description": "主要カンナビノイド7化合物（CBD, THC, CBG, HHC, THCV, THC-O, THCH）のトレンドデータ（Google Trends, X, YouTube）",
+      "schema": {
+        "fields": [
+          {
+            "name": "keyword",
+            "type": "string",
+            "description": "収集キーワード（化合物名）",
+            "constraints": {
+              "enum": ["CBD", "THC", "CBG", "HHC", "THCV", "THC-O", "THCH"]
+            }
+          },
+          {
+            "name": "geo",
+            "type": "string",
+            "description": "地域コード (JP = 日本)",
+            "constraints": {
+              "enum": ["JP"]
+            }
+          },
+          {
+            "name": "timeframe",
+            "type": "string",
+            "description": "観測期間 (例: today 12-m, today 5-y)"
+          },
+          {
+            "name": "source",
+            "type": "string",
+            "description": "データソース",
+            "constraints": {
+              "enum": ["google-trends", "x-twitter", "youtube"]
+            }
+          },
+          {
+            "name": "date",
+            "type": "date",
+            "description": "データポイントの日付 (週次データは週開始日)"
+          },
+          {
+            "name": "value",
+            "type": "number",
+            "description": "興味度スコア (0-100, Google Trends)",
+            "constraints": {
+              "minimum": 0,
+              "maximum": 100
+            }
+          },
+          {
+            "name": "record_count",
+            "type": "integer",
+            "description": "取得件数 (X, YouTube)",
+            "constraints": {
+              "minimum": 0
+            }
+          },
+          {
+            "name": "compound_category",
+            "type": "string",
+            "description": "化合物カテゴリ",
+            "constraints": {
+              "enum": [
+                "major_phytocannabinoid",
+                "minor_phytocannabinoid",
+                "semi_synthetic",
+                "synthetic"
+              ]
+            },
+            "references": {
+              "taxonomy": "metadata/taxonomy/compound-taxonomy.skos.jsonld",
+              "skos_scheme": "jptr:compound-scheme"
             }
           }
         ]

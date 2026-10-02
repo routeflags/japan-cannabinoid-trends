@@ -206,7 +206,85 @@
 
 ---
 
-## 6. 欠損値の扱い
+## 6. 主要カンナビノイドトレンドデータ: `cannabinoid-multi-trends`
+
+**Study ID:** cannabinoid-multi-trends
+**作成日:** 2026-10-02
+**対象化合物:** CBD, THC, CBG, HHC, THCV, THC-O, THCH
+
+### 6.1 Google Trends データ
+
+**パス:** `datasets/cannabinoid-multi-trends/data/raw/google_trends/`
+
+| カラム名 | 型 | 単位 | 説明 | 欠損値の扱い |
+|----------|-----|------|------|-------------|
+| `keyword` | string | — | 収集キーワード（化合物名） | 欠損なし |
+| `geo` | string | — | 地域コード（JP = 日本） | 欠損なし |
+| `timeframe` | string | — | 観測期間（例: `today 12-m`, `today 5-y`） | 欠損なし |
+| `date` | date | — | データポイントの日付（週開始日） | 欠損なし |
+| `value` | number | — | 興味度スコア（0-100） | 低ボリュームでは `0`（`observed_zero`） |
+
+**データ期間:**
+- 12ヶ月データ: 2025-09-28 〜 2026-10-03
+- 5年データ: 2021-09-26 〜 2026-10-03
+
+**注意事項:**
+- Google Trends は相対指数（0-100）であり、絶対検索数ではない
+- 低ボリュームクエリ（HHC, THCH, THCV, THC-O）はデータが不安定
+- THCV/THC-O は12ヶ月データでは閾値未満の可能性がある
+
+### 6.2 X (Twitter) データ
+
+**パス:** `datasets/cannabinoid-multi-trends/data/raw/x/`
+
+| カラム名 | 型 | 単位 | 説明 | 欠損値の扱い |
+|----------|-----|------|------|-------------|
+| `tweet_id` | string | — | ツイート ID | 欠損なし |
+| `screen_name` | string | — | 投稿者ユーザー名 | 欠損なし |
+| `created_at` | string (ISO 8601) | — | 投稿日時（UTC） | 欠損なし |
+| `text` | string | — | ツイート本文 | 欠損なし |
+| `lang` | string | — | 言語コード | 欠損なし |
+| `views` | integer / string | 回 | 表示回数（string 型の場合あり） | 欠損なし |
+| `favorites` | integer | 個 | いいね数 | 欠損なし |
+| `retweets` | integer | 個 | リポスト数 | 欠損なし |
+| `replies` | integer | 個 | 返信数 | 欠損なし |
+
+**観測期間:** 2026-09-01 〜 2026-10-01
+**注意事項:**
+- `views` は string 型で返る場合がある（`int()` 変換が必要）
+- シャドウバンにより 0 件の可能性あり（`observed_zero` として記録）
+- 個人情報を含むため、公開時は匿名化が必要
+
+### 6.3 YouTube データ
+
+**パス:** `datasets/cannabinoid-multi-trends/data/raw/youtube/`
+
+| カラム名 | 型 | 単位 | 説明 | 欠損値の扱い |
+|----------|-----|------|------|-------------|
+| `videoId` | string | — | YouTube 動画 ID | 欠損なし |
+| `title` | string | — | 動画タイトル | 欠損なし |
+| `channelTitle` | string | — | チャンネル名 | 欠損なし |
+| `views` | integer | 回 | 再生数 | 欠損なし |
+| `duration` | integer | 秒 | 動画の長さ | 欠損なし |
+| `timestamp` | string | — | 相対公開日（例: "3 days ago"） | 欠損なし |
+
+**取得日:** 2026-10-02（スナップショット）
+**注意事項:**
+- `timestamp` は相対表記（絶対日付ではない）
+- ページング重複あり、`videoId` で重複排除必須
+- 再生数は取得時点の値（変動する）
+
+### 6.4 化合物カテゴリ
+
+| カテゴリ ID | 成分 | SKOS Concept |
+|-------------|------|--------------|
+| `major_phytocannabinoid` | CBD, THC | `compound_cbd`, `compound_thc` |
+| `minor_phytocannabinoid` | CBG, THCV, THCH | `compound_cbg`, `compound_thcv`, `compound_thch` |
+| `semi_synthetic` | HHC, THC-O | `compound_hhc`, `compound_thc_o` |
+
+---
+
+## 7. 欠損値の扱い
 
 ### 6.1 状態定義
 
@@ -230,9 +308,9 @@
 
 ---
 
-## 7. カラム名の正規化
+## 8. カラム名の正規化
 
-### 7.1 X データ
+### 8.1 X データ
 
 | 元のフィールド（Apify） | 正規化後 | 理由 |
 |------------------------|---------|------|
@@ -246,7 +324,7 @@
 
 ---
 
-## 8. 関連ドキュメント
+## 9. 関連ドキュメント
 
 | ドキュメント | 内容 |
 |-------------|------|
