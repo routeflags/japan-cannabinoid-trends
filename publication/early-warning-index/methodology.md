@@ -92,9 +92,84 @@ Twelve cannabinoids were selected based on:
 | **Unregulated (conditional)** | Legal under conditions (e.g., THC-free) |
 | **Unregulated (caution)** | Not specifically regulated but monitoring recommended |
 
+### Regulatory History Fields
+
+The dataset records three distinct regulatory timepoints:
+
+| Field | Definition | Example (THCH) |
+|-------|------------|----------------|
+| **first_regulation_date** | Initial individual designation | 2023-08-04 |
+| **generic_designation_date** | Group/generic designation (if applicable) | 2023-09-10 |
+| **current_status** | Current regulatory status | Designated Drug |
+
 ---
 
-## 6. Data Processing
+## 6. Emergence Score System
+
+### Definition
+
+The Emergence Score (ES) is a composite indicator of compound emergence intensity, calculated from four components:
+
+```
+ES = f(growth, acceleration, persistence, novelty)
+```
+
+### Scoring Rubric
+
+| Score | Classification | Definition |
+|:-----:|----------------|------------|
+| **0** | Not detected | No data in Google Trends |
+| **1** | Sporadic detection | Isolated non-zero weeks, no sustained pattern |
+| **2** | Sustained detection | Regular appearance but low growth rate |
+| **3** | Rapid growth | Significant increase in search interest |
+| **4** | High-growth emerging | Rapid growth + recent emergence + regulatory attention |
+
+### Component Criteria
+
+| Component | Measurement | Weight |
+|-----------|-------------|:------:|
+| **Growth** | Peak value / mean value ratio | High |
+| **Acceleration** | Rate of change in recent periods | Medium |
+| **Persistence** | Share of non-zero weeks | Medium |
+| **Novelty** | Recency of first mention | High |
+
+### Scoring Examples
+
+| Compound | ES | Rationale |
+|----------|:--:|-----------|
+| CBD | 1 | Baseline compound, stable year-round presence |
+| HHC | 3 | Low-volume but rapid growth before regulation |
+| HHCH | 4 | High growth + recent emergence + regulatory intervention |
+| H4CBH | 4 | Recent emergence + high initial values |
+
+### Limitations of Emergence Score
+
+1. **Relative index:** Based on Google Trends relative values, not absolute search volume
+2. **Qualitative:** Score reflects patterns, not statistical significance
+3. **Context-dependent:** May not apply equally across different market conditions
+4. **Not predictive:** Describes past emergence, not future trajectory
+
+---
+
+## 7. Cohort Classification
+
+### Baseline vs Emerging
+
+| Cohort | Compounds | Definition |
+|--------|-----------|------------|
+| **Baseline** | CBD, THC, CBN, CBG, THCV | Pre-existing market presence (first mention ≤ 2021-12-31) |
+| **Emerging** | HHC, THC-O, THCH, HHCH, CRDP, H4CBH, HHBD | Recently appeared (first mention ≥ 2022-01-01) |
+
+### Analytical Use
+
+Baseline compounds serve as **reference series** for monitoring emerging compounds, enabling:
+- Context for relative interest levels
+- Comparison of emergence patterns
+- Control for market-wide search trends
+
+---
+
+## 8. Data Processing
 
 ### Raw Data Location
 
@@ -117,7 +192,7 @@ datasets/cannabinoid-multi-trends/data/processed/
 
 ---
 
-## 7. Quality Controls
+## 9. Quality Controls
 
 | Control | Implementation |
 |---------|---------------|
@@ -129,7 +204,7 @@ datasets/cannabinoid-multi-trends/data/processed/
 
 ---
 
-## 8. Limitations
+## 10. Limitations
 
 1. **Relative indices:** Google Trends values (0-100) measure relative interest, not absolute search volume.
 2. **5-year window:** Google Trends maximum timeframe is `today 5-y`; pre-2021 emergence cannot be detected.
@@ -140,7 +215,7 @@ datasets/cannabinoid-multi-trends/data/processed/
 
 ---
 
-## 9. Reproducibility
+## 11. Reproducibility
 
 ### Collection Script
 
@@ -160,7 +235,7 @@ Includes: run_id, study_id, source, collection_timestamp, queries.
 
 ---
 
-## 10. Citation
+## 12. Citation
 
 When citing this methodology or dataset:
 

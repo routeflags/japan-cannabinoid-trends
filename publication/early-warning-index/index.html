@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Japan Cannabinoid Emerging Compound Early Warning Index v1</title>
-    <meta name="description" content="Early warning index tracking the emergence of cannabinoids in Japanese Google search data (2021-2026), with regulatory status for 12 compounds.">
+    <meta name="description" content="Early warning index tracking the emergence of cannabinoids in Japanese Google search data (2021-2026), with regulatory status and emergence scoring for 12 compounds.">
     <meta name="author" content="Kyoji Kato">
-    <meta name="keywords" content="cannabinoids, Japan, Google Trends, regulatory status, early warning, CBD, CBN, HHC, HHCH">
+    <meta name="keywords" content="cannabinoids, Japan, Google Trends, regulatory status, early warning, CBD, CBN, HHC, HHCH, emergence score">
     
     <!-- Schema.org Dataset -->
     <script type="application/ld+json">
@@ -14,7 +14,7 @@
         "@context": "https://schema.org/",
         "@type": "Dataset",
         "name": "Japan Cannabinoid Emerging Compound Early Warning Index v1",
-        "description": "Early warning index tracking the emergence of cannabinoids in Japanese Google search data (2021-2026), with regulatory status for 12 compounds.",
+        "description": "Early warning index tracking the emergence of cannabinoids in Japanese Google search data (2021-2026), with regulatory status and emergence scoring for 12 compounds.",
         "author": {
             "@type": "Person",
             "name": "Kyoji Kato",
@@ -27,7 +27,7 @@
         "datePublished": "2026-10-02",
         "license": "https://creativecommons.org/licenses/by/4.0/",
         "url": "https://github.com/routeflags/japan-cannabinoid-trends",
-        "keywords": ["cannabinoids", "Japan", "Google Trends", "regulatory status", "early warning"]
+        "keywords": ["cannabinoids", "Japan", "Google Trends", "regulatory status", "early warning", "emergence score"]
     }
     </script>
     
@@ -36,6 +36,8 @@
             --primary: #1a5276;
             --secondary: #2980b9;
             --accent: #e74c3c;
+            --success: #27ae60;
+            --warning: #f39c12;
             --bg: #f8f9fa;
             --text: #2c3e50;
             --border: #dee2e6;
@@ -141,7 +143,7 @@
             margin-bottom: 0.5rem;
         }
         
-        .citation-unit {
+        .finding-card {
             background: #f8f9fa;
             border: 1px solid var(--border);
             border-radius: 6px;
@@ -149,15 +151,42 @@
             margin: 1rem 0;
         }
         
-        .citation-unit-number {
+        .finding-id {
             display: inline-block;
-            background: var(--secondary);
+            background: var(--primary);
             color: white;
             padding: 0.25rem 0.75rem;
             border-radius: 12px;
             font-size: 0.85rem;
             font-weight: 600;
             margin-bottom: 0.75rem;
+            font-family: monospace;
+        }
+        
+        .observation {
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            color: var(--primary);
+        }
+        
+        .evidence-table {
+            margin: 0.75rem 0;
+        }
+        
+        .evidence-table table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+        
+        .evidence-table th, .evidence-table td {
+            padding: 0.4rem 0.75rem;
+            border: 1px solid var(--border);
+        }
+        
+        .evidence-table th {
+            background: #e8f4f8;
+            font-weight: 600;
         }
         
         .citation-sentence {
@@ -168,10 +197,22 @@
             margin: 0.75rem 0;
         }
         
-        .source-note {
+        .interpretation {
             font-size: 0.9rem;
             color: #666;
             margin-top: 0.5rem;
+            padding-top: 0.5rem;
+            border-top: 1px dashed var(--border);
+        }
+        
+        .source-note {
+            font-size: 0.85rem;
+            color: #888;
+            margin-top: 0.5rem;
+        }
+        
+        .source-note a {
+            color: var(--secondary);
         }
         
         table {
@@ -202,12 +243,74 @@
         }
         
         .unregulated {
-            color: #27ae60;
+            color: var(--success);
             font-weight: 600;
         }
         
         .caution {
-            color: #f39c12;
+            color: var(--warning);
+            font-weight: 600;
+        }
+        
+        .baseline {
+            background: #e8f8f0;
+        }
+        
+        .emerging {
+            background: #fff8e1;
+        }
+        
+        .score-badge {
+            display: inline-block;
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        
+        .score-1 { background: #d5f5e3; color: #1e8449; }
+        .score-2 { background: #d6eaf8; color: #2471a3; }
+        .score-3 { background: #fcf3cf; color: #b7950b; }
+        .score-4 { background: #fadbd8; color: #c0392b; }
+        
+        .emergence-scale {
+            background: #f8f9fa;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+        
+        .scale-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+        
+        .scale-number {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-weight: 700;
+            font-size: 1.2rem;
+            margin-right: 1rem;
+            color: white;
+        }
+        
+        .scale-0 { background: #95a5a6; }
+        .scale-1 { background: #27ae60; }
+        .scale-2 { background: #2980b9; }
+        .scale-3 { background: #f39c12; }
+        .scale-4 { background: #e74c3c; }
+        
+        .scale-description {
+            flex: 1;
+        }
+        
+        .scale-label {
             font-weight: 600;
         }
         
@@ -258,6 +361,16 @@
             .meta-grid {
                 grid-template-columns: 1fr;
             }
+            
+            .scale-item {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .scale-number {
+                margin-right: 0;
+                margin-bottom: 0.5rem;
+            }
         }
     </style>
 </head>
@@ -284,7 +397,7 @@
                 </div>
                 <div class="meta-item">
                     <div class="meta-label">Compounds Tracked</div>
-                    <div class="meta-value">12</div>
+                    <div class="meta-value">12 (5 baseline + 7 emerging)</div>
                 </div>
                 <div class="meta-item">
                     <div class="meta-label">License</div>
@@ -301,176 +414,310 @@
             <h2>Key Findings</h2>
             <div class="key-findings">
                 <ul>
-                    <li><strong>12 cannabinoids</strong> tracked in Japanese Google Trends data from 2021 to 2026</li>
-                    <li><strong>6 compounds</strong> are now regulated under Japanese law (THC, HHC, THCH, HHCH, THC-O, CBN)</li>
-                    <li><strong>HHCH</strong> shows clear regulation effect: search interest peaked 3 weeks before regulation, then disappeared</li>
-                    <li><strong>H4CBH and HHBD</strong> emerged in 2025, approximately 8 months apart</li>
-                    <li><strong>4 new cannabinoids</strong> appeared in Japanese search data during 2022-2023</li>
+                    <li><strong>12 cannabinoids</strong> tracked: 5 baseline (CBD, THC, CBN, CBG, THCV) + 7 emerging (HHC, THC-O, THCH, HHCH, CRDP, H4CBH, HHBD)</li>
+                    <li><strong>6 compounds</strong> now regulated under Japanese law</li>
+                    <li><strong>JCEI-F001:</strong> HHCH shows post-regulation decline in search interest (temporal association)</li>
+                    <li><strong>Emergence Score system</strong> classifies compounds from 0 (not detected) to 4 (high-growth emerging)</li>
+                    <li><strong>4 new cannabinoids</strong> emerged during 2022-2023, 2 more in 2025</li>
                 </ul>
             </div>
         </section>
         
+        <section id="emergence-score">
+            <h2>Emergence Score System</h2>
+            <p>The Emergence Score (ES) is a composite indicator of compound emergence intensity:</p>
+            
+            <div class="emergence-scale">
+                <div class="scale-item">
+                    <div class="scale-number scale-0">0</div>
+                    <div class="scale-description">
+                        <div class="scale-label">Not detected</div>
+                        <div>No data in Google Trends</div>
+                    </div>
+                </div>
+                <div class="scale-item">
+                    <div class="scale-number scale-1">1</div>
+                    <div class="scale-description">
+                        <div class="scale-label">Sporadic detection</div>
+                        <div>Isolated non-zero weeks, no sustained pattern</div>
+                    </div>
+                </div>
+                <div class="scale-item">
+                    <div class="scale-number scale-2">2</div>
+                    <div class="scale-description">
+                        <div class="scale-label">Sustained detection</div>
+                        <div>Regular appearance but low growth rate</div>
+                    </div>
+                </div>
+                <div class="scale-item">
+                    <div class="scale-number scale-3">3</div>
+                    <div class="scale-description">
+                        <div class="scale-label">Rapid growth</div>
+                        <div>Significant increase in search interest</div>
+                    </div>
+                </div>
+                <div class="scale-item">
+                    <div class="scale-number scale-4">4</div>
+                    <div class="scale-description">
+                        <div class="scale-label">High-growth emerging</div>
+                        <div>Rapid growth + recent emergence + regulatory attention</div>
+                    </div>
+                </div>
+            </div>
+            
+            <p><strong>Components:</strong> Growth (peak/mean ratio), Acceleration (rate of change), Persistence (non-zero weeks share), Novelty (recency of first mention).</p>
+        </section>
+        
         <section id="data-table">
             <h2>Data Summary</h2>
-            <p>The following table summarizes first-mention dates and regulatory status for all tracked compounds.</p>
+            <p>Compounds are classified as <strong>baseline</strong> (pre-existing market presence) or <strong>emerging</strong> (appeared 2022+).</p>
             
             <table>
                 <thead>
                     <tr>
                         <th>Compound</th>
-                        <th>Classification</th>
+                        <th>Cohort</th>
                         <th>First Mention</th>
-                        <th>Regulatory Status</th>
-                        <th>Regulation Date</th>
+                        <th>ES</th>
+                        <th>Current Status</th>
+                        <th>First Regulation</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
+                    <tr class="baseline">
                         <td><strong>CBD</strong></td>
-                        <td>Major Phytocannabinoid</td>
+                        <td>Baseline</td>
                         <td>2021-09-26以前*</td>
+                        <td><span class="score-badge score-1">1</span></td>
                         <td class="unregulated">Unregulated (conditional)</td>
                         <td>—</td>
                     </tr>
-                    <tr>
+                    <tr class="baseline">
                         <td><strong>THC</strong></td>
-                        <td>Major Phytocannabinoid</td>
+                        <td>Baseline</td>
                         <td>2021-09-26以前*</td>
+                        <td><span class="score-badge score-1">1</span></td>
                         <td class="regulated">Regulated</td>
                         <td>1948-07-10</td>
                     </tr>
-                    <tr>
+                    <tr class="baseline">
                         <td><strong>CBN</strong></td>
-                        <td>Minor Phytocannabinoid</td>
+                        <td>Baseline</td>
                         <td>2021-09-26以前*</td>
+                        <td><span class="score-badge score-1">1</span></td>
                         <td class="regulated">Designated Drug</td>
                         <td>2026-06-01</td>
                     </tr>
-                    <tr>
+                    <tr class="baseline">
                         <td><strong>CBG</strong></td>
-                        <td>Minor Phytocannabinoid</td>
+                        <td>Baseline</td>
                         <td>2021-09-26</td>
+                        <td><span class="score-badge score-2">2</span></td>
                         <td class="unregulated">Unregulated (conditional)</td>
                         <td>—</td>
                     </tr>
-                    <tr>
-                        <td><strong>HHC</strong></td>
-                        <td>Semi-Synthetic</td>
-                        <td>2021-11-28</td>
-                        <td class="regulated">Designated Drug</td>
-                        <td>2022-03-17</td>
-                    </tr>
-                    <tr>
-                        <td><strong>HHCH</strong></td>
-                        <td>Synthetic</td>
-                        <td>2023-03-26</td>
-                        <td class="regulated">Designated Drug</td>
-                        <td>2023-12-02</td>
-                    </tr>
-                    <tr>
+                    <tr class="baseline">
                         <td><strong>THCV</strong></td>
-                        <td>Minor Phytocannabinoid</td>
+                        <td>Baseline</td>
                         <td>2021-12-19</td>
+                        <td><span class="score-badge score-2">2</span></td>
                         <td class="unregulated">Unregulated</td>
                         <td>—</td>
                     </tr>
-                    <tr>
-                        <td><strong>THC-O</strong></td>
-                        <td>Semi-Synthetic</td>
-                        <td>2022-03-13</td>
-                        <td class="regulated">Narcotics</td>
-                        <td>2024-12-12</td>
+                    <tr class="emerging">
+                        <td><strong>HHC</strong></td>
+                        <td>Emerging</td>
+                        <td>2021-11-28</td>
+                        <td><span class="score-badge score-3">3</span></td>
+                        <td class="regulated">Designated Drug</td>
+                        <td>2022-03-17</td>
                     </tr>
-                    <tr>
+                    <tr class="emerging">
+                        <td><strong>THC-O</strong></td>
+                        <td>Emerging</td>
+                        <td>2022-03-13</td>
+                        <td><span class="score-badge score-3">3</span></td>
+                        <td class="regulated">Designated Drug</td>
+                        <td>2023-03-20</td>
+                    </tr>
+                    <tr class="emerging">
                         <td><strong>THCH</strong></td>
-                        <td>Minor Phytocannabinoid</td>
+                        <td>Emerging</td>
                         <td>2022-04-17</td>
+                        <td><span class="score-badge score-2">2</span></td>
                         <td class="regulated">Designated Drug</td>
                         <td>2023-08-04</td>
                     </tr>
-                    <tr>
+                    <tr class="emerging">
                         <td><strong>CRDP</strong></td>
-                        <td>Synthetic</td>
+                        <td>Emerging</td>
                         <td>2022-07-31</td>
+                        <td><span class="score-badge score-3">3</span></td>
                         <td class="caution">Unregulated (caution)</td>
                         <td>—</td>
                     </tr>
-                    <tr>
+                    <tr class="emerging">
+                        <td><strong>HHCH</strong></td>
+                        <td>Emerging</td>
+                        <td>2023-03-26</td>
+                        <td><span class="score-badge score-4">4</span></td>
+                        <td class="regulated">Designated Drug</td>
+                        <td>2023-12-02</td>
+                    </tr>
+                    <tr class="emerging">
                         <td><strong>H4CBH</strong></td>
-                        <td>Semi-Synthetic</td>
+                        <td>Emerging</td>
                         <td>2025-04-06</td>
+                        <td><span class="score-badge score-4">4</span></td>
                         <td class="caution">Unregulated (caution)</td>
                         <td>—</td>
                     </tr>
-                    <tr>
+                    <tr class="emerging">
                         <td><strong>HHBD</strong></td>
-                        <td>Semi-Synthetic</td>
+                        <td>Emerging</td>
                         <td>2025-11-30</td>
+                        <td><span class="score-badge score-4">4</span></td>
                         <td class="caution">Unregulated (caution)</td>
                         <td>—</td>
                     </tr>
                 </tbody>
             </table>
             
-            <p class="source-note">* Left-censored: compound was already present in Google Trends data at the start of the 5-year window (2021-09-26). True first-mention date may be earlier.</p>
+            <p class="source-note">* Left-censored: compound was already present in Google Trends data at the start of the 5-year window (2021-09-26). ES = Emergence Score.</p>
         </section>
         
-        <section id="citation-units">
+        <section id="findings">
             <h2>Citable Findings</h2>
-            <p>The following findings are designed for direct citation in research, journalism, and policy documents.</p>
+            <p>Findings are identified by <code>JCEI-FXXX</code> notation for precise citation across dataset versions.</p>
             
-            <div class="citation-unit">
-                <div class="citation-unit-number">Citation Unit 1</div>
-                <h3>HHCH Regulation Effect</h3>
-                <div class="citation-sentence">
-                    "In Japanese Google Trends data, HHCH (hexahydrocannabihexol) first appeared in the week of 2023-03-26 and peaked at a relative interest score of 100 in the week of 2023-11-12—approximately three weeks before it was designated as a controlled substance on 2023-12-02. Following regulation, search interest dropped to near zero and has remained minimal through 2026."
+            <div class="finding-card">
+                <div class="finding-id">JCEI-F001</div>
+                <div class="observation">HHCH Post-Regulation Decline in Search Interest</div>
+                <div class="evidence-table">
+                    <table>
+                        <tr><th>Metric</th><th>Value</th></tr>
+                        <tr><td>First mention</td><td>2023-03-26</td></tr>
+                        <tr><td>Peak week</td><td>2023-11-12 (value: 100)</td></tr>
+                        <tr><td>Regulation effective</td><td>2023-12-02</td></tr>
+                        <tr><td>Post-regulation level</td><td>Near zero (2024-2026)</td></tr>
+                    </table>
                 </div>
-                <div class="source-note">Source: <a href="https://github.com/routeflags/japan-cannabinoid-trends/blob/main/research/20261002-first-mention-timeline.md">First-Mention Timeline Research</a> | Accessed: 2026-10-02 | Note: Google Trends values are relative indices, not search volumes.</div>
+                <div class="citation-sentence">
+                    "In Japanese Google Trends data, HHCH (hexahydrocannabihexol) first appeared in the week of 2023-03-26 and peaked at a relative interest score of 100 in the week of 2023-11-12—approximately three weeks before it was designated as a controlled substance on 2023-12-02. Following regulation, search interest declined to near zero and has remained minimal through 2026."
+                </div>
+                <div class="interpretation"><strong>Interpretation:</strong> Temporal association only. No causal relationship is inferred between regulation and search interest decline.</div>
+                <div class="source-note">Source: <a href="https://github.com/routeflags/japan-cannabinoid-trends/blob/main/research/20261002-first-mention-timeline.md">First-Mention Timeline</a> | Regulatory: <a href="https://www.mhlw.go.jp/seisakunitsuite/bunya/kenkou_iryou/iyakuhin/yakubuturanyou/oshirase/20231227-1.html">MHLW</a></div>
             </div>
             
-            <div class="citation-unit">
-                <div class="citation-unit-number">Citation Unit 2</div>
-                <h3>CBN Regulation Timeline</h3>
+            <div class="finding-card">
+                <div class="finding-id">JCEI-F002</div>
+                <div class="observation">CBN Regulation Timeline</div>
+                <div class="evidence-table">
+                    <table>
+                        <tr><th>Metric</th><th>Value</th></tr>
+                        <tr><td>Health incidents reported</td><td>October 2024 onwards</td></tr>
+                        <tr><td>Ordinance announced</td><td>2026-03-18</td></tr>
+                        <tr><td>Regulation effective</td><td>2026-06-01</td></tr>
+                    </table>
+                </div>
                 <div class="citation-sentence">
                     "CBN (cannabinol) was designated a controlled substance in Japan effective June 1, 2026, following a series of health incidents reported since October 2024. The designation was announced on March 18, 2026, via Ministry of Health, Labour and Welfare ordinance."
                 </div>
-                <div class="source-note">Source: <a href="https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/kenkou_iryou/iyakuhin/yakubuturanyou/other/CBN_shitei.html">MHLW Official Page</a> | Accessed: 2026-10-02</div>
+                <div class="interpretation"><strong>Interpretation:</strong> Regulatory timeline based on official MHLW sources.</div>
+                <div class="source-note">Source: <a href="https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/kenkou_iryou/iyakuhin/yakubuturanyou/other/CBN_shitei.html">MHLW Official Page</a></div>
             </div>
             
-            <div class="citation-unit">
-                <div class="citation-unit-number">Citation Unit 3</div>
-                <h3>H4CBH and HHBD Emergence Sequence</h3>
+            <div class="finding-card">
+                <div class="finding-id">JCEI-F003</div>
+                <div class="observation">H4CBH and HHBD Emergence Sequence</div>
+                <div class="evidence-table">
+                    <table>
+                        <tr><th>Metric</th><th>Value</th></tr>
+                        <tr><td>H4CBH first mention</td><td>2025-04-06</td></tr>
+                        <tr><td>HHBD first mention</td><td>2025-11-30</td></tr>
+                        <tr><td>Time difference</td><td>~8 months</td></tr>
+                    </table>
+                </div>
                 <div class="citation-sentence">
                     "In Japanese Google Trends data, H4CBH first appeared in the week of 2025-04-06, while HHBD first appeared in the week of 2025-11-30—approximately eight months later. Both compounds are semi-synthetic cannabinoids that emerged during the same market expansion period."
                 </div>
-                <div class="source-note">Source: <a href="https://github.com/routeflags/japan-cannabinoid-trends/blob/main/research/20261002-first-mention-timeline.md">First-Mention Timeline Research</a> | Accessed: 2026-10-02</div>
+                <div class="interpretation"><strong>Interpretation:</strong> Emergence sequence based on first non-zero weeks in 5-year Google Trends data.</div>
+                <div class="source-note">Source: <a href="https://github.com/routeflags/japan-cannabinoid-trends/blob/main/research/20261002-first-mention-timeline.md">First-Mention Timeline</a></div>
             </div>
             
-            <div class="citation-unit">
-                <div class="citation-unit-number">Citation Unit 4</div>
-                <h3>Regulated Compounds Summary</h3>
-                <div class="citation-sentence">
-                    "As of October 2026, six of twelve tracked cannabinoids in Japan are subject to specific regulations: THC (cannabis control act, 1948), HHC (designated drug, 2022), THCH (designated drug, 2023), HHCH (designated drug, 2023), THC-O (narcotics control act, 2024), and CBN (designated drug, 2026)."
+            <div class="finding-card">
+                <div class="finding-id">JCEI-F004</div>
+                <div class="observation">Regulated Compounds Summary</div>
+                <div class="evidence-table">
+                    <table>
+                        <tr><th>Compound</th><th>First Regulation</th><th>Status</th></tr>
+                        <tr><td>THC</td><td>1948-07-10</td><td>Regulated</td></tr>
+                        <tr><td>HHC</td><td>2022-03-17</td><td>Designated Drug</td></tr>
+                        <tr><td>THC-O</td><td>2023-03-20</td><td>Designated Drug</td></tr>
+                        <tr><td>THCH</td><td>2023-08-04</td><td>Designated Drug</td></tr>
+                        <tr><td>HHCH</td><td>2023-12-02</td><td>Designated Drug</td></tr>
+                        <tr><td>CBN</td><td>2026-06-01</td><td>Designated Drug</td></tr>
+                    </table>
                 </div>
-                <div class="source-note">Source: <a href="https://github.com/routeflags/japan-cannabinoid-trends/blob/main/research/regulatory-status/SUMMARY.md">Regulatory Status Summary</a> | Accessed: 2026-10-02</div>
+                <div class="citation-sentence">
+                    "As of October 2026, six of twelve tracked cannabinoids in Japan are subject to specific regulations: THC (cannabis control act, 1948), HHC (designated drug, 2022), THC-O (designated drug, 2023), THCH (designated drug, 2023), HHCH (designated drug, 2023), and CBN (designated drug, 2026)."
+                </div>
+                <div class="interpretation"><strong>Interpretation:</strong> Regulatory status based on MHLW official sources as of 2026-10-02.</div>
+                <div class="source-note">Source: <a href="https://github.com/routeflags/japan-cannabinoid-trends/blob/main/research/regulatory-status/SUMMARY.md">Regulatory Status Summary</a></div>
             </div>
             
-            <div class="citation-unit">
-                <div class="citation-unit-number">Citation Unit 5</div>
-                <h3>New Compound Emergence Rate</h3>
-                <div class="citation-sentence">
-                    "Between 2022 and 2025, four new cannabinoids appeared in Japanese Google Trends data for the first time: THC-O (March 2022), THCH (April 2022), CRDP (July 2022), and HHCH (March 2023). Two additional semi-synthetic cannabinoids, H4CBH and HHBD, emerged in 2025."
+            <div class="finding-card">
+                <div class="finding-id">JCEI-F005</div>
+                <div class="observation">New Compound Emergence Rate</div>
+                <div class="evidence-table">
+                    <table>
+                        <tr><th>Year</th><th>Compounds</th><th>Count</th></tr>
+                        <tr><td>2022</td><td>THC-O, THCH, CRDP</td><td>3</td></tr>
+                        <tr><td>2023</td><td>HHCH</td><td>1</td></tr>
+                        <tr><td>2025</td><td>H4CBH, HHBD</td><td>2</td></tr>
+                        <tr><td colspan="2"><strong>Total</strong></td><td><strong>6</strong></td></tr>
+                    </table>
                 </div>
-                <div class="source-note">Source: <a href="https://github.com/routeflags/japan-cannabinoid-trends/blob/main/research/20261002-first-mention-timeline.md">First-Mention Timeline Research</a> | Accessed: 2026-10-02</div>
+                <div class="citation-sentence">
+                    "Between 2022 and 2025, six new cannabinoids appeared in Japanese Google Trends data for the first time: THC-O (March 2022), THCH (April 2022), CRDP (July 2022), HHCH (March 2023), H4CBH (April 2025), and HHBD (November 2025)."
+                </div>
+                <div class="interpretation"><strong>Interpretation:</strong> First-mention detection based on non-zero weeks in 5-year Google Trends data.</div>
+                <div class="source-note">Source: <a href="https://github.com/routeflags/japan-cannabinoid-trends/blob/main/research/20261002-first-mention-timeline.md">First-Mention Timeline</a></div>
             </div>
             
-            <div class="citation-unit">
-                <div class="citation-unit-number">Citation Unit 6</div>
-                <h3>Regulatory Category Distribution</h3>
-                <div class="citation-sentence">
-                    "Japanese regulation of cannabinoids employs multiple legal frameworks: the Cannabis Control Act for THC and conditional CBD/CBG, the Pharmaceuticals and Medical Devices Act for designated drugs (HHC, THCH, HHCH, CBN), and the Narcotics and Psychotropics Control Act for THC-O. This multi-framework approach reflects different risk assessments for different compound classes."
+            <div class="finding-card">
+                <div class="finding-id">JCEI-F006</div>
+                <div class="observation">Regulatory Category Distribution</div>
+                <div class="evidence-table">
+                    <table>
+                        <tr><th>Legal Framework</th><th>Compounds</th></tr>
+                        <tr><td>Cannabis Control Act</td><td>THC, CBD, CBG</td></tr>
+                        <tr><td>PMD Act (Designated Drug)</td><td>HHC, THC-O, THCH, HHCH, CBN</td></tr>
+                        <tr><td>No specific regulation</td><td>THCV, CRDP, H4CBH, HHBD</td></tr>
+                    </table>
                 </div>
-                <div class="source-note">Source: <a href="https://github.com/routeflags/japan-cannabinoid-trends/blob/main/research/regulatory-status/SUMMARY.md">Regulatory Status Summary</a> | Accessed: 2026-10-02</div>
+                <div class="citation-sentence">
+                    "Japanese regulation of cannabinoids employs multiple legal frameworks: the Cannabis Control Act for THC and conditional CBD/CBG, the Pharmaceuticals and Medical Devices Act for designated drugs (HHC, THC-O, THCH, HHCH, CBN), and no specific regulation for emerging compounds like THCV, CRDP, H4CBH, and HHBD."
+                </div>
+                <div class="interpretation"><strong>Interpretation:</strong> Classification based on official Japanese legal sources.</div>
+                <div class="source-note">Source: <a href="https://github.com/routeflags/japan-cannabinoid-trends/blob/main/research/regulatory-status/SUMMARY.md">Regulatory Status Summary</a></div>
+            </div>
+            
+            <div class="finding-card">
+                <div class="finding-id">JCEI-F007</div>
+                <div class="observation">Baseline vs Emerging Cohort</div>
+                <div class="evidence-table">
+                    <table>
+                        <tr><th>Cohort</th><th>Compounds</th></tr>
+                        <tr><td>Baseline (≤2021)</td><td>CBD, THC, CBN, CBG, THCV</td></tr>
+                        <tr><td>Emerging (≥2022)</td><td>HHC, THC-O, THCH, HHCH, CRDP, H4CBH, HHBD</td></tr>
+                    </table>
+                </div>
+                <div class="citation-sentence">
+                    "Japanese cannabinoid market can be divided into baseline compounds (CBD, THC, CBN, CBG, THCV) with pre-existing market presence and emerging compounds (HHC, THC-O, THCH, HHCH, CRDP, H4CBH, HHBD) that appeared in Google Trends data from 2022 onwards. This distinction enables use of baseline compounds as reference series for monitoring emerging compounds."
+                </div>
+                <div class="interpretation"><strong>Interpretation:</strong> Cohort classification based on first-mention timing relative to 2022-01-01 threshold.</div>
+                <div class="source-note">Source: <a href="https://github.com/routeflags/japan-cannabinoid-trends/blob/main/datasets/cannabinoid-multi-trends/data/processed/early-warning-index-v1.csv">Dataset CSV</a></div>
             </div>
         </section>
         
@@ -484,7 +731,7 @@
         
         <section id="methodology">
             <h2>Methodology</h2>
-            <p>For full methodology details, including data sources, collection methods, and quality controls, please refer to:</p>
+            <p>For full methodology details, including Emergence Score calculation, data sources, and quality controls, please refer to:</p>
             <ul>
                 <li><a href="https://github.com/routeflags/japan-cannabinoid-trends/blob/main/publication/early-warning-index/methodology.md">Methodology Document</a></li>
                 <li><a href="https://github.com/routeflags/japan-cannabinoid-trends/blob/main/publication/early-warning-index/limitations.md">Limitations Document</a></li>
@@ -505,6 +752,8 @@
                 <li><strong>Polysemy:</strong> CBD and THC are ambiguous terms that may include non-cannabinoid searches.</li>
                 <li><strong>Low-volume censoring:</strong> Queries below Google Trends threshold may show as zero.</li>
                 <li><strong>Regulatory status:</strong> Current as of 2026-10-02; subject to change.</li>
+                <li><strong>Temporal association:</strong> Correlations between regulatory action and search interest changes do not establish causation.</li>
+                <li><strong>Emergence Score:</strong> Qualitative indicator based on relative data; not a statistical prediction model.</li>
             </ul>
         </section>
         
@@ -520,8 +769,12 @@
         <section id="citation">
             <h2>How to Cite</h2>
             
-            <h3>APA Format</h3>
+            <h3>Dataset Citation</h3>
             <p>KATO, Kyoji. (2026). Japan Cannabinoid Emerging Compound Early Warning Index v1. Routeflags Co., Ltd. [Dataset]. https://github.com/routeflags/japan-cannabinoid-trends</p>
+            
+            <h3>Finding Citation</h3>
+            <p>For specific findings, use the Finding ID notation:</p>
+            <p><code>Kato (2026), JCEI-F001</code> — HHCH post-regulation decline</p>
             
             <h3>BibTeX</h3>
             <pre><code>@dataset{kato2026cannabinoid,
