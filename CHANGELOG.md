@@ -7,6 +7,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.7.1] - 2026-10-02
+
+### Added
+- **キーワードカバレッジ拡張** (EXP-20261002)
+  - 新 Study: `cannabinoid-multi-trends`
+  - 主要カンナビノイド7化合物を追加: CBD, THC, CBG, HHC, THCV, THC-O, THCH
+  - Google Trends: 5キーワード × 52週 + 比較セット + 5年データ
+  - X (Twitter): 7キーワード × 316件
+  - YouTube: 7キーワード × 182件
+- **言及開始時期調査** (MNT-20261002)
+  - 各成分の Google Trends 初出時期を特定
+  - 5年データ (2021-09 〜 2026-10) を収集
+  - THC-O 初出: 2022-03-13
+  - データの限界を明確化 (Google Trends 5年制限)
+
+### Changed
+- **ドキュメント更新**
+  - `metadata/datapackage.json`: 新 Study のリソース追加、キーワード更新
+  - `docs/data-dictionary.md`: 新カラム定義追加 (Section 6)
+  - `CITATION.cff`: キーワード更新、バージョン 1.7.1
+- **エージェント更新**
+  - research-pipeline, research-data-librarian, doi-validator, research-chair
+  - AGENTS.md: 技術標準セクション追加
+
+---
+
 ## [1.7.0] - 2026-10-02
 
 **DOI:** [10.5281/zenodo.23095153](https://doi.org/10.5281/zenodo.23095153)
