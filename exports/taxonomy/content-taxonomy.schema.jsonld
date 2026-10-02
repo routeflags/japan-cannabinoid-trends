@@ -1,0 +1,223 @@
+{
+  "@context": {
+    "schema": "https://schema.org/",
+    "skos": "http://www.w3.org/2004/02/skos/core#"
+  },
+  "@type": "schema:DefinedTermSet",
+  "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/content-taxonomy",
+  "schema:name": "",
+  "schema:description": "Cannabinoid research taxonomy for social media content classification",
+  "schema:dateCreated": "2026-10-02",
+  "schema:license": "https://creativecommons.org/licenses/by/4.0/",
+  "schema:hasDefinedTerm": [
+    {
+      "@type": "schema:DefinedTerm",
+      "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/topic_ingredient",
+      "schema:name": "配合/成分",
+      "schema:inDefinedTermSet": {
+        "@type": "schema:DefinedTermSet",
+        "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/topic-ingredient-scheme"
+      },
+      "schema:alternateName": [
+        "配合/成分",
+        "ingredient",
+        "composition",
+        "potency"
+      ],
+      "schema:termCode": "topic_ingredient"
+    },
+    {
+      "@type": "schema:DefinedTerm",
+      "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/topic_product",
+      "schema:name": "新商品/入荷",
+      "schema:inDefinedTermSet": {
+        "@type": "schema:DefinedTermSet",
+        "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/topic-product-scheme"
+      },
+      "schema:alternateName": [
+        "新商品/入荷",
+        "new product",
+        "product launch",
+        "restock"
+      ],
+      "schema:termCode": "topic_product"
+    },
+    {
+      "@type": "schema:DefinedTerm",
+      "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/topic_effect",
+      "schema:name": "体感/効果",
+      "schema:inDefinedTermSet": {
+        "@type": "schema:DefinedTermSet",
+        "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/topic-effect-scheme"
+      },
+      "schema:alternateName": [
+        "体感/効果",
+        "effect",
+        "experience",
+        "sensation"
+      ],
+      "schema:termCode": "topic_effect"
+    },
+    {
+      "@type": "schema:DefinedTerm",
+      "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/topic_promotion",
+      "schema:name": "セール/キャンペーン",
+      "schema:inDefinedTermSet": {
+        "@type": "schema:DefinedTermSet",
+        "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/topic-promotion-scheme"
+      },
+      "schema:alternateName": [
+        "セール/キャンペーン",
+        "sale",
+        "promotion",
+        "discount"
+      ],
+      "schema:termCode": "topic_promotion"
+    },
+    {
+      "@type": "schema:DefinedTerm",
+      "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/topic_review",
+      "schema:name": "レビュー",
+      "schema:inDefinedTermSet": {
+        "@type": "schema:DefinedTermSet",
+        "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/topic-review-scheme"
+      },
+      "schema:alternateName": [
+        "レビュー",
+        "review",
+        "evaluation",
+        "feedback"
+      ],
+      "schema:termCode": "topic_review"
+    },
+    {
+      "@type": "schema:DefinedTerm",
+      "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/topic_store",
+      "schema:name": "店舗情報",
+      "schema:inDefinedTermSet": {
+        "@type": "schema:DefinedTermSet",
+        "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/topic-store-scheme"
+      },
+      "schema:alternateName": [
+        "店舗情報",
+        "store",
+        "shop",
+        "location"
+      ],
+      "schema:termCode": "topic_store"
+    },
+    {
+      "@type": "schema:DefinedTerm",
+      "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/intent_informational",
+      "schema:name": "情報提供",
+      "schema:inDefinedTermSet": {
+        "@type": "schema:DefinedTermSet",
+        "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/intent-informational-scheme"
+      },
+      "schema:alternateName": [
+        "情報提供",
+        "informational",
+        "educational"
+      ],
+      "schema:description": "Posts intended to share information or knowledge.",
+      "schema:termCode": "intent_informational"
+    },
+    {
+      "@type": "schema:DefinedTerm",
+      "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/intent_commercial",
+      "schema:name": "商業目的",
+      "schema:inDefinedTermSet": {
+        "@type": "schema:DefinedTermSet",
+        "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/intent-commercial-scheme"
+      },
+      "schema:alternateName": [
+        "商業目的",
+        "commercial",
+        "promotional",
+        "sales"
+      ],
+      "schema:description": "Posts with commercial intent (sales, promotion, advertising).",
+      "schema:termCode": "intent_commercial"
+    },
+    {
+      "@type": "schema:DefinedTerm",
+      "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/intent_experiential",
+      "schema:name": "体験報告",
+      "schema:inDefinedTermSet": {
+        "@type": "schema:DefinedTermSet",
+        "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/intent-experiential-scheme"
+      },
+      "schema:alternateName": [
+        "体験報告",
+        "experiential",
+        "personal report"
+      ],
+      "schema:description": "Posts sharing personal experiences or testimonials.",
+      "schema:termCode": "intent_experiential"
+    },
+    {
+      "@type": "schema:DefinedTerm",
+      "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/intent_harm_report",
+      "schema:name": "有害報告",
+      "schema:inDefinedTermSet": {
+        "@type": "schema:DefinedTermSet",
+        "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/intent-harm-report-scheme"
+      },
+      "schema:alternateName": [
+        "有害報告",
+        "adverse event",
+        "harm report"
+      ],
+      "schema:description": "Posts reporting adverse effects, harm, or negative experiences.",
+      "schema:termCode": "intent_harm_report"
+    },
+    {
+      "@type": "schema:DefinedTerm",
+      "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/format_text",
+      "schema:name": "テキスト",
+      "schema:inDefinedTermSet": {
+        "@type": "schema:DefinedTermSet",
+        "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/format-text-scheme"
+      },
+      "schema:alternateName": "テキスト",
+      "schema:description": "Text-only posts.",
+      "schema:termCode": "format_text"
+    },
+    {
+      "@type": "schema:DefinedTerm",
+      "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/format_image",
+      "schema:name": "画像",
+      "schema:inDefinedTermSet": {
+        "@type": "schema:DefinedTermSet",
+        "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/format-image-scheme"
+      },
+      "schema:alternateName": "画像",
+      "schema:description": "Posts with image(s).",
+      "schema:termCode": "format_image"
+    },
+    {
+      "@type": "schema:DefinedTerm",
+      "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/format_video",
+      "schema:name": "動画",
+      "schema:inDefinedTermSet": {
+        "@type": "schema:DefinedTermSet",
+        "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/format-video-scheme"
+      },
+      "schema:alternateName": "動画",
+      "schema:description": "Posts with video content.",
+      "schema:termCode": "format_video"
+    },
+    {
+      "@type": "schema:DefinedTerm",
+      "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/format_link",
+      "schema:name": "リンク",
+      "schema:inDefinedTermSet": {
+        "@type": "schema:DefinedTermSet",
+        "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/format-link-scheme"
+      },
+      "schema:alternateName": "リンク",
+      "schema:description": "Posts sharing external links.",
+      "schema:termCode": "format_link"
+    }
+  ]
+}

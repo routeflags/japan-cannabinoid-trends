@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Japan Cannabinoid Emerging Compound Early Warning Index v1</title>
+    <meta name="description" content="Early warning index tracking the emergence of cannabinoids in Japanese Google search data (2021-2026), with regulatory status for 12 compounds.">
+    <meta name="author" content="Kyoji Kato">
+    <meta name="keywords" content="cannabinoids, Japan, Google Trends, regulatory status, early warning, CBD, CBN, HHC, HHCH">
+    
+    <!-- Schema.org Dataset -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org/",
+        "@type": "Dataset",
+        "name": "Japan Cannabinoid Emerging Compound Early Warning Index v1",
+        "description": "Early warning index tracking the emergence of cannabinoids in Japanese Google search data (2021-2026), with regulatory status for 12 compounds.",
+        "author": {
+            "@type": "Person",
+            "name": "Kyoji Kato",
+            "identifier": "https://orcid.org/0009-0007-5131-0374"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "Routeflags Co., Ltd."
+        },
+        "datePublished": "2026-10-02",
+        "license": "https://creativecommons.org/licenses/by/4.0/",
+        "url": "https://github.com/routeflags/japan-cannabinoid-trends",
+        "keywords": ["cannabinoids", "Japan", "Google Trends", "regulatory status", "early warning"]
+    }
+    </script>
+    
+    <style>
+        :root {
+            --primary: #1a5276;
+            --secondary: #2980b9;
+            --accent: #e74c3c;
+            --bg: #f8f9fa;
+            --text: #2c3e50;
+            --border: #dee2e6;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background: var(--bg);
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        header {
+            background: var(--primary);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .meta {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .meta-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+        
+        .meta-item {
+            padding: 0.5rem;
+        }
+        
+        .meta-label {
+            font-weight: 600;
+            color: var(--secondary);
+            font-size: 0.9rem;
+        }
+        
+        .meta-value {
+            font-size: 1rem;
+        }
+        
+        section {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        h2 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--secondary);
+        }
+        
+        h3 {
+            color: var(--secondary);
+            margin: 1.5rem 0 0.5rem 0;
+        }
+        
+        .key-findings {
+            background: #e8f4f8;
+            border-left: 4px solid var(--secondary);
+            padding: 1rem 1.5rem;
+            margin: 1rem 0;
+        }
+        
+        .key-findings ul {
+            margin-left: 1.5rem;
+        }
+        
+        .key-findings li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .citation-unit {
+            background: #f8f9fa;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+        
+        .citation-unit-number {
+            display: inline-block;
+            background: var(--secondary);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+        
+        .citation-sentence {
+            font-style: italic;
+            padding: 1rem;
+            background: white;
+            border-left: 3px solid var(--accent);
+            margin: 0.75rem 0;
+        }
+        
+        .source-note {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 0.5rem;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+        
+        th, td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        th {
+            background: var(--primary);
+            color: white;
+            font-weight: 600;
+        }
+        
+        tr:hover {
+            background: #f1f8ff;
+        }
+        
+        .regulated {
+            color: var(--accent);
+            font-weight: 600;
+        }
+        
+        .unregulated {
+            color: #27ae60;
+            font-weight: 600;
+        }
+        
+        .caution {
+            color: #f39c12;
+            font-weight: 600;
+        }
+        
+        .download-btn {
+            display: inline-block;
+            background: var(--secondary);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            margin: 0.5rem 0.5rem 0.5rem 0;
+        }
+        
+        .download-btn:hover {
+            background: var(--primary);
+        }
+        
+        .coi-disclosure {
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            border-radius: 6px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+        
+        .coi-disclosure h3 {
+            color: #856404;
+            margin-top: 0;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            h1 {
+                font-size: 1.5rem;
+            }
+            
+            .meta-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Japan Cannabinoid Emerging Compound Early Warning Index</h1>
+        <div class="subtitle">Version 1.0 — Tracking cannabinoid emergence in Japanese search data (2021-2026)</div>
+    </header>
+    
+    <div class="container">
+        <div class="meta">
+            <div class="meta-grid">
+                <div class="meta-item">
+                    <div class="meta-label">Version</div>
+                    <div class="meta-value">v1.0</div>
+                </div>
+                <div class="meta-item">
+                    <div class="meta-label">Published</div>
+                    <div class="meta-value">2026-10-02</div>
+                </div>
+                <div class="meta-item">
+                    <div class="meta-label">Data Period</div>
+                    <div class="meta-value">2021-09-26 to 2026-10-03</div>
+                </div>
+                <div class="meta-item">
+                    <div class="meta-label">Compounds Tracked</div>
+                    <div class="meta-value">12</div>
+                </div>
+                <div class="meta-item">
+                    <div class="meta-label">License</div>
+                    <div class="meta-value">CC BY 4.0</div>
+                </div>
+                <div class="meta-item">
+                    <div class="meta-label">DOI</div>
+                    <div class="meta-value">Pending</div>
+                </div>
+            </div>
+        </div>
+        
+        <section id="key-findings">
+            <h2>Key Findings</h2>
+            <div class="key-findings">
+                <ul>
+                    <li><strong>12 cannabinoids</strong> tracked in Japanese Google Trends data from 2021 to 2026</li>
+                    <li><strong>6 compounds</strong> are now regulated under Japanese law (THC, HHC, THCH, HHCH, THC-O, CBN)</li>
+                    <li><strong>HHCH</strong> shows clear regulation effect: search interest peaked 3 weeks before regulation, then disappeared</li>
+                    <li><strong>H4CBH and HHBD</strong> emerged in 2025, approximately 8 months apart</li>
+                    <li><strong>4 new cannabinoids</strong> appeared in Japanese search data during 2022-2023</li>
+                </ul>
+            </div>
+        </section>
+        
+        <section id="data-table">
+            <h2>Data Summary</h2>
+            <p>The following table summarizes first-mention dates and regulatory status for all tracked compounds.</p>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Compound</th>
+                        <th>Classification</th>
+                        <th>First Mention</th>
+                        <th>Regulatory Status</th>
+                        <th>Regulation Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>CBD</strong></td>
+                        <td>Major Phytocannabinoid</td>
+                        <td>2021-09-26以前*</td>
+                        <td class="unregulated">Unregulated (conditional)</td>
+                        <td>—</td>
+                    </tr>
+                    <tr>
+                        <td><strong>THC</strong></td>
+                        <td>Major Phytocannabinoid</td>
+                        <td>2021-09-26以前*</td>
+                        <td class="regulated">Regulated</td>
+                        <td>1948-07-10</td>
+                    </tr>
+                    <tr>
+                        <td><strong>CBN</strong></td>
+                        <td>Minor Phytocannabinoid</td>
+                        <td>2021-09-26以前*</td>
+                        <td class="regulated">Designated Drug</td>
+                        <td>2026-06-01</td>
+                    </tr>
+                    <tr>
+                        <td><strong>CBG</strong></td>
+                        <td>Minor Phytocannabinoid</td>
+                        <td>2021-09-26</td>
+                        <td class="unregulated">Unregulated (conditional)</td>
+                        <td>—</td>
+                    </tr>
+                    <tr>
+                        <td><strong>HHC</strong></td>
+                        <td>Semi-Synthetic</td>
+                        <td>2021-11-28</td>
+                        <td class="regulated">Designated Drug</td>
+                        <td>2022-03-17</td>
+                    </tr>
+                    <tr>
+                        <td><strong>HHCH</strong></td>
+                        <td>Synthetic</td>
+                        <td>2023-03-26</td>
+                        <td class="regulated">Designated Drug</td>
+                        <td>2023-12-02</td>
+                    </tr>
+                    <tr>
+                        <td><strong>THCV</strong></td>
+                        <td>Minor Phytocannabinoid</td>
+                        <td>2021-12-19</td>
+                        <td class="unregulated">Unregulated</td>
+                        <td>—</td>
+                    </tr>
+                    <tr>
+                        <td><strong>THC-O</strong></td>
+                        <td>Semi-Synthetic</td>
+                        <td>2022-03-13</td>
+                        <td class="regulated">Narcotics</td>
+                        <td>2024-12-12</td>
+                    </tr>
+                    <tr>
+                        <td><strong>THCH</strong></td>
+                        <td>Minor Phytocannabinoid</td>
+                        <td>2022-04-17</td>
+                        <td class="regulated">Designated Drug</td>
+                        <td>2023-08-04</td>
+                    </tr>
+                    <tr>
+                        <td><strong>CRDP</strong></td>
+                        <td>Synthetic</td>
+                        <td>2022-07-31</td>
+                        <td class="caution">Unregulated (caution)</td>
+                        <td>—</td>
+                    </tr>
+                    <tr>
+                        <td><strong>H4CBH</strong></td>
+                        <td>Semi-Synthetic</td>
+                        <td>2025-04-06</td>
+                        <td class="caution">Unregulated (caution)</td>
+                        <td>—</td>
+                    </tr>
+                    <tr>
+                        <td><strong>HHBD</strong></td>
+                        <td>Semi-Synthetic</td>
+                        <td>2025-11-30</td>
+                        <td class="caution">Unregulated (caution)</td>
+                        <td>—</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <p class="source-note">* Left-censored: compound was already present in Google Trends data at the start of the 5-year window (2021-09-26). True first-mention date may be earlier.</p>
+        </section>
+        
+        <section id="citation-units">
+            <h2>Citable Findings</h2>
+            <p>The following findings are designed for direct citation in research, journalism, and policy documents.</p>
+            
+            <div class="citation-unit">
+                <div class="citation-unit-number">Citation Unit 1</div>
+                <h3>HHCH Regulation Effect</h3>
+                <div class="citation-sentence">
+                    "In Japanese Google Trends data, HHCH (hexahydrocannabihexol) first appeared in the week of 2023-03-26 and peaked at a relative interest score of 100 in the week of 2023-11-12—approximately three weeks before it was designated as a controlled substance on 2023-12-02. Following regulation, search interest dropped to near zero and has remained minimal through 2026."
+                </div>
+                <div class="source-note">Source: <a href="https://github.com/routeflags/japan-cannabinoid-trends/blob/main/research/20261002-first-mention-timeline.md">First-Mention Timeline Research</a> | Accessed: 2026-10-02 | Note: Google Trends values are relative indices, not search volumes.</div>
+            </div>
+            
+            <div class="citation-unit">
+                <div class="citation-unit-number">Citation Unit 2</div>
+                <h3>CBN Regulation Timeline</h3>
+                <div class="citation-sentence">
+                    "CBN (cannabinol) was designated a controlled substance in Japan effective June 1, 2026, following a series of health incidents reported since October 2024. The designation was announced on March 18, 2026, via Ministry of Health, Labour and Welfare ordinance."
+                </div>
+                <div class="source-note">Source: <a href="https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/kenkou_iryou/iyakuhin/yakubuturanyou/other/CBN_shitei.html">MHLW Official Page</a> | Accessed: 2026-10-02</div>
+            </div>
+            
+            <div class="citation-unit">
+                <div class="citation-unit-number">Citation Unit 3</div>
+                <h3>H4CBH and HHBD Emergence Sequence</h3>
+                <div class="citation-sentence">
+                    "In Japanese Google Trends data, H4CBH first appeared in the week of 2025-04-06, while HHBD first appeared in the week of 2025-11-30—approximately eight months later. Both compounds are semi-synthetic cannabinoids that emerged during the same market expansion period."
+                </div>
+                <div class="source-note">Source: <a href="https://github.com/routeflags/japan-cannabinoid-trends/blob/main/research/20261002-first-mention-timeline.md">First-Mention Timeline Research</a> | Accessed: 2026-10-02</div>
+            </div>
+            
+            <div class="citation-unit">
+                <div class="citation-unit-number">Citation Unit 4</div>
+                <h3>Regulated Compounds Summary</h3>
+                <div class="citation-sentence">
+                    "As of October 2026, six of twelve tracked cannabinoids in Japan are subject to specific regulations: THC (cannabis control act, 1948), HHC (designated drug, 2022), THCH (designated drug, 2023), HHCH (designated drug, 2023), THC-O (narcotics control act, 2024), and CBN (designated drug, 2026)."
+                </div>
+                <div class="source-note">Source: <a href="https://github.com/routeflags/japan-cannabinoid-trends/blob/main/research/regulatory-status/SUMMARY.md">Regulatory Status Summary</a> | Accessed: 2026-10-02</div>
+            </div>
+            
+            <div class="citation-unit">
+                <div class="citation-unit-number">Citation Unit 5</div>
+                <h3>New Compound Emergence Rate</h3>
+                <div class="citation-sentence">
+                    "Between 2022 and 2025, four new cannabinoids appeared in Japanese Google Trends data for the first time: THC-O (March 2022), THCH (April 2022), CRDP (July 2022), and HHCH (March 2023). Two additional semi-synthetic cannabinoids, H4CBH and HHBD, emerged in 2025."
+                </div>
+                <div class="source-note">Source: <a href="https://github.com/routeflags/japan-cannabinoid-trends/blob/main/research/20261002-first-mention-timeline.md">First-Mention Timeline Research</a> | Accessed: 2026-10-02</div>
+            </div>
+            
+            <div class="citation-unit">
+                <div class="citation-unit-number">Citation Unit 6</div>
+                <h3>Regulatory Category Distribution</h3>
+                <div class="citation-sentence">
+                    "Japanese regulation of cannabinoids employs multiple legal frameworks: the Cannabis Control Act for THC and conditional CBD/CBG, the Pharmaceuticals and Medical Devices Act for designated drugs (HHC, THCH, HHCH, CBN), and the Narcotics and Psychotropics Control Act for THC-O. This multi-framework approach reflects different risk assessments for different compound classes."
+                </div>
+                <div class="source-note">Source: <a href="https://github.com/routeflags/japan-cannabinoid-trends/blob/main/research/regulatory-status/SUMMARY.md">Regulatory Status Summary</a> | Accessed: 2026-10-02</div>
+            </div>
+        </section>
+        
+        <section id="data-download">
+            <h2>Download Data</h2>
+            <p>The complete dataset is available for download and reuse.</p>
+            
+            <a href="https://github.com/routeflags/japan-cannabinoid-trends/blob/main/datasets/cannabinoid-multi-trends/data/processed/early-warning-index-v1.csv" class="download-btn">Download CSV</a>
+            <a href="https://github.com/routeflags/japan-cannabinoid-trends" class="download-btn">View on GitHub</a>
+        </section>
+        
+        <section id="methodology">
+            <h2>Methodology</h2>
+            <p>For full methodology details, including data sources, collection methods, and quality controls, please refer to:</p>
+            <ul>
+                <li><a href="https://github.com/routeflags/japan-cannabinoid-trends/blob/main/publication/early-warning-index/methodology.md">Methodology Document</a></li>
+                <li><a href="https://github.com/routeflags/japan-cannabinoid-trends/blob/main/publication/early-warning-index/limitations.md">Limitations Document</a></li>
+            </ul>
+            
+            <h3>Data Source</h3>
+            <p>Google Trends (JP) — 5-year and 12-month timeframes, collected 2026-10-02.</p>
+            
+            <h3>Regulatory Sources</h3>
+            <p>Ministry of Health, Labour and Welfare (MHLW) official sources, including designated drug lists and press releases.</p>
+        </section>
+        
+        <section id="limitations">
+            <h2>Limitations</h2>
+            <ul>
+                <li><strong>Relative indices:</strong> Google Trends values (0-100) are relative, not absolute search volumes.</li>
+                <li><strong>5-year window:</strong> Pre-2021 data unavailable; some compounds may have earlier emergence.</li>
+                <li><strong>Polysemy:</strong> CBD and THC are ambiguous terms that may include non-cannabinoid searches.</li>
+                <li><strong>Low-volume censoring:</strong> Queries below Google Trends threshold may show as zero.</li>
+                <li><strong>Regulatory status:</strong> Current as of 2026-10-02; subject to change.</li>
+            </ul>
+        </section>
+        
+        <section id="coi">
+            <h2>Conflict of Interest Disclosure</h2>
+            <div class="coi-disclosure">
+                <h3>Commercial Relationship</h3>
+                <p>The publisher operates an e-commerce business in the cannabinoid sector. This commercial relationship may represent a potential conflict of interest. The methodology and source information are provided to allow independent evaluation of the findings.</p>
+                <p>All analysis is compound-level, not brand-level. No product rankings or commercial recommendations are included.</p>
+            </div>
+        </section>
+        
+        <section id="citation">
+            <h2>How to Cite</h2>
+            
+            <h3>APA Format</h3>
+            <p>KATO, Kyoji. (2026). Japan Cannabinoid Emerging Compound Early Warning Index v1. Routeflags Co., Ltd. [Dataset]. https://github.com/routeflags/japan-cannabinoid-trends</p>
+            
+            <h3>BibTeX</h3>
+            <pre><code>@dataset{kato2026cannabinoid,
+  author = {Kato, Kyoji},
+  title = {Japan Cannabinoid Emerging Compound Early Warning Index v1},
+  year = {2026},
+  publisher = {Routeflags Co., Ltd.},
+  url = {https://github.com/routeflags/japan-cannabinoid-trends}
+}</code></pre>
+        </section>
+    </div>
+    
+    <footer>
+        <p>© 2026 Routeflags Co., Ltd. | License: <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></p>
+        <p>Author: <a href="https://orcid.org/0009-0007-5131-0374">Kyoji Kato</a> (ORCID: 0009-0007-5131-0374)</p>
+        <p>Data source: Google Trends (JP) | Regulatory sources: MHLW</p>
+    </footer>
+</body>
+</html>

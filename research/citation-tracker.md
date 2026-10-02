@@ -35,6 +35,27 @@ DOI: 10.5281/zenodo.23097769
 
 ---
 
+## Citation Assets
+
+### Asset Register
+
+| Asset | Type | DOI | Published | Primary Persona | Status |
+|-------|------|-----|-----------|-----------------|--------|
+| CBX Online Trend Dataset v1.7.1 | Dataset | 10.5281/zenodo.23097769 | 2026-10-02 | Academic | Published |
+| Early Warning Index v1 | Dataset | Pending | 2026-10-02 | Journalist/Policy | Published |
+| First-Mention Timeline | Research Note | — | 2026-10-02 | Policy/Journalist | Published |
+| Regulatory Status Summary | Research Note | — | 2026-10-02 | Policy/Industry | Published |
+
+---
+
+## Citation Unit Log
+
+| Date | Finding ID | Sentence | Asset URL | Cited By |
+|------|-----------|----------|-----------|----------|
+| — | — | — | — | (awaiting citations) |
+
+---
+
 ## Citation Types
 
 | Type | Description |
@@ -99,12 +120,26 @@ DOI: 10.5281/zenodo.23097769
 
 ---
 
+## Early Warning Index v1 Metrics (2026-10-02)
+
+| Metric | Value |
+|--------|:-----:|
+| Views | 0 |
+| Citations | 0 |
+| Backlinks | 0 |
+| GitHub stars | — |
+
+---
+
 ## Monitoring Methods
 
 ### Automated
 
 - [ ] Google Scholar alerts for "CBX Online Trend Dataset"
+- [ ] Google Scholar alerts for "Japan Cannabinoid Early Warning Index"
 - [ ] Google Alerts for "japan-cannabinoid-trends"
+- [ ] Google Alerts for "H4CBH Japan Google Trends"
+- [ ] Google Alerts for "HHBD first appeared"
 - [ ] Zenodo citation count monitoring
 - [ ] GitHub traffic insights
 
@@ -112,9 +147,22 @@ DOI: 10.5281/zenodo.23097769
 
 - [ ] Search Google Scholar for DOI citations
 - [ ] Search Google for dataset title mentions
+- [ ] Search Japanese: 「カンナビノイド トレンド 日本」「H4CBH 検索」
 - [ ] Check backlinks via Ahrefs/SEMrush
 - [ ] Review Zenodo analytics
 - [ ] Check GitHub stars/forks
+
+---
+
+## Citation Health Funnel
+
+| Stage | Status | Notes |
+|-------|:------:|-------|
+| DISCOVERABLE | ✅ | DOI registered, GitHub public, English page available |
+| UNDERSTOOD | ✅ | Methodology and limitations documented |
+| TRUSTED | ⚠️ | COI disclosed; awaiting external validation |
+| USED | ⏳ | Early stage; monitoring for reuse |
+| CITED | ⏳ | Baseline established; monitoring for citations |
 
 ---
 

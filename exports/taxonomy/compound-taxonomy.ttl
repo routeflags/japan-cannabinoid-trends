@@ -1,0 +1,213 @@
+# RDF/Turtle export
+# Generated: 2026-10-02T04:34:44.529444Z
+# Source: SKOS JSON-LD
+
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+@prefix chebi: <http://purl.obolibrary.org/obo/chebi/> .
+@prefix wikidata: <http://www.wikidata.org/entity/> .
+@prefix jptr: <https://japan-cannabinoid-trends.routeflags.com/taxonomy/> .
+
+
+<https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-taxonomy>
+    rdf:type <http://www.w3.org/2004/02/skos/core#ConceptScheme> ;
+    <http://purl.org/dc/terms/title> "カンナビノイド化合物タクソノミー"@ja ;
+    <http://purl.org/dc/terms/description> "Taxonomy of cannabinoid compounds tracked in this research project."@en ;
+    <http://purl.org/dc/terms/creator> "Routeflags Co., Ltd." ;
+    <http://purl.org/dc/terms/created> "2026-10-02" ;
+    <http://purl.org/dc/terms/modified> "2026-10-02" ;
+    <http://purl.org/dc/terms/license> <https://creativecommons.org/licenses/by/4.0/> ;
+    <http://www.w3.org/2004/02/skos/core#hasTopConcept> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-major> ;
+    <http://www.w3.org/2004/02/skos/core#hasTopConcept> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-minor> ;
+    <http://www.w3.org/2004/02/skos/core#hasTopConcept> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-rare> ;
+    <http://www.w3.org/2004/02/skos/core#hasTopConcept> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-semisynthetic> ;
+    <http://www.w3.org/2004/02/skos/core#hasTopConcept> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-synthetic> ;
+    <http://www.w3.org/2004/02/skos/core#hasTopConcept> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-endocannabinoid> .
+
+<https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-major>
+    rdf:type <http://www.w3.org/2004/02/skos/core#Concept> ;
+    <http://www.w3.org/2004/02/skos/core#inScheme> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-taxonomy> ;
+    <http://www.w3.org/2004/02/skos/core#topConceptOf> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-taxonomy> ;
+    <http://www.w3.org/2004/02/skos/core#prefLabel> "主要フィトカンナビノイド"@ja ;
+    <http://www.w3.org/2004/02/skos/core#notation> "compound_major" ;
+    <http://www.w3.org/2004/02/skos/core#narrower> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-cbd> ;
+    <http://www.w3.org/2004/02/skos/core#narrower> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-thc> .
+
+<https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-minor>
+    rdf:type <http://www.w3.org/2004/02/skos/core#Concept> ;
+    <http://www.w3.org/2004/02/skos/core#inScheme> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-taxonomy> ;
+    <http://www.w3.org/2004/02/skos/core#topConceptOf> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-taxonomy> ;
+    <http://www.w3.org/2004/02/skos/core#prefLabel> "主要フィトカンナビノイド以外のフィトカンナビノイド"@ja ;
+    <http://www.w3.org/2004/02/skos/core#notation> "compound_minor" ;
+    <http://www.w3.org/2004/02/skos/core#narrower> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-cbg> ;
+    <http://www.w3.org/2004/02/skos/core#narrower> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-cbn> ;
+    <http://www.w3.org/2004/02/skos/core#narrower> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-cbc> ;
+    <http://www.w3.org/2004/02/skos/core#narrower> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-thcv> ;
+    <http://www.w3.org/2004/02/skos/core#narrower> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-cbdv> ;
+    <http://www.w3.org/2004/02/skos/core#narrower> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-cbx> ;
+    <http://www.w3.org/2004/02/skos/core#narrower> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-h4cbh> ;
+    <http://www.w3.org/2004/02/skos/core#narrower> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-hhbd> .
+
+<https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-rare>
+    rdf:type <http://www.w3.org/2004/02/skos/core#Concept> ;
+    <http://www.w3.org/2004/02/skos/core#inScheme> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-taxonomy> ;
+    <http://www.w3.org/2004/02/skos/core#topConceptOf> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-taxonomy> ;
+    <http://www.w3.org/2004/02/skos/core#prefLabel> "レアカンナビノイド"@ja ;
+    <http://www.w3.org/2004/02/skos/core#notation> "compound_rare" .
+
+<https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-semisynthetic>
+    rdf:type <http://www.w3.org/2004/02/skos/core#Concept> ;
+    <http://www.w3.org/2004/02/skos/core#inScheme> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-taxonomy> ;
+    <http://www.w3.org/2004/02/skos/core#topConceptOf> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-taxonomy> ;
+    <http://www.w3.org/2004/02/skos/core#prefLabel> "半合成カンナビノイド"@ja ;
+    <http://www.w3.org/2004/02/skos/core#notation> "compound_semisynthetic" .
+
+<https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-synthetic>
+    rdf:type <http://www.w3.org/2004/02/skos/core#Concept> ;
+    <http://www.w3.org/2004/02/skos/core#inScheme> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-taxonomy> ;
+    <http://www.w3.org/2004/02/skos/core#topConceptOf> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-taxonomy> ;
+    <http://www.w3.org/2004/02/skos/core#prefLabel> "合成カンナビノイド"@ja ;
+    <http://www.w3.org/2004/02/skos/core#notation> "compound_synthetic" .
+
+<https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-endocannabinoid>
+    rdf:type <http://www.w3.org/2004/02/skos/core#Concept> ;
+    <http://www.w3.org/2004/02/skos/core#inScheme> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-taxonomy> ;
+    <http://www.w3.org/2004/02/skos/core#topConceptOf> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-taxonomy> ;
+    <http://www.w3.org/2004/02/skos/core#prefLabel> "エンドカンナビノイド"@ja ;
+    <http://www.w3.org/2004/02/skos/core#notation> "compound_endocannabinoid" ;
+    <http://www.w3.org/2004/02/skos/core#narrower> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-anandamide> ;
+    <http://www.w3.org/2004/02/skos/core#narrower> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-2ag> .
+
+<https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-cbd>
+    rdf:type <http://www.w3.org/2004/02/skos/core#Concept> ;
+    <http://www.w3.org/2004/02/skos/core#inScheme> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-taxonomy> ;
+    <http://www.w3.org/2004/02/skos/core#broader> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-major> ;
+    <http://www.w3.org/2004/02/skos/core#prefLabel> "カンナビジオール (CBD)"@ja ;
+    <http://www.w3.org/2004/02/skos/core#altLabel> "CBD"@en ;
+    <http://www.w3.org/2004/02/skos/core#altLabel> "カンナビジオール"@ja ;
+    <http://www.w3.org/2004/02/skos/core#notation> "compound_cbd" ;
+    <http://www.w3.org/2004/02/skos/core#scopeNote> "A major phytocannabinoid. Non-intoxicating. Widely studied."@en ;
+    <http://www.w3.org/2004/02/skos/core#exactMatch> <http://www.wikidata.org/entity/Q141452> .
+
+<https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-thc>
+    rdf:type <http://www.w3.org/2004/02/skos/core#Concept> ;
+    <http://www.w3.org/2004/02/skos/core#inScheme> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-taxonomy> ;
+    <http://www.w3.org/2004/02/skos/core#broader> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-major> ;
+    <http://www.w3.org/2004/02/skos/core#prefLabel> "デルタ9-テトラヒドロカンナビノール (THC)"@ja ;
+    <http://www.w3.org/2004/02/skos/core#altLabel> "THC"@en ;
+    <http://www.w3.org/2004/02/skos/core#altLabel> "デルタ9-THC"@ja ;
+    <http://www.w3.org/2004/02/skos/core#notation> "compound_thc" ;
+    <http://www.w3.org/2004/02/skos/core#scopeNote> "A major phytocannabinoid. Psychoactive. Controlled substance in many jurisdictions."@en ;
+    <http://www.w3.org/2004/02/skos/core#exactMatch> <http://www.wikidata.org/entity/Q141629> .
+
+<https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-cbg>
+    rdf:type <http://www.w3.org/2004/02/skos/core#Concept> ;
+    <http://www.w3.org/2004/02/skos/core#inScheme> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-taxonomy> ;
+    <http://www.w3.org/2004/02/skos/core#broader> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-minor> ;
+    <http://www.w3.org/2004/02/skos/core#prefLabel> "カンナビゲロール (CBG)"@ja ;
+    <http://www.w3.org/2004/02/skos/core#altLabel> "CBG"@en ;
+    <http://www.w3.org/2004/02/skos/core#altLabel> "カンナビゲロール"@ja ;
+    <http://www.w3.org/2004/02/skos/core#notation> "compound_cbg" ;
+    <http://www.w3.org/2004/02/skos/core#scopeNote> "A minor phytocannabinoid. Precursor to other cannabinoids."@en ;
+    <http://www.w3.org/2004/02/skos/core#exactMatch> <http://www.wikidata.org/entity/Q422432> .
+
+<https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-cbn>
+    rdf:type <http://www.w3.org/2004/02/skos/core#Concept> ;
+    <http://www.w3.org/2004/02/skos/core#inScheme> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-taxonomy> ;
+    <http://www.w3.org/2004/02/skos/core#broader> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-minor> ;
+    <http://www.w3.org/2004/02/skos/core#prefLabel> "カンナビノール (CBN)"@ja ;
+    <http://www.w3.org/2004/02/skos/core#altLabel> "CBN"@en ;
+    <http://www.w3.org/2004/02/skos/core#altLabel> "カンナビノール"@ja ;
+    <http://www.w3.org/2004/02/skos/core#notation> "compound_cbn" ;
+    <http://www.w3.org/2004/02/skos/core#scopeNote> "A minor phytocannabinoid. Degradation product of THC."@en ;
+    <http://www.w3.org/2004/02/skos/core#exactMatch> <http://www.wikidata.org/entity/Q415237> .
+
+<https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-cbc>
+    rdf:type <http://www.w3.org/2004/02/skos/core#Concept> ;
+    <http://www.w3.org/2004/02/skos/core#inScheme> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-taxonomy> ;
+    <http://www.w3.org/2004/02/skos/core#broader> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-minor> ;
+    <http://www.w3.org/2004/02/skos/core#prefLabel> "カンナビクロメン (CBC)"@ja ;
+    <http://www.w3.org/2004/02/skos/core#altLabel> "CBC"@en ;
+    <http://www.w3.org/2004/02/skos/core#altLabel> "カンナビクロメン"@ja ;
+    <http://www.w3.org/2004/02/skos/core#notation> "compound_cbc" ;
+    <http://www.w3.org/2004/02/skos/core#exactMatch> <http://www.wikidata.org/entity/Q422441> .
+
+<https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-thcv>
+    rdf:type <http://www.w3.org/2004/02/skos/core#Concept> ;
+    <http://www.w3.org/2004/02/skos/core#inScheme> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-taxonomy> ;
+    <http://www.w3.org/2004/02/skos/core#broader> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-minor> ;
+    <http://www.w3.org/2004/02/skos/core#prefLabel> "テトラヒドロカンナビバリン (THCV)"@ja ;
+    <http://www.w3.org/2004/02/skos/core#altLabel> "THCV"@en ;
+    <http://www.w3.org/2004/02/skos/core#altLabel> "THCv"@en ;
+    <http://www.w3.org/2004/02/skos/core#notation> "compound_thcv" ;
+    <http://www.w3.org/2004/02/skos/core#exactMatch> <http://www.wikidata.org/entity/Q422449> .
+
+<https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-cbdv>
+    rdf:type <http://www.w3.org/2004/02/skos/core#Concept> ;
+    <http://www.w3.org/2004/02/skos/core#inScheme> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-taxonomy> ;
+    <http://www.w3.org/2004/02/skos/core#broader> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-minor> ;
+    <http://www.w3.org/2004/02/skos/core#prefLabel> "カンナビジバリン (CBDV)"@ja ;
+    <http://www.w3.org/2004/02/skos/core#altLabel> "CBDV"@en ;
+    <http://www.w3.org/2004/02/skos/core#notation> "compound_cbdv" ;
+    <http://www.w3.org/2004/02/skos/core#exactMatch> <http://www.wikidata.org/entity/Q422426> .
+
+<https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-cbx>
+    rdf:type <http://www.w3.org/2004/02/skos/core#Concept> ;
+    <http://www.w3.org/2004/02/skos/core#inScheme> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-taxonomy> ;
+    <http://www.w3.org/2004/02/skos/core#broader> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-minor> ;
+    <http://www.w3.org/2004/02/skos/core#prefLabel> "CBX (カンナビノイド)"@ja ;
+    <http://www.w3.org/2004/02/skos/core#altLabel> "CBX"@en ;
+    <http://www.w3.org/2004/02/skos/core#altLabel> "CBX リキッド"@ja ;
+    <http://www.w3.org/2004/02/skos/core#altLabel> "CBX カンナビノイド"@ja ;
+    <http://www.w3.org/2004/02/skos/core#notation> "compound_cbx" ;
+    <http://www.w3.org/2004/02/skos/core#scopeNote> "日本で市販されているマイナーカンナビノイド。※ 'CBX' は多義語（ホンダ CBX400F バイクとも混同される）。判別クエリを使用して識別する必要あり。"@ja ;
+    <http://www.w3.org/2004/02/skos/core#related> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-h4cbh> ;
+    <http://www.w3.org/2004/02/skos/core#related> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-hhbd> .
+
+<https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-h4cbh>
+    rdf:type <http://www.w3.org/2004/02/skos/core#Concept> ;
+    <http://www.w3.org/2004/02/skos/core#inScheme> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-taxonomy> ;
+    <http://www.w3.org/2004/02/skos/core#broader> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-minor> ;
+    <http://www.w3.org/2004/02/skos/core#prefLabel> "H4CBH"@ja ;
+    <http://www.w3.org/2004/02/skos/core#altLabel> "H4CBH"@en ;
+    <http://www.w3.org/2004/02/skos/core#altLabel> "H4CBH リキッド"@ja ;
+    <http://www.w3.org/2004/02/skos/core#notation> "compound_h4cbh" ;
+    <http://www.w3.org/2004/02/skos/core#scopeNote> "A hydrogenated cannabinoid derivative marketed in Japan."@en ;
+    <http://www.w3.org/2004/02/skos/core#related> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-cbx> ;
+    <http://www.w3.org/2004/02/skos/core#related> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-hhbd> .
+
+<https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-hhbd>
+    rdf:type <http://www.w3.org/2004/02/skos/core#Concept> ;
+    <http://www.w3.org/2004/02/skos/core#inScheme> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-taxonomy> ;
+    <http://www.w3.org/2004/02/skos/core#broader> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-minor> ;
+    <http://www.w3.org/2004/02/skos/core#prefLabel> "HHBD"@ja ;
+    <http://www.w3.org/2004/02/skos/core#altLabel> "HHBD"@en ;
+    <http://www.w3.org/2004/02/skos/core#altLabel> "HHBD リキッド"@ja ;
+    <http://www.w3.org/2004/02/skos/core#notation> "compound_hhbd" ;
+    <http://www.w3.org/2004/02/skos/core#scopeNote> "A cannabinoid derivative marketed in Japan."@en ;
+    <http://www.w3.org/2004/02/skos/core#related> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-cbx> ;
+    <http://www.w3.org/2004/02/skos/core#related> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-h4cbh> .
+
+<https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-anandamide>
+    rdf:type <http://www.w3.org/2004/02/skos/core#Concept> ;
+    <http://www.w3.org/2004/02/skos/core#inScheme> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-taxonomy> ;
+    <http://www.w3.org/2004/02/skos/core#broader> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-endocannabinoid> ;
+    <http://www.w3.org/2004/02/skos/core#prefLabel> "アナンダミド (AEA)"@ja ;
+    <http://www.w3.org/2004/02/skos/core#altLabel> "AEA"@en ;
+    <http://www.w3.org/2004/02/skos/core#altLabel> "アナンダミド"@ja ;
+    <http://www.w3.org/2004/02/skos/core#notation> "compound_anandamide" ;
+    <http://www.w3.org/2004/02/skos/core#exactMatch> <http://www.wikidata.org/entity/Q409339> .
+
+<https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-2ag>
+    rdf:type <http://www.w3.org/2004/02/skos/core#Concept> ;
+    <http://www.w3.org/2004/02/skos/core#inScheme> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-taxonomy> ;
+    <http://www.w3.org/2004/02/skos/core#broader> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-endocannabinoid> ;
+    <http://www.w3.org/2004/02/skos/core#prefLabel> "2-アラキドノイルグリセロール (2-AG)"@ja ;
+    <http://www.w3.org/2004/02/skos/core#altLabel> "2-AG"@en ;
+    <http://www.w3.org/2004/02/skos/core#altLabel> "2AG"@en ;
+    <http://www.w3.org/2004/02/skos/core#notation> "compound_2ag" ;
+    <http://www.w3.org/2004/02/skos/core#exactMatch> <http://www.wikidata.org/entity/Q295793> .
