@@ -853,24 +853,63 @@ research_backlog:
   high_priority:
 
     - id: CBR-001
-      topic: CBG human pharmacokinetics
-      status: planned
+      topic: CBX Online Trend Dataset - v1.7.0 released
+      status: completed
+      doi: 10.5281/zenodo.23095153
+      notes: |
+        Technical standards compliance (W3C SKOS, IPTC, Schema.org)
+        Content classification for X data (ISS-004 resolved)
+        Export scripts (RDF/Turtle, JSON-LD)
 
     - id: CBR-002
-      topic: minor cannabinoid toxicology
-      status: active
+      topic: Japan Cannabinoid Product Transparency Survey 2027
+      status: planned
+      notes: |
+        Highest-value citation opportunity (4/5 citation probability)
+        Primary stakeholder: consumer organizations
+        Pilot: 60-100 products, pre-registered checklist
 
   medium_priority:
 
     - id: CBR-003
-      topic: CBC receptor pharmacology
-      status: monitoring
+      topic: Polysemy-adjusted cannabinoid search interest index
+      status: planned
+      notes: |
+        Category-level data is COI-resistant
+        Infrastructure already exists
+
+    - id: CBR-004
+      topic: Monthly Cannabinoid Statistics Brief
+      status: planned
+      notes: |
+        Media-facing publication format
+        Low difficulty, high media utility
 
   completed:
 
-    - id: CBR-004
-      topic: CBD refractory epilepsy
-      status: reviewed
+    - id: CBR-005
+      topic: Technical standards compliance implementation
+      status: completed
+      notes: |
+        Phase 1-7 completed
+        SKOS taxonomy, IPTC mapping, Schema.org mapping
+        Export scripts, validation scripts
+
+    - id: CBR-006
+      topic: FAIR principles evaluation and improvement
+      status: completed
+      notes: |
+        FAIR score: 4.5+/5
+        Data Dictionary, Provenance, Anonymized data
+        Frictionless Data Package schema
+
+    - id: CBR-007
+      topic: DOI publication and citation readiness
+      status: completed
+      notes: |
+        Zenodo DOI: 10.5281/zenodo.23095153
+        Citation tracker established
+        Version/DOI sync validation
 ```
 
 ---
