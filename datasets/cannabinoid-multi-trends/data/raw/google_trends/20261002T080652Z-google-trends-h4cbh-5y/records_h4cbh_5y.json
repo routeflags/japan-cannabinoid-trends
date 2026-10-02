@@ -1,0 +1,16 @@
+{
+  "keyword": "H4CBH",
+  "geo": "JP",
+  "timeframe": "today 5-y",
+  "collected_at": "2026-10-02",
+  "note": "5年データ。2025-04に初出、以降断続的に検索需要",
+  "first_mention": "2025-04-06",
+  "first_value": 41,
+  "peak": {"date": "2026-07-26", "value": 100},
+  "data_summary": {
+    "period_with_data": "2025-04-06 〜 2026-10-03 (断続的)",
+    "period_without_data": "2021-09-26 〜 2025-03-30",
+    "data_points_nonzero": 65,
+    "data_points_zero": 197
+  }
+}

@@ -11,16 +11,27 @@
 ```
 KATO, Kyoji. (2026).
 CBX Online Trend Dataset 2026: Google Trends, Social Media, and COA Data from Japan.
-Version 1.6.2.
+Version 1.7.1.
 Routeflags Co., Ltd.
 [Dataset].
-DOI: 10.5281/zenodo.23095153
+DOI: 10.5281/zenodo.23097769
 ```
 
-**DOI (Concept):** https://doi.org/10.5281/zenodo.23095152
-**DOI (Version):** https://doi.org/10.5281/zenodo.23095153
+**DOI (Concept):** https://doi.org/10.5281/zenodo.23097768
+**DOI (Version v1.7.1):** https://doi.org/10.5281/zenodo.23097769
+**DOI (Version v1.7.0):** https://doi.org/10.5281/zenodo.23095153
 **GitHub:** https://github.com/routeflags/japan-cannabinoid-trends
 **Guide Page:** https://www.thch-vape.shop/guide/substance/what-is-cbx
+
+---
+
+## Dataset Versions
+
+| Version | Release Date | DOI | Status |
+|---------|-------------|-----|--------|
+| v1.7.1 | 2026-10-02 | 10.5281/zenodo.23097769 | Latest |
+| v1.7.0 | 2026-10-02 | 10.5281/zenodo.23095153 | Previous |
+| v1.6.2 | 2026-10-02 | 10.5281/zenodo.23091163 | Archived |
 
 ---
 
@@ -53,7 +64,9 @@ DOI: 10.5281/zenodo.23095153
 
 | Version | Release Date | DOI | Academic | Media | Policy | Industry | Web | Total |
 |---------|-------------|-----|:--------:|:-----:|:------:|:--------:|:---:|:-----:|
-| v1.6.2 | 2026-10-02 | 10.5281/zenodo.23095153 | 0 | 0 | 0 | 0 | 0 | **0** |
+| v1.7.1 | 2026-10-02 | 10.5281/zenodo.23097769 | 0 | 0 | 0 | 0 | 0 | **0** |
+| v1.7.0 | 2026-10-02 | 10.5281/zenodo.23095153 | 0 | 0 | 0 | 0 | 0 | **0** |
+| v1.6.2 | 2026-10-02 | 10.5281/zenodo.23091163 | 0 | 0 | 0 | 0 | 0 | **0** |
 
 ### By Quarter
 
@@ -71,6 +84,18 @@ DOI: 10.5281/zenodo.23095153
 | Industry | 0 | 0% |
 | Web | 0 | 0% |
 | **Total** | **0** | — |
+
+---
+
+## Zenodo Analytics Baseline (2026-10-02)
+
+| Metric | v1.7.1 | v1.7.0 | v1.6.2 |
+|--------|:------:|:------:|:------:|
+| Views | — | — | — |
+| Downloads | — | — | — |
+| Unique visitors | — | — | — |
+
+*Note: Analytics data to be collected from Zenodo dashboard.*
 
 ---
 
