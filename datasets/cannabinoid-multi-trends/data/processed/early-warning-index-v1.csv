@@ -1,13 +1,13 @@
-compound,classification,first_mention_date,left_censored,first_value,peak_value,peak_week,mean_12m,persistence_class,regulatory_status,regulation_date,regulation_type,source_run_ids
-CBD,Major Phytocannabinoid,2021-09-26以前,true,45,100,2021-09-26,50,Year-round,Unregulated (conditional),,Cannabis Control Act,EXP-20261002
-THC,Major Phytocannabinoid,2021-09-26以前,true,9,100,2025-08-31,15,Year-round,Regulated,1948-07-10,Cannabis Control Act/Narcotics Control Act,EXP-20261002
-CBN,Minor Phytocannabinoid,2021-09-26以前,true,20,100,2025-04-20,50,Year-round,Designated Drug,2026-06-01,PMD Act (Designated Drug),EXP-20261002
-CBG,Minor Phytocannabinoid,2021-09-26,false,34,100,2022-05-22,30,Intermittent,Unregulated (conditional),,Cannabis Control Act,EXP-20261002
-HHC,Semi-Synthetic,2021-11-28,false,1,100,2022-03-06,10,Low-volume,Designated Drug,2022-03-17,PMD Act (Designated Drug),EXP-20261002
-HHCH,Synthetic,2023-03-26,false,1,100,2023-11-12,5,Pre-regulation spike,Designated Drug,2023-12-02,PMD Act (Designated Drug),EXP-20261002
-THCV,Minor Phytocannabinoid,2021-12-19,false,42,100,2023-09-03,15,Intermittent,Unregulated,,No specific regulation,EXP-20261002
-THC-O,Semi-Synthetic,2022-03-13,false,71,100,2022-03-13,40,Intermittent,Narcotics,2024-12-12,Narcotics and Psychotropics Control Act,EXP-20261002
-THCH,Minor Phytocannabinoid,2022-04-17,false,1,100,2026-07-05,5,Very low,Designated Drug,2023-08-04,PMD Act (Designated Drug),EXP-20261002
-CRDP,Synthetic,2022-07-31,false,29,100,2025-06-08,30,Intermittent,Unregulated (caution),,No specific regulation (monitoring),EXP-20261002
-H4CBH,Semi-Synthetic,2025-04-06,false,41,100,2026-07-26,50,Intermittent,Unregulated (caution),,No specific regulation (monitoring),EXP-20261002
-HHBD,Semi-Synthetic,2025-11-30,false,37,100,2025-12-07,30,Intermittent,Unregulated (caution),,No specific regulation (monitoring),EXP-20261002
+compound,classification,cohort,first_mention_date,left_censored,first_value,peak_value,peak_week,mean_12m,persistence_class,emergence_score,first_regulation_date,first_regulation_type,current_status,current_legal_basis,generic_designation_date,source_run_ids
+CBD,Major Phytocannabinoid,Baseline,2021-09-26以前,true,45,100,2021-09-26,50,Year-round,1,,Unregulated (conditional),Cannabis Control Act (conditional THC-free),,EXP-20261002
+THC,Major Phytocannabinoid,Baseline,2021-09-26以前,true,9,100,2025-08-31,15,Year-round,1,1948-07-10,Cannabis Control Act,Regulated,Narcotics Control Act (residual THC limits) + Cannabis Control Act,2024-12-12,EXP-20261002
+CBN,Minor Phytocannabinoid,Baseline,2021-09-26以前,true,20,100,2025-04-20,50,Year-round,1,2026-06-01,PMD Act (Designated Drug),Designated Drug,PMD Act (Designated Drug),,EXP-20261002
+CBG,Minor Phytocannabinoid,Baseline,2021-09-26,false,34,100,2022-05-22,30,Intermittent,2,,Unregulated (conditional),Cannabis Control Act (conditional THC-free),,EXP-20261002
+THCV,Minor Phytocannabinoid,Baseline,2021-12-19,false,42,100,2023-09-03,15,Intermittent,2,,Unregulated,No specific regulation,,EXP-20261002
+HHC,Semi-Synthetic,Emerging,2021-11-28,false,1,100,2022-03-06,10,Low-volume,3,2022-03-17,PMD Act (Designated Drug),Designated Drug,PMD Act (Designated Drug),,EXP-20261002
+THCH,Minor Phytocannabinoid,Emerging,2022-04-17,false,1,100,2026-07-05,5,Very low,2,2023-08-04,PMD Act (Designated Drug),Designated Drug,PMD Act (Designated Drug),2023-09-10,EXP-20261002
+THC-O,Semi-Synthetic,Emerging,2022-03-13,false,71,100,2022-03-13,40,Intermittent,3,2023-03-20,PMD Act (Designated Drug),Designated Drug,PMD Act (Designated Drug),,EXP-20261002
+HHCH,Synthetic,Emerging,2023-03-26,false,1,100,2023-11-12,5,Pre-regulation spike,4,2023-12-02,PMD Act (Designated Drug),Designated Drug,PMD Act (Designated Drug),,EXP-20261002
+CRDP,Synthetic,Emerging,2022-07-31,false,29,100,2025-06-08,30,Intermittent,3,,Unregulated (caution),No specific regulation (monitoring),,EXP-20261002
+H4CBH,Semi-Synthetic,Emerging,2025-04-06,false,41,100,2026-07-26,50,Intermittent,4,,Unregulated (caution),No specific regulation (monitoring),,EXP-20261002
+HHBD,Semi-Synthetic,Emerging,2025-11-30,false,37,100,2025-12-07,30,Intermittent,4,,Unregulated (caution),No specific regulation (monitoring),,EXP-20261002
