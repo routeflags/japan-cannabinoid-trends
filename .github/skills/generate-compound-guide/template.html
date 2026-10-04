@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{COMPOUND_NAME}} とは？成分・規制・安全性の現状（2026年版）</title>
+<meta name="description" content="{{COMPOUND_NAME}}の化学的特徴、規制状況、安全性データ、他のカンナビノイドとの比較を解説。Google Trends検索需要データも掲載。分かっていること・分からないことを整理しました。">
+<link rel="canonical" href="https://www.thch-vape.shop/guide/{{COMPOUND_SLUG}}">
+
+<!-- 構造化データ: BreadcrumbList -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://www.thch-vape.shop/" },
+    { "@type": "ListItem", "position": 2, "name": "読み物", "item": "https://www.thch-vape.shop/guide/articles" },
+    { "@type": "ListItem", "position": 3, "name": "{{COMPOUND_NAME}} ガイド", "item": "https://www.thch-vape.shop/guide/{{COMPOUND_SLUG}}" }
+  ]
+}
+</script>
+
+<!-- 構造化データ: Article -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "{{COMPOUND_NAME}} とは？成分・規制・安全性の現状（2026年版）",
+  "description": "{{COMPOUND_JAPANESE}}の化学的特徴、日本での規制状況、安全性データの現状を解説するガイド記事。",
+  "datePublished": "{{DATE_PUBLISHED}}",
+  "dateModified": "{{DATE_MODIFIED}}",
+  "author": {
+    "@type": "Person",
+    "name": "店長",
+    "url": "https://www.thch-vape.shop/help/about"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "リキッド通販ショップ",
+    "url": "https://www.thch-vape.shop/"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://www.thch-vape.shop/guide/{{COMPOUND_SLUG}}"
+  }
+}
+</script>
+
+<!-- 構造化データ: FAQPage -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "{{COMPOUND_NAME}}は合法ですか？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "{{FAQ_LEGAL_ANSWER}}"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "{{COMPOUND_NAME}}と{{COMPARISON_1}}の違いは何ですか？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "{{FAQ_COMPARISON_ANSWER}}"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "{{COMPOUND_NAME}}の副作用はありますか？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "{{FAQ_SAFETY_ANSWER}}"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "{{COMPOUND_NAME}}製品を選ぶときの注意点は？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "{{FAQ_PRODUCT_ANSWER}}"
+      }
+    }
+  ]
+}
+</script>
+
+<style>
+  :root { --brand: #2ec9bb; --brand3: #2b1e1e; --ink: #262626; --gray: #6c757d; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, "Hiragino Sans", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif; color: var(--ink); line-height: 1.7; }
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+
+  /* ヘッダー */
+  .header { background: #fff; border-bottom: 1px solid #eee; padding: 12px 0; }
+  .header .container { display: flex; align-items: center; justify-content: space-between; }
+  .header .logo { font-size: 18px; font-weight: 700; color: var(--brand3); text-decoration: none; }
+  .header nav a { margin-left: 16px; color: var(--ink); text-decoration: none; font-size: 14px; }
+
+  /* パンくず */
+  .breadcrumb { font-size: 12px; color: var(--gray); padding: 12px 0; border-bottom: 1px dotted #ccc; }
+  .breadcrumb a { color: var(--brand); text-decoration: none; }
+
+  /* 信頼性ブロック */
+  .trust-block { background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 8px; padding: 12px 16px; margin: 32px 0 16px; font-size: 13px; color: var(--gray); }
+  .trust-block p { margin: 0; }
+  .trust-block strong { color: var(--ink); }
+  .trust-block a { color: var(--brand); }
+
+  /* 要点ブロック */
+  .summary-block { background: #e9fbf8; border-left: 4px solid var(--brand); border-radius: 0 8px 8px 0; padding: 16px 20px; margin-bottom: 32px; }
+  .summary-block h2 { font-size: 16px; margin-bottom: 8px; color: var(--brand3); }
+  .summary-block ul { padding-left: 20px; }
+  .summary-block li { margin-bottom: 4px; font-size: 14px; }
+
+  /* 本文 */
+  h1 { font-size: 28px; margin: 32px 0 16px; color: var(--brand3); }
+  h2 { font-size: 22px; margin: 32px 0 12px; color: var(--brand3); border-bottom: 2px solid var(--brand); padding-bottom: 8px; }
+  h3 { font-size: 18px; margin: 24px 0 8px; }
+  p { margin-bottom: 12px; }
+  ul, ol { padding-left: 20px; margin-bottom: 12px; }
+  li { margin-bottom: 4px; }
+  .reference-note { font-size: 12px; color: var(--gray); margin-top: 4px; margin-bottom: 16px; padding: 8px 12px; background: #f8f9fa; border-radius: 4px; }
+  .reference-note a { color: var(--brand); }
+
+  /* 注意ブロック */
+  .caution-block { background: #fff3cd; border: 1px solid #ffc107; border-radius: 8px; padding: 16px 20px; margin: 24px 0; }
+  .caution-block h3 { margin-top: 0; color: #856404; }
+  .caution-block p { color: #856404; margin-bottom: 0; }
+
+  /* 比較テーブル */
+  .comparison-table { width: 100%; border-collapse: collapse; margin: 24px 0; font-size: 14px; }
+  .comparison-table th, .comparison-table td { border: 1px solid #dee2e6; padding: 10px 12px; text-align: left; }
+  .comparison-table th { background: #f8f9fa; font-weight: 600; color: var(--brand3); }
+  .comparison-table td:first-child { font-weight: 500; white-space: nowrap; }
+
+  /* 規制セクション */
+  .regulation-box { background: #fff; border: 1px solid #dee2e6; border-radius: 8px; padding: 20px; margin: 24px 0; }
+  .regulation-box h3 { margin-top: 0; }
+  .regulation-box ul { padding-left: 20px; }
+  .regulation-box li { margin-bottom: 6px; }
+
+  /* ガイド導線 */
+  .guide-link { background: #fffbe6; border: 1px solid #ffe58f; border-radius: 8px; padding: 16px 20px; margin: 24px 0; }
+  .guide-link p { margin: 0; font-size: 14px; }
+  .guide-link a { color: var(--brand); font-weight: 600; }
+
+  /* 成分別CTA */
+  .ingredient-cta { background: var(--brand3); color: #fff; border-radius: 8px; padding: 24px; margin: 32px 0; }
+  .ingredient-cta h2 { color: #fff; border-bottom-color: rgba(255,255,255,0.3); margin-top: 0; }
+  .ingredient-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin-top: 16px; }
+  .ingredient-btn { display: block; background: rgba(255,255,255,0.15); color: #fff; text-decoration: none; padding: 14px 12px; border-radius: 6px; text-align: center; transition: background 0.2s; }
+  .ingredient-btn:hover { background: rgba(255,255,255,0.25); }
+  .ingredient-btn .name { font-size: 16px; font-weight: 700; display: block; }
+  .ingredient-btn .desc { font-size: 12px; opacity: 0.8; display: block; margin-top: 4px; }
+
+  /* データテーブル */
+  .data-section { background: #fff; border: 1px solid #dee2e6; border-radius: 8px; padding: 20px; margin: 32px 0; }
+  .data-section h2 { border-bottom: none; margin-top: 0; }
+  .data-section .meta { font-size: 12px; color: var(--gray); margin-bottom: 16px; }
+  .data-table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 13px; }
+  .data-table th, .data-table td { border: 1px solid #dee2e6; padding: 8px 10px; text-align: left; }
+  .data-table th { background: #f8f9fa; font-weight: 600; color: var(--brand3); }
+  .data-table .num { text-align: right; font-variant-numeric: tabular-nums; }
+  .data-note { font-size: 12px; color: var(--gray); margin-top: 8px; padding: 8px 12px; background: #f8f9fa; border-radius: 4px; }
+  .data-badge { display: inline-block; font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 10px; margin-left: 8px; }
+  .data-badge--first { background: #e9fbf8; color: var(--brand); }
+  .data-badge--dummy { background: #fff3cd; color: #856404; }
+
+  /* フッター */
+  .footer { background: var(--brand3); color: #fff; padding: 32px 0; margin-top: 48px; font-size: 13px; }
+  .footer a { color: rgba(255,255,255,0.8); text-decoration: none; }
+</style>
+</head>
+<body>
+
+<!-- ヘッダー -->
+<header class="header">
+  <div class="container">
+    <a href="/" class="logo">リキッド通販ショップ</a>
+    <nav>
+      <a href="/products/list">商品一覧</a>
+      <a href="/guide/articles">読み物</a>
+      <a href="/news">ニュース</a>
+      <a href="/contact">お問い合わせ</a>
+    </nav>
+  </div>
+</header>
+
+<!-- パンくず -->
+<div class="container">
+  <nav class="breadcrumb">
+    <a href="/">ホーム</a> &gt;
+    <a href="/guide/articles">読み物</a> &gt;
+    <span>{{COMPOUND_NAME}} ガイド</span>
+  </nav>
+</div>
+
+<main class="container">
+
+  <!-- ===== 著者・ライセンス情報 ===== -->
+  <div class="reference-note" style="margin-bottom: 24px;">
+    <strong>著者:</strong> 店長｜
+    <strong>所属:</strong> リキッド通販ショップ｜
+    <strong>ライセンス:</strong> CC-BY-4.0｜
+    <strong>最終更新:</strong> {{DATE_MODIFIED}}
+  </div>
+
+  <!-- ===== 利益相反の開示 ===== -->
+  <div class="caution-block" style="background: #f8f9fa; border-color: #dee2e6;">
+    <h3 style="color: var(--ink);">利益相反の開示</h3>
+    <p>本ページの発行者（リキッド通販ショップ）は、カンナビノイド製品を販売するEC事業を運営しています。この商業的関係は、本ページの情報選択に影響を及ぼす可能性があります。</p>
+    <p>本ページのデータ・方法論・制約は、独立した評価を可能にするために記載しています。</p>
+    <p>本ページは以下のものではありません：</p>
+    <ul>
+      <li>医療・治療の助言</li>
+      <li>商品の効能の保証</li>
+      <li>購入を推奨するもの</li>
+      <li>患者の自己判断を助長するもの</li>
+    </ul>
+  </div>
+
+  <!-- ===== 要点ブロック ===== -->
+  <div class="summary-block">
+    <h2>このページで分かること</h2>
+    <ul>
+      <li><strong>{{COMPOUND_NAME}}とは</strong> — {{SUMMARY_1}}</li>
+      <li><strong>規制状況</strong> — {{SUMMARY_2}}</li>
+      <li><strong>安全性</strong> — {{SUMMARY_3}}</li>
+      <li><strong>{{COMPARISON_1}}との比較</strong> — {{SUMMARY_4}}</li>
+      <li><strong>独自データ</strong> — {{SUMMARY_5}}</li>
+    </ul>
+  </div>
+
+  <!-- ===== H1 ===== -->
+  <h1>{{COMPOUND_NAME}} とは？成分・規制・安全性の現状（2026年版）</h1>
+
+  <p>{{INTRO_PARAGRAPH_1}}</p>
+
+  <p>{{INTRO_PARAGRAPH_2}}</p>
+
+  <p>{{INTRO_PARAGRAPH_3}}</p>
+
+  <div class="caution-block">
+    <h3>⚠ この記事の前提</h3>
+    <p>{{CAVEAT_TEXT}}</p>
+  </div>
+
+  <!-- ===== {{COMPOUND_NAME}} とは ===== -->
+  <h2 id="what-is-{{COMPOUND_SLUG}}">{{COMPOUND_NAME}} とは（現段階の理解）</h2>
+
+  <p>{{WHAT_IS_INTRO}}</p>
+
+  <h3>学術的な {{COMPOUND_NAME}}</h3>
+
+  <p>{{ACADEMIC_INFO}}</p>
+
+  <div class="reference-note">
+    出典: {{ACADEMIC_SOURCE}}
+  </div>
+
+  <p>{{ACADEMIC_FEATURES_INTRO}}</p>
+
+  <ul>
+    {{ACADEMIC_FEATURES_LIST}}
+  </ul>
+
+  <h3>市場で流通する「{{COMPOUND_NAME}}」</h3>
+
+  <p>{{MARKET_INFO_INTRO}}</p>
+
+  <ul>
+    {{MARKET_FEATURES_LIST}}
+  </ul>
+
+  <div class="reference-note">
+    出典: {{MARKET_SOURCE}}
+  </div>
+
+  <div class="caution-block">
+    <h3>⚠ 分かっていないこと</h3>
+    <p>{{UNKNOWN_FACTS}}</p>
+  </div>
+
+  <!-- ===== 規制状況 ===== -->
+  <h2 id="regulation">規制状況</h2>
+
+  <p>{{REGULATION_INTRO}}</p>
+
+  <h3>日本国内</h3>
+
+  <p>{{JAPAN_REGULATION_INTRO}}</p>
+
+  <div class="regulation-box">
+    <h3>{{REGULATION_LAW_TITLE}}</h3>
+    <p>{{REGULATION_LAW_DESCRIPTION}}</p>
+    <ul>
+      {{REGULATION_LAW_DETAILS}}
+    </ul>
+  </div>
+
+  <div class="reference-note">
+    出典: {{REGULATION_SOURCE}}
+  </div>
+
+  <p>{{JAPAN_REGULATION_NOTE}}</p>
+
+  <h3>国際的な状況</h3>
+
+  <ul>
+    {{INTERNATIONAL_REGULATION_LIST}}
+  </ul>
+
+  <p>{{INTERNATIONAL_REGULATION_NOTE}}</p>
+
+  <!-- ===== 安全性 ===== -->
+  <h2 id="safety">安全性について</h2>
+
+  <p>{{SAFETY_INTRO}}</p>
+
+  <h3>分かっていること</h3>
+
+  <ul>
+    {{SAFETY_KNOWN_LIST}}
+  </ul>
+
+  <h3>分かっていないこと</h3>
+
+  <ul>
+    {{SAFETY_UNKNOWN_LIST}}
+  </ul>
+
+  <div class="caution-block">
+    <h3>⚠ 安全性に関する注意</h3>
+    <p>{{SAFETY_WARNING}}</p>
+  </div>
+
+  <!-- ===== 比較 ===== -->
+  <h2 id="compare">{{COMPARISON_1}}との比較</h2>
+
+  <p>{{COMPARISON_INTRO}}</p>
+
+  <table class="comparison-table">
+    <thead>
+      <tr>
+        <th>比較ポイント</th>
+        {{COMPARISON_HEADER_CELLS}}
+      </tr>
+    </thead>
+    <tbody>
+      {{COMPARISON_TABLE_ROWS}}
+    </tbody>
+  </table>
+
+  <!-- ===== 独自データ：Google Trends ===== -->
+  <div class="data-section">
+    <h2 id="data-search">独自データ: {{COMPOUND_NAME}} の Google Trends 検索需要 <span class="data-badge data-badge--first">一次データ</span></h2>
+    <p class="meta">データソース: Google Trends / 地域: 日本 (JP) / 期間: 過去12ヶ月 / 取得日: {{GT_DATE}}</p>
+
+    <p>{{GT_INTRO}}</p>
+
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>キーワード</th>
+          <th class="num">単独平均</th>
+          <th class="num">比較平均</th>
+          <th class="num">ピーク</th>
+          <th>特徴</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{GT_TABLE_ROWS}}
+      </tbody>
+    </table>
+
+    <p class="data-note">
+      <strong>所見:</strong> {{GT_FINDING}}
+    </p>
+  </div>
+
+  <!-- ===== 独自データ：X (Twitter) トレンド（データがある場合） ===== -->
+  {{X_TREND_SECTION}}
+
+  <!-- ===== 成分別CTA ===== -->
+  <div class="ingredient-cta">
+    <h2>他の成分も探す</h2>
+    <div class="ingredient-grid">
+      {{INGREDIENT_BUTTONS}}
+    </div>
+  </div>
+
+  <!-- ===== FAQ ===== -->
+  <h2 id="faq">よくある質問</h2>
+
+  <h3>{{COMPOUND_NAME}} は合法ですか？</h3>
+  <p>{{FAQ_LEGAL_ANSWER_1}}</p>
+  <p>{{FAQ_LEGAL_ANSWER_2}}</p>
+
+  <h3>{{COMPOUND_NAME}} と {{COMPARISON_1}} の違いは何ですか？</h3>
+  <p>{{FAQ_COMPARISON_ANSWER_1}}</p>
+  <p>{{FAQ_COMPARISON_ANSWER_2}}</p>
+
+  <h3>{{COMPOUND_NAME}} の副作用はありますか？</h3>
+  <p>{{FAQ_SAFETY_ANSWER_1}}</p>
+  <p>{{FAQ_SAFETY_ANSWER_2}}</p>
+
+  <h3>{{COMPOUND_NAME}} 製品を選ぶときの注意点は？</h3>
+  <p>{{FAQ_PRODUCT_ANSWER_1}}</p>
+  <p>{{FAQ_PRODUCT_ANSWER_2}}</p>
+
+  <!-- ===== 信頼性情報 ===== -->
+  <div class="trust-block">
+    <p>
+      <strong>最終確認日:</strong> {{DATE_MODIFIED}}（JST）｜
+      <strong>確認者:</strong> 店長 ｜
+      <strong>修正窓口:</strong> <a href="/contact">お問い合わせ</a>
+    </p>
+    <p style="margin-top: 4px;">
+      {{TRUST_NOTE}}
+    </p>
+  </div>
+
+</main>
+
+<!-- フッター -->
+<footer class="footer">
+  <div class="container">
+    <p>© リキッド通販ショップ</p>
+    <p style="margin-top: 8px;">
+      <a href="/help/about">当サイトについて</a> ｜
+      <a href="/help/tradelaw">特定商取引法に基づく表記</a> ｜
+      <a href="/help/privacy">プライバシーポリシー</a> ｜
+      <a href="/contact">お問い合わせ</a>
+    </p>
+  </div>
+</footer>
+
+</body>
+</html>
