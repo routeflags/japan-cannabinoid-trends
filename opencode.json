@@ -113,6 +113,18 @@
         "google-trends-mcp"
       ],
       "enabled": true
+    },
+    "youtube": {
+      "type": "local",
+      "command": [
+        "/Users/bookair18/OS/media/06_symphony/symphony_workspaces/.github/bin/run-with-env.sh",
+        "/Users/bookair18/OS/media/06_symphony/symphony_workspaces/.env.d/youtube.env",
+        "uvx",
+        "--with",
+        "mcp<2",
+        "youtube-mcp"
+      ],
+      "enabled": true
     }
   },
   "skills": {
