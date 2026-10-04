@@ -2,12 +2,14 @@
 """
 Compound Guide Page Generator
 CBX ガイドページと同じ構造で、他のカンナビノイド化合物用ガイドを生成する。
+substance-dictionary 準拠のエビデンスラダーシステム、主張ラベル、薬機法コンプライアンスを含む。
 
 使用例:
     python3 generate_compound_guide.py --compound CBN --japanese カンナビノール \
         --regulation "指定薬物（2026年6月1日施行）" \
         --characteristics "THCの酸化で生成" "催眠作用の可能性" \
-        --compare CBD THC CBG
+        --compare CBD THC CBG \
+        --tier flagship
 """
 
 import argparse
@@ -22,6 +24,7 @@ def generate_compound_guide(
     regulation_status: str,
     characteristics: List[str],
     comparison_compounds: Optional[List[str]] = None,
+    tier: str = "standard",
     output_dir: str = "publication",
     template_path: str = ".github/skills/generate-compound-guide/template.html",
 ) -> Path:
@@ -32,6 +35,11 @@ def generate_compound_guide(
     
     if characteristics is None:
         characteristics = []
+    
+    # Tier の検証
+    valid_tiers = ["flagship", "standard"]
+    if tier not in valid_tiers:
+        raise ValueError(f"tier は {valid_tiers} のいずれかである必要があります")
     
     compound_slug = compound_name.lower()
     today = datetime.now().strftime("%Y-%m-%d")
@@ -49,6 +57,7 @@ def generate_compound_guide(
         "{{REGULATION_STATUS}}": regulation_status,
         "{{COMPARISON_1}}": comparison_compounds[0],
         "{{GT_DATE}}": today,
+        "{{TIER}}": tier,
     }
     
     for key, value in replacements.items():
@@ -160,6 +169,22 @@ def generate_compound_guide(
         
         "X_TREND_SECTION": "<!-- X トレンドデータは収集後に追加 -->",
         
+        "MARKET_TRENDS_INTRO": f"このセクションでは、{compound_name}に関する市場の文脈と社会的議論を整理します。",
+        
+        "MARKET_CONTEXT": f"{compound_name}はカンナビノイド市場の中で{characteristics[0] if characteristics else '注目されている成分'}として位置づけられています。",
+        
+        "MARKET_CONTEXT_SOURCE": "業界メディア・市場調査資料",
+        
+        "MARKET_PRODUCT_FORMATS": "\n".join([
+            "    <li><strong>リキッド:</strong> 電子タバコ用リキッドとして流通</li>",
+            "    <li><strong>オイル:</strong> 口腔内摂取用オイル</li>",
+            "    <li><strong>その他:</strong> グミ、カプセル等の食品形態</li>",
+        ]),
+        
+        "MARKET_SOCIAL_DISCUSSION": f"{compound_name}をめぐる社会的議論は、安全性と規制のバランスが中心です。",
+        
+        "MARKET_LIMITATIONS": f"{compound_name}の市場データは業界メディアやサプライヤー情報に依存しています。観測事実と解釈を区別してください。",
+        
         "INGREDIENT_BUTTONS": "\n".join([
             f"""      <a href="/ingredient/{c.lower()}" class="ingredient-btn">
         <span class="name">{c}</span>
@@ -200,6 +225,7 @@ def generate_compound_guide(
     print(f"✅ 生成完了: {output_path}")
     print(f"   化合物: {compound_name} ({compound_japanese})")
     print(f"   規制状況: {regulation_status}")
+    print(f"   Tier: {tier}")
     print(f"   ファイルサイズ: {output_path.stat().st_size:,} bytes")
     
     return output_path
@@ -212,6 +238,7 @@ def main():
     parser.add_argument("--regulation", "-r", required=True, help="規制状況")
     parser.add_argument("--characteristics", "-k", nargs="+", required=True, help="特徴のリスト")
     parser.add_argument("--compare", nargs="+", default=["CBD", "CBG", "CBX"], help="比較対象")
+    parser.add_argument("--tier", "-t", choices=["flagship", "standard"], default="standard", help="Tier (flagship/standard)")
     parser.add_argument("--output", "-o", default="publication", help="出力ディレクトリ")
     
     args = parser.parse_args()
@@ -222,6 +249,7 @@ def main():
         regulation_status=args.regulation,
         characteristics=args.characteristics,
         comparison_compounds=args.compare,
+        tier=args.tier,
         output_dir=args.output,
     )
 
