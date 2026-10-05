@@ -7,6 +7,83 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.9.0] - 2026-10-05
+
+### Added
+- **12化合物ガイドページ** (substance-dictionary 準拠)
+  - CBD, CBG, CBN, THC (flagship tier)
+  - HHC, HHCH, THCH, THC-O, THCV, CRDP, H4CBH, HHBD (standard tier)
+  - Evidence Ladder (L0-L4) と Claim Labels 適用
+  - 薬機法/YMYL コンプライアンス対応
+
+- **Google Trends common-scale 拡張**
+  - 比較セット B: CBN, CRDP, HHCH, THC-O, THCV
+  - 比較セット C: CBN, CBG, CBD
+  - 比較セット D: H4CBH, HHBD, CRDP
+  - 共通スケール比較を 5→12 化合物に拡張
+
+- **Inter-rater Reliability (kappa) 検証**
+  - H4CBH: kappa = 0.596 (Moderate)
+  - HHBD: kappa = 0.804 (Almost perfect)
+  - 分類信頼性の定量化
+
+- **Phase 2 データ収集**
+  - 日本語 YouTube データ (Apify): 180件
+  - CBN 規制前後 X データ + CBG 対照: 300件
+  - H4CBH/HHBD X データ拡大 (n=200): 400件
+
+- **Compound Guide Generation スキル**
+  - `.github/skills/generate-compound-guide/`
+  - substance-dictionary 準拠のガイドページ生成
+
+### Changed
+- **Google Trends ランキング修正**
+  - 個別正規化データの誤用を修正
+  - 共通スケール比較データを使用
+  - CBD > THC > CBG > HHC > THCH の順序に修正
+
+- **CBN 表現の修正**
+  - 「規制効果」→「時系列的関連」に変更
+  - 因果関係の非主張を明確化
+
+- **Evidence Ladder ガイドページ適用**
+  - 全12ガイドページに L0-L4 バッジ追加
+  - Claim Labels (OBSERVED/DERIVED/INTERPRETATION) 追加
+
+- **H4CBH/HHBD/CRDP 規制表現の緩和**
+  - 「極めて高い」→「可能性がある」に変更
+
+- **Early Warning Index 方法論の文書化**
+  - データ辞書セクション追加
+  - 正規化の注意事項を明記
+
+- **SNS 分類手法の文書化**
+  - 分類プロセス・カテゴリ定義を文書化
+  - 信頼区間 (Wilson score) を追加
+
+### Fixed
+- **バージョン/DOI 同期**
+  - datapackage.json, methodology.md, guide_cbx, README の不整合を修正
+  - pre-commit hook にバージョン同期検証を追加
+
+- **Google Trends 比較の順位矛盾**
+  - Section 1 と Section 5 の整合性を修正
+
+- **YouTube データ文書の修正**
+  - API クォータ: 10,000 → 100/日
+  - 日本語 CBD 件数: 653 → 423 (11%)
+  - 日本語キーワード収集の失敗を明記
+
+### Research Outputs
+- `research/20261004-google-trends-comparison.md` (修正版)
+- `research/20261004-h4cbh-hhbd-sns-analysis.md` (CI 追加)
+- `research/20261005-kappa-analysis.md`
+- `research/20261005-phase2-collection-results.md`
+- `research/20261005-phase2-analysis-results.md`
+- `research/20261005-academic-research-youtube-review.md`
+
+---
+
 ## [1.8.0] - 2026-10-02
 
 ### Added

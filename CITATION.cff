@@ -4,8 +4,8 @@
 cff-version: 1.2.0
 message: "If you use this dataset, please cite it as below."
 title: "Japan Cannabinoid Trends Dataset 2026: Google Trends, Social Media, Regulatory Status, and Early Warning Index"
-version: "1.8.0"
-date-released: "2026-10-02"
+version: "1.9.0"
+date-released: "2026-10-05"
 type: dataset
 license: CC-BY-4.0
 language: ja

@@ -1,12 +1,12 @@
 {
   "name": "japan-cannabinoid-trends",
   "title": "Japan Cannabinoid Trends Dataset 2026: Google Trends, Social Media, Regulatory Status, and Early Warning Index",
-  "version": "1.8.0",
+  "version": "1.9.0",
   "description": "日本国内におけるカンナビノイド関連トレンドを追跡するロングジューデータセット。Google Trends（CBD / CBG / CBN / THC / HHC / HHCH / THCH / THC-O / THCV / H4CBH / HHBD / CRDP）、X (Twitter)、YouTube、規制状況（12化合物）、早期警戒指数（Early Warning Index）を収録。",
   "homepage": "https://github.com/routeflags/japan-cannabinoid-trends",
   "license": "CC-BY-4.0",
   "created": "2026-09-16",
-  "modified": "2026-10-04",
+  "modified": "2026-10-05",
   "contributors": [
     {
       "name": "KATO, Kyoji",
@@ -147,7 +147,15 @@
             "type": "string",
             "description": "週分類 (W1-W6)",
             "constraints": {
-              "enum": ["W1", "W2", "W3", "W4", "W5", "W6", "unknown"]
+              "enum": [
+                "W1",
+                "W2",
+                "W3",
+                "W4",
+                "W5",
+                "W6",
+                "unknown"
+              ]
             }
           },
           {
@@ -200,7 +208,10 @@
             "type": "string",
             "description": "本文が存在するか (yes/no)",
             "constraints": {
-              "enum": ["yes", "no"]
+              "enum": [
+                "yes",
+                "no"
+              ]
             }
           },
           {
@@ -242,7 +253,15 @@
             "type": "string",
             "description": "週分類 (W1-W6)",
             "constraints": {
-              "enum": ["W1", "W2", "W3", "W4", "W5", "W6", "unknown"]
+              "enum": [
+                "W1",
+                "W2",
+                "W3",
+                "W4",
+                "W5",
+                "W6",
+                "unknown"
+              ]
             }
           },
           {
@@ -295,7 +314,10 @@
             "type": "string",
             "description": "本文が存在するか (yes/no)",
             "constraints": {
-              "enum": ["yes", "no"]
+              "enum": [
+                "yes",
+                "no"
+              ]
             }
           },
           {
@@ -367,7 +389,9 @@
             "type": "string",
             "description": "プラットフォーム名",
             "constraints": {
-              "enum": ["x_twitter"]
+              "enum": [
+                "x_twitter"
+              ]
             },
             "references": {
               "schema_property": "schema:isPartOf",
@@ -400,7 +424,15 @@
             "type": "string",
             "description": "収集キーワード（化合物名）",
             "constraints": {
-              "enum": ["CBD", "THC", "CBG", "HHC", "THCV", "THC-O", "THCH"]
+              "enum": [
+                "CBD",
+                "THC",
+                "CBG",
+                "HHC",
+                "THCV",
+                "THC-O",
+                "THCH"
+              ]
             }
           },
           {
@@ -408,7 +440,9 @@
             "type": "string",
             "description": "地域コード (JP = 日本)",
             "constraints": {
-              "enum": ["JP"]
+              "enum": [
+                "JP"
+              ]
             }
           },
           {
@@ -421,7 +455,11 @@
             "type": "string",
             "description": "データソース",
             "constraints": {
-              "enum": ["google-trends", "x-twitter", "youtube"]
+              "enum": [
+                "google-trends",
+                "x-twitter",
+                "youtube"
+              ]
             }
           },
           {
@@ -468,5 +506,5 @@
     }
   ],
   "doi": "10.5281/zenodo.23101318",
-  "citation": "KATO, Kyoji. (2026). Japan Cannabinoid Trends Dataset 2026: Google Trends, Social Media, Regulatory Status, and Early Warning Index. Version 1.8.0. Routeflags Co., Ltd. [Dataset]. DOI: 10.5281/zenodo.23101318"
+  "citation": "KATO, Kyoji. (2026). Japan Cannabinoid Trends Dataset 2026: Google Trends, Social Media, Regulatory Status, and Early Warning Index. Version 1.9.0. Routeflags Co., Ltd. [Dataset]. DOI: 10.5281/zenodo.23101318"
 }
