@@ -46,12 +46,25 @@ Twelve cannabinoids were selected based on:
 
 ### Compounds Tracked
 
-| Category | Compounds |
-|----------|-----------|
-| Major Phytocannabinoids | CBD, THC |
-| Minor Phytocannabinoids | CBN, CBG, THCV, THCH |
-| Semi-Synthetic | HHC, THC-O, H4CBH, HHBD |
-| Synthetic | HHCH, CRDP |
+| Category (CSV) | SKOS Notation | Compounds |
+|----------------|---------------|-----------|
+| Major Phytocannabinoid | compound_major | CBD, THC |
+| Minor Phytocannabinoid | compound_minor | CBN, CBG, THCV, THCH |
+| Semi-Synthetic | compound_semisynthetic | HHC, THC-O, H4CBH, HHBD |
+| Synthetic | compound_synthetic | HHCH, CRDP |
+
+### Classification Source
+
+化合物分類は SKOS タクソノミー（`metadata/taxonomy/compound-taxonomy.skos.jsonld`）を唯一の真実源（single source of truth）とする。
+
+CSV の `classification` フィールドは、SKOS の以下のカテゴリ英語対応を使用：
+
+| SKOS notation | SKOS prefLabel (JA) | CSV classification (EN) |
+|---------------|---------------------|------------------------|
+| compound_major | 主要フィトカンナビノイド | Major Phytocannabinoid |
+| compound_minor | 主要フィトカンナビノイド以外のフィトカンナビノイド | Minor Phytocannabinoid |
+| compound_semisynthetic | 半合成カンナビノイド | Semi-Synthetic |
+| compound_synthetic | 合成カンナビノイド | Synthetic |
 
 ---
 
