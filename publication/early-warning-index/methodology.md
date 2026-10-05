@@ -192,7 +192,54 @@ datasets/cannabinoid-multi-trends/data/processed/
 
 ---
 
-## 9. Quality Controls
+## 9. Data Dictionary (CSV Fields)
+
+### 重要: 正規化に関する注意
+
+**`mean_12m` および `peak_value` は、各化合物を個別に収集した Google Trends データの値です。**
+
+Google Trends は個別クエリを、各々のピーク値を100として正規化します。したがって、これらの値は**化合物間の比較には使用できません。**
+
+化合物間の比較には、共通スケールの比較データ（`comparison_setA.json`）を使用してください。
+
+→ 詳細: `research/20261004-google-trends-comparison.md`
+
+### フィールド定義
+
+| フィールド | 型 | 説明 | 計算方法 |
+|-----------|-----|------|---------|
+| `compound` | string | 化合物名 | — |
+| `classification` | string | 化学分類 | SKOS タクソノミー準拠 |
+| `cohort` | string | コホート（Baseline / Emerging） | 初出時期で判定 |
+| `first_mention_date` | date | 初出時期 | 5年データの最初の非ゼロ値 |
+| `left_censored` | boolean | 左打ち切りフラグ | 5年ウィンドウ起点時点ですでにデータがある場合 true |
+| `first_value` | integer | 初出時の値 | 個別正規化スケール（0-100） |
+| `peak_value` | integer | ピーク値 | 個別正規化スケール（0-100、常に100） |
+| `peak_week` | date | ピーク週 | 最大値を返した週 |
+| `mean_12m` | integer | 12ヶ月平均 | **個別正規化**スケール（0-100） |
+| `persistence_class` | string | 持続性分類 | セクション4のルールで判定 |
+| `emergence_score` | integer | 出現スコア（0-4） | セクション6のルーブリックで判定 |
+| `first_regulation_date` | date | 初回規制日 | 一次資料（MHLW等）より |
+| `first_regulation_type` | string | 規制種別 | 薬機法 / 大麻取締法等 |
+| `current_status` | string | 現在の法的状態 | 規制 / 指定薬物 / 非規制等 |
+| `current_legal_basis` | string | 現行の法的根拠 | 具体的な法令名 |
+| `generic_designation_date` | date | 包括指定日 | 包括指定があった場合 |
+| `source_run_ids` | string | 収集ランID | Google Trends 収集の run_id |
+
+### mean_12m と Google Trends レポート値の関係
+
+| 値のタイプ | スケール | 用途 |
+|-----------|---------|------|
+| **本 CSV の mean_12m** | 個別正規化（各化合物のピーク=100） | 各化合物の時系列推移 |
+| **比較データの値** | 共通スケール（CBD=100） | 化合物間の横断比較 |
+
+**例:**
+- THC の mean_12m = 15（個別正規化）→ THC 自体のピークに対する平均
+- THC の共通スケール値 = 12（比較データ）→ CBD を100とした場合の THC の相対値
+
+---
+
+## 10. Quality Controls
 
 | Control | Implementation |
 |---------|---------------|
@@ -204,7 +251,7 @@ datasets/cannabinoid-multi-trends/data/processed/
 
 ---
 
-## 10. Limitations
+## 11. Limitations
 
 1. **Relative indices:** Google Trends values (0-100) measure relative interest, not absolute search volume.
 2. **5-year window:** Google Trends maximum timeframe is `today 5-y`; pre-2021 emergence cannot be detected.
@@ -215,7 +262,7 @@ datasets/cannabinoid-multi-trends/data/processed/
 
 ---
 
-## 11. Reproducibility
+## 12. Reproducibility
 
 ### Collection Script
 
@@ -235,7 +282,7 @@ Includes: run_id, study_id, source, collection_timestamp, queries.
 
 ---
 
-## 12. Citation
+## 13. Citation
 
 When citing this methodology or dataset:
 
