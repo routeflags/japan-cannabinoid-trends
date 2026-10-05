@@ -1,0 +1,8 @@
+{
+  "run_id": "20261005T100000Z-google-trends-common-scale-expansion",
+  "collection_date": "2026-10-05",
+  "purpose": "Google Trends common-scale expansion for additional compounds",
+  "sets_collected": ["B", "C", "D"],
+  "sets_failed": [],
+  "note": "All three sets collected successfully. Set D required retry due to rate limiting."
+}

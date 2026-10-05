@@ -1,0 +1,13 @@
+{
+  "comparison_set": "D",
+  "terms": ["H4CBH", "HHBD", "CRDP"],
+  "geo": "JP",
+  "timeframe": "today 12-m",
+  "collected_at": "2026-10-05",
+  "average_interest": {
+    "H4CBH": 58,
+    "HHBD": 30,
+    "CRDP": 12
+  },
+  "note": "H4CBH dominates among monitoring targets. HHBD shows moderate interest. CRDP shows intermittent signals mostly in Oct-Dec 2025."
+}
