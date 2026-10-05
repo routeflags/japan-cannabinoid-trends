@@ -1,0 +1,13 @@
+{
+  "comparison_set": "C",
+  "terms": ["CBN", "CBG", "CBD"],
+  "geo": "JP",
+  "timeframe": "today 12-m",
+  "collected_at": "2026-10-05",
+  "average_interest": {
+    "CBN": 11,
+    "CBG": 3,
+    "CBD": 47
+  },
+  "note": "CBD dominates. CBN shows decline after June 2026 regulation. CBG remains low and stable."
+}

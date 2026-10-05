@@ -1,0 +1,15 @@
+{
+  "comparison_set": "B",
+  "terms": ["CBN", "CRDP", "HHCH", "THC-O", "THCV"],
+  "geo": "JP",
+  "timeframe": "today 12-m",
+  "collected_at": "2026-10-05",
+  "average_interest": {
+    "CBN": 55,
+    "CRDP": 2,
+    "HHCH": 0,
+    "THC-O": 0,
+    "THCV": 0
+  },
+  "note": "CBN is dominant in this comparison set. CRDP shows intermittent signals. HHCH, THC-O, THCV are below detection threshold."
+}
