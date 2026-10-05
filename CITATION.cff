@@ -80,7 +80,7 @@ references:
 
 identifiers:
   - type: doi
-    value: "10.5281/zenodo.23101318"
+    value: "10.5281/zenodo.23164973"
     description: "Zenodo DOI for v1.8.0"
   - type: url
     value: "https://github.com/routeflags/japan-cannabinoid-trends"
@@ -89,7 +89,7 @@ identifiers:
 preferred-citation:
   type: dataset
   title: "Japan Cannabinoid Trends Dataset 2026"
-  version: "1.8.0"
+  version: "1.9.0"
   year: 2026
   month: 10
   authors:
@@ -101,5 +101,5 @@ preferred-citation:
     name: "Routeflags Co., Ltd."
     city: "Tokyo"
     country: "JP"
-  url: "https://doi.org/10.5281/zenodo.23101318"
-  doi: "10.5281/zenodo.23101318"
+  url: "https://doi.org/10.5281/zenodo.23164973"
+  doi: "10.5281/zenodo.23164973"
