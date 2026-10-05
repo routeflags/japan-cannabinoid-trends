@@ -1,12 +1,12 @@
 {
   "name": "japan-cannabinoid-trends",
-  "title": "CBX Online Trend Dataset 2026: Google Trends, Social Media, and COA Data from Japan",
+  "title": "Japan Cannabinoid Trends Dataset 2026: Google Trends, Social Media, Regulatory Status, and Early Warning Index",
   "version": "1.8.0",
-  "description": "日本国内におけるカンナビノイド関連トレンドを追跡するロングジューデータセット。Google Trends（CBX / H4CBH / HHBD / CBX リキッド / CBD / THC / CBG / HHC / THCV / THC-O / THCH）、X (Twitter)、YouTube、COA 分析結果（ISO/IEC 17025 認定 2 社）を収録。",
+  "description": "日本国内におけるカンナビノイド関連トレンドを追跡するロングジューデータセット。Google Trends（CBD / CBG / CBN / THC / HHC / HHCH / THCH / THC-O / THCV / H4CBH / HHBD / CRDP）、X (Twitter)、YouTube、規制状況（12化合物）、早期警戒指数（Early Warning Index）を収録。",
   "homepage": "https://github.com/routeflags/japan-cannabinoid-trends",
   "license": "CC-BY-4.0",
   "created": "2026-09-16",
-  "modified": "2026-10-02",
+  "modified": "2026-10-04",
   "contributors": [
     {
       "name": "KATO, Kyoji",
@@ -17,20 +17,25 @@
   ],
   "keywords": [
     "cannabinoid",
-    "CBX",
+    "CBD",
+    "CBG",
+    "CBN",
+    "THC",
+    "HHC",
+    "HHCH",
+    "THCH",
+    "THC-O",
+    "THCV",
     "H4CBH",
     "HHBD",
-    "CBD",
-    "THC",
-    "CBG",
-    "HHC",
-    "THCV",
-    "THC-O",
-    "THCH",
+    "CRDP",
+    "CBX",
     "Google Trends",
     "X (Twitter)",
     "YouTube",
     "Japan",
+    "regulatory status",
+    "early warning index",
     "online trends",
     "search interest",
     "longitudinal data"
@@ -462,6 +467,6 @@
       }
     }
   ],
-  "doi": "10.5281/zenodo.23097769",
-  "citation": "KATO, Kyoji. (2026). CBX Online Trend Dataset 2026: Google Trends, Social Media, and COA Data from Japan. Version 1.7.1. Routeflags Co., Ltd. [Dataset]. DOI: 10.5281/zenodo.23097769"
+  "doi": "10.5281/zenodo.23101318",
+  "citation": "KATO, Kyoji. (2026). Japan Cannabinoid Trends Dataset 2026: Google Trends, Social Media, Regulatory Status, and Early Warning Index. Version 1.8.0. Routeflags Co., Ltd. [Dataset]. DOI: 10.5281/zenodo.23101318"
 }
