@@ -94,6 +94,36 @@
   body { font-family: -apple-system, "Hiragino Sans", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif; color: var(--ink); line-height: 1.7; }
   .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
 
+  /* Evidence Ladder & Claim Labels */
+  .evidence-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 600;
+    margin-left: 6px;
+    vertical-align: middle;
+  }
+  .evidence-l1 { background: #d4edda; color: #155724; }
+  .evidence-l2 { background: #d1ecf1; color: #0c5460; }
+  .evidence-l3 { background: #fff3cd; color: #856404; }
+  .evidence-l4 { background: #f8d7da; color: #721c24; }
+  .evidence-l0 { background: #e2e3e5; color: #383d41; }
+  
+  .claim-label {
+    display: inline-block;
+    padding: 1px 6px;
+    border-radius: 3px;
+    font-size: 10px;
+    font-weight: 500;
+    margin-right: 4px;
+    border: 1px solid;
+  }
+  .claim-observed { background: #e7f3ff; color: #004085; border-color: #b8daff; }
+  .claim-derived { background: #e7f3ff; color: #004085; border-color: #b8daff; }
+  .claim-interpretation { background: #fff3cd; color: #856404; border-color: #ffeeba; }
+  .claim-hypothesis { background: #f8d7da; color: #721c24; border-color: #f5c6cb; }
+
   /* ヘッダー */
   .header { background: #fff; border-bottom: 1px solid #eee; padding: 12px 0; }
   .header .container { display: flex; align-items: center; justify-content: space-between; }
@@ -249,6 +279,40 @@
     <p>{{CAVEAT_TEXT}}</p>
   </div>
 
+  <!-- ===== エビデンスラダー ===== -->
+  <div class="trust-block">
+    <h3>📊 エビデンスラダー（証拠レベル）</h3>
+    <p>本記事の科学的主張には、以下の証拠レベルを付記しています。</p>
+    <table style="width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 13px;">
+      <tr style="border-bottom: 1px solid #eee;">
+        <td style="padding: 6px 8px;"><span class="evidence-badge evidence-l1">L1</span></td>
+        <td style="padding: 6px 8px;">ヒト介入研究（RCT / 併用試験）</td>
+      </tr>
+      <tr style="border-bottom: 1px solid #eee;">
+        <td style="padding: 6px 8px;"><span class="evidence-badge evidence-l2">L2</span></td>
+        <td style="padding: 6px 8px;">ヒト観察研究 / 症例報告</td>
+      </tr>
+      <tr style="border-bottom: 1px solid #eee;">
+        <td style="padding: 6px 8px;"><span class="evidence-badge evidence-l3">L3</span></td>
+        <td style="padding: 6px 8px;">動物研究</td>
+      </tr>
+      <tr style="border-bottom: 1px solid #eee;">
+        <td style="padding: 6px 8px;"><span class="evidence-badge evidence-l4">L4</span></td>
+        <td style="padding: 6px 8px;">in vitro / in silico</td>
+      </tr>
+      <tr>
+        <td style="padding: 6px 8px;"><span class="evidence-badge evidence-l0">L0</span></td>
+        <td style="padding: 6px 8px;">逸話 / SNS / マーケティング表現（本文の根拠には使用しません）</td>
+      </tr>
+    </table>
+    <p style="margin-top: 8px; font-size: 12px; color: var(--gray);">
+      主張ラベル: <span class="claim-label claim-observed">OBSERVED</span> 測定・観測事実 /
+      <span class="claim-label claim-derived">DERIVED</span> 計算・集計値 /
+      <span class="claim-label claim-interpretation">INTERPRETATION</span> 観測からの解釈 /
+      <span class="claim-label claim-hypothesis">HYPOTHESIS</span> 未検証の仮説
+    </p>
+  </div>
+
   <!-- ===== {{COMPOUND_NAME}} とは ===== -->
   <h2 id="what-is-{{COMPOUND_SLUG}}">{{COMPOUND_NAME}} とは（現段階の理解）</h2>
 
@@ -256,7 +320,7 @@
 
   <h3>学術的な {{COMPOUND_NAME}}</h3>
 
-  <p>{{ACADEMIC_INFO}}</p>
+  <p>{{ACADEMIC_INFO}} <span class="evidence-badge evidence-l3">L3</span> <span class="claim-label claim-observed">OBSERVED</span></p>
 
   <div class="reference-note">
     出典: {{ACADEMIC_SOURCE}}
