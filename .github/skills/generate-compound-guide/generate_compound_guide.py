@@ -79,7 +79,13 @@ def generate_compound_guide(
         
         "WHAT_IS_INTRO": f"このセクションでは、学術文献上の{compound_name}と、市場で流通している製品の違いを整理します。",
         
-        "ACADEMIC_INFO": f"{compound_japanese}（{compound_name}）は大麻草に含まれる天然のカンナビノイドです。",
+        # C4修正: 化学構造不明の化合物を正しく扱う
+        "ACADEMIC_INFO": (
+            f"{compound_japanese}（{compound_name}）は市場で流通しているカンナビノイド関連物質です。"
+            f"正式な化学構造や性質は公開されておらず、学術的な裏付けは限定的です。"
+            if "仮称" in compound_japanese or compound_name in ["H4CBH", "HHBD", "CRDP"]
+            else f"{compound_japanese}（{compound_name}）は大麻草に含まれる天然のカンナビノイドです。"
+        ),
         
         "ACADEMIC_SOURCE": "学術文献より",
         
