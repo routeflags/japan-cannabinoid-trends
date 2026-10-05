@@ -1,0 +1,115 @@
+#!/usr/bin/env bash
+# =============================================================================
+# Pre-commit hook: Data Schema + Version Sync Validation
+#
+# コミット前に以下を検証:
+# 1. Data Dictionary と実際のデータスキーマの一致
+# 2. バージョン/DOI の同期（CITATION.cff, datapackage.json 等）
+#
+# 検証をスキップする場合:
+#   git commit --no-verify
+#
+# フックを無効化する場合:
+#   mv .git/hooks/pre-commit .git/hooks/pre-commit.disabled
+# =============================================================================
+
+set -e
+
+REPO_ROOT="$(git rev-parse --show-toplevel)"
+cd "$REPO_ROOT"
+
+# 変更されたファイルを取得
+CHANGED_FILES=$(git diff --cached --name-only)
+
+# データスキーマ検証が必要なファイル
+SCHEMA_VALIDATION_NEEDED=false
+
+# バージョン同期検証が必要なファイル
+VERSION_VALIDATION_NEEDED=false
+
+for file in $CHANGED_FILES; do
+  case $file in
+    # データスキーマ検証対象
+    metadata/datapackage.json|\
+    datasets/*/data/processed/*.csv|\
+    docs/data-dictionary.md|\
+    docs/provenance.md)
+      SCHEMA_VALIDATION_NEEDED=true
+      ;;
+    # バージョン同期検証対象
+    CITATION.cff|\
+    CHANGELOG.md|\
+    metadata/datapackage.json|\
+    methodology.md|\
+    README.md|\
+    publication/guide_cbx_rewrite.html)
+      VERSION_VALIDATION_NEEDED=true
+      ;;
+  esac
+done
+
+# どちらの検証も不要な場合はスキップ
+if [ "$SCHEMA_VALIDATION_NEEDED" = false ] && [ "$VERSION_VALIDATION_NEEDED" = false ]; then
+  exit 0
+fi
+
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo "  Pre-commit: Data Validation"
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo ""
+
+VALIDATION_FAILED=false
+
+# 1. データスキーマ検証
+if [ "$SCHEMA_VALIDATION_NEEDED" = true ]; then
+  echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+  echo "  1. Data Schema Validation"
+  echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+  echo ""
+  
+  if ! bash scripts/validation/validate-data-schema.sh; then
+    echo ""
+    echo "  ❌ データスキーマ検証に失敗しました"
+    VALIDATION_FAILED=true
+  else
+    echo ""
+    echo "  ✅ データスキーマ検証に合格しました"
+  fi
+  echo ""
+fi
+
+# 2. バージョン同期検証
+if [ "$VERSION_VALIDATION_NEEDED" = true ]; then
+  echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+  echo "  2. Version Sync Validation"
+  echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+  echo ""
+  
+  if ! bash scripts/validation/validate-version-sync.sh; then
+    echo ""
+    echo "  ❌ バージョン同期検証に失敗しました"
+    VALIDATION_FAILED=true
+  else
+    echo ""
+    echo "  ✅ バージョン同期検証に合格しました"
+  fi
+  echo ""
+fi
+
+# 検証結果の判定
+if [ "$VALIDATION_FAILED" = true ]; then
+  echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+  echo "  ❌ コミットがブロックされました"
+  echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+  echo ""
+  echo "  検証に失敗しました。問題を修正するか、--no-verify でスキップしてください。"
+  echo ""
+  exit 1
+fi
+
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo "  ✅ 全検証に合格しました"
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo ""
+
+exit 0
