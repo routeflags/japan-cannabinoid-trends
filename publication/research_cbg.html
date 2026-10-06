@@ -26,6 +26,16 @@
   <h2 id="data-search">独自データ: CBG の Google Trends 検索需要 <span>一次データ</span></h2>
   <p>データソース: Google Trends / 地域: 日本 (JP) / 期間: 過去12ヶ月（週次）/ 取得日: 2026-10-06</p>
   <p>Google Trends から、CBG の日本国内検索興味度（相対指数 0-100）を取得しました。</p>
+
+  <div>
+    <p><strong>用語の定義:</strong></p>
+    <ul>
+      <li><strong>単独平均（個別正規化値）</strong>: 各キーワードを個別に取得した際の12ヶ月平均値。各キーワードのピークを100とする正規化であり、<strong>キーワード間の比較には使用できない</strong>。</li>
+      <li><strong>比較平均（共通スケール値）</strong>: 複数キーワードを同時取得した際の12ヶ月平均値。比較セット内の最大値を100とする正規化であり、<strong>キーワード間の相対的な検索需要を示す</strong>。</li>
+      <li><strong>興味度スコア</strong>: Google Trends が返す相対指数（0-100）。絶対検索数ではなく、期間内の最大検索量を100とした相対値。</li>
+    </ul>
+  </div>
+
   <h3>キーワード別サマリー（個別正規化値）</h3>
   <table>
     <thead>
@@ -65,83 +75,6 @@
 </div>
 
 
-<!-- ===== 規制状況 ===== -->
-<div>
-  <h2 id="data-regulation">規制状況: CBG の日本法での法的扱い <span>一次資料の整理</span></h2>
-  <p>データソース: 厚生労働省 / 調査日: 2026-10-06</p>
-  <h3>法的扱い</h3>
-  <table>
-    <thead>
-      <tr>
-        <th>項目</th>
-        <th>内容</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>法的扱い</td>
-        <td><strong>非規制（条件付き合法）</strong></td>
-      </tr>
-      <tr>
-        <td>規制基準</td>
-        <td>部位ではなく <strong>製品中のΔ9-THC残留量</strong></td>
-      </tr>
-      <tr>
-        <td>葉・花穂由来</td>
-        <td>✅ 可（2024-12-12以降）</td>
-      </tr>
-      <tr>
-        <td>法令名</td>
-        <td>大麻草の栽培の規制に関する法律（2024年12月改正）</td>
-      </tr>
-      <tr>
-        <td>出典</td>
-        <td><a href="https://www.mhlw.go.jp/content/11120000/001302615.pdf">一次資料</a></td>
-      </tr>
-    </tbody>
-  </table>
-
-  <h3>THC 残留限度値</h3>
-  <table>
-    <thead>
-      <tr>
-        <th>製品種別</th>
-        <th>限度値</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>油脂・粉末</td>
-        <td><strong>10 ppm</strong> (0.0010%)</td>
-      </tr>
-      <tr>
-        <td>水溶液</td>
-        <td><strong>0.10 ppm</strong> (0.000010%)</td>
-      </tr>
-      <tr>
-        <td>その他</td>
-        <td><strong>1 ppm</strong> (0.0001%)</td>
-      </tr>
-    </tbody>
-  </table>
-
-  <p><strong>注意:</strong> 限度値超過品は麻薬として所持・使用・販売等が禁止されます。</p>
-</div>
-
-
-<!-- ===== 独自データ：COA 分析結果 ===== -->
-<div>
-  <h2 id="data-coa">独自データ: CBG 製品の COA 分析結果 <span>一次データ</span></h2>
-  <p>データソース: サプライヤー提供 COA / 取得日: 2026-10-06</p>
-  <p>COA（Certificate of Analysis）は、製品に含まれる成分を分析した証明書です。</p>
-  <h3>分析結果</h3>
-  <figure>
-    <img src="https://www.thch-vape.shop/html/user_data/assets/img/coa/wing-cbg.jpg" alt="CBG COA 分析結果" style="max-width: 100%; height: auto;">
-    <figcaption>CBG 製品の COA 分析結果</figcaption>
-  </figure>
-  <p><strong>注意:</strong> Wing CBG 製品の COA（サプライヤー提示）。</p>
-  <p><strong>COA の限界:</strong> 原料 COA ≠ 販売製品ごとの検査結果。サプライヤー分析 ≠ 当店分析。</p>
-</div>
 
 
 
