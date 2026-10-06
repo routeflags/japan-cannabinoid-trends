@@ -7,13 +7,12 @@ CSS、インラインスタイル、ヘッダー、フッター、記事構造�
 
 使用例:
     python3 generate_research_data_page.py \
-      --compound CBN \
-      --japanese "カンナビノール" \
-      --regulation "指定薬物（2026年6月1日施行）" \
-      --gt-individual-avg 55.6 \
-      --gt-common-scale 11 \
-      --regulation-date "2026-06-01" \
-      --regulation-law "薬機法（指定薬物）"
+      --compound CBD \
+      --japanese "カンナビジェロール" \
+      --regulation "非規制（条件付き合法）" \
+      --gt-individual-avg 46.8 \
+      --gt-common-scale 47 \
+      --coa-url "https://example.com/coa.jpg"
 """
 
 import argparse
@@ -31,6 +30,14 @@ def generate_research_page(
     regulation_date: Optional[str] = None,
     regulation_law: Optional[str] = None,
     regulation_source: Optional[str] = None,
+    coa_url: Optional[str] = None,
+    coa_notes: Optional[str] = None,
+    x_records: Optional[int] = None,
+    x_period: Optional[str] = None,
+    x_findings: Optional[str] = None,
+    youtube_records: Optional[int] = None,
+    youtube_period: Optional[str] = None,
+    youtube_findings: Optional[str] = None,
     output_dir: str = "publication",
 ) -> Path:
     """調査データページを生成する"""
@@ -46,9 +53,7 @@ def generate_research_page(
 <div>
   <h2 id="data-search">独自データ: {compound_name} の Google Trends 検索需要 <span>一次データ</span></h2>
   <p>データソース: Google Trends / 地域: 日本 (JP) / 期間: 過去12ヶ月（週次）/ 取得日: {today}</p>
-
-  <p>Google Trends から、{compound_name} の日本国内検索興味度（相対指数 0-100）を取得しました。市場全体の検索需要を示す公開データです。</p>
-
+  <p>Google Trends から、{compound_name} の日本国内検索興味度（相対指数 0-100）を取得しました。</p>
   <h3>キーワード別サマリー（個別正規化値）</h3>
   <table>
     <thead>
@@ -56,8 +61,6 @@ def generate_research_page(
         <th>キーワード</th>
         <th>12ヶ月平均</th>
         <th>12ヶ月最高</th>
-        <th>12ヶ月最低</th>
-        <th>データポイント</th>
       </tr>
     </thead>
     <tbody>
@@ -65,43 +68,31 @@ def generate_research_page(
         <td><strong>{compound_name}</strong></td>
         <td>{gt_individual_avg}</td>
         <td>100</td>
-        <td>—</td>
-        <td>53</td>
       </tr>
     </tbody>
   </table>
-
-  <p><strong>注意:</strong> 上記は個別収集データであり、{compound_name} 自体のピークを100とする正規化です。化合物間の比較には共通スケールデータを使用してください。</p>
 """
-        
         if gt_common_scale is not None:
             gt_section += f"""
-  <h3>共通スケール比較（化合物間比較用）</h3>
-  <p>データソース: <code>comparison_set*.json</code> / 化合物同時比較 / CBD = 100 基準</p>
-
+  <h3>共通スケール比較</h3>
+  <p>CBD = 100 基準の相対値</p>
   <table>
     <thead>
       <tr>
         <th>化合物</th>
         <th>共通スケール値</th>
-        <th>個別正規化値（参考）</th>
       </tr>
     </thead>
     <tbody>
       <tr>
         <td><strong>{compound_name}</strong></td>
         <td><strong>{gt_common_scale}</strong></td>
-        <td>{gt_individual_avg}</td>
       </tr>
     </tbody>
   </table>
 """
-        
-        gt_section += f"""
-  <p>
-    <strong>制約:</strong> Google Trends は相対指数であり、絶対検索数ではない。
-    低ボリュームクエリはデータが返らない場合がある。
-  </p>
+        gt_section += """
+  <p><strong>制約:</strong> Google Trends は相対指数であり、絶対検索数ではない。</p>
 </div>
 """
     
@@ -113,7 +104,6 @@ def generate_research_page(
 <div>
   <h2 id="data-regulation">独自データ: {compound_name} の日本法規制状況 <span>一次資料</span></h2>
   <p>データソース: 厚生労働省 / 調査日: {today}</p>
-
   <h3>法的扱い</h3>
   <table>
     <thead>
@@ -128,32 +118,117 @@ def generate_research_page(
         <td><strong>{regulation_status}</strong></td>
       </tr>
 """
-        
         if regulation_law:
             regulation_section += f"""      <tr>
         <td>法令名</td>
         <td>{regulation_law}</td>
       </tr>
 """
-        
         if regulation_date:
             regulation_section += f"""      <tr>
         <td>施行日</td>
         <td>{regulation_date}</td>
       </tr>
 """
-        
         if regulation_source:
             regulation_section += f"""      <tr>
         <td>出典</td>
         <td><a href="{regulation_source}">一次資料</a></td>
       </tr>
 """
-        
         regulation_section += """    </tbody>
   </table>
-
-  <p><strong>注意:</strong> 法的状況は調査時点の結果。法改正の可能性あり。詳細は一次資料を確認してください。</p>
+  <p><strong>注意:</strong> 法的状況は調査時点の結果。法改正の可能性あり。</p>
+</div>
+"""
+    
+    # COA データセクション
+    coa_section = ""
+    if coa_url:
+        coa_notes_text = coa_notes or "サプライヤー提供の分析証明書。当店自身による分析ではありません。"
+        coa_section = f"""
+<!-- ===== 独自データ：COA 分析結果 ===== -->
+<div>
+  <h2 id="data-coa">独自データ: {compound_name} 製品の COA 分析結果 <span>一次データ</span></h2>
+  <p>データソース: サプライヤー提供 COA / 取得日: {today}</p>
+  <p>COA（Certificate of Analysis）は、製品に含まれる成分を分析した証明書です。</p>
+  <h3>分析結果</h3>
+  <figure>
+    <img src="{coa_url}" alt="{compound_name} COA 分析結果" style="max-width: 100%; height: auto;">
+    <figcaption>{compound_name} 製品の COA 分析結果</figcaption>
+  </figure>
+  <p><strong>注意:</strong> {coa_notes_text}</p>
+  <p><strong>COA の限界:</strong> 原料 COA ≠ 販売製品ごとの検査結果。サプライヤー分析 ≠ 当店分析。</p>
+</div>
+"""
+    
+    # X (Twitter) データセクション
+    x_section = ""
+    if x_records is not None:
+        x_period_text = x_period or "直近3ヶ月"
+        x_findings_text = x_findings or "データ分析中"
+        x_section = f"""
+<!-- ===== 独自データ：X (Twitter) トレンド ===== -->
+<div>
+  <h2 id="data-x">独自データ: {compound_name} の X (Twitter) トレンド <span>一次データ</span></h2>
+  <p>データソース: X (Twitter) via Apify / 期間: {x_period_text} / 取得日: {today}</p>
+  <p>X (Twitter) から、{compound_name} に関する日本語投稿を収集しました。</p>
+  <h3>収集結果</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>指標</th>
+        <th>値</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>日本語投稿数</td>
+        <td>{x_records}件</td>
+      </tr>
+      <tr>
+        <td>観測期間</td>
+        <td>{x_period_text}</td>
+      </tr>
+    </tbody>
+  </table>
+  <p><strong>所見:</strong> {x_findings_text}</p>
+  <p><strong>制約:</strong> X 検索結果のサンプルであり、全投稿を網羅するものではない。</p>
+</div>
+"""
+    
+    # YouTube データセクション
+    youtube_section = ""
+    if youtube_records is not None:
+        youtube_period_text = youtube_period or "観測期間"
+        youtube_findings_text = youtube_findings or "データ分析中"
+        youtube_section = f"""
+<!-- ===== 独自データ：YouTube トレンド ===== -->
+<div>
+  <h2 id="data-youtube">独自データ: {compound_name} の YouTube トレンド <span>一次データ</span></h2>
+  <p>データソース: YouTube / 期間: {youtube_period_text} / 取得日: {today}</p>
+  <p>YouTube から、{compound_name} に関する動画を収集しました。</p>
+  <h3>収集結果</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>指標</th>
+        <th>値</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>動画数</td>
+        <td>{youtube_records}件</td>
+      </tr>
+      <tr>
+        <td>観測期間</td>
+        <td>{youtube_period_text}</td>
+      </tr>
+    </tbody>
+  </table>
+  <p><strong>所見:</strong> {youtube_findings_text}</p>
+  <p><strong>制約:</strong> YouTube 検索結果のサンプルであり、全動画を網羅するものではない。</p>
 </div>
 """
     
@@ -169,7 +244,6 @@ def generate_research_page(
 
 <!-- ===== 調査方法 ===== -->
 <h2 id="methodology">調査方法</h2>
-
 <p>このセクションでは、本ページの情報がどのように収集・分析されたかを公開しています。</p>
 
 <h3>研究質問</h3>
@@ -178,41 +252,14 @@ def generate_research_page(
 
 <h3>データソース</h3>
 <ul>
-  <li><strong>検索データ（主要）:</strong> Google Trends（日本、過去12ヶ月）</li>
+  <li><strong>検索データ:</strong> Google Trends（日本、過去12ヶ月）</li>
   <li><strong>規制資料:</strong> 厚生労働省</li>
-  <li><strong>学術文献:</strong> PubMed, Google Scholar</li>
 </ul>
-
-<h3>検索クエリ</h3>
-<ul>
-  <li>Google Trends: <code>{compound_name}</code>（geo=JP, 期間=today 12-m）</li>
-  <li>学術: PubMed, Google Scholar で {compound_name} を検索</li>
-  <li>規制: 厚労省 指定薬物一覧</li>
-</ul>
-
-<h3>取得期間</h3>
-<p>2025-09-28 ～ {today}（Google Trends 週次）</p>
-
-<h3>含み・除外基準</h3>
-<ul>
-  <li><strong>含む:</strong> 日本語クエリ、英語クエリのうち日本市場関連</li>
-  <li><strong>除く:</strong> ボット判定クエリ、同一IPからの連続アクセス</li>
-</ul>
-
-<h3>再現性チェックリスト</h3>
-<ul>
-  <li>✅ 検索クエリを完全に記録した</li>
-  <li>✅ 取得日を記録した</li>
-  <li>✅ 含み・除外の基準を明記した</li>
-  <li>✅ 生データを保存した（Google Trends JSON）</li>
-  <li>✅ 出典を明記した</li>
-</ul>
-
-<p>
-  <strong>制約:</strong> Google Trends の値は相対指数（0-100）であり、絶対検索数ではありません。
-</p>
 {gt_section}
 {regulation_section}
+{coa_section}
+{x_section}
+{youtube_section}
 <!-- ===== 引用情報 ===== -->
 <div>
   <h2 id="citation">引用 (How to Cite)</h2>
@@ -252,14 +299,22 @@ def generate_research_page(
 
 def main():
     parser = argparse.ArgumentParser(description="化合物の調査データページを生成")
-    parser.add_argument("--compound", "-c", required=True, help="化合物名 (例: CBN)")
-    parser.add_argument("--japanese", "-j", required=True, help="日本語名 (例: カンナビノール)")
+    parser.add_argument("--compound", "-c", required=True, help="化合物名")
+    parser.add_argument("--japanese", "-j", required=True, help="日本語名")
     parser.add_argument("--regulation", "-r", required=True, help="規制状況")
     parser.add_argument("--gt-individual-avg", type=float, help="Google Trends 個別平均値")
-    parser.add_argument("--gt-common-scale", type=float, help="共通スケール値 (CBD=100基準)")
-    parser.add_argument("--regulation-date", help="規制施行日 (例: 2026-06-01)")
+    parser.add_argument("--gt-common-scale", type=float, help="共通スケール値")
+    parser.add_argument("--regulation-date", help="規制施行日")
     parser.add_argument("--regulation-law", help="関連法令")
     parser.add_argument("--regulation-source", help="一次資料の URL")
+    parser.add_argument("--coa-url", help="COA 画像の URL")
+    parser.add_argument("--coa-notes", help="COA の注意事項")
+    parser.add_argument("--x-records", type=int, help="X 投稿数")
+    parser.add_argument("--x-period", help="X 観測期間")
+    parser.add_argument("--x-findings", help="X 所見")
+    parser.add_argument("--youtube-records", type=int, help="YouTube 動画数")
+    parser.add_argument("--youtube-period", help="YouTube 観測期間")
+    parser.add_argument("--youtube-findings", help="YouTube 所見")
     parser.add_argument("--output", "-o", default="publication", help="出力ディレクトリ")
     
     args = parser.parse_args()
@@ -273,6 +328,14 @@ def main():
         regulation_date=args.regulation_date,
         regulation_law=args.regulation_law,
         regulation_source=args.regulation_source,
+        coa_url=args.coa_url,
+        coa_notes=args.coa_notes,
+        x_records=args.x_records,
+        x_period=args.x_period,
+        x_findings=args.x_findings,
+        youtube_records=args.youtube_records,
+        youtube_period=args.youtube_period,
+        youtube_findings=args.youtube_findings,
         output_dir=args.output,
     )
 
