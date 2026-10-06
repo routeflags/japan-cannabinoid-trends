@@ -99,7 +99,86 @@ def generate_research_page(
     # 規制状況セクション
     regulation_section = ""
     if regulation_date or regulation_law:
-        regulation_section = f"""
+        # CBD/CBG の場合、正しい条件を表示
+        if compound_name in ["CBD", "CBG"]:
+            regulation_section = f"""
+<!-- ===== 規制状況 ===== -->
+<div>
+  <h2 id="data-regulation">規制状況: {compound_name} の日本法での法的扱い <span>一次資料の整理</span></h2>
+  <p>データソース: 厚生労働省 / 調査日: {today}</p>
+  <h3>法的扱い</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>項目</th>
+        <th>内容</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>法的扱い</td>
+        <td><strong>{regulation_status}</strong></td>
+      </tr>
+      <tr>
+        <td>規制基準</td>
+        <td>部位ではなく <strong>製品中のΔ9-THC残留量</strong></td>
+      </tr>
+      <tr>
+        <td>葉・花穂由来</td>
+        <td>✅ 可（2024-12-12以降）</td>
+      </tr>
+"""
+            if regulation_law:
+                regulation_section += f"""      <tr>
+        <td>法令名</td>
+        <td>{regulation_law}</td>
+      </tr>
+"""
+            if regulation_date:
+                regulation_section += f"""      <tr>
+        <td>施行日</td>
+        <td>{regulation_date}</td>
+      </tr>
+"""
+            if regulation_source:
+                regulation_section += f"""      <tr>
+        <td>出典</td>
+        <td><a href="{regulation_source}">一次資料</a></td>
+      </tr>
+"""
+            regulation_section += """    </tbody>
+  </table>
+
+  <h3>THC 残留限度値</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>製品種別</th>
+        <th>限度値</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>油脂・粉末</td>
+        <td><strong>10 ppm</strong> (0.0010%)</td>
+      </tr>
+      <tr>
+        <td>水溶液</td>
+        <td><strong>0.10 ppm</strong> (0.000010%)</td>
+      </tr>
+      <tr>
+        <td>その他</td>
+        <td><strong>1 ppm</strong> (0.0001%)</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p><strong>注意:</strong> 限度値超過品は麻薬として所持・使用・販売等が禁止されます。</p>
+</div>
+"""
+        else:
+            # その他の化合物
+            regulation_section = f"""
 <!-- ===== 規制状況 ===== -->
 <div>
   <h2 id="data-regulation">規制状況: {compound_name} の日本法での法的扱い <span>一次資料の整理</span></h2>
@@ -118,25 +197,25 @@ def generate_research_page(
         <td><strong>{regulation_status}</strong></td>
       </tr>
 """
-        if regulation_law:
-            regulation_section += f"""      <tr>
+            if regulation_law:
+                regulation_section += f"""      <tr>
         <td>法令名</td>
         <td>{regulation_law}</td>
       </tr>
 """
-        if regulation_date:
-            regulation_section += f"""      <tr>
+            if regulation_date:
+                regulation_section += f"""      <tr>
         <td>施行日</td>
         <td>{regulation_date}</td>
       </tr>
 """
-        if regulation_source:
-            regulation_section += f"""      <tr>
+            if regulation_source:
+                regulation_section += f"""      <tr>
         <td>出典</td>
         <td><a href="{regulation_source}">一次資料</a></td>
       </tr>
 """
-        regulation_section += """    </tbody>
+            regulation_section += """    </tbody>
   </table>
   <p><strong>注意:</strong> 法的状況は調査時点の結果。法改正の可能性あり。</p>
 </div>
