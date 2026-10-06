@@ -1,0 +1,46 @@
+{
+  "cbd": {
+    "kappa": 0.7335307179866765,
+    "interpretation": "Substantial",
+    "n": 100,
+    "distribution": {
+      "製品宣伝・販売": 15,
+      "会話・引用": 30,
+      "その他": 40,
+      "製品レビュー": 15
+    }
+  },
+  "cbg": {
+    "kappa": 0.7390311531560919,
+    "interpretation": "Substantial",
+    "n": 100,
+    "distribution": {
+      "その他": 25,
+      "製品宣伝・販売": 56,
+      "製品レビュー": 7,
+      "会話・引用": 12
+    }
+  },
+  "cbn": {
+    "kappa": 0.719918548685672,
+    "interpretation": "Substantial",
+    "n": 89,
+    "distribution": {
+      "製品レビュー": 10,
+      "その他": 39,
+      "会話・引用": 25,
+      "製品宣伝・販売": 15
+    }
+  },
+  "thc": {
+    "kappa": 0.6117084826762246,
+    "interpretation": "Substantial",
+    "n": 100,
+    "distribution": {
+      "会話・引用": 40,
+      "その他": 43,
+      "製品レビュー": 10,
+      "製品宣伝・販売": 7
+    }
+  }
+}
