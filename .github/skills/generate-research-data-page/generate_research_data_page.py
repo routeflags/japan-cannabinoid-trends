@@ -100,9 +100,9 @@ def generate_research_page(
     regulation_section = ""
     if regulation_date or regulation_law:
         regulation_section = f"""
-<!-- ===== 独自データ：規制状況 ===== -->
+<!-- ===== 規制状況 ===== -->
 <div>
-  <h2 id="data-regulation">独自データ: {compound_name} の日本法規制状況 <span>一次資料</span></h2>
+  <h2 id="data-regulation">規制状況: {compound_name} の日本法での法的扱い <span>一次資料の整理</span></h2>
   <p>データソース: 厚生労働省 / 調査日: {today}</p>
   <h3>法的扱い</h3>
   <table>
