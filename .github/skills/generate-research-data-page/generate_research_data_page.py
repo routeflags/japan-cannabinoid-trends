@@ -54,6 +54,16 @@ def generate_research_page(
   <h2 id="data-search">独自データ: {compound_name} の Google Trends 検索需要 <span>一次データ</span></h2>
   <p>データソース: Google Trends / 地域: 日本 (JP) / 期間: 過去12ヶ月（週次）/ 取得日: {today}</p>
   <p>Google Trends から、{compound_name} の日本国内検索興味度（相対指数 0-100）を取得しました。</p>
+  
+  <div style="margin: 12px 0; padding: 12px; background: #f8f9fa; border-left: 3px solid #6c757d;">
+    <p style="margin: 0 0 8px 0; font-size: 13px;"><strong>用語の定義:</strong></p>
+    <ul style="margin: 0; padding-left: 20px; font-size: 13px;">
+      <li><strong>単独平均（個別正規化値）</strong>: 各キーワードを個別に取得した際の12ヶ月平均値。各キーワードのピークを100とする正規化であり、<strong>キーワード間の比較には使用できない</strong>。</li>
+      <li><strong>比較平均（共通スケール値）</strong>: 複数キーワードを同時取得した際の12ヶ月平均値。比較セット内の最大値を100とする正規化であり、<strong>キーワード間の相対的な検索需要を示す</strong>。</li>
+      <li><strong>興味度スコア</strong>: Google Trends が返す相対指数（0-100）。絶対検索数ではなく、期間内の最大検索量を100とした相対値。</li>
+    </ul>
+  </div>
+  
   <h3>キーワード別サマリー（個別正規化値）</h3>
   <table>
     <thead>
