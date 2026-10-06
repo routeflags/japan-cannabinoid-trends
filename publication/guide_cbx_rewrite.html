@@ -467,7 +467,7 @@
   <p>このセクションでは、本ページの情報がどのように収集・分析されたかを公開しています。</p>
 
   <h3>研究質問</h3>
-  <p>「2026年7月から10月の日本国内におけるCBXのオンライン上の検索需要・市場動向・規制状況は何か？」</p>
+  <p>「過去12ヶ月（2025-09～2026-10）の日本国内検索データをもとに、2026年7月以降のCBX市場動向・規制状況を整理する」</p>
   <p class="data-note"><strong>最終更新:</strong> 2026-10-01。Google Trends データに差し替え、YouTube 24件データを反映（26件から2件除外）。</p>
 
   <h3>データソース</h3>
@@ -517,6 +517,15 @@
     <p class="meta">データソース: Google Trends / 地域: 日本 (JP) / 期間: 過去12ヶ月（週次）/ 取得日: 2026-10-01</p>
 
     <p>Google Trends から、CBX / H4CBH / HHBD の日本国内検索興味度（相対指数 0-100）を取得しました。市場全体の検索需要を示す公開データです。</p>
+
+    <div style="margin: 12px 0; padding: 12px; background: #f8f9fa; border-left: 3px solid #6c757d;">
+      <p style="margin: 0 0 8px 0; font-size: 13px;"><strong>用語の定義:</strong></p>
+      <ul style="margin: 0; padding-left: 20px; font-size: 13px;">
+        <li><strong>単独平均</strong>: 各キーワードを個別に取得した際の12ヶ月平均値。各キーワードのピークを100とする正規化であり、<strong>キーワード間の比較には使用できない</strong>。</li>
+        <li><strong>比較平均</strong>: 複数キーワードを同時取得した際の12ヶ月平均値。比較セット内の最大値を100とする正規化であり、<strong>キーワード間の相対的な検索需要を示す</strong>。</li>
+        <li><strong>興味度スコア</strong>: Google Trends が返す相対指数（0-100）。絶対検索数ではなく、期間内の最大検索量を100とした相対値。</li>
+      </ul>
+    </div>
 
     <h3>キーワード別サマリー</h3>
     <table class="data-table">
@@ -899,6 +908,10 @@
     </table>
 
     <p class="data-note">
+      <div style="margin: 12px 0; padding: 12px; background: #fff3cd; border-left: 3px solid #ffc107;">
+        <p style="margin: 0; font-size: 13px;"><strong>⚠️ 単独平均と比較平均の違い:</strong> 単独平均は各キーワードのピークを100とする正規化であり、<strong>キーワード間の比較には使用できない</strong>。比較平均は複数キーワードを同時取得した際の相対値であり、<strong>キーワード間の検索需要の違いを示す</strong>。例: CBX の単独平均（68）と CBD の単独平均（46.8）を比較しても意味がないが、共通スケールでは CBD（47）> CBX（68）という結果は得られない（CBD が共通スケールで高い）。</p>
+      </div>
+
       <strong>所見:</strong> 比較クエリでは「CBX」の相対興味度が最も高く（平均 68）、H4CBH（13）、HHBD（7）が続きます。ただし、「CBX」は多義語であり、カンナビノイド製品とは無関係な検索を含む可能性があります。H4CBH は通年でデータがある一方、HHBD は 2025年12月のピークのみ突出しています。CBX リキッドは比較クエリでは検出限界（0-7）ですが、単独クエリでは 2026年9月から検出されています（Google Trends の閾値効果の可能性）。Google Trends の値は相対指数であり、絶対検索数ではありません。
     </p>
   </div>
