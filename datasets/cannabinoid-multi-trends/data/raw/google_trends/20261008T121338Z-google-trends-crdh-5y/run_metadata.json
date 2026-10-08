@@ -1,0 +1,10 @@
+{
+  "run_id": "20261008T121338Z-google-trends-crdh-5y",
+  "collection_date": "2026-10-08",
+  "keyword": "CRDH",
+  "geo": "JP",
+  "timeframe": "today 5-y",
+  "study_id": "cannabinoid-multi-trends",
+  "source": "google-trends-mcp",
+  "note": "5-year baseline for CRDH to complete coverage matrix"
+}
