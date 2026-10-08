@@ -248,7 +248,295 @@
 
   "metadata": {
     "created": "2026-09-18",
-    "updated": "2026-09-18",
+    "updated": "2026-10-09",
     "maintainer": "ROUTE FLAGS Co., Ltd."
+  },
+
+  "dataCoverage": {
+    "lastAudit": "2026-10-09",
+    "auditNote": "X/Twitter data is limited to recent tweets due to Apify actor constraints. Historical date range filtering is not supported.",
+
+    "compounds": {
+      "CBD": {
+        "x": {
+          "count": 100,
+          "period": "2026-10-01",
+          "periodDays": 1,
+          "source": "datasets/cannabinoid-social-trends/data/raw/x/20261006T104633Z-main-compounds/cbd.json"
+        },
+        "youtube": {
+          "count": 0,
+          "period": null,
+          "source": null,
+          "gap": true
+        },
+        "googleTrends": {
+          "commonScale": "Set A",
+          "individual12m": true,
+          "individual5y": true
+        }
+      },
+      "THC": {
+        "x": {
+          "count": 100,
+          "period": "2026-09-28 ~ 2026-10-01",
+          "periodDays": 3,
+          "source": "datasets/cannabinoid-social-trends/data/raw/x/20261006T104633Z-main-compounds/thc.json"
+        },
+        "youtube": {
+          "count": 25,
+          "period": "2026-10-01",
+          "source": "datasets/cannabinoid-multi-trends/data/raw/youtube/"
+        },
+        "googleTrends": {
+          "commonScale": "Set A",
+          "individual12m": true,
+          "individual5y": true
+        }
+      },
+      "CBG": {
+        "x": {
+          "count": 100,
+          "period": "2026-09-30 ~ 2026-10-01",
+          "periodDays": 1,
+          "source": "datasets/cannabinoid-social-trends/data/raw/x/20261006T104633Z-main-compounds/cbg.json"
+        },
+        "youtube": {
+          "count": 0,
+          "period": null,
+          "source": null,
+          "gap": true
+        },
+        "googleTrends": {
+          "commonScale": "Set A",
+          "individual12m": true,
+          "individual5y": true
+        }
+      },
+      "CBN": {
+        "x": {
+          "count": 89,
+          "period": "2026-09-25 ~ 2026-09-30",
+          "periodDays": 5,
+          "source": "datasets/cannabinoid-social-trends/data/raw/x/20261006T104633Z-main-compounds/cbn.json"
+        },
+        "youtube": {
+          "count": 0,
+          "period": null,
+          "source": null,
+          "gap": true
+        },
+        "googleTrends": {
+          "commonScale": "Set B",
+          "individual12m": true,
+          "individual5y": true
+        }
+      },
+      "THCV": {
+        "x": {
+          "count": 40,
+          "period": "2026-09-11 ~ 2026-09-30",
+          "periodDays": 19,
+          "source": "datasets/cannabinoid-multi-trends/data/raw/x/20261002T064532Z-x-thcv/records.json"
+        },
+        "youtube": {
+          "count": 23,
+          "period": "2026-10-01",
+          "source": "datasets/cannabinoid-multi-trends/data/raw/youtube/"
+        },
+        "googleTrends": {
+          "commonScale": "Set B",
+          "individual12m": true,
+          "individual5y": true
+        }
+      },
+      "THCH": {
+        "x": {
+          "count": 36,
+          "period": "2026-09-04 ~ 2026-09-30",
+          "periodDays": 26,
+          "source": "datasets/cannabinoid-multi-trends/data/raw/x/20261002T064549Z-x-thch/records.json"
+        },
+        "youtube": {
+          "count": 20,
+          "period": "2026-10-01",
+          "source": "datasets/cannabinoid-multi-trends/data/raw/youtube/"
+        },
+        "googleTrends": {
+          "commonScale": "Set A",
+          "individual12m": true,
+          "individual5y": true
+        }
+      },
+      "HHC": {
+        "x": {
+          "count": 40,
+          "period": "2026-10-01",
+          "periodDays": 1,
+          "source": "datasets/cannabinoid-multi-trends/data/raw/x/20261002T064454Z-x-hhc/records.json"
+        },
+        "youtube": {
+          "count": 28,
+          "period": "2026-10-01",
+          "source": "datasets/cannabinoid-multi-trends/data/raw/youtube/"
+        },
+        "googleTrends": {
+          "commonScale": "Set A",
+          "individual12m": true,
+          "individual5y": true
+        }
+      },
+      "THC-O": {
+        "x": {
+          "count": 40,
+          "period": "2026-09-30 ~ 2026-10-01",
+          "periodDays": 1,
+          "source": "datasets/cannabinoid-multi-trends/data/raw/x/20261002T064540Z-x-thc-o/records.json"
+        },
+        "youtube": {
+          "count": 30,
+          "period": "2026-10-01",
+          "source": "datasets/cannabinoid-multi-trends/data/raw/youtube/"
+        },
+        "googleTrends": {
+          "commonScale": "Set B",
+          "individual12m": true,
+          "individual5y": true
+        }
+      },
+      "H4CBH": {
+        "x": {
+          "count": 200,
+          "period": "2026-09-18 ~ 2026-09-30",
+          "periodDays": 12,
+          "source": "datasets/cannabinoid-social-trends/data/raw/x/20261005T140548Z-h4cbh-hhbd-expanded/h4cbh_expanded.json"
+        },
+        "youtube": {
+          "count": 24,
+          "period": "2026-10-01",
+          "source": "datasets/cannabinoid-multi-trends/data/raw/youtube/"
+        },
+        "googleTrends": {
+          "commonScale": "Set D",
+          "individual12m": true,
+          "individual5y": true
+        }
+      },
+      "HHBD": {
+        "x": {
+          "count": 200,
+          "period": "2026-09-18 ~ 2026-09-30",
+          "periodDays": 12,
+          "source": "datasets/cannabinoid-social-trends/data/raw/x/20261005T140548Z-h4cbh-hhbd-expanded/hhbd_expanded.json"
+        },
+        "youtube": {
+          "count": 22,
+          "period": "2026-10-01",
+          "source": "datasets/cannabinoid-multi-trends/data/raw/youtube/"
+        },
+        "googleTrends": {
+          "commonScale": "Set D",
+          "individual12m": true,
+          "individual5y": true
+        }
+      },
+      "HHCH": {
+        "x": {
+          "count": 100,
+          "period": "2026-04-18 ~ 2026-09-23",
+          "periodDays": 158,
+          "source": "datasets/cannabinoid-social-trends/data/raw/x/20261008T121158Z-hhch/records.json"
+        },
+        "youtube": {
+          "count": 20,
+          "period": "2026-10-01",
+          "source": "datasets/cannabinoid-multi-trends/data/raw/youtube/"
+        },
+        "googleTrends": {
+          "commonScale": "Set B",
+          "individual12m": true,
+          "individual5y": true
+        }
+      },
+      "CRDP": {
+        "x": {
+          "count": 100,
+          "period": "2026-09-30 ~ 2026-10-02",
+          "periodDays": 2,
+          "source": "datasets/cannabinoid-social-trends/data/raw/x/20261008T121238Z-crdp/records.json"
+        },
+        "youtube": {
+          "count": 27,
+          "period": "2026-10-01",
+          "source": "datasets/cannabinoid-multi-trends/data/raw/youtube/"
+        },
+        "googleTrends": {
+          "commonScale": "Set B",
+          "individual12m": true,
+          "individual5y": true
+        }
+      },
+      "CRDH": {
+        "x": {
+          "count": 200,
+          "period": "2026-04-10 ~ 2026-10-07",
+          "periodDays": 180,
+          "source": "datasets/cannabinoid-social-trends/data/raw/x/20261008T125934Z-crdh-expanded/records.json"
+        },
+        "youtube": {
+          "count": 21,
+          "period": "2026-10-01",
+          "source": "datasets/cannabinoid-multi-trends/data/raw/youtube/"
+        },
+        "googleTrends": {
+          "commonScale": "Set D",
+          "individual12m": true,
+          "individual5y": true
+        }
+      }
+    },
+
+    "summary": {
+      "totalCompounds": 13,
+      "xCoverage": {
+        "withData": 13,
+        "gaps": 0,
+        "avgPeriodDays": 41
+      },
+      "youtubeCoverage": {
+        "withData": 10,
+        "gaps": 3,
+        "gapCompounds": ["CBD", "CBG", "CBN"]
+      },
+      "googleTrendsCoverage": {
+        "commonScale": 13,
+        "individual12m": 13,
+        "individual5y": 13
+      }
+    },
+
+    "knownIssues": [
+      {
+        "id": "X-PERIOD-001",
+        "severity": "high",
+        "description": "CBD research page claims collection period 2026-07-01 to 2026-10-01, but actual data is only from 2026-10-01",
+        "affectedPages": ["publication/research_cbd.html"],
+        "status": "open"
+      },
+      {
+        "id": "YT-GAP-001",
+        "severity": "medium",
+        "description": "CBD, CBG, CBN have no YouTube data collected",
+        "affectedCompounds": ["CBD", "CBG", "CBN"],
+        "status": "open"
+      },
+      {
+        "id": "X-LIMIT-001",
+        "severity": "low",
+        "description": "X/Twitter Apify actor does not support historical date range filtering (since:/until: operators ignored)",
+        "affectedCompounds": ["all"],
+        "status": "known-limitation"
+      }
+    ]
   }
 }
