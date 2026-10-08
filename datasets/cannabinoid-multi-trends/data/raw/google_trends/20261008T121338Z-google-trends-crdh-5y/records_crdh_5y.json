@@ -1,0 +1,17 @@
+{
+  "keyword": "CRDH",
+  "geo": "JP",
+  "timeframe": "today 5-y",
+  "collected_at": "2026-10-08",
+  "note": "5-year Google Trends baseline for CRDH. First mention 2023-09-24 (value 48). Peak 2024-12-15 (value 100). Current level near zero.",
+  "first_mention": "2023-09-24",
+  "first_value": 48,
+  "peak": {"date": "2024-12-15", "value": 100},
+  "data_summary": {
+    "total_weeks": 261,
+    "nonzero_weeks": 38,
+    "zero_weeks": 223,
+    "average_all": 15.3,
+    "average_nonzero": 73.4
+  }
+}
