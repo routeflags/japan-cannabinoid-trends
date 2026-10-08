@@ -80,7 +80,14 @@
       "id": "who",
       "term": "WHO",
       "kind": "institution",
-      "role": "科学的評価・勧告"
+      "role": "科学的・医学的評価。Schedule変更はできない（勧告する）",
+      "status": "国連の専門機関（Specialized Agency）",
+      "functions": [
+        "薬物の科学的・医学的評価",
+        "CNDへのSchedule変更勧告",
+        "INCB委員候補の推薦"
+      ],
+      "not_a": "CNDの下部組織でもINCBの下部組織でもない"
     },
     {
       "id": "cnd",
@@ -356,10 +363,21 @@
         "organization": "INCB",
         "classification": "条約に基づく独立した関連機関。ECOSOCの補助機関という広義の記述も存在",
         "function": "遵守監視、推計・統計の審査、前駆物質統制等"
+      },
+      {
+        "organization": "WHO",
+        "classification": "国連の専門機関（Specialized Agency）",
+        "function": "科学的・医学的評価、Schedule変更勧告、INCB委員候補の推薦"
+      },
+      {
+        "organization": "UNODC",
+        "classification": "国連事務局の一部",
+        "function": "各国への技術支援、国際協力、INCB事務局支援"
       }
     ],
     "election": "ECOSOCはCNDの加盟国とINCBの委員13名を選出する。INCB委員は個人資格で職務を行う。",
-    "secretariat": "UNODC内のINCB事務局が支援する。"
+    "secretariat": "UNODC内のINCB事務局が支援する。",
+    "whoPosition": "WHOは国連の専門機関として独立した地位を持つ。科学的評価と勧告を行うが、Schedule変更の権限はない。"
   },
   "thcIsomers": {
     "classificationSystem": {
