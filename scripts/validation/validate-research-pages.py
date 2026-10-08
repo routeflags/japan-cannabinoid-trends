@@ -154,19 +154,53 @@ def has_data_for_section(compound: str, section_id: str) -> bool:
     if not section_config:
         return False
 
+    import glob
+
     for data_path_template in section_config["data_paths"]:
-        # Replace compound placeholder (case-insensitive)
+        # Replace compound placeholder
         data_path = data_path_template.replace("{compound}", compound)
+
         # Use glob pattern matching
-        import glob
         matches = glob.glob(str(REPO_ROOT / data_path))
-        if matches:
+
+        # Filter matches to avoid false positives (e.g., HHC matching HHCH)
+        filtered_matches = []
+        for match in matches:
+            filename = os.path.basename(match).lower()
+            compound_lower = compound.lower()
+
+            # For COA files, check if filename starts with compound name
+            # followed by a non-alphanumeric character or end of string
+            if section_id == "data-coa":
+                if filename.startswith(compound_lower):
+                    rest = filename[len(compound_lower):]
+                    # Check that next char is not alphanumeric (avoid HHC matching HHCH)
+                    if not rest or not rest[0].isalnum():
+                        filtered_matches.append(match)
+            else:
+                filtered_matches.append(match)
+
+        if filtered_matches:
             return True
 
         # Also try uppercase compound
         data_path_upper = data_path_template.replace("{compound}", compound.upper())
         matches_upper = glob.glob(str(REPO_ROOT / data_path_upper))
-        if matches_upper:
+
+        filtered_upper = []
+        for match in matches_upper:
+            filename = os.path.basename(match)
+            compound_upper = compound.upper()
+
+            if section_id == "data-coa":
+                if filename.startswith(compound_upper):
+                    rest = filename[len(compound_upper):]
+                    if not rest or not rest[0].isalnum():
+                        filtered_upper.append(match)
+            else:
+                filtered_upper.append(match)
+
+        if filtered_upper:
             return True
 
     return False
