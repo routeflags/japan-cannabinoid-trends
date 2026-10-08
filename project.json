@@ -441,18 +441,49 @@
       "current": "ジベンゾピラン式（Dibenzopyran）"
     },
     "nomenclatureMapping": {
-      "Δ1-THC": "Δ9-THC",
-      "Δ2-THC": "Δ10-THC",
-      "Δ3-THC": "Δ6a(10a)-THC",
-      "Δ4-THC": "Δ6a(7)-THC",
-      "Δ5-THC": "Δ7-THC",
-      "Δ6-THC": "Δ8-THC",
-      "Δ1(7)-THC": "Δ9(11)-THC"
+      "Δ1-THC": {
+        "current": "Δ9-THC",
+        "confidence": "confirmed",
+        "note": "同一の位置異性体"
+      },
+      "Δ2-THC": {
+        "current": "Δ10-THC",
+        "confidence": "needs-structural-confirmation",
+        "note": "構造による対応確認が必要"
+      },
+      "Δ3-THC": {
+        "current": "Δ6a(10a)-THC",
+        "confidence": "confirmed",
+        "note": "同一の位置異性体"
+      },
+      "Δ4-THC": {
+        "current": "Δ6a(7)-THC",
+        "confidence": "confirmed",
+        "note": "同一の位置異性体"
+      },
+      "Δ5-THC": {
+        "current": "Δ7-THC",
+        "confidence": "examples-exist-needs-confirmation",
+        "note": "対応例あり。構造確認が必要"
+      },
+      "Δ6-THC": {
+        "current": "Δ8-THC",
+        "confidence": "confirmed",
+        "note": "同一の位置異性体"
+      },
+      "Δ1(7)-THC": {
+        "current": "Δ9(11)-THC",
+        "confidence": "confirmed",
+        "note": "慣用名: Δ11-THC, exo-THC"
+      }
     },
-    "nomenclatureWarning": "旧式名称は別化合物ではない。データセットでは canonical_name（現行）に統合し、aliases に旧名を保持する。",
+    "unconfirmedIsomers": {
+      "Δ12-THC": "独立した化合物として確認できず"
+    },
+    "nomenclatureWarning": "旧式名称は別化合物ではない。ただし立体異性体の違いはこの表に含めていない。データセットでは canonical_name（現行）に統合し、aliases に旧名を保持する。",
     "identificationMethod": {
       "required": ["canonical_name", "casNumber", "nomenclature"],
-      "recommended": ["iupacName", "inchiKey", "structuralFormula"]
+      "recommended": ["iupacName", "inchiKey", "structuralFormula", "stereochemistry"]
     },
 
     "isomers": {
@@ -465,7 +496,7 @@
         "casNumber": null,
         "iupacName": null,
         "commonName": "Delta-6a(7)-THC",
-        "notes": "厚労省統制物質一覧に記載。旧式名称: Δ4-THC"
+        "notes": "厚労省統制物質一覧に記載。旧式名称: Δ4-THC（確認済み）"
       },
       "Δ6a(10a)-THC": {
         "canonicalName": "Δ6a(10a)-THC",
@@ -476,7 +507,7 @@
         "casNumber": null,
         "iupacName": null,
         "commonName": "Delta-6a(10a)-THC",
-        "notes": "厚労省統制物質一覧に記載。旧式名称: Δ3-THC"
+        "notes": "厚労省統制物質一覧に記載。旧式名称: Δ3-THC（確認済み）"
       },
       "Δ7-THC": {
         "canonicalName": "Δ7-THC",
@@ -487,7 +518,7 @@
         "casNumber": null,
         "iupacName": null,
         "commonName": "Delta-7-THC",
-        "notes": "厚労省統制物質一覧に記載。旧式名称: Δ5-THC"
+        "notes": "厚労省統制物質一覧に記載。旧式名称: Δ5-THC（対応例あり、構造確認要）"
       },
       "Δ8-THC": {
         "canonicalName": "Δ8-THC",
@@ -498,7 +529,7 @@
         "casNumber": "5957-75-7",
         "iupacName": "(−)-trans-Δ8-THC",
         "commonName": "Delta-8-THC",
-        "notes": "CBDからの化学変換で製造。Δ9より弱い精神活性。旧式名称: Δ6-THC"
+        "notes": "CBDからの化学変換で製造。Δ9より弱い精神活性。旧式名称: Δ6-THC（確認済み）"
       },
       "Δ8-THCO": {
         "canonicalName": "Δ8-THCO",
@@ -520,18 +551,18 @@
         "casNumber": "1972-08-3",
         "iupacName": "(−)-trans-Δ9-THC",
         "commonName": "Dronabinol",
-        "notes": "大麻の主要な精神活性成分。旧式名称: Δ1-THC"
+        "notes": "大麻の主要な精神活性成分。旧式名称: Δ1-THC（確認済み）"
       },
       "Δ9(11)-THC": {
         "canonicalName": "Δ9(11)-THC",
         "japaneseName": "デルタ9(11)-THC",
-        "aliases": ["Δ1(7)-THC"],
+        "aliases": ["Δ1(7)-THC", "Δ11-THC", "exo-THC"],
         "regulation": "麻薬",
         "regulationStatus": "narcotic",
         "casNumber": null,
         "iupacName": null,
         "commonName": "Delta-9(11)-THC",
-        "notes": "厚労省統制物質一覧に記載。旧式名称: Δ1(7)-THC"
+        "notes": "厚労省統制物質一覧に記載。旧式名称: Δ1(7)-THC。慣用名: Δ11-THC, exo-THC"
       },
       "Δ9-THCO": {
         "canonicalName": "Δ9-THCO",
@@ -553,7 +584,7 @@
         "casNumber": "50554-36-6",
         "iupacName": "Δ10-THC",
         "commonName": "Delta-10-THC",
-        "notes": "厚労省統制物質一覧に記載。旧式名称: Δ2-THC"
+        "notes": "厚労省統制物質一覧に記載。旧式名称: Δ2-THC（構造確認要）"
       }
     }
   },
