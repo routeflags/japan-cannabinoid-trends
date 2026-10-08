@@ -7,6 +7,56 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.10.0] - 2026-10-08
+
+### Added
+- **CRDH 化合物追加**
+  - SKOS タクソノミー: compound_crdh
+  - Google Trends: 12ヶ月 + 5年 + 共通スケール
+  - X (Twitter): 200件
+  - YouTube: 21件
+  - COA: KCA Laboratories (ND結果)
+  - 規制レポート: 非規制（要注意）
+  - 調査ページ: publication/research_crdh.html
+
+- **X コンテンツ分類拡張 (Batch 1: A2+A3)**
+  - 13化合物に分類を拡張（4→13）
+  - Wilson 95% 信頼区間を全比率に適用
+  - 再現可能スクリプト: scripts/analysis/classify_x_data.py
+
+- **規制前後比較分析 (Batch 2: B2+B3)**
+  - HHC (2022-03-17): 平均いいね -36.8%
+  - THC-O (2023-03-20): 平均いいね -31.6%
+  - THCH (2023-08-04): 平均いいね +287.5%
+  - CBG 対照付き: 再現可能スクリプト
+
+- **CBX 規制レポート**
+  - 化学構造不明のため分類不能
+  - 製品中 THC 残留量で判断
+
+- **YouTube データ拡張**
+  - HHC: 27件, THCH: 20件, THC-O: 30件
+  - H4CBH: 24件, HHBD: 22件, HHCH: 20件
+  - CRDP: 27件, CRDH: 21件
+
+### Changed
+- **カバレッジ率改善**
+  - YouTube: 50% → 100%
+  - X: 79% → 100%
+  - GT 5年: 86% → 100%
+  - GT 共通Scale: 79% → 93%
+  - COA: 57% → 64%
+  - 調査ページ: 93% → 100%
+
+- **引用トラッカー更新**
+  - v1.9.0 DOI: 10.5281/zenodo.23164973
+  - アラート設定手順を追加
+
+### Fixed
+- マトリックスのカバレッジ表を最新状態に更新
+
+---
+
 ## [1.9.0] - 2026-10-05
 
 ### Added
