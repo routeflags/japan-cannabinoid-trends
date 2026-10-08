@@ -452,6 +452,18 @@
       }
     },
     "whoSource": "WHO『Isomers of THC』Annex 1（41～48ページ）",
+    "naturalOccurrence": {
+      "confirmed": ["Δ8-THC", "Δ9-THC"],
+      "unconfirmed": ["Δ6a(7)-THC", "Δ6a(10a)-THC", "Δ7-THC", "Δ9(11)-THC", "Δ10-THC"],
+      "note": "「未確認」は天然に絶対存在しないという意味ではなく、十分な分析証拠を確認できなかったという意味。",
+      "source": "EUDA、WHO、米国SAMHSA、および2024年の総説"
+    },
+    "productionTypes": {
+      "natural": "天然カンナビノイド：大麻草に天然に存在することが確認された物質",
+      "semiSynthetic": "半合成カンナビノイド：天然成分を原料として化学変換した物質",
+      "fullySynthetic": "全合成カンナビノイド：化学合成によって製造された物質",
+      "note": "同じΔ8-THCでも、大麻草から直接得られたものと、CBDを化学変換して製造されたものがある。化合物の名称だけでは製造由来を判断できない。"
+    },
     "stereoisomerBreakdown": {
       "Δ6a(10a)-THC": 2,
       "Δ6a(7)-THC": 4,
@@ -521,10 +533,11 @@
         "aliases": ["Δ4-THC"],
         "regulation": "麻薬",
         "regulationStatus": "narcotic",
+        "naturalOccurrence": "unconfirmed",
         "casNumber": null,
         "iupacName": null,
         "commonName": "Delta-6a(7)-THC",
-        "notes": "厚労省統制物質一覧に記載。旧式名称: Δ4-THC（確認済み）"
+        "notes": "厚労省統制物質一覧に記載。旧式名称: Δ4-THC（確認済み）。天然存在未確認、化学合成例あり。"
       },
       "Δ6a(10a)-THC": {
         "canonicalName": "Δ6a(10a)-THC",
@@ -532,10 +545,11 @@
         "aliases": ["Δ3-THC"],
         "regulation": "麻薬",
         "regulationStatus": "narcotic",
+        "naturalOccurrence": "unconfirmed",
         "casNumber": null,
         "iupacName": null,
         "commonName": "Delta-6a(10a)-THC",
-        "notes": "厚労省統制物質一覧に記載。旧式名称: Δ3-THC（確認済み）"
+        "notes": "厚労省統制物質一覧に記載。旧式名称: Δ3-THC（確認済み）。天然存在未確認、化学合成例あり。"
       },
       "Δ7-THC": {
         "canonicalName": "Δ7-THC",
@@ -543,10 +557,11 @@
         "aliases": ["Δ5-THC"],
         "regulation": "麻薬",
         "regulationStatus": "narcotic",
+        "naturalOccurrence": "unconfirmed",
         "casNumber": null,
         "iupacName": null,
         "commonName": "Delta-7-THC",
-        "notes": "厚労省統制物質一覧に記載。旧式名称: Δ5-THC（対応例あり、構造確認要）"
+        "notes": "厚労省統制物質一覧に記載。旧式名称: Δ5-THC（対応例あり、構造確認要）。天然産出を断定できない。"
       },
       "Δ8-THC": {
         "canonicalName": "Δ8-THC",
@@ -554,10 +569,11 @@
         "aliases": ["Δ6-THC"],
         "regulation": "麻薬",
         "regulationStatus": "narcotic",
+        "naturalOccurrence": "confirmed",
         "casNumber": "5957-75-7",
         "iupacName": "(−)-trans-Δ8-THC",
         "commonName": "Delta-8-THC",
-        "notes": "CBDからの化学変換で製造。Δ9より弱い精神活性。旧式名称: Δ6-THC（確認済み）"
+        "notes": "CBDからの化学変換で製造。Δ9より弱い精神活性。旧式名称: Δ6-THC（確認済み）。天然では微量。"
       },
       "Δ8-THCO": {
         "canonicalName": "Δ8-THCO",
@@ -565,10 +581,11 @@
         "aliases": ["Δ8-THC-O-Acetate"],
         "regulation": "麻薬",
         "regulationStatus": "narcotic",
+        "naturalOccurrence": "not-natural",
         "casNumber": null,
         "iupacName": null,
         "commonName": "Delta-8-THC-O-Acetate",
-        "notes": "Δ8-THCのアセテート体。別化合物として規制。"
+        "notes": "Δ8-THCのアセテート体。別化合物として規制。全合成カンナビノイド。"
       },
       "Δ9-THC": {
         "canonicalName": "Δ9-THC",
@@ -576,10 +593,11 @@
         "aliases": ["Δ1-THC"],
         "regulation": "麻薬",
         "regulationStatus": "narcotic",
+        "naturalOccurrence": "confirmed",
         "casNumber": "1972-08-3",
         "iupacName": "(−)-trans-Δ9-THC",
         "commonName": "Dronabinol",
-        "notes": "大麻の主要な精神活性成分。旧式名称: Δ1-THC（確認済み）"
+        "notes": "大麻の主要な精神活性成分。旧式名称: Δ1-THC（確認済み）。天然カンナビノイド。"
       },
       "Δ9(11)-THC": {
         "canonicalName": "Δ9(11)-THC",
@@ -587,10 +605,11 @@
         "aliases": ["Δ1(7)-THC", "Δ11-THC", "exo-THC"],
         "regulation": "麻薬",
         "regulationStatus": "narcotic",
+        "naturalOccurrence": "unconfirmed",
         "casNumber": null,
         "iupacName": null,
         "commonName": "Delta-9(11)-THC",
-        "notes": "厚労省統制物質一覧に記載。旧式名称: Δ1(7)-THC。慣用名: Δ11-THC, exo-THC"
+        "notes": "厚労省統制物質一覧に記載。旧式名称: Δ1(7)-THC。慣用名: Δ11-THC, exo-THC。化学合成・変換で得られる。"
       },
       "Δ9-THCO": {
         "canonicalName": "Δ9-THCO",
@@ -598,10 +617,11 @@
         "aliases": ["Δ9-THC-O-Acetate"],
         "regulation": "麻薬",
         "regulationStatus": "narcotic",
+        "naturalOccurrence": "not-natural",
         "casNumber": null,
         "iupacName": null,
         "commonName": "Delta-9-THC-O-Acetate",
-        "notes": "Δ9-THCのアセテート体。別化合物として規制。"
+        "notes": "Δ9-THCのアセテート体。別化合物として規制。全合成カンナビノイド。"
       },
       "Δ10-THC": {
         "canonicalName": "Δ10-THC",
@@ -609,10 +629,11 @@
         "aliases": ["Δ2-THC"],
         "regulation": "麻薬",
         "regulationStatus": "narcotic",
+        "naturalOccurrence": "unconfirmed",
         "casNumber": "50554-36-6",
         "iupacName": "Δ10-THC",
         "commonName": "Delta-10-THC",
-        "notes": "厚労省統制物質一覧に記載。旧式名称: Δ2-THC（構造確認要）"
+        "notes": "厚労省統制物質一覧に記載。旧式名称: Δ2-THC（構造確認要）。化学合成・変換で得られる。"
       }
     }
   },
