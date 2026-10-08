@@ -451,7 +451,8 @@
         "casNumber": null,
         "iupacName": null,
         "commonName": "Delta-5-THC",
-        "notes": "厚労省統制物質一覧に記載なし。米国カリフォルニア州の規制リストには記載あり。"
+        "investigationRecord": "research/regulatory-status/DELTA5-THC-investigation.md",
+        "notes": "2026-10-09調査: 厚労省統制物質一覧（2024-12-12）に記載なし。ただし規制対象外と断定は不可。包括指定の範囲要確認。"
       },
       "Δ6-THC": {
         "japaneseName": "デルタ6-THC",
