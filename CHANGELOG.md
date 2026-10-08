@@ -7,6 +7,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.11.0] - 2026-10-09
+
+### Fixed
+- CRDP/CRDH regulation status: corrected from "regulated" to "conditional legal" (条件付き合法)
+- THCV regulation status: corrected to scheduled substance (指定薬物) since 2023-09-10
+- Removed subjective language ("要注意") throughout all files
+- Unified regulation terminology to "条件付き合法" for all non-regulated cannabinoids
+
+### Added
+- COA sections for H4CBH, HHBD, HHCH, CRDP with analysis summary tables
+- COA analysis summary tables for CBG, CBN, THC-O
+- CRDH YouTube statistics (views, channels, top videos)
+- Downloaded COA files: H4CBH.pdf, HHBD.JPG, HHCH.pdf, CRDP.png, wing-cbg.jpg, cbn.jpeg, THCO-COA.pdf
+
+### Changed
+- All non-regulated compounds now consistently use "条件付き合法" terminology
+- Regulation status reports updated with accurate information
+
+
 ## [1.10.0] - 2026-10-08
 
 ### Added
