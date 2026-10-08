@@ -1,7 +1,6 @@
 {
   "$schema": "./shared/schemas/project.schema.json",
   "schemaVersion": "1.0.0",
-
   "project": {
     "id": "japan-cannabinoid-trends",
     "name": "Japan Cannabinoid Trends",
@@ -10,7 +9,6 @@
     "type": "longitudinal-research",
     "visibility": "private"
   },
-
   "scope": {
     "country": "JP",
     "geographicScope": "Japan",
@@ -20,7 +18,6 @@
     "secondaryLanguage": "en",
     "population": "Publicly observable cannabinoid-related search, social, web, analytics, and market signals relevant to Japan"
   },
-
   "objectives": {
     "primary": "Build a reproducible longitudinal dataset for observing cannabinoid-related trends in Japan.",
     "secondary": [
@@ -31,7 +28,6 @@
       "Separate raw observations from interpretation and publication"
     ]
   },
-
   "workflow": {
     "currentStage": "collection",
     "stages": [
@@ -46,7 +42,6 @@
       "publication"
     ]
   },
-
   "dataSources": {
     "x": {
       "enabled": true,
@@ -105,7 +100,6 @@
       "status": "planned"
     }
   },
-
   "datasets": {
     "root": "datasets",
     "structure": {
@@ -121,7 +115,6 @@
     "requireMethodology": true,
     "requireMetadata": true
   },
-
   "research": {
     "principles": {
       "reproducible": true,
@@ -138,7 +131,6 @@
       "collectionLimitsMustBeDocumented": true
     }
   },
-
   "dataGovernance": {
     "rawData": {
       "mutable": false,
@@ -159,7 +151,6 @@
       "overwriteAllowed": false
     }
   },
-
   "provenance": {
     "required": true,
     "recommendedFields": [
@@ -179,7 +170,6 @@
       "limitations"
     ]
   },
-
   "validation": {
     "required": true,
     "checks": [
@@ -193,7 +183,6 @@
       "collection-integrity"
     ]
   },
-
   "analysis": {
     "allowCrossSourceAnalysis": true,
     "preserveSourceIdentity": true,
@@ -201,7 +190,6 @@
     "requireMethodologyReference": true,
     "causalClaimsRequireEvidence": true
   },
-
   "publication": {
     "enabled": true,
     "status": "not-ready",
@@ -215,13 +203,11 @@
     "requireValidation": true,
     "requireHumanApproval": true
   },
-
   "repository": {
     "owner": "routeflags",
     "name": "japan-cannabinoid-trends",
     "defaultBranch": "main"
   },
-
   "automation": {
     "agentReadable": true,
     "allowAutomaticCollection": true,
@@ -232,30 +218,25 @@
     "allowRawDataModification": false,
     "allowHistoricalDataDeletion": false
   },
-
   "agents": {
     "librarian": {
       "enabled": true,
       "path": ".github/agents/research-data-librarian.agent.md"
     }
   },
-
   "security": {
     "allowSecretsInRepository": false,
     "allowCredentialsInRepository": false,
     "allowPrivatePersonalDataInRepository": false
   },
-
   "metadata": {
     "created": "2026-09-18",
     "updated": "2026-10-09",
     "maintainer": "ROUTE FLAGS Co., Ltd."
   },
-
   "queryDesign": {
     "lastUpdated": "2026-10-09",
     "principle": "MECE: Each compound has unique queries per media type, avoiding overlap",
-
     "mediaTypes": {
       "x": {
         "languageFilter": "lang:ja",
@@ -276,7 +257,6 @@
         "costPerCompound": "free"
       }
     },
-
     "compounds": {
       "CBD": {
         "japaneseName": "カンナビジオール",
@@ -290,7 +270,9 @@
       },
       "THC": {
         "japaneseName": "テトラヒドロカンナビノール",
-        "aliases": ["Δ9-THC"],
+        "aliases": [
+          "Δ9-THC"
+        ],
         "queries": {
           "x": "THC リキッド lang:ja",
           "youtube": "THC リキッド",
@@ -300,7 +282,10 @@
       },
       "Δ8-THC": {
         "japaneseName": "デルタ8-テトラヒドロカンナビノール",
-        "aliases": ["Delta8-THC", "Δ8-THC"],
+        "aliases": [
+          "Delta8-THC",
+          "Δ8-THC"
+        ],
         "regulationStatus": "麻薬",
         "notes": "Δ9-THCと別化合物。精神活性はΔ9より弱い。CBDからの化学変換で製造されることが多い。Δ8-THC-O（アセテート体）とは別化合物。",
         "queries": {
@@ -362,7 +347,10 @@
       },
       "THC-O": {
         "japaneseName": "THC-アセテート",
-        "aliases": ["THCO", "THC-O-Acetate"],
+        "aliases": [
+          "THCO",
+          "THC-O-Acetate"
+        ],
         "queries": {
           "x": "THC-O リキッド lang:ja",
           "youtube": "THC-O リキッド",
@@ -421,7 +409,6 @@
         "commonScaleSet": "Set D"
       }
     },
-
     "costEstimate": {
       "x": "~$1.30 (13 compounds × $0.10)",
       "youtube": "~$0.65 (13 compounds × $0.05)",
@@ -429,237 +416,24 @@
       "total": "~$1.95"
     }
   },
-
   "thcIsomers": {
     "lastUpdated": "2026-10-09",
-    "regulatoryBasis": "厚生労働省 統制物質一覧（2024-12-12時点）",
-    "sourceUrl": "https://www.ncd.mhlw.go.jp/dl_data/keitai/cotrolled_substances_list20241212%20.pdf",
     "knowledgeGraph": "metadata/taxonomy/thc-regulatory-knowledge-graph.json",
-    "internationalTreatyStatus": {
-      "delta9THC": {
-        "treaty": "1971年向精神薬条約",
-        "schedule": "Schedule II",
-        "history": "1991年に Schedule I から Schedule II へ変更"
-      },
-      "other6Isomers": {
-        "treaty": "1971年向精神薬条約",
-        "schedule": "Schedule I",
-        "members": ["Δ6a(7)-THC", "Δ6a(10a)-THC", "Δ7-THC", "Δ8-THC", "Δ9(11)-THC", "Δ10-THC"]
-      },
-      "cannabisResin": {
-        "treaty": "1961年麻薬単一条約",
-        "schedule": "Schedule I",
-        "history": "2020-12-02 に Schedule IV から削除。Schedule I は維持"
-      }
-    },
-    "recommendedPhrasing": "THCの主要な二重結合位置異性体は7分類あり、立体異性体を区別するとWHOの整理では計30種類となる。",
-    "limitationNote": "この30種類はWHOが対象としたTHC異性体の内訳であり、同じ分子式を持つあらゆる構造異性体を含む総数という意味ではない。",
-    "classificationSystem": {
-      "tier1": {
-        "name": "位置異性体",
-        "count": 7,
-        "basis": "二重結合の位置",
-        "usage": "SNS・Google Trendsなどの検索語を分類"
-      },
-      "tier2": {
-        "name": "立体異性体",
-        "count": 30,
-        "basis": "立体配置まで区別",
-        "usage": "化学構造・CAS番号・規制対象の精密な識別",
-        "note": "7分類の下に合計30種類の立体異性体がある。7+30=37種類ではない。"
-      }
-    },
-    "whoSource": "WHO『Isomers of THC』Annex 1（41～48ページ）",
-    "naturalOccurrence": {
-      "confirmed": ["Δ8-THC", "Δ9-THC"],
-      "unconfirmed": ["Δ6a(7)-THC", "Δ6a(10a)-THC", "Δ7-THC", "Δ9(11)-THC", "Δ10-THC"],
-      "note": "「未確認」は天然に絶対存在しないという意味ではなく、十分な分析証拠を確認できなかったという意味。",
-      "source": "EUDA、WHO、米国SAMHSA、および2024年の総説"
-    },
-    "productionTypes": {
-      "natural": "天然カンナビノイド：大麻草に天然に存在することが確認された物質",
-      "semiSynthetic": "半合成カンナビノイド：天然成分を原料として化学変換した物質",
-      "fullySynthetic": "全合成カンナビノイド：化学合成によって製造された物質",
-      "note": "同じΔ8-THCでも、大麻草から直接得られたものと、CBDを化学変換して製造されたものがある。化合物の名称だけでは製造由来を判断できない。"
-    },
-    "stereoisomerBreakdown": {
-      "Δ6a(10a)-THC": 2,
-      "Δ6a(7)-THC": 4,
-      "Δ7-THC": 8,
-      "Δ8-THC": 4,
-      "Δ9-THC": 4,
-      "Δ10-THC": 4,
-      "Δ9(11)-THC": 4,
-      "total": 30
-    },
-    "regulatedIsomers": ["Δ6a(7)", "Δ6a(10a)", "Δ7", "Δ8", "Δ9", "Δ9(11)", "Δ10"],
-    "regulatedAcetates": ["Δ8-THCO", "Δ8-THCOP", "Δ9-THCO", "Δ9-THCOP"],
-    "nomenclatureSystems": {
-      "old": "モノテルペン式（Monoterpenoid）",
-      "current": "ジベンゾピラン式（Dibenzopyran）"
-    },
-    "nomenclatureMapping": {
-      "Δ1-THC": {
-        "current": "Δ9-THC",
-        "confidence": "confirmed",
-        "note": "同一の位置異性体"
-      },
-      "Δ2-THC": {
-        "current": "Δ10-THC",
-        "confidence": "needs-structural-confirmation",
-        "note": "構造による対応確認が必要"
-      },
-      "Δ3-THC": {
-        "current": "Δ6a(10a)-THC",
-        "confidence": "confirmed",
-        "note": "同一の位置異性体"
-      },
-      "Δ4-THC": {
-        "current": "Δ6a(7)-THC",
-        "confidence": "confirmed",
-        "note": "同一の位置異性体"
-      },
-      "Δ5-THC": {
-        "current": "Δ7-THC",
-        "confidence": "examples-exist-needs-confirmation",
-        "note": "対応例あり。構造確認が必要"
-      },
-      "Δ6-THC": {
-        "current": "Δ8-THC",
-        "confidence": "confirmed",
-        "note": "同一の位置異性体"
-      },
-      "Δ1(7)-THC": {
-        "current": "Δ9(11)-THC",
-        "confidence": "confirmed",
-        "note": "慣用名: Δ11-THC, exo-THC"
-      }
-    },
-    "unconfirmedIsomers": {
-      "Δ12-THC": "独立した化合物として確認できず"
-    },
-    "nomenclatureWarning": "旧式名称は別化合物ではない。ただし立体異性体の違いはこの表に含めていない。データセットでは canonical_name（現行）に統合し、aliases に旧名を保持する。",
-    "identificationMethod": {
-      "required": ["canonical_name", "casNumber", "nomenclature"],
-      "recommended": ["iupacName", "inchiKey", "structuralFormula", "stereochemistry"]
-    },
-
-    "isomers": {
-      "Δ6a(7)-THC": {
-        "canonicalName": "Δ6a(7)-THC",
-        "japaneseName": "デルタ6a(7)-THC",
-        "aliases": ["Δ4-THC"],
-        "regulation": "麻薬",
-        "regulationStatus": "narcotic",
-        "naturalOccurrence": "unconfirmed",
-        "casNumber": null,
-        "iupacName": null,
-        "commonName": "Delta-6a(7)-THC",
-        "notes": "厚労省統制物質一覧に記載。旧式名称: Δ4-THC（確認済み）。天然存在未確認、化学合成例あり。"
-      },
-      "Δ6a(10a)-THC": {
-        "canonicalName": "Δ6a(10a)-THC",
-        "japaneseName": "デルタ6a(10a)-THC",
-        "aliases": ["Δ3-THC"],
-        "regulation": "麻薬",
-        "regulationStatus": "narcotic",
-        "naturalOccurrence": "unconfirmed",
-        "casNumber": null,
-        "iupacName": null,
-        "commonName": "Delta-6a(10a)-THC",
-        "notes": "厚労省統制物質一覧に記載。旧式名称: Δ3-THC（確認済み）。天然存在未確認、化学合成例あり。"
-      },
-      "Δ7-THC": {
-        "canonicalName": "Δ7-THC",
-        "japaneseName": "デルタ7-THC",
-        "aliases": ["Δ5-THC"],
-        "regulation": "麻薬",
-        "regulationStatus": "narcotic",
-        "naturalOccurrence": "unconfirmed",
-        "casNumber": null,
-        "iupacName": null,
-        "commonName": "Delta-7-THC",
-        "notes": "厚労省統制物質一覧に記載。旧式名称: Δ5-THC（対応例あり、構造確認要）。天然産出を断定できない。"
-      },
-      "Δ8-THC": {
-        "canonicalName": "Δ8-THC",
-        "japaneseName": "デルタ8-テトラヒドロカンナビノール",
-        "aliases": ["Δ6-THC"],
-        "regulation": "麻薬",
-        "regulationStatus": "narcotic",
-        "naturalOccurrence": "confirmed",
-        "casNumber": "5957-75-7",
-        "iupacName": "(−)-trans-Δ8-THC",
-        "commonName": "Delta-8-THC",
-        "notes": "CBDからの化学変換で製造。Δ9より弱い精神活性。旧式名称: Δ6-THC（確認済み）。天然では微量。"
-      },
-      "Δ8-THCO": {
-        "canonicalName": "Δ8-THCO",
-        "japaneseName": "デルタ8-THCアセテート",
-        "aliases": ["Δ8-THC-O-Acetate"],
-        "regulation": "麻薬",
-        "regulationStatus": "narcotic",
-        "naturalOccurrence": "not-natural",
-        "casNumber": null,
-        "iupacName": null,
-        "commonName": "Delta-8-THC-O-Acetate",
-        "notes": "Δ8-THCのアセテート体。別化合物として規制。全合成カンナビノイド。"
-      },
-      "Δ9-THC": {
-        "canonicalName": "Δ9-THC",
-        "japaneseName": "デルタ9-テトラヒドロカンナビノール",
-        "aliases": ["Δ1-THC"],
-        "regulation": "麻薬",
-        "regulationStatus": "narcotic",
-        "naturalOccurrence": "confirmed",
-        "casNumber": "1972-08-3",
-        "iupacName": "(−)-trans-Δ9-THC",
-        "commonName": "Dronabinol",
-        "notes": "大麻の主要な精神活性成分。旧式名称: Δ1-THC（確認済み）。天然カンナビノイド。"
-      },
-      "Δ9(11)-THC": {
-        "canonicalName": "Δ9(11)-THC",
-        "japaneseName": "デルタ9(11)-THC",
-        "aliases": ["Δ1(7)-THC", "Δ11-THC", "exo-THC"],
-        "regulation": "麻薬",
-        "regulationStatus": "narcotic",
-        "naturalOccurrence": "unconfirmed",
-        "casNumber": null,
-        "iupacName": null,
-        "commonName": "Delta-9(11)-THC",
-        "notes": "厚労省統制物質一覧に記載。旧式名称: Δ1(7)-THC。慣用名: Δ11-THC, exo-THC。化学合成・変換で得られる。"
-      },
-      "Δ9-THCO": {
-        "canonicalName": "Δ9-THCO",
-        "japaneseName": "デルタ9-THCアセテート",
-        "aliases": ["Δ9-THC-O-Acetate"],
-        "regulation": "麻薬",
-        "regulationStatus": "narcotic",
-        "naturalOccurrence": "not-natural",
-        "casNumber": null,
-        "iupacName": null,
-        "commonName": "Delta-9-THC-O-Acetate",
-        "notes": "Δ9-THCのアセテート体。別化合物として規制。全合成カンナビノイド。"
-      },
-      "Δ10-THC": {
-        "canonicalName": "Δ10-THC",
-        "japaneseName": "デルタ10-テトラヒドロカンナビノール",
-        "aliases": ["Δ2-THC"],
-        "regulation": "麻薬",
-        "regulationStatus": "narcotic",
-        "naturalOccurrence": "unconfirmed",
-        "casNumber": "50554-36-6",
-        "iupacName": "Δ10-THC",
-        "commonName": "Delta-10-THC",
-        "notes": "厚労省統制物質一覧に記載。旧式名称: Δ2-THC（構造確認要）。化学合成・変換で得られる。"
-      }
+    "specification": "docs/specs/thc-nomenclature-standard.md",
+    "quickReference": {
+      "positionalIsomers": 7,
+      "stereoisomers": 30,
+      "regulatedInJapan": 7,
+      "naturalConfirmed": [
+        "Δ8-THC",
+        "Δ9-THC"
+      ],
+      "nomenclatureStandard": "ジベンゾピラン式（Dibenzopyran）"
     }
   },
-
   "dataCoverage": {
     "lastAudit": "2026-10-09",
     "auditNote": "X/Twitter data is limited to recent tweets due to Apify actor constraints. Historical date range filtering is not supported.",
-
     "compounds": {
       "CBD": {
         "x": {
@@ -899,7 +673,6 @@
         }
       }
     },
-
     "summary": {
       "totalCompounds": 13,
       "xCoverage": {
@@ -910,7 +683,11 @@
       "youtubeCoverage": {
         "withData": 10,
         "gaps": 3,
-        "gapCompounds": ["CBD", "CBG", "CBN"]
+        "gapCompounds": [
+          "CBD",
+          "CBG",
+          "CBN"
+        ]
       },
       "googleTrendsCoverage": {
         "commonScale": 13,
@@ -918,27 +695,34 @@
         "individual5y": 13
       }
     },
-
     "knownIssues": [
       {
         "id": "X-PERIOD-001",
         "severity": "high",
         "description": "CBD research page claims collection period 2026-07-01 to 2026-10-01, but actual data is only from 2026-10-01",
-        "affectedPages": ["publication/research_cbd.html"],
+        "affectedPages": [
+          "publication/research_cbd.html"
+        ],
         "status": "open"
       },
       {
         "id": "YT-GAP-001",
         "severity": "medium",
         "description": "CBD, CBG, CBN have no YouTube data collected",
-        "affectedCompounds": ["CBD", "CBG", "CBN"],
+        "affectedCompounds": [
+          "CBD",
+          "CBG",
+          "CBN"
+        ],
         "status": "open"
       },
       {
         "id": "X-LIMIT-001",
         "severity": "low",
         "description": "X/Twitter Apify actor does not support historical date range filtering (since:/until: operators ignored)",
-        "affectedCompounds": ["all"],
+        "affectedCompounds": [
+          "all"
+        ],
         "status": "known-limitation"
       }
     ]
