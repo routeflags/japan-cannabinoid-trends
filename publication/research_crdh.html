@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CRDH 調査データ</title>
+</head>
+<body>
+
+<!-- ===== 調査方法 ===== -->
+<h2 id="methodology">調査方法</h2>
+<p>このセクションでは、本ページの情報がどのように収集・分析されたかを公開しています。</p>
+
+<h3>研究質問</h3>
+<p>「日本国内におけるCRDHのオンライン上の検索需要・SNS言及・規制状況は何か？」</p>
+<p><strong>最終更新:</strong> 2026-10-08。</p>
+
+<h3>データソース</h3>
+<ul>
+  <li><strong>検索データ:</strong> Google Trends（日本、過去12ヶ月・5年）</li>
+  <li><strong>SNSデータ:</strong> X (Twitter)（日本語、200件）</li>
+  <li><strong>動画データ:</strong> YouTube（21件）</li>
+  <li><strong>分析証明書:</strong> KCA Laboratories（ND結果）</li>
+  <li><strong>規制資料:</strong> 厚生労働省</li>
+</ul>
+
+<!-- ===== 独自データ：Google Trends 検索需要 ===== -->
+<div>
+  <h2 id="data-search">独自データ: CRDH の Google Trends 検索需要 <span>一次データ</span></h2>
+  <p>データソース: Google Trends / 地域: 日本 (JP) / 期間: 過去5年（週次）/ 取得日: 2026-10-08</p>
+  <p>Google Trends から、CRDH の日本国内検索興味度（相対指数 0-100）を取得しました。</p>
+
+  <div>
+    <p><strong>用語の定義:</strong></p>
+    <ul>
+      <li><strong>単独平均（個別正規化値）</strong>: 各キーワードを個別に取得した際の5年平均値。各キーワードのピークを100とする正規化であり、<strong>キーワード間の比較には使用できない</strong>。</li>
+      <li><strong>比較平均（共通スケール値）</strong>: 複数キーワードを同時取得した際の12ヶ月平均値。比較セット内の最大値を100とする正規化であり、<strong>キーワード間の相対的な検索需要を示す</strong>。</li>
+      <li><strong>興味度スコア</strong>: Google Trends が返す相対指数（0-100）。絶対検索数ではなく、期間内の最大検索量を100とした相対値。</li>
+    </ul>
+  </div>
+
+  <h3>5年データサマリー（個別正規化値）</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>指標</th>
+        <th>値</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>収集期間</td>
+        <td>2021-10 ~ 2026-10（261週）</td>
+      </tr>
+      <tr>
+        <td>非ゼロ週数</td>
+        <td>38週</td>
+      </tr>
+      <tr>
+        <td>ゼロ週数</td>
+        <td>223週</td>
+      </tr>
+      <tr>
+        <td>5年平均（全週）</td>
+        <td>15.3</td>
+      </tr>
+      <tr>
+        <td>5年平均（非ゼロのみ）</td>
+        <td>73.4</td>
+      </tr>
+      <tr>
+        <td>初出</td>
+        <td>2023-09-24（値: 48）</td>
+      </tr>
+      <tr>
+        <td>ピーク</td>
+        <td>2024-12-15（値: 100）</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>12ヶ月データサマリー（共通スケール）</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>キーワード</th>
+        <th>12ヶ月平均</th>
+        <th>比較セット</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>CRDH</strong></td>
+        <td>0</td>
+        <td>CRDH vs CBD vs THC</td>
+      </tr>
+      <tr>
+        <td>CBD（参考）</td>
+        <td>47</td>
+        <td>—</td>
+      </tr>
+      <tr>
+        <td>THC（参考）</td>
+        <td>12</td>
+        <td>—</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p><strong>制約:</strong> Google Trends は相対指数であり、絶対検索数ではない。12ヶ月期間ではCRDHの検索需要がほぼゼロ。</p>
+</div>
+
+<!-- ===== 独自データ：X (Twitter) 言及分析 ===== -->
+<div>
+  <h2 id="data-x">独自データ: CRDH の X (Twitter) 言及分析 <span>一次データ</span></h2>
+  <p>データソース: X (Twitter) via Apify / 言語: 日本語 / 件数: 200件 / 取得日: 2026-10-08</p>
+
+  <h3>コンテンツ分類結果（信頼区間付き）</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>カテゴリ</th>
+        <th>件数</th>
+        <th>比率</th>
+        <th>95% CI</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>製品宣伝・販売</td>
+        <td>83</td>
+        <td><strong>83.8%</strong></td>
+        <td>[75.3%, 89.8%]</td>
+      </tr>
+      <tr>
+        <td>製品レビュー</td>
+        <td>4</td>
+        <td>4.0%</td>
+        <td>[1.6%, 9.9%]</td>
+      </tr>
+      <tr>
+        <td>会話・引用</td>
+        <td>3</td>
+        <td>3.0%</td>
+        <td>[1.0%, 8.5%]</td>
+      </tr>
+      <tr>
+        <td>その他</td>
+        <td>9</td>
+        <td>9.1%</td>
+        <td>[4.9%, 16.4%]</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p><strong>制約:</strong> ルールベース分類のため、文脈による誤分類の可能性がある。信頼区間は Wilson スコア法による95%信頼区間。</p>
+</div>
+
+<!-- ===== 独自データ：YouTube 動画分析 ===== -->
+<div>
+  <h2 id="data-youtube">独自データ: CRDH の YouTube 動画分析 <span>一次データ</span></h2>
+  <p>データソース: YouTube Search via Apify / クエリ: "CRDH カンナビノイド" / 件数: 21件 / 取得日: 2026-10-08</p>
+
+  <h3>動画データサマリー</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>指標</th>
+        <th>値</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>ユニーク動画数</td>
+        <td>21</td>
+      </tr>
+      <tr>
+        <td>取得日</td>
+        <td>2026-10-08</td>
+      </tr>
+      <tr>
+        <td>検索クエリ</td>
+        <td>CRDH カンナビノイド</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p><strong>制約:</strong> YouTube 検索結果は取得日時点のものであり、動画の追加・削除により変動する可能性がある。</p>
+</div>
+
+<!-- ===== 独自データ：COA 分析結果 ===== -->
+<div>
+  <h2 id="data-coa">独自データ: CRDH の COA 分析結果 <span>一次データ</span></h2>
+  <p>データソース: KCA Laboratories / 取得日: 2026-10-08</p>
+
+  <h3>分析証明書サマリー</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>項目</th>
+        <th>値</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>分析ラボ</td>
+        <td>KCA Laboratories (Kentucky, USA)</td>
+      </tr>
+      <tr>
+        <td>サンプルID</td>
+        <td>SA-241011-S0094</td>
+      </tr>
+      <tr>
+        <td>バッチ</td>
+        <td>CRDH-241008-1</td>
+      </tr>
+      <tr>
+        <td>マトリックス</td>
+        <td>Concentrate - Distillate</td>
+      </tr>
+      <tr>
+        <td>クライアント</td>
+        <td>CannaTech (Yokosuka, Kanagawa)</td>
+      </tr>
+      <tr>
+        <td>分析完了日</td>
+        <td>2024-10-09</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>分析結果</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>分析項目</th>
+        <th>結果</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Total Δ9-THC</td>
+        <td><strong>ND</strong>（未検出）</td>
+      </tr>
+      <tr>
+        <td>Δ9-THC</td>
+        <td><strong>ND</strong>（未検出）</td>
+      </tr>
+      <tr>
+        <td>Total Cannabinoids</td>
+        <td><strong>ND</strong>（未検出）</td>
+      </tr>
+      <tr>
+        <td>Moisture Content</td>
+        <td>Not Tested</td>
+      </tr>
+      <tr>
+        <td>Foreign Matter</td>
+        <td>Not Tested</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p><strong>ND = Not Detected（未検出）</strong></p>
+  <p><strong>制約:</strong> これはサプライヤーが提供したCOAであり、当店自身の分析結果ではない。原料COAと製品ごとの検査結果は異なる。</p>
+</div>
+
+<!-- ===== 規制状況 ===== -->
+<div>
+  <h2 id="regulation">独自データ: CRDH の規制状況 <span>一次データ</span></h2>
+  <p>データソース: 厚生労働省 / 調査日: 2026-10-08</p>
+
+  <h3>法的扱い</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>項目</th>
+        <th>内容</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>法的状態</td>
+        <td><strong>非規制（要注意）</strong></td>
+      </tr>
+      <tr>
+        <td>規制カテゴリ</td>
+        <td>指定薬物の候補</td>
+      </tr>
+      <tr>
+        <td>確信度</td>
+        <td>LOW</td>
+      </tr>
+      <tr>
+        <td>化学構造</td>
+        <td>不明</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>監視すべきポイント</h3>
+  <ul>
+    <li>化学構造の開示</li>
+    <li>MHLW の注意喚起</li>
+    <li>類縁体の規制動向</li>
+  </ul>
+
+  <p><strong>制約:</strong> 化学構造が不明のため、規制分類は推測に基づく。製品にΔ9-THCが含まれる場合、残留限度値（油脂・粉末10ppm、水溶液0.10ppm、その他1ppm）が適用される。</p>
+</div>
+
+<!-- ===== 引用情報 ===== -->
+<div>
+  <h2 id="citation">引用 (How to Cite)</h2>
+  <p>
+    KATO, Kyoji（2026）.<br>
+    「Japan Cannabinoid Trends Dataset 2026: Google Trends, Social Media, Regulatory Status, and Early Warning Index」.<br>
+    Version 1.9.0<br>
+    Routeflags Co., Ltd.<br>
+    [Dataset].<br>
+    DOI: <a href="https://doi.org/10.5281/zenodo.23164973">10.5281/zenodo.23164973</a>
+  </p>
+  <p>
+    <a href="https://doi.org/10.5281/zenodo.23164972">
+      <img src="https://zenodo.org/badge/1375618430.svg" alt="DOI">
+    </a>
+  </p>
+</div>
+
+</body>
+</html>
