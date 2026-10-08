@@ -1,0 +1,418 @@
+{
+  "HHC": {
+    "name": "HHC",
+    "n": 40,
+    "raw_count": 40,
+    "excluded": 0,
+    "results": [
+      {
+        "category": "製品宣伝・販売",
+        "count": 0,
+        "percentage": 0.0,
+        "ci_95": "[0%, 8.8%]"
+      },
+      {
+        "category": "製品レビュー",
+        "count": 0,
+        "percentage": 0.0,
+        "ci_95": "[0%, 8.8%]"
+      },
+      {
+        "category": "会話・引用",
+        "count": 9,
+        "percentage": 22.5,
+        "ci_95": "[12.3%, 37.5%]"
+      },
+      {
+        "category": "その他",
+        "count": 31,
+        "percentage": 77.5,
+        "ci_95": "[62.5%, 87.7%]"
+      }
+    ]
+  },
+  "THCV": {
+    "name": "THCV",
+    "n": 40,
+    "raw_count": 40,
+    "excluded": 0,
+    "results": [
+      {
+        "category": "製品宣伝・販売",
+        "count": 0,
+        "percentage": 0.0,
+        "ci_95": "[0%, 8.8%]"
+      },
+      {
+        "category": "製品レビュー",
+        "count": 1,
+        "percentage": 2.5,
+        "ci_95": "[0.4%, 12.9%]"
+      },
+      {
+        "category": "会話・引用",
+        "count": 18,
+        "percentage": 45.0,
+        "ci_95": "[30.7%, 60.2%]"
+      },
+      {
+        "category": "その他",
+        "count": 21,
+        "percentage": 52.5,
+        "ci_95": "[37.5%, 67.1%]"
+      }
+    ]
+  },
+  "THC-O": {
+    "name": "THC-O",
+    "n": 40,
+    "raw_count": 40,
+    "excluded": 0,
+    "results": [
+      {
+        "category": "製品宣伝・販売",
+        "count": 1,
+        "percentage": 2.5,
+        "ci_95": "[0.4%, 12.9%]"
+      },
+      {
+        "category": "製品レビュー",
+        "count": 0,
+        "percentage": 0.0,
+        "ci_95": "[0%, 8.8%]"
+      },
+      {
+        "category": "会話・引用",
+        "count": 17,
+        "percentage": 42.5,
+        "ci_95": "[28.5%, 57.8%]"
+      },
+      {
+        "category": "その他",
+        "count": 22,
+        "percentage": 55.0,
+        "ci_95": "[39.8%, 69.3%]"
+      }
+    ]
+  },
+  "THCH": {
+    "name": "THCH",
+    "n": 36,
+    "raw_count": 36,
+    "excluded": 0,
+    "results": [
+      {
+        "category": "製品宣伝・販売",
+        "count": 3,
+        "percentage": 8.3,
+        "ci_95": "[2.9%, 21.8%]"
+      },
+      {
+        "category": "製品レビュー",
+        "count": 1,
+        "percentage": 2.8,
+        "ci_95": "[0.5%, 14.2%]"
+      },
+      {
+        "category": "会話・引用",
+        "count": 8,
+        "percentage": 22.2,
+        "ci_95": "[11.7%, 38.1%]"
+      },
+      {
+        "category": "その他",
+        "count": 24,
+        "percentage": 66.7,
+        "ci_95": "[50.3%, 79.8%]"
+      }
+    ]
+  },
+  "H4CBH": {
+    "name": "H4CBH",
+    "n": 199,
+    "raw_count": 200,
+    "excluded": 1,
+    "results": [
+      {
+        "category": "製品宣伝・販売",
+        "count": 43,
+        "percentage": 21.6,
+        "ci_95": "[16.5%, 27.8%]"
+      },
+      {
+        "category": "製品レビュー",
+        "count": 27,
+        "percentage": 13.6,
+        "ci_95": "[9.5%, 19.0%]"
+      },
+      {
+        "category": "会話・引用",
+        "count": 32,
+        "percentage": 16.1,
+        "ci_95": "[11.6%, 21.8%]"
+      },
+      {
+        "category": "その他",
+        "count": 97,
+        "percentage": 48.7,
+        "ci_95": "[41.9%, 55.6%]"
+      }
+    ]
+  },
+  "HHBD": {
+    "name": "HHBD",
+    "n": 200,
+    "raw_count": 200,
+    "excluded": 0,
+    "results": [
+      {
+        "category": "製品宣伝・販売",
+        "count": 80,
+        "percentage": 40.0,
+        "ci_95": "[33.5%, 46.9%]"
+      },
+      {
+        "category": "製品レビュー",
+        "count": 24,
+        "percentage": 12.0,
+        "ci_95": "[8.2%, 17.2%]"
+      },
+      {
+        "category": "会話・引用",
+        "count": 28,
+        "percentage": 14.0,
+        "ci_95": "[9.9%, 19.5%]"
+      },
+      {
+        "category": "その他",
+        "count": 68,
+        "percentage": 34.0,
+        "ci_95": "[27.8%, 40.8%]"
+      }
+    ]
+  },
+  "HHCH": {
+    "name": "HHCH",
+    "n": 98,
+    "raw_count": 100,
+    "excluded": 2,
+    "results": [
+      {
+        "category": "製品宣伝・販売",
+        "count": 9,
+        "percentage": 9.2,
+        "ci_95": "[4.9%, 16.5%]"
+      },
+      {
+        "category": "製品レビュー",
+        "count": 15,
+        "percentage": 15.3,
+        "ci_95": "[9.5%, 23.7%]"
+      },
+      {
+        "category": "会話・引用",
+        "count": 19,
+        "percentage": 19.4,
+        "ci_95": "[12.8%, 28.3%]"
+      },
+      {
+        "category": "その他",
+        "count": 55,
+        "percentage": 56.1,
+        "ci_95": "[46.3%, 65.5%]"
+      }
+    ]
+  },
+  "CRDP": {
+    "name": "CRDP",
+    "n": 99,
+    "raw_count": 100,
+    "excluded": 1,
+    "results": [
+      {
+        "category": "製品宣伝・販売",
+        "count": 83,
+        "percentage": 83.8,
+        "ci_95": "[75.3%, 89.8%]"
+      },
+      {
+        "category": "製品レビュー",
+        "count": 4,
+        "percentage": 4.0,
+        "ci_95": "[1.6%, 9.9%]"
+      },
+      {
+        "category": "会話・引用",
+        "count": 3,
+        "percentage": 3.0,
+        "ci_95": "[1.0%, 8.5%]"
+      },
+      {
+        "category": "その他",
+        "count": 9,
+        "percentage": 9.1,
+        "ci_95": "[4.9%, 16.4%]"
+      }
+    ]
+  },
+  "CRDH": {
+    "name": "CRDH",
+    "n": 6,
+    "raw_count": 6,
+    "excluded": 0,
+    "results": [
+      {
+        "category": "製品宣伝・販売",
+        "count": 2,
+        "percentage": 33.3,
+        "ci_95": "[9.7%, 70.0%]"
+      },
+      {
+        "category": "製品レビュー",
+        "count": 2,
+        "percentage": 33.3,
+        "ci_95": "[9.7%, 70.0%]"
+      },
+      {
+        "category": "会話・引用",
+        "count": 1,
+        "percentage": 16.7,
+        "ci_95": "[3.0%, 56.4%]"
+      },
+      {
+        "category": "その他",
+        "count": 1,
+        "percentage": 16.7,
+        "ci_95": "[3.0%, 56.4%]"
+      }
+    ]
+  },
+  "CBD": {
+    "name": "CBD",
+    "n": 99,
+    "raw_count": 100,
+    "excluded": 1,
+    "results": [
+      {
+        "category": "製品宣伝・販売",
+        "count": 21,
+        "percentage": 21.2,
+        "ci_95": "[14.3%, 30.3%]"
+      },
+      {
+        "category": "製品レビュー",
+        "count": 4,
+        "percentage": 4.0,
+        "ci_95": "[1.6%, 9.9%]"
+      },
+      {
+        "category": "会話・引用",
+        "count": 20,
+        "percentage": 20.2,
+        "ci_95": "[13.5%, 29.2%]"
+      },
+      {
+        "category": "その他",
+        "count": 54,
+        "percentage": 54.5,
+        "ci_95": "[44.8%, 64.0%]"
+      }
+    ]
+  },
+  "CBG": {
+    "name": "CBG",
+    "n": 100,
+    "raw_count": 100,
+    "excluded": 0,
+    "results": [
+      {
+        "category": "製品宣伝・販売",
+        "count": 61,
+        "percentage": 61.0,
+        "ci_95": "[51.2%, 70.0%]"
+      },
+      {
+        "category": "製品レビュー",
+        "count": 5,
+        "percentage": 5.0,
+        "ci_95": "[2.2%, 11.2%]"
+      },
+      {
+        "category": "会話・引用",
+        "count": 16,
+        "percentage": 16.0,
+        "ci_95": "[10.1%, 24.4%]"
+      },
+      {
+        "category": "その他",
+        "count": 18,
+        "percentage": 18.0,
+        "ci_95": "[11.7%, 26.7%]"
+      }
+    ]
+  },
+  "CBN": {
+    "name": "CBN",
+    "n": 88,
+    "raw_count": 89,
+    "excluded": 1,
+    "results": [
+      {
+        "category": "製品宣伝・販売",
+        "count": 17,
+        "percentage": 19.3,
+        "ci_95": "[12.4%, 28.8%]"
+      },
+      {
+        "category": "製品レビュー",
+        "count": 3,
+        "percentage": 3.4,
+        "ci_95": "[1.2%, 9.5%]"
+      },
+      {
+        "category": "会話・引用",
+        "count": 21,
+        "percentage": 23.9,
+        "ci_95": "[16.2%, 33.7%]"
+      },
+      {
+        "category": "その他",
+        "count": 47,
+        "percentage": 53.4,
+        "ci_95": "[43.1%, 63.5%]"
+      }
+    ]
+  },
+  "THC": {
+    "name": "THC",
+    "n": 99,
+    "raw_count": 100,
+    "excluded": 1,
+    "results": [
+      {
+        "category": "製品宣伝・販売",
+        "count": 15,
+        "percentage": 15.2,
+        "ci_95": "[9.4%, 23.5%]"
+      },
+      {
+        "category": "製品レビュー",
+        "count": 6,
+        "percentage": 6.1,
+        "ci_95": "[2.8%, 12.6%]"
+      },
+      {
+        "category": "会話・引用",
+        "count": 20,
+        "percentage": 20.2,
+        "ci_95": "[13.5%, 29.2%]"
+      },
+      {
+        "category": "その他",
+        "count": 58,
+        "percentage": 58.6,
+        "ci_95": "[48.7%, 67.8%]"
+      }
+    ]
+  }
+}
