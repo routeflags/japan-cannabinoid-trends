@@ -1,0 +1,13 @@
+{
+  "compound": "CBG",
+  "geo": "JP",
+  "timeframe": "today 5-y",
+  "collected_at": "2026-10-06",
+  "data_points": 261,
+  "first_value": 28,
+  "last_value": 44,
+  "peak_value": 100,
+  "peak_date": "2023-11-19 to 2023-11-25",
+  "avg_5y": 45.6,
+  "note": "5-year weekly data. High and variable interest. Peak in Nov 2023. Consistently higher than CBD in recent 12 months."
+}

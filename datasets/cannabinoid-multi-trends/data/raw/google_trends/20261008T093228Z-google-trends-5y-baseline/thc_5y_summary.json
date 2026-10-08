@@ -1,0 +1,13 @@
+{
+  "compound": "THC",
+  "geo": "JP",
+  "timeframe": "today 5-y",
+  "collected_at": "2026-10-06",
+  "data_points": 261,
+  "first_value": 8,
+  "last_value": 7,
+  "peak_value": 100,
+  "peak_date": "2025-08-31 to 2025-09-06",
+  "avg_5y": 12.2,
+  "note": "5-year weekly data. Relatively stable. Spike in Nov 2023 (22) and recent increase Nov 2025 onwards."
+}
