@@ -1,6 +1,6 @@
 # Japan Cannabinoid Trends
 
-[![DOI](https://zenodo.org/badge/1375618430.svg)](https://doi.org/10.5281/zenodo.23240244)
+[![DOI](https://zenodo.org/badge/1375618430.svg)](https://doi.org/10.5281/zenodo.23243494)
 
 An open research dataset for tracking cannabinoid-related trends in Japan across social media, search, web, and first-party data sources.
 
