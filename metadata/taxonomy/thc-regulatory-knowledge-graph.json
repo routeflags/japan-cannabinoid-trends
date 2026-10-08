@@ -1,7 +1,7 @@
 {
   "title": "大麻・THC異性体の規制用語と関係",
   "as_of": "2026-10-09",
-  "schema": "knowledge-graph-v1.1",
+  "schema": "knowledge-graph-v1.2",
   "created": "2026-10-09",
   "source": "WHO, INCB, UNODC, EUDA, SAMHSA, 各国法令",
   "nodes": [
@@ -80,14 +80,7 @@
       "id": "who",
       "term": "WHO",
       "kind": "institution",
-      "role": "科学的・医学的評価。Schedule変更はできない（勧告する）",
-      "status": "国連の専門機関（Specialized Agency）",
-      "functions": [
-        "薬物の科学的・医学的評価",
-        "CNDへのSchedule変更勧告",
-        "INCB委員候補の推薦"
-      ],
-      "not_a": "CNDの下部組織でもINCBの下部組織でもない"
+      "role": "科学的評価・勧告"
     },
     {
       "id": "cnd",
@@ -181,6 +174,41 @@
       "id": "unodc",
       "term": "国連薬物犯罪事務所 UNODC",
       "kind": "un_office"
+    },
+    {
+      "id": "un_system",
+      "term": "国連システム",
+      "kind": "institutional_system"
+    },
+    {
+      "id": "un_secretariat",
+      "term": "国連事務局",
+      "kind": "un_organ"
+    },
+    {
+      "id": "un_secretary_general",
+      "term": "国連事務総長",
+      "kind": "un_official"
+    },
+    {
+      "id": "ecdd",
+      "term": "WHO薬物依存専門家委員会 ECDD",
+      "kind": "expert_committee"
+    },
+    {
+      "id": "t1988",
+      "term": "1988年麻薬及び向精神薬の不正取引の防止に関する国際連合条約",
+      "kind": "treaty"
+    },
+    {
+      "id": "precursor_tables",
+      "term": "1988年条約 Table I / II",
+      "kind": "control_tables"
+    },
+    {
+      "id": "states",
+      "term": "締約国",
+      "kind": "legal_actor"
     }
   ],
   "relations": [
@@ -349,6 +377,120 @@
       "subject": "incb",
       "predicate": "monitors_implementation_of",
       "object": "t1971"
+    },
+    {
+      "subject": "un_system",
+      "predicate": "includes",
+      "object": "un",
+      "relation_type": "organizational_relationship"
+    },
+    {
+      "subject": "un_system",
+      "predicate": "includes_specialized_agency",
+      "object": "who",
+      "relation_type": "organizational_relationship"
+    },
+    {
+      "subject": "un",
+      "predicate": "has_principal_organ",
+      "object": "un_secretariat",
+      "relation_type": "organizational_relationship"
+    },
+    {
+      "subject": "un_secretariat",
+      "predicate": "contains_office",
+      "object": "unodc",
+      "relation_type": "organizational_relationship"
+    },
+    {
+      "subject": "who",
+      "predicate": "has_expert_committee",
+      "object": "ecdd",
+      "relation_type": "organizational_relationship"
+    },
+    {
+      "subject": "ecdd",
+      "predicate": "performs_scientific_assessment_for",
+      "object": "who",
+      "relation_type": "scientific_assessment"
+    },
+    {
+      "subject": "who",
+      "predicate": "submits_scheduling_assessment_via",
+      "object": "un_secretary_general",
+      "relation_type": "scheduling_recommendation"
+    },
+    {
+      "subject": "un_secretary_general",
+      "predicate": "transmits_scheduling_information_to",
+      "object": "cnd",
+      "relation_type": "recommendation_route"
+    },
+    {
+      "subject": "un_secretary_general",
+      "predicate": "transmits_scheduling_information_to",
+      "object": "incb",
+      "relation_type": "recommendation_route"
+    },
+    {
+      "subject": "un_secretary_general",
+      "predicate": "transmits_scheduling_information_to",
+      "object": "states",
+      "relation_type": "recommendation_route"
+    },
+    {
+      "subject": "cnd",
+      "predicate": "provides_policy_guidance_to_drug_programme_of",
+      "object": "unodc",
+      "relation_type": "policy_guidance"
+    },
+    {
+      "subject": "unodc",
+      "predicate": "provides_secretariat_support_to",
+      "object": "cnd",
+      "relation_type": "secretariat_support"
+    },
+    {
+      "subject": "incb",
+      "predicate": "submits_report_through",
+      "object": "cnd",
+      "relation_type": "reporting_route"
+    },
+    {
+      "subject": "cnd",
+      "predicate": "transmits_incb_report_to",
+      "object": "ecosoc",
+      "relation_type": "reporting_route"
+    },
+    {
+      "subject": "incb",
+      "predicate": "reviews_estimates_and_statistics_from",
+      "object": "states",
+      "relation_type": "treaty_compliance_monitoring"
+    },
+    {
+      "subject": "incb",
+      "predicate": "assesses_precursors_under",
+      "object": "t1988",
+      "relation_type": "precursor_assessment"
+    },
+    {
+      "subject": "incb",
+      "predicate": "recommends_precursor_table_changes_to",
+      "object": "cnd",
+      "relation_type": "precursor_recommendation"
+    },
+    {
+      "subject": "cnd",
+      "predicate": "decides_changes_to",
+      "object": "precursor_tables",
+      "relation_type": "precursor_decision"
+    },
+    {
+      "subject": "t1988",
+      "predicate": "defines_control_tables",
+      "object": "precursor_tables",
+      "relation_type": "legal_basis"
     }
   ],
   "institutional_structure": {
@@ -363,21 +505,56 @@
         "organization": "INCB",
         "classification": "条約に基づく独立した関連機関。ECOSOCの補助機関という広義の記述も存在",
         "function": "遵守監視、推計・統計の審査、前駆物質統制等"
-      },
-      {
-        "organization": "WHO",
-        "classification": "国連の専門機関（Specialized Agency）",
-        "function": "科学的・医学的評価、Schedule変更勧告、INCB委員候補の推薦"
-      },
-      {
-        "organization": "UNODC",
-        "classification": "国連事務局の一部",
-        "function": "各国への技術支援、国際協力、INCB事務局支援"
       }
     ],
     "election": "ECOSOCはCNDの加盟国とINCBの委員13名を選出する。INCB委員は個人資格で職務を行う。",
     "secretariat": "UNODC内のINCB事務局が支援する。",
-    "whoPosition": "WHOは国連の専門機関として独立した地位を持つ。科学的評価と勧告を行うが、Schedule変更の権限はない。"
+    "organization_hierarchy": {
+      "un_system": {
+        "un": {
+          "ecosoc": [
+            "cnd",
+            "incb"
+          ],
+          "un_secretariat": [
+            "unodc"
+          ]
+        },
+        "specialized_agencies": [
+          "who"
+        ]
+      }
+    },
+    "distinction_note": "WHOは国連と協定関係にある独立した専門機関であり国連事務局の下部組織ではない。ECOSOCとINCBの関係は選出・報告等であり、指揮命令関係を意味しない。",
+    "who_nominations": "WHOの推薦名簿からECOSOCがINCB委員3名を選び、政府推薦名簿から10名を選ぶ。",
+    "incb_statistics": "INCBは各国提出の麻薬需要見込みと統計を審査し、合法的な国際取引を監視する。直接各国の供給を運営するわけではない。",
+    "unodc": "UNODCは国連事務局の一部であり、CNDとINCBの事務局業務を支援する。INCB事務局は実質的事項についてINCBに責任を負う。"
+  },
+  "process_flows": {
+    "organization_vs_information_flow": "組織階層と報告・勧告の伝達経路を別々に記述",
+    "scheduling_1961_1971": [
+      "ecdd",
+      "who",
+      "un_secretary_general",
+      "cnd"
+    ],
+    "notification_recipients": [
+      "cnd",
+      "states",
+      "incb（条約・手続に応じる）"
+    ],
+    "precursor_1988": [
+      "incb",
+      "cnd",
+      "precursor_tables"
+    ],
+    "incb_reporting": [
+      "incb",
+      "cnd",
+      "ecosoc"
+    ],
+    "medical_scientific_weight": "WHOの医学・科学的評価には条約上特別な重みがある。CNDの最終判断と同一ではない。",
+    "precursor_exception": "1988年条約の前駆物質表の変更はINCBの評価・勧告に基づく経路であり、通常のWHO/ECDDによる麻薬・向精神薬の評価経路とは異なる。"
   },
   "thcIsomers": {
     "classificationSystem": {
@@ -704,6 +881,18 @@
     {
       "title": "ECOSOC subsidiary and related bodies",
       "url": "https://ecosoc.un.org/en/about-us/ecosoc-subsidiary-bodies"
+    },
+    {
+      "title": "1961年麻薬単一条約",
+      "url": "https://www.incb.org/documents/Narcotic-Drugs/1961-Convention/convention_1961_en.pdf"
+    },
+    {
+      "title": "1971年向精神薬条約",
+      "url": "https://www.incb.org/documents/Psychotropics/conventions/convention_1971_en.pdf"
+    },
+    {
+      "title": "1988年条約",
+      "url": "https://www.unodc.org/pdf/convention_1988_en.pdf"
     }
   ],
   "caveats": [
