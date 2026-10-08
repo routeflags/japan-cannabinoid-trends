@@ -252,6 +252,159 @@
     "maintainer": "ROUTE FLAGS Co., Ltd."
   },
 
+  "queryDesign": {
+    "lastUpdated": "2026-10-09",
+    "principle": "MECE: Each compound has unique queries per media type, avoiding overlap",
+
+    "mediaTypes": {
+      "x": {
+        "languageFilter": "lang:ja",
+        "queryFormat": "{compound} {japanese_name}",
+        "actor": "cPYLH3QT9GyzKhB4S",
+        "costPerCompound": "~$0.10"
+      },
+      "youtube": {
+        "languageFilter": null,
+        "queryFormat": "{compound} {japanese_name}",
+        "actor": "gJvjeCYNraSfhIaNd",
+        "costPerCompound": "~$0.05",
+        "note": "No language filter available. Japanese queries preferred to surface Japanese content."
+      },
+      "googleTrends": {
+        "queryFormat": "{compound}",
+        "mcp": "google-trends",
+        "costPerCompound": "free"
+      }
+    },
+
+    "compounds": {
+      "CBD": {
+        "japaneseName": "カンナビジオール",
+        "queries": {
+          "x": "CBD カンナビジオール リキッド lang:ja",
+          "youtube": "CBD カンナビジオール リキッド",
+          "googleTrends": "CBD"
+        },
+        "commonScaleSet": "Set A"
+      },
+      "THC": {
+        "japaneseName": "テトラヒドロカンナビノール",
+        "queries": {
+          "x": "THC テトラヒドロカンナビノール リキッド lang:ja",
+          "youtube": "THC テトラヒドロカンナビノール リキッド",
+          "googleTrends": "THC"
+        },
+        "commonScaleSet": "Set A"
+      },
+      "CBG": {
+        "japaneseName": "カンナビゲロール",
+        "queries": {
+          "x": "CBG カンナビゲロール リキッド lang:ja",
+          "youtube": "CBG カンナビゲロール リキッド",
+          "googleTrends": "CBG"
+        },
+        "commonScaleSet": "Set A"
+      },
+      "CBN": {
+        "japaneseName": "カンナビノール",
+        "queries": {
+          "x": "CBN カンナビノール リキッド lang:ja",
+          "youtube": "CBN カンナビノール リキッド",
+          "googleTrends": "CBN"
+        },
+        "commonScaleSet": "Set B"
+      },
+      "THCV": {
+        "japaneseName": "テトラヒドロカンナビバリン",
+        "queries": {
+          "x": "THCV テトラヒドロカンナビバリン リキッド lang:ja",
+          "youtube": "THCV テトラヒドロカンナビバリン リキッド",
+          "googleTrends": "THCV"
+        },
+        "commonScaleSet": "Set B"
+      },
+      "THCH": {
+        "japaneseName": "テトラヒドロカンナビクロヘキソール",
+        "queries": {
+          "x": "THCH カンナビノイド リキッド lang:ja",
+          "youtube": "THCH カンナビノイド リキッド",
+          "googleTrends": "THCH"
+        },
+        "commonScaleSet": "Set A"
+      },
+      "HHC": {
+        "japaneseName": "ヘキサヒドロカンナビノール",
+        "queries": {
+          "x": "HHC ヘキサヒドロカンナビノール リキッド lang:ja",
+          "youtube": "HHC ヘキサヒドロカンナビノール リキッド",
+          "googleTrends": "HHC"
+        },
+        "commonScaleSet": "Set A"
+      },
+      "THC-O": {
+        "japaneseName": "THC-アセテート",
+        "queries": {
+          "x": "THC-O カンナビノイド リキッド lang:ja",
+          "youtube": "THC-O カンナビノイド リキッド",
+          "googleTrends": "THC-O"
+        },
+        "commonScaleSet": "Set B"
+      },
+      "H4CBH": {
+        "japaneseName": "H4CBH",
+        "queries": {
+          "x": "H4CBH カンナビノイド リキッド lang:ja",
+          "youtube": "H4CBH カンナビノイド リキッド",
+          "googleTrends": "H4CBH"
+        },
+        "commonScaleSet": "Set D"
+      },
+      "HHBD": {
+        "japaneseName": "HHBD",
+        "queries": {
+          "x": "HHBD カンナビノイド リキッド lang:ja",
+          "youtube": "HHBD カンナビノイド リキッド",
+          "googleTrends": "HHBD"
+        },
+        "commonScaleSet": "Set D"
+      },
+      "HHCH": {
+        "japaneseName": "HHCH",
+        "queries": {
+          "x": "HHCH カンナビノイド リキッド lang:ja",
+          "youtube": "HHCH カンナビノイド リキッド",
+          "googleTrends": "HHCH"
+        },
+        "commonScaleSet": "Set B"
+      },
+      "CRDP": {
+        "japaneseName": "CRDP",
+        "queries": {
+          "x": "CRDP カンナビノイド リキッド lang:ja",
+          "youtube": "CRDP カンナビノイド リキッド",
+          "googleTrends": "CRDP"
+        },
+        "commonScaleSet": "Set B"
+      },
+      "CRDH": {
+        "japaneseName": "CRDH",
+        "queries": {
+          "x": "CRDH カンナビノイド リキッド lang:ja",
+          "youtube": "CRDH カンナビノイド リキッド",
+          "googleTrends": "CRDH"
+        },
+        "commonScaleSet": "Set D"
+      }
+    },
+
+    "costEstimate": {
+      "x": "~$1.30 (13 compounds × $0.10)",
+      "youtube": "~$0.65 (13 compounds × $0.05)",
+      "googleTrends": "free",
+      "total": "~$1.95"
+    }
+  },
+
   "dataCoverage": {
     "lastAudit": "2026-10-09",
     "auditNote": "X/Twitter data is limited to recent tweets due to Apify actor constraints. Historical date range filtering is not supported.",
