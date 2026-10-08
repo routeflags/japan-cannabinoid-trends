@@ -259,13 +259,13 @@
     "mediaTypes": {
       "x": {
         "languageFilter": "lang:ja",
-        "queryFormat": "{compound} {japanese_name}",
+        "queryFormat": "{compound} リキッド",
         "actor": "cPYLH3QT9GyzKhB4S",
         "costPerCompound": "~$0.10"
       },
       "youtube": {
         "languageFilter": null,
-        "queryFormat": "{compound} {japanese_name}",
+        "queryFormat": "{compound} リキッド",
         "actor": "gJvjeCYNraSfhIaNd",
         "costPerCompound": "~$0.05",
         "note": "No language filter available. Japanese queries preferred to surface Japanese content."
@@ -281,8 +281,8 @@
       "CBD": {
         "japaneseName": "カンナビジオール",
         "queries": {
-          "x": "CBD カンナビジオール リキッド lang:ja",
-          "youtube": "CBD カンナビジオール リキッド",
+          "x": "CBD リキッド lang:ja",
+          "youtube": "CBD リキッド",
           "googleTrends": "CBD"
         },
         "commonScaleSet": "Set A"
@@ -290,8 +290,8 @@
       "THC": {
         "japaneseName": "テトラヒドロカンナビノール",
         "queries": {
-          "x": "THC テトラヒドロカンナビノール リキッド lang:ja",
-          "youtube": "THC テトラヒドロカンナビノール リキッド",
+          "x": "THC リキッド lang:ja",
+          "youtube": "THC リキッド",
           "googleTrends": "THC"
         },
         "commonScaleSet": "Set A"
@@ -299,8 +299,8 @@
       "CBG": {
         "japaneseName": "カンナビゲロール",
         "queries": {
-          "x": "CBG カンナビゲロール リキッド lang:ja",
-          "youtube": "CBG カンナビゲロール リキッド",
+          "x": "CBG リキッド lang:ja",
+          "youtube": "CBG リキッド",
           "googleTrends": "CBG"
         },
         "commonScaleSet": "Set A"
@@ -308,8 +308,8 @@
       "CBN": {
         "japaneseName": "カンナビノール",
         "queries": {
-          "x": "CBN カンナビノール リキッド lang:ja",
-          "youtube": "CBN カンナビノール リキッド",
+          "x": "CBN リキッド lang:ja",
+          "youtube": "CBN リキッド",
           "googleTrends": "CBN"
         },
         "commonScaleSet": "Set B"
@@ -317,8 +317,8 @@
       "THCV": {
         "japaneseName": "テトラヒドロカンナビバリン",
         "queries": {
-          "x": "THCV テトラヒドロカンナビバリン リキッド lang:ja",
-          "youtube": "THCV テトラヒドロカンナビバリン リキッド",
+          "x": "THCV リキッド lang:ja",
+          "youtube": "THCV リキッド",
           "googleTrends": "THCV"
         },
         "commonScaleSet": "Set B"
@@ -326,8 +326,8 @@
       "THCH": {
         "japaneseName": "テトラヒドロカンナビクロヘキソール",
         "queries": {
-          "x": "THCH カンナビノイド リキッド lang:ja",
-          "youtube": "THCH カンナビノイド リキッド",
+          "x": "THCH リキッド lang:ja",
+          "youtube": "THCH リキッド",
           "googleTrends": "THCH"
         },
         "commonScaleSet": "Set A"
@@ -335,8 +335,8 @@
       "HHC": {
         "japaneseName": "ヘキサヒドロカンナビノール",
         "queries": {
-          "x": "HHC ヘキサヒドロカンナビノール リキッド lang:ja",
-          "youtube": "HHC ヘキサヒドロカンナビノール リキッド",
+          "x": "HHC リキッド lang:ja",
+          "youtube": "HHC リキッド",
           "googleTrends": "HHC"
         },
         "commonScaleSet": "Set A"
@@ -344,8 +344,8 @@
       "THC-O": {
         "japaneseName": "THC-アセテート",
         "queries": {
-          "x": "THC-O カンナビノイド リキッド lang:ja",
-          "youtube": "THC-O カンナビノイド リキッド",
+          "x": "THC-O リキッド lang:ja",
+          "youtube": "THC-O リキッド",
           "googleTrends": "THC-O"
         },
         "commonScaleSet": "Set B"
@@ -353,8 +353,8 @@
       "H4CBH": {
         "japaneseName": "H4CBH",
         "queries": {
-          "x": "H4CBH カンナビノイド リキッド lang:ja",
-          "youtube": "H4CBH カンナビノイド リキッド",
+          "x": "H4CBH リキッド lang:ja",
+          "youtube": "H4CBH リキッド",
           "googleTrends": "H4CBH"
         },
         "commonScaleSet": "Set D"
@@ -362,8 +362,8 @@
       "HHBD": {
         "japaneseName": "HHBD",
         "queries": {
-          "x": "HHBD カンナビノイド リキッド lang:ja",
-          "youtube": "HHBD カンナビノイド リキッド",
+          "x": "HHBD リキッド lang:ja",
+          "youtube": "HHBD リキッド",
           "googleTrends": "HHBD"
         },
         "commonScaleSet": "Set D"
@@ -371,8 +371,8 @@
       "HHCH": {
         "japaneseName": "HHCH",
         "queries": {
-          "x": "HHCH カンナビノイド リキッド lang:ja",
-          "youtube": "HHCH カンナビノイド リキッド",
+          "x": "HHCH リキッド lang:ja",
+          "youtube": "HHCH リキッド",
           "googleTrends": "HHCH"
         },
         "commonScaleSet": "Set B"
@@ -380,8 +380,8 @@
       "CRDP": {
         "japaneseName": "CRDP",
         "queries": {
-          "x": "CRDP カンナビノイド リキッド lang:ja",
-          "youtube": "CRDP カンナビノイド リキッド",
+          "x": "CRDP リキッド lang:ja",
+          "youtube": "CRDP リキッド",
           "googleTrends": "CRDP"
         },
         "commonScaleSet": "Set B"
@@ -389,8 +389,8 @@
       "CRDH": {
         "japaneseName": "CRDH",
         "queries": {
-          "x": "CRDH カンナビノイド リキッド lang:ja",
-          "youtube": "CRDH カンナビノイド リキッド",
+          "x": "CRDH リキッド lang:ja",
+          "youtube": "CRDH リキッド",
           "googleTrends": "CRDH"
         },
         "commonScaleSet": "Set D"
