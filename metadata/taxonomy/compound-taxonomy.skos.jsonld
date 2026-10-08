@@ -383,6 +383,30 @@
       },
       "skos:related": ["jptr:compound-cbx", "jptr:compound-h4cbh"]
     },
+    {
+      "@id": "jptr:compound-crdh",
+      "@type": "skos:Concept",
+      "skos:inScheme": "jptr:compound-taxonomy",
+      "skos:broader": "jptr:compound-synthetic",
+      "skos:prefLabel": {
+        "@value": "CRDH",
+        "@language": "en"
+      },
+      "skos:prefLabel": {
+        "@value": "CRDH",
+        "@language": "ja"
+      },
+      "skos:altLabel": [
+        { "@value": "CRDH", "@language": "en" },
+        { "@value": "CRDH リキッド", "@language": "ja" }
+      ],
+      "skos:notation": "compound_crdh",
+      "skos:scopeNote": {
+        "@value": "A synthetic cannabinoid derivative marketed in Japan. Chemical structure unknown. Monitoring target.",
+        "@language": "en"
+      },
+      "skos:related": ["jptr:compound-crdp"]
+    },
 
     {
       "@id": "jptr:compound-anandamide",
