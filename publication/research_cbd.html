@@ -158,9 +158,10 @@
 <!-- ===== 独自データ：YouTube トレンド ===== -->
 <div>
   <h2 id="data-youtube">独自データ: CBD の YouTube トレンド <span>一次データ</span></h2>
-  <p>データソース: YouTube / 期間: 2026-10（日本語キーワード「CBD オイル」） / 取得日: 2026-10-08</p>
-  <p>YouTube から、CBD に関する動画を収集しました。</p>
-  <h3>収集結果</h3>
+  <p>データソース: YouTube Search via Apify / 検索クエリ: 「CBD オイル」（日本語） / 取得日: 2026-10-05</p>
+  <p>YouTube 検索結果から、CBD に関する日本語動画を収集・分析しました。</p>
+
+  <h3>収集結果サマリー</h3>
   <table>
     <thead>
       <tr>
@@ -170,17 +171,169 @@
     </thead>
     <tbody>
       <tr>
-        <td>動画数</td>
-        <td>60件</td>
+        <td>ユニーク動画数</td>
+        <td><strong>28件</strong>（重複排除後）</td>
       </tr>
       <tr>
-        <td>観測期間</td>
-        <td>2026-10（日本語キーワード「CBD オイル」）</td>
+        <td>元データ件数</td>
+        <td>60件（ページング重複含む）</td>
+      </tr>
+      <tr>
+        <td>検索クエリ</td>
+        <td>「CBD オイル」</td>
+      </tr>
+      <tr>
+        <td>言語</td>
+        <td>日本語</td>
+      </tr>
+      <tr>
+        <td>取得日</td>
+        <td>2026-10-05</td>
       </tr>
     </tbody>
   </table>
-  <p><strong>所見:</strong> 日本語動画60件を収集。医療解説、製品レビュー、安全性解説など多様なコンテンツ。</p>
-  <p><strong>制約:</strong> YouTube 検索結果のサンプルであり、全動画を網羅するものではない。</p>
+
+  <h3>再生数統計</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>統計量</th>
+        <th>再生数</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>平均</td>
+        <td><strong>48,100</strong></td>
+      </tr>
+      <tr>
+        <td>中央値</td>
+        <td>14,298</td>
+      </tr>
+      <tr>
+        <td>最大</td>
+        <td>596,956</td>
+      </tr>
+      <tr>
+        <td>最小</td>
+        <td>1,647</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>動画長統計</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>統計量</th>
+        <th>動画長</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>平均</td>
+        <td><strong>10.8分</strong>（649秒）</td>
+      </tr>
+      <tr>
+        <td>最大</td>
+        <td>23.5分（1,410秒）</td>
+      </tr>
+      <tr>
+        <td>最小</td>
+        <td>1.4分（86秒）</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>チャンネル分布（上位5）</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>チャンネル</th>
+        <th>件数</th>
+        <th>比率</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>キヨキヨの美容チャンネル</td>
+        <td><strong>8</strong></td>
+        <td>28.6%</td>
+      </tr>
+      <tr>
+        <td>Kazuya Sakoda</td>
+        <td>3</td>
+        <td>10.7%</td>
+      </tr>
+      <tr>
+        <td>Dr Ishiguro / 切り抜き</td>
+        <td>3</td>
+        <td>10.7%</td>
+      </tr>
+      <tr>
+        <td>高須幹弥（高須クリニック）</td>
+        <td>1</td>
+        <td>3.6%</td>
+      </tr>
+      <tr>
+        <td>イタリアの食卓 Miho's kitchen</td>
+        <td>1</td>
+        <td>3.6%</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>上位動画（再生数順）</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>タイトル</th>
+        <th>チャンネル</th>
+        <th>再生数</th>
+        <th>長さ</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1</td>
+        <td>[Cannabis?] A medical explanation of CBD [Is it legal?]</td>
+        <td>高須幹弥（高須クリニック）</td>
+        <td><strong>596,956</strong></td>
+        <td>21:55</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>CBDオイルの光と影 知識があなたを守る鍵 精神科医 対談</td>
+        <td>吉野敏明チャンネル〜日本の病を治す〜</td>
+        <td><strong>244,308</strong></td>
+        <td>23:30</td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td>40% CBD oil is too strong—don't bother. A comparative review</td>
+        <td>キヨキヨの美容チャンネル</td>
+        <td>60,051</td>
+        <td>10:20</td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td>【 CBDオイル 】私が健康維持のために愛用している、自然由来の製品</td>
+        <td>イタリアの食卓 Miho's kitchen</td>
+        <td>49,897</td>
+        <td>16:15</td>
+      </tr>
+      <tr>
+        <td>5</td>
+        <td>【医師解説】CBDって本当に安全？健康に与える影響とは</td>
+        <td>【南雲吉則】Dr.ナグモの命の食事</td>
+        <td>47,091</td>
+        <td>12:53</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p><strong>制約:</strong> YouTube 検索結果のサンプルであり、全動画を網羅するものではない。再生数は取得日時点の値であり、変動する可能性がある。</p>
 </div>
 
 <!-- ===== 引用情報 ===== -->
