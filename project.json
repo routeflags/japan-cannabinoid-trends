@@ -434,6 +434,34 @@
     "lastUpdated": "2026-10-09",
     "regulatoryBasis": "厚生労働省 統制物質一覧（2024-12-12時点）",
     "sourceUrl": "https://www.ncd.mhlw.go.jp/dl_data/keitai/cotrolled_substances_list20241212%20.pdf",
+    "recommendedPhrasing": "THCの主要な二重結合位置異性体は7分類あり、立体異性体を区別するとWHOの整理では計30種類となる。",
+    "limitationNote": "この30種類はWHOが対象としたTHC異性体の内訳であり、同じ分子式を持つあらゆる構造異性体を含む総数という意味ではない。",
+    "classificationSystem": {
+      "tier1": {
+        "name": "位置異性体",
+        "count": 7,
+        "basis": "二重結合の位置",
+        "usage": "SNS・Google Trendsなどの検索語を分類"
+      },
+      "tier2": {
+        "name": "立体異性体",
+        "count": 30,
+        "basis": "立体配置まで区別",
+        "usage": "化学構造・CAS番号・規制対象の精密な識別",
+        "note": "7分類の下に合計30種類の立体異性体がある。7+30=37種類ではない。"
+      }
+    },
+    "whoSource": "WHO『Isomers of THC』Annex 1（41～48ページ）",
+    "stereoisomerBreakdown": {
+      "Δ6a(10a)-THC": 2,
+      "Δ6a(7)-THC": 4,
+      "Δ7-THC": 8,
+      "Δ8-THC": 4,
+      "Δ9-THC": 4,
+      "Δ10-THC": 4,
+      "Δ9(11)-THC": 4,
+      "total": 30
+    },
     "regulatedIsomers": ["Δ6a(7)", "Δ6a(10a)", "Δ7", "Δ8", "Δ9", "Δ9(11)", "Δ10"],
     "regulatedAcetates": ["Δ8-THCO", "Δ8-THCOP", "Δ9-THCO", "Δ9-THCOP"],
     "nomenclatureSystems": {
