@@ -573,6 +573,87 @@ scripts/export/
 
 ---
 
+# JSON Files
+
+This repository maintains several JSON files for configuration, metadata, and knowledge representation.
+
+## File Overview
+
+| File | Purpose |
+|------|---------|
+| `project.json` | Project configuration: scope, data sources, query design, data coverage summary |
+| `metadata/datapackage.json` | Frictionless Data Package specification: schema, version, citation |
+| `metadata/taxonomy/thc-regulatory-knowledge-graph.json` | THC isomer regulatory knowledge graph: nodes, relations, nomenclature, treaty status |
+| `metadata/taxonomy/content-taxonomy.skos.jsonld` | W3C SKOS content classification taxonomy |
+| `metadata/taxonomy/compound-taxonomy.skos.jsonld` | W3C SKOS compound classification taxonomy |
+| `metadata/schema/socialmediaposting.jsonld` | Schema.org SocialMediaPosting mapping |
+
+## project.json
+
+Main project configuration file.
+
+### Sections
+
+| Section | Content |
+|---------|---------|
+| `project` | ID, name, description, status, type |
+| `scope` | Geographic, topical, and population definitions |
+| `dataSources` | X, YouTube, Instagram, TikTok, Google Trends, etc. |
+| `queryDesign` | Standardized queries for each compound × media type |
+| `thcIsomers` | Quick reference (details in knowledge graph) |
+| `dataCoverage` | Summary of compound × media coverage |
+
+### thcIsomers Quick Reference
+
+```json
+{
+  "thcIsomers": {
+    "knowledgeGraph": "metadata/taxonomy/thc-regulatory-knowledge-graph.json",
+    "quickReference": {
+      "positionalIsomers": 7,
+      "stereoisomers": 30,
+      "regulatedInJapan": 7,
+      "naturalConfirmed": ["Δ8-THC", "Δ9-THC"]
+    }
+  }
+}
+```
+
+## thc-regulatory-knowledge-graph.json
+
+Comprehensive knowledge graph for THC isomer regulation.
+
+### Structure
+
+| Section | Content |
+|---------|---------|
+| `nodes` | Chemical compounds, treaties, schedules, institutions, jurisdictions |
+| `relations` | Regulatory relationships between entities |
+| `thcIsomers` | 7 positional isomers, 30 stereoisomers, nomenclature mapping |
+| `schedule_history` | Historical changes to treaty schedules |
+| `jurisdiction_notes` | Country-specific regulatory status |
+| `legal_effect` | International law implications |
+| `sources` | Primary source references |
+
+### THC Isomer Details
+
+| Field | Description |
+|-------|-------------|
+| `canonicalName` | Current dibenzopyran naming |
+| `aliases` | Old monoterpenoid naming |
+| `regulation` | Japanese regulation status |
+| `naturalOccurrence` | confirmed / unconfirmed / not-natural |
+| `casNumber` | CAS registry number |
+
+## Management
+
+For updating these files, see:
+
+- `.github/skills/knowledge-graph-management/SKILL.md`
+- `docs/specs/thc-nomenclature-standard.md`
+
+---
+
 # Agent Behavior
 
 Before changing research data, an agent must determine:
