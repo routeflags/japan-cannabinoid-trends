@@ -92,6 +92,24 @@ compounds:
         note: "2025年12月にピークあり（要因特定できず）"
 
   # ---------------------------------------------------------------------------
+  # CRDH
+  # ---------------------------------------------------------------------------
+  CRDH:
+    display_name: "CRDH"
+    category: "synthetic_cannabinoid"
+    keywords:
+      - "CRDH"
+      - "CRDH リキッド"
+      - "CRDH カンナビノイド"
+    polysemy_warning: null
+    discriminating_queries: []
+    search_notes:
+      google_trends:
+        single_query_avg: null
+        comparison_avg: null
+        note: "2026-10-06 追加。データ未収集。"
+
+  # ---------------------------------------------------------------------------
   # CBD (比較対象)
   # ---------------------------------------------------------------------------
   CBD:
