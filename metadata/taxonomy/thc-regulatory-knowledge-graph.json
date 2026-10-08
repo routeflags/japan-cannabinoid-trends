@@ -26,10 +26,10 @@
     {"id":"s1971i","term":"1971年条約 Schedule I","kind":"schedule"},
     {"id":"s1971ii","term":"1971年条約 Schedule II","kind":"schedule"},
     {"id":"who","term":"WHO","kind":"institution","role":"科学的・医学的評価。Schedule変更はできない（勧告する）"},
-    {"id":"cnd","term":"国連麻薬委員会 CND","kind":"institution","role":"国際薬物規制に関する政策・決定。Schedule変更の権限を持つ"},
-    {"id":"incb","term":"国際麻薬統制委員会 INCB","kind":"institution","role":"締約国の条約遵守を監視。Schedule変更はできない。13名の委員で構成され、ECOSOCにより選出"},
+    {"id":"cnd","term":"国連麻薬委員会 CND","kind":"institution","legalStatus":"ECOSOCの機能委員会","role":"国際薬物規制に関する政策・決定。Schedule変更の権限を持つ"},
+    {"id":"incb","term":"国際麻薬統制委員会 INCB","kind":"institution","legalStatus":"条約に基づく独立した関連機関","role":"締約国の条約遵守を監視。Schedule変更はできない。13名の委員で構成され、ECOSOCにより選出"},
     {"id":"unodc","term":"国連薬物犯罪事務所 UNODC","kind":"institution","role":"各国への技術支援、国際協力、事務局業務。Schedule変更はできない"},
-    {"id":"ecosoc","term":"国連経済社会理事会 ECOSOC","kind":"institution","role":"INCB委員の選出"},
+    {"id":"ecosoc","term":"国連経済社会理事会 ECOSOC","kind":"institution","role":"CNDの上位機関。INCB委員の選出"},
     {"id":"canada","term":"カナダ","kind":"jurisdiction"},
     {"id":"germany","term":"ドイツ","kind":"jurisdiction"},
     {"id":"japan","term":"日本","kind":"jurisdiction"},
@@ -82,16 +82,21 @@
   ],
 
   "institutionalFramework": {
+    "legalStatusDistinction": {
+      "cnd": "ECOSOCの機能委員会（Functional Commission）",
+      "incb": "条約に基づく独立した関連機関（Treaty-based Independent Organ）"
+    },
     "unSystem": {
-      "ecosoc": "国連経済社会理事会。INCB委員の選出を行う",
-      "cnd": "国連麻薬委員会。Schedule変更を決定できる唯一の機関",
-      "incb": "国際麻薬統制委員会。条約遵守を監視。13名の委員で構成。委員は政府代表ではなく独立した立場で職務を行う",
+      "ecosoc": "国連経済社会理事会。CNDの上位機関。INCB委員の選出を行う",
+      "cnd": "国連麻薬委員会。ECOSOCの機能委員会。Schedule変更を決定できる唯一の機関",
+      "incb": "国際麻薬統制委員会。条約に基づく独立した関連機関。条約遵守を監視。13名の委員で構成。委員は政府代表ではなく独立した立場で職務を行う",
       "unodc": "国連薬物犯罪事務所。事務局・技術支援",
       "who": "世界保健機関。科学的・医学的評価と勧告"
     },
     "keyDistinctions": [
       "INCBは国連の独立機関。民間団体ではない",
       "INCBはCNDやUNODCの下部組織ではない",
+      "CNDはECOSOCの機能委員会、INCBは条約に基づく独立した関連機関（法的地位が異なる）",
       "INCB委員はECOSOCにより選出される",
       "INCBはSchedule変更の権限を持たない",
       "INCBは準司法的機関だが、国内法を無効にする判決を下す機関ではない"
