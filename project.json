@@ -436,71 +436,74 @@
     "sourceUrl": "https://www.ncd.mhlw.go.jp/dl_data/keitai/cotrolled_substances_list20241212%20.pdf",
     "regulatedIsomers": ["Δ6a(7)", "Δ6a(10a)", "Δ7", "Δ8", "Δ9", "Δ9(11)", "Δ10"],
     "regulatedAcetates": ["Δ8-THCO", "Δ8-THCOP", "Δ9-THCO", "Δ9-THCOP"],
-    "unconfirmedIsomers": ["Δ5", "Δ6"],
-    "nomenclatureWarning": "Δ6-THCはPubChemでΔ8-THCの同義語として登録。旧命名法のためCAS番号での識別必須。",
+    "nomenclatureSystems": {
+      "old": "モノテルペン式（Monoterpenoid）",
+      "current": "ジベンゾピラン式（Dibenzopyran）"
+    },
+    "nomenclatureMapping": {
+      "Δ1-THC": "Δ9-THC",
+      "Δ2-THC": "Δ10-THC",
+      "Δ3-THC": "Δ6a(10a)-THC",
+      "Δ4-THC": "Δ6a(7)-THC",
+      "Δ5-THC": "Δ7-THC",
+      "Δ6-THC": "Δ8-THC",
+      "Δ1(7)-THC": "Δ9(11)-THC"
+    },
+    "nomenclatureWarning": "旧式名称は別化合物ではない。データセットでは canonical_name（現行）に統合し、aliases に旧名を保持する。",
     "identificationMethod": {
-      "required": ["casNumber", "iupacName", "nomenclature"],
-      "recommended": ["structuralFormula", "commonName"]
+      "required": ["canonical_name", "casNumber", "nomenclature"],
+      "recommended": ["iupacName", "inchiKey", "structuralFormula"]
     },
 
     "isomers": {
-      "Δ5-THC": {
-        "japaneseName": "デルタ5-THC",
-        "regulation": "統制物質一覧に記載なし",
-        "regulationStatus": "unconfirmed",
-        "casNumber": null,
-        "iupacName": null,
-        "commonName": "Delta-5-THC",
-        "investigationRecord": "research/regulatory-status/DELTA5-THC-investigation.md",
-        "notes": "2026-10-09調査: 厚労省統制物質一覧（2024-12-12）に記載なし。ただし規制対象外と断定は不可。包括指定の範囲要確認。"
-      },
-      "Δ6-THC": {
-        "japaneseName": "デルタ6-THC",
-        "regulation": "統制物質一覧に記載なし",
-        "regulationStatus": "unconfirmed",
-        "casNumber": null,
-        "iupacName": null,
-        "commonName": "Delta-6-THC",
-        "notes": "PubChemでΔ8-THCの同義語として登録。独立した異性体か不明。"
-      },
       "Δ6a(7)-THC": {
+        "canonicalName": "Δ6a(7)-THC",
         "japaneseName": "デルタ6a(7)-THC",
+        "aliases": ["Δ4-THC"],
         "regulation": "麻薬",
         "regulationStatus": "narcotic",
         "casNumber": null,
         "iupacName": null,
         "commonName": "Delta-6a(7)-THC",
-        "notes": "厚労省統制物質一覧に記載"
+        "notes": "厚労省統制物質一覧に記載。旧式名称: Δ4-THC"
       },
       "Δ6a(10a)-THC": {
+        "canonicalName": "Δ6a(10a)-THC",
         "japaneseName": "デルタ6a(10a)-THC",
+        "aliases": ["Δ3-THC"],
         "regulation": "麻薬",
         "regulationStatus": "narcotic",
         "casNumber": null,
         "iupacName": null,
         "commonName": "Delta-6a(10a)-THC",
-        "notes": "厚労省統制物質一覧に記載"
+        "notes": "厚労省統制物質一覧に記載。旧式名称: Δ3-THC"
       },
       "Δ7-THC": {
+        "canonicalName": "Δ7-THC",
         "japaneseName": "デルタ7-THC",
+        "aliases": ["Δ5-THC"],
         "regulation": "麻薬",
         "regulationStatus": "narcotic",
         "casNumber": null,
         "iupacName": null,
         "commonName": "Delta-7-THC",
-        "notes": "厚労省統制物質一覧に記載"
+        "notes": "厚労省統制物質一覧に記載。旧式名称: Δ5-THC"
       },
       "Δ8-THC": {
+        "canonicalName": "Δ8-THC",
         "japaneseName": "デルタ8-テトラヒドロカンナビノール",
+        "aliases": ["Δ6-THC"],
         "regulation": "麻薬",
         "regulationStatus": "narcotic",
         "casNumber": "5957-75-7",
         "iupacName": "(−)-trans-Δ8-THC",
         "commonName": "Delta-8-THC",
-        "notes": "CBDからの化学変換で製造。Δ9より弱い精神活性。"
+        "notes": "CBDからの化学変換で製造。Δ9より弱い精神活性。旧式名称: Δ6-THC"
       },
       "Δ8-THCO": {
+        "canonicalName": "Δ8-THCO",
         "japaneseName": "デルタ8-THCアセテート",
+        "aliases": ["Δ8-THC-O-Acetate"],
         "regulation": "麻薬",
         "regulationStatus": "narcotic",
         "casNumber": null,
@@ -509,25 +512,31 @@
         "notes": "Δ8-THCのアセテート体。別化合物として規制。"
       },
       "Δ9-THC": {
+        "canonicalName": "Δ9-THC",
         "japaneseName": "デルタ9-テトラヒドロカンナビノール",
+        "aliases": ["Δ1-THC"],
         "regulation": "麻薬",
         "regulationStatus": "narcotic",
         "casNumber": "1972-08-3",
         "iupacName": "(−)-trans-Δ9-THC",
         "commonName": "Dronabinol",
-        "notes": "大麻の主要な精神活性成分"
+        "notes": "大麻の主要な精神活性成分。旧式名称: Δ1-THC"
       },
       "Δ9(11)-THC": {
+        "canonicalName": "Δ9(11)-THC",
         "japaneseName": "デルタ9(11)-THC",
+        "aliases": ["Δ1(7)-THC"],
         "regulation": "麻薬",
         "regulationStatus": "narcotic",
         "casNumber": null,
         "iupacName": null,
         "commonName": "Delta-9(11)-THC",
-        "notes": "厚労省統制物質一覧に記載"
+        "notes": "厚労省統制物質一覧に記載。旧式名称: Δ1(7)-THC"
       },
       "Δ9-THCO": {
+        "canonicalName": "Δ9-THCO",
         "japaneseName": "デルタ9-THCアセテート",
+        "aliases": ["Δ9-THC-O-Acetate"],
         "regulation": "麻薬",
         "regulationStatus": "narcotic",
         "casNumber": null,
@@ -536,13 +545,15 @@
         "notes": "Δ9-THCのアセテート体。別化合物として規制。"
       },
       "Δ10-THC": {
+        "canonicalName": "Δ10-THC",
         "japaneseName": "デルタ10-テトラヒドロカンナビノール",
+        "aliases": ["Δ2-THC"],
         "regulation": "麻薬",
         "regulationStatus": "narcotic",
         "casNumber": "50554-36-6",
         "iupacName": "Δ10-THC",
         "commonName": "Delta-10-THC",
-        "notes": "厚労省統制物質一覧に記載"
+        "notes": "厚労省統制物質一覧に記載。旧式名称: Δ2-THC"
       }
     }
   },
