@@ -298,6 +298,18 @@
         },
         "commonScaleSet": "Set A"
       },
+      "Δ8-THC": {
+        "japaneseName": "デルタ8-テトラヒドロカンナビノール",
+        "aliases": ["Delta8-THC", "Δ8-THC"],
+        "regulationStatus": "麻薬",
+        "notes": "Δ9-THCと別化合物。精神活性はΔ9より弱い。CBDからの化学変換で製造されることが多い。Δ8-THC-O（アセテート体）とは別化合物。",
+        "queries": {
+          "x": "Δ8-THC リキッド lang:ja",
+          "youtube": "Δ8-THC リキッド",
+          "googleTrends": "Δ8-THC"
+        },
+        "commonScaleSet": null
+      },
       "CBG": {
         "japaneseName": "カンナビゲロール",
         "aliases": [],
