@@ -1,0 +1,9 @@
+{
+  "run_id": "common-scale-missing-20261009",
+  "collection_timestamp": "2026-10-09",
+  "geo": "JP",
+  "timeframe": "today 12-m",
+  "terms": ["H4CBH", "HHBD", "CRDH"],
+  "purpose": "Common scale comparison for missing compounds",
+  "note": "Compounds not included in Set A or Set B"
+}
