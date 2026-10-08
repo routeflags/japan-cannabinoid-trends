@@ -80,7 +80,7 @@ references:
 
 identifiers:
   - type: doi
-    value: "10.5281/zenodo.23164973"
+    value: "10.5281/zenodo.23240245"
     description: "Zenodo DOI for v1.8.0"
   - type: url
     value: "https://github.com/routeflags/japan-cannabinoid-trends"
@@ -101,5 +101,5 @@ preferred-citation:
     name: "Routeflags Co., Ltd."
     city: "Tokyo"
     country: "JP"
-  url: "https://doi.org/10.5281/zenodo.23164973"
-  doi: "10.5281/zenodo.23164973"
+  url: "https://doi.org/10.5281/zenodo.23240245"
+  doi: "10.5281/zenodo.23240245"

@@ -14,11 +14,11 @@ Japan Cannabinoid Trends Dataset 2026: Google Trends, Social Media, Regulatory S
 Version 1.9.0.
 Routeflags Co., Ltd.
 [Dataset].
-DOI: 10.5281/zenodo.23164973
+DOI: 10.5281/zenodo.23240245
 ```
 
-**DOI (Concept):** https://doi.org/10.5281/zenodo.23164972
-**DOI (Version v1.9.0):** https://doi.org/10.5281/zenodo.23164973
+**DOI (Concept):** https://doi.org/10.5281/zenodo.23240244
+**DOI (Version v1.9.0):** https://doi.org/10.5281/zenodo.23240245
 **DOI (Version v1.8.0):** https://doi.org/10.5281/zenodo.23101318
 **DOI (Version v1.7.1):** https://doi.org/10.5281/zenodo.23097769
 **GitHub:** https://github.com/routeflags/japan-cannabinoid-trends
@@ -48,7 +48,7 @@ DOI: 10.5281/zenodo.23164973
 
 | Version | Release Date | DOI | Status |
 |---------|-------------|-----|--------|
-| **v1.9.0** | **2026-10-06** | **10.5281/zenodo.23164973** | **Latest** |
+| **v1.9.0** | **2026-10-06** | **10.5281/zenodo.23240245** | **Latest** |
 | v1.8.0 | 2026-10-02 | 10.5281/zenodo.23101318 | Previous |
 | v1.7.1 | 2026-10-02 | 10.5281/zenodo.23097769 | Archived |
 | v1.7.0 | 2026-10-02 | 10.5281/zenodo.23095153 | Archived |
@@ -61,13 +61,13 @@ DOI: 10.5281/zenodo.23164973
 
 | Asset | Type | DOI | Published | Primary Persona | Status |
 |-------|------|-----|-----------|-----------------|--------|
-| **Japan Cannabinoid Trends Dataset v1.9.0** | **Dataset** | **10.5281/zenodo.23164973** | **2026-10-06** | **Academic** | **Published** |
+| **Japan Cannabinoid Trends Dataset v1.9.0** | **Dataset** | **10.5281/zenodo.23240245** | **2026-10-06** | **Academic** | **Published** |
 | Japan Cannabinoid Trends Dataset v1.8.0 | Dataset | 10.5281/zenodo.23101318 | 2026-10-02 | Academic | Archived |
-| Early Warning Index v1 | Dataset (component) | 10.5281/zenodo.23164973 | 2026-10-06 | Journalist/Policy | Published |
+| Early Warning Index v1 | Dataset (component) | 10.5281/zenodo.23240245 | 2026-10-06 | Journalist/Policy | Published |
 | First-Mention Timeline | Research Note | — | 2026-10-02 | Policy/Journalist | Published |
 | Regulatory Status Summary | Research Note | — | 2026-10-02 | Policy/Industry | Published |
 | CBN Natural Experiment Analysis | Research Note | — | 2026-10-06 | Policy/Industry | Published |
-| 5-Year Google Trends Baseline | Dataset (component) | 10.5281/zenodo.23164973 | 2026-10-06 | Academic | Published |
+| 5-Year Google Trends Baseline | Dataset (component) | 10.5281/zenodo.23240245 | 2026-10-06 | Academic | Published |
 
 ### Citation Unit Log
 
