@@ -900,5 +900,30 @@
     "物質の化学的分類と法的定義は別軸",
     "各国の合法化範囲は異なる",
     "個別製品の適法性を判定するデータではない"
-  ]
+  ],
+  "regulatoryApproach": {
+    "type": "blacklist",
+    "alternativeName": "ネガティブリスト方式",
+    "principle": "原則として全て合法。指定された物質のみ禁止。",
+    "appliedIn": [
+      "日本（麻薬及び向精神薬取薬取締法、薬機法指定薬物）",
+      "米国（Controlled Substances Act）",
+      "国際条約（1961年条約、1971年条約）"
+    ],
+    "implications": {
+      "unlistedSubstances": "リストにない物質は原則合法",
+      "structureDisclosure": "化学構造の公開と法的合法性は無関係",
+      "newSubstances": "リスト追加まで規制対象外"
+    },
+    "commonMisconceptions": [
+      {
+        "misconception": "構造不明＝法的不安定",
+        "correction": "リスト外＝合法"
+      },
+      {
+        "misconception": "未指定＝グレーゾーン",
+        "correction": "未指定＝規制対象外"
+      }
+    ]
+  }
 }
