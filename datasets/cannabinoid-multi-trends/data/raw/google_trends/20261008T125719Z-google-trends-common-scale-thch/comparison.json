@@ -1,0 +1,9 @@
+{
+  "terms": ["THCH", "CBD", "THC"],
+  "geo": "JP",
+  "timeframe": "today 12-m",
+  "collected_at": "2026-10-08",
+  "average_interest": {"THCH": 0, "CBD": 47, "THC": 12},
+  "peak": {"term": "CBD", "date": "2026-05-03", "value": 100},
+  "note": "THCH near-zero interest on common scale with CBD/THC"
+}
