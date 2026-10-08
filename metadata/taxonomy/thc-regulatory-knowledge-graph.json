@@ -1,0 +1,98 @@
+{
+  "title": "大麻・THC異性体の規制用語と関係",
+  "as_of": "2026-10-09",
+  "schema": "knowledge-graph-v1",
+  "created": "2026-10-09",
+  "source": "WHO, INCB, UNODC, 各国法令",
+
+  "nodes": [
+    {"id":"plant","term":"大麻草","kind":"plant","definition":"Cannabis属の植物"},
+    {"id":"cannabis","term":"大麻（1961年条約）","kind":"material","definition":"樹脂未抽出の大麻草の花または果実のついた先端部分（条約第1条）"},
+    {"id":"resin","term":"大麻樹脂","kind":"material","definition":"大麻草から分離された樹脂"},
+    {"id":"thc","term":"THC位置異性体","kind":"chemical_group"},
+    {"id":"delta9","term":"Δ9-THC","kind":"chemical"},
+    {"id":"other6","term":"その他6分類のTHC位置異性体","kind":"chemical_group","members":["Δ6a(7)-THC","Δ6a(10a)-THC","Δ7-THC","Δ8-THC","Δ9(11)-THC","Δ10-THC"]},
+    {"id":"t1961","term":"1961年麻薬単一条約","kind":"treaty"},
+    {"id":"t1971","term":"1971年向精神薬条約","kind":"treaty"},
+    {"id":"s1961i","term":"1961年条約 Schedule I","kind":"schedule"},
+    {"id":"s1961iv","term":"1961年条約 Schedule IV","kind":"schedule"},
+    {"id":"s1971i","term":"1971年条約 Schedule I","kind":"schedule"},
+    {"id":"s1971ii","term":"1971年条約 Schedule II","kind":"schedule"},
+    {"id":"who","term":"WHO","kind":"institution","role":"科学的評価・勧告"},
+    {"id":"cnd","term":"国連麻薬委員会 CND","kind":"institution","role":"条約上のスケジュール変更の決定"},
+    {"id":"incb","term":"国際麻薬統制委員会 INCB","kind":"institution","role":"条約実施の監視"},
+    {"id":"canada","term":"カナダ","kind":"jurisdiction"},
+    {"id":"germany","term":"ドイツ","kind":"jurisdiction"},
+    {"id":"japan","term":"日本","kind":"jurisdiction"},
+    {"id":"usa","term":"米国","kind":"jurisdiction"},
+    {"id":"canada_act","term":"Cannabis Act","kind":"domestic_law"},
+    {"id":"germany_act","term":"Cannabisgesetz / KCanG","kind":"domestic_law"},
+    {"id":"japan_act","term":"麻薬及び向精神薬取締法","kind":"domestic_law"},
+    {"id":"usa_csa","term":"Controlled Substances Act","kind":"domestic_law"},
+    {"id":"obligation","term":"条約遵守義務","kind":"legal_concept"},
+    {"id":"oversight","term":"監視・対話・是正要請","kind":"legal_process"},
+    {"id":"article14","term":"1961年条約第14条の措置","kind":"legal_process"},
+    {"id":"trade_recommendation","term":"麻薬の輸出入停止の勧告","kind":"potential_measure"}
+  ],
+
+  "relations": [
+    {"subject":"plant","predicate":"has_defined_part","object":"cannabis"},
+    {"subject":"plant","predicate":"source_of","object":"resin"},
+    {"subject":"plant","predicate":"may_contain","object":"delta9"},
+    {"subject":"thc","predicate":"includes","object":"delta9"},
+    {"subject":"thc","predicate":"includes","object":"other6"},
+    {"subject":"t1961","predicate":"regulates","object":"cannabis"},
+    {"subject":"t1961","predicate":"regulates","object":"resin"},
+    {"subject":"cannabis","predicate":"listed_under","object":"s1961i"},
+    {"subject":"resin","predicate":"listed_under","object":"s1961i"},
+    {"subject":"delta9","predicate":"listed_under","object":"s1971ii"},
+    {"subject":"other6","predicate":"listed_under","object":"s1971i"},
+    {"subject":"who","predicate":"scientifically_advises","object":"cnd"},
+    {"subject":"incb","predicate":"performs","object":"oversight"},
+    {"subject":"t1961","predicate":"creates","object":"obligation"},
+    {"subject":"t1971","predicate":"creates","object":"obligation"},
+    {"subject":"t1961","predicate":"provides","object":"article14"},
+    {"subject":"article14","predicate":"may_result_in","object":"trade_recommendation","qualification":"所定の要件・手続に基づく勧告。直接の強制命令ではない"},
+    {"subject":"canada","predicate":"enacted","object":"canada_act"},
+    {"subject":"germany","predicate":"enacted","object":"germany_act"},
+    {"subject":"japan","predicate":"enacted","object":"japan_act"},
+    {"subject":"usa","predicate":"enacted","object":"usa_csa"}
+  ],
+
+  "schedule_history": [
+    {"year":1991,"scope":"Δ9-THC","treaty":"1971","from":"Schedule I","to":"Schedule II"},
+    {"date":"2020-12-02","scope":"大麻・大麻樹脂","treaty":"1961","from":"Schedule I + IV","to":"Schedule I","note":"Schedule IVから削除。Iは維持"},
+    {"date":"2020-12-02","scope":"Δ9-THC","treaty":"1971","result":"移管提案は成立せず。Schedule IIを維持"}
+  ],
+
+  "jurisdiction_notes": [
+    {"jurisdiction":"Canada","law":"Cannabis Act","adult_nonmedical_cannabis":"条件付きで合法","treaty_alignment":"INCBは国際条約との不整合を指摘"},
+    {"jurisdiction":"Germany","law":"KCanG","adult_nonmedical_cannabis":"所持・自家栽培・非営利栽培協会を一定範囲で認める","treaty_alignment":"INCBは条約との不整合を指摘"},
+    {"jurisdiction":"Japan","law":"麻薬及び向精神薬取締法等","adult_nonmedical_cannabis":"禁止"},
+    {"jurisdiction":"USA","law":"Controlled Substances Act","adult_nonmedical_cannabis":"州法と連邦法を区別する必要あり"}
+  ],
+
+  "legal_effect": {
+    "binding_obligation":"条約は締約国に対し国際法上の遵守義務を課す",
+    "domestic_law":"国内の合法化は条約上の義務を自動消滅させないが、条約が国内法を自動無効化するわけでもない",
+    "monitoring":"INCBは監視・対話・是正要請等を行う",
+    "article_14":"条件を満たす場合、INCBは薬物の輸出入停止を他の締約国に勧告し得る",
+    "sanctions_against_canada_germany":{"status":"not_verified","note":"合法化を理由とする具体的制裁の発動は本整理では確認されていない。不存在を証明するものではない"}
+  },
+
+  "sources": [
+    {"title":"1961 Single Convention","url":"https://www.incb.org/incb/en/narcotic-drugs/1961-convention.html"},
+    {"title":"1971 Psychotropic Convention","url":"https://www.incb.org/incb/en/psychotropics/1971-convention.html"},
+    {"title":"INCB Green List","url":"https://www.incb.org/incb/en/psychotropics/green-list.html"},
+    {"title":"Canada Cannabis Act","url":"https://laws-lois.justice.gc.ca/eng/acts/C-24.5/"},
+    {"title":"Germany KCanG","url":"https://www.gesetze-im-internet.de/kcang/"},
+    {"title":"Vienna Convention on the Law of Treaties","url":"https://legal.un.org/ilc/texts/instruments/english/conventions/1_1_1969.pdf"}
+  ],
+
+  "caveats": [
+    "条約ごとにSchedule番号の意味は異なる",
+    "物質の化学的分類と法的定義は別軸",
+    "各国の合法化範囲は異なる",
+    "個別製品の適法性を判定するデータではない"
+  ]
+}

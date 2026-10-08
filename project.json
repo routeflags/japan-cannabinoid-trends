@@ -434,6 +434,24 @@
     "lastUpdated": "2026-10-09",
     "regulatoryBasis": "厚生労働省 統制物質一覧（2024-12-12時点）",
     "sourceUrl": "https://www.ncd.mhlw.go.jp/dl_data/keitai/cotrolled_substances_list20241212%20.pdf",
+    "knowledgeGraph": "metadata/taxonomy/thc-regulatory-knowledge-graph.json",
+    "internationalTreatyStatus": {
+      "delta9THC": {
+        "treaty": "1971年向精神薬条約",
+        "schedule": "Schedule II",
+        "history": "1991年に Schedule I から Schedule II へ変更"
+      },
+      "other6Isomers": {
+        "treaty": "1971年向精神薬条約",
+        "schedule": "Schedule I",
+        "members": ["Δ6a(7)-THC", "Δ6a(10a)-THC", "Δ7-THC", "Δ8-THC", "Δ9(11)-THC", "Δ10-THC"]
+      },
+      "cannabisResin": {
+        "treaty": "1961年麻薬単一条約",
+        "schedule": "Schedule I",
+        "history": "2020-12-02 に Schedule IV から削除。Schedule I は維持"
+      }
+    },
     "recommendedPhrasing": "THCの主要な二重結合位置異性体は7分類あり、立体異性体を区別するとWHOの整理では計30種類となる。",
     "limitationNote": "この30種類はWHOが対象としたTHC異性体の内訳であり、同じ分子式を持つあらゆる構造異性体を含む総数という意味ではない。",
     "classificationSystem": {
