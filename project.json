@@ -430,6 +430,93 @@
     }
   },
 
+  "thcIsomers": {
+    "lastUpdated": "2026-10-09",
+    "regulatoryBasis": "厚生労働省: 国内で規制されるTHC異性体7種類",
+    "regulatedIsomers": ["Δ6a(7)", "Δ6a(10a)", "Δ7", "Δ8", "Δ9", "Δ9(11)", "Δ10"],
+    "unconfirmedIsomers": ["Δ5", "Δ6"],
+    "nomenclatureWarning": "Δ6-THCは旧命名法でΔ8-THCを指す場合あり。CAS番号での識別必須。",
+    "identificationMethod": {
+      "required": ["casNumber", "iupacName", "nomenclature"],
+      "recommended": ["structuralFormula", "commonName"]
+    },
+
+    "isomers": {
+      "Δ5-THC": {
+        "japaneseName": "デルタ5-THC",
+        "regulation": "個別確認要",
+        "casNumber": null,
+        "iupacName": null,
+        "commonName": "Delta-5-THC",
+        "notes": "米国カリフォルニア州の規制リストに記載。日本法での扱いは未確認。"
+      },
+      "Δ6-THC": {
+        "japaneseName": "デルタ6-THC",
+        "regulation": "個別確認要",
+        "casNumber": null,
+        "iupacName": null,
+        "commonName": "Delta-6-THC",
+        "notes": "命名法に注意。旧命名法ではΔ8-THCを指す場合あり。"
+      },
+      "Δ6a(7)-THC": {
+        "japaneseName": "デルタ6a(7)-THC",
+        "regulation": "規制対象",
+        "casNumber": null,
+        "iupacName": null,
+        "commonName": "Delta-6a(7)-THC",
+        "notes": "厚生労働省指定の7異性体の一つ"
+      },
+      "Δ6a(10a)-THC": {
+        "japaneseName": "デルタ6a(10a)-THC",
+        "regulation": "規制対象",
+        "casNumber": null,
+        "iupacName": null,
+        "commonName": "Delta-6a(10a)-THC",
+        "notes": "厚生労働省指定の7異性体の一つ"
+      },
+      "Δ7-THC": {
+        "japaneseName": "デルタ7-THC",
+        "regulation": "規制対象",
+        "casNumber": null,
+        "iupacName": null,
+        "commonName": "Delta-7-THC",
+        "notes": "厚生労働省指定の7異性体の一つ"
+      },
+      "Δ8-THC": {
+        "japaneseName": "デルタ8-テトラヒドロカンナビノール",
+        "regulation": "麻薬",
+        "casNumber": "5957-75-7",
+        "iupacName": "(−)-trans-Δ8-THC",
+        "commonName": "Delta-8-THC",
+        "notes": "CBDからの化学変換で製造。Δ9より弱い精神活性。Δ8-THC-O（アセテート体）とは別化合物。"
+      },
+      "Δ9-THC": {
+        "japaneseName": "デルタ9-テトラヒドロカンナビノール",
+        "regulation": "麻薬",
+        "casNumber": "1972-08-3",
+        "iupacName": "(−)-trans-Δ9-THC",
+        "commonName": "Dronabinol",
+        "notes": "大麻の主要な精神活性成分"
+      },
+      "Δ9(11)-THC": {
+        "japaneseName": "デルタ9(11)-THC",
+        "regulation": "規制対象",
+        "casNumber": null,
+        "iupacName": null,
+        "commonName": "Delta-9(11)-THC",
+        "notes": "厚生労働省指定の7異性体の一つ"
+      },
+      "Δ10-THC": {
+        "japaneseName": "デルタ10-テトラヒドロカンナビノール",
+        "regulation": "規制対象",
+        "casNumber": "50554-36-6",
+        "iupacName": "Δ10-THC",
+        "commonName": "Delta-10-THC",
+        "notes": "厚生労働省指定の7異性体の一つ"
+      }
+    }
+  },
+
   "dataCoverage": {
     "lastAudit": "2026-10-09",
     "auditNote": "X/Twitter data is limited to recent tweets due to Apify actor constraints. Historical date range filtering is not supported.",
