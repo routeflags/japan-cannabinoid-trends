@@ -1,0 +1,142 @@
+{
+  "control": {
+    "n": 100,
+    "unique_users": 19,
+    "total_likes": 428,
+    "avg_likes": 4.3,
+    "median_likes": 2,
+    "max_likes": 34,
+    "total_retweets": 76,
+    "avg_retweets": 0.8,
+    "total_replies": 39,
+    "avg_replies": 0.4
+  },
+  "compounds": {
+    "HHC": {
+      "regulation_date": "2022-03-17",
+      "pre_period": "2021-09 ~ 2022-03",
+      "post_period": "2022-04 ~ 2022-09",
+      "pre_metrics": {
+        "n": 100,
+        "unique_users": 94,
+        "total_likes": 1440,
+        "avg_likes": 14.4,
+        "median_likes": 3,
+        "max_likes": 260,
+        "total_retweets": 148,
+        "avg_retweets": 1.5,
+        "total_replies": 25,
+        "avg_replies": 0.2
+      },
+      "post_metrics": {
+        "n": 100,
+        "unique_users": 66,
+        "total_likes": 907,
+        "avg_likes": 9.1,
+        "median_likes": 6,
+        "max_likes": 52,
+        "total_retweets": 174,
+        "avg_retweets": 1.7,
+        "total_replies": 76,
+        "avg_replies": 0.8
+      },
+      "changes": {
+        "n": "+0.0%",
+        "unique_users": "-29.8%",
+        "total_likes": "-37.0%",
+        "avg_likes": "-36.8%",
+        "total_retweets": "+17.6%",
+        "avg_retweets": "+13.3%"
+      },
+      "control_comparison": {
+        "compound_post_avg_likes": 9.1,
+        "control_avg_likes": 4.3,
+        "ratio": 2.12
+      }
+    },
+    "THC-O": {
+      "regulation_date": "2023-03-20",
+      "pre_period": "2022-09 ~ 2023-03",
+      "post_period": "2023-04 ~ 2023-09",
+      "pre_metrics": {
+        "n": 100,
+        "unique_users": 65,
+        "total_likes": 3831,
+        "avg_likes": 38.3,
+        "median_likes": 4,
+        "max_likes": 2538,
+        "total_retweets": 789,
+        "avg_retweets": 7.9,
+        "total_replies": 100,
+        "avg_replies": 1.0
+      },
+      "post_metrics": {
+        "n": 76,
+        "unique_users": 45,
+        "total_likes": 1993,
+        "avg_likes": 26.2,
+        "median_likes": 3,
+        "max_likes": 386,
+        "total_retweets": 640,
+        "avg_retweets": 8.4,
+        "total_replies": 165,
+        "avg_replies": 2.2
+      },
+      "changes": {
+        "n": "-24.0%",
+        "unique_users": "-30.8%",
+        "total_likes": "-48.0%",
+        "avg_likes": "-31.6%",
+        "total_retweets": "-18.9%",
+        "avg_retweets": "+6.3%"
+      },
+      "control_comparison": {
+        "compound_post_avg_likes": 26.2,
+        "control_avg_likes": 4.3,
+        "ratio": 6.09
+      }
+    },
+    "THCH": {
+      "regulation_date": "2023-08-04",
+      "pre_period": "2023-02 ~ 2023-08",
+      "post_period": "2023-09 ~ 2024-02",
+      "pre_metrics": {
+        "n": 100,
+        "unique_users": 74,
+        "total_likes": 1117,
+        "avg_likes": 11.2,
+        "median_likes": 4,
+        "max_likes": 138,
+        "total_retweets": 137,
+        "avg_retweets": 1.4,
+        "total_replies": 22,
+        "avg_replies": 0.2
+      },
+      "post_metrics": {
+        "n": 100,
+        "unique_users": 84,
+        "total_likes": 4343,
+        "avg_likes": 43.4,
+        "median_likes": 3,
+        "max_likes": 2166,
+        "total_retweets": 496,
+        "avg_retweets": 5.0,
+        "total_replies": 219,
+        "avg_replies": 2.2
+      },
+      "changes": {
+        "n": "+0.0%",
+        "unique_users": "+13.5%",
+        "total_likes": "+288.8%",
+        "avg_likes": "+287.5%",
+        "total_retweets": "+262.0%",
+        "avg_retweets": "+257.1%"
+      },
+      "control_comparison": {
+        "compound_post_avg_likes": 43.4,
+        "control_avg_likes": 4.3,
+        "ratio": 10.09
+      }
+    }
+  }
+}
