@@ -76,6 +76,41 @@ japan-cannabinoid-trends/
 └── metadata/
 ```
 
+### JSON Files
+
+| File | Purpose |
+|------|---------|
+| `project.json` | Project configuration: scope, data sources, query design, data coverage summary |
+| `metadata/datapackage.json` | Frictionless Data Package specification: schema, version, citation |
+| `metadata/taxonomy/thc-regulatory-knowledge-graph.json` | THC isomer regulatory knowledge graph: nodes, relations, nomenclature, treaty status |
+| `metadata/taxonomy/content-taxonomy.skos.jsonld` | W3C SKOS content classification taxonomy |
+| `metadata/taxonomy/compound-taxonomy.skos.jsonld` | W3C SKOS compound classification taxonomy |
+| `metadata/taxonomy/iptc-mapping.yaml` | IPTC Media Topics mapping |
+| `metadata/taxonomy/classification-rules.yaml` | Content classification rules |
+| `metadata/schema/socialmediaposting.jsonld` | Schema.org SocialMediaPosting mapping |
+
+#### project.json
+
+Main project configuration file. Contains:
+
+- **Project metadata**: ID, name, status
+- **Research scope**: Geographic, topical, and population definitions
+- **Data sources**: X, YouTube, Instagram, TikTok, Google Trends, etc.
+- **Query design**: Standardized queries for each compound × media type
+- **THC isomers**: Quick reference (details in knowledge graph)
+- **Data coverage**: Summary of compound × media coverage
+
+#### thc-regulatory-knowledge-graph.json
+
+Comprehensive knowledge graph for THC isomer regulation. Contains:
+
+- **Nodes**: Chemical compounds, treaties, schedules, institutions, jurisdictions
+- **Relations**: Regulatory relationships between entities
+- **THC isomer details**: 7 positional isomers, 30 stereoisomers, nomenclature mapping
+- **Natural occurrence**: Confirmed vs unconfirmed in cannabis
+- **Treaty status**: 1961/1971 Convention schedules
+- **International notes**: Canada, Germany, Japan, USA regulatory status
+
 ### Data lifecycle
 
 ```text

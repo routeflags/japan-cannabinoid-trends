@@ -3,7 +3,7 @@
   "as_of": "2026-10-09",
   "schema": "knowledge-graph-v1",
   "created": "2026-10-09",
-  "source": "WHO, INCB, UNODC, 各国法令",
+  "source": "WHO, INCB, UNODC, EUDA, SAMHSA, 各国法令",
 
   "nodes": [
     {"id":"plant","term":"大麻草","kind":"plant","definition":"Cannabis属の植物"},
@@ -11,7 +11,14 @@
     {"id":"resin","term":"大麻樹脂","kind":"material","definition":"大麻草から分離された樹脂"},
     {"id":"thc","term":"THC位置異性体","kind":"chemical_group"},
     {"id":"delta9","term":"Δ9-THC","kind":"chemical"},
-    {"id":"other6","term":"その他6分類のTHC位置異性体","kind":"chemical_group","members":["Δ6a(7)-THC","Δ6a(10a)-THC","Δ7-THC","Δ8-THC","Δ9(11)-THC","Δ10-THC"]},
+    {"id":"delta6a7","term":"Δ6a(7)-THC","kind":"chemical"},
+    {"id":"delta6a10a","term":"Δ6a(10a)-THC","kind":"chemical"},
+    {"id":"delta7","term":"Δ7-THC","kind":"chemical"},
+    {"id":"delta8","term":"Δ8-THC","kind":"chemical"},
+    {"id":"delta911","term":"Δ9(11)-THC","kind":"chemical"},
+    {"id":"delta10","term":"Δ10-THC","kind":"chemical"},
+    {"id":"delta8thco","term":"Δ8-THCO","kind":"chemical"},
+    {"id":"delta9thco","term":"Δ9-THCO","kind":"chemical"},
     {"id":"t1961","term":"1961年麻薬単一条約","kind":"treaty"},
     {"id":"t1971","term":"1971年向精神薬条約","kind":"treaty"},
     {"id":"s1961i","term":"1961年条約 Schedule I","kind":"schedule"},
@@ -39,14 +46,25 @@
     {"subject":"plant","predicate":"has_defined_part","object":"cannabis"},
     {"subject":"plant","predicate":"source_of","object":"resin"},
     {"subject":"plant","predicate":"may_contain","object":"delta9"},
+    {"subject":"plant","predicate":"may_contain","object":"delta8"},
     {"subject":"thc","predicate":"includes","object":"delta9"},
-    {"subject":"thc","predicate":"includes","object":"other6"},
+    {"subject":"thc","predicate":"includes","object":"delta6a7"},
+    {"subject":"thc","predicate":"includes","object":"delta6a10a"},
+    {"subject":"thc","predicate":"includes","object":"delta7"},
+    {"subject":"thc","predicate":"includes","object":"delta8"},
+    {"subject":"thc","predicate":"includes","object":"delta911"},
+    {"subject":"thc","predicate":"includes","object":"delta10"},
     {"subject":"t1961","predicate":"regulates","object":"cannabis"},
     {"subject":"t1961","predicate":"regulates","object":"resin"},
     {"subject":"cannabis","predicate":"listed_under","object":"s1961i"},
     {"subject":"resin","predicate":"listed_under","object":"s1961i"},
     {"subject":"delta9","predicate":"listed_under","object":"s1971ii"},
-    {"subject":"other6","predicate":"listed_under","object":"s1971i"},
+    {"subject":"delta6a7","predicate":"listed_under","object":"s1971i"},
+    {"subject":"delta6a10a","predicate":"listed_under","object":"s1971i"},
+    {"subject":"delta7","predicate":"listed_under","object":"s1971i"},
+    {"subject":"delta8","predicate":"listed_under","object":"s1971i"},
+    {"subject":"delta911","predicate":"listed_under","object":"s1971i"},
+    {"subject":"delta10","predicate":"listed_under","object":"s1971i"},
     {"subject":"who","predicate":"scientifically_advises","object":"cnd"},
     {"subject":"incb","predicate":"performs","object":"oversight"},
     {"subject":"t1961","predicate":"creates","object":"obligation"},
@@ -58,6 +76,178 @@
     {"subject":"japan","predicate":"enacted","object":"japan_act"},
     {"subject":"usa","predicate":"enacted","object":"usa_csa"}
   ],
+
+  "thcIsomers": {
+    "classificationSystem": {
+      "tier1": {
+        "name": "位置異性体",
+        "count": 7,
+        "basis": "二重結合の位置",
+        "usage": "SNS・Google Trendsなどの検索語を分類"
+      },
+      "tier2": {
+        "name": "立体異性体",
+        "count": 30,
+        "basis": "立体配置まで区別",
+        "usage": "化学構造・CAS番号・規制対象の精密な識別",
+        "note": "7分類の下に合計30種類の立体異性体がある。7+30=37種類ではない。"
+      }
+    },
+    "whoSource": "WHO『Isomers of THC』Annex 1（41～48ページ）",
+    "recommendedPhrasing": "THCの主要な二重結合位置異性体は7分類あり、立体異性体を区別するとWHOの整理では計30種類となる。",
+    "limitationNote": "この30種類はWHOが対象としたTHC異性体の内訳であり、同じ分子式を持つあらゆる構造異性体を含む総数という意味ではない。",
+
+    "stereoisomerBreakdown": {
+      "Δ6a(10a)-THC": 2,
+      "Δ6a(7)-THC": 4,
+      "Δ7-THC": 8,
+      "Δ8-THC": 4,
+      "Δ9-THC": 4,
+      "Δ10-THC": 4,
+      "Δ9(11)-THC": 4,
+      "total": 30
+    },
+
+    "naturalOccurrence": {
+      "confirmed": ["Δ8-THC", "Δ9-THC"],
+      "unconfirmed": ["Δ6a(7)-THC", "Δ6a(10a)-THC", "Δ7-THC", "Δ9(11)-THC", "Δ10-THC"],
+      "note": "「未確認」は天然に絶対存在しないという意味ではなく、十分な分析証拠を確認できなかったという意味。",
+      "source": "EUDA、WHO、米国SAMHSA、および2024年の総説"
+    },
+
+    "productionTypes": {
+      "natural": "天然カンナビノイド：大麻草に天然に存在することが確認された物質",
+      "semiSynthetic": "半合成カンナビノイド：天然成分を原料として化学変換した物質",
+      "fullySynthetic": "全合成カンナビノイド：化学合成によって製造された物質",
+      "note": "同じΔ8-THCでも、大麻草から直接得られたものと、CBDを化学変換して製造されたものがある。化合物の名称だけでは製造由来を判断できない。"
+    },
+
+    "nomenclatureSystems": {
+      "old": "モノテルペン式（Monoterpenoid）",
+      "current": "ジベンゾピラン式（Dibenzopyran）"
+    },
+
+    "nomenclatureMapping": {
+      "Δ1-THC": {"current": "Δ9-THC", "confidence": "confirmed", "note": "同一の位置異性体"},
+      "Δ2-THC": {"current": "Δ10-THC", "confidence": "needs-structural-confirmation", "note": "構造による対応確認が必要"},
+      "Δ3-THC": {"current": "Δ6a(10a)-THC", "confidence": "confirmed", "note": "同一の位置異性体"},
+      "Δ4-THC": {"current": "Δ6a(7)-THC", "confidence": "confirmed", "note": "同一の位置異性体"},
+      "Δ5-THC": {"current": "Δ7-THC", "confidence": "examples-exist-needs-confirmation", "note": "対応例あり。構造確認が必要"},
+      "Δ6-THC": {"current": "Δ8-THC", "confidence": "confirmed", "note": "同一の位置異性体"},
+      "Δ1(7)-THC": {"current": "Δ9(11)-THC", "confidence": "confirmed", "note": "慣用名: Δ11-THC, exo-THC"}
+    },
+
+    "isomers": {
+      "Δ6a(7)-THC": {
+        "canonicalName": "Δ6a(7)-THC",
+        "japaneseName": "デルタ6a(7)-THC",
+        "aliases": ["Δ4-THC"],
+        "regulation": "麻薬",
+        "regulationStatus": "narcotic",
+        "naturalOccurrence": "unconfirmed",
+        "casNumber": null,
+        "iupacName": null,
+        "commonName": "Delta-6a(7)-THC",
+        "notes": "厚労省統制物質一覧に記載。旧式名称: Δ4-THC（確認済み）。天然存在未確認、化学合成例あり。"
+      },
+      "Δ6a(10a)-THC": {
+        "canonicalName": "Δ6a(10a)-THC",
+        "japaneseName": "デルタ6a(10a)-THC",
+        "aliases": ["Δ3-THC"],
+        "regulation": "麻薬",
+        "regulationStatus": "narcotic",
+        "naturalOccurrence": "unconfirmed",
+        "casNumber": null,
+        "iupacName": null,
+        "commonName": "Delta-6a(10a)-THC",
+        "notes": "厚労省統制物質一覧に記載。旧式名称: Δ3-THC（確認済み）。天然存在未確認、化学合成例あり。"
+      },
+      "Δ7-THC": {
+        "canonicalName": "Δ7-THC",
+        "japaneseName": "デルタ7-THC",
+        "aliases": ["Δ5-THC"],
+        "regulation": "麻薬",
+        "regulationStatus": "narcotic",
+        "naturalOccurrence": "unconfirmed",
+        "casNumber": null,
+        "iupacName": null,
+        "commonName": "Delta-7-THC",
+        "notes": "厚労省統制物質一覧に記載。旧式名称: Δ5-THC（対応例あり、構造確認要）。天然産出を断定できない。"
+      },
+      "Δ8-THC": {
+        "canonicalName": "Δ8-THC",
+        "japaneseName": "デルタ8-テトラヒドロカンナビノール",
+        "aliases": ["Δ6-THC"],
+        "regulation": "麻薬",
+        "regulationStatus": "narcotic",
+        "naturalOccurrence": "confirmed",
+        "casNumber": "5957-75-7",
+        "iupacName": "(−)-trans-Δ8-THC",
+        "commonName": "Delta-8-THC",
+        "notes": "CBDからの化学変換で製造。Δ9より弱い精神活性。旧式名称: Δ6-THC（確認済み）。天然では微量。"
+      },
+      "Δ8-THCO": {
+        "canonicalName": "Δ8-THCO",
+        "japaneseName": "デルタ8-THCアセテート",
+        "aliases": ["Δ8-THC-O-Acetate"],
+        "regulation": "麻薬",
+        "regulationStatus": "narcotic",
+        "naturalOccurrence": "not-natural",
+        "casNumber": null,
+        "iupacName": null,
+        "commonName": "Delta-8-THC-O-Acetate",
+        "notes": "Δ8-THCのアセテート体。別化合物として規制。全合成カンナビノイド。"
+      },
+      "Δ9-THC": {
+        "canonicalName": "Δ9-THC",
+        "japaneseName": "デルタ9-テトラヒドロカンナビノール",
+        "aliases": ["Δ1-THC"],
+        "regulation": "麻薬",
+        "regulationStatus": "narcotic",
+        "naturalOccurrence": "confirmed",
+        "casNumber": "1972-08-3",
+        "iupacName": "(−)-trans-Δ9-THC",
+        "commonName": "Dronabinol",
+        "notes": "大麻の主要な精神活性成分。旧式名称: Δ1-THC（確認済み）。天然カンナビノイド。"
+      },
+      "Δ9(11)-THC": {
+        "canonicalName": "Δ9(11)-THC",
+        "japaneseName": "デルタ9(11)-THC",
+        "aliases": ["Δ1(7)-THC", "Δ11-THC", "exo-THC"],
+        "regulation": "麻薬",
+        "regulationStatus": "narcotic",
+        "naturalOccurrence": "unconfirmed",
+        "casNumber": null,
+        "iupacName": null,
+        "commonName": "Delta-9(11)-THC",
+        "notes": "厚労省統制物質一覧に記載。旧式名称: Δ1(7)-THC。慣用名: Δ11-THC, exo-THC。化学合成・変換で得られる。"
+      },
+      "Δ9-THCO": {
+        "canonicalName": "Δ9-THCO",
+        "japaneseName": "デルタ9-THCアセテート",
+        "aliases": ["Δ9-THC-O-Acetate"],
+        "regulation": "麻薬",
+        "regulationStatus": "narcotic",
+        "naturalOccurrence": "not-natural",
+        "casNumber": null,
+        "iupacName": null,
+        "commonName": "Delta-9-THC-O-Acetate",
+        "notes": "Δ9-THCのアセテート体。別化合物として規制。全合成カンナビノイド。"
+      },
+      "Δ10-THC": {
+        "canonicalName": "Δ10-THC",
+        "japaneseName": "デルタ10-テトラヒドロカンナビノール",
+        "aliases": ["Δ2-THC"],
+        "regulation": "麻薬",
+        "regulationStatus": "narcotic",
+        "naturalOccurrence": "unconfirmed",
+        "casNumber": "50554-36-6",
+        "iupacName": "Δ10-THC",
+        "commonName": "Delta-10-THC",
+        "notes": "厚労省統制物質一覧に記載。旧式名称: Δ2-THC（構造確認要）。化学合成・変換で得られる。"
+      }
+    }
+  },
 
   "schedule_history": [
     {"year":1991,"scope":"Δ9-THC","treaty":"1971","from":"Schedule I","to":"Schedule II"},
@@ -80,13 +270,19 @@
     "sanctions_against_canada_germany":{"status":"not_verified","note":"合法化を理由とする具体的制裁の発動は本整理では確認されていない。不存在を証明するものではない"}
   },
 
+  "regulatoryBasis": "厚生労働省 統制物質一覧（2024-12-12時点）",
+  "regulatorySourceUrl": "https://www.ncd.mhlw.go.jp/dl_data/keitai/cotrolled_substances_list20241212%20.pdf",
+
   "sources": [
     {"title":"1961 Single Convention","url":"https://www.incb.org/incb/en/narcotic-drugs/1961-convention.html"},
     {"title":"1971 Psychotropic Convention","url":"https://www.incb.org/incb/en/psychotropics/1971-convention.html"},
     {"title":"INCB Green List","url":"https://www.incb.org/incb/en/psychotropics/green-list.html"},
     {"title":"Canada Cannabis Act","url":"https://laws-lois.justice.gc.ca/eng/acts/C-24.5/"},
     {"title":"Germany KCanG","url":"https://www.gesetze-im-internet.de/kcang/"},
-    {"title":"Vienna Convention on the Law of Treaties","url":"https://legal.un.org/ilc/texts/instruments/english/conventions/1_1_1969.pdf"}
+    {"title":"Vienna Convention on the Law of Treaties","url":"https://legal.un.org/ilc/texts/instruments/english/conventions/1_1_1969.pdf"},
+    {"title":"WHO Isomers of THC","url":"https://cdn.who.int"},
+    {"title":"MHLW Controlled Substances List","url":"https://www.ncd.mhlw.go.jp/dl_data/keitai/cotrolled_substances_list20241212%20.pdf"},
+    {"title":"EUDA Cannabis drug profile","url":"https://www.euda.europa.eu"}
   ],
 
   "caveats": [
