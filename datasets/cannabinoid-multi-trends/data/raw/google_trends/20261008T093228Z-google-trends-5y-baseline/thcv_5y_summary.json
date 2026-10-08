@@ -1,0 +1,13 @@
+{
+  "compound": "THCV",
+  "geo": "JP",
+  "timeframe": "today 5-y",
+  "collected_at": "2026-10-06",
+  "data_points": 261,
+  "first_value": 0,
+  "last_value": 0,
+  "peak_value": 100,
+  "peak_date": "2023-09-03 to 2023-09-09",
+  "avg_5y": 5.2,
+  "note": "5-year weekly data. Intermittent signal. Peak Sep 2023. No data since Dec 2023 (below detection threshold)."
+}
