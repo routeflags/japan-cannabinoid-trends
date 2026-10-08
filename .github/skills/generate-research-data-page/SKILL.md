@@ -96,6 +96,20 @@ CSS、インラインスタイル、ヘッダー、フッター、記事構造�
 | 期間 | 収集期間 | ✅ |
 | 言語フィルタ | lang:ja 等 | ✅ |
 
+**必須テーブル構成:**
+
+```html
+<!-- コンテンツ分類結果 -->
+<h3>コンテンツ分類結果（信頼区間付き）</h3>
+<table>
+  <tr><th>カテゴリ</th><th>件数</th><th>比率</th><th>95% CI</th></tr>
+  <tr><td>製品宣伝・販売</td><td>XX</td><td>XX%</td><td>[XX%, XX%]</td></tr>
+  <tr><td>製品レビュー</td><td>XX</td><td>XX%</td><td>[XX%, XX%]</td></tr>
+  <tr><td>会話・引用</td><td>XX</td><td>XX%</td><td>[XX%, XX%]</td></tr>
+  <tr><td>その他</td><td>XX</td><td>XX%</td><td>[XX%, XX%]</td></tr>
+</table>
+```
+
 ### Google Trends セクション要件
 
 | 要件 | 内容 | 必須 |
