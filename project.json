@@ -280,6 +280,7 @@
     "compounds": {
       "CBD": {
         "japaneseName": "カンナビジオール",
+        "aliases": [],
         "queries": {
           "x": "CBD リキッド lang:ja",
           "youtube": "CBD リキッド",
@@ -289,6 +290,7 @@
       },
       "THC": {
         "japaneseName": "テトラヒドロカンナビノール",
+        "aliases": ["Δ9-THC"],
         "queries": {
           "x": "THC リキッド lang:ja",
           "youtube": "THC リキッド",
@@ -298,6 +300,7 @@
       },
       "CBG": {
         "japaneseName": "カンナビゲロール",
+        "aliases": [],
         "queries": {
           "x": "CBG リキッド lang:ja",
           "youtube": "CBG リキッド",
@@ -307,6 +310,7 @@
       },
       "CBN": {
         "japaneseName": "カンナビノール",
+        "aliases": [],
         "queries": {
           "x": "CBN リキッド lang:ja",
           "youtube": "CBN リキッド",
@@ -316,6 +320,7 @@
       },
       "THCV": {
         "japaneseName": "テトラヒドロカンナビバリン",
+        "aliases": [],
         "queries": {
           "x": "THCV リキッド lang:ja",
           "youtube": "THCV リキッド",
@@ -325,6 +330,7 @@
       },
       "THCH": {
         "japaneseName": "テトラヒドロカンナビクロヘキソール",
+        "aliases": [],
         "queries": {
           "x": "THCH リキッド lang:ja",
           "youtube": "THCH リキッド",
@@ -334,6 +340,7 @@
       },
       "HHC": {
         "japaneseName": "ヘキサヒドロカンナビノール",
+        "aliases": [],
         "queries": {
           "x": "HHC リキッド lang:ja",
           "youtube": "HHC リキッド",
@@ -343,6 +350,7 @@
       },
       "THC-O": {
         "japaneseName": "THC-アセテート",
+        "aliases": ["THCO", "THC-O-Acetate"],
         "queries": {
           "x": "THC-O リキッド lang:ja",
           "youtube": "THC-O リキッド",
@@ -352,6 +360,7 @@
       },
       "H4CBH": {
         "japaneseName": "H4CBH",
+        "aliases": [],
         "queries": {
           "x": "H4CBH リキッド lang:ja",
           "youtube": "H4CBH リキッド",
@@ -361,6 +370,7 @@
       },
       "HHBD": {
         "japaneseName": "HHBD",
+        "aliases": [],
         "queries": {
           "x": "HHBD リキッド lang:ja",
           "youtube": "HHBD リキッド",
@@ -370,6 +380,7 @@
       },
       "HHCH": {
         "japaneseName": "HHCH",
+        "aliases": [],
         "queries": {
           "x": "HHCH リキッド lang:ja",
           "youtube": "HHCH リキッド",
@@ -379,6 +390,7 @@
       },
       "CRDP": {
         "japaneseName": "CRDP",
+        "aliases": [],
         "queries": {
           "x": "CRDP リキッド lang:ja",
           "youtube": "CRDP リキッド",
@@ -388,6 +400,7 @@
       },
       "CRDH": {
         "japaneseName": "CRDH",
+        "aliases": [],
         "queries": {
           "x": "CRDH リキッド lang:ja",
           "youtube": "CRDH リキッド",
