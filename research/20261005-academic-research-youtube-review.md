@@ -60,7 +60,7 @@ Sub-questions:
 - `research/20261004-cbx-rikiddo-youtube-12months-report.md`
 - `datasets/cannabinoid-multi-trends/methodology.md`
 - `datasets/cannabinoid-multi-trends/data/processed/collection-summary.md`
-- `datasets/cannabinoid-multi-trends/data/processed/early-warning-index-v1.csv`
+- `datasets/cannabinoid-multi-trends/data/processed/search-emergence-tracker-v1.csv`
 
 ---
 
@@ -559,7 +559,7 @@ research_documents_reviewed:
   - research/20261004-cbx-rikiddo-youtube-12months-report.md
   - datasets/cannabinoid-multi-trends/methodology.md
   - datasets/cannabinoid-multi-trends/data/processed/collection-summary.md
-  - datasets/cannabinoid-multi-trends/data/processed/early-warning-index-v1.csv
+  - datasets/cannabinoid-multi-trends/data/processed/search-emergence-tracker-v1.csv
 
 data_inspection:
   japanese_keywords: 40 files, all quota errors (429)
@@ -608,7 +608,7 @@ publication_decision: READY_WITH_MINOR_CHANGES
 13. CBX リキッド YouTube データ収集レポート（12ヶ月） — `research/20261004-cbx-rikiddo-youtube-12months-report.md`
 14. Methodology — `datasets/cannabinoid-multi-trends/methodology.md`
 15. Collection Summary — `datasets/cannabinoid-multi-trends/data/processed/collection-summary.md`
-16. Early Warning Index v1 — `datasets/cannabinoid-multi-trends/data/processed/early-warning-index-v1.csv`
+16. Japan Cannabinoid Search Emergence Tracker v1 — `datasets/cannabinoid-multi-trends/data/processed/search-emergence-tracker-v1.csv`
 
 ---
 

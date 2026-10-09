@@ -1,4 +1,4 @@
-# Citation Units — Japan Cannabinoid Early Warning Index v1
+# Citation Units — Japan Cannabinoid Search Emergence Tracker v1
 
 | 項目 | 内容 |
 |------|------|
@@ -6,19 +6,19 @@
 | **Date** | 2026-10-02 |
 | **Data Period** | 2021-09-26 to 2026-10-03 |
 | **Source** | Google Trends (JP) |
-| **Naming Convention** | JCEI-FXXX (Japan Cannabinoid Early Warning Index - Finding) |
+| **Naming Convention** | JCSET-FXXX (Japan Cannabinoid Search Emergence Tracker - Finding) |
 
 ---
 
 ## Finding ID Guide
 
-Findings are identified by `JCEI-F###` notation. This enables precise citation across dataset versions:
+Findings are identified by `JCSET-F###` notation. This enables precise citation across dataset versions:
 
-> Kato (2026), JCEI-F001
+> Kato (2026), JCSET-F001
 
 ---
 
-## JCEI-F001: HHCH Post-Regulation Decline
+## JCSET-F001: HHCH Post-Regulation Decline
 
 **Compound:** HHCH
 
@@ -45,7 +45,7 @@ Temporal association only. No causal relationship is inferred between regulation
 
 ---
 
-## JCEI-F002: CBN Regulation Timeline
+## JCSET-F002: CBN Regulation Timeline
 
 **Compound:** CBN
 
@@ -70,7 +70,7 @@ Regulatory timeline based on official MHLW sources.
 
 ---
 
-## JCEI-F003: H4CBH and HHBD Emergence Sequence
+## JCSET-F003: H4CBH and HHBD Emergence Sequence
 
 **Compounds:** H4CBH, HHBD
 
@@ -94,7 +94,7 @@ Emergence sequence based on first non-zero weeks in 5-year Google Trends data.
 
 ---
 
-## JCEI-F004: Regulated Compounds Summary
+## JCSET-F004: Regulated Compounds Summary
 
 **Scope:** All tracked compounds
 
@@ -121,7 +121,7 @@ Regulatory status based on MHLW official sources as of 2026-10-02.
 
 ---
 
-## JCEI-F005: New Compound Emergence Rate
+## JCSET-F005: New Compound Emergence Rate
 
 **Scope:** Emerging cohort
 
@@ -146,7 +146,7 @@ First-mention detection based on non-zero weeks in 5-year Google Trends data.
 
 ---
 
-## JCEI-F006: Regulatory Category Distribution
+## JCSET-F006: Regulatory Category Distribution
 
 **Scope:** All tracked compounds
 
@@ -170,7 +170,7 @@ Classification based on official Japanese legal sources.
 
 ---
 
-## JCEI-F007: Baseline vs Emerging Cohort
+## JCSET-F007: Baseline vs Emerging Cohort
 
 **Scope:** All tracked compounds
 
@@ -189,7 +189,7 @@ Compounds can be classified into baseline (pre-existing market presence) and eme
 **Interpretation:**
 Cohort classification based on first-mention timing relative to 2022-01-01 threshold.
 
-**Source URL:** https://github.com/routeflags/japan-cannabinoid-trends/blob/main/datasets/cannabinoid-multi-trends/data/processed/early-warning-index-v1.csv
+**Source URL:** https://github.com/routeflags/japan-cannabinoid-trends/blob/main/datasets/cannabinoid-multi-trends/data/processed/search-emergence-tracker-v1.csv
 
 ---
 
@@ -199,7 +199,7 @@ Cohort classification based on first-mention timing relative to 2022-01-01 thres
 > KATO, Kyoji. (2026). Japan Cannabinoid Emerging Compound Early Warning Index v1. Routeflags Co., Ltd. [Dataset]. https://github.com/routeflags/japan-cannabinoid-trends
 
 **Citing specific findings:**
-> Kato (2026), JCEI-F001 — HHCH post-regulation decline
+> Kato (2026), JCSET-F001 — HHCH post-regulation decline
 
 **BibTeX:**
 ```bibtex

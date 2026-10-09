@@ -5,12 +5,12 @@
 
 ---
 
-## OPP-001 — Japan Cannabinoid Emerging Compound Early Warning Index
+## OPP-001 — Japan Cannabinoid Search Emergence Tracker
 
 | Field | Value |
 |---|---|
 | **ID** | OPP-001 |
-| **TITLE** | Japan Cannabinoid Emerging Compound Early Warning Index (bilingual EN/JA) |
+| **TITLE** | Japan Cannabinoid Search Emergence Tracker (bilingual EN/JA) |
 | **PRIMARY_STAKEHOLDER** | Journalist / data journalist |
 | **SECONDARY_STAKEHOLDERS** | Policymaker, forensic toxicologist, academic (NPS/drug policy), harm-reduction NGO |
 | **QUESTION** | Which cannabinoid terms are newly appearing in Japanese public search attention, and how quickly are they peaking or fading? |
@@ -20,7 +20,7 @@
 | **METHOD** | Descriptive statistics + first-detection rule + persistence classification (share of observed weeks with value > 0 in trailing 12 months; explicit censoring for terms below Trends threshold). No causal claims. |
 | **OUTPUT** | 1) Machine-readable CSV/JSON; 2) English landing page with citation units; 3) quarterly refresh; 4) DOI via existing Zenodo pipeline. |
 | **UPDATE_FREQUENCY** | Quarterly |
-| **CITATION_REASON** | Journalists need "when did X appear in Japan" numbers; policymakers need early-warning framing; academics need structured JP NPS-adjacent series. Easy validation sentences. |
+| **CITATION_REASON** | Journalists need "when did X appear in Japan" numbers; policymakers need search-emergence framing; academics need structured JP NPS-adjacent series. Easy validation sentences. |
 | **SEO_VALUE** | MEDIUM — English compound+Japan queries underserved |
 | **CITATION_VALUE** | HIGH — originality + scarcity + media/policy utility |
 | **COST** | LOW — data already collected; primarily curation, English writeup, chart, method note |
@@ -143,7 +143,7 @@ PRIORITY ≈ Citation Value × Data Scarcity × Stakeholder Demand × Business V
 
 | Opp | Citation | Scarcity | Demand | Business | Feasibility | Verdict |
 |---|:---:|:---:|:---:|:---:|:---:|---|
-| OPP-001 Early Warning Index | HIGH | HIGH (EN/JP gap) | HIGH | MEDIUM | HIGH (data in hand) | **NOW** |
+| OPP-001 Japan Cannabinoid Search Emergence Tracker | HIGH | HIGH (EN/JP gap) | HIGH | MEDIUM | HIGH (data in hand) | **NOW** |
 | OPP-002 Transparency Survey | HIGH | HIGH | HIGH | HIGH | MEDIUM | **NEXT** (needs design + COI controls) |
 | OPP-003 Quarterly Brief | MED–HIGH | MED | HIGH | MED | HIGH | AFTER OPP-001 metrics locked |
 | OPP-004 Event Timing | MED–HIGH | HIGH | MED | MED | MED | 2027 research cycle |
