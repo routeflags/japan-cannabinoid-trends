@@ -174,8 +174,21 @@ collect_month 2026 7
 3. **推測を事実として扱わない** — 「0件」だから「ブロックされている」とは限らない
 4. **日付指定は `query` 内に書く** — Actor に専用パラメータはない
 
+## 日付フィルタが必要な場合
+
+**この Actor では `since:`/`until:` が機能しません。**
+
+日付フィルタが必要な場合は、別の Actor を使用してください：
+
+| Actor | ID | 日付フィルタ |
+|-------|-----|:------------:|
+| **x-posts-search** | `rBaTEHzveTxZPraGv` | ✅ 動作する |
+
+詳細: `apify-x-posts-search` スキル参照
+
 ## 関連
 
 - 管理スキル: `apify-mcp`（MCP起動・認証）
+- **日付フィルタ対応:** `apify-x-posts-search`
 - 姉妹スキル: `apify-instagram-search` / `apify-youtube-search` / `apify-tiktok-search`
 - パンチパターン: `projects/ec/research/20260917/punch-pattern-apify-date-filter.md`
