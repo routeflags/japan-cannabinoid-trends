@@ -196,7 +196,7 @@ Cohort classification based on first-mention timing relative to 2022-01-01 thres
 ## How to Cite This Dataset
 
 **APA format:**
-> KATO, Kyoji. (2026). Japan Cannabinoid Emerging Compound Early Warning Index v1. Routeflags Co., Ltd. [Dataset]. https://github.com/routeflags/japan-cannabinoid-trends
+> KATO, Kyoji. (2026). Japan Cannabinoid Search Emergence Tracker v1. Routeflags Co., Ltd. [Dataset]. https://github.com/routeflags/japan-cannabinoid-trends
 
 **Citing specific findings:**
 > Kato (2026), JCSET-F001 — HHCH post-regulation decline
@@ -205,7 +205,7 @@ Cohort classification based on first-mention timing relative to 2022-01-01 thres
 ```bibtex
 @dataset{kato2026cannabinoid,
   author = {Kato, Kyoji},
-  title = {Japan Cannabinoid Emerging Compound Early Warning Index v1},
+  title = {Japan Cannabinoid Search Emergence Tracker v1},
   year = {2026},
   publisher = {Routeflags Co., Ltd.},
   url = {https://github.com/routeflags/japan-cannabinoid-trends}
