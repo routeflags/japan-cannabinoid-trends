@@ -67,7 +67,7 @@ with open('$INDEX_FILE', 'r') as f:
     content = f.read()
 # Find compound names in the HTML
 compounds = set()
-for c in ['CBD', 'THC', 'CBG', 'CBN', 'THCV', 'THCH', 'HHC', 'THC-O', 'H4CBH', 'HHBD', 'HHCH', 'CRDP', 'CRDH', 'CBX']:
+for c in ['CBD', 'THC', 'CBG', 'CBN', 'THCV', 'THCH', 'HHC', 'THC-O', 'H4CBH', 'HHBD', 'HHCH', 'CRDP', 'CRDH']:
     if c in content:
         compounds.add(c)
 print(' '.join(sorted(compounds)))
