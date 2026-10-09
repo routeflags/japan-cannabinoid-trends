@@ -1,4 +1,4 @@
-# Limitations — Japan Cannabinoid Early Warning Index v1
+# Limitations — Japan Cannabinoid Search Emergence Tracker v1
 
 | 項目 | 内容 |
 |------|------|

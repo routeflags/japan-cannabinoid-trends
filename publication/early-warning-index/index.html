@@ -3,18 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Japan Cannabinoid Emerging Compound Early Warning Index v1</title>
-    <meta name="description" content="Early warning index tracking the emergence of cannabinoids in Japanese Google search data (2021-2026), with regulatory status and emergence scoring for 12 compounds.">
+    <title>Japan Cannabinoid Search Emergence Tracker v1</title>
+    <meta name="description" content="Search emergence tracker for cannabinoids in Japanese Google search data (2021-2026), with regulatory status and emergence scoring for 12 compounds.">
     <meta name="author" content="Kyoji Kato">
-    <meta name="keywords" content="cannabinoids, Japan, Google Trends, regulatory status, early warning, CBD, CBN, HHC, HHCH, emergence score">
+    <meta name="keywords" content="cannabinoids, Japan, Google Trends, regulatory status, search trends, CBD, CBN, HHC, HHCH, emergence score">
     
     <!-- Schema.org Dataset -->
     <script type="application/ld+json">
     {
         "@context": "https://schema.org/",
         "@type": "Dataset",
-        "name": "Japan Cannabinoid Emerging Compound Early Warning Index v1",
-        "description": "Early warning index tracking the emergence of cannabinoids in Japanese Google search data (2021-2026), with regulatory status and emergence scoring for 12 compounds.",
+        "name": "Japan Cannabinoid Search Emergence Tracker v1",
+        "description": "Search emergence tracker for cannabinoids in Japanese Google search data (2021-2026), with regulatory status and emergence scoring for 12 compounds.",
         "author": {
             "@type": "Person",
             "name": "Kyoji Kato",
@@ -376,7 +376,7 @@
 </head>
 <body>
     <header>
-        <h1>Japan Cannabinoid Emerging Compound Early Warning Index</h1>
+        <h1>Japan Cannabinoid Search Emergence Tracker</h1>
         <div class="subtitle">Version 1.0 — Tracking cannabinoid emergence in Japanese search data (2021-2026)</div>
     </header>
     
@@ -416,7 +416,7 @@
                 <ul>
                     <li><strong>12 cannabinoids</strong> tracked: 5 baseline (CBD, THC, CBN, CBG, THCV) + 7 emerging (HHC, THC-O, THCH, HHCH, CRDP, H4CBH, HHBD)</li>
                     <li><strong>6 compounds</strong> now regulated under Japanese law</li>
-                    <li><strong>JCEI-F001:</strong> HHCH shows post-regulation decline in search interest (temporal association)</li>
+                    <li><strong>JCSET-F001:</strong> HHCH shows post-regulation decline in search interest (temporal association)</li>
                     <li><strong>Emergence Score system</strong> classifies compounds from 0 (not detected) to 4 (high-growth emerging)</li>
                     <li><strong>4 new cannabinoids</strong> emerged during 2022-2023, 2 more in 2025</li>
                 </ul>
@@ -588,10 +588,10 @@
         
         <section id="findings">
             <h2>Citable Findings</h2>
-            <p>Findings are identified by <code>JCEI-FXXX</code> notation for precise citation across dataset versions.</p>
+            <p>Findings are identified by <code>JCSET-FXXX</code> notation for precise citation across dataset versions.</p>
             
             <div class="finding-card">
-                <div class="finding-id">JCEI-F001</div>
+                <div class="finding-id">JCSET-F001</div>
                 <div class="observation">HHCH Post-Regulation Decline in Search Interest</div>
                 <div class="evidence-table">
                     <table>
@@ -610,7 +610,7 @@
             </div>
             
             <div class="finding-card">
-                <div class="finding-id">JCEI-F002</div>
+                <div class="finding-id">JCSET-F002</div>
                 <div class="observation">CBN Regulation Timeline</div>
                 <div class="evidence-table">
                     <table>
@@ -628,7 +628,7 @@
             </div>
             
             <div class="finding-card">
-                <div class="finding-id">JCEI-F003</div>
+                <div class="finding-id">JCSET-F003</div>
                 <div class="observation">H4CBH and HHBD Emergence Sequence</div>
                 <div class="evidence-table">
                     <table>
@@ -646,7 +646,7 @@
             </div>
             
             <div class="finding-card">
-                <div class="finding-id">JCEI-F004</div>
+                <div class="finding-id">JCSET-F004</div>
                 <div class="observation">Regulated Compounds Summary</div>
                 <div class="evidence-table">
                     <table>
@@ -667,7 +667,7 @@
             </div>
             
             <div class="finding-card">
-                <div class="finding-id">JCEI-F005</div>
+                <div class="finding-id">JCSET-F005</div>
                 <div class="observation">New Compound Emergence Rate</div>
                 <div class="evidence-table">
                     <table>
@@ -686,7 +686,7 @@
             </div>
             
             <div class="finding-card">
-                <div class="finding-id">JCEI-F006</div>
+                <div class="finding-id">JCSET-F006</div>
                 <div class="observation">Regulatory Category Distribution</div>
                 <div class="evidence-table">
                     <table>
@@ -704,7 +704,7 @@
             </div>
             
             <div class="finding-card">
-                <div class="finding-id">JCEI-F007</div>
+                <div class="finding-id">JCSET-F007</div>
                 <div class="observation">Baseline vs Emerging Cohort</div>
                 <div class="evidence-table">
                     <table>
@@ -717,7 +717,7 @@
                     "Japanese cannabinoid market can be divided into baseline compounds (CBD, THC, CBN, CBG, THCV) with pre-existing market presence and emerging compounds (HHC, THC-O, THCH, HHCH, CRDP, H4CBH, HHBD) that appeared in Google Trends data from 2022 onwards. This distinction enables use of baseline compounds as reference series for monitoring emerging compounds."
                 </div>
                 <div class="interpretation"><strong>Interpretation:</strong> Cohort classification based on first-mention timing relative to 2022-01-01 threshold.</div>
-                <div class="source-note">Source: <a href="https://github.com/routeflags/japan-cannabinoid-trends/blob/main/datasets/cannabinoid-multi-trends/data/processed/early-warning-index-v1.csv">Dataset CSV</a></div>
+                <div class="source-note">Source: <a href="https://github.com/routeflags/japan-cannabinoid-trends/blob/main/datasets/cannabinoid-multi-trends/data/processed/search-emergence-tracker-v1.csv">Dataset CSV</a></div>
             </div>
         </section>
         
@@ -725,7 +725,7 @@
             <h2>Download Data</h2>
             <p>The complete dataset is available for download and reuse.</p>
             
-            <a href="https://github.com/routeflags/japan-cannabinoid-trends/blob/main/datasets/cannabinoid-multi-trends/data/processed/early-warning-index-v1.csv" class="download-btn">Download CSV</a>
+            <a href="https://github.com/routeflags/japan-cannabinoid-trends/blob/main/datasets/cannabinoid-multi-trends/data/processed/search-emergence-tracker-v1.csv" class="download-btn">Download CSV</a>
             <a href="https://github.com/routeflags/japan-cannabinoid-trends" class="download-btn">View on GitHub</a>
         </section>
         
@@ -770,16 +770,16 @@
             <h2>How to Cite</h2>
             
             <h3>Dataset Citation</h3>
-            <p>KATO, Kyoji. (2026). Japan Cannabinoid Emerging Compound Early Warning Index v1. Routeflags Co., Ltd. [Dataset]. https://github.com/routeflags/japan-cannabinoid-trends</p>
+            <p>KATO, Kyoji. (2026). Japan Cannabinoid Search Emergence Tracker v1. Routeflags Co., Ltd. [Dataset]. https://github.com/routeflags/japan-cannabinoid-trends</p>
             
             <h3>Finding Citation</h3>
             <p>For specific findings, use the Finding ID notation:</p>
-            <p><code>Kato (2026), JCEI-F001</code> — HHCH post-regulation decline</p>
+            <p><code>Kato (2026), JCSET-F001</code> — HHCH post-regulation decline</p>
             
             <h3>BibTeX</h3>
             <pre><code>@dataset{kato2026cannabinoid,
   author = {Kato, Kyoji},
-  title = {Japan Cannabinoid Emerging Compound Early Warning Index v1},
+  title = {Japan Cannabinoid Search Emergence Tracker v1},
   year = {2026},
   publisher = {Routeflags Co., Ltd.},
   url = {https://github.com/routeflags/japan-cannabinoid-trends}
