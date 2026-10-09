@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 # =============================================================================
-# Early Warning Index Validator
+# Search Emergence Tracker Validator
 #
-# Early Warning Index が最新の情報と整合しているかを検証:
+# Search Emergence Tracker が最新の情報と整合しているかを検証:
 # 1. 化合物カバレッジ（project.json と一致するか）
 # 2. 規制情報の鮮度（規制レポートとの整合）
 # 3. 公開日と最終更新日の確認
 #
 # 使用方法:
-#   bash scripts/validation/validate-early-warning-index.sh
+#   bash scripts/validation/validate-search-emergence-tracker.sh
 #
 # 検証をスキップする場合:
 #   git commit --no-verify
@@ -19,7 +19,7 @@ set -e
 REPO_ROOT="$(git rev-parse --show-toplevel)"
 cd "$REPO_ROOT"
 
-INDEX_DIR="publication/early-warning-index"
+INDEX_DIR="publication/search-emergence-tracker"
 INDEX_FILE="${INDEX_DIR}/index.html"
 PROJECT_FILE="project.json"
 REG_DIR="research/regulatory-status"
@@ -32,7 +32,7 @@ BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
 echo "======================================================================"
-echo "  Early Warning Index Validator"
+echo "  Search Emergence Tracker Validator"
 echo "======================================================================"
 echo ""
 
@@ -185,12 +185,12 @@ echo ""
 
 if [ $FAIL_COUNT -gt 0 ]; then
     echo -e "${RED}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-    echo -e "${RED}  ❌ Early Warning Index が最新ではありません${NC}"
+    echo -e "${RED}  ❌ Search Emergence Tracker が最新ではありません${NC}"
     echo -e "${RED}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
     exit 1
 else
     echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-    echo -e "${GREEN}  ✅ Early Warning Index は最新です${NC}"
+    echo -e "${GREEN}  ✅ Search Emergence Tracker は最新です${NC}"
     echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
     exit 0
 fi

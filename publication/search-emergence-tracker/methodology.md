@@ -200,7 +200,7 @@ datasets/cannabinoid-multi-trends/data/raw/google_trends/
 
 ```
 datasets/cannabinoid-multi-trends/data/processed/
-└── early-warning-index-v1.csv
+└── search-emergence-tracker-v1.csv
 ```
 
 ---
@@ -299,7 +299,7 @@ Includes: run_id, study_id, source, collection_timestamp, queries.
 
 When citing this methodology or dataset:
 
-> KATO, Kyoji. (2026). Japan Cannabinoid Emerging Compound Japan Cannabinoid Search Emergence Tracker v1 [Methodology]. Routeflags Co., Ltd. https://github.com/routeflags/japan-cannabinoid-trends/blob/main/publication/early-warning-index/methodology.md
+> KATO, Kyoji. (2026). Japan Cannabinoid Emerging Compound Japan Cannabinoid Search Emergence Tracker v1 [Methodology]. Routeflags Co., Ltd. https://github.com/routeflags/japan-cannabinoid-trends/blob/main/publication/search-emergence-tracker/methodology.md
 
 ---
 
