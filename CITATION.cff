@@ -80,7 +80,7 @@ references:
 
 identifiers:
   - type: doi
-    value: "10.5281/zenodo.23243495"
+    value: "10.5281/zenodo.23253840"
     description: "Zenodo DOI for v1.8.0"
   - type: url
     value: "https://github.com/routeflags/japan-cannabinoid-trends"
