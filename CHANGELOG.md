@@ -7,6 +7,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.12.0] - 2026-10-09
+
+### Fixed
+- CBX legal status: corrected to legal (blacklist regulatory system)
+- CBD X data period claim: corrected from 3 months to 1 day
+- THCV regulation format: unified to 規制（指定薬物）
+- Removed subjective expressions (可能性が高い, 規制候補, etc.)
+
+### Added
+- Blacklist regulatory approach documentation
+- THC isomer nomenclature standard (dibenzopyran)
+- WHO 2-tier classification (7 positional + 30 stereoisomers)
+- Natural occurrence classification for THC isomers
+- International treaty status (1961/1971 Conventions)
+- Knowledge graph v1.2 with institutional framework
+- Knowledge graph management skill
+
+### Changed
+- Institutional relationships clarified (CND, INCB, WHO, UNODC)
+- project.json thcIsomers simplified (moved to knowledge graph)
+- README.md and AGENTS.md updated with JSON file descriptions
+
+
 ## [1.11.0] - 2026-10-09
 
 ### Fixed

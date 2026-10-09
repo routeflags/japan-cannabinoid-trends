@@ -1,7 +1,7 @@
 {
   "name": "japan-cannabinoid-trends",
   "title": "Japan Cannabinoid Trends Dataset 2026: Google Trends, Social Media, Regulatory Status, and Early Warning Index",
-  "version": "1.11.0",
+  "version": "1.12.0",
   "description": "日本国内におけるカンナビノイド関連トレンドを追跡するロングジューデータセット。Google Trends（CBD / CBG / CBN / THC / HHC / HHCH / THCH / THC-O / THCV / H4CBH / HHBD / CRDP）、X (Twitter)、YouTube、規制状況（12化合物）、早期警戒指数（Early Warning Index）を収録。",
   "homepage": "https://github.com/routeflags/japan-cannabinoid-trends",
   "license": "CC-BY-4.0",
@@ -506,5 +506,5 @@
     }
   ],
   "doi": "10.5281/zenodo.23243495",
-  "citation": "KATO, Kyoji. (2026). Japan Cannabinoid Trends Dataset 2026: Google Trends, Social Media, Regulatory Status, and Early Warning Index. Version 1.11.0. Routeflags Co., Ltd. [Dataset]. DOI: 10.5281/zenodo.23243495"
+  "citation": "KATO, Kyoji. (2026). Japan Cannabinoid Trends Dataset 2026: Google Trends, Social Media, Regulatory Status, and Early Warning Index. Version 1.12.0. Routeflags Co., Ltd. [Dataset]. DOI: 10.5281/zenodo.23243495"
 }
