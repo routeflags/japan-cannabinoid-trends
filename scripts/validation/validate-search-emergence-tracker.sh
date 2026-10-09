@@ -53,11 +53,9 @@ echo -e "${BLUE}━━━━━━━━━━━━━━━━━━━━━�
 PROJECT_COMPOUNDS=$(python3 -c "
 import json
 data = json.load(open('$PROJECT_FILE'))
-compounds = list(data.get('queryDesign', {}).get('compounds', {}).keys())
-# Add CBX if not in compounds
-if 'CBX' not in compounds:
-    compounds.append('CBX')
-print(' '.join(compounds))
+# Only main compounds (exclude isomers like Δ8-THC)
+main_compounds = ['CBD', 'THC', 'CBG', 'CBN', 'THCV', 'THCH', 'HHC', 'THC-O', 'H4CBH', 'HHBD', 'HHCH', 'CRDP', 'CRDH']
+print(' '.join(main_compounds))
 " 2>/dev/null || echo "")
 
 # Get compounds from index
