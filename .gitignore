@@ -37,3 +37,5 @@ __pycache__/
 
 # Private data (anonymization mappings, etc.)
 datasets/*/data/private/
+
+/datasets/youtube-consistency/schema/schema.sql
