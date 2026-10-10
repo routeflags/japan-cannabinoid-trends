@@ -153,12 +153,6 @@ SELECT
 FROM videos;
 EOF
 
-sqlite3 "$DB_PATH" << EOF
-SELECT 
-    '総Run数: ' || COUNT(*)
-FROM runs;
-EOF
-
 echo ""
 echo "【ファイルパス】"
 echo "  Raw: /tmp/${RUN_ID}_raw.json"
