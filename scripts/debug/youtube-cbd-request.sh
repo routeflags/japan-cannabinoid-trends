@@ -140,12 +140,6 @@ echo "  検索クエリ: $SEARCH_TERM"
 echo "  max_videos: $MAX_VIDEOS"
 echo ""
 
-echo "【取得結果】"
-echo "  総行数: $TOTAL_LINES"
-echo "  ユニークID数: $UNIQUE_COUNT"
-echo "  重複数: $DUPLICATE_COUNT"
-echo ""
-
 echo "【累積統計】"
 sqlite3 "$DB_PATH" << EOF
 SELECT 
