@@ -1,146 +1,142 @@
-# scripts/debug — YouTube Data API 日付範囲取得
+# scripts/debug — 収集・検証スクリプト
 
-## youtube_api_date_range.py
+カンナビノイド関連データの収集と、その品質検証を行うスクリプト集。
 
-YouTube Data API v3 で日付範囲を指定して動画を検索取得し、SQLite (trends.db) に格納するデバッグ用スクリプト。ページネーション・中断再開（リジューム）対応。
+| スクリプト | 用途 |
+|---|---|
+| [`youtube_apify_store.py`](./youtube_apify_store.py) | **YouTube 収集本体**（Apify）→ SQLite 格納 |
+| [`x_posts_date_range.py`](./x_posts_date_range.py) | **X (Twitter) 収集**（Apify）→ SQLite 格納 |
+| [`youtube_idempotency_check.sh`](./youtube_idempotency_check.sh) | YouTube の冪等性（再現性）検証 |
+| `youtube_api_date_range.py` | ⚠️ **旧: YouTube Data API v3 版。利用規約の観点から計画から除外済み** |
 
-### 必要環境
+> **YouTube Data API v3 は使用しない。** 利用規約上の判断により計画から除外。
+> 収集はすべて Apify 経由で行う。
 
-- Python 3 標準ライブラリのみ（追加パッケージ不要）
-- `YOUTUBE_API_KEY` を含む env ファイル（デフォルト: `/Users/bookair18/OS/media/06_symphony/symphony_workspaces/.env.d/youtube.env`）
-- `runs` / `videos` / `run_videos` テーブルを持つ SQLite DB（デフォルト: `datasets/youtube-consistency/data/trends.db`）
+---
 
-### 完全版コマンド
+## youtube_apify_store.py
+
+Apify Actor `h7sDV53CddomktSi5`（streamers/youtube-scraper）で YouTube を検索し、
+SQLite (`datasets/youtube-consistency/data/trends.db`) に格納する。
+
+### 使い方
 
 ```bash
-python3 scripts/debug/youtube_api_date_range.py \
-  SEARCH_TERM PUBLISHED_AFTER PUBLISHED_BEFORE [MAX_RESULTS] [MAX_PAGES] \
-  [--db-path PATH] [--env-file PATH] [--checkpoint-root PATH] \
-  [--api-base URL] [--force-new]
+python3 scripts/debug/youtube_apify_store.py [SEARCH_TERM] [DATE_FILTER] \
+  [--db-path PATH] [--env-file PATH] [--init-db]
+
+# 例
+python3 scripts/debug/youtube_apify_store.py "CBD リキッド" month
+python3 scripts/debug/youtube_apify_store.py "HHBD リキッド" all
 ```
 
-### パラメータ
+### DATE_FILTER
 
-| 位置 | 名前 | デフォルト | 説明 |
-|---|---|---|---|
-| 1 | SEARCH_TERM | `CBD リキッド` | 検索クエリ |
-| 2 | PUBLISHED_AFTER | `2026-01-01` | 取得開始日 (この日を含む) |
-| 3 | PUBLISHED_BEFORE | `2026-04-01` | 取得終了日 (この日を含まない) |
-| 4 | MAX_RESULTS | `50` | 1ページあたりの最大取得件数 (API上限 50) |
-| 5 | MAX_PAGES | `10` | 最大取得ページ数 (50×10 = 最大500件) |
+| 値 | 意味 |
+|---|---|
+| `all` | **全期間**（`dateFilter` を送らない） |
+| `hour` | 直近1時間 |
+| `today` | 直近24時間 |
+| `week` | 直近7日 |
+| `month` | 直近30日 |
+
+> **絶対日付は指定できない**（相対期間のみ）。`all` は関連度ベースの全期間取得。
 
 ### オプション
 
-| オプション | 環境変数 | デフォルト | 説明 |
-|---|---|---|---|
-| `--db-path` | `DB_PATH` | `datasets/youtube-consistency/data/trends.db` | SQLite パス |
-| `--env-file` | `YOUTUBE_ENV` | 上記 youtube.env | APIキーの env ファイル |
-| `--checkpoint-root` | `CHECKPOINT_ROOT` | `datasets/youtube-consistency/data/checkpoints` | チェックポイント保存先 |
-| `--api-base` | `YOUTUBE_API_BASE` | `https://www.googleapis.com` | API ベースURL (テスト用) |
-| `--force-new` | — | — | 既存チェックポイントを退避して最初から取得 |
-
-### 終了コード
-
-| コード | 意味 |
-|---|---|
-| 0 | 完了 |
-| 2 | クォータ超過等で中断（**再実行すれば続きから再開**） |
-| 1 | その他のエラー（接続エラー等。進捗は保存済み） |
-
-### 中断再開（リジューム）
-
-- 同一クエリ（検索語 + 日付範囲）はチェックポイントが共有される
-- ページ取得ごとに `state.json` に `next_page_token` が保存される
-- クォータ超過・トークン切れ・ネットワーク断の後、**翌日以降に同じコマンドを再実行**すれば取得済みページをスキップして続きから再開
-- 全ページ取得済みの再実行は冪等（API を呼ばず DB 格納のみ再実行）
-- ページ数を増やしたい場合は MAX_PAGES を増やして再実行
-
-チェックポイント構成:
-
-```
-datasets/youtube-consistency/data/checkpoints/yt_<hash>/
-├── state.json        # run_id, next_page_token, pages_fetched, status
-├── last_error.json   # エラー時のみ保存
-└── pages/
-    └── page_0001.json  # API 応答 raw（イミュータブル）
-```
-
-### 実行例
-
-```bash
-# 基本
-python3 scripts/debug/youtube_api_date_range.py "CBD リキッド" 2026-01-01 2026-02-01
-
-# 2016年1月〜4月を1ヶ月ずつ取得
-python3 scripts/debug/youtube_api_date_range.py "CBD リキッド" 2016-01-01 2016-02-01
-python3 scripts/debug/youtube_api_date_range.py "CBD リキッド" 2016-02-01 2016-03-01
-python3 scripts/debug/youtube_api_date_range.py "CBD リキッド" 2016-03-01 2016-04-01
-python3 scripts/debug/youtube_api_date_range.py "CBD リキッド" 2016-04-01 2016-05-01
-
-# 上記を一括実行
-for m in 01 02 03 04 05 06 07 08 09 10 11 12; do
-  next=$(printf "%02d" $((10#$m + 1)))
-  python3 scripts/debug/youtube_api_date_range.py "CBD リキッド" "2016-${m}-01" "2016-${next}-01" 2>&1 | tee /tmp/yt2016_${m}.log
-done
-
-# ログを残しながら実行
-python3 scripts/debug/youtube_api_date_range.py "CBD リキッド" 2016-01-01 2016-02-01 \
-  2>&1 | tee /tmp/yt2016_01.log
-```
-
-2017〜2019年を月次で取得:
-
-```bash
-# 個別実行（36ヶ月分）
-python3 scripts/debug/youtube_api_date_range.py "CBD リキッド" 2017-01-01 2017-02-01
-python3 scripts/debug/youtube_api_date_range.py "CBD リキッド" 2017-02-01 2017-03-01
-# ... 以下 2019-12-01 → 2020-01-01 まで同様
-
-# 一括実行（年の繰り上がり対応済み: 12月は翌年01-01まで）
-for y in 2017 2018 2019; do
-  for m in 01 02 03 04 05 06 07 08 09 10 11 12; do
-    if [ "$m" = "12" ]; then
-      next="$((y + 1))-01-01"
-    else
-      next="${y}-$(printf '%02d' $((10#$m + 1)))-01"
-    fi
-    python3 scripts/debug/youtube_api_date_range.py "CBD リキッド" "${y}-${m}-01" "$next" \
-      2>&1 | tee "/tmp/yt_${y}${m}.log"
-  done
-done
-```
-
-### DB 格納内容
-
-| テーブル | 内容 | 冪等性 |
+| オプション | 環境変数 | デフォルト |
 |---|---|---|
-| `runs` | run_id, 検索語, レコード数, ユニーク数 など | `INSERT OR REPLACE` (同一 run_id) |
-| `videos` | video_id, タイトル, チャンネル, 公開日, 初出 run, 初出時刻 | `INSERT ... ON CONFLICT` (欠損メタのみ補完) |
-| `run_videos` | run × video の対応 | `INSERT OR IGNORE` |
+| `--db-path` | `DB_PATH` | `datasets/youtube-consistency/data/trends.db` |
+| `--env-file` | `APIFY_ENV` | symphony_workspaces の `.env.d/apify.env` |
+| `--init-db` | — | `schema/schema.sql` から DB を初期化してから実行 |
 
-run_id 形式: `yt_api_<ジョブハッシュ12桁>_<UTCタイムスタンプ>`。
-ジョブハッシュを含むため、同一秒に開始された別ジョブ（月跨ぎループ等）でも衝突しない。
+### 出力
 
-### 既知の注意
+実行したコマンド、取得件数、DB 動画総数、run_id、取得一覧（タイトル + URL）のみを出力する。
 
-- **月跨ぎループは年の繰り上がりに注意**: `for m in $(seq -w 1 12)` のようなループは 12月に `2016-13-01` を生成して失敗する。12月は `2016-12-01` → `2017-01-01` を指定すること（不正な日付は API 到達前に検出されて終了する）
-- **run_id 衝突の歴史的バグ**: 2026-10-10 18:57 時点の旧版は run_id が秒精度タイムスタンプのみで、高速ループ時に同一秒の別ジョブが run_id を共有し 2016年1-3月・6-11月の runs/run_videos 混在が発生した。チェックポイントの raw 応答から月別に再構築して修正済み（修正ログ: 2026-10-10, チェックポイント raw から再構築、API消費なし）
+### 仕様上の要点
 
+- **冪等**: 同一 video_id は `ON CONFLICT DO UPDATE` で欠損メタのみ補完。再実行しても重複しない
+- **ポーリング**: Actor の完了 (`SUCCEEDED`) を最大15分待ってから dataset を取得する。
+  未完了の空 dataset を「0件」として格納しない
+- **失敗と0件を区別**: dataset がリスト形式でなければエラー。`SUCCEEDED` で0件なら真の `observed_zero`
+- **`lang:ja` は使えない**: YouTube 検索演算子に `lang:` は存在しない。付けると検索が壊れる
 
-補助ファイル（冪等・再実行で上書き）:
+### Apify 仕様（検証済み）
 
-- `/tmp/<run_id>_raw.json` — 全ページ統合の raw データ
-- `/tmp/<run_id>_ids.txt` / `_unique.txt` — videoId 一覧
+- 3つの動画上限（`maxResults` / `maxResultsShorts` / `maxResultStreams`）が**全て0**だと Actor が失敗する
+- `maxResults` の maximum は **999999**
+- `dateFilter` は **ローリング窓**（`month` = 直近30日）。暦月ではない
+- `oldestPostDate` は **channel URL 専用**。指定すると `sortVideosBy` は `NEWEST` に自動リセット
+- `sortVideosBy: OLDEST` は `oldestPostDate` 併用時に効かない（実測で不規則な順）
 
-### モジュールとしての再利用
+---
 
-```python
-from youtube_api_date_range import (
-    collect_pages,       # ページ取得（リジューム対応）
-    aggregate_pages,     # 全ページ統合
-    store_to_sqlite,     # DB 格納（冪等）
-    compute_match_stats, # 既出/新規の照合
-)
+## x_posts_date_range.py
+
+Apify Actor `rBaTEHzveTxZPraGv`（x-posts-search）で X 投稿を検索し、
+SQLite (`datasets/x-consistency/data/trends.db`) に格納する。
+
+```bash
+python3 scripts/debug/x_posts_date_range.py [SEARCH_TERM] [PUBLISHED_AFTER] [PUBLISHED_BEFORE] [MAX_ITEMS] \
+  [--db-path PATH] [--env-file PATH] [--init-db]
+
+# 例
+python3 scripts/debug/x_posts_date_range.py "CBD リキッド" 2016-01-01 2016-02-01 50
 ```
 
-`datasets/youtube-consistency/data/checkpoints/` は収集の中間状態であり、再現性確保のため削除しないこと。取り直す場合のみ `--force-new` を使う。
+### 日付指定
+
+X の検索演算子 `since:` / `until:` を `query` に付与する（Actor 側の仕様）。
+
+```
+CBD リキッド since:2016-01-01 until:2016-02-01
+```
+
+### 出力テーブル
+
+`runs` / `posts` / `run_posts`。`posts` には postId・本文・URL・投稿日時・作者・エンゲージメントを格納。
+
+### 冪等性（実測）
+
+同一クエリを4回独立取得し、**全ペア 100% の重複率**を確認済み
+（2016-01、投稿6件）。期間指定があるため安定する。
+ただし件数が上限に達する月は未検証。
+
+---
+
+## youtube_idempotency_check.sh
+
+同一パラメータで2回独立取得し、videoId の重複率で再現性を測る。
+
+```bash
+bash scripts/debug/youtube_idempotency_check.sh [SEARCH_TERM] [DATE_FILTER]
+
+# 例
+bash scripts/debug/youtube_idempotency_check.sh "CBD リキッド" month
+```
+
+### 判定基準（評価レポート B4 準拠）
+
+| 重複率 | 判定 |
+|---|---|
+| ≥95% | ✅ PASS |
+| 80–94% | ⚠️ CONDITIONAL |
+| <80% | ❌ FAIL |
+
+### 実測結果
+
+| 条件 | 重複率 | 判定 |
+|---|---|---|
+| `dateFilter: month` | **100.0%** | ✅ PASS |
+| 日付フィルタなし（旧 danek Actor） | 55–76% | ❌ FAIL |
+
+**日付で期間を絞ると再現性が確保される**。絞らないと関連度アルゴリズムが毎回揺れる。
+
+---
+
+## 関連資料
+
+- データセット仕様: [`datasets/youtube-consistency/README.md`](../../datasets/youtube-consistency/README.md)
+- Actor 評価記録: [`research/apify/actor-evaluations.md`](../../research/apify/actor-evaluations.md)
+- Apify スキル: [`.github/skills/apify-youtube-scraper/SKILL.md`](../../.github/skills/apify-youtube-scraper/SKILL.md)
