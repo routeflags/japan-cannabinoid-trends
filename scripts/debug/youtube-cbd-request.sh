@@ -143,8 +143,11 @@ echo ""
 echo "【累積統計】"
 sqlite3 "$DB_PATH" << EOF
 SELECT 
-    '総ユニーク動画数: ' || COUNT(*) 
-FROM videos;
+    '総ユニーク動画数: ' || COUNT(DISTINCT v.video_id)
+FROM videos v
+JOIN run_videos rv ON v.video_id = rv.video_id
+JOIN runs r ON rv.run_id = r.run_id
+WHERE r.search_term = '${SEARCH_TERM}';
 EOF
 
 echo ""
