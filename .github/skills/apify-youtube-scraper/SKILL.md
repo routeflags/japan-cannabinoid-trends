@@ -52,7 +52,7 @@ Apify Actor `h7sDV53CddomktSi5`（streamers/youtube-scraper）を使って、You
 | `maxResults` | integer | — | 取得上限（デフォルト: 10） |
 | `maxResultsShorts` | integer | — | Shorts 上限（0=除外） |
 | `maxResultStreams` | integer | — | ストリーム上限（0=除外） |
-| `dateFilter` | string | — | 日付フィルタ（hour/day/week/month/year） |
+| `dateFilter` | string | — | 日付フィルタ（hour/today/week/month/year） |
 | `sortingOrder` | string | — | ソート順（relevance/rating/date/views） |
 
 ---
@@ -61,20 +61,31 @@ Apify Actor `h7sDV53CddomktSi5`（streamers/youtube-scraper）を使って、You
 
 ### 検索クエリ使用時
 
-| `dateFilter` | 期間 |
-|--------------|------|
-| `hour` | 過去1時間 |
-| `day` | 過去24時間 |
-| `week` | 過去7日 |
-| `month` | 過去30日 |
-| `year` | 過去1年 |
+`dateFilter` は **相対期間のみ**。実行時点を基準とした**ローリング窓（直近N期間）**で、絶対日付（例: `2016-01-01`）は指定できない。
 
-### URL 使用時
+| `dateFilter` | 意味（実スキーム enumTitle） | **実挙動（2026-10-10 実測）** |
+|--------------|------|------|
+| `hour` | Last hour | 直近1時間 |
+| `today` | Today | 直近24時間（要検証） |
+| `week` | This week | **直近7日**（要検証） |
+| `month` | This month | **直近30日**（実測済み） |
+| `year` | This year | 直近365日（要検証） |
+
+> ⚠️ **実測によりローリング窓であることを確認済み**。`month` は enumTitle が「This month」だが、実挙動は**暦月ではなく直近30日**。2026-10-10 の実行で `dateFilter: "month"` を指定すると **2026-09-10〜2026-10-09** の動画が返った（最古=09-10, 最新=10-09）。暦月（10-01〜10-09）ではなかった。
+> ⚠️ 研究データの期間解釈を誤りやすい。**「今月分」を取得したい場合、`month` を使うと前月分が大量に混入する**。
+> ⚠️ 絶対日付の期間指定が必要な場合は、この Actor では実現不可。
+> ⚠️ 値は `day` ではなく **`today`**（当該Actorの実スキームに `day` は存在しない）。
+
+### URL 使用時（channel URL 専用）
 
 | パラメータ | 内容 |
 |------------|------|
-| `oldestPostDate` | `YYYY-MM-DD` 形式 |
+| `oldestPostDate` | `YYYY-MM-DD`。**下限のみ**（この日以降を取得）。上限は指定不可 |
 | `sortVideosBy` | `NEWEST`, `OLDEST`, `POPULAR` |
+
+> ⚠️ `oldestPostDate` は **channel URL 専用**（実スキーム sectionCaption:「applicable only to scraping by channels URL」）。検索結果ページURL（`/results?search_query=`）では機能しない。
+> ⚠️ `oldestPostDate` を指定すると **`sortVideosBy` は自動的に `NEWEST` へリセットされる**（実スキーム明記）。`OLDEST` 昇順取得はできない。
+> ⚠️ `startUrls` を指定すると `searchQueries` は無視される。したがって **キーワード検索＋絶対日付範囲はこのActorでは実現不可**。絶対日付の上下限が必要な場合は公式 YouTube Data API v3 の `publishedAfter`/`publishedBefore` を使用すること。
 
 ---
 
@@ -144,12 +155,16 @@ curl -s "https://api.apify.com/v2/datasets/$DS/items?clean=true&format=json" \
   -H "Authorization: Bearer $APIFY_TOKEN"
 ```
 
-### 特定期間の動画を取得（URL使用時）
+### 特定期間の動画を取得（channel URL 使用時）
+
+> ⚠️ `oldestPostDate` は **channel URL 専用**。検索結果ページURL（`/results?search_query=`）では機能しない。
+> ⚠️ 指定すると `sortVideosBy` は **`NEWEST` に自動リセット**される（`OLDEST` 昇順取得は不可）。
+> ⚠️ 上限（〜まで）は指定できないため、必要ならクライアント側で `date` を絞り込む。
 
 ```bash
 source /Users/bookair18/OS/media/06_symphony/symphony_workspaces/.env.d/apify.env
 
-# 2026年9月以降の動画を取得
+# 2026年9月以降の動画を取得（対象チャンネルの /videos ページを指定）
 R=$(curl -s -X POST "https://api.apify.com/v2/acts/h7sDV53CddomktSi5/runs?waitForFinish=90" \
   -H "Authorization: Bearer $APIFY_TOKEN" \
   -H "Content-Type: application/json" \
