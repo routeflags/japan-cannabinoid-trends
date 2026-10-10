@@ -10,7 +10,8 @@ dateFilter（相対期間）で検索し、結果を datasets/youtube-consistenc
 例:
     python3 scripts/debug/youtube_apify_store.py "CBD リキッド" month
 
-dateFilter: hour | today | week | month | year（相対期間のみ・絶対日付は不可）
+dateFilter: all | hour | today | week | month | year
+    all は全期間（日付フィルタなし）。他は相対期間のみ・絶対日付は不可
 
 環境変数:
     APIFY_ENV   Apify トークンの env ファイル
@@ -22,6 +23,7 @@ import json
 import os
 import sqlite3
 import sys
+import time
 import urllib.error
 import urllib.request
 from datetime import datetime, timezone
@@ -33,7 +35,10 @@ DEFAULT_DB_PATH = "datasets/youtube-consistency/data/trends.db"
 DEFAULT_APIFY_ENV = (
     "/Users/bookair18/OS/media/06_symphony/symphony_workspaces/.env.d/apify.env"
 )
-DATE_FILTERS = ("hour", "today", "week", "month", "year")
+DATE_FILTERS = ("all", "hour", "today", "week", "month", "year")
+MAX_RESULTS = 999999   # Actor の許容上限
+POLL_TIMEOUT = 900     # Actor 完了待ちの最大秒数 (15分)
+POLL_INTERVAL = 10     # ポーリング間隔 (秒)
 
 
 def load_token(env_path):
@@ -75,33 +80,62 @@ def api_request(url, method="GET", payload=None, token=None):
 
 
 def fetch_items(token, query, date_filter):
-    """Apify で検索し items リストを返す。"""
+    """Apify で検索し items リストを返す。
+
+    date_filter='all' の場合は dateFilter を送らない（全期間・日付フィルタなし）。
+    Actor の完了 (SUCCEEDED) をポーリングで待ってから dataset を取得する。
+    """
+    payload = {
+        "searchQueries": [query],
+        "maxResults": MAX_RESULTS,
+        "maxResultsShorts": 0,
+        "maxResultStreams": 0,
+        "sortingOrder": "date",
+    }
+    if date_filter != "all":
+        payload["dateFilter"] = date_filter
     run = api_request(
         f"{APIFY_BASE}/v2/acts/{ACTOR_ID}/runs?waitForFinish=180",
         method="POST",
-        payload={
-            "searchQueries": [query],
-            "dateFilter": date_filter,
-            "maxResults": 999999,
-            "maxResultsShorts": 0,
-            "maxResultStreams": 0,
-            "sortingOrder": "date",
-        },
+        payload=payload,
         token=token,
     )
     data = run.get("data") or {}
     run_id = data.get("id")
     status = data.get("status")
     dataset_id = data.get("defaultDatasetId")
-    if status == "FAILED":
-        raise RuntimeError(f"Actor 実行失敗: {data.get('statusMessage')}")
+    if not run_id:
+        raise RuntimeError(f"run_id が返りませんでした: {data}")
+
+    # 完了までポーリング（waitForFinish で未完了なら RUNNING/READY のまま）
+    deadline = time.time() + POLL_TIMEOUT
+    while status in ("RUNNING", "READY"):
+        if time.time() > deadline:
+            raise RuntimeError(
+                f"Actor 完了待ちがタイムアウト (status={status}, "
+                f"{POLL_TIMEOUT}秒)。run_id={run_id}"
+            )
+        time.sleep(POLL_INTERVAL)
+        run = api_request(f"{APIFY_BASE}/v2/actor-runs/{run_id}", token=token)
+        data = run.get("data") or {}
+        status = data.get("status")
+
+    if status != "SUCCEEDED":
+        raise RuntimeError(
+            f"Actor 実行失敗: status={status} msg={data.get('statusMessage')}"
+        )
+    if not dataset_id:
+        dataset_id = data.get("defaultDatasetId")
     if not dataset_id:
         raise RuntimeError("defaultDatasetId が返りませんでした")
+
     items = api_request(
         f"{APIFY_BASE}/v2/datasets/{dataset_id}/items?clean=true&format=json",
         token=token,
     )
-    return run_id, dataset_id, (items if isinstance(items, list) else [])
+    if not isinstance(items, list):
+        raise RuntimeError(f"dataset がリスト形式でありません: {str(items)[:200]}")
+    return run_id, dataset_id, items
 
 
 def duration_to_seconds(dur):
@@ -130,7 +164,7 @@ def store(db_path, search_term, apify_run_id, dataset_id, items):
                 collection_timestamp, record_count, unique_count,
                 collector, collector_version)
                VALUES (?, 'youtube', ?, ?, ?, ?, ?, ?, 'apify', 'youtube-scraper')""",
-            (apify_run_id, search_term, len(items), dataset_id,
+            (apify_run_id, search_term, MAX_RESULTS, dataset_id,
              now, len(items), unique),
         )
         for it in items:

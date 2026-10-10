@@ -3,7 +3,30 @@
 YouTube 検索クエリに対する複数回の収集 Run の一貫性（一致率）を検証するデータセット。
 
 - 仕様: `docs/specs/youtube-sqlite-design.md`
-- 状態: スキーマ整備済み（データ収集前）
+- 状態: スキーマ整備済み・データ収集中
+
+## 収集方法
+
+**Apify Actor `h7sDV53CddomktSi5`（streamers/youtube-scraper）** を使用する。
+
+```bash
+python3 scripts/debug/youtube_apify_store.py "CBD リキッド" month
+python3 scripts/debug/youtube_apify_store.py "HHBD リキッド" all
+```
+
+| dateFilter | 意味 |
+|------------|------|
+| `all` | 全期間（`dateFilter` を送らない） |
+| `month` | 直近30日（ローリング窓） |
+| `week` / `today` / `hour` | 直近7日 / 24時間 / 1時間 |
+
+制約:
+- **絶対日付は指定できない**（相対期間のみ）。`all` は関連度ベースの全期間取得
+- `maxResults` は上限。3つの動画上限が全て0だと Actor が失敗する
+- `lang:ja` は **YouTube 検索演算子として存在しない**（付けない）
+- Actor の完了（`SUCCEEDED`）をポーリングで待ってから dataset を取得する
+
+**YouTube Data API v3 は利用規約の観点から使用しない**（計画から除外）。
 
 ## データベース
 
@@ -48,11 +71,37 @@ sqlite3 datasets/youtube-consistency/data/trends.db \
 | `videos` | 動画マスタ（video_id 一意、初回収集情報を保持） |
 | `run_videos` | Run と Video の関係（検索順位・重複フラグ） |
 
+`runs` の主要カラム:
+
+| カラム | 意味 |
+|--------|------|
+| `max_videos` | 取得上限（Actor に指定した値） |
+| `record_count` | 実取得件数 |
+| `unique_count` | ユニーク件数 |
+| `apify_dataset_id` | Apify の dataset ID（Raw の追跡用） |
+
+`videos` の主要カラム:
+
+| カラム | 意味 |
+|--------|------|
+| `url` | 動画 URL（`https://www.youtube.com/watch?v=<video_id>`） |
+| `published_at` | 公開日時（ISO 8601 / UTC） |
+| `duration` | 長さ（秒） |
+
 ビュー: `v_run_summary`（Run サマリー）, `v_video_appearance`（動画出現履歴）
 
 一致率は保存せず都度計算する（`queries/calculate_rate.sql`, `queries/view_history.sql`）。
 仕様書にあった `consistency_metrics` テーブル・`v_consistency_history` ビューは、
 誰も投入・メンテナンスしないため削除済み。
+
+## 冪等性・再現性
+
+- **冪等性**: 同一 video_id は `INSERT OR IGNORE` / `ON CONFLICT DO UPDATE` で保護。
+  再実行しても重複しない
+- **再現性の実測**: `dateFilter: month` では重複率 100%（4回独立取得で全ペア一致）。
+  `all` は関連度ベースのため結果が揺れる可能性があり **要検証**
+- **`observed_zero` と失敗の区別**: Actor が `SUCCEEDED` で0件なら真の0件。
+  ポーリングにより未完了 dataset を0件として格納しない
 
 ## 制約
 
@@ -71,13 +120,17 @@ sqlite3 datasets/youtube-consistency/data/trends.db \
 ## データフロー
 
 ```
-Step 1: API 実行
+Step 1: Apify Actor 実行（完了をポーリングで待つ）
         ↓
-Step 2: runs に INSERT
+Step 2: dataset から items を取得（リスト形式でない場合はエラー）
         ↓
-Step 3: videos に INSERT OR IGNORE
+Step 3: runs に INSERT OR REPLACE
         ↓
-Step 4: run_videos に INSERT
+Step 4: videos に INSERT ... ON CONFLICT DO UPDATE（欠損メタのみ補完）
         ↓
-Step 5: 一致率を計算（queries/calculate_rate.sql / view_history.sql、都度計算）
+Step 5: run_videos に INSERT OR IGNORE
+        ↓
+Step 6: 一致率を計算（queries/calculate_rate.sql / view_history.sql、都度計算）
 ```
+
+途中で失敗しても Raw（Apify dataset）は追跡可能なため、再実行すれば冪等に復旧する。
