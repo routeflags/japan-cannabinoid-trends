@@ -35,6 +35,10 @@
 | X (Twitter) | Apify `cPYLH3QT9GyzKhB4S` | ~$0.80 | ✅ 収集完了 |
 | YouTube | Apify `gJvjeCYNraSfhIaNd` | ~$0.09 | ✅ 収集完了 |
 
+> **関連データセットとの役割分担**: 本データセットは**トレンド分析**（複数プラットフォームの出現・時系列分布）が目的。
+> YouTube 検索結果の**一貫性・再現性検証**は [`datasets/youtube-consistency/`](../youtube-consistency/) が担当しており、
+> そちらは別の Actor（`h7sDV53CddomktSi5` / streamers/youtube-scraper）を使う。両者は目的・ Actor・格納形式（本件は raw ファイル、同件は SQLite）が異なるため重複ではなく分業である。
+
 ## 収集結果（2026-10-02）
 
 ### Google Trends
