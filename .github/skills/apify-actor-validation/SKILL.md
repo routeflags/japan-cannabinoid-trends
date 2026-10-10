@@ -287,6 +287,17 @@ curl -s "https://api.apify.com/v2/datasets/DATASET_ID/items?clean=true&format=js
 
 評価結果を `research/apify/actor-evaluations.md` に記録。
 
+**重要:** Actor 検証を実施した場合、必ず `research/apify/actor-evaluations.md` を更新すること。
+
+更新対象:
+- 評価マトリクス（A. 機能的適合性）
+- スコア集計
+- 検証結果
+- 詳細評価
+- 推奨アクション
+- 検証が必要な項目
+- 更新履歴
+
 ---
 
 ## よくある問題と回避策
