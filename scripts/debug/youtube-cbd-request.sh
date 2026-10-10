@@ -142,12 +142,36 @@ echo ""
 
 echo "【累積統計】"
 sqlite3 "$DB_PATH" << EOF
-SELECT 
+SELECT
     '総ユニーク動画数: ' || COUNT(DISTINCT v.video_id)
 FROM videos v
 JOIN run_videos rv ON v.video_id = rv.video_id
 JOIN runs r ON rv.run_id = r.run_id
 WHERE r.search_term = '${SEARCH_TERM}';
+
+WITH cumulative AS (
+    SELECT DISTINCT rv.video_id
+    FROM run_videos rv
+    JOIN runs r ON rv.run_id = r.run_id
+    WHERE r.search_term = '${SEARCH_TERM}'
+      AND r.run_id != '${RUN_ID}'
+),
+current_run AS (
+    SELECT DISTINCT video_id
+    FROM run_videos
+    WHERE run_id = '${RUN_ID}'
+)
+SELECT
+    '一致率（前回までの累積との重複率）: ' ||
+    CASE WHEN COUNT(*) = 0 THEN 'N/A'
+         ELSE ROUND(
+             SUM(CASE WHEN c.video_id IN (SELECT video_id FROM cumulative) THEN 1 ELSE 0 END)
+             * 100.0 / COUNT(*), 1) || '%'
+    END ||
+    '（重複 ' || SUM(CASE WHEN c.video_id IN (SELECT video_id FROM cumulative) THEN 1 ELSE 0 END) ||
+    ' / 新規 ' || SUM(CASE WHEN c.video_id NOT IN (SELECT video_id FROM cumulative) THEN 1 ELSE 0 END) ||
+    ' / 当該Run計 ' || COUNT(*) || '）'
+FROM current_run c;
 EOF
 
 echo ""
