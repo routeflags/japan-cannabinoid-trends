@@ -45,15 +45,10 @@ echo "【Step 1】API 実行中..."
 PUBLISHED_AFTER_RFC3339="${PUBLISHED_AFTER}T00:00:00Z"
 PUBLISHED_BEFORE_RFC3339="${PUBLISHED_BEFORE}T00:00:00Z"
 
-R=$(curl -s "https://www.googleapis.com/youtube/v3/search" \
-  -H "Authorization: Bearer $YOUTUBE_API_KEY" \
-  --data-urlencode "part=snippet" \
-  --data-urlencode "q=${SEARCH_TERM}" \
-  --data-urlencode "type=video" \
-  --data-urlencode "publishedAfter=${PUBLISHED_AFTER_RFC3339}" \
-  --data-urlencode "publishedBefore=${PUBLISHED_BEFORE_RFC3339}" \
-  --data-urlencode "maxResults=${MAX_RESULTS}" \
-  --data-urlencode "order=date")
+# クエリをエンコード
+ENCODED_QUERY=$(python3 -c "import urllib.parse; print(urllib.parse.quote('${SEARCH_TERM}'))")
+
+R=$(curl -s "https://www.googleapis.com/youtube/v3/search?part=snippet&q=${ENCODED_QUERY}&type=video&publishedAfter=${PUBLISHED_AFTER_RFC3339}&publishedBefore=${PUBLISHED_BEFORE_RFC3339}&maxResults=${MAX_RESULTS}&order=date&key=${YOUTUBE_API_KEY}")
 
 # エラーチェック
 ERROR=$(echo "$R" | jq -r '.error.message // empty')
