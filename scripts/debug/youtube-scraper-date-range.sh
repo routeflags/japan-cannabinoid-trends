@@ -42,7 +42,7 @@ echo ""
 echo "【Step 1】API 実行中..."
 ENCODED_QUERY=$(python3 -c "import urllib.parse; print(urllib.parse.quote('$SEARCH_TERM'))")
 
-R=$(curl -s -X POST "https://api.apify.com/v2/acts/${ACTOR_ID}/runs?waitForFinish=90" \
+R=$(curl -s -X POST "https://api.apify.com/v2/acts/${ACTOR_ID}/runs" \
   -H "Authorization: Bearer $APIFY_TOKEN" \
   -H "Content-Type: application/json" \
   -d "{
@@ -56,18 +56,35 @@ R=$(curl -s -X POST "https://api.apify.com/v2/acts/${ACTOR_ID}/runs?waitForFinis
 
 APIFY_RUN_ID=$(echo "$R" | jq -r '.data.id')
 DATASET_ID=$(echo "$R" | jq -r '.data.defaultDatasetId')
-STATUS=$(echo "$R" | jq -r '.data.status')
 
 echo "  Apify Run ID: $APIFY_RUN_ID"
 echo "  Dataset ID: $DATASET_ID"
-echo "  Status: $STATUS"
+echo "  実行を待機中..."
+echo ""
+
+# Step 1.5: 完了まで待機
+MAX_WAIT=300
+WAITED=0
+STATUS="RUNNING"
+
+while [ "$STATUS" != "SUCCEEDED" ] && [ "$STATUS" != "FAILED" ] && [ "$WAITED" -lt "$MAX_WAIT" ]; do
+  sleep 10
+  WAITED=$((WAITED + 10))
+  
+  STATUS=$(curl -s "https://api.apify.com/v2/actor-runs/${APIFY_RUN_ID}" \
+    -H "Authorization: Bearer $APIFY_TOKEN" | jq -r '.data.status')
+  
+  echo "  経過時間: ${WAITED}秒 | ステータス: $STATUS"
+done
+
 echo ""
 
 if [ "$STATUS" != "SUCCEEDED" ]; then
-  echo "❌ API 実行失敗"
-  echo "$R" | jq .
+  echo "❌ API 実行失敗（ステータス: $STATUS）"
   exit 1
 fi
+
+echo "  ✅ 実行完了"
 
 sleep 3
 
