@@ -134,3 +134,19 @@ Step 6: 一致率を計算（queries/calculate_rate.sql / view_history.sql、都
 ```
 
 途中で失敗しても Raw（Apify dataset）は追跡可能なため、再実行すれば冪等に復旧する。
+
+## YouTube Data API v3
+
+### YouTube Data Provenance and Usage
+
+YouTube video metadata in this dataset was collected using the third-party [YouTube Scraper](https://apify.com/streamers/youtube-scraper) Actor on the Apify platform, rather than through direct use of the official YouTube Data API.
+
+The collected metadata may include video IDs, titles, channel names, publication dates, and view counts. These records are used to study the emergence and temporal distribution of cannabinoid-related topics in Japan.
+
+The research team has not identified a 30-day retention requirement in the applicable Apify Actor Terms. This does not constitute a representation that YouTube's platform terms, third-party rights, or applicable laws impose no additional restrictions.
+
+The dataset is independently compiled and is not affiliated with or endorsed by YouTube, Google, or Apify.
+
+**Licensing note:** The repository's CC BY 4.0 license applies only to original research materials and datasets to the extent that the authors have the rights to license them. It does not override third-party rights in source metadata or content.
+
+For collection methodology and provenance details, see [`Data Provenance`](../../docs/provenance.md).
