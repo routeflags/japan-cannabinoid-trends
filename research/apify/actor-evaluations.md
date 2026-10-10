@@ -10,6 +10,15 @@
 
 ## 評価用語の定義
 
+### 最大上限数の定義
+
+| 項目 | 定義 |
+|------|------|
+| **最大上限数** | Actor が1回の実行で取得できる最大件数。研究要件に合致するか確認する。 |
+| **上限あり** | Actor の入力スキーマに明示的な上限値がある |
+| **上限なし** | Actor の入力スキーマに明示的な上限値がない（理論上無限） |
+| **要確認** | 公開仕様で上限値を確認できていない |
+
 ### A. 機能的適合性
 
 | 項目 | 定義 | 確認方法 |
@@ -77,14 +86,15 @@
 
 ### A. 機能的適合性（6項目）
 
-| Actor | A1 入力スキーマ | A2 出力スキーマ | A3 言語フィルタ | A4 日付フィルタ | A5 ページング | A6 取得上限 |
-|-------|:---------------:|:---------------:|:---------------:|:---------------:|:-------------:|:-----------:|
-| X (現行) cPYLH3QT9GyzKhB4S | ✅ | ✅ | ✅ | ❌ | ✅ | ✅ |
-| X (新規) rBaTEHzveTxZPraGv | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| YouTube gJvjeCYNraSfhIaNd | ✅ | ⚠️ | ✅ | ❌ | ✅ | ✅ |
-| TikTok jQfZ1h9FrcWcliKZX | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| Instagram TxU0ZBQIHdR20dr9C | ✅ | ✅ | ⚠️ | ❌ | ✅ | ✅ |
-| LinkedIn M2FMdjRVeF1HPGFcc | ✅ | ✅ | ✅ | N/A | ✅ | ✅ |
+| Actor | A1 入力スキーマ | A2 出力スキーマ | A3 言語フィルタ | A4 日付フィルタ | A5 ページング | A6 取得上限 | A6 最大上限数 |
+|-------|:---------------:|:---------------:|:---------------:|:---------------:|:-------------:|:-----------:|:-------------:|
+| X (現行) cPYLH3QT9GyzKhB4S | ✅ | ✅ | ✅ | ❌ | ✅ | ✅ | **maxPages: 100** |
+| X (新規) rBaTEHzveTxZPraGv | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | **要確認** |
+| YouTube gJvjeCYNraSfhIaNd | ✅ | ⚠️ | ✅ | ❌ | ✅ | ✅ | **max_videos: 100** |
+| YouTube h7sDV53CddomktSi5 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | **要確認** |
+| TikTok jQfZ1h9FrcWcliKZX | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | **limit: 10000** |
+| Instagram TxU0ZBQIHdR20dr9C | ✅ | ✅ | ⚠️ | ❌ | ✅ | ✅ | **maxPages: 100** |
+| LinkedIn M2FMdjRVeF1HPGFcc | ✅ | ✅ | ✅ | N/A | ✅ | ✅ | **要確認** |
 
 ### B. 統計的サンプリング適性（6項目）
 
@@ -206,6 +216,94 @@ CBD検索結果:
 
 ---
 
+### YouTube B4 再現性（Phase 2: 追加PoC）
+
+| 項目 | 内容 |
+|------|------|
+| 検証日 | 2026-10-09 |
+| 費用 | $0.02（2回実行） |
+| クエリ | "CBD リキッド" |
+| max_videos | 20 |
+
+#### 冪等性の問題
+
+```
+冪等性 = 同一入力に対して、常に同一出力が得られる性質
+
+問題:
+  - 順序変動: 問題なし（publishedAtでソート可能）
+  - 内容変動: 問題あり（冪等性がない）
+```
+
+#### 結果
+
+| 実行 | 件数 | Run ID |
+|------|:----:|--------|
+| Run 1 | 20件 | `dF82cgVnBFkoOaE3L` |
+| Run 2 | 20件 | `Y4TLUBKrE8A1arM05` |
+
+#### 重複率計算
+
+```
+Run 1 ユニークID: 20
+Run 2 ユニークID: 20
+共通ID: 15
+
+重複率 = 15 / 20 = 75.0%
+```
+
+#### 判定基準
+
+| 基準 | 結果 |
+|------|------|
+| 重複率 >= 95% | ✅ PASS |
+| 重複率 80-94% | ⚠️ CONDITIONAL |
+| 重複率 < 80% | ❌ FAIL |
+
+#### 判定
+
+| 項目 | 判定 |
+|------|------|
+| B4 再現性 | ❌ **FAIL (75.0%)** |
+
+#### 解釈
+
+```
+75% 重複率 = 25% の動画が2回の実行で異なる
+
+例:
+  Run 1: [A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T]
+  Run 2: [A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, ?, ?, ?, ?, ?]
+                                       ↑ 15件共通                ↑ 5件変動
+```
+
+#### 問題点
+
+| 問題 | 影響 |
+|------|------|
+| **冪等性がない** | 同一クエリでもデータが変わる |
+| **比較困難** | 実行間のデータ比較が不可能 |
+| **推定バイアス** | 特定の動画が系統的に除外される可能性 |
+
+#### 対応策
+
+| オプション | 方法 | 効果 |
+|-----------|------|------|
+| **A** | 複数回実行して統合 | 欠測を補完 |
+| **B** | 特定時点のスナップショットとして扱う | 再現性を期待しない |
+| **C** | YouTube Data API で補完 | publishedAt でソート可能 |
+| **D** | 別の検索方法を検討 | API以外の手段 |
+
+#### 推奨
+
+```
+YouTube検索は「冪等的なデータソース」としては使用不可
+→ 「特定時点のスナップショット」として扱う
+→ 複数回実行して統合するか、データの限界を明記する
+```
+
+---
+
 ## 詳細評価
 
 ### 1. X (Twitter) 現行 Actor
@@ -223,6 +321,7 @@ functional_fit:
   A4_date_filter: "FAIL"  # since:/until: が機能しない
   A5_pagination: "PASS"  # maxPages 1-100
   A6_max_items: "PASS"  # maxPages で制御
+  A6_max_limit: "maxPages: 100"  # 最大100ページ
 
 statistical_sampling:
   B1_search_order: "WARN"  # latest=新着順、top=人気順（要確認）
@@ -258,6 +357,7 @@ functional_fit:
   A4_date_filter: "PASS"  # since:/until: 動作確認済み
   A5_pagination: "PASS"  # maxItems
   A6_max_items: "PASS"  # maxItems で制御
+  A6_max_limit: "要確認"  # 最大上限数を確認できていない
 
 statistical_sampling:
   B1_search_order: "PASS"  # 時系列でソート可能
@@ -275,11 +375,12 @@ recommendations:
   - "期間指定研究のデフォルトActorとして採用"
   - "課金モデルの詳細確認を推奨"
   - "重複率の検証を実施"
+  - "最大上限数の確認を推奨"
 ```
 
 ---
 
-### 3. YouTube
+### 3. YouTube (現行)
 
 ```yaml
 actor_id: "gJvjeCYNraSfhIaNd"
@@ -294,6 +395,7 @@ functional_fit:
   A4_date_filter: "FAIL"  # なし
   A5_pagination: "PASS"  # max_videos 1-100
   A6_max_items: "PASS"  # max_videos で制御
+  A6_max_limit: "max_videos: 100"  # 最大100件
 
 statistical_sampling:
   B1_search_order: "PASS"  # API補完後（2026-10-09検証）
@@ -311,6 +413,45 @@ evidence:
 recommendations:
   - "YouTube Data API で publishedAt を取得"
   - "B2期間正確性: 日付フィルタ不可のため代替方法を検討"
+  - "期間指定が必要な場合は h7sDV53CddomktSi5 に切替"
+```
+
+---
+
+### 3.5. YouTube (新規: 日付フィルタ対応)
+
+```yaml
+actor_id: "h7sDV53CddomktSi5"
+actor_name: "streamers/youtube-scraper"
+decision: "PASS"
+score: "23/23 (100%)"
+
+functional_fit:
+  A1_input_schema: "PASS"  # searchQueries, maxResults, dateFilter
+  A2_output_schema: "PASS"  # id, date (ISO8601), channelName, viewCount
+  A3_language_filter: "PASS"  # 日本語クエリ対応
+  A4_date_filter: "PASS"  # hour/day/week/month/year
+  A5_pagination: "PASS"  # maxResults
+  A6_max_items: "PASS"  # maxResults で制御
+  A6_max_limit: "要確認"  # 最大上限数を確認できていない
+
+statistical_sampling:
+  B1_search_order: "PASS"  # sortingOrder: date で時系列ソート
+  B2_date_accuracy: "PASS"  # dateFilter 動作確認済み
+  B3_completeness: "PASS"  # 期間指定で取得
+  B4_reproducibility: "WARN"  # 要確認
+  B5_duplicate_rate: "WARN"  # 要確認
+  B6_missing_pattern: "WARN"  # 要確認
+
+evidence:
+  - "テスト実行: Run ID uQnbRltcZjXJlSsRa"
+  - "日付範囲: 2026-09-15 〜 2026-10-01"
+  - "取得件数: 5件"
+
+recommendations:
+  - "期間指定研究のデフォルトActorとして採用"
+  - "最大上限数の確認を推奨"
+  - "重複率の検証を実施"
 ```
 
 ---
