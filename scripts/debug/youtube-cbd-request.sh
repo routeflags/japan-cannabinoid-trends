@@ -82,16 +82,8 @@ echo "  ユニークID数: $UNIQUE_COUNT"
 echo "  重複数: $DUPLICATE_COUNT"
 echo ""
 
-# Step 4: 重複分析
-echo "【Step 4】重複分析..."
-echo "  重複回数の分布:"
-sort "/tmp/${RUN_ID}_ids.txt" | uniq -c | awk '{print $1}' | sort | uniq -c | sort -rn | while read count freq; do
-  echo "    ${freq}回重複: ${count}件"
-done
-echo ""
-
-# Step 5: SQLite 格納
-echo "【Step 5】SQLite 格納中..."
+# Step 4: SQLite 格納
+echo "【Step 4】SQLite 格納中..."
 
 # Run 情報を格納
 sqlite3 "$DB_PATH" << EOF
@@ -113,8 +105,8 @@ done < "/tmp/${RUN_ID}_unique.txt"
 echo "  ✅ 格納完了"
 echo ""
 
-# Step 6: 一致率計算
-echo "【Step 6】一致率計算..."
+# Step 5: 一致率計算
+echo "【Step 5】一致率計算..."
 sqlite3 "$DB_PATH" << EOF
 WITH cumulative AS (
     SELECT DISTINCT rv.video_id
@@ -136,7 +128,7 @@ EOF
 
 echo ""
 
-# Step 7: 結果サマリー
+# Step 6: 結果サマリー
 echo "========================================="
 echo "結果サマリー"
 echo "========================================="
