@@ -1,0 +1,195 @@
+#!/bin/bash
+# YouTube 日付フィルタ対応 Actor デバッグスクリプト
+#
+# 使い方:
+#   bash scripts/debug/youtube-scraper-request.sh [max_results] [search_term] [date_filter]
+#
+# 例:
+#   bash scripts/debug/youtube-scraper-request.sh 50 "CBD リキッド" "month"
+#   bash scripts/debug/youtube-scraper-request.sh 100 "CBD リキッド" "week"
+#   bash scripts/debug/youtube-scraper-request.sh 20 "CBD リキッド" "year"
+
+set -e
+
+# 設定
+DB_PATH="${DB_PATH:-datasets/youtube-consistency/data/trends.db}"
+APIFY_ENV="${APIFY_ENV:-/Users/bookair18/OS/media/06_symphony/symphony_workspaces/.env.d/apify.env}"
+ACTOR_ID="h7sDV53CddomktSi5"
+
+# パラメータ
+MAX_RESULTS="${1:-50}"
+SEARCH_TERM="${2:-CBD リキッド}"
+DATE_FILTER="${3:-month}"
+
+# Apify トークン読み込み
+source "$APIFY_ENV"
+
+echo "========================================="
+echo "YouTube Scraper デバッグスクリプト"
+echo "========================================="
+echo ""
+echo "Actor: $ACTOR_ID"
+echo "検索クエリ: $SEARCH_TERM"
+echo "maxResults: $MAX_RESULTS"
+echo "dateFilter: $DATE_FILTER"
+echo "データベース: $DB_PATH"
+echo ""
+
+# 実行 ID 生成
+RUN_ID="scraper_$(date -u +"%Y%m%dT%H%M%SZ")"
+echo "Run ID: $RUN_ID"
+echo ""
+
+# Step 1: API 実行
+echo "【Step 1】API 実行中..."
+R=$(curl -s -X POST "https://api.apify.com/v2/acts/${ACTOR_ID}/runs?waitForFinish=90" \
+  -H "Authorization: Bearer $APIFY_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d "{
+    \"searchQueries\": [\"${SEARCH_TERM}\"],
+    \"maxResults\": ${MAX_RESULTS},
+    \"maxResultsShorts\": 0,
+    \"maxResultStreams\": 0,
+    \"dateFilter\": \"${DATE_FILTER}\",
+    \"sortingOrder\": \"date\"
+  }")
+
+APIFY_RUN_ID=$(echo "$R" | jq -r '.data.id')
+DATASET_ID=$(echo "$R" | jq -r '.data.defaultDatasetId')
+STATUS=$(echo "$R" | jq -r '.data.status')
+
+echo "  Apify Run ID: $APIFY_RUN_ID"
+echo "  Dataset ID: $DATASET_ID"
+echo "  Status: $STATUS"
+echo ""
+
+if [ "$STATUS" != "SUCCEEDED" ]; then
+  echo "❌ API 実行失敗"
+  echo "$R" | jq .
+  exit 1
+fi
+
+sleep 3
+
+# Step 2: データ取得
+echo "【Step 2】データ取得中..."
+curl -s "https://api.apify.com/v2/datasets/${DATASET_ID}/items?clean=true&format=json" \
+  -H "Authorization: Bearer $APIFY_TOKEN" > "/tmp/${RUN_ID}_raw.json"
+
+RECORD_COUNT=$(jq 'length' "/tmp/${RUN_ID}_raw.json")
+echo "  取得件数: $RECORD_COUNT"
+echo ""
+
+# Step 3: videoId 抽出
+echo "【Step 3】videoId 抽出中..."
+jq -r '.[].id' "/tmp/${RUN_ID}_raw.json" | sort > "/tmp/${RUN_ID}_ids.txt"
+jq -r '.[].id' "/tmp/${RUN_ID}_raw.json" | sort -u > "/tmp/${RUN_ID}_unique.txt"
+
+TOTAL_LINES=$(wc -l < "/tmp/${RUN_ID}_ids.txt")
+UNIQUE_COUNT=$(wc -l < "/tmp/${RUN_ID}_unique.txt")
+DUPLICATE_COUNT=$((TOTAL_LINES - UNIQUE_COUNT))
+
+echo "  総行数: $TOTAL_LINES"
+echo "  ユニークID数: $UNIQUE_COUNT"
+echo "  重複数: $DUPLICATE_COUNT"
+echo ""
+
+# Step 4: 日付範囲確認
+echo "【Step 4】日付範囲確認..."
+python3 << 'EOF'
+import json
+from datetime import datetime
+
+with open(f"/tmp/{run_id}_raw.json") as f:
+    data = json.load(f)
+
+dates = [item.get('date') for item in data if item.get('date')]
+if dates:
+    min_date = min(dates)
+    max_date = max(dates)
+    print(f"  最古: {min_date[:10]}")
+    print(f"  最新: {max_date[:10]}")
+    print(f"  範囲: {(datetime.fromisoformat(max_date.replace('Z', '+00:00')) - datetime.fromisoformat(min_date.replace('Z', '+00:00'))).days} 日間")
+else:
+    print("  ⚠️ 日付データなし")
+EOF
+echo ""
+
+# Step 5: SQLite 格納
+echo "【Step 5】SQLite 格納中..."
+
+# Run 情報を格納
+sqlite3 "$DB_PATH" << EOF
+INSERT OR REPLACE INTO runs (run_id, search_term, max_videos, apify_dataset_id, collection_timestamp, record_count, unique_count, collector, collector_version)
+VALUES ('${RUN_ID}', '${SEARCH_TERM}', ${MAX_RESULTS}, '${DATASET_ID}', datetime('now'), ${RECORD_COUNT}, ${UNIQUE_COUNT}, 'apify', 'youtube-scraper');
+EOF
+
+# 動画情報を格納
+while IFS= read -r vid; do
+  sqlite3 "$DB_PATH" << EOF
+INSERT OR IGNORE INTO videos (video_id, first_seen_run, first_seen_at)
+VALUES ('${vid}', '${RUN_ID}', datetime('now'));
+
+INSERT OR IGNORE INTO run_videos (run_id, video_id)
+VALUES ('${RUN_ID}', '${vid}');
+EOF
+done < "/tmp/${RUN_ID}_unique.txt"
+
+echo "  ✅ 格納完了"
+echo ""
+
+# Step 6: 一致率計算
+echo "【Step 6】一致率計算..."
+sqlite3 "$DB_PATH" << EOF
+WITH cumulative AS (
+    SELECT DISTINCT rv.video_id
+    FROM run_videos rv
+    JOIN runs r ON rv.run_id = r.run_id
+    WHERE r.run_id != '${RUN_ID}'
+),
+current_run AS (
+    SELECT DISTINCT video_id
+    FROM run_videos
+    WHERE run_id = '${RUN_ID}'
+)
+SELECT 
+    COUNT(*) as unique_count,
+    SUM(CASE WHEN c.video_id IN (SELECT video_id FROM cumulative) THEN 1 ELSE 0 END) as already_collected,
+    SUM(CASE WHEN c.video_id NOT IN (SELECT video_id FROM cumulative) THEN 1 ELSE 0 END) as new_videos
+FROM current_run c;
+EOF
+
+echo ""
+
+# Step 7: 結果サマリー
+echo "========================================="
+echo "結果サマリー"
+echo "========================================="
+echo ""
+echo "【Run 情報】"
+echo "  Run ID: $RUN_ID"
+echo "  Apify Run ID: $APIFY_RUN_ID"
+echo "  検索クエリ: $SEARCH_TERM"
+echo "  maxResults: $MAX_RESULTS"
+echo "  dateFilter: $DATE_FILTER"
+echo ""
+
+echo "【累積統計】"
+sqlite3 "$DB_PATH" << EOF
+SELECT 
+    '総ユニーク動画数: ' || COUNT(DISTINCT v.video_id)
+FROM videos v
+JOIN run_videos rv ON v.video_id = rv.video_id
+JOIN runs r ON rv.run_id = r.run_id
+WHERE r.search_term = '${SEARCH_TERM}';
+EOF
+
+echo ""
+echo "【ファイルパス】"
+echo "  Raw: /tmp/${RUN_ID}_raw.json"
+echo "  IDs: /tmp/${RUN_ID}_ids.txt"
+echo "  Unique: /tmp/${RUN_ID}_unique.txt"
+echo ""
+echo "========================================="
+echo "完了"
+echo "========================================="
