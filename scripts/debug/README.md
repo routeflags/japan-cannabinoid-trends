@@ -7,10 +7,10 @@
 | [`youtube_apify_store.py`](./youtube_apify_store.py) | **YouTube 収集本体**（Apify）→ SQLite 格納 |
 | [`x_posts_date_range.py`](./x_posts_date_range.py) | **X (Twitter) 収集**（Apify）→ SQLite 格納 |
 | [`youtube_idempotency_check.sh`](./youtube_idempotency_check.sh) | YouTube の冪等性（再現性）検証 |
-| `youtube_api_date_range.py` | ⚠️ **旧: YouTube Data API v3 版。利用規約の観点から計画から除外済み** |
 
 > **YouTube Data API v3 は使用しない。** 利用規約上の判断により計画から除外。
-> 収集はすべて Apify 経由で行う。
+> 収集はすべて Apify 経由で行う。旧 API v3 スクリプト
+> (`youtube_api_date_range.py`) は削除済み。
 
 ---
 

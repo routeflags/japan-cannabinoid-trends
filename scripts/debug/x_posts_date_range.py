@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """X (Twitter) 投稿 日付範囲指定データ取得（リジューム対応）
 
-YouTube 版 (youtube_api_date_range.py) と同一の設計思想で、Apify Actor
+YouTube 版 (youtube_apify_store.py) と同様に、Apify Actor
 `rBaTEHzveTxZPraGv` (x-posts-search) を使って日付範囲指定で投稿を取得する。
 
 Usage:
@@ -51,6 +51,8 @@ DEFAULT_APIFY_ENV = (
 DEFAULT_CHECKPOINT_ROOT = "datasets/x-consistency/data/checkpoints"
 DEFAULT_APIFY_BASE = "https://api.apify.com"
 ACTOR_ID = "rBaTEHzveTxZPraGv"  # x-posts-search
+POLL_TIMEOUT = 900     # Actor 完了待ちの最大秒数 (15分)
+POLL_INTERVAL = 10     # ポーリング間隔 (秒)
 
 # 課金・レート制限を示すエラー判定
 BILLING_REASONS = re.compile(
@@ -160,29 +162,43 @@ def build_query(search_term, published_after, published_before):
 
 
 def run_actor(api_base, token, actor_id, run_input, wait_seconds=180):
-    """Actor を実行し、完了を待って run オブジェクトを返す。"""
+    """Actor を実行し、完了 (SUCCEEDED) をポーリングで待って run オブジェクトを返す。
+
+    未完了のまま dataset を取得すると不完全なデータを「正常」と誤認するため、
+    SUCCEEDED を確認できない限り例外を送出する。
+    """
     url = (
         f"{api_base}/v2/acts/{actor_id}/runs"
         f"?waitForFinish={int(wait_seconds)}"
     )
     run = _request(url, method="POST", payload=run_input, token=token)
-    status = (run.get("data") or {}).get("status")
+    data = run.get("data") or {}
+    status = data.get("status")
+    run_id = data.get("id")
+    if not run_id:
+        raise ApiError(f"run_id が返りませんでした: {str(run)[:200]}")
 
-    # 未完了ならポーリング（最大5分）
-    run_id = (run.get("data") or {}).get("id")
-    deadline = time.time() + 300
-    while status in ("RUNNING", "READY", "SUCCEEDED") and status != "SUCCEEDED":
+    # 完了までポーリング（waitForFinish で未完了なら RUNNING/READY のまま）
+    deadline = time.time() + POLL_TIMEOUT
+    while status in ("RUNNING", "READY"):
         if time.time() > deadline:
-            break
-        time.sleep(5)
+            raise ApiError(
+                f"Actor 完了待ちがタイムアウト (status={status}, "
+                f"{POLL_TIMEOUT}秒)。run_id={run_id}"
+            )
+        time.sleep(POLL_INTERVAL)
         run = _request(
             f"{api_base}/v2/actor-runs/{run_id}", method="GET", token=token
         )
-        status = (run.get("data") or {}).get("status")
+        data = run.get("data") or {}
+        status = data.get("status")
 
-    if status == "FAILED":
-        raise ApiError(f"Actor 実行失敗 (run_id={run_id})")
-    return run.get("data") or {}
+    if status != "SUCCEEDED":
+        raise ApiError(
+            f"Actor 実行失敗: status={status} "
+            f"msg={data.get('statusMessage')} run_id={run_id}"
+        )
+    return data
 
 
 def fetch_dataset_items(api_base, token, dataset_id):

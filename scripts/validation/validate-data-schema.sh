@@ -493,6 +493,93 @@ for file in "${REQUIRED_FILES[@]}"; do
 done
 
 # =============================================================================
+# 5. SQLite DB 整合性（trends.db）
+# =============================================================================
+
+print_header "5. SQLite DB 整合性"
+
+validate_trend_db() {
+  local db="$1" label="$2"
+  local idcol="$3" mcol="$4" reltable="$5"
+
+  if [ ! -f "$db" ]; then
+    print_warn "$label: DB が存在しません ($db)"
+    return
+  fi
+
+  # unique_count と 実際のリレーション件数の一致
+  # （record_count は raw 件数＝重複込み。run_videos はユニークのみなので
+  #   一致するのは unique_count の側）
+  local mismatch
+  mismatch=$(sqlite3 "$db" "
+    SELECT COUNT(*) FROM (
+      SELECT r.run_id
+      FROM runs r
+      LEFT JOIN $reltable x ON x.run_id = r.run_id
+      GROUP BY r.run_id, r.unique_count
+      HAVING COALESCE(COUNT(x.$idcol), 0) != COALESCE(r.unique_count, -1)
+    );" 2>/dev/null)
+  if [ "$mismatch" = "0" ]; then
+    print_pass "$label: runs.record_count が実リレーション件数と一致"
+  else
+    print_fail "$label: runs.record_count と実件数が不一致 ($mismatch run)"
+  fi
+
+  # ダングリング参照（runs に存在しない run_id）
+  local dangling
+  dangling=$(sqlite3 "$db" "
+    SELECT COUNT(*) FROM $reltable x
+    WHERE x.run_id NOT IN (SELECT run_id FROM runs);" 2>/dev/null)
+  if [ "$dangling" = "0" ]; then
+    print_pass "$label: ダングリング run_id なし"
+  else
+    print_fail "$label: 存在しない run_id への参照が $dangling 件"
+  fi
+
+  # マスタ側の初出 run 参照
+  local orphan
+  orphan=$(sqlite3 "$db" "
+    SELECT COUNT(*) FROM $mcol m
+    WHERE m.first_seen_run IS NOT NULL
+      AND m.first_seen_run NOT IN (SELECT run_id FROM runs);" 2>/dev/null)
+  if [ "$orphan" = "0" ]; then
+    print_pass "$label: first_seen_run の参照整合 OK"
+  else
+    print_fail "$label: first_seen_run の dangling が $orphan 件"
+  fi
+
+  # 日付形式（ISO 8601）
+  local bad_date
+  bad_date=$(sqlite3 "$db" "
+    SELECT COUNT(*) FROM $mcol
+    WHERE $({ [ "$mcol" = "videos" ] && echo "published_at" || echo "created_at"; }) IS NOT NULL
+      AND NOT $({ [ "$mcol" = "videos" ] && echo "published_at" || echo "created_at"; }) GLOB '[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]*';" 2>/dev/null)
+  if [ "$bad_date" = "0" ]; then
+    print_pass "$label: 日付形式が ISO 8601"
+  else
+    print_fail "$label: 日付形式が不正な行が $bad_date 件"
+  fi
+}
+
+validate_trend_db "datasets/youtube-consistency/data/trends.db" "YouTube" "video_id" "videos" "run_videos"
+validate_trend_db "datasets/x-consistency/data/trends.db" "X" "post_id" "posts" "run_posts"
+
+# URL 整合（video_id が URL に含まれるか）
+# Apify は &list= / &t= 等のパラメータ付き URL を返すため厳密一致は求めない
+YT_DB="datasets/youtube-consistency/data/trends.db"
+if [ -f "$YT_DB" ]; then
+  BAD_URL=$(sqlite3 "$YT_DB" "
+    SELECT COUNT(*) FROM videos
+    WHERE url IS NOT NULL
+      AND instr(url, video_id) = 0;" 2>/dev/null)
+  if [ "$BAD_URL" = "0" ]; then
+    print_pass "YouTube: url に video_id が含まれる"
+  else
+    print_fail "YouTube: url に video_id が含まれない行が $BAD_URL 件"
+  fi
+fi
+
+# =============================================================================
 # サマリー
 # =============================================================================
 
