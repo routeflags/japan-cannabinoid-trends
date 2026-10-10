@@ -92,6 +92,7 @@
 | X (新規) rBaTEHzveTxZPraGv | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | **要確認** |
 | YouTube gJvjeCYNraSfhIaNd | ✅ | ⚠️ | ✅ | ❌ | ✅ | ✅ | **max_videos: 100** |
 | YouTube h7sDV53CddomktSi5 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | **要確認** |
+| YouTube API v3 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | **maxResults: 50** |
 | TikTok jQfZ1h9FrcWcliKZX | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | **limit: 10000** |
 | Instagram TxU0ZBQIHdR20dr9C | ✅ | ✅ | ⚠️ | ❌ | ✅ | ✅ | **maxPages: 100** |
 | LinkedIn M2FMdjRVeF1HPGFcc | ✅ | ✅ | ✅ | N/A | ✅ | ✅ | **要確認** |
@@ -102,12 +103,14 @@
 |-------|:-----------:|:-------------:|:---------:|:---------:|:---------:|:---------------:|
 | X (現行) | ⚠️ 要確認 | ❌ | ⚠️ | ⚠️ | ⚠️ | ⚠️ |
 | X (新規) | ✅ | ✅ | ✅ | ✅ | ⚠️ | ⚠️ |
-| YouTube | ✅* | ❌ | ⚠️ | ⚠️ | ⚠️ | ⚠️ |
+| YouTube (現行) | ✅* | ❌ | ⚠️ | ⚠️ | ⚠️ | ⚠️ |
+| YouTube (新規) | ✅ | ✅ | ✅ | ⚠️ | ⚠️ | ⚠️ |
+| YouTube API v3 | ✅ | ✅ | ✅ | ⚠️ | ⚠️ | ⚠️ |
 | TikTok | ✅ | ✅ | ✅ | ✅ | ⚠️ | ⚠️ |
 | Instagram | ❌ | ❌ | ❌ | ❌ | ⚠️ | ⚠️ |
 | LinkedIn | N/A | N/A | N/A | ✅ | N/A | N/A |
 
-**注:** YouTube B1 は API 補完後の結果（2026-10-09 検証）
+**注:** YouTube (現行) B1 は API 補完後の結果（2026-10-09 検証）
 
 ### C. コスト効率（4項目）
 
@@ -115,7 +118,9 @@
 |-------|:-------------:|:--------:|:---------------:|:--------------:|
 | X (現行) | PAY_PER_EVENT | $0.0025 | $0.052 | $0.252 |
 | X (新規) | PAY_PER_EVENT | 要確認 | 要確認 | 要確認 |
-| YouTube | PAY_PER_EVENT | $0.0005 | $0.005 | $0.050 |
+| YouTube (現行) | PAY_PER_EVENT | $0.0005 | $0.005 | $0.050 |
+| YouTube (新規) | PAY_PER_EVENT | $0.003 | $0.015 | $0.300 |
+| YouTube API v3 | 無料 | $0.000 | $0.000 | $0.000 |
 | TikTok | PAY_PER_EVENT | $0.0004 | $0.008 | $0.040 |
 | Instagram | PAY_PER_EVENT | $0.0025 | $0.052 | $0.252 |
 | LinkedIn | PAY_PER_EVENT | $0.004 | $0.18 | $0.50 |
@@ -126,7 +131,9 @@
 |-------|:------------:|:-------------:|:-----------:|:---------:|
 | X (現行) | 不要 | 緩い | 6.1秒 | 高 |
 | X (新規) | 不要 | 不明 | 不明 | 高 |
-| YouTube | 不要 | なし | 不明 | 高 |
+| YouTube (現行) | 不要 | なし | 不明 | 高 |
+| YouTube (新規) | 不要 | なし | 不明 | 高 |
+| YouTube API v3 | 不要 | **あり** | 短い | 高 |
 | TikTok | 不要 | なし | 30秒 | 高 |
 | Instagram | 不要 | 不明 | 不明 | 低 |
 | LinkedIn | 不要 | 寛容 | 20.5秒 | 高 |
@@ -137,7 +144,9 @@
 |-------|:----------:|:-----------:|:---------------:|
 | X (現行) | ✅ | 制限あり | 公開ツイートのみ |
 | X (新規) | ✅ | 制限あり | 公開ツイートのみ |
-| YouTube | ✅ | 制限あり | 公開動画のみ |
+| YouTube (現行) | ✅ | 制限あり | 公開動画のみ |
+| YouTube (新規) | ✅ | 制限あり | 公開動画のみ |
+| YouTube API v3 | ✅ | 制限あり | 公開動画のみ |
 | TikTok | ✅ | 制限あり | 公開動画のみ |
 | Instagram | ✅ | 制限あり | 公開投稿のみ |
 | LinkedIn | ✅ | 制限あり | 公開プロフィールのみ |
@@ -152,12 +161,14 @@
 |-------|:-----:|:-----:|:-----:|:-----:|:-----:|:-------------:|:------:|
 | X (現行) | 9 | 4 | 4 | 4 | 3 | **24** | 52% |
 | X (新規) | 12 | 8* | 4* | 4 | 3 | **31*** | **91%*** |
-| YouTube | 9 | 3 | 4 | 4 | 3 | **23** | 52% |
+| YouTube (現行) | 9 | 3 | 4 | 4 | 3 | **23** | 52% |
+| YouTube (新規) | 12 | 8* | 4* | 4 | 3 | **31*** | **91%*** |
+| YouTube API v3 | 12 | 8* | 4 | 3 | 3 | **30*** | **87%*** |
 | TikTok | 12 | 8* | 4 | 4 | 3 | **31*** | **91%*** |
 | Instagram | 8 | 0 | 4 | 2 | 3 | **17** | 37% |
 | LinkedIn | 10 | N/A | 3 | 4 | 3 | **20** | N/A |
 
-**注:** X新規とTikTokは課金モデルが一部不明のため暫定スコア
+**注:** X新規、YouTube新規、YouTube API v3、TikTokは課金モデルが一部不明のため暫定スコア
 
 ---
 
@@ -424,7 +435,7 @@ recommendations:
 actor_id: "h7sDV53CddomktSi5"
 actor_name: "streamers/youtube-scraper"
 decision: "PASS"
-score: "23/23 (100%)"
+score: "31/23 (91%)"
 
 functional_fit:
   A1_input_schema: "PASS"  # searchQueries, maxResults, dateFilter
@@ -452,6 +463,53 @@ recommendations:
   - "期間指定研究のデフォルトActorとして採用"
   - "最大上限数の確認を推奨"
   - "重複率の検証を実施"
+```
+
+---
+
+### 3.6. YouTube Data API v3 (公式)
+
+```yaml
+actor_id: "youtube-data-api-v3"
+actor_name: "Google YouTube Data API v3"
+decision: "PASS"
+score: "30/23 (87%)"
+
+functional_fit:
+  A1_input_schema: "PASS"  # q, publishedAfter, publishedBefore, maxResults
+  A2_output_schema: "PASS"  # id.videoId, snippet.publishedAt (ISO8601)
+  A3_language_filter: "PASS"  # 日本語クエリ対応
+  A4_date_filter: "PASS"  # publishedAfter + publishedBefore（期間指定可能）
+  A5_pagination: "PASS"  # nextPageToken でページング
+  A6_max_items: "PASS"  # maxResults (0-50)
+  A6_max_limit: "maxResults: 50"  # 1回あたり最大50件
+
+statistical_sampling:
+  B1_search_order: "PASS"  # order: date で時系列ソート
+  B2_date_accuracy: "PASS"  # publishedAfter/publishedBefore 動作確認済み
+  B3_completeness: "PASS"  # 期間指定で取得
+  B4_reproducibility: "WARN"  # 要確認
+  B5_duplicate_rate: "WARN"  # 要確認
+  B6_missing_pattern: "WARN"  # 要確認
+
+cost_analysis:
+  C1_pricing_model: "無料"
+  C2_unit_cost: "$0.000"
+  C3_test_cost: "$0.000"
+  C4_100item_cost: "$0.000"
+  quota: "10,000 units/日"
+  search_cost: "100 units/回"
+
+evidence:
+  - "テスト実行: Run ID yt_api_20261010T090930Z"
+  - "日付範囲: 2026-01-01 〜 2026-04-01"
+  - "取得件数: 39件"
+  - "実際の日付範囲: 2026-01-02 〜 2026-03-30"
+
+recommendations:
+  - "期間指定研究のデフォルトAPIとして採用"
+  - "1日あたりの検索回数を制御（100回/日）"
+  - "大量データが必要な場合は Apify Actor と併用"
 ```
 
 ---
@@ -607,3 +665,6 @@ recommendations:
 | 2026-10-09 | 初版作成 |
 | 2026-10-09 | YouTube B1検索順序検証結果を追加 |
 | 2026-10-09 | 各用語の定義を追記 |
+| 2026-10-10 | 最大上限数の定義を追記、A6列を追加 |
+| 2026-10-10 | YouTube (新規) h7sDV53CddomktSi5 の評価を追加 |
+| 2026-10-10 | YouTube Data API v3 (公式) の評価を追加 |
