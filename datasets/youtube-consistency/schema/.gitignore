@@ -1,2 +1,3 @@
-*
-!.gitignore
+# schema/ 配下はスキーマ定義を追跡する（再現性のため）。
+# DB ファイル等の生成物は data/ 配下に置く（data/.gitignore で除外）。
+

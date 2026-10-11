@@ -1,9 +1,12 @@
 # youtube-consistency — YouTube 検索結果の一貫性・重複分析
 
 YouTube 検索クエリに対する複数回の収集 Run の一貫性（一致率）を検証するデータセット。
+一貫性検証に加えて、**5 化合物の全期間スナップショット**と
+**CBD リキッドの 2016–2019 月次系列**を保持する YouTube データの main store としても機能する。
 
 - 仕様: `docs/specs/youtube-sqlite-design.md`
-- 状態: スキーマ整備済み・データ収集中
+- 状態: 一貫性検証は完了（同一クエリ 6 回取得で 39/39 = 100% 一致）。スナップショット 5 化合物格納済み
+- 関連レポート: [`research/youtube/20261012-youtube-consistency-and-cbd-timeline.md`](../../research/youtube/20261012-youtube-consistency-and-cbd-timeline.md)
 
 ## 収集方法
 
@@ -26,7 +29,20 @@ python3 scripts/debug/youtube_apify_store.py "HHBD リキッド" all
 - `lang:ja` は **YouTube 検索演算子として存在しない**（付けない）
 - Actor の完了（`SUCCEEDED`）をポーリングで待ってから dataset を取得する
 
-**YouTube Data API v3 は利用規約の観点から使用しない**（計画から除外）。
+## 収集ツールの経緯（v3 API データの削除について）
+
+本 dataset の開発過程では日付範囲指定の必要性から一時的に
+**YouTube Data API v3** 版の収集スクリプト（`youtube_api_date_range.py`、削除済み）を導入し、
+2016-01〜2019-12 の月次ウィンドウ 48 件分のデータを取得した。
+
+しかし [README かつての方針]「YouTube Data API v3 は利用規約の観点から使用しない」に照らし、
+**2026-10-12 に方針決定を行い、v3 由来の全 run（`collector='youtube-api'`、55 件）と
+関連 run_videos を DB から削除した**。削除前のバックアップは
+`data/trends.db.bak-20261011T1511Z`（Git 管理外・ローカル保持）。
+
+削除済みデータの集計結果（月次件数・公開年分布）は
+上記リサーチレポートに derived data として記録した。
+raw レコードの再取得は行わない。
 
 ## データベース
 
