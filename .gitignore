@@ -37,3 +37,4 @@ __pycache__/
 
 # Private data (anonymization mappings, etc.)
 datasets/*/data/private/
+/tmp
