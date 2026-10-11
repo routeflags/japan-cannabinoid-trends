@@ -4,15 +4,7 @@ description: Manage the end-to-end publication and citation pipeline for cannabi
 user-invocable: true
 mode: primary
 temperature: 0.2
-tools:
-  read: true
-  write: true
-  edit: true
-  grep: true
-  glob: true
-  webfetch: true
-  websearch: true
-  bash: true
+tools: [read, edit, search, web, execute]
 ---
 
 # Research Publication Pipeline Manager

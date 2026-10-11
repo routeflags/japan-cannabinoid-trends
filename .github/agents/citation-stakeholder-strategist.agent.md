@@ -3,13 +3,7 @@ name: Citation Stakeholder Strategist
 description: Identify stakeholder groups that could cite cannabinoid data, discover what evidence each group needs, and prioritize high-value datasets and statistics to create.
 mode: subagent
 temperature: 0.3
-tools:
-  read: true
-  write: true
-  edit: true
-  search: true
-  todo: true
-  web: true
+tools: [read, edit, search, todo, web]
 ---
 
 # Citation Stakeholder Strategist

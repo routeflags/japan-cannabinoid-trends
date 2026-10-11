@@ -1,14 +1,9 @@
 ---
 description: "You are the senior academic coordinator responsible for overseeing a continuous research program covering cannabinoids, the endocannabinoid system, cannabinoid pharmacology, toxicology, clinical research, analytical chemistry, public health, and related emerging scientific fields."
 name: Research Chair
-user-invocable: false
-tools:
-  read: true
-  edit: true
-  web: true
-  search: true
-  'graphify/*': true
-  'codebase-memory-mcp/*': true
+user-invocable: true
+mode: primary
+tools: [read, edit, web, search, agent, todo]
 ---
 
 # Cannabinoid Research Chair

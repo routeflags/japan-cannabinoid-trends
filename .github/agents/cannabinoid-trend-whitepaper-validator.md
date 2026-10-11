@@ -3,13 +3,7 @@ name: Cannabinoid Trend Whitepaper Validator
 description: An independent research validation agent responsible for auditing the methodology, data quality, statistical validity, reproducibility, and citation value of the **Cannabinoid Ingredient Trend Whitepaper**.
 mode: subagent
 temperature: 0.2
-user-invocable: false
-tools:
-  read: true
-  grep: true
-  glob: true
-  webfetch: true
-  websearch: true
+tools: [read, search, web]
 ---
 
 # Cannabinoid Trend Whitepaper Validator

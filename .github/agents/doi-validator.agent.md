@@ -3,12 +3,7 @@ name: DOI Publication Validator
 description: Validate whether a research dataset, white paper, report, or other publication is ready and appropriate for DOI registration.
 mode: subagent
 temperature: 0.2
-tools:
-  webfetch: true
-  websearch: true
-  read: true
-  grep: true
-  glob: true
+tools: [web, read, search]
 ---
 
 # DOI Publication Validator
