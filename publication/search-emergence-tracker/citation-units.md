@@ -39,7 +39,7 @@ Peak search interest occurred approximately three weeks before regulatory enforc
 **Interpretation:**
 Temporal association only. No causal relationship is inferred between regulation and search interest decline.
 
-**Source URL:** https://github.com/routeflags/japan-cannabinoid-trends/blob/main/research/20261002-first-mention-timeline.md
+**Source URL:** https://github.com/routeflags/japan-cannabinoid-trends/blob/main/research/google-trends/20261002-first-mention-timeline.md
 
 **Regulatory source:** https://www.mhlw.go.jp/seisakunitsuite/bunya/kenkou_iryou/iyakuhin/yakubuturanyou/oshirase/20231227-1.html
 
@@ -90,7 +90,7 @@ H4CBH emerged approximately eight months before HHBD in Japanese search data.
 **Interpretation:**
 Emergence sequence based on first non-zero weeks in 5-year Google Trends data.
 
-**Source URL:** https://github.com/routeflags/japan-cannabinoid-trends/blob/main/research/20261002-first-mention-timeline.md
+**Source URL:** https://github.com/routeflags/japan-cannabinoid-trends/blob/main/research/google-trends/20261002-first-mention-timeline.md
 
 ---
 
@@ -142,7 +142,7 @@ Six new cannabinoids appeared in Japanese Google Trends data during 2022-2025.
 **Interpretation:**
 First-mention detection based on non-zero weeks in 5-year Google Trends data.
 
-**Source URL:** https://github.com/routeflags/japan-cannabinoid-trends/blob/main/research/20261002-first-mention-timeline.md
+**Source URL:** https://github.com/routeflags/japan-cannabinoid-trends/blob/main/research/google-trends/20261002-first-mention-timeline.md
 
 ---
 

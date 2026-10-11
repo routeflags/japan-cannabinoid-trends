@@ -7,7 +7,7 @@
 | **対象** | 13化合物（既存4 + 新規9） |
 | **方法** | ルールベース分類 + Wilson 95% 信頼区間 |
 | **スクリプト** | `scripts/analysis/classify_x_data.py` |
-| **データ** | `research/20261008-x-classification-batch1.json` |
+| **データ** | `research/x/20261008-x-classification-batch1.json` |
 
 ---
 

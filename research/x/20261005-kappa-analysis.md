@@ -111,9 +111,9 @@
 
 | ファイル | 内容 |
 |---------|------|
-| `scripts/analyze_kappa.py` | kappa 計算スクリプト |
-| `research/20261005-kappa-analysis.json` | 分析結果（JSON） |
-| `research/20261005-kappa-analysis.md` | 本レポート |
+| `scripts/analysis/analyze_kappa.py` | kappa 計算スクリプト |
+| `research/x/20261005-kappa-analysis.json` | 分析結果（JSON） |
+| `research/x/20261005-kappa-analysis.md` | 本レポート |
 
 ---
 

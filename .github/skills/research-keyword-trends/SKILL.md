@@ -168,7 +168,7 @@ datasets/cannabinoid-multi-trends/data/raw/google_trends/
 
 3. 初出時期特定: 2021-09-26以前（5年ウィンドウ起点時点ですでに存在）
 
-4. レポート更新: research/20261002-first-mention-timeline.md
+4. レポート更新: research/google-trends/20261002-first-mention-timeline.md
 ```
 
 ### 例2: 新規キーワード CBC の調査
@@ -202,8 +202,8 @@ research/
 
 ## 関連
 
-- **研究計画書:** `research/20261002-keyword-coverage-expansion.md`
-- **既存レポート:** `research/20261002-first-mention-timeline.md`
+- **研究計画書:** `research/strategy/20261002-keyword-coverage-expansion.md`
+- **既存レポート:** `research/google-trends/20261002-first-mention-timeline.md`
 - **上位スキル:** `research-google-trends`（Google Trends 収集）
 - **データセット:** `datasets/cannabinoid-multi-trends/`
 - **タクソノミー:** `metadata/taxonomy/compound-taxonomy.skos.jsonld`

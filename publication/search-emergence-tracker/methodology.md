@@ -215,7 +215,7 @@ Google Trends は個別クエリを、各々のピーク値を100として正規
 
 化合物間の比較には、共通スケールの比較データ（`comparison_setA.json`）を使用してください。
 
-→ 詳細: `research/20261004-google-trends-comparison.md`
+→ 詳細: `research/google-trends/20261004-google-trends-comparison.md`
 
 ### フィールド定義
 

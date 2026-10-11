@@ -7,7 +7,7 @@
 | **対象** | HHC, THC-O, THCH（CBG 対照付き） |
 | **方法** | 時系列比較 + CBG 対照（差分の差分法の概念） |
 | **スクリプト** | `scripts/analysis/regulatory_comparison.py` |
-| **データ** | `research/20261008-regulatory-comparison-batch2.json` |
+| **データ** | `research/x/20261008-regulatory-comparison-batch2.json` |
 
 ---
 

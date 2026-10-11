@@ -217,7 +217,7 @@ CBN の検索興味度指数は、2026-06-01 の指定薬物規制後17週間で
 
 | ファイル | 内容 |
 |---------|------|
-| `research/20261004-google-trends-compound-summary.md` | 個別データの詳細 |
+| `research/google-trends/20261004-google-trends-compound-summary.md` | 個別データの詳細 |
 | `research/regulatory-status/SUMMARY.md` | 規制状況サマリー |
 | `datasets/cannabinoid-multi-trends/data/processed/early-warning-index-v1.csv` | 早期警戒指数 |
 | `datasets/cannabinoid-multi-trends/data/raw/google_trends/20261002T064236Z-google-trends-comparison-setA/comparison_setA.json` | 共通スケール比較データ |

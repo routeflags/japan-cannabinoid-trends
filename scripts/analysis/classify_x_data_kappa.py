@@ -195,7 +195,7 @@ def main():
         for compound, data in results.items()
     }
     
-    output_path = Path("research/20261006-x-content-classification.json")
+    output_path = Path("research/x/20261006-x-content-classification.json")
     with open(output_path, "w") as f:
         json.dump(output, f, ensure_ascii=False, indent=2)
     

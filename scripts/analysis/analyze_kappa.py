@@ -242,7 +242,7 @@ def main():
         print(f"{compound.upper()}: kappa = {data['kappa']:.3f} ({data['interpretation']})")
     
     # 結果をファイルに保存
-    output_path = Path("research/20261005-kappa-analysis.json")
+    output_path = Path("research/x/20261005-kappa-analysis.json")
     output_path.parent.mkdir(parents=True, exist_ok=True)
     
     with open(output_path, "w") as f:

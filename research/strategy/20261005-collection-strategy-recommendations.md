@@ -442,13 +442,13 @@ research_date: 2026-10-05
 task: Forward-looking collection strategy recommendations
 
 sources_reviewed:
-  - research/20261005-academic-research-youtube-review.md
-  - research/20261004-youtube-language-filter-analysis.md
-  - research/20261004-youtube-data-collection-plan.md
-  - research/20261004-x-data-status-report.md
-  - research/20261004-h4cbh-hhbd-sns-analysis.md
-  - research/20261004-cbx-rikiddo-youtube-12months-report.md
-  - research/20261004-google-trends-compound-summary.md
+  - research/youtube/20261005-academic-research-youtube-review.md
+  - research/youtube/20261004-youtube-language-filter-analysis.md
+  - research/youtube/20261004-youtube-data-collection-plan.md
+  - research/x/20261004-x-data-status-report.md
+  - research/x/20261004-h4cbh-hhbd-sns-analysis.md
+  - research/youtube/20261004-cbx-rikiddo-youtube-12months-report.md
+  - research/google-trends/20261004-google-trends-compound-summary.md
   - datasets/cbx-social-trends/methodology.md
   - datasets/cannabinoid-multi-trends/methodology.md
   - datasets/cannabinoid-multi-trends/data/processed/early-warning-index-v1.csv

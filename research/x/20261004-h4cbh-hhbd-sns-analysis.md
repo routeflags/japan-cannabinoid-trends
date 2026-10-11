@@ -293,7 +293,7 @@
 | `datasets/cannabinoid-social-trends/data/raw/x/20261004-h4cbh-hhbd/h4cbh/run_metadata.json` | H4CBH実行メタデータ |
 | `datasets/cannabinoid-social-trends/data/raw/x/20261004-h4cbh-hhbd/hhbd/records.json` | HHBD生データ（40件） |
 | `datasets/cannabinoid-social-trends/data/raw/x/20261004-h4cbh-hhbd/hhbd/run_metadata.json` | HHBD実行メタデータ |
-| `research/20261004-h4cbh-hhbd-sns-analysis.md` | 本分析レポート |
+| `research/x/20261004-h4cbh-hhbd-sns-analysis.md` | 本分析レポート |
 
 ---
 

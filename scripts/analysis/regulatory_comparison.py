@@ -205,7 +205,7 @@ def main():
         }
 
     # Save results
-    output_dir = "research"
+    output_dir = "research/x"
     output_path = os.path.join(output_dir, "20261008-regulatory-comparison-batch2.json")
 
     with open(output_path, "w") as f:

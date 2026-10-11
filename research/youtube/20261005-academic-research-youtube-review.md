@@ -53,11 +53,11 @@ Sub-questions:
 
 ### Research Documents Reviewed
 
-- `research/20261004-youtube-data-collection-plan.md`
-- `research/20261004-youtube-phase1-report.md`
-- `research/20261004-youtube-language-filter-analysis.md`
-- `research/20261004-cbx-youtube-12months-report.md`
-- `research/20261004-cbx-rikiddo-youtube-12months-report.md`
+- `research/youtube/20261004-youtube-data-collection-plan.md`
+- `research/youtube/20261004-youtube-phase1-report.md`
+- `research/youtube/20261004-youtube-language-filter-analysis.md`
+- `research/youtube/20261004-cbx-youtube-12months-report.md`
+- `research/youtube/20261004-cbx-rikiddo-youtube-12months-report.md`
 - `datasets/cannabinoid-multi-trends/methodology.md`
 - `datasets/cannabinoid-multi-trends/data/processed/collection-summary.md`
 - `datasets/cannabinoid-multi-trends/data/processed/search-emergence-tracker-v1.csv`
@@ -315,7 +315,7 @@ The collection log (`collection_log.txt`) confirms 0 records for all keyword-yea
 
 ### 1. API Quota Constraint (Critical)
 
-**Issue:** The YouTube Data API v3 provides 100 search queries per day. The collection plan (`research/20261004-youtube-data-collection-plan.md`) assumed 10,000 units/day, which is incorrect.
+**Issue:** The YouTube Data API v3 provides 100 search queries per day. The collection plan (`research/youtube/20261004-youtube-data-collection-plan.md`) assumed 10,000 units/day, which is incorrect.
 
 **Impact:**
 - Japanese keyword collection: 40 queries needed → complete failure
@@ -337,7 +337,7 @@ The collection log (`collection_log.txt`) confirms 0 records for all keyword-yea
 - English CBG/THC: 100% non-Japanese content
 - Cannot represent Japanese cannabinoid content trends
 
-**Evidence:** Language filter analysis (`research/20261004-youtube-language-filter-analysis.md`) correctly identifies this issue and recommends Japanese keyword collection—which then failed due to quota.
+**Evidence:** Language filter analysis (`research/youtube/20261004-youtube-language-filter-analysis.md`) correctly identifies this issue and recommends Japanese keyword collection—which then failed due to quota.
 
 **Assessment:** The methodology correctly identified the problem but could not implement the solution due to quota constraints.
 
@@ -456,9 +456,9 @@ The collection log (`collection_log.txt`) confirms 0 records for all keyword-yea
 | Document | Update Required |
 |----------|-----------------|
 | `datasets/cannabinoid-multi-trends/methodology.md` | Add YouTube API quota constraint (100/day) |
-| `research/20261004-youtube-data-collection-plan.md` | Correct quota assumption (10,000 → 100) |
-| `research/20261004-youtube-phase1-report.md` | Correct CBD record counts (actual: 3,831, not 0) |
-| `research/20261004-youtube-language-filter-analysis.md` | Update Japanese video counts (423, not 653) |
+| `research/youtube/20261004-youtube-data-collection-plan.md` | Correct quota assumption (10,000 → 100) |
+| `research/youtube/20261004-youtube-phase1-report.md` | Correct CBD record counts (actual: 3,831, not 0) |
+| `research/youtube/20261004-youtube-language-filter-analysis.md` | Update Japanese video counts (423, not 653) |
 
 ---
 
@@ -552,11 +552,11 @@ sources_reviewed:
   cbx_rikiddo_12months: 20261004T135457Z-youtube-cbx-rikiddo-12months
 
 research_documents_reviewed:
-  - research/20261004-youtube-data-collection-plan.md
-  - research/20261004-youtube-phase1-report.md
-  - research/20261004-youtube-language-filter-analysis.md
-  - research/20261004-cbx-youtube-12months-report.md
-  - research/20261004-cbx-rikiddo-youtube-12months-report.md
+  - research/youtube/20261004-youtube-data-collection-plan.md
+  - research/youtube/20261004-youtube-phase1-report.md
+  - research/youtube/20261004-youtube-language-filter-analysis.md
+  - research/youtube/20261004-cbx-youtube-12months-report.md
+  - research/youtube/20261004-cbx-rikiddo-youtube-12months-report.md
   - datasets/cannabinoid-multi-trends/methodology.md
   - datasets/cannabinoid-multi-trends/data/processed/collection-summary.md
   - datasets/cannabinoid-multi-trends/data/processed/search-emergence-tracker-v1.csv
@@ -601,11 +601,11 @@ publication_decision: READY_WITH_MINOR_CHANGES
 
 ### Research Documents
 
-9. YouTube データ収集計画書 — `research/20261004-youtube-data-collection-plan.md`
-10. YouTube データ収集レポート（フェーズ1） — `research/20261004-youtube-phase1-report.md`
-11. YouTube データ 言語フィルタ付き再分析 — `research/20261004-youtube-language-filter-analysis.md`
-12. CBX YouTube データ収集レポート（12ヶ月） — `research/20261004-cbx-youtube-12months-report.md`
-13. CBX リキッド YouTube データ収集レポート（12ヶ月） — `research/20261004-cbx-rikiddo-youtube-12months-report.md`
+9. YouTube データ収集計画書 — `research/youtube/20261004-youtube-data-collection-plan.md`
+10. YouTube データ収集レポート（フェーズ1） — `research/youtube/20261004-youtube-phase1-report.md`
+11. YouTube データ 言語フィルタ付き再分析 — `research/youtube/20261004-youtube-language-filter-analysis.md`
+12. CBX YouTube データ収集レポート（12ヶ月） — `research/youtube/20261004-cbx-youtube-12months-report.md`
+13. CBX リキッド YouTube データ収集レポート（12ヶ月） — `research/youtube/20261004-cbx-rikiddo-youtube-12months-report.md`
 14. Methodology — `datasets/cannabinoid-multi-trends/methodology.md`
 15. Collection Summary — `datasets/cannabinoid-multi-trends/data/processed/collection-summary.md`
 16. Japan Cannabinoid Search Emergence Tracker v1 — `datasets/cannabinoid-multi-trends/data/processed/search-emergence-tracker-v1.csv`

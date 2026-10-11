@@ -11,7 +11,7 @@ import glob
 REPO_ROOT = Path(__file__).parent.parent.parent
 
 # Load X classification data
-with open(REPO_ROOT / "research/20261008-x-classification-batch1.json") as f:
+with open(REPO_ROOT / "research/x/20261008-x-classification-batch1.json") as f:
     x_data = json.load(f)
 
 # YouTube data paths per compound

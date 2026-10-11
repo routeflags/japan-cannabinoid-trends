@@ -90,7 +90,7 @@
 
 ## 関連
 
-- 計画書: `research/20261002-keyword-coverage-expansion.md`
+- 計画書: `research/strategy/20261002-keyword-coverage-expansion.md`
 - 収集サマリー: `data/processed/collection-summary.md`
 - 既存研究: `datasets/cbx-search-trends/`, `datasets/cbx-social-trends/`
 - タクソノミー: `metadata/taxonomy/compound-taxonomy.skos.jsonld`

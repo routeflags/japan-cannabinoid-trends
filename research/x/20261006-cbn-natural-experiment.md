@@ -127,4 +127,4 @@
 | `datasets/.../cbn-pre-post-regulation/cbn_pre.json` | 規制前データ（100件） |
 | `datasets/.../cbn-pre-post-regulation/cbn_post.json` | 規制後データ（100件） |
 | `datasets/.../cbn-pre-post-regulation/cbg_control.json` | CBG 対照データ（100件） |
-| `research/20261006-cbn-natural-experiment.md` | 本レポート |
+| `research/x/20261006-cbn-natural-experiment.md` | 本レポート |

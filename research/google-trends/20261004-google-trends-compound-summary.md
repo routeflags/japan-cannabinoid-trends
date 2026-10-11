@@ -16,7 +16,7 @@
 
 **化合物間の比較には使用できません。** 横断比較には共通スケールデータ（`comparison_setA.json`）を使用してください。
 
-→ 詳細: `research/20261004-google-trends-comparison.md`
+→ 詳細: `research/google-trends/20261004-google-trends-comparison.md`
 
 ---
 

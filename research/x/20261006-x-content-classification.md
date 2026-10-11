@@ -111,6 +111,6 @@
 
 | ファイル | 内容 |
 |---------|------|
-| `scripts/classify_x_data.py` | 分類スクリプト |
-| `research/20261006-x-content-classification.json` | 分類結果（JSON） |
-| `research/20261006-x-content-classification.md` | 本レポート |
+| `scripts/analysis/classify_x_data_kappa.py` | 分類スクリプト |
+| `research/x/20261006-x-content-classification.json` | 分類結果（JSON） |
+| `research/x/20261006-x-content-classification.md` | 本レポート |
