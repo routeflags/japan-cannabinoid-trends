@@ -113,6 +113,14 @@ COLLECTION_PLAN_SCHEMA = {
                 "type": "string",
                 "empty": False,
             },
+            # G3: a study may require an exact absolute window.  When true,
+            # a collector whose compiled window is inexact (e.g. rolling
+            # relative timeframes with unverified boundaries) must not run
+            # (c.md §6.2 "exact=false の状態では、厳密な期間指定が必要な収集を
+            # 実行しない").  Optional and untouched by previous documents.
+            "exact_required": {
+                "type": "boolean",
+            },
         },
     },
     "purpose": {

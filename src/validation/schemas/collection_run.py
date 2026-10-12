@@ -204,6 +204,21 @@ COLLECTION_RUN_SCHEMA = {
             "temporal_contract_version": {
                 "type": "string",
             },
+            # G3 (c.md §8): the reference time that a relative collector
+            # window was resolved against (UTC ISO 8601), and the compiler's
+            # explicit limitations.  Optional: legacy runs and runs collected
+            # without a compiled window do not carry them.
+            "reference_time": {
+                "type": "string",
+                "iso_datetime": True,
+            },
+            "limitations": {
+                "type": "list",
+                "schema": {
+                    "type": "string",
+                    "empty": False,
+                },
+            },
             "calendar": {
                 "type": "string",
             },

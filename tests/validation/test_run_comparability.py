@@ -109,3 +109,53 @@ def test_unsupported_purpose_is_unknown():
 def test_explicit_direct_comparison_purpose_is_modelled():
     result = compare_runs(_run(), _run(), purpose="direct_comparison")
     assert result.status == "conditional"
+
+
+# ---------------------------------------------------------------------------
+# G3 §12: temporal comparability additions (T6/T7/T17)
+# ---------------------------------------------------------------------------
+
+
+def test_time_axis_mismatch_breaks_c2():
+    """G3-T17: publication time and observation time are different axes
+    (e.g. YouTube video publication vs view counts) and must never be
+    treated as the same axis."""
+
+    result = compare_runs(
+        _run(time_axis="video_published_at"), _run(time_axis="view_observed_at")
+    )
+    assert result.status == "not_comparable"
+    assert result.reasons == ["c2_time_axis_mismatch"]
+
+
+def _coverage(status: str) -> dict:
+    return {"coverage_version": "1.0.0", "coverage": {"status": status}}
+
+
+def test_coverage_partial_downgrades_to_conditional():
+    result = compare_runs(_run(), _run(), coverage_a=_coverage("partial"))
+    assert result.status == "conditional"
+    assert "t6_coverage_partial" in result.reasons
+
+
+def test_coverage_missing_blocks_comparison():
+    result = compare_runs(_run(), _run(), coverage_b=_coverage("missing"))
+    assert result.status == "not_comparable"
+    assert result.reasons == ["t6_coverage_missing"]
+
+
+def test_coverage_unknown_is_unknown():
+    result = compare_runs(_run(), _run(), coverage_a=_coverage("unknown"))
+    assert result.status == "unknown"
+    assert result.reasons == ["t7_missingness_not_explicit"]
+
+
+def test_complete_coverage_keeps_the_previous_verdict():
+    result = compare_runs(
+        _run(),
+        _run(),
+        coverage_a=_coverage("complete"),
+        coverage_b=_coverage("complete"),
+    )
+    assert result.status == "conditional"
+    assert result.reasons == ["coverage_and_sampling_review_required"]

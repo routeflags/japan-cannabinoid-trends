@@ -10,7 +10,12 @@ Flow (fail closed at every step):
 
 1. structural validation of the plan (``collection-plan-v1``);
 2. collector selection (capability gate, no auto-switch);
-3. pre-collection gate (registry / query / temporal semantics);
+3. pre-collection gate (registry / query / temporal semantics; G3 window
+   registry consistency when ``metadata/windows`` exists);
+3b. G3 window compilation: an absolute plan window is compiled into the
+   collector's registered parameters *before* collection and the result is
+   verified (fail closed: ``WINDOW_NOT_REPRESENTABLE``,
+   ``WINDOW_TIMEFRAME_CONFLICT``, ``WINDOW_EXACTNESS_UNAVAILABLE``);
 4. adapter contract + identity + capability cross-checks;
 5. adapter-specific plan validation;
 6. ``collect`` into ``<workspace>/.staging/<run-id>/`` with the payload,
@@ -43,6 +48,7 @@ from validation.gates import pre_collection_gate
 from validation.pipeline import validate_full
 from validation.reporting import Issue
 from validation.semantic import Registries
+from validation.windows import WindowCompilationError
 
 from collection.core.contracts import (
     ADAPTER_CONTRACT_VERSION,
@@ -101,6 +107,23 @@ def _git_commit(workspace_root) -> str | None:
         commit = result.stdout.strip()
         return commit or None
     return None
+
+
+def _resolve_window_compiler(collector_id):
+    """Resolve the G3 window compiler for a collector (lazy import).
+
+    The platform-name resolution table lives in ``collection.adapters`` only
+    (P1); the core never imports a vendor module directly.  A collector
+    without a compiler keeps the pre-G3 behaviour (the adapter owns its
+    period parameters).
+    """
+    if not collector_id:
+        return None
+    try:
+        from collection.adapters import get_window_compiler
+    except Exception:  # noqa: BLE001 - resolution is optional by design
+        return None
+    return get_window_compiler(collector_id)
 
 
 @dataclass
@@ -250,6 +273,7 @@ def run_collection(
     run_id: str | None = None,
     now: datetime | None = None,
     environment: dict | None = None,
+    compiler=None,
 ) -> PipelineResult:
     """Run the full collection pipeline for one plan (see module docstring)."""
     if registries is None:
@@ -271,6 +295,76 @@ def run_collection(
     pre_gate = pre_collection_gate(plan_document, registries=registries)
     if not pre_gate.passed:
         return PipelineResult(action="stopped", issues=pre_gate.issues)
+
+    # 3b. G3 window compilation: the absolute window is verified against the
+    # collector's registered vocabulary *before* anything is collected
+    # (c.md §6/§P6: no silent fallback; unsupported windows must not start a
+    # collection with a different period).
+    moment = now or datetime.now(timezone.utc)
+    window = plan.get("window") if isinstance(plan.get("window"), dict) else {}
+    if compiler is None:
+        compiler = _resolve_window_compiler(collector_entry.get("collector_id"))
+    compiled = None
+    if compiler is not None and window:
+        try:
+            compiled = compiler.compile(
+                window,
+                reference_time=moment,
+                capabilities=collector_entry.get("capabilities"),
+            )
+        except WindowCompilationError as error:
+            return PipelineResult(
+                action="stopped",
+                issues=[
+                    _issue(
+                        "WINDOW_NOT_REPRESENTABLE",
+                        "/window",
+                        "window compilation refused ("
+                        + ", ".join(error.codes)
+                        + "): "
+                        + str(error),
+                    )
+                ],
+            )
+    effective_plan = plan
+    if compiled is not None:
+        # Source-agnostic merge (P1): the compiler's parameters are merged
+        # into the plan's adapter extension area; a plan that already
+        # declares a conflicting non-empty value stops the run (P6: the
+        # period is never switched silently).
+        effective_plan = dict(plan)
+        query = dict(plan.get("query")) if isinstance(plan.get("query"), dict) else {}
+        for key, value in compiled.parameters.items():
+            declared = query.get(key)
+            if key in query and declared not in (None, "") and declared != value:
+                return PipelineResult(
+                    action="stopped",
+                    issues=[
+                        _issue(
+                            "WINDOW_TIMEFRAME_CONFLICT",
+                            f"/query/{key}",
+                            "the plan's declared period parameter does not match "
+                            f"the compiled window ({declared!r} != {value!r}); "
+                            "the period is never switched silently (P6)",
+                        )
+                    ],
+                )
+            query[key] = value
+        effective_plan["query"] = query
+        if window.get("exact_required") is True and compiled.exact is False:
+            return PipelineResult(
+                action="stopped",
+                issues=[
+                    _issue(
+                        "WINDOW_EXACTNESS_UNAVAILABLE",
+                        "/window/exact_required",
+                        "the plan requires an exact window but the compiled "
+                        "collector window is inexact (c.md §6.2); record "
+                        "exact_required only for collectors with verified "
+                        "boundaries",
+                    )
+                ],
+            )
 
     # 4. adapter contract / identity / capability cross-checks
     contract_violations = check_adapter_contract(adapter)
@@ -310,8 +404,9 @@ def run_collection(
             ],
         )
 
-    # 5. adapter-specific plan validation
-    adapter_violations = adapter.validate_plan(plan)
+    # 5. adapter-specific plan validation (against the effective plan, i.e.
+    # with the compiled timeframe when a window compiler ran)
+    adapter_violations = adapter.validate_plan(effective_plan)
     if adapter_violations:
         return PipelineResult(
             action="stopped",
@@ -322,7 +417,6 @@ def run_collection(
         )
 
     # 6. staging
-    moment = now or datetime.now(timezone.utc)
     effective_run_id = run_id or default_run_id(
         str(plan.get("source_id")), str(plan.get("study_id")), moment
     )
@@ -353,7 +447,7 @@ def run_collection(
 
     started_at = moment
     try:
-        result = adapter.collect(plan)
+        result = adapter.collect(effective_plan)
     except Exception as error:  # noqa: BLE001 - a crash is recorded, not lost
         result = CollectionResult(
             raw={"error": {"exception": error.__class__.__name__}},
@@ -364,6 +458,11 @@ def run_collection(
             completeness="missing",
         )
     finished_at = datetime.now(timezone.utc)
+    if finished_at < started_at:
+        # Deterministic replay: an explicit reference/collection time may be
+        # ahead of the wall clock; a run cannot finish before it started, and
+        # the recorded pair must stay internally consistent (G5-T08).
+        finished_at = started_at
 
     observations = list(result.observations)
     if result.status in ("success", "partial") and not observations:
@@ -407,10 +506,9 @@ def run_collection(
     if commit:
         run_environment.setdefault("code_commit", commit)
 
-    window = plan.get("window") if isinstance(plan.get("window"), dict) else {}
     window_id = window.get("window_id") or f"{window.get('start')}_{window.get('end_exclusive')}"
     document = build_run_metadata(
-        plan=plan,
+        plan=effective_plan,
         collector_entry=collector_entry,
         adapter=adapter,
         result=result,
@@ -421,6 +519,7 @@ def run_collection(
         window_id=window_id,
         environment=run_environment,
         query_registry_version=registries.query_registry_version,
+        compiled=compiled,
     )
     _write_json(staged_dir / RUN_METADATA_NAME, document)
 

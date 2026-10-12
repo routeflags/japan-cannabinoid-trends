@@ -8,6 +8,7 @@ ever executed.
 from __future__ import annotations
 
 import json
+from datetime import datetime, timezone
 from pathlib import Path
 
 import pytest
@@ -19,6 +20,13 @@ REPO_METADATA = REPO_ROOT / "metadata"
 
 FIXTURE_12M = FIXTURES / "interest_over_time_cbx_rikiddo_12m.json"
 FIXTURE_5Y = FIXTURES / "interest_over_time_cbx_rikiddo_5y.json"
+
+#: Fixed G3 reference (collection) time for deterministic window compilation.
+#: The G3 compiler resolves relative timeframes against the collection
+#: instant; tests must not depend on the wall clock (CI stability).  Matches
+#: the recorded fixtures' ``collected_at``.
+REFERENCE_NOW = datetime(2026, 10, 13, 0, 0, 0, tzinfo=timezone.utc)
+REFERENCE_NOW_ISO = "2026-10-13T00:00:00Z"
 
 #: The real recorded series file (tracked in git, read-only in tests).
 RECORDED_CBD_5Y = (

@@ -26,6 +26,7 @@ import re
 from pathlib import Path
 
 from collection.core.contracts import CollectionResult, TransportError
+from validation.windows import RELATIVE_TIMEFRAME_MODELS
 
 __all__ = [
     "GoogleTrendsMcpAdapter",
@@ -36,15 +37,11 @@ __all__ = [
 
 TOOL_INTEREST_OVER_TIME = "interest_over_time"
 
-#: Timeframes observed in the 29 recorded runs and documented in the
-#: research-google-trends skill.  Unknown timeframes are refused (fail
-#: closed; promoting one requires a capability verification).
-SUPPORTED_TIMEFRAMES = (
-    "today 1-m",
-    "today 3-m",
-    "today 12-m",
-    "today 5-y",
-)
+#: Timeframes observed in the recorded runs and documented in the
+#: research-google-trends skill.  Derived from the shared G3 timeframe models
+#: (``validation.windows``) so the compiler and the adapter allow-list can
+#: never drift.  Unknown timeframes are refused (fail closed).
+SUPPORTED_TIMEFRAMES = tuple(RELATIVE_TIMEFRAME_MODELS)
 
 _GEO_PATTERN = re.compile(r"^[A-Z]{2}$")
 
@@ -195,6 +192,7 @@ class GoogleTrendsMcpAdapter:
             )
 
         observations = self.extract_observations(raw)
+        observed_min, observed_max = _observed_bounds(observations)
         return CollectionResult(
             raw=raw,
             payload_schema_id=self.payload_schema_id,
@@ -218,8 +216,11 @@ class GoogleTrendsMcpAdapter:
                     "observed range "
                     + _observed_range_label(observations)
                 ),
-                "observed_min_timestamp": None,
-                "observed_max_timestamp": None,
+                # G3 P5: the observed bounds are the bucket labels present in
+                # the response (date-precision, UTC); a label range is not a
+                # completeness claim for the requested window.
+                "observed_min_timestamp": observed_min,
+                "observed_max_timestamp": observed_max,
             },
         )
 
@@ -254,6 +255,18 @@ def _observed_range_label(observations) -> str:
     if not dates:
         return "empty (no data points returned)"
     return f"{dates[0]}..{dates[-1]}"
+
+
+def _observed_bounds(observations) -> tuple:
+    """First/last bucket-label dates of the response series (UTC, date
+    precision).  ``(None, None)`` for an empty series: no observed period is
+    known, and nothing is fabricated (G3 P7)."""
+    labels = sorted(
+        point["date"] for point in observations if isinstance(point.get("date"), str)
+    )
+    if not labels:
+        return None, None
+    return f"{labels[0]}T00:00:00Z", f"{labels[-1]}T00:00:00Z"
 
 
 def build_adapter(fixture=None, capabilities=None) -> GoogleTrendsMcpAdapter:

@@ -11,6 +11,8 @@ from collection.core.cli import EXIT_CONFIG, EXIT_GATE, EXIT_IO, EXIT_OK, main
 
 from conftest import (
     FIXTURE_12M,
+    REFERENCE_NOW,
+    REFERENCE_NOW_ISO,
     REPO_CONFIG,
     REPO_METADATA,
     load_json,
@@ -53,6 +55,8 @@ def test_collect_adopts_via_cli(capsys, tmp_path):
             str(FIXTURE_12M),
             "--run-id",
             RUN_ID,
+            "--now",
+            REFERENCE_NOW_ISO,
             "--format",
             "json",
             *_base_args(root),
@@ -79,6 +83,8 @@ def test_collect_without_a_session_fails_closed(capsys, tmp_path):
             str(plan_path),
             "--run-id",
             RUN_ID,
+            "--now",
+            REFERENCE_NOW_ISO,
             "--format",
             "json",
             *_base_args(root),
@@ -157,6 +163,7 @@ def test_adopt_command_quarantines_a_tampered_run(capsys, tmp_path):
         datasets_root=root / "datasets",
         registries=registries,
         run_id=RUN_ID,
+        now=REFERENCE_NOW,
     )
     staged = _staged_copy(
         Path(first.final_dir),

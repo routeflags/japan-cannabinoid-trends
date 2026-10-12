@@ -137,13 +137,15 @@ def build_artifact_manifest(run_id: str, run_dir, artifacts) -> dict:
     return {"schema_version": "1.0.0", "run_id": run_id, "artifacts": items}
 
 
-def _temporal_provenance(plan: dict, result: CollectionResult, window_id: str) -> dict:
+def _temporal_provenance(plan: dict, result: CollectionResult, window_id: str, compiled=None) -> dict:
     """Merge the plan's requested window with the adapter's observed facts.
 
     The adapter's ``temporal`` block carries what only the source can know
     (granularity, week boundary, window type, observed bounds); the plan
     supplies the requested window and, when given, granularity / timezone as
-    fallbacks.
+    fallbacks.  When a G3 window compiler ran, its recorded facts (reference
+    time, limitations, window type, exactness) are included as well — the
+    requested and observed periods stay separate (P5, c.md §8).
     """
     plan_window = plan.get("window") if isinstance(plan.get("window"), dict) else {}
     temporal = result.temporal if isinstance(result.temporal, dict) else {}
@@ -167,6 +169,13 @@ def _temporal_provenance(plan: dict, result: CollectionResult, window_id: str) -
     ):
         if key in temporal:
             block[key] = temporal[key]
+    if compiled is not None:
+        if compiled.reference_time:
+            block["reference_time"] = compiled.reference_time
+        if compiled.limitations:
+            block["limitations"] = list(compiled.limitations)
+        block["collector_window_type"] = compiled.collector_window_type
+        block["exact_window_match"] = compiled.exact
     if result.submitted_parameters:
         block["submitted_parameters"] = dict(result.submitted_parameters)
     return block
@@ -185,6 +194,7 @@ def build_run_metadata(
     window_id: str,
     environment: dict | None = None,
     query_registry_version: str | None = None,
+    compiled=None,
 ) -> dict:
     """Build a ``collection-run-v1`` run_metadata document from real facts.
 
@@ -233,7 +243,7 @@ def build_run_metadata(
         "collection_started_at": iso_timestamp(started_at),
         "collection_finished_at": iso_timestamp(finished_at),
         "query_provenance": query_provenance,
-        "temporal_provenance": _temporal_provenance(plan, result, window_id),
+        "temporal_provenance": _temporal_provenance(plan, result, window_id, compiled),
         "execution": execution,
         "artifact_manifest": artifact_manifest_name,
     }

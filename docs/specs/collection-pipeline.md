@@ -20,7 +20,13 @@ Source / Collector Registry (config/sources.json, config/collectors.json)
       v  select_collector  (capability gate; unknown は自動選択しない)
 Capability / Selection Gate (fail closed)
       |
-      v  adapter.validate_plan
+      v  window registry 照合 (metadata/windows; 不一致は停止)
+Temporal Contract (絶対 window の正本性確認)
+      |
+      v  Window Compiler (collector 別。表現不能は fail closed = P6)
+Compiled Window (parameters / exact / limitations)
+      |
+      v  adapter.validate_plan / adapter.collect
 Source Adapter (G1 §8 contract)
   └─ transport: live (SessionMcp) / recorded replay
       |
@@ -35,8 +41,10 @@ Schema + Provenance + Hash + Missingness + Completeness
       v
 <datasets-root>/<study>/data/raw/<run-id>/   (catalog)
       |
-      v  validation.cli compare-runs  = L2 (C1/C2/C3)
+      v  validation.cli compare-runs  = L2 (C1/C2/C3、--coverage-* で T6/T7)
       +-- not_comparable --> 採用は維持、比較不可を別途報告
+      |
+      v  validation.cli coverage-run  = G3 §9 coverage manifest (report)
 ```
 
 L1（正しさ）と L2（比較可能性）は独立して判定する（G1 P5）。採用済み run でも
@@ -50,6 +58,7 @@ L2 が `not_comparable` になることはある。
 |---|---|---|
 | `config/sources.json` | `source-registry-v1` | source の性質（kind / measurement_types / publication_review_required）。秘密情報は置かない |
 | `config/collectors.json` | `collector-registry-v1` | 実際の収集手段（provider / transport / external_id / adapter_id / version / status / capability 三値 / evidence） |
+| `metadata/windows/*.json` | `temporal-window-v1` | G3: 絶対期間の正本（ファイル名 = window_id、UTC 保存・半開区間）。plan が同名 window_id を名乗る場合は完全一致を要求 |
 
 - capability は `supported` / `unsupported` / `unknown` の三値（G1 §7.2）。
   **未確認を `unknown` のまま保つ**（推測で `supported` にしない）。
@@ -84,7 +93,21 @@ L2 が `not_comparable` になることはある。
   （`tests/collection/`）を追加 → ④ capability を実測して registry を更新。
   コアの改修は不要（a.md §15 の架空ソーステストで検証済み）。
 
-### 3.1 既存 shell 収集（`src/collection/*.sh`, `scripts/collect-youtube-*.sh`）との整合
+### 3.2 Window Compiler（G3 §6）
+
+- 実装: `src/collection/adapters/google_trends/compiler.py`（collector 別）。共通
+  プリミティブは `validation/windows.py`（platform 名は adapters のみ = P1）。
+- `collect` は収集前に plan の絶対 window を compile し、結果を `query` 拡張
+  領域へ source-agnostic にマージする。plan が同キーに非空の異なる値を宣言して
+  いれば `WINDOW_TIMEFRAME_CONFLICT` で停止（P6: 期間の無断切替なし）。
+- 拒否は fail closed: `WINDOW_NOT_REPRESENTABLE`（候補 timeframe なし・時代不一致・
+  絶対能力 supported なのに実装なし）。`window.exact_required: true` の plan は
+  `exact=false` の collector では `WINDOW_EXACTNESS_UNAVAILABLE` で停止。
+- ドライラン: `python -m collection.core.cli compile-window`（収集しない）。
+- 現在 `exact=false` / `boundary_semantics=unverified` は Google Trends の
+  ローリング期間の実測検証が未実施であることを反映する。
+
+### 3.3 既存 shell 収集（`src/collection/*.sh`, `scripts/collect-youtube-*.sh`）との整合
 
 - 今回は既存 shell を書き換えていない。移行パスは
   「staged ディレクトリ（`run_metadata.json` + artifact）を出力し、
@@ -113,6 +136,12 @@ L2 が `not_comparable` になることはある。
 G2 以降の補足: `query_provenance.compound_id` は compound-taxonomy の notation
 （例 `compound_cbx`）を使い、registry 読込時は `query_registry_version` も記録
 する（b.md §7。registry が無い場合は記録しない — 推測しない）。
+
+G3 以降の補足: window compiler が動いた run は `temporal_provenance` に
+`reference_time`（相対期間の解決基準時刻）と `limitations`（exact=false の理由）
+を記録し、観測側は応答系列の bucket label 範囲を `observed_min_timestamp` /
+`observed_max_timestamp` に記録する（requested / observed の分離 = P5。既存 29 run
+への遡及変換はしない）。
 
 秘密情報: `submitted_parameters` は adapter が許可リスト方式で組み立てる
 （tool / terms / geo / timeframe のみ）。env ファイルや token は保存しない。
@@ -170,6 +199,7 @@ L1-09 の規則:
 | C1 | `compound_id` / `query_id` / `submitted_query` の不一致 → `not_comparable` |
 | C2 | `temporal_provenance`（window / granularity / timezone / week_start / time_axis）→ `compare_temporal_windows` を再利用 |
 | C3 | `source_id` 不一致（単位の代理）→ `not_comparable`。同一 source で collector のみ不一致 → `conditional` |
+| T6/T7（任意） | `--coverage-a`/`--coverage-b` で G3 coverage manifest を渡した場合のみ。partial → `conditional`（`t6_coverage_partial`）/ missing → `not_comparable`（`t6_coverage_missing`）/ unknown → 欠測状態未明示として `unknown`（`t7_missingness_not_explicit`） |
 
 - 現時点の最強判定は `conditional`（coverage / sampling レビューが必要なため
   `comparable` は未実装。既存方針どおり）。
@@ -186,7 +216,12 @@ L1-09 の規則:
 # 収集（offline replay。ライブは MCP セッション承認後）
 python -m collection.core.cli collect --plan plan.json \
   --fixture <recorded_response.json> \
-  --workspace <root> --datasets-root <root>/datasets
+  --workspace <root> --datasets-root <root>/datasets \
+  --now 2026-10-13T00:00:00Z   # 決定論的リプレイ用の基準時刻固定（任意）
+
+# G3 window compiler のドライラン（収集しない）
+python -m collection.core.cli compile-window --window-id <window_id> \
+  --collector google-trends-mcp --reference-time 2026-10-13T00:00:00Z
 
 # 外部 collector が staging に出した run の採用判定
 python -m collection.core.cli adopt --staged <staging>/<run-id> --workspace <root>
@@ -194,18 +229,23 @@ python -m collection.core.cli adopt --staged <staging>/<run-id> --workspace <roo
 # L1 単体（任意の run ディレクトリ）
 python -m validation.cli gate-run --file <run_metadata.json>
 
-# L2（run ペア）
+# L2（run ペア。--coverage-a/b で G3 T6/T7 条件を有効化）
 python -m validation.cli compare-runs --a a.json --b b.json
+
+# G3 §9 coverage manifest（常に exit 0 のレポート）
+python -m validation.cli coverage-run --file <run_dir or run_metadata.json>
 ```
 
 | exit | 意味（collect / adopt / gate-run） |
 |---|---|
 | 0 | adopted（catalog） |
 | 1 | quarantined / stopped（採用しない。raw は保全） |
-| 2 | 設定エラー（registry 不正、adapter 未実装、plan 不正） |
+| 2 | 設定エラー（registry 不正、adapter 未実装、plan 不正、compiler 未登録） |
 | 3 | I/O エラー |
 
-`compare-runs` は常に 0（比較判定は採用可否のゲートではない）。
+`compare-runs` は常に 0（比較判定は採用可否のゲートではない）。`coverage-run`
+も常に 0（coverage はレポート。0 への変換禁止は判定側で行う）。`compile-window`
+は 0 = 表現可能 / 1 = 拒否（fail closed）/ 2 = 設定エラー。
 
 ---
 
@@ -221,5 +261,10 @@ python -m validation.cli compare-runs --a a.json --b b.json
   plan の `query_id` は registry 照合され、未登録は fail closed で停止する。
   旧 run の旧形式 `queries` は変更せず、対応関係は
   `docs/audits/g2-query-inventory.json`（b.md §13 の 5 状態）で管理する。
+- G3（temporal contract / window compiler / coverage）は Google Trends 1 ソースで
+  導入済み（2026-10-13 垂直スライス。詳細は
+  `docs/specs/validation-framework.md` §16）。他ソースの compiler は未実装で、
+  compiler 未登録の collector は従来どおり adapter 自身が期間パラメータを検証する。
+  ライブ収集による境界挙動の検証（`exact=true` への昇格）は未実施。
 - G7（study / measurement registry）導入時は、plan の `study_id` 参照検証が
   自動で有効になる（CLI の `--metadata-dir` に registry が置かれればよい）。

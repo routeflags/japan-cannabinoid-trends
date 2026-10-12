@@ -13,7 +13,7 @@
 | Phase 3 | Schema Registry 拡充（G1〜G7・running profile・バージョン管理） | **実装済み**（15 スキーマ登録。P3-10 は対象不存在のため §11 の決定により終結） |
 | Phase 4 | Semantic / Integrity / Lineage / Git Policy / Comparability / Publication / Secret Scan | **実装済み** |
 | Phase 5 | CLI・JSON Validation Report・Exit Code | **実装済み** |
-| Phase 6 | 収集パイプライン統合 | **G1 垂直スライス実装済み**（registries / capability gate / adapter contract / L1 + quarantine / L2。ライブ収集は未実施、既存 shell・skill への適用は親判断待ち — §13） |
+| Phase 6 | 収集パイプライン統合 | **G1 垂直スライス実装済み**（registries / capability gate / adapter contract / L1 + quarantine / L2。ライブ収集は未実施、既存 shell・skill への適用は親判断待ち — §13）。**G3 垂直スライス実装済み**（Temporal Contract / Window Compiler / Coverage / Temporal Comparability / 旧 run 監査 — §16） |
 | Phase 7 | CI | 実装済み（`research-validation.yml` 新設。初回実行成功: 2026-10-13 push `324cd55`） |
 | Phase 8 | Legacy Audit | 実装済み（24件を非破壊監査。`docs/audits/g5-legacy-runs.json`、raw sha256 前後一致） |
 
@@ -46,9 +46,9 @@ python3 -m venv .venv
 .venv/bin/python -m pytest
 ```
 
-- Contract Tests: `tests/validation/`（456件）+ `tests/collection/`（59件）
-  ＝ **515件**（2026-10-13 G2 垂直スライス後。`.venv/bin/python -m pytest` で実測。
-  G1 直後は 461 件、非オブジェクト入力修正後は 468 件）。
+- Contract Tests: `tests/validation/`（496件）+ `tests/collection/`（77件）
+  ＝ **573件**（2026-10-13 G3 垂直スライス後。`.venv/bin/python -m pytest` で実測。
+  G2 直後は 515 件、G1 直後は 461 件）。
 - 新しいスキーマを登録したら、対応する Contract Test を必ず追加する
   （20261013h.md §9 / §16）。`tests/validation/test_schema_coverage.py` が
   「登録済みスキーマIDを参照するテストファイルの存在」を機械的に検査するため、
@@ -81,6 +81,8 @@ report = outcome.to_report().to_dict()
 | `semantic.py` | 意味検証: 日時、execution 整合、Registry 参照、Capability Gate、秘密情報スキャン |
 | `integrity.py` | SHA-256 / byte_length / ファイル存在 / Lineage（読取専用） |
 | `comparability.py` | L2 / G3 / G7 比較可能性ゲート |
+| `windows.py` | G3 Temporal Contract プリミティブ（半開区間変換・相対期間の名目解決・バケット生成・CompiledWindow・window レジストリ整合） |
+| `coverage.py` | G3 Coverage Validation（§9 manifest・§11 欠測状態・§15 旧 run 時系列棚卸し） |
 | `storage_policy.py` | Git 追跡検証（read-only git）/ Publication Gate / policy 選択 |
 | `pipeline.py` | 層順序つき統合実行（構造→意味→Artifact） |
 | `reporting.py` | Issue 正規化と JSON Validation Report（安定形式） |
@@ -119,8 +121,14 @@ report = outcome.to_report().to_dict()
 # 収集後 L1 ゲート（Phase 6 P6-2）: catalog / quarantine
 .venv/bin/python -m validation.cli gate-run --file datasets/<study>/.../run_metadata.json
 
-# L2 比較可能性（G1 §12、C1-C3）: 常に exit 0、判定はレポートで
+# L2 比較可能性（G1 §12、C1-C3。`--coverage-a`/`--coverage-b` で G3 T6/T7 も）: 常に exit 0、判定はレポートで
 .venv/bin/python -m validation.cli compare-runs --a a.json --b b.json
+
+# G3 §9 Coverage manifest（読み取り専用レポート。常に exit 0）
+.venv/bin/python -m validation.cli coverage-run --file <run_dir or run_metadata.json>
+
+# G3 §15 旧 run 時系列棚卸し（非破壊。sha256 前後比較。既定出力は docs/audits/）
+.venv/bin/python -m validation.cli audit-temporal --output docs/audits/g3-temporal-inventory.json
 
 # G5 Legacy 監査（非破壊。--output 省略時は stdout）
 .venv/bin/python -m validation.cli audit-legacy --output docs/audits/g5-legacy-runs.json
@@ -157,6 +165,9 @@ report = outcome.to_report().to_dict()
 - G1 収集コア（registry → adapter → staging → L1 → catalog/quarantine）は
   `python -m collection.core.cli {collect|adopt}`。詳細は
   `docs/specs/collection-pipeline.md`。
+- G3 Window Compiler のドライランは `python -m collection.core.cli compile-window`
+  （exit 0 = 表現可能 / 1 = 拒否 / 2 = 設定エラー）。`collect` に
+  `--now <ISO 8601>`（基準時刻の固定。決定論的リプレイ用）を追加した（§16）。
 
 ## 6. CI（Phase 7 実装済み — 初回実行成功）
 
@@ -196,6 +207,8 @@ Cerberus は**構造検証のみ**を担当する。
 | G2 Query Registry の内部整合（重複 ID・重複文字列・taxonomy 参照・variant 束） | Query Semantics（実装済み: `query_semantics.check_query_registry` / `check_query_variants`。`validate-registries` が実行） |
 | Query 文字列の Stage-1 分類・定義比較可能性（Q1-Q5 部分） | Query Semantics（実装済み: `classify_query_text` / `compare_query_definitions`。Stage 2/3・compiler は未実装 → §15） |
 | 日時・期間境界の前後関係 | Temporal / Semantic Validator（実装済み: `semantic.check_temporal_semantics`） |
+| 絶対 window の正本性・相対期間の変換（G3 Window Compiler） | `validation.windows` + collector 別 compiler（実装済み: `collection.adapters.google_trends.compiler`。GT 1 ソース） |
+| 要求期間と観測期間の分離・coverage 評価（G3 §9/§11） | `validation.coverage`（実装済み: `coverage-run` / 監査）。欠測と観測ゼロを区別する |
 | Query と Source の整合性・Capability | Semantic Validator（実装済み: `semantic.check_capability_gate`） |
 | 欠測とゼロの区別・終端 run の raw 証拠（L1-09） | Semantic Validator（実装済み: `semantic.check_missingness_consistency`。`post_collection_gate` 経由） |
 | ファイルハッシュ | Integrity Validator（実装済み: `integrity`） |
@@ -249,7 +262,11 @@ Cerberus は**構造検証のみ**を担当する。
 | `study-registry-v1` | G7 | `metadata/studies/study-registry.json` |
 | `measurement-registry-v1` | G7 | `metadata/measurements/measurement-registry.json` |
 | `research-view-v1` | G7 | 研究 view 定義（合算モード禁止） |
-| `collection-plan-v1` | P6 | 収集前ゲート入力（初期契約。G1 垂直スライスで adapter 向けの任意フィールド `query` / `window.granularity|week_start|timezone|window_id` を追加 — §13） |
+| `collection-plan-v1` | P6 | 収集前ゲート入力（初期契約。G1 垂直スライスで adapter 向けの任意フィールド `query` / `window.granularity|week_start|timezone|window_id` を追加 — §13。G3 で `window.exact_required` を追加 — §16） |
+
+G5 `collection-run-v1` には G3 で `temporal_provenance.reference_time` /
+`temporal_provenance.limitations` を**任意フィールド**として追加した（後方互換。
+contract version は 1.0.0 のまま — G2 の plan 拡張と同じ手順）。
 
 各スキーマの未包含事項（意味検証側の担当）は各モジュールの docstring に明記してある。
 
@@ -261,6 +278,7 @@ Cerberus は**構造検証のみ**を担当する。
 | `config/collectors.json` | collector-registry-v1 | **あり**（6 collector。active は `google-trends-mcp` のみ） |
 | `metadata/queries/query-registry.json` | query-registry-v1 | **あり**（G2 垂直スライス: 7 queries。`validate-registries` と CI が実検証する） |
 | `metadata/queries/query-variants.json` | query-variants-registry-v1 | **あり**（3 variant sets） |
+| `metadata/windows/*.json` | temporal-window-v1 | **あり**（G3 垂直スライス: 2 windows。`validate-registries` と CI が実検証する） |
 | `metadata/studies/study-registry.json` | study-registry-v1 | なし（G7 の作業） |
 | `metadata/measurements/measurement-registry.json` | measurement-registry-v1 | なし（G7 の作業） |
 | `config/storage-policies.json` | storage-policy-registry-v1 | なし（G6 の作業） |
@@ -269,7 +287,10 @@ Cerberus は**構造検証のみ**を担当する。
 ファイルが置かれれば、CI が自動的に検証対象に含める。G2 の 2 ファイルは検証
 対象に含まれ、taxonomy（`metadata/taxonomy/compound-taxonomy.skos.jsonld`）が
 存在する場合は compound 参照の意味検証も実行される（無い場合は該当チェック
-のみ無効になる）。
+のみ無効になる）。G3 の `metadata/windows/*.json` も検証対象に含まれ、
+`temporal-window-v1` + 時系列意味検証に加えて、重複 `window_id` と
+ファイル名不一致（`WINDOW_ID_DUPLICATE` / `WINDOW_FILE_STEM_MISMATCH`）を
+機械的に検出する（ファイル名 = window_id は§16 の規則）。
 
 ## 11. JSON Schema 共存（P3-10）— 決定: Cerberus を構造検証の正本とする
 
@@ -370,10 +391,13 @@ python3 -m venv .venv
 .venv/bin/python -m validation.cli validate-registries
 .venv/bin/python -m validation.cli audit-legacy --output docs/audits/g5-legacy-runs.json
 .venv/bin/python -m validation.cli audit-queries --output docs/audits/g2-query-inventory.json
+.venv/bin/python -m validation.cli audit-temporal --output docs/audits/g3-temporal-inventory.json
 ```
 
 - 実データへの end-to-end: `validate --profile legacy`（監査）と
   strict（不合格 exit 1）を既存 run_metadata で確認済み（2026-10-13）。
+- G3 の再現（offline）: `compile-window`（§16）→ `collect --now ...`（固定基準）
+  → `gate-run` → `coverage-run`。ライブ収集は実行しない（§13）。
 - G1 収集フローの再現（offline）: `python -m collection.core.cli collect --plan
   <plan> --fixture tests/collection/fixtures/google_trends/... --workspace <root>`
   → `python -m validation.cli compare-runs --a ... --b ...`。ライブ収集は
@@ -423,4 +447,64 @@ G2 仕様（`docs/plans/20261013b.md`）の垂直スライス。登録範囲は�
     本番採用してはならない — Stage 1 はクエリ文字列の検証・デモ用で、コンテンツ
     分類の本番採用は未実施）。
   - provenance の `variant_id` / `compiler_id` / content hash（G5 schema 未拡張）。
+
+## 16. G3 垂直スライス（Temporal Contract / Window Compiler / Coverage）— 2026-10-13
+
+G3 仕様（`docs/plans/20261013c.md`）の垂直スライス。対象は Google Trends 1 ソース。
+**ライブ収集・新しい外部依存の追加は行っていない。**
+
+### 16.1 決定事項
+
+- **§13 と §4.2 の矛盾**: G1/G2 と同じ解釈を踏襲。§13 の required リストを必須、
+  §4.2 の追加項目（`calendar` / `week_start` / `temporal_contract_version`）は任意
+  （`validation.schemas.temporal` の docstring に記録済み）。
+- **window 正本**: `metadata/windows/<window_id>.json`（ファイル名 = window_id）。
+  スキーマは既存 `temporal-window-v1` を再利用（**新スキーマなし**）。研究計画の
+  正本はこの絶対期間であり、相対期間は collector パラメータ（compiler 出力）に
+  のみ存在する。初期登録は 2 件（`2025-10-12_2026-10-12` / `2021-10-10_2026-10-12`）。
+- **旧 29 run**: 遡及変換しない（P1）。`audit-temporal` は事実の抽出のみを行い、
+  `resolved_absolute_window: null` + not-derived 理由を記録する（§15）。
+- **検出時点**: plan の `window.window_id` がレジストリにある場合、bounds / timezone /
+granularity / week_start の完全一致を要求（不一致・未登録は exit 1）。
+  レジストリ不在時は既存規約どおりチェック無効。
+- **要求と実際のずれ**: 表現可能なら `partial` として採用・記録（推奨 A）。
+  表現不能（候補 timeframe なし・時代不一致・絶対能力 supported なのに実装なし）は
+  fail closed。厳密期間が必要な研究は plan に `window.exact_required: true` を明示する
+  と、`exact=false` の collector では停止する（c.md §6.2）。
+
+### 16.2 実装済み
+
+- `validation/windows.py`: 半開区間の UTC 変換（c.md §7 の期待値一致）、相対時間
+  語彙（`today 1-m/3-m/12-m/5-y`）の名目解決（基準時刻必須）、月末/闰年クランプ、
+  DST 対応のカレンダー演算、許容差 7 日（週次バケット 1 個）の一致判定、
+  月次バケット生成、`CompiledWindow` 契約と compiler shape check。
+- `collection/adapters/google_trends/compiler.py`: 絶対 window → timeframe 変換の
+  実行前検証。拒否理由コード（`no_registered_timeframe_matches` 等）は安定 API。
+  platform 名は adapters のみ（P1）。
+- pipeline 統合（`collection.core.pipeline`）: 収集前に compile し、結果を
+  `query` 拡張領域へ source-agnostic にマージ。衝突は `WINDOW_TIMEFRAME_CONFLICT` で
+  停止（P6）。失敗コード: `WINDOW_NOT_REPRESENTABLE` / `WINDOW_EXACTNESS_UNAVAILABLE`。
+- provenance: `temporal_provenance` に `reference_time` / `limitations` を追加
+  （任意、後方互換）、観測側は bucket label 範囲を `observed_min/max_timestamp`
+  に記録（requested / observed の分離 = P5）。
+- `validation/coverage.py` + `coverage-run`: §9.3 形式の manifest。requested /
+  collector（名目解決）/ observed（ラベル）/ verified（空のまま）を区別し、
+  欠測・観測ゼロ・取得失敗を区別する（P7）。実例: `common-scale-missing` →
+  `partial`（terms は observed_nonzero、0 点は below_threshold 候補）、
+  `nodata` → `missing`（terms は `below_threshold`。`observed_zero` は**使わない**）。
+- temporal comparability（§12）: T1-T5/T8 は既存。coverage manifest を渡した場合の
+  T6/T7 を追加（partial → conditional / missing → not_comparable / unknown →
+  missingness 未明示として unknown）。CLI `--coverage-a/--coverage-b` で有効化。
+- 旧 run 監査（§15/Phase 1）: `docs/audits/g3-temporal-inventory.json`（29 run、
+  sha256 前後比較で `raw_modified: false`。テストが再計算一致を強制）。
+
+### 16.3 未実装（引き継ぎ）
+
+- ライブ収集による Google Trends の境界挙動検証（`exact=true` への昇格条件）。
+  それまでは全 compile が `exact=false` / `boundary_semantics=unverified`。
+- 他ソース（X / YouTube / TikTok / Instagram / LinkedIn）の Window Compiler と
+  `dateFilter=month` 等のローリング語彙の検証。
+- §10 の日次/週次のバケット集計（月次バケット生成のみ実装。分析側の集計は未接続）。
+- coverage manifest の run ディレクトリへの永続化（現状は `coverage-run` のオンデマンド評価）。
+- T6 の sampling / normalization 条件（comparison set 等）の完全モデル化（G7）。
 

@@ -52,6 +52,7 @@ from validation.semantic import (
     check_temporal_semantics,
     scan_for_secrets,
 )
+from validation.windows import check_plan_window_registry
 
 __all__ = ["GateResult", "post_collection_gate", "pre_collection_gate"]
 
@@ -134,6 +135,11 @@ def pre_collection_gate(plan: dict, *, registries: Registries) -> GateResult:
     window = plan.get("window")
     if isinstance(window, dict):
         issues.extend(check_temporal_semantics(window))
+        # G3 P1: when the absolute window registry exists and the plan claims
+        # a registered window_id, the plan must carry that window (fail
+        # closed on drift).  Without a registry the check is disabled.
+        if registries.windows:
+            issues.extend(check_plan_window_registry(window, registries.windows))
 
     passed = not _failed(issues)
     return GateResult(passed, _PRE_ACTIONS[passed], issues)

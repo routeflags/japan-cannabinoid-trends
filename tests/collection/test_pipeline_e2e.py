@@ -19,6 +19,7 @@ from conftest import (
     FIXTURE_12M,
     FIXTURE_5Y,
     RECORDED_CBD_5Y,
+    REFERENCE_NOW,
     build_replay_adapter,
     load_json,
     make_plan,
@@ -43,6 +44,7 @@ def _collect(registries, root, *, fixture, plan, run_id):
         datasets_root=root / "datasets",
         registries=registries,
         run_id=run_id,
+        now=REFERENCE_NOW,
     )
 
 
@@ -192,8 +194,12 @@ def test_invalid_plan_is_stopped(tmp_path, registries):
 
 
 def test_adapter_plan_validation_stops_unverified_timeframes(tmp_path, registries):
+    """Adapter-level period validation still fails closed when no compiler
+    applies (a plan without a window); with a window, the G3 compiler gate
+    runs instead (see tests/collection/test_window_compiler.py)."""
     root = make_workspace(tmp_path)
     plan = make_plan(timeframe="today 2-y")
+    plan.pop("window")
     result = _collect(registries, root, fixture=FIXTURE_12M, plan=plan, run_id=RUN_ID_12M)
     assert result.action == "stopped"
     assert any(issue.code == "ADAPTER_PLAN_REJECTED" for issue in result.issues)
@@ -206,6 +212,7 @@ def test_adapter_identity_mismatch_stops(tmp_path, registries):
     result = run_collection(
         make_plan(), adapter=adapter, workspace_root=root,
         datasets_root=root / "datasets", registries=registries, run_id=RUN_ID_12M,
+        now=REFERENCE_NOW,
     )
     assert result.action == "stopped"
     assert [issue.code for issue in result.issues] == ["ADAPTER_IDENTITY_MISMATCH"]
@@ -220,6 +227,7 @@ def test_adapter_capability_mismatch_stops(tmp_path, registries):
     result = run_collection(
         make_plan(), adapter=adapter, workspace_root=root,
         datasets_root=root / "datasets", registries=registries, run_id=RUN_ID_12M,
+        now=REFERENCE_NOW,
     )
     assert result.action == "stopped"
     assert [issue.code for issue in result.issues] == ["ADAPTER_CAPABILITY_MISMATCH"]
@@ -260,6 +268,7 @@ def test_failed_collection_is_quarantined_not_recorded_as_zero(tmp_path, registr
     result = run_collection(
         make_plan(), adapter=adapter, workspace_root=root,
         datasets_root=root / "datasets", registries=registries, run_id=RUN_ID_12M,
+        now=REFERENCE_NOW,
     )
     assert result.action == "quarantined"
     quarantine_dir = Path(result.final_dir)

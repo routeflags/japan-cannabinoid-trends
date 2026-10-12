@@ -8,7 +8,10 @@ Commands
 - ``validate-all``        registries + all studies (JSON report for CI)
 - ``gate-plan``           pre-collection gate for a collection plan (P6-1)
 - ``gate-run``            post-collection L1 gate: catalog vs quarantine (P6-2)
-- ``compare-runs``        L2 run-level comparability (G1 §12, C1-C3)
+- ``compare-runs``        L2 run-level comparability (G1 §12, C1-C3; G3 T6/T7
+                          with ``--coverage-a`` / ``--coverage-b``)
+- ``coverage-run``        G3 §9 coverage manifest for one run (report only)
+- ``audit-temporal``      non-destructive G3 §15 temporal inventory
 - ``classify-query``      Stage-1 query-string classification (G2 §8)
 - ``compare-queries``     definition-level query comparability (G2 §9)
 - ``audit-queries``       non-destructive G2 query inventory (b.md §13)
@@ -42,6 +45,7 @@ import sys
 from pathlib import Path
 
 from validation.comparability import compare_runs
+from validation.coverage import build_temporal_inventory, evaluate_coverage
 from validation.gates import post_collection_gate, pre_collection_gate
 from validation.integrity import IO_ISSUE_CODES, sha256_file
 from validation.legacy import LegacyProfileNotAllowed, audit_record
@@ -62,7 +66,11 @@ from validation.reporting import (
     dump_json,
 )
 from validation.schema_registry import get_schema
-from validation.semantic import Registries
+from validation.semantic import Registries, check_temporal_semantics
+from validation.windows import (
+    check_window_registry_files,
+    load_window_documents,
+)
 
 __all__ = ["main"]
 
@@ -144,8 +152,12 @@ def load_registries(config_dir: Path, metadata_dir: Path) -> Registries:
     Returns an empty ``Registries`` while a registry file does not exist yet;
     reference checks are then skipped instead of failing.  The query variants
     bundle and the query-registry version ride along with the query registry
-    (G2 vertical slice).
+    (G2 vertical slice); the G3 window documents ride along the same way.
     """
+    try:
+        window_documents = load_window_documents(Path(metadata_dir) / "windows")
+    except ValueError as error:
+        raise ConfigError(str(error)) from error
     return Registries.from_documents(
         source_registry=_load_optional_json(config_dir / "sources.json"),
         collector_registry=_load_optional_json(config_dir / "collectors.json"),
@@ -158,6 +170,7 @@ def load_registries(config_dir: Path, metadata_dir: Path) -> Registries:
         study_registry=_load_optional_json(
             metadata_dir / "studies" / "study-registry.json"
         ),
+        window_documents=window_documents,
     )
 
 
@@ -508,6 +521,39 @@ def _validate_registries(args) -> tuple[ReportBundle, int]:
             )
             bundle.reports.append(outcome.to_report())
 
+    # G3: the absolute window registry (metadata/windows/*.json).  Each
+    # document is validated with ``temporal-window-v1`` plus the temporal
+    # semantics; cross-file checks (duplicate window_id, file name) are
+    # computed over all documents at once.
+    windows_dir = metadata_dir / "windows"
+    if windows_dir.is_dir():
+        window_items = []
+        for path in sorted(windows_dir.glob("*.json")):
+            found = True
+            try:
+                window_items.append((path, _load_json(path)))
+            except (OSError, json.JSONDecodeError, UnicodeDecodeError):
+                bundle.reports.append(
+                    Report(
+                        schema_id="temporal-window-v1",
+                        target=str(path),
+                        valid=False,
+                        issues=[_io_issue("TARGET_FILE_UNREADABLE", str(path))],
+                    )
+                )
+        cross_checks = check_window_registry_files(window_items)
+        for path, document in window_items:
+            outcome = validate_full(
+                document,
+                schema_id="temporal-window-v1",
+                target=str(path),
+                extra_checks=[
+                    lambda document: check_temporal_semantics(document),
+                    lambda document, _path=path: cross_checks.get(str(_path), []),
+                ],
+            )
+            bundle.reports.append(outcome.to_report())
+
     if not found:
         bundle.note = "no registry files found; nothing to validate"
     return bundle, _exit_code_for_reports(bundle.reports)
@@ -725,10 +771,13 @@ def cmd_gate_run(args) -> int:
 
 
 def cmd_compare_runs(args) -> int:
-    """L2 run-level comparability report (C1 / C2 / C3).
+    """L2 run-level comparability report (C1 / C2 / C3 + optional T6/T7).
 
     Exit code is 0 for any produced verdict: L2 restricts comparison, it does
     not invalidate data (P5).  Unreadable inputs are I/O errors (exit 3).
+    When ``--coverage-a`` / ``--coverage-b`` are given (run directories or
+    ``run_metadata.json`` paths), the G3 coverage manifests are evaluated and
+    the temporal gate additionally applies the T6/T7 coverage conditions.
     """
     documents = []
     for label, path_str in (("a", args.a), ("b", args.b)):
@@ -739,7 +788,20 @@ def cmd_compare_runs(args) -> int:
             _err(f"cannot read input file ({label}): {path}")
             return EXIT_IO
 
-    result = compare_runs(documents[0], documents[1], purpose=args.purpose or "")
+    coverage_a = None
+    coverage_b = None
+    if args.coverage_a:
+        coverage_a = evaluate_coverage(args.coverage_a)
+    if args.coverage_b:
+        coverage_b = evaluate_coverage(args.coverage_b)
+
+    result = compare_runs(
+        documents[0],
+        documents[1],
+        purpose=args.purpose or "",
+        coverage_a=coverage_a,
+        coverage_b=coverage_b,
+    )
     report = {
         "validation_version": VALIDATION_VERSION,
         "gate": "L2",
@@ -750,10 +812,85 @@ def cmd_compare_runs(args) -> int:
         "status": result.status,
         "reasons": list(result.reasons),
     }
+    if coverage_a is not None or coverage_b is not None:
+        report["coverage"] = {
+            "a": (coverage_a or {}).get("coverage", {}).get("status"),
+            "b": (coverage_b or {}).get("coverage", {}).get("status"),
+        }
     lines = [f"L2 {result.status} {args.a} vs {args.b}"]
     for reason in result.reasons:
         lines.append(f"  reason: {reason}")
     _emit(report, fmt=args.format, output=args.output, human_lines=lines)
+    return EXIT_OK
+
+
+# ---------------------------------------------------------------------------
+# coverage-run (G3 §9)
+# ---------------------------------------------------------------------------
+
+
+def cmd_coverage_run(args) -> int:
+    """G3 §9 coverage manifest for one run (read-only).
+
+    The command reports; it never invalidates data, so the exit code is 0
+    for any produced manifest (like ``compare-runs``).  Unreadable targets
+    are I/O errors (exit 3).
+    """
+    target = Path(args.file)
+    if not target.exists():
+        _err(f"cannot read target: {target}")
+        return EXIT_IO
+    manifest = evaluate_coverage(target)
+    coverage = manifest["coverage"]
+    lines = [
+        f"COVERAGE {coverage['status']} run_id={manifest['run_id']} "
+        f"window_id={manifest['window_id']}",
+        f"  target: {target}",
+    ]
+    for reason in coverage["reasons"]:
+        lines.append(f"  reason: {reason}")
+    for term, entry in sorted(coverage["states"].items()):
+        lines.append(
+            f"  term {term}: state={entry['state']} "
+            f"points={entry['point_count']} zeros={entry['zero_count']}"
+        )
+    _emit(manifest, fmt=args.format, output=args.output, human_lines=lines)
+    return EXIT_OK
+
+
+# ---------------------------------------------------------------------------
+# audit-temporal (G3 §15)
+# ---------------------------------------------------------------------------
+
+
+def cmd_audit_temporal(args) -> int:
+    """Non-destructive G3 §15 temporal inventory over run metadata files.
+
+    Read-only: every file touched is hashed before and after, and
+    ``raw_modified`` records any drift.  Relative legacy periods are never
+    converted into absolute windows (``resolved_absolute_window: null``).
+    """
+    inventory = build_temporal_inventory(Path(args.datasets_root))
+    if args.output:
+        try:
+            _write_output(args.output, inventory)
+        except OSError as error:
+            _err(
+                f"cannot write audit output: {args.output} "
+                f"({error.__class__.__name__})"
+            )
+            return EXIT_IO
+        _err(
+            f"temporal inventory written: {args.output} "
+            f"({inventory['count']} run(s), raw_modified={inventory['raw_modified']})"
+        )
+    else:
+        print(dump_json(inventory), end="")
+    summary = ", ".join(
+        f"{key}={value}"
+        for key, value in sorted(inventory["classification_summary"].items())
+    )
+    _err(f"temporal inventory: {inventory['count']} run(s) [{summary}]")
     return EXIT_OK
 
 
@@ -1045,9 +1182,40 @@ def build_parser() -> argparse.ArgumentParser:
         default="",
         help="comparison purpose; only direct_comparison is modelled today",
     )
+    compare.add_argument(
+        "--coverage-a",
+        help="run directory / run_metadata.json for the G3 coverage conditions "
+        "(T6/T7) on side a",
+    )
+    compare.add_argument(
+        "--coverage-b",
+        help="run directory / run_metadata.json for the G3 coverage conditions "
+        "(T6/T7) on side b",
+    )
     compare.add_argument("--format", choices=("text", "json"), default="text")
     compare.add_argument("--output", help="write the JSON report to this path")
     compare.set_defaults(handler=cmd_compare_runs)
+
+    coverage_run = sub.add_parser(
+        "coverage-run",
+        help="G3 §9 coverage manifest for one run (read-only report)",
+    )
+    coverage_run.add_argument(
+        "--file", required=True, help="run directory or run_metadata.json"
+    )
+    coverage_run.add_argument("--format", choices=("text", "json"), default="text")
+    coverage_run.add_argument("--output", help="write the JSON manifest to this path")
+    coverage_run.set_defaults(handler=cmd_coverage_run)
+
+    audit_temporal = sub.add_parser(
+        "audit-temporal",
+        help="non-destructive G3 §15 temporal inventory over run_metadata files",
+    )
+    audit_temporal.add_argument("--datasets-root", default="datasets")
+    audit_temporal.add_argument(
+        "--output", default="docs/audits/g3-temporal-inventory.json"
+    )
+    audit_temporal.set_defaults(handler=cmd_audit_temporal)
 
     classify = sub.add_parser(
         "classify-query",

@@ -473,6 +473,11 @@ class Registries:
     queries: tuple = ()
     query_variants: tuple = ()
     studies: tuple = ()
+    #: G3 absolute window registry (``metadata/windows/*.json``).  An empty
+    #: tuple means the registry is absent and the window-registry checks are
+    #: disabled (repository convention: missing registries never produce
+    #: false failures).
+    windows: tuple = ()
     #: ``schema_version`` of the loaded query registry.  Stamped into new-run
     #: provenance (b.md §7) so a run records which registry definition version
     #: produced it.
@@ -487,6 +492,7 @@ class Registries:
         query_registry=None,
         query_variants_registry=None,
         study_registry=None,
+        window_documents=None,
     ) -> "Registries":
         def items(document, key):
             if isinstance(document, dict) and isinstance(document.get(key), list):
@@ -505,6 +511,7 @@ class Registries:
             queries=items(query_registry, "queries"),
             query_variants=items(query_variants_registry, "variant_sets"),
             studies=items(study_registry, "studies"),
+            windows=tuple(window_documents or ()),
             query_registry_version=query_registry_version,
         )
 

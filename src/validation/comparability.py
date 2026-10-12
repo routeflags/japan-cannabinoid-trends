@@ -198,7 +198,27 @@ def _query_identity(query_provenance: dict) -> tuple | None:
     )
 
 
-def compare_runs(a: dict, b: dict, *, purpose: str = "") -> ComparabilityResult:
+def _coverage_status(manifest):
+    """Coverage status from a §9.3 manifest, or ``None`` when not supplied."""
+    if not isinstance(manifest, dict):
+        return None
+    coverage = manifest.get("coverage")
+    if not isinstance(coverage, dict):
+        return None
+    status = coverage.get("status")
+    if status in ("complete", "partial", "missing", "unknown"):
+        return status
+    return None
+
+
+def compare_runs(
+    a: dict,
+    b: dict,
+    *,
+    purpose: str = "",
+    coverage_a: dict | None = None,
+    coverage_b: dict | None = None,
+) -> ComparabilityResult:
     """G1 §12 L2 gate for two run metadata documents.
 
     Conditions:
@@ -215,6 +235,14 @@ def compare_runs(a: dict, b: dict, *, purpose: str = "") -> ComparabilityResult:
       different ``collector_id`` stays ``conditional`` (provenance change
       needs review).  Unit *labels* are not carried by run metadata today;
       the measurement registry (G7) will refine this.
+    - T6/T7 (c.md §12.1, optional): when G3 coverage manifests are supplied
+      (``coverage_a`` / ``coverage_b``), a coverage gap blocks comparison
+      (``t6_coverage_missing`` -> ``not_comparable``), a partial coverage
+      downgrades to ``conditional`` (``t6_coverage_partial``), and an
+      indeterminate coverage (missingness not explicit) yields ``unknown``
+      (``t7_missingness_not_explicit``).  With both manifests absent the
+      verdict is exactly the pre-G3 one — coverage facts are never inferred
+      from run metadata alone.
 
     Only ``direct_comparison`` is modelled as a purpose (normalized-pattern
     comparisons are future work), matching the existing gate conventions:
@@ -265,8 +293,22 @@ def compare_runs(a: dict, b: dict, *, purpose: str = "") -> ComparabilityResult:
     if window_result.status == _NOT_COMPARABLE:
         reasons.extend(f"c2_{reason}" for reason in window_result.reasons)
 
+    # T6/T7 (c.md §12.1): coverage suitability / explicit missingness, only
+    # when coverage manifests were supplied by the caller.
+    coverage_statuses = [
+        status
+        for status in (_coverage_status(coverage_a), _coverage_status(coverage_b))
+        if status is not None
+    ]
+    if "unknown" in coverage_statuses:
+        return ComparabilityResult(_UNKNOWN, ["t7_missingness_not_explicit"])
+    if "missing" in coverage_statuses:
+        reasons.append("t6_coverage_missing")
+
     # C3: unit / provenance.
     conditionals: list[str] = []
+    if "partial" in coverage_statuses:
+        conditionals.append("t6_coverage_partial")
     source_a = a.get("source_id")
     source_b = b.get("source_id")
     if not isinstance(source_a, str) or not source_a or not isinstance(source_b, str) or not source_b:
