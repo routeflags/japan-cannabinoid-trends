@@ -471,7 +471,12 @@ class Registries:
     sources: tuple = ()
     collectors: tuple = ()
     queries: tuple = ()
+    query_variants: tuple = ()
     studies: tuple = ()
+    #: ``schema_version`` of the loaded query registry.  Stamped into new-run
+    #: provenance (b.md §7) so a run records which registry definition version
+    #: produced it.
+    query_registry_version: str | None = None
 
     @classmethod
     def from_documents(
@@ -480,6 +485,7 @@ class Registries:
         source_registry=None,
         collector_registry=None,
         query_registry=None,
+        query_variants_registry=None,
         study_registry=None,
     ) -> "Registries":
         def items(document, key):
@@ -487,15 +493,29 @@ class Registries:
                 return tuple(document[key])
             return ()
 
+        query_registry_version = None
+        if isinstance(query_registry, dict) and isinstance(
+            query_registry.get("schema_version"), str
+        ):
+            query_registry_version = query_registry["schema_version"]
+
         return cls(
             sources=items(source_registry, "sources"),
             collectors=items(collector_registry, "collectors"),
             queries=items(query_registry, "queries"),
+            query_variants=items(query_variants_registry, "variant_sets"),
             studies=items(study_registry, "studies"),
+            query_registry_version=query_registry_version,
         )
 
     def any(self) -> bool:
-        return bool(self.sources or self.collectors or self.queries or self.studies)
+        return bool(
+            self.sources
+            or self.collectors
+            or self.queries
+            or self.query_variants
+            or self.studies
+        )
 
 
 _REGISTERED_HISTORICAL_STATUSES = ("legacy", "deprecated", "unverified")

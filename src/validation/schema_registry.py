@@ -29,7 +29,11 @@ from validation.schemas.collection_run import (
     COLLECTION_RUN_SCHEMA,
 )
 from validation.schemas.provenance import TRANSFORMATION_SCHEMA
-from validation.schemas.query import QUERY_REGISTRY_SCHEMA, QUERY_VARIANTS_SCHEMA
+from validation.schemas.query import (
+    QUERY_REGISTRY_SCHEMA,
+    QUERY_VARIANTS_REGISTRY_SCHEMA,
+    QUERY_VARIANTS_SCHEMA,
+)
 from validation.schemas.registries import (
     COLLECTOR_REGISTRY_SCHEMA,
     SOURCE_REGISTRY_SCHEMA,
@@ -52,9 +56,11 @@ SCHEMA_REGISTRY: dict[str, dict] = {
     # G1 source / collector registries (P3-3).
     "source-registry-v1": SOURCE_REGISTRY_SCHEMA,
     "collector-registry-v1": COLLECTOR_REGISTRY_SCHEMA,
-    # G2 query registry / variants (P3-4).
+    # G2 query registry / variants (P3-4); the variants *file* schema was
+    # added with the G2 vertical slice (query-variants-v1 stays the block).
     "query-registry-v1": QUERY_REGISTRY_SCHEMA,
     "query-variants-v1": QUERY_VARIANTS_SCHEMA,
+    "query-variants-registry-v1": QUERY_VARIANTS_REGISTRY_SCHEMA,
     # G3 temporal window (P3-5).
     "temporal-window-v1": TEMPORAL_WINDOW_SCHEMA,
     # G4 artifact manifest (P3-6).

@@ -9,6 +9,9 @@ Commands
 - ``gate-plan``           pre-collection gate for a collection plan (P6-1)
 - ``gate-run``            post-collection L1 gate: catalog vs quarantine (P6-2)
 - ``compare-runs``        L2 run-level comparability (G1 §12, C1-C3)
+- ``classify-query``      Stage-1 query-string classification (G2 §8)
+- ``compare-queries``     definition-level query comparability (G2 §9)
+- ``audit-queries``       non-destructive G2 query inventory (b.md §13)
 - ``audit-legacy``        non-destructive G5 legacy audit (Phase 8)
 
 Exit codes (h.md §13)
@@ -43,6 +46,14 @@ from validation.gates import post_collection_gate, pre_collection_gate
 from validation.integrity import IO_ISSUE_CODES, sha256_file
 from validation.legacy import LegacyProfileNotAllowed, audit_record
 from validation.pipeline import validate_full
+from validation.query_semantics import (
+    build_query_inventory,
+    check_query_registry,
+    check_query_variants,
+    classify_query_text,
+    compare_query_definitions,
+    load_compound_vocabulary,
+)
 from validation.reporting import (
     VALIDATION_VERSION,
     Issue,
@@ -78,6 +89,7 @@ REGISTRY_FILES = (
 
 METADATA_REGISTRY_FILES = (
     ("queries/query-registry.json", "query-registry-v1"),
+    ("queries/query-variants.json", "query-variants-registry-v1"),
     ("studies/study-registry.json", "study-registry-v1"),
     ("measurements/measurement-registry.json", "measurement-registry-v1"),
 )
@@ -107,17 +119,41 @@ class ConfigError(Exception):
     """Schema / configuration problem (exit code 2)."""
 
 
+def _load_query_vocabulary(metadata_dir: Path):
+    """Load the compound taxonomy for query semantic checks (G2).
+
+    Returns ``None`` when the taxonomy file is absent (the same convention as
+    a missing registry: the corresponding cross-checks are disabled instead
+    of producing false failures).  An unreadable taxonomy is a configuration
+    error.
+    """
+    path = Path(metadata_dir) / "taxonomy" / "compound-taxonomy.skos.jsonld"
+    if not path.is_file():
+        return None
+    try:
+        return load_compound_vocabulary(path)
+    except (OSError, json.JSONDecodeError, UnicodeDecodeError) as error:
+        raise ConfigError(
+            f"compound taxonomy cannot be read as JSON-LD: {path}"
+        ) from error
+
+
 def load_registries(config_dir: Path, metadata_dir: Path) -> Registries:
     """Build the reference-check registries from present files only.
 
-    Returns an empty ``Registries`` while the G1/G2/G7 registry files do not
-    exist yet; reference checks are then skipped instead of failing.
+    Returns an empty ``Registries`` while a registry file does not exist yet;
+    reference checks are then skipped instead of failing.  The query variants
+    bundle and the query-registry version ride along with the query registry
+    (G2 vertical slice).
     """
     return Registries.from_documents(
         source_registry=_load_optional_json(config_dir / "sources.json"),
         collector_registry=_load_optional_json(config_dir / "collectors.json"),
         query_registry=_load_optional_json(
             metadata_dir / "queries" / "query-registry.json"
+        ),
+        query_variants_registry=_load_optional_json(
+            metadata_dir / "queries" / "query-variants.json"
         ),
         study_registry=_load_optional_json(
             metadata_dir / "studies" / "study-registry.json"
@@ -410,6 +446,23 @@ def _validate_registries(args) -> tuple[ReportBundle, int]:
     # always validated strictly.
     bundle = ReportBundle(profile=getattr(args, "profile", "strict"))
 
+    # G2 sibling documents / taxonomy for the query-registry semantic checks.
+    # A file that cannot be loaded here is reported on its own turn below;
+    # the query checks then run without the missing cross-reference (missing
+    # registries disable checks instead of producing false failures).
+    try:
+        query_document = _load_optional_json(
+            metadata_dir / "queries" / "query-registry.json"
+        )
+        variants_document = _load_optional_json(
+            metadata_dir / "queries" / "query-variants.json"
+        )
+        vocabulary = _load_query_vocabulary(metadata_dir)
+    except ConfigError:
+        query_document = None
+        variants_document = None
+        vocabulary = None
+
     found = False
     for directory, entries in (
         (config_dir, REGISTRY_FILES),
@@ -432,16 +485,31 @@ def _validate_registries(args) -> tuple[ReportBundle, int]:
                     )
                 )
                 continue
+            extra_checks = []
+            if schema_id == "query-registry-v1":
+                extra_checks.append(
+                    lambda document, _vocabulary=vocabulary: check_query_registry(
+                        document, vocabulary=_vocabulary
+                    )
+                )
+            elif schema_id == "query-variants-registry-v1":
+                extra_checks.append(
+                    lambda document,
+                    _registry=query_document,
+                    _vocabulary=vocabulary: check_query_variants(
+                        document, query_registry=_registry, vocabulary=_vocabulary
+                    )
+                )
             outcome = validate_full(
-                document, schema_id=schema_id, target=str(path)
+                document,
+                schema_id=schema_id,
+                target=str(path),
+                extra_checks=extra_checks,
             )
             bundle.reports.append(outcome.to_report())
 
     if not found:
-        bundle.note = (
-            "no registry files found (G1/G2/G6/G7 registries are not "
-            "implemented yet); nothing to validate"
-        )
+        bundle.note = "no registry files found; nothing to validate"
     return bundle, _exit_code_for_reports(bundle.reports)
 
 
@@ -690,6 +758,211 @@ def cmd_compare_runs(args) -> int:
 
 
 # ---------------------------------------------------------------------------
+# classify-query / compare-queries / audit-queries (G2 §8 / §9 / §13)
+# ---------------------------------------------------------------------------
+
+
+def _query_registry_payload(registries: Registries) -> dict:
+    return {
+        "schema_version": registries.query_registry_version,
+        "queries": list(registries.queries),
+    }
+
+
+def _query_variants_payload(registries: Registries) -> dict:
+    return {"variant_sets": list(registries.query_variants)}
+
+
+def _query_reference(entry: dict) -> dict:
+    return {
+        "query_id": entry.get("query_id"),
+        "compound_id": entry.get("compound_id"),
+        "intent_id": entry.get("intent_id"),
+        "canonical_text": entry.get("canonical_text"),
+        "status": entry.get("status"),
+    }
+
+
+def cmd_classify_query(args) -> int:
+    """Stage-1 deterministic classification of one query string (G2 §8).
+
+    Exit 0 = the text resolves to a registered query in ``active`` status
+    (adoptable as that query); 1 = not adoptable (irrelevant / ambiguous /
+    unknown, or a non-active registration); 2 = configuration error (query
+    registry missing or unreadable).
+    """
+    try:
+        registries = load_registries(Path(args.config_dir), Path(args.metadata_dir))
+        vocabulary = _load_query_vocabulary(Path(args.metadata_dir))
+    except ConfigError as error:
+        _err(str(error))
+        return EXIT_CONFIG
+    if not registries.queries:
+        _err("query registry not found (metadata/queries/query-registry.json)")
+        return EXIT_CONFIG
+
+    result = classify_query_text(
+        args.text,
+        query_registry=_query_registry_payload(registries),
+        variant_registry=_query_variants_payload(registries),
+        vocabulary=vocabulary,
+    )
+    result["registry_version"] = registries.query_registry_version
+    adoptable = (
+        result["classification"] == "relevant"
+        and result.get("query_status") == "active"
+    )
+    lines = [f"{result['classification'].upper()} {result['text']!r}"]
+    if result.get("query_id"):
+        lines.append(
+            f"  query_id: {result['query_id']} "
+            f"(status={result.get('query_status')})"
+        )
+    if result.get("variant_id"):
+        lines.append(f"  variant_id: {result['variant_id']}")
+    if result.get("rule_id"):
+        lines.append(f"  rule: {result['rule_id']} - {result.get('rationale')}")
+        lines.append(f"  evidence: {result.get('evidence')}")
+    if result.get("matched_tokens"):
+        lines.append("  matched tokens: " + ", ".join(result["matched_tokens"]))
+    for reason in result.get("reasons", []):
+        lines.append(f"  reason: {reason}")
+    _emit(result, fmt=args.format, output=args.output, human_lines=lines)
+    return EXIT_OK if adoptable else EXIT_DATA
+
+
+def cmd_compare_queries(args) -> int:
+    """Definition-level comparability of two registered queries (G2 §9).
+
+    The verdict never invalidates data (exit 0 for any produced verdict,
+    like ``compare-runs``); an unknown query_id is a configuration error
+    (exit 2, fail closed).
+    """
+    try:
+        registries = load_registries(Path(args.config_dir), Path(args.metadata_dir))
+    except ConfigError as error:
+        _err(str(error))
+        return EXIT_CONFIG
+    if not registries.queries:
+        _err("query registry not found (metadata/queries/query-registry.json)")
+        return EXIT_CONFIG
+
+    entries = {
+        query.get("query_id"): query
+        for query in registries.queries
+        if isinstance(query, dict)
+    }
+    for name in (args.a, args.b):
+        if name not in entries:
+            _err(f"unknown query_id: {name}")
+            return EXIT_CONFIG
+
+    result = compare_query_definitions(
+        entries[args.a],
+        entries[args.b],
+        registry_version_a=registries.query_registry_version,
+        registry_version_b=registries.query_registry_version,
+    )
+    report = {
+        "validation_version": VALIDATION_VERSION,
+        "gate": "G2-query-comparability",
+        "schema_id": "query-registry-v1",
+        "registry_version": registries.query_registry_version,
+        "a": _query_reference(entries[args.a]),
+        "b": _query_reference(entries[args.b]),
+        "status": result.status,
+        "reasons": list(result.reasons),
+    }
+    lines = [f"G2 {result.status} {args.a} vs {args.b}"]
+    for reason in result.reasons:
+        lines.append(f"  reason: {reason}")
+    _emit(report, fmt=args.format, output=args.output, human_lines=lines)
+    return EXIT_OK
+
+
+def cmd_audit_queries(args) -> int:
+    """Non-destructive b.md §13 query inventory over run metadata files.
+
+    Read-only: each file is hashed before and after reading and
+    ``raw_modified`` records any drift.  Exit 0 on success, 2 for a missing
+    query registry / configuration error, 3 when the output cannot be
+    written.
+    """
+    try:
+        registries = load_registries(Path(args.config_dir), Path(args.metadata_dir))
+        vocabulary = _load_query_vocabulary(Path(args.metadata_dir))
+    except ConfigError as error:
+        _err(str(error))
+        return EXIT_CONFIG
+    if not registries.queries:
+        _err("query registry not found (metadata/queries/query-registry.json)")
+        return EXIT_CONFIG
+
+    datasets_root = Path(args.datasets_root)
+    files = (
+        sorted(datasets_root.rglob("run_metadata.json"))
+        if datasets_root.is_dir()
+        else []
+    )
+    entries = []
+    for path in files:
+        entry = {
+            "path": str(path),
+            "document": None,
+            "sha256": None,
+            "sha256_after": None,
+            "unchanged": None,
+        }
+        try:
+            before = sha256_file(path)
+            document = _load_json(path)
+            after = sha256_file(path)
+        except (OSError, json.JSONDecodeError, UnicodeDecodeError):
+            entries.append(entry)
+            continue
+        entry.update(
+            {
+                "document": document,
+                "sha256": before,
+                "sha256_after": after,
+                "unchanged": before == after,
+            }
+        )
+        entries.append(entry)
+
+    audit = build_query_inventory(
+        entries,
+        query_registry=_query_registry_payload(registries),
+        variant_registry=_query_variants_payload(registries),
+        vocabulary=vocabulary,
+    )
+
+    if args.output:
+        try:
+            _write_output(args.output, audit)
+        except OSError as error:
+            _err(
+                f"cannot write audit output: {args.output} "
+                f"({error.__class__.__name__})"
+            )
+            return EXIT_IO
+        _err(
+            f"query inventory written: {args.output} "
+            f"({audit['count']} run(s), {audit['query_count']} string(s))"
+        )
+    else:
+        print(dump_json(audit), end="")
+    summary = ", ".join(
+        f"{key}={value}" for key, value in sorted(audit["summary"].items())
+    )
+    _err(
+        f"query inventory: {audit['count']} run(s), "
+        f"{audit['query_count']} string(s) [{summary}]"
+    )
+    return EXIT_OK
+
+
+# ---------------------------------------------------------------------------
 # argparse wiring
 # ---------------------------------------------------------------------------
 
@@ -775,6 +1048,35 @@ def build_parser() -> argparse.ArgumentParser:
     compare.add_argument("--format", choices=("text", "json"), default="text")
     compare.add_argument("--output", help="write the JSON report to this path")
     compare.set_defaults(handler=cmd_compare_runs)
+
+    classify = sub.add_parser(
+        "classify-query",
+        help="Stage-1 classification of one query string (G2 §8)",
+    )
+    classify.add_argument("--text", required=True)
+    _add_common(classify, with_profile=False)
+    classify.set_defaults(handler=cmd_classify_query)
+
+    compare_queries = sub.add_parser(
+        "compare-queries",
+        help="definition-level comparability of two registered queries (G2 §9)",
+    )
+    compare_queries.add_argument("--a", required=True, help="query_id (query registry)")
+    compare_queries.add_argument("--b", required=True, help="query_id (query registry)")
+    _add_common(compare_queries, with_profile=False)
+    compare_queries.set_defaults(handler=cmd_compare_queries)
+
+    audit_queries = sub.add_parser(
+        "audit-queries",
+        help="non-destructive G2 query inventory over run_metadata files (b.md §13)",
+    )
+    audit_queries.add_argument("--datasets-root", default="datasets")
+    audit_queries.add_argument(
+        "--output", default="docs/audits/g2-query-inventory.json"
+    )
+    audit_queries.add_argument("--config-dir", default="config")
+    audit_queries.add_argument("--metadata-dir", default="metadata")
+    audit_queries.set_defaults(handler=cmd_audit_queries)
 
     audit = sub.add_parser(
         "audit-legacy", help="non-destructive G5 legacy audit (Phase 8)"

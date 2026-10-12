@@ -1,0 +1,55 @@
+{
+  "schema_version": "1.0.0",
+  "variant_sets": [
+    {
+      "query_id": "cbd-general-ja",
+      "variants": [
+        {
+          "variant_id": "cbd-general-primary",
+          "text": "CBD",
+          "status": "primary"
+        },
+        {
+          "variant_id": "cbd-general-en",
+          "text": "Cannabidiol",
+          "status": "alternative"
+        },
+        {
+          "variant_id": "cbd-general-kana",
+          "text": "カンナビジオール",
+          "status": "alternative"
+        }
+      ]
+    },
+    {
+      "query_id": "cbd-liquid-ja",
+      "variants": [
+        {
+          "variant_id": "cbd-liquid-primary",
+          "text": "CBD リキッド",
+          "status": "primary"
+        },
+        {
+          "variant_id": "cbd-liquid-nospace",
+          "text": "CBDリキッド",
+          "status": "alternative"
+        }
+      ]
+    },
+    {
+      "query_id": "cbx-liquid-ja",
+      "variants": [
+        {
+          "variant_id": "cbx-liquid-primary",
+          "text": "CBX リキッド",
+          "status": "primary"
+        },
+        {
+          "variant_id": "cbx-liquid-nospace",
+          "text": "CBXリキッド",
+          "status": "alternative"
+        }
+      ]
+    }
+  ]
+}

@@ -20,6 +20,7 @@ EXPECTED_COVERAGE = {
     "collector-registry-v1": "test_registries_g1.py",
     "query-registry-v1": "test_query_registry.py",
     "query-variants-v1": "test_query_registry.py",
+    "query-variants-registry-v1": "test_query_registry.py",
     "temporal-window-v1": "test_temporal_window.py",
     "artifact-manifest-v1": "test_artifact_manifest.py",
     "transformation-v1": "test_transformation.py",

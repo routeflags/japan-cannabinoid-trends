@@ -420,6 +420,7 @@ def run_collection(
         artifact_manifest_name=ARTIFACT_MANIFEST_NAME,
         window_id=window_id,
         environment=run_environment,
+        query_registry_version=registries.query_registry_version,
     )
     _write_json(staged_dir / RUN_METADATA_NAME, document)
 

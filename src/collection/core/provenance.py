@@ -184,11 +184,15 @@ def build_run_metadata(
     artifact_manifest_name: str,
     window_id: str,
     environment: dict | None = None,
+    query_registry_version: str | None = None,
 ) -> dict:
     """Build a ``collection-run-v1`` run_metadata document from real facts.
 
     Identity fields come from the registry entry (collector) and the adapter
     (adapter_id) - the pipeline has already cross-checked that they agree.
+    ``query_registry_version`` records which query-registry definition version
+    the run was planned against (b.md §7); it is omitted when no registry is
+    loaded so the field is never invented.
     """
     query = plan.get("query") if isinstance(plan.get("query"), dict) else {}
     query_provenance = {
@@ -199,6 +203,8 @@ def build_run_metadata(
         query_provenance["compound_id"] = query["compound_id"]
     if query.get("intent_id"):
         query_provenance["intent_id"] = query["intent_id"]
+    if query_registry_version:
+        query_provenance["query_registry_version"] = query_registry_version
 
     collector_block = {
         "collector_id": collector_entry.get("collector_id"),

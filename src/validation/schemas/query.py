@@ -30,9 +30,29 @@ Interpretations recorded for review
   enum, not the variant one.
 - ``language`` requires at least two characters (b.md §10 JSON Schema
   ``minLength: 2``).
+- ``compound_id`` references the compound taxonomy's ``skos:notation``
+  (e.g. ``compound_cbx``).  b.md §4 makes the existing SKOS taxonomy the
+  canonical source for compound concepts and §5.2 asks the registry to
+  reference its identifiers; the repository standard (AGENTS.md) names the
+  notation as the portable Concept ID, keeping the compound concept separate
+  from any search text (P1).
+- ``query-variants-registry-v1`` (added with the G2 vertical slice) is the
+  *file* schema for ``metadata/queries/query-variants.json``; the block shape
+  stays ``query-variants-v1`` (b.md §5.1/§5.3) and is reused unchanged as the
+  item schema of ``variant_sets``.
 """
 
 from __future__ import annotations
+
+__all__ = [
+    "QUERY_INTENTS",
+    "QUERY_REGISTRY_SCHEMA",
+    "QUERY_STATUSES",
+    "QUERY_VARIANT_ITEM",
+    "QUERY_VARIANTS_REGISTRY_SCHEMA",
+    "QUERY_VARIANTS_SCHEMA",
+    "VARIANT_STATUSES",
+]
 
 QUERY_STATUSES = ["active", "deprecated", "experimental"]
 
@@ -98,7 +118,7 @@ QUERY_REGISTRY_SCHEMA = {
     },
 }
 
-_VARIANT_ITEM = {
+QUERY_VARIANT_ITEM = {
     "variant_id": {
         "type": "string",
         "required": True,
@@ -127,7 +147,26 @@ QUERY_VARIANTS_SCHEMA = {
         "required": True,
         "schema": {
             "type": "dict",
-            "schema": _VARIANT_ITEM,
+            "schema": QUERY_VARIANT_ITEM,
+        },
+    },
+}
+
+#: ``metadata/queries/query-variants.json`` - a bundle of ``query-variants-v1``
+#: blocks, one per query concept (b.md §5.1 recommends the file; the block
+#: schema is kept as-is for backward compatibility).
+QUERY_VARIANTS_REGISTRY_SCHEMA = {
+    "schema_version": {
+        "type": "string",
+        "required": True,
+        "empty": False,
+    },
+    "variant_sets": {
+        "type": "list",
+        "required": True,
+        "schema": {
+            "type": "dict",
+            "schema": QUERY_VARIANTS_SCHEMA,
         },
     },
 }

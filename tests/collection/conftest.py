@@ -53,8 +53,11 @@ def make_plan(
     collector_id: str | None = "google-trends-mcp",
     source_id: str = "google-trends",
     study_id: str = STUDY_ID,
-    query_id: str = "cbx-rikiddo-ja",
-    compound_id: str = "CBX",
+    # The real query registry (metadata/queries/query-registry.json) is loaded
+    # by these tests; the plan must name a registered query (pre-gate is
+    # fail closed) and the compound notation used by the registry.
+    query_id: str = "cbx-liquid-ja",
+    compound_id: str = "compound_cbx",
     purpose: str = "G1 collection contract test (synthetic replay)",
 ) -> dict:
     plan = {

@@ -11,9 +11,9 @@ def _run(
     *,
     source_id: str = "google-trends",
     collector_id: str = "google-trends-mcp",
-    query_id: str = "cbx-rikiddo-ja",
+    query_id: str = "cbx-liquid-ja",
     submitted: str = "CBX リキッド",
-    compound_id="CBX",
+    compound_id="compound_cbx",
     start: str = "2025-10-12T00:00:00Z",
     end: str = "2026-10-12T00:00:00Z",
     granularity: str = "week",
@@ -54,7 +54,7 @@ def test_query_mismatch_breaks_c1():
 
 
 def test_compound_mismatch_breaks_c1():
-    result = compare_runs(_run(), _run(compound_id="THC"))
+    result = compare_runs(_run(), _run(compound_id="compound_thc"))
     assert result.status == "not_comparable"
     assert result.reasons == ["c1_compound_mismatch"]
 

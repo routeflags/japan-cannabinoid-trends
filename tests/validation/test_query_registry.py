@@ -16,6 +16,7 @@ from validation.schemas.query import (
     QUERY_INTENTS,
     QUERY_REGISTRY_SCHEMA,
     QUERY_STATUSES,
+    QUERY_VARIANTS_REGISTRY_SCHEMA,
     QUERY_VARIANTS_SCHEMA,
 )
 
@@ -108,3 +109,46 @@ def test_query_variants_require_shape():
     assert any("text" in str(entry) for entry in result.errors["variants"])
     document = {"query_id": "cbd-liquid-ja", "variants": [{"variant_id": "v1", "text": "x", "status": "first"}]}
     assert not validate_document(document, QUERY_VARIANTS_SCHEMA).valid
+
+
+# ---------------------------------------------------------------------------
+# query-variants-registry-v1 (G2 vertical slice): the variants bundle file
+# ---------------------------------------------------------------------------
+
+
+def test_query_variants_registry_schema_is_registered():
+    assert get_schema("query-variants-registry-v1") is QUERY_VARIANTS_REGISTRY_SCHEMA
+
+
+def test_query_variants_registry_sample_passes():
+    result = validate_document(
+        _load("query-variants.json"), QUERY_VARIANTS_REGISTRY_SCHEMA
+    )
+    assert result.valid is True, result.errors
+
+
+def test_query_variants_registry_requires_bundle_shape():
+    document = _load("query-variants.json")
+    del document["variant_sets"]
+    assert not validate_document(document, QUERY_VARIANTS_REGISTRY_SCHEMA).valid
+    document = _load("query-variants.json")
+    del document["schema_version"]
+    assert not validate_document(document, QUERY_VARIANTS_REGISTRY_SCHEMA).valid
+
+
+def test_query_variants_registry_rejects_unknown_fields():
+    """The block shape stays query-variants-v1: unknown fields fail at both
+    bundle and block level (no silent extension area)."""
+    document = _load("query-variants.json")
+    document["variant_sets"][0]["platform_syntax"] = "x"
+    assert not validate_document(document, QUERY_VARIANTS_REGISTRY_SCHEMA).valid
+    document = _load("query-variants.json")
+    document["variant_sets"][0]["variants"][0]["language"] = "ja"
+    assert not validate_document(document, QUERY_VARIANTS_REGISTRY_SCHEMA).valid
+
+
+def test_query_variants_registry_does_not_mutate():
+    document = _load("query-variants.json")
+    before = deepcopy(document)
+    validate_document(document, QUERY_VARIANTS_REGISTRY_SCHEMA)
+    assert document == before

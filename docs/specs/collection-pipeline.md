@@ -110,6 +110,10 @@ L2 が `not_comparable` になることはある。
 `collection_started_at` / `queries`→`query_provenance` / 件数→
 `execution.returned_count` / `purpose`→`purpose` / エラー→`execution.errors`。
 
+G2 以降の補足: `query_provenance.compound_id` は compound-taxonomy の notation
+（例 `compound_cbx`）を使い、registry 読込時は `query_registry_version` も記録
+する（b.md §7。registry が無い場合は記録しない — 推測しない）。
+
 秘密情報: `submitted_parameters` は adapter が許可リスト方式で組み立てる
 （tool / terms / geo / timeframe のみ）。env ファイルや token は保存しない。
 
@@ -213,6 +217,9 @@ python -m validation.cli compare-runs --a a.json --b b.json
   ライブ収集承認後のタスク。
 - 既存 shell / skill（`research-google-trends` 等）への強制適用は未実施
   （移行は親の判断）。
-- G2（query registry）・G7（study / measurement registry）導入時は、
-  plan の `query_id` / `study_id` 参照検証が自動で有効になる（CLI の
-  `--metadata-dir` に registry が置かれればよい）。
+- G2（query registry / variants）は導入済み（2026-10-13 垂直スライス）。
+  plan の `query_id` は registry 照合され、未登録は fail closed で停止する。
+  旧 run の旧形式 `queries` は変更せず、対応関係は
+  `docs/audits/g2-query-inventory.json`（b.md §13 の 5 状態）で管理する。
+- G7（study / measurement registry）導入時は、plan の `study_id` 参照検証が
+  自動で有効になる（CLI の `--metadata-dir` に registry が置かれればよい）。

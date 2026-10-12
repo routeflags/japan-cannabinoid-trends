@@ -91,7 +91,7 @@ def test_cv06_unregistered_query_fails():
 
 def test_compound_mismatch_fails():
     document = _run_document()
-    document["query_provenance"]["compound_id"] = "CBD"
+    document["query_provenance"]["compound_id"] = "compound_thc"
     issues = check_registry_references(document, _registries())
     assert "REFERENCE_COMPOUND_MISMATCH" in _codes(issues)
 
@@ -100,7 +100,7 @@ def test_deprecated_query_is_informational():
     """Registered-but-deprecated differs from unregistered."""
     document = _run_document()
     document["query_provenance"]["query_id"] = "cbd-liquid-ja"
-    document["query_provenance"]["compound_id"] = "CBD"
+    document["query_provenance"]["compound_id"] = "compound_cbd"
     issues = check_registry_references(document, _registries())
     by_code = {issue.code: issue for issue in issues}
     assert by_code["QUERY_DEPRECATED_REFERENCE"].severity == "info"

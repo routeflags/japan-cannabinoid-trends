@@ -1,0 +1,30 @@
+{
+  "schema_version": "1.0.0",
+  "variant_sets": [
+    {
+      "query_id": "cbx-general-ja",
+      "variants": [
+        {
+          "variant_id": "cbx-general-primary",
+          "text": "CBX",
+          "status": "primary"
+        }
+      ]
+    },
+    {
+      "query_id": "cbd-liquid-ja",
+      "variants": [
+        {
+          "variant_id": "cbd-liquid-primary",
+          "text": "CBD リキッド",
+          "status": "primary"
+        },
+        {
+          "variant_id": "cbd-liquid-nospace",
+          "text": "CBDリキッド",
+          "status": "alternative"
+        }
+      ]
+    }
+  ]
+}

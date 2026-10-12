@@ -16,7 +16,7 @@
   "collection_finished_at": "2026-10-13T00:03:00Z",
   "query_provenance": {
     "query_id": "cbx-general-ja",
-    "compound_id": "CBX",
+    "compound_id": "compound_cbx",
     "intent_id": "compound_general",
     "submitted_query": "CBX",
     "query_registry_version": "1.0.0"

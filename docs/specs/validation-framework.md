@@ -46,8 +46,9 @@ python3 -m venv .venv
 .venv/bin/python -m pytest
 ```
 
-- Contract Tests: `tests/validation/`（402件）+ `tests/collection/`（59件）
-  ＝ **461件**（2026-10-13 G1 垂直スライス後。親が `.venv/bin/python -m pytest` で実測）。
+- Contract Tests: `tests/validation/`（456件）+ `tests/collection/`（59件）
+  ＝ **515件**（2026-10-13 G2 垂直スライス後。`.venv/bin/python -m pytest` で実測。
+  G1 直後は 461 件、非オブジェクト入力修正後は 468 件）。
 - 新しいスキーマを登録したら、対応する Contract Test を必ず追加する
   （20261013h.md §9 / §16）。`tests/validation/test_schema_coverage.py` が
   「登録済みスキーマIDを参照するテストファイルの存在」を機械的に検査するため、
@@ -123,11 +124,24 @@ report = outcome.to_report().to_dict()
 
 # G5 Legacy 監査（非破壊。--output 省略時は stdout）
 .venv/bin/python -m validation.cli audit-legacy --output docs/audits/g5-legacy-runs.json
+
+# G2 Stage-1 分類: exit 0 = 登録済み active クエリとして採用可 / 1 = 採用不可
+.venv/bin/python -m validation.cli classify-query --text "Durban CBD"
+
+# G2 クエリ定義の比較可能性（Q1-Q5 部分。判定は常に exit 0、未登録 ID は 2）
+.venv/bin/python -m validation.cli compare-queries --a cbd-general-ja --b cbd-liquid-ja
+
+# G2 旧 run クエリ棚卸し（非破壊。b.md §13 の 5 状態。既定出力は docs/audits/）
+.venv/bin/python -m validation.cli audit-queries --output docs/audits/g2-query-inventory.json
 ```
 
 - Exit Code: 0=成功 / 1=データ検証失敗 / 2=スキーマ・設定エラー /
   3=ファイルI/Oエラー（20261013h.md §13）。
   1回の実行で複数種が発生した場合の優先順位は **2 > 3 > 1 > 0**。
+- G2 追加コマンド: `classify-query` は 0=登録済み active クエリとして採用可 /
+  1=採用不可（irrelevant・ambiguous・unknown・非 active）/ 2=設定エラー。
+  `compare-queries` は「判定であってデータ不採用ではない」ため常に 0
+  （未登録 query_id は 2）。`audit-queries` は非破壊（読取専用、sha256 前後比較）。
 - 出力先: 機械可読 JSON は stdout（`--format json`）または `--output`。
   人間向けメッセージは stderr。
 - `--profile legacy` は凍結済み legacy run_id にのみ許可（§12）。新規 run へ
@@ -179,6 +193,8 @@ Cerberus は**構造検証のみ**を担当する。
 |---|---|
 | 必須項目・型・値域・列挙値・ネスト・余分なフィールド | Cerberus（本フレームワーク） |
 | Compound / Query / Source / Collector の Registry 存在 | Registry Validator（実装済み: `semantic.check_registry_references`） |
+| G2 Query Registry の内部整合（重複 ID・重複文字列・taxonomy 参照・variant 束） | Query Semantics（実装済み: `query_semantics.check_query_registry` / `check_query_variants`。`validate-registries` が実行） |
+| Query 文字列の Stage-1 分類・定義比較可能性（Q1-Q5 部分） | Query Semantics（実装済み: `classify_query_text` / `compare_query_definitions`。Stage 2/3・compiler は未実装 → §15） |
 | 日時・期間境界の前後関係 | Temporal / Semantic Validator（実装済み: `semantic.check_temporal_semantics`） |
 | Query と Source の整合性・Capability | Semantic Validator（実装済み: `semantic.check_capability_gate`） |
 | 欠測とゼロの区別・終端 run の raw 証拠（L1-09） | Semantic Validator（実装済み: `semantic.check_missingness_consistency`。`post_collection_gate` 経由） |
@@ -214,7 +230,7 @@ Cerberus は**構造検証のみ**を担当する。
 6. 契約バージョンは `schema_registry.SCHEMA_VERSIONS` と文書の
    `schema_version` の両方を更新する（CV-20: 不一致は検出される）。
 
-## 10. スキーマ一覧（15件、契約バージョンはいずれも 1.0.0）
+## 10. スキーマ一覧（16件、契約バージョンはいずれも 1.0.0）
 
 | Schema ID | 契約 | 主な内容 |
 |---|---|---|
@@ -224,6 +240,7 @@ Cerberus は**構造検証のみ**を担当する。
 | `collector-registry-v1` | G1 | `config/collectors.json`（capability 三値・status 五値） |
 | `query-registry-v1` | G2 | `metadata/queries/query-registry.json` |
 | `query-variants-v1` | G2 | 表記ゆれブロック |
+| `query-variants-registry-v1` | G2 | `metadata/queries/query-variants.json`（variant 束。ブロック形状は `query-variants-v1` を再利用） |
 | `temporal-window-v1` | G3 | 単独 window 文書 |
 | `artifact-manifest-v1` | G4 | Artifact manifest（sha256 は 64桁小文字 hex） |
 | `transformation-v1` | G5 | 変換来歴（input/output 参照は非空） |
@@ -242,13 +259,17 @@ Cerberus は**構造検証のみ**を担当する。
 |---|---|---|
 | `config/sources.json` | source-registry-v1 | **あり**（6 source。`validate-registries` と CI が実検証する） |
 | `config/collectors.json` | collector-registry-v1 | **あり**（6 collector。active は `google-trends-mcp` のみ） |
-| `metadata/queries/query-registry.json` | query-registry-v1 | なし（G2 の作業） |
+| `metadata/queries/query-registry.json` | query-registry-v1 | **あり**（G2 垂直スライス: 7 queries。`validate-registries` と CI が実検証する） |
+| `metadata/queries/query-variants.json` | query-variants-registry-v1 | **あり**（3 variant sets） |
 | `metadata/studies/study-registry.json` | study-registry-v1 | なし（G7 の作業） |
 | `metadata/measurements/measurement-registry.json` | measurement-registry-v1 | なし（G7 の作業） |
 | `config/storage-policies.json` | storage-policy-registry-v1 | なし（G6 の作業） |
 
-`validate-registries` は存在するファイルのみを検証する。上記 G2/G6/G7 の
-ファイルが置かれれば、CI が自動的に検証対象に含める。
+`validate-registries` は存在するファイルのみを検証する。上記 G6/G7 の
+ファイルが置かれれば、CI が自動的に検証対象に含める。G2 の 2 ファイルは検証
+対象に含まれ、taxonomy（`metadata/taxonomy/compound-taxonomy.skos.jsonld`）が
+存在する場合は compound 参照の意味検証も実行される（無い場合は該当チェック
+のみ無効になる）。
 
 ## 11. JSON Schema 共存（P3-10）— 決定: Cerberus を構造検証の正本とする
 
@@ -348,6 +369,7 @@ python3 -m venv .venv
 .venv/bin/python -m pytest
 .venv/bin/python -m validation.cli validate-registries
 .venv/bin/python -m validation.cli audit-legacy --output docs/audits/g5-legacy-runs.json
+.venv/bin/python -m validation.cli audit-queries --output docs/audits/g2-query-inventory.json
 ```
 
 - 実データへの end-to-end: `validate --profile legacy`（監査）と
@@ -357,3 +379,48 @@ python3 -m venv .venv
   → `python -m validation.cli compare-runs --a ... --b ...`。ライブ収集は
   実行しない（§13）。
 - CI ワークフローは初回実行に成功している（§6）。
+
+## 15. G2 垂直スライス（Query Registry / 表記ゆれ / 意味検証）— 2026-10-13
+
+G2 仕様（`docs/plans/20261013b.md`）の垂直スライス。登録範囲は「taxonomy に概念が
+あり、run 実績または keywords.yaml に実在する」CBX / CBD の 7 クエリに限定した
+（証拠台帳: `docs/provenance/query-inventory.md`）。**ライブ収集・新しい外部依存
+の追加は行っていない。**
+
+- **実装済み**:
+  - `metadata/queries/query-registry.json`（7 queries）/
+    `metadata/queries/query-variants.json`（3 variant sets）。
+    `compound_id` は taxonomy の notation（`compound_cbx` 等）。
+  - 新スキーマ `query-variants-registry-v1`（variant 束ファイル。ブロック形状は
+    `query-variants-v1` を後方互換のため変更せず再利用）。
+  - `validation.query_semantics`: `check_query_registry` / `check_query_variants`
+    （重複 ID・重複文字列・taxonomy 参照・primary 一致等を `validate-registries`
+    に配線 = CI で実行）、`classify_query_text`（Stage 1。除外フレーズは
+    rationale / evidence 付きの明示表）、`compare_query_definitions`
+    （Q1-Q5 部分。**comparable は返さず**、L2 C1 と矛盾しないことをテストで固定）。
+  - CLI: `classify-query`（0=採用可 / 1=採用不可 / 2=設定エラー）/`compare-queries`
+    /`audit-queries`。
+  - run provenance: registry 読込時は `query_provenance.query_registry_version` を
+    記録（b.md §7）。未登録 query_id は error、deprecated は info（既存
+    `semantic.check_registry_references` をそのまま使用）。
+  - 旧 run 棚卸し（b.md §13）: `docs/audits/g2-query-inventory.json`。
+    29 run / 75 文字列を exact_match=22 / variant_match=1 / ambiguous=36 /
+    unmapped=16 / semantic_match_candidate=0 に分類し、`raw_modified: false`
+    （sha256 前後比較）。テストが再計算一致を強制する。
+- **決定（J1 は要確認）**:
+  - 既存 29 run の旧形式 `queries` は registry 照合の対象にしない（形状分離＋
+    監査ファイルで対応関係を管理）。新規 run の `query_provenance` は fail closed。
+    この決定は可逆で、旧形式を fail closed の対象にする場合は凍結リスト運用
+    （legacy.py）側の再設計が必要になるため、採用していない。
+  - 除外方式は「正規化（NFKC + casefold）＋明示フレーズ表」（正規表現なし。
+    根拠: docs/collection-gap-analysis.md 原因 G2 行 + b.md §8）。
+  - THC-O / THCH / CRDP / HHC / HHCH は taxonomy に概念がなく登録できない
+    （taxonomy 側の課題として引き継ぎ。§15 ラスト参照）。
+- **未実装（引き継ぎ）**:
+  - Platform Query Compiler（b.md Phase 3）と platform syntax の registry 表現
+    （Q5 は現状 `submitted_query` の一致で代用。compiler 導入時に置換する）。
+  - Semantic Filter Stage 2/3 と評価データ（b.md §8.3: 分類精度を測定せずに
+    本番採用してはならない — Stage 1 はクエリ文字列の検証・デモ用で、コンテンツ
+    分類の本番採用は未実施）。
+  - provenance の `variant_id` / `compiler_id` / content hash（G5 schema 未拡張）。
+

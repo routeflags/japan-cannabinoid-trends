@@ -40,6 +40,10 @@ def _registry_tree(tmp_path: Path):
     shutil.copy(REGISTRIES / "collectors.json", config / "collectors.json")
     shutil.copy(REGISTRIES / "queries.json", metadata / "queries" / "query-registry.json")
     shutil.copy(
+        REGISTRIES / "query-variants.json",
+        metadata / "queries" / "query-variants.json",
+    )
+    shutil.copy(
         REGISTRIES / "study-registry.json",
         metadata / "studies" / "study-registry.json",
     )
@@ -464,6 +468,7 @@ def test_validate_registries_valid_files_exit_0(capsys, tmp_path):
         "source-registry-v1",
         "collector-registry-v1",
         "query-registry-v1",
+        "query-variants-registry-v1",
         "study-registry-v1",
     }
 
@@ -510,7 +515,7 @@ def test_validate_all_bundle(capsys, tmp_path):
     bundle = json.loads(output.read_text(encoding="utf-8"))
     assert code == EXIT_OK
     assert bundle["valid"] is True
-    assert len(bundle["reports"]) == 5  # 4 registries + 1 run
+    assert len(bundle["reports"]) == 6  # 5 registries + 1 run
     assert captured.out == ""
 
 
@@ -798,6 +803,162 @@ def test_compare_runs_missing_file_exit_3(capsys, tmp_path):
     captured = capsys.readouterr()
     assert code == EXIT_IO
     assert "cannot read input file" in captured.err
+
+
+# ---------------------------------------------------------------------------
+# G2 query commands (classify-query / compare-queries / audit-queries)
+# ---------------------------------------------------------------------------
+
+
+def _repo_args() -> list[str]:
+    return [
+        "--config-dir",
+        str(REPO_ROOT / "config"),
+        "--metadata-dir",
+        str(REPO_ROOT / "metadata"),
+    ]
+
+
+def test_classify_query_relevant_exit_0(capsys):
+    code = main(
+        ["classify-query", "--text", "CBD リキッド", "--format", "json", *_repo_args()]
+    )
+    captured = capsys.readouterr()
+    report = json.loads(captured.out)
+    assert code == EXIT_OK
+    assert report["classification"] == "relevant"
+    assert report["query_id"] == "cbd-liquid-ja"
+    assert report["registry_version"] == "1.0.0"
+
+
+def test_classify_query_variant_and_normalization(capsys):
+    """Case / width differences are absorbed by normalization (not by extra
+    variant entries) and a registered no-space variant resolves."""
+    for text in ("CBDリキッド", "cbd リキッド", "ＣＢＤ"):
+        code = main(
+            ["classify-query", "--text", text, "--format", "json", *_repo_args()]
+        )
+        captured = capsys.readouterr()
+        report = json.loads(captured.out)
+        assert code == EXIT_OK, report
+        assert report["classification"] == "relevant"
+
+
+def test_classify_query_durban_cbd_is_not_adoptable(capsys):
+    code = main(
+        ["classify-query", "--text", "Durban CBD", "--format", "json", *_repo_args()]
+    )
+    captured = capsys.readouterr()
+    report = json.loads(captured.out)
+    assert code == EXIT_DATA  # classified, but must not be adopted as a compound
+    assert report["classification"] == "irrelevant"
+    assert report["rule_id"] == "non-compound-durban-cbd"
+    assert report["evidence"]
+
+
+def test_classify_query_missing_registry_exit_2(capsys, tmp_path):
+    code = main(
+        ["classify-query", "--text", "CBD", *_isolated_registry_args(tmp_path)]
+    )
+    assert code == EXIT_CONFIG
+
+
+def test_compare_queries_intent_mismatch_is_not_comparable(capsys):
+    code = main(
+        [
+            "compare-queries",
+            "--a",
+            "cbd-general-ja",
+            "--b",
+            "cbd-liquid-ja",
+            "--format",
+            "json",
+            *_repo_args(),
+        ]
+    )
+    captured = capsys.readouterr()
+    report = json.loads(captured.out)
+    assert code == EXIT_OK  # a verdict, not a data failure
+    assert report["gate"] == "G2-query-comparability"
+    assert report["status"] == "not_comparable"
+    assert "q2_intent_mismatch" in report["reasons"]
+    assert "q3_text_mismatch" in report["reasons"]
+
+
+def test_compare_queries_same_query_is_conditional(capsys):
+    code = main(
+        [
+            "compare-queries",
+            "--a",
+            "cbd-general-ja",
+            "--b",
+            "cbd-general-ja",
+            "--format",
+            "json",
+            *_repo_args(),
+        ]
+    )
+    captured = capsys.readouterr()
+    report = json.loads(captured.out)
+    assert code == EXIT_OK
+    assert report["status"] == "conditional"
+
+
+def test_compare_queries_unknown_id_exit_2(capsys):
+    code = main(
+        [
+            "compare-queries",
+            "--a",
+            "cbd-general-ja",
+            "--b",
+            "no-such-query",
+            *_repo_args(),
+        ]
+    )
+    captured = capsys.readouterr()
+    assert code == EXIT_CONFIG
+    assert "unknown query_id" in captured.err
+
+
+def test_audit_queries_command(capsys, tmp_path):
+    run_dir = tmp_path / "datasets" / "study-z" / "data" / "raw" / "run-a"
+    run_dir.mkdir(parents=True)
+    (run_dir / "run_metadata.json").write_text(
+        json.dumps(
+            {
+                "run_id": "legacy-a",
+                "source": "x",
+                "queries": [
+                    {"term": "CBD"},
+                    {"terms": ["CBX リキッド", "Durban CBD"]},
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
+    output = tmp_path / "audit.json"
+    code = main(
+        [
+            "audit-queries",
+            "--datasets-root",
+            str(tmp_path / "datasets"),
+            "--output",
+            str(output),
+            *_repo_args(),
+        ]
+    )
+    captured = capsys.readouterr()
+    audit = json.loads(output.read_text(encoding="utf-8"))
+    assert code == EXIT_OK
+    assert audit["count"] == 1
+    assert audit["raw_modified"] is False
+    states = {
+        entry["text"]: entry["state"] for entry in audit["runs"][0]["queries"]
+    }
+    assert states["CBD"] == "exact_match"
+    assert states["CBX リキッド"] == "exact_match"
+    assert states["Durban CBD"] == "ambiguous"
+    assert "query inventory written" in captured.err
 
 
 # ---------------------------------------------------------------------------

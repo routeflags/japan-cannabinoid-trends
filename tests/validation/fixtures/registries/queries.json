@@ -3,7 +3,7 @@
   "queries": [
     {
       "query_id": "cbx-general-ja",
-      "compound_id": "CBX",
+      "compound_id": "compound_cbx",
       "intent_id": "compound_general",
       "language": "ja",
       "canonical_text": "CBX",
@@ -11,7 +11,7 @@
     },
     {
       "query_id": "cbd-liquid-ja",
-      "compound_id": "CBD",
+      "compound_id": "compound_cbd",
       "intent_id": "product_liquid",
       "language": "ja",
       "canonical_text": "CBD リキッド",
