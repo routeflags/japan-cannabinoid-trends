@@ -10,7 +10,7 @@
 |---|---|---|
 | Phase 1 | 既存環境監査 | 完了（監査結果は下記 §8） |
 | Phase 2 | 依存導入・共通Validator・G5スキーマ・Contract Tests | 実装済み（コミット 654b5b9） |
-| Phase 3 | Schema Registry 拡充（G1〜G7・running profile・バージョン管理） | **実装済み**（15 スキーマ登録。P3-10 JSON Schema 共存は方針決定のみ・未実装） |
+| Phase 3 | Schema Registry 拡充（G1〜G7・running profile・バージョン管理） | **実装済み**（15 スキーマ登録。P3-10 は対象不存在のため §11 の決定により終結） |
 | Phase 4 | Semantic / Integrity / Lineage / Git Policy / Comparability / Publication / Secret Scan | **実装済み** |
 | Phase 5 | CLI・JSON Validation Report・Exit Code | **実装済み** |
 | Phase 6 | 収集パイプライン統合 | 一部（ゲートライブラリ `gates.py` + `run-gates.sh`。`src/collection/*` 本体への配線は未実施） |
@@ -217,20 +217,25 @@ Cerberus は**構造検証のみ**を担当する。
 
 各スキーマの未包含事項（意味検証側の担当）は各モジュールの docstring に明記してある。
 
-## 11. JSON Schema 共存（P3-10）— 方針決定・未実装
+## 11. JSON Schema 共存（P3-10）— 決定: Cerberus を構造検証の正本とする
 
 Phase 1 監査のとおり、リポジトリには**実在する JSON Schema ファイルがない**
 （`project.json` の `$schema` は dangling 参照）。そのため h.md §17 の
-「両 Validator 実行・差分で CI 失敗」は対象が存在せず、**未実装**とする。
+「両 Validator 実行・差分で CI 失敗」は対象が存在せず、本項目は
+**該当なし（no-op）として終結**する。
 
-推奨方針（親・ユーザーの判断待ちの決定事項）:
+**決定（2026-10-13）**:
 
-1. 現時点では既存 G3/G5 仕様書内の JSON Schema 例は**仕様記述**として扱い、
-   Cerberus 側を実行時の構造検証の実装とする。
-2. 将来 `schemas/*.schema.json` を公開契約として導入する場合は、
-   単一の正本（JSON Schema）→ Cerberus スキーマ生成、または同一 fixture への
-   二重実行テストを同時に導入する（手動二重管理はドリフトのため禁止）。
-3. 導入時には `jsonschema` 依存の追加が必要（現時点の依存は cerberus のみ）。
+1. 実行時の構造検証の正本は **Cerberus スキーマ（`src/validation/schemas/`）** とする。
+2. 各仕様書（G3/G5 等）内の JSON Schema 例は**仕様記述**として扱い、実行時の
+   検証器としては実装しない。
+3. 将来 `schemas/*.schema.json` を公開契約として導入する場合は、次のいずれかを
+   **同時に**導入する。片方だけの導入は禁止（手動二重管理はドリフトの原因）。
+   - 単一の正本（JSON Schema）から Cerberus スキーマを生成する、または
+   - 同一 fixture を両 Validator へ通す二重実行テストを追加する。
+4. 導入時には `jsonschema` の依存追加が必要（現時点の依存は `cerberus` のみ）。
+   CI の差分ゲートも導入と同時に有効化する（`research-validation.yml` の
+   ヘッダコメントを参照）。
 
 ## 12. Legacy Audit（Phase 8 実装済み）
 
