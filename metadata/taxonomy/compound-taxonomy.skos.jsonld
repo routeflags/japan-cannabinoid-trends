@@ -26,7 +26,7 @@
       },
       "dct:creator": "Routeflags Co., Ltd.",
       "dct:created": "2026-10-02",
-      "dct:modified": "2026-10-02",
+      "dct:modified": "2026-10-13",
       "dct:license": "https://creativecommons.org/licenses/by/4.0/",
       "skos:hasTopConcept": [
         "jptr:compound-major",
@@ -79,7 +79,8 @@
         "jptr:compound-cbdv",
         "jptr:compound-cbx",
         "jptr:compound-h4cbh",
-        "jptr:compound-hhbd"
+        "jptr:compound-hhbd",
+        "jptr:compound-thch"
       ]
     },
     {
@@ -110,7 +111,11 @@
         "@value": "半合成カンナビノイド",
         "@language": "ja"
       },
-      "skos:notation": "compound_semisynthetic"
+      "skos:notation": "compound_semisynthetic",
+      "skos:narrower": [
+        "jptr:compound-hhc",
+        "jptr:compound-thc-o"
+      ]
     },
     {
       "@id": "jptr:compound-synthetic",
@@ -125,7 +130,11 @@
         "@value": "合成カンナビノイド",
         "@language": "ja"
       },
-      "skos:notation": "compound_synthetic"
+      "skos:notation": "compound_synthetic",
+      "skos:narrower": [
+        "jptr:compound-hhch",
+        "jptr:compound-crdp"
+      ]
     },
     {
       "@id": "jptr:compound-endocannabinoid",
@@ -406,6 +415,136 @@
         "@language": "en"
       },
       "skos:related": ["jptr:compound-crdp"]
+    },
+
+    {
+      "@id": "jptr:compound-hhc",
+      "@type": "skos:Concept",
+      "skos:inScheme": "jptr:compound-taxonomy",
+      "skos:broader": "jptr:compound-semisynthetic",
+      "skos:prefLabel": {
+        "@value": "Hexahydrocannabinol (HHC)",
+        "@language": "en"
+      },
+      "skos:prefLabel": {
+        "@value": "ヘキサヒドロカンナビノール (HHC)",
+        "@language": "ja"
+      },
+      "skos:altLabel": [
+        { "@value": "HHC", "@language": "en" },
+        { "@value": "ヘキサヒドロカンナビノール", "@language": "ja" },
+        { "@value": "HHC リキッド", "@language": "ja" }
+      ],
+      "skos:notation": "compound_hhc",
+      "skos:scopeNote": {
+        "@value": "A semi-synthetic hydrogenated cannabinoid marketed in Japan.",
+        "@language": "en"
+      },
+      "skos:related": ["jptr:compound-hhch"]
+    },
+
+    {
+      "@id": "jptr:compound-hhch",
+      "@type": "skos:Concept",
+      "skos:inScheme": "jptr:compound-taxonomy",
+      "skos:broader": "jptr:compound-synthetic",
+      "skos:prefLabel": {
+        "@value": "Hexahydrocannabihexol (HHCH)",
+        "@language": "en"
+      },
+      "skos:prefLabel": {
+        "@value": "ヘキサヒドロカンナビヘキソール (HHCH)",
+        "@language": "ja"
+      },
+      "skos:altLabel": [
+        { "@value": "HHCH", "@language": "en" },
+        { "@value": "ヘキサヒドロカンナビヘキソール", "@language": "ja" },
+        { "@value": "HHCH リキッド", "@language": "ja" }
+      ],
+      "skos:notation": "compound_hhch",
+      "skos:scopeNote": {
+        "@value": "A synthetic cannabinoid marketed in Japan.",
+        "@language": "en"
+      },
+      "skos:related": ["jptr:compound-hhc"]
+    },
+
+    {
+      "@id": "jptr:compound-thch",
+      "@type": "skos:Concept",
+      "skos:inScheme": "jptr:compound-taxonomy",
+      "skos:broader": "jptr:compound-minor",
+      "skos:prefLabel": {
+        "@value": "Tetrahydrocannabihexol (THCH)",
+        "@language": "en"
+      },
+      "skos:prefLabel": {
+        "@value": "テトラヒドロカンナビヘキソール (THCH)",
+        "@language": "ja"
+      },
+      "skos:altLabel": [
+        { "@value": "THCH", "@language": "en" },
+        { "@value": "テトラヒドロカンナビヘキソール", "@language": "ja" },
+        { "@value": "THCH リキッド", "@language": "ja" }
+      ],
+      "skos:notation": "compound_thch",
+      "skos:scopeNote": {
+        "@value": "A minor phytocannabinoid marketed in Japan.",
+        "@language": "en"
+      }
+    },
+
+    {
+      "@id": "jptr:compound-thc-o",
+      "@type": "skos:Concept",
+      "skos:inScheme": "jptr:compound-taxonomy",
+      "skos:broader": "jptr:compound-semisynthetic",
+      "skos:prefLabel": {
+        "@value": "Tetrahydrocannabinol-O-acetate (THC-O)",
+        "@language": "en"
+      },
+      "skos:prefLabel": {
+        "@value": "テトラヒドロカンナビノール-O (THC-O)",
+        "@language": "ja"
+      },
+      "skos:altLabel": [
+        { "@value": "THC-O", "@language": "en" },
+        { "@value": "THCO", "@language": "en" },
+        { "@value": "THC-O-Acetate", "@language": "en" },
+        { "@value": "テトラヒドロカンナビノール-O", "@language": "ja" },
+        { "@value": "THC-アセテート", "@language": "ja" },
+        { "@value": "THC-O リキッド", "@language": "ja" }
+      ],
+      "skos:notation": "compound_thc_o",
+      "skos:scopeNote": {
+        "@value": "A semi-synthetic cannabinoid acetate marketed in Japan.",
+        "@language": "en"
+      }
+    },
+
+    {
+      "@id": "jptr:compound-crdp",
+      "@type": "skos:Concept",
+      "skos:inScheme": "jptr:compound-taxonomy",
+      "skos:broader": "jptr:compound-synthetic",
+      "skos:prefLabel": {
+        "@value": "CRDP",
+        "@language": "en"
+      },
+      "skos:prefLabel": {
+        "@value": "CRDP",
+        "@language": "ja"
+      },
+      "skos:altLabel": [
+        { "@value": "CRDP", "@language": "en" },
+        { "@value": "CRDP リキッド", "@language": "ja" }
+      ],
+      "skos:notation": "compound_crdp",
+      "skos:scopeNote": {
+        "@value": "A synthetic cannabinoid marketed in Japan. Chemical structure unknown. Monitoring target.",
+        "@language": "en"
+      },
+      "skos:related": ["jptr:compound-crdh"]
     },
 
     {

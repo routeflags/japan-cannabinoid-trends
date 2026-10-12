@@ -445,4 +445,12 @@ def test_audit_snapshot_records_the_legacy_examples():
     assert states["CBD オイル"] == "exact_match"
     # not registered yet: recorded for review, never silently mapped
     assert states["THC リキッド"] == "ambiguous"
-    assert stored["summary"]["unmapped"] > 0
+    # The five compounds missing from the taxonomy (HHC / HHCH / THCH / THC-O /
+    # CRDP) were added on 2026-10-13, so their mentions classify as ambiguous
+    # ('compound_token_without_registered_query') instead of unmapped.  Assert
+    # the partition and that review-required entries exist, rather than a fixed
+    # ``unmapped`` count: a future run may legitimately record an unmapped
+    # string, and turning that into a failure would contradict the point of
+    # recording it.
+    assert stored["summary"]["ambiguous"] > 0
+    assert sum(stored["summary"].values()) == stored["query_count"]

@@ -18,8 +18,8 @@
     "exact_match": 22,
     "variant_match": 1,
     "semantic_match_candidate": 0,
-    "ambiguous": 36,
-    "unmapped": 16
+    "ambiguous": 52,
+    "unmapped": 0
   },
   "runs": [
     {
@@ -99,11 +99,11 @@
       "queries": [
         {
           "text": "HHC",
-          "state": "unmapped",
-          "classification": "unknown",
+          "state": "ambiguous",
+          "classification": "ambiguous",
           "query_id": null,
           "variant_id": null,
-          "detail": "no_registered_correspondence",
+          "detail": "compound_token_without_registered_query",
           "source_fields": [
             "queries[0].term"
           ]
@@ -121,11 +121,11 @@
       "queries": [
         {
           "text": "THCH",
-          "state": "unmapped",
-          "classification": "unknown",
+          "state": "ambiguous",
+          "classification": "ambiguous",
           "query_id": null,
           "variant_id": null,
-          "detail": "no_registered_correspondence",
+          "detail": "compound_token_without_registered_query",
           "source_fields": [
             "queries[0].term"
           ]
@@ -186,22 +186,22 @@
         },
         {
           "text": "HHC",
-          "state": "unmapped",
-          "classification": "unknown",
+          "state": "ambiguous",
+          "classification": "ambiguous",
           "query_id": null,
           "variant_id": null,
-          "detail": "no_registered_correspondence",
+          "detail": "compound_token_without_registered_query",
           "source_fields": [
             "queries[0].terms[3]"
           ]
         },
         {
           "text": "THCH",
-          "state": "unmapped",
-          "classification": "unknown",
+          "state": "ambiguous",
+          "classification": "ambiguous",
           "query_id": null,
           "variant_id": null,
-          "detail": "no_registered_correspondence",
+          "detail": "compound_token_without_registered_query",
           "source_fields": [
             "queries[0].terms[4]"
           ]
@@ -329,11 +329,11 @@
       "queries": [
         {
           "text": "CRDP",
-          "state": "unmapped",
-          "classification": "unknown",
+          "state": "ambiguous",
+          "classification": "ambiguous",
           "query_id": null,
           "variant_id": null,
-          "detail": "no_registered_correspondence",
+          "detail": "compound_token_without_registered_query",
           "source_fields": [
             "queries[0].term"
           ]
@@ -351,11 +351,11 @@
       "queries": [
         {
           "text": "CRDP",
-          "state": "unmapped",
-          "classification": "unknown",
+          "state": "ambiguous",
+          "classification": "ambiguous",
           "query_id": null,
           "variant_id": null,
-          "detail": "no_registered_correspondence",
+          "detail": "compound_token_without_registered_query",
           "source_fields": [
             "queries[0].term"
           ]
@@ -373,11 +373,11 @@
       "queries": [
         {
           "text": "HHCH",
-          "state": "unmapped",
-          "classification": "unknown",
+          "state": "ambiguous",
+          "classification": "ambiguous",
           "query_id": null,
           "variant_id": null,
-          "detail": "no_registered_correspondence",
+          "detail": "compound_token_without_registered_query",
           "source_fields": [
             "queries[0].term"
           ]
@@ -395,11 +395,11 @@
       "queries": [
         {
           "text": "HHCH",
-          "state": "unmapped",
-          "classification": "unknown",
+          "state": "ambiguous",
+          "classification": "ambiguous",
           "query_id": null,
           "variant_id": null,
-          "detail": "no_registered_correspondence",
+          "detail": "compound_token_without_registered_query",
           "source_fields": [
             "queries[0].term"
           ]
@@ -460,11 +460,11 @@
         },
         {
           "text": "HHC",
-          "state": "unmapped",
-          "classification": "unknown",
+          "state": "ambiguous",
+          "classification": "ambiguous",
           "query_id": null,
           "variant_id": null,
-          "detail": "no_registered_correspondence",
+          "detail": "compound_token_without_registered_query",
           "source_fields": [
             "compounds_collected[3]"
           ]
@@ -674,11 +674,11 @@
         },
         {
           "text": "HHC リキッド",
-          "state": "unmapped",
-          "classification": "unknown",
+          "state": "ambiguous",
+          "classification": "ambiguous",
           "query_id": null,
           "variant_id": null,
-          "detail": "no_registered_correspondence",
+          "detail": "compound_token_without_registered_query",
           "source_fields": [
             "queries[4].term"
           ]
@@ -755,11 +755,11 @@
         },
         {
           "text": "HHC リキッド",
-          "state": "unmapped",
-          "classification": "unknown",
+          "state": "ambiguous",
+          "classification": "ambiguous",
           "query_id": null,
           "variant_id": null,
-          "detail": "no_registered_correspondence",
+          "detail": "compound_token_without_registered_query",
           "source_fields": [
             "queries[4].term"
           ]
@@ -812,11 +812,11 @@
         },
         {
           "text": "THCH リキッド",
-          "state": "unmapped",
-          "classification": "unknown",
+          "state": "ambiguous",
+          "classification": "ambiguous",
           "query_id": null,
           "variant_id": null,
-          "detail": "no_registered_correspondence",
+          "detail": "compound_token_without_registered_query",
           "source_fields": [
             "queries[2].term",
             "queries[9].terms[2]"
@@ -848,11 +848,11 @@
         },
         {
           "text": "HHCH リキッド",
-          "state": "unmapped",
-          "classification": "unknown",
+          "state": "ambiguous",
+          "classification": "ambiguous",
           "query_id": null,
           "variant_id": null,
-          "detail": "no_registered_correspondence",
+          "detail": "compound_token_without_registered_query",
           "source_fields": [
             "queries[5].term",
             "queries[10].terms[2]"
@@ -860,11 +860,11 @@
         },
         {
           "text": "CRDP リキッド",
-          "state": "unmapped",
-          "classification": "unknown",
+          "state": "ambiguous",
+          "classification": "ambiguous",
           "query_id": null,
           "variant_id": null,
-          "detail": "no_registered_correspondence",
+          "detail": "compound_token_without_registered_query",
           "source_fields": [
             "queries[6].term",
             "queries[10].terms[3]"
@@ -910,11 +910,11 @@
         },
         {
           "text": "HHC リキッド",
-          "state": "unmapped",
-          "classification": "unknown",
+          "state": "ambiguous",
+          "classification": "ambiguous",
           "query_id": null,
           "variant_id": null,
-          "detail": "no_registered_correspondence",
+          "detail": "compound_token_without_registered_query",
           "source_fields": [
             "queries[8].terms[2]"
           ]
@@ -976,11 +976,11 @@
         },
         {
           "text": "HHC リキッド",
-          "state": "unmapped",
-          "classification": "unknown",
+          "state": "ambiguous",
+          "classification": "ambiguous",
           "query_id": null,
           "variant_id": null,
-          "detail": "no_registered_correspondence",
+          "detail": "compound_token_without_registered_query",
           "source_fields": [
             "queries[4].term"
           ]
