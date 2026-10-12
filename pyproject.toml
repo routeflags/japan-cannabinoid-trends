@@ -1,0 +1,38 @@
+# Cerberus-based structural validation framework for the G1-G7 research data
+# contracts (docs/plans/20261013h.md).
+#
+# This is the repository's first third-party Python dependency and the single
+# declared source of Python dependencies. Development workflow:
+#
+#   python3 -m venv .venv
+#   .venv/bin/python -m pip install -e ".[dev]"
+#   .venv/bin/python -m pytest
+#
+# See docs/specs/validation-framework.md for the full setup and operations
+# contract.
+
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "japan-cannabinoid-trends-validation"
+version = "0.1.0"
+description = "Cerberus-based structural validation for the G1-G7 data contracts of the japan-cannabinoid-trends research repository"
+license = "CC-BY-4.0"
+requires-python = ">=3.12"
+dependencies = [
+    "cerberus==1.3.8",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest==9.1.1",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]

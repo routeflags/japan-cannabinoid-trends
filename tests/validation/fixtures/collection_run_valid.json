@@ -1,0 +1,43 @@
+{
+  "schema_version": "1.0.0",
+  "run_id": "20261013T000000Z-x-cbx-001",
+  "study_id": "cannabinoid-social-trends",
+  "source_id": "x",
+  "purpose": "compound trend observation",
+  "collector": {
+    "collector_id": "x-apify-example",
+    "adapter_id": "x-apify-example@1",
+    "provider": "apify",
+    "transport": "actor",
+    "external_id": "EXAMPLE_ACTOR_ID",
+    "version": "unknown"
+  },
+  "collection_started_at": "2026-10-13T00:00:00Z",
+  "collection_finished_at": "2026-10-13T00:03:00Z",
+  "query_provenance": {
+    "query_id": "cbx-general-ja",
+    "compound_id": "CBX",
+    "intent_id": "compound_general",
+    "submitted_query": "CBX",
+    "query_registry_version": "1.0.0"
+  },
+  "temporal_provenance": {
+    "window_id": "2026-09-jst",
+    "requested_start": "2026-08-31T15:00:00Z",
+    "requested_end_exclusive": "2026-09-30T15:00:00Z",
+    "granularity": "day",
+    "timezone": "Asia/Tokyo",
+    "exact_window_match": false
+  },
+  "execution": {
+    "status": "partial",
+    "returned_count": 100,
+    "pagination_exhausted": false,
+    "errors": []
+  },
+  "artifact_manifest": "artifact-manifest.json",
+  "environment": {
+    "code_commit": "EXAMPLE_COMMIT",
+    "runtime_version": "unknown"
+  }
+}
