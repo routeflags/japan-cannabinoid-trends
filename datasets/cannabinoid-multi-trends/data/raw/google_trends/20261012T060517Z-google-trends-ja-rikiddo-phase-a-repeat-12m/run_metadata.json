@@ -1,0 +1,72 @@
+{
+  "run_id": "20261012T060517Z-google-trends-ja-rikiddo-phase-a-repeat-12m",
+  "study_id": "cannabinoid-multi-trends",
+  "source": "google-trends",
+  "mcp_server": "google-trends-mcp",
+  "mcp_version": "0.1.1",
+  "collection_timestamp": "2026-10-12T06:05:29.146Z",
+  "repeat_of": "20261012T055259Z-google-trends-ja-rikiddo-phase-a-12m",
+  "queries": [
+    {
+      "term": "CBD リキッド",
+      "geo": "JP",
+      "timeframe": "today 12-m",
+      "type": "interest_over_time"
+    },
+    {
+      "term": "THC リキッド",
+      "geo": "JP",
+      "timeframe": "today 12-m",
+      "type": "interest_over_time"
+    },
+    {
+      "term": "CBG リキッド",
+      "geo": "JP",
+      "timeframe": "today 12-m",
+      "type": "interest_over_time"
+    },
+    {
+      "term": "CBN リキッド",
+      "geo": "JP",
+      "timeframe": "today 12-m",
+      "type": "interest_over_time"
+    },
+    {
+      "term": "HHC リキッド",
+      "geo": "JP",
+      "timeframe": "today 12-m",
+      "type": "interest_over_time"
+    },
+    {
+      "terms": [
+        "CBX リキッド",
+        "CBD リキッド",
+        "THC リキッド",
+        "CBG リキッド",
+        "CBN リキッド"
+      ],
+      "geo": "JP",
+      "timeframe": "today 12-m",
+      "type": "compare_terms",
+      "label": "JA-1"
+    }
+  ],
+  "anchor_terms": [
+    "CBX リキッド",
+    "CBD リキッド"
+  ],
+  "zero_status": {
+    "CBD リキッド": "low_volume",
+    "THC リキッド": "low_volume",
+    "CBG リキッド": "low_volume",
+    "CBN リキッド": "low_volume",
+    "HHC リキッド": "below_threshold"
+  },
+  "rate_limit_429": {
+    "compare_ja1_attempts": 1,
+    "backoffs_s": [],
+    "recovered": true,
+    "singles_429": 0
+  },
+  "purpose": "Phase A repeat for non-determinism"
+}

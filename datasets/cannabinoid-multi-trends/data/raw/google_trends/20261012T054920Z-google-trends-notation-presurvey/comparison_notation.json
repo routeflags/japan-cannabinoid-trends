@@ -1,0 +1,40 @@
+{
+  "run_id": "20261012T054920Z-google-trends-notation-presurvey",
+  "study_id": "cannabinoid-multi-trends",
+  "source": "google-trends",
+  "mcp_server": "google-trends-mcp",
+  "mcp_version": "0.1.1",
+  "collection_timestamp": "2026-10-12T05:51:23Z",
+  "comparisons": [
+    {
+      "terms": [
+        "CBD リキッド",
+        "CBDリキッド"
+      ],
+      "geo": "JP",
+      "timeframe": "today 12-m",
+      "type": "compare_terms",
+      "result_text": "Comparison: CBD リキッド vs CBDリキッド\nGeo: JP | Timeframe: today 12-m\n\nAverage interest scores (0-100):\n  CBD リキッド: 58 <-- highest\n  CBDリキッド: 58\n\nDate\tCBD リキッド\tCBDリキッド\nOct 12 – 18, 2025\t65\t57\nOct 19 – 25, 2025\t69\t58\nOct 26 – Nov 1, 2025\t52\t52\nNov 2 – 8, 2025\t73\t77\nNov 9 – 15, 2025\t71\t77\nNov 16 – 22, 2025\t61\t70\nNov 23 – 29, 2025\t41\t72\nNov 30 – Dec 6, 2025\t69\t57\nDec 7 – 13, 2025\t42\t56\nDec 14 – 20, 2025\t66\t63\nDec 21 – 27, 2025\t55\t50\nDec 28, 2025 – Jan 3, 2026\t65\t49\nJan 4 – 10, 2026\t48\t44\nJan 11 – 17, 2026\t74\t76\nJan 18 – 24, 2026\t61\t59\nJan 25 – 31, 2026\t91\t100\nFeb 1 – 7, 2026\t61\t59\nFeb 8 – 14, 2026\t57\t48\nFeb 15 – 21, 2026\t60\t71\nFeb 22 – 28, 2026\t78\t91\nMar 1 – 7, 2026\t64\t75\nMar 8 – 14, 2026\t60\t49\nMar 15 – 21, 2026\t51\t55\nMar 22 – 28, 2026\t65\t70\nMar 29 – Apr 4, 2026\t90\t63\nApr 5 – 11, 2026\t51\t66\nApr 12 – 18, 2026\t70\t71\nApr 19 – 25, 2026\t70\t57\nApr 26 – May 2, 2026\t45\t45\nMay 3 – 9, 2026\t0\t49\nMay 10 – 16, 2026\t68\t51\nMay 17 – 23, 2026\t51\t52\nMay 24 – 30, 2026\t87\t79\nMay 31 – Jun 6, 2026\t73\t85\nJun 7 – 13, 2026\t53\t59\nJun 14 – 20, 2026\t58\t48\nJun 21 – 27, 2026\t48\t40\nJun 28 – Jul 4, 2026\t67\t48\nJul 5 – 11, 2026\t53\t0\nJul 12 – 18, 2026\t42\t34\nJul 19 – 25, 2026\t0\t46\nJul 26 – Aug 1, 2026\t62\t71\nAug 2 – 8, 2026\t47\t35\nAug 9 – 15, 2026\t77\t74\nAug 16 – 22, 2026\t63\t72\nAug 23 – 29, 2026\t40\t0\nAug 30 – Sep 5, 2026\t71\t68\nSep 6 – 12, 2026\t72\t68\nSep 13 – 19, 2026\t72\t64\nSep 20 – 26, 2026\t0\t54\nSep 27 – Oct 3, 2026\t45\t45\nOct 4 – 10, 2026\t51\t50\nOct 11 – 17, 2026\t53\t40"
+    },
+    {
+      "terms": [
+        "THC-O リキッド",
+        "THC-Oリキッド"
+      ],
+      "geo": "JP",
+      "timeframe": "today 12-m",
+      "type": "compare_terms",
+      "result_text": "Google Trends returned no data. Try a broader timeframe or different terms."
+    },
+    {
+      "terms": [
+        "CBD リキッド",
+        "CBD オイル"
+      ],
+      "geo": "JP",
+      "timeframe": "today 12-m",
+      "type": "compare_terms",
+      "result_text": "Comparison: CBD リキッド vs CBD オイル\nGeo: JP | Timeframe: today 12-m\n\nAverage interest scores (0-100):\n  CBD リキッド: 25\n  CBD オイル: 62 <-- highest\n\nDate\tCBD リキッド\tCBD オイル\nOct 12 – 18, 2025\t27\t100\nOct 19 – 25, 2025\t29\t83\nOct 26 – Nov 1, 2025\t22\t71\nNov 2 – 8, 2025\t31\t81\nNov 9 – 15, 2025\t30\t73\nNov 16 – 22, 2025\t26\t82\nNov 23 – 29, 2025\t17\t76\nNov 30 – Dec 6, 2025\t29\t73\nDec 7 – 13, 2025\t18\t86\nDec 14 – 20, 2025\t28\t50\nDec 21 – 27, 2025\t23\t55\nDec 28, 2025 – Jan 3, 2026\t28\t51\nJan 4 – 10, 2026\t20\t71\nJan 11 – 17, 2026\t31\t83\nJan 18 – 24, 2026\t26\t64\nJan 25 – 31, 2026\t38\t84\nFeb 1 – 7, 2026\t26\t91\nFeb 8 – 14, 2026\t24\t66\nFeb 15 – 21, 2026\t25\t71\nFeb 22 – 28, 2026\t33\t62\nMar 1 – 7, 2026\t27\t66\nMar 8 – 14, 2026\t25\t43\nMar 15 – 21, 2026\t22\t69\nMar 22 – 28, 2026\t27\t73\nMar 29 – Apr 4, 2026\t38\t54\nApr 5 – 11, 2026\t22\t52\nApr 12 – 18, 2026\t29\t55\nApr 19 – 25, 2026\t30\t56\nApr 26 – May 2, 2026\t19\t50\nMay 3 – 9, 2026\t0\t82\nMay 10 – 16, 2026\t29\t70\nMay 17 – 23, 2026\t21\t68\nMay 24 – 30, 2026\t37\t64\nMay 31 – Jun 6, 2026\t31\t53\nJun 7 – 13, 2026\t23\t67\nJun 14 – 20, 2026\t24\t65\nJun 21 – 27, 2026\t20\t40\nJun 28 – Jul 4, 2026\t28\t48\nJul 5 – 11, 2026\t23\t60\nJul 12 – 18, 2026\t18\t42\nJul 19 – 25, 2026\t0\t54\nJul 26 – Aug 1, 2026\t26\t47\nAug 2 – 8, 2026\t20\t51\nAug 9 – 15, 2026\t33\t62\nAug 16 – 22, 2026\t27\t53\nAug 23 – 29, 2026\t17\t38\nAug 30 – Sep 5, 2026\t30\t53\nSep 6 – 12, 2026\t30\t46\nSep 13 – 19, 2026\t30\t53\nSep 20 – 26, 2026\t0\t34\nSep 27 – Oct 3, 2026\t19\t39\nOct 4 – 10, 2026\t21\t44\nOct 11 – 17, 2026\t24\t45"
+    }
+  ]
+}

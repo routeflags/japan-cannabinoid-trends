@@ -1,0 +1,304 @@
+{
+  "run_id": "20261012T061614Z-google-trends-ja-rikiddo-phase-b-12m",
+  "study_id": "cannabinoid-multi-trends",
+  "source": "google-trends",
+  "mcp_server": "google-trends-mcp",
+  "mcp_version": "0.1.1",
+  "collection_timestamp": "2026-10-12T06:32:38.178Z",
+  "queries": [
+    {
+      "term": "THCV リキッド",
+      "geo": "JP",
+      "timeframe": "today 12-m",
+      "type": "interest_over_time"
+    },
+    {
+      "term": "THC-O リキッド",
+      "geo": "JP",
+      "timeframe": "today 12-m",
+      "type": "interest_over_time"
+    },
+    {
+      "term": "THCH リキッド",
+      "geo": "JP",
+      "timeframe": "today 12-m",
+      "type": "interest_over_time"
+    },
+    {
+      "term": "H4CBH リキッド",
+      "geo": "JP",
+      "timeframe": "today 12-m",
+      "type": "interest_over_time"
+    },
+    {
+      "term": "HHBD リキッド",
+      "geo": "JP",
+      "timeframe": "today 12-m",
+      "type": "interest_over_time"
+    },
+    {
+      "term": "HHCH リキッド",
+      "geo": "JP",
+      "timeframe": "today 12-m",
+      "type": "interest_over_time"
+    },
+    {
+      "term": "CRDP リキッド",
+      "geo": "JP",
+      "timeframe": "today 12-m",
+      "type": "interest_over_time"
+    },
+    {
+      "term": "CRDH リキッド",
+      "geo": "JP",
+      "timeframe": "today 12-m",
+      "type": "interest_over_time"
+    },
+    {
+      "terms": [
+        "CBX リキッド",
+        "CBD リキッド",
+        "HHC リキッド",
+        "THCV リキッド",
+        "THC-O リキッド"
+      ],
+      "geo": "JP",
+      "timeframe": "today 12-m",
+      "type": "compare_terms",
+      "label": "JA2"
+    },
+    {
+      "terms": [
+        "CBX リキッド",
+        "CBD リキッド",
+        "THCH リキッド",
+        "H4CBH リキッド",
+        "HHBD リキッド"
+      ],
+      "geo": "JP",
+      "timeframe": "today 12-m",
+      "type": "compare_terms",
+      "label": "JA3"
+    },
+    {
+      "terms": [
+        "CBX リキッド",
+        "CBD リキッド",
+        "HHCH リキッド",
+        "CRDP リキッド",
+        "CRDH リキッド"
+      ],
+      "geo": "JP",
+      "timeframe": "today 12-m",
+      "type": "compare_terms",
+      "label": "JA4"
+    }
+  ],
+  "anchor_terms": [
+    "CBX リキッド",
+    "CBD リキッド"
+  ],
+  "zero_status": {
+    "THCV リキッド": "unknown",
+    "THC-O リキッド": "unknown",
+    "THCH リキッド": "low_volume",
+    "H4CBH リキッド": "low_volume",
+    "HHBD リキッド": "low_volume",
+    "HHCH リキッド": "low_volume",
+    "CRDP リキッド": "unknown",
+    "CRDH リキッド": "unknown"
+  },
+  "rate_limit_429": {
+    "requests_hit": 1,
+    "backoffs": [
+      {
+        "label": "ja4",
+        "attempt": 1,
+        "wait_s": 60
+      }
+    ],
+    "recovered": true
+  },
+  "errors": [],
+  "request_log": [
+    {
+      "label": "THCV リキッド",
+      "tool": "interest_over_time",
+      "args": {
+        "terms": [
+          "THCV リキッド"
+        ],
+        "geo": "JP",
+        "timeframe": "today 12-m"
+      },
+      "attempts": 1,
+      "rate_limited": false,
+      "ok": true
+    },
+    {
+      "label": "THC-O リキッド",
+      "tool": "interest_over_time",
+      "args": {
+        "terms": [
+          "THC-O リキッド"
+        ],
+        "geo": "JP",
+        "timeframe": "today 12-m"
+      },
+      "attempts": 1,
+      "rate_limited": false,
+      "ok": true
+    },
+    {
+      "label": "THCH リキッド",
+      "tool": "interest_over_time",
+      "args": {
+        "terms": [
+          "THCH リキッド"
+        ],
+        "geo": "JP",
+        "timeframe": "today 12-m"
+      },
+      "attempts": 1,
+      "rate_limited": false,
+      "ok": true
+    },
+    {
+      "label": "H4CBH リキッド",
+      "tool": "interest_over_time",
+      "args": {
+        "terms": [
+          "H4CBH リキッド"
+        ],
+        "geo": "JP",
+        "timeframe": "today 12-m"
+      },
+      "attempts": 1,
+      "rate_limited": false,
+      "ok": true
+    },
+    {
+      "label": "HHBD リキッド",
+      "tool": "interest_over_time",
+      "args": {
+        "terms": [
+          "HHBD リキッド"
+        ],
+        "geo": "JP",
+        "timeframe": "today 12-m"
+      },
+      "attempts": 1,
+      "rate_limited": false,
+      "ok": true
+    },
+    {
+      "label": "HHCH リキッド",
+      "tool": "interest_over_time",
+      "args": {
+        "terms": [
+          "HHCH リキッド"
+        ],
+        "geo": "JP",
+        "timeframe": "today 12-m"
+      },
+      "attempts": 1,
+      "rate_limited": false,
+      "ok": true
+    },
+    {
+      "label": "CRDP リキッド",
+      "tool": "interest_over_time",
+      "args": {
+        "terms": [
+          "CRDP リキッド"
+        ],
+        "geo": "JP",
+        "timeframe": "today 12-m"
+      },
+      "attempts": 1,
+      "rate_limited": false,
+      "ok": true
+    },
+    {
+      "label": "CRDH リキッド",
+      "tool": "interest_over_time",
+      "args": {
+        "terms": [
+          "CRDH リキッド"
+        ],
+        "geo": "JP",
+        "timeframe": "today 12-m"
+      },
+      "attempts": 1,
+      "rate_limited": false,
+      "ok": true
+    },
+    {
+      "label": "ja2",
+      "tool": "compare_terms",
+      "args": {
+        "terms": [
+          "CBX リキッド",
+          "CBD リキッド",
+          "HHC リキッド",
+          "THCV リキッド",
+          "THC-O リキッド"
+        ],
+        "geo": "JP",
+        "timeframe": "today 12-m"
+      },
+      "attempts": 1,
+      "rate_limited": false,
+      "ok": true
+    },
+    {
+      "label": "ja3",
+      "tool": "compare_terms",
+      "args": {
+        "terms": [
+          "CBX リキッド",
+          "CBD リキッド",
+          "THCH リキッド",
+          "H4CBH リキッド",
+          "HHBD リキッド"
+        ],
+        "geo": "JP",
+        "timeframe": "today 12-m"
+      },
+      "attempts": 1,
+      "rate_limited": false,
+      "ok": true
+    },
+    {
+      "label": "ja4",
+      "tool": "compare_terms",
+      "args": {
+        "terms": [
+          "CBX リキッド",
+          "CBD リキッド",
+          "HHCH リキッド",
+          "CRDP リキッド",
+          "CRDH リキッド"
+        ],
+        "geo": "JP",
+        "timeframe": "today 12-m"
+      },
+      "attempts": 2,
+      "rate_limited": true,
+      "ok": true
+    }
+  ],
+  "sleeps_s": [
+    116.3,
+    71.4,
+    75.6,
+    90.2,
+    114.7,
+    119.9,
+    86.0,
+    98.9,
+    75.5,
+    64.3
+  ],
+  "purpose": "Phase B remaining 8 + JA-2..JA-4"
+}

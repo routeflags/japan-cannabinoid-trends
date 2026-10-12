@@ -1,0 +1,20 @@
+{
+  "terms": [
+    "CBX リキッド",
+    "CBD リキッド",
+    "THC リキッド",
+    "CBG リキッド",
+    "CBN リキッド"
+  ],
+  "geo": "JP",
+  "timeframe": "today 12-m",
+  "collected_at": "2026-10-12T06:12:39.237Z",
+  "averages": {
+    "CBX リキッド": 3.0,
+    "CBD リキッド": 64.1,
+    "THC リキッド": 0.4,
+    "CBG リキッド": 0.2,
+    "CBN リキッド": 2.5
+  },
+  "raw_text": "Comparison: CBX リキッド vs CBD リキッド vs THC リキッド vs CBG リキッド vs CBN リキッド\nGeo: JP | Timeframe: today 12-m\n\nAverage interest scores (0-100):\n  CBX リキッド: 3\n  CBD リキッド: 64 <-- highest\n  THC リキッド: 0\n  CBG リキッド: 0\n  CBN リキッド: 2\n\nDate\tCBX リキッド\tCBD リキッド\tTHC リキッド\tCBG リキッド\tCBN リキッド\nOct 12 – 18, 2025\t0\t71\t0\t0\t0\nOct 19 – 25, 2025\t0\t76\t0\t0\t0\nOct 26 – Nov 1, 2025\t0\t57\t0\t0\t0\nNov 2 – 8, 2025\t0\t80\t0\t0\t0\nNov 9 – 15, 2025\t0\t78\t0\t0\t0\nNov 16 – 22, 2025\t0\t67\t0\t0\t0\nNov 23 – 29, 2025\t0\t45\t0\t0\t0\nNov 30 – Dec 6, 2025\t0\t76\t0\t0\t40\nDec 7 – 13, 2025\t0\t47\t0\t0\t0\nDec 14 – 20, 2025\t0\t73\t0\t0\t0\nDec 21 – 27, 2025\t0\t61\t0\t0\t0\nDec 28, 2025 – Jan 3, 2026\t0\t72\t0\t0\t42\nJan 4 – 10, 2026\t0\t53\t0\t0\t0\nJan 11 – 17, 2026\t0\t81\t0\t0\t0\nJan 18 – 24, 2026\t0\t67\t0\t0\t0\nJan 25 – 31, 2026\t0\t100\t0\t0\t0\nFeb 1 – 7, 2026\t0\t67\t0\t0\t0\nFeb 8 – 14, 2026\t0\t63\t0\t0\t0\nFeb 15 – 21, 2026\t0\t66\t0\t0\t41\nFeb 22 – 28, 2026\t0\t86\t0\t0\t0\nMar 1 – 7, 2026\t0\t71\t0\t0\t0\nMar 8 – 14, 2026\t0\t66\t0\t0\t0\nMar 15 – 21, 2026\t0\t56\t0\t0\t0\nMar 22 – 28, 2026\t0\t72\t0\t0\t0\nMar 29 – Apr 4, 2026\t0\t100\t0\t0\t0\nApr 5 – 11, 2026\t0\t56\t0\t0\t0\nApr 12 – 18, 2026\t0\t77\t0\t0\t0\nApr 19 – 25, 2026\t0\t77\t0\t0\t0\nApr 26 – May 2, 2026\t0\t50\t0\t0\t0\nMay 3 – 9, 2026\t0\t0\t0\t0\t0\nMay 10 – 16, 2026\t0\t74\t0\t0\t0\nMay 17 – 23, 2026\t0\t56\t0\t0\t0\nMay 24 – 30, 2026\t0\t95\t0\t0\t0\nMay 31 – Jun 6, 2026\t0\t80\t0\t0\t0\nJun 7 – 13, 2026\t0\t59\t0\t0\t0\nJun 14 – 20, 2026\t0\t63\t0\t0\t0\nJun 21 – 27, 2026\t0\t53\t0\t0\t0\nJun 28 – Jul 4, 2026\t0\t73\t0\t0\t0\nJul 5 – 11, 2026\t0\t59\t0\t0\t0\nJul 12 – 18, 2026\t0\t46\t0\t0\t0\nJul 19 – 25, 2026\t0\t0\t0\t0\t0\nJul 26 – Aug 1, 2026\t0\t69\t0\t0\t0\nAug 2 – 8, 2026\t0\t52\t0\t0\t0\nAug 9 – 15, 2026\t0\t85\t0\t0\t0\nAug 16 – 22, 2026\t0\t70\t0\t0\t0\nAug 23 – 29, 2026\t0\t44\t0\t0\t0\nAug 30 – Sep 5, 2026\t0\t78\t0\t0\t0\nSep 6 – 12, 2026\t37\t79\t0\t0\t0\nSep 13 – 19, 2026\t46\t79\t0\t0\t0\nSep 20 – 26, 2026\t0\t0\t0\t0\t0\nSep 27 – Oct 3, 2026\t28\t50\t9\t6\t5\nOct 4 – 10, 2026\t24\t56\t10\t6\t4\nOct 11 – 17, 2026\t23\t64\t0\t0\t0"
+}

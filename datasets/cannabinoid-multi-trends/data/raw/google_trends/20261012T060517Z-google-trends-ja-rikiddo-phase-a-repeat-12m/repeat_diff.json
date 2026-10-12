@@ -1,0 +1,1376 @@
+{
+  "prev_run_id": "20261012T055259Z-google-trends-ja-rikiddo-phase-a-12m",
+  "repeat_run_id": "20261012T060517Z-google-trends-ja-rikiddo-phase-a-repeat-12m",
+  "prev_collection": "2026-10-12T05:53:04Z approx",
+  "repeat_collection": "2026-10-12T06:05:29.146Z",
+  "singles": {
+    "CBD リキッド": {
+      "prev_avg": 64.02,
+      "repeat_avg": 64.08,
+      "avg_diff": 0.06,
+      "n_weeks": 53,
+      "n_changed_weeks": 1,
+      "max_abs_diff": 3,
+      "weekly_diffs": [
+        {
+          "date": "2025-10-12",
+          "prev": 71,
+          "repeat": 71,
+          "diff": 0
+        },
+        {
+          "date": "2025-10-19",
+          "prev": 76,
+          "repeat": 76,
+          "diff": 0
+        },
+        {
+          "date": "2025-10-26",
+          "prev": 57,
+          "repeat": 57,
+          "diff": 0
+        },
+        {
+          "date": "2025-11-02",
+          "prev": 80,
+          "repeat": 80,
+          "diff": 0
+        },
+        {
+          "date": "2025-11-09",
+          "prev": 78,
+          "repeat": 78,
+          "diff": 0
+        },
+        {
+          "date": "2025-11-16",
+          "prev": 67,
+          "repeat": 67,
+          "diff": 0
+        },
+        {
+          "date": "2025-11-23",
+          "prev": 45,
+          "repeat": 45,
+          "diff": 0
+        },
+        {
+          "date": "2025-11-30",
+          "prev": 76,
+          "repeat": 76,
+          "diff": 0
+        },
+        {
+          "date": "2025-12-07",
+          "prev": 47,
+          "repeat": 47,
+          "diff": 0
+        },
+        {
+          "date": "2025-12-14",
+          "prev": 73,
+          "repeat": 73,
+          "diff": 0
+        },
+        {
+          "date": "2025-12-21",
+          "prev": 61,
+          "repeat": 61,
+          "diff": 0
+        },
+        {
+          "date": "2026-12-28",
+          "prev": 72,
+          "repeat": 72,
+          "diff": 0
+        },
+        {
+          "date": "2026-01-04",
+          "prev": 53,
+          "repeat": 53,
+          "diff": 0
+        },
+        {
+          "date": "2026-01-11",
+          "prev": 81,
+          "repeat": 81,
+          "diff": 0
+        },
+        {
+          "date": "2026-01-18",
+          "prev": 67,
+          "repeat": 67,
+          "diff": 0
+        },
+        {
+          "date": "2026-01-25",
+          "prev": 100,
+          "repeat": 100,
+          "diff": 0
+        },
+        {
+          "date": "2026-02-01",
+          "prev": 67,
+          "repeat": 67,
+          "diff": 0
+        },
+        {
+          "date": "2026-02-08",
+          "prev": 63,
+          "repeat": 63,
+          "diff": 0
+        },
+        {
+          "date": "2026-02-15",
+          "prev": 66,
+          "repeat": 66,
+          "diff": 0
+        },
+        {
+          "date": "2026-02-22",
+          "prev": 86,
+          "repeat": 86,
+          "diff": 0
+        },
+        {
+          "date": "2026-03-01",
+          "prev": 71,
+          "repeat": 71,
+          "diff": 0
+        },
+        {
+          "date": "2026-03-08",
+          "prev": 66,
+          "repeat": 66,
+          "diff": 0
+        },
+        {
+          "date": "2026-03-15",
+          "prev": 56,
+          "repeat": 56,
+          "diff": 0
+        },
+        {
+          "date": "2026-03-22",
+          "prev": 72,
+          "repeat": 72,
+          "diff": 0
+        },
+        {
+          "date": "2026-03-29",
+          "prev": 100,
+          "repeat": 100,
+          "diff": 0
+        },
+        {
+          "date": "2026-04-05",
+          "prev": 56,
+          "repeat": 56,
+          "diff": 0
+        },
+        {
+          "date": "2026-04-12",
+          "prev": 77,
+          "repeat": 77,
+          "diff": 0
+        },
+        {
+          "date": "2026-04-19",
+          "prev": 77,
+          "repeat": 77,
+          "diff": 0
+        },
+        {
+          "date": "2026-04-26",
+          "prev": 50,
+          "repeat": 50,
+          "diff": 0
+        },
+        {
+          "date": "2026-05-03",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-05-10",
+          "prev": 74,
+          "repeat": 74,
+          "diff": 0
+        },
+        {
+          "date": "2026-05-17",
+          "prev": 56,
+          "repeat": 56,
+          "diff": 0
+        },
+        {
+          "date": "2026-05-24",
+          "prev": 95,
+          "repeat": 95,
+          "diff": 0
+        },
+        {
+          "date": "2026-05-31",
+          "prev": 80,
+          "repeat": 80,
+          "diff": 0
+        },
+        {
+          "date": "2026-06-07",
+          "prev": 59,
+          "repeat": 59,
+          "diff": 0
+        },
+        {
+          "date": "2026-06-14",
+          "prev": 63,
+          "repeat": 63,
+          "diff": 0
+        },
+        {
+          "date": "2026-06-21",
+          "prev": 53,
+          "repeat": 53,
+          "diff": 0
+        },
+        {
+          "date": "2026-06-28",
+          "prev": 73,
+          "repeat": 73,
+          "diff": 0
+        },
+        {
+          "date": "2026-07-05",
+          "prev": 59,
+          "repeat": 59,
+          "diff": 0
+        },
+        {
+          "date": "2026-07-12",
+          "prev": 46,
+          "repeat": 46,
+          "diff": 0
+        },
+        {
+          "date": "2026-07-19",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-07-26",
+          "prev": 69,
+          "repeat": 69,
+          "diff": 0
+        },
+        {
+          "date": "2026-08-02",
+          "prev": 52,
+          "repeat": 52,
+          "diff": 0
+        },
+        {
+          "date": "2026-08-09",
+          "prev": 85,
+          "repeat": 85,
+          "diff": 0
+        },
+        {
+          "date": "2026-08-16",
+          "prev": 70,
+          "repeat": 70,
+          "diff": 0
+        },
+        {
+          "date": "2026-08-23",
+          "prev": 44,
+          "repeat": 44,
+          "diff": 0
+        },
+        {
+          "date": "2026-08-30",
+          "prev": 78,
+          "repeat": 78,
+          "diff": 0
+        },
+        {
+          "date": "2026-09-06",
+          "prev": 79,
+          "repeat": 79,
+          "diff": 0
+        },
+        {
+          "date": "2026-09-13",
+          "prev": 79,
+          "repeat": 79,
+          "diff": 0
+        },
+        {
+          "date": "2026-09-20",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-09-27",
+          "prev": 50,
+          "repeat": 50,
+          "diff": 0
+        },
+        {
+          "date": "2026-10-04",
+          "prev": 56,
+          "repeat": 56,
+          "diff": 0
+        },
+        {
+          "date": "2026-10-11",
+          "prev": 62,
+          "repeat": 65,
+          "diff": 3
+        }
+      ]
+    },
+    "THC リキッド": {
+      "prev_avg": 3.51,
+      "repeat_avg": 3.51,
+      "avg_diff": 0.0,
+      "n_weeks": 53,
+      "n_changed_weeks": 0,
+      "max_abs_diff": 0,
+      "weekly_diffs": [
+        {
+          "date": "2025-10-12",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2025-10-19",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2025-10-26",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2025-11-02",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2025-11-09",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2025-11-16",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2025-11-23",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2025-11-30",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2025-12-07",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2025-12-14",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2025-12-21",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-12-28",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-01-04",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-01-11",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-01-18",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-01-25",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-02-01",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-02-08",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-02-15",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-02-22",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-03-01",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-03-08",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-03-15",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-03-22",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-03-29",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-04-05",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-04-12",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-04-19",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-04-26",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-05-03",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-05-10",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-05-17",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-05-24",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-05-31",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-06-07",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-06-14",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-06-21",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-06-28",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-07-05",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-07-12",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-07-19",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-07-26",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-08-02",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-08-09",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-08-16",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-08-23",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-08-30",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-09-06",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-09-13",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-09-20",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-09-27",
+          "prev": 86,
+          "repeat": 86,
+          "diff": 0
+        },
+        {
+          "date": "2026-10-04",
+          "prev": 100,
+          "repeat": 100,
+          "diff": 0
+        },
+        {
+          "date": "2026-10-11",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        }
+      ]
+    },
+    "CBG リキッド": {
+      "prev_avg": 3.6,
+      "repeat_avg": 3.6,
+      "avg_diff": 0.0,
+      "n_weeks": 53,
+      "n_changed_weeks": 0,
+      "max_abs_diff": 0,
+      "weekly_diffs": [
+        {
+          "date": "2025-10-12",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2025-10-19",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2025-10-26",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2025-11-02",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2025-11-09",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2025-11-16",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2025-11-23",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2025-11-30",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2025-12-07",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2025-12-14",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2025-12-21",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-12-28",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-01-04",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-01-11",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-01-18",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-01-25",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-02-01",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-02-08",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-02-15",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-02-22",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-03-01",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-03-08",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-03-15",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-03-22",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-03-29",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-04-05",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-04-12",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-04-19",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-04-26",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-05-03",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-05-10",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-05-17",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-05-24",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-05-31",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-06-07",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-06-14",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-06-21",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-06-28",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-07-05",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-07-12",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-07-19",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-07-26",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-08-02",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-08-09",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-08-16",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-08-23",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-08-30",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-09-06",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-09-13",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-09-20",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-09-27",
+          "prev": 100,
+          "repeat": 100,
+          "diff": 0
+        },
+        {
+          "date": "2026-10-04",
+          "prev": 91,
+          "repeat": 91,
+          "diff": 0
+        },
+        {
+          "date": "2026-10-11",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        }
+      ]
+    },
+    "CBN リキッド": {
+      "prev_avg": 5.96,
+      "repeat_avg": 5.96,
+      "avg_diff": 0.0,
+      "n_weeks": 53,
+      "n_changed_weeks": 0,
+      "max_abs_diff": 0,
+      "weekly_diffs": [
+        {
+          "date": "2025-10-12",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2025-10-19",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2025-10-26",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2025-11-02",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2025-11-09",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2025-11-16",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2025-11-23",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2025-11-30",
+          "prev": 95,
+          "repeat": 95,
+          "diff": 0
+        },
+        {
+          "date": "2025-12-07",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2025-12-14",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2025-12-21",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-12-28",
+          "prev": 100,
+          "repeat": 100,
+          "diff": 0
+        },
+        {
+          "date": "2026-01-04",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-01-11",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-01-18",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-01-25",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-02-01",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-02-08",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-02-15",
+          "prev": 99,
+          "repeat": 99,
+          "diff": 0
+        },
+        {
+          "date": "2026-02-22",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-03-01",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-03-08",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-03-15",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-03-22",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-03-29",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-04-05",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-04-12",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-04-19",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-04-26",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-05-03",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-05-10",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-05-17",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-05-24",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-05-31",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-06-07",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-06-14",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-06-21",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-06-28",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-07-05",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-07-12",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-07-19",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-07-26",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-08-02",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-08-09",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-08-16",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-08-23",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-08-30",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-09-06",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-09-13",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-09-20",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        },
+        {
+          "date": "2026-09-27",
+          "prev": 13,
+          "repeat": 13,
+          "diff": 0
+        },
+        {
+          "date": "2026-10-04",
+          "prev": 9,
+          "repeat": 9,
+          "diff": 0
+        },
+        {
+          "date": "2026-10-11",
+          "prev": 0,
+          "repeat": 0,
+          "diff": 0
+        }
+      ]
+    },
+    "HHC リキッド": {
+      "prev_avg": null,
+      "repeat_avg": null,
+      "avg_diff": null,
+      "note": "no-data in both runs",
+      "weekly_diffs": []
+    }
+  },
+  "comparison_ja1": {
+    "prev_averages": {
+      "CBX リキッド": 3.1,
+      "CBD リキッド": 64,
+      "THC リキッド": 0.4,
+      "CBG リキッド": 0.2,
+      "CBN リキッド": 2.5
+    },
+    "repeat_averages": {
+      "CBX リキッド": 3.0,
+      "CBD リキッド": 64.1,
+      "THC リキッド": 0.4,
+      "CBG リキッド": 0.2,
+      "CBN リキッド": 2.5
+    },
+    "avg_diffs": {
+      "CBX リキッド": -0.1,
+      "CBD リキッド": 0.1,
+      "THC リキッド": 0.0,
+      "CBG リキッド": 0.0,
+      "CBN リキッド": 0.0
+    },
+    "n_cells": 265,
+    "n_changed_cells": 2,
+    "changed_cells": [
+      {
+        "week": "Oct 11 – 17, 2026",
+        "term": "CBX リキッド",
+        "prev": 31,
+        "repeat": 23,
+        "diff": -8
+      },
+      {
+        "week": "Oct 11 – 17, 2026",
+        "term": "CBD リキッド",
+        "prev": 59,
+        "repeat": 64,
+        "diff": 5
+      }
+    ]
+  },
+  "hhc_no_data_reproduced": true,
+  "zero_status_update": {
+    "HHC リキッド": {
+      "prev": "unknown",
+      "repeat": "below_threshold",
+      "confirmed": true
+    }
+  }
+}

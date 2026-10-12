@@ -1,0 +1,46 @@
+{
+  "run_id": "20261012T064246Z-google-trends-ja-rikiddo-5y-main5",
+  "study_id": "cannabinoid-multi-trends",
+  "source": "google-trends",
+  "mcp_server": "google-trends-mcp",
+  "mcp_version": "0.1.1",
+  "collection_timestamp": "2026-10-12T06:42:46.688Z",
+  "purpose": "5y parallel for main 5",
+  "queries": [
+    {
+      "term": "CBD リキッド",
+      "geo": "JP",
+      "timeframe": "today 5-y",
+      "type": "interest_over_time"
+    },
+    {
+      "term": "THC リキッド",
+      "geo": "JP",
+      "timeframe": "today 5-y",
+      "type": "interest_over_time"
+    },
+    {
+      "term": "CBG リキッド",
+      "geo": "JP",
+      "timeframe": "today 5-y",
+      "type": "interest_over_time"
+    },
+    {
+      "term": "CBN リキッド",
+      "geo": "JP",
+      "timeframe": "today 5-y",
+      "type": "interest_over_time"
+    },
+    {
+      "term": "HHC リキッド",
+      "geo": "JP",
+      "timeframe": "today 5-y",
+      "type": "interest_over_time"
+    }
+  ],
+  "rate_limit_429": {
+    "occurred": true,
+    "details": "CBD リキッド first attempt returned HTTP 429 tool error; retry after ~5min backoff succeeded with full 5y series. retry_errors_logged=[]"
+  },
+  "errors": {}
+}

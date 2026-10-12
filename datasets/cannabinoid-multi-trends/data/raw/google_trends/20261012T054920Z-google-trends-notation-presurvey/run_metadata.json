@@ -1,0 +1,43 @@
+{
+  "run_id": "20261012T054920Z-google-trends-notation-presurvey",
+  "study_id": "cannabinoid-multi-trends",
+  "source": "google-trends",
+  "mcp_server": "google-trends-mcp",
+  "mcp_version": "0.1.1",
+  "collection_timestamp": "2026-10-12T05:51:23Z",
+  "queries": [
+    {
+      "terms": [
+        "CBD リキッド",
+        "CBDリキッド"
+      ],
+      "geo": "JP",
+      "timeframe": "today 12-m",
+      "type": "compare_terms"
+    },
+    {
+      "terms": [
+        "THC-O リキッド",
+        "THC-Oリキッド"
+      ],
+      "geo": "JP",
+      "timeframe": "today 12-m",
+      "type": "compare_terms"
+    },
+    {
+      "terms": [
+        "CBD リキッド",
+        "CBD オイル"
+      ],
+      "geo": "JP",
+      "timeframe": "today 12-m",
+      "type": "compare_terms"
+    }
+  ],
+  "purpose": "S3 notation presurvey",
+  "anchor_terms": [],
+  "errors": {
+    "rate_limited_429": 0,
+    "other_errors": 0
+  }
+}
