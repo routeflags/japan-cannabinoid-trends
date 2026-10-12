@@ -40,15 +40,16 @@ other objects are strict.
 
 from __future__ import annotations
 
-GRANULARITIES = ["hour", "day", "week", "month"]
+from copy import deepcopy
 
-COLLECTOR_WINDOW_TYPES = [
-    "absolute_datetime",
-    "absolute_date",
-    "relative_duration",
-    "calendar_period",
-    "unbounded",
-    "unsupported",
+from validation.schemas.temporal import COLLECTOR_WINDOW_TYPES, GRANULARITIES
+
+__all__ = [
+    "COLLECTION_RUN_SCHEMA",
+    "COLLECTION_RUN_RUNNING_SCHEMA",
+    "COLLECTOR_WINDOW_TYPES",
+    "EXECUTION_STATUSES",
+    "GRANULARITIES",
 ]
 
 EXECUTION_STATUSES = ["running", "success", "partial", "failed"]
@@ -255,3 +256,27 @@ COLLECTION_RUN_SCHEMA = {
         },
     },
 }
+
+
+def _build_running_schema(finalized: dict) -> dict:
+    """Derive the running-run profile from the finalized G5 schema.
+
+    Differences (rollout plan P3-1, h.md §7 last paragraph):
+
+    - ``execution.status`` must be ``running``: a run that has not finished
+      cannot claim ``success`` / ``partial`` / ``failed``;
+    - ``collection_finished_at`` is removed from the schema entirely, so a
+      document that carries it fails with ``unknown field``.  This is the
+      bypass detector: a finished run cannot be re-labelled as ``running``
+      to escape the finalized requirements (h.md §18, P8-3 direction).
+
+    Keeping one derived source of truth means the two profiles cannot drift:
+    every change to the finalized schema is inherited by the running profile.
+    """
+    schema = deepcopy(finalized)
+    schema["execution"]["schema"]["status"]["allowed"] = ["running"]
+    del schema["collection_finished_at"]
+    return schema
+
+
+COLLECTION_RUN_RUNNING_SCHEMA = _build_running_schema(COLLECTION_RUN_SCHEMA)

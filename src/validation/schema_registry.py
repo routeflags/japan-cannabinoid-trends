@@ -2,19 +2,81 @@
 
 Contract (docs/plans/20261013h.md §9):
 
-- Every schema is addressable by a stable string ID (``collection-run-v1``;
-  G1-G7 schemas will be added in Phase 3).
-- Registering a new schema requires a matching Contract Test (§16).
+- Every schema is addressable by a stable string ID (``collection-run-v1``
+  plus the G1-G7 schemas registered in Phase 3).
+- The registry manages both the schema *ID* and the schema *version*; the
+  version is compared against a document's ``schema_version`` field by
+  ``validation.semantic.check_schema_version`` (CV-20).
+- Registering a new schema requires a matching Contract Test (§16 / §9).
+  ``tests/validation/test_schema_coverage.py`` fails when a registered ID has
+  no declared test module, so the rule is enforced mechanically.
 - Unknown IDs raise ``ValueError`` so that CLI/config errors can be mapped to
-  exit code 2 (schema / configuration error) in a later phase.
+  exit code 2 (schema / configuration error).
+
+Profile handling
+----------------
+``collection-run-v1`` is the finalized (strict) G5 profile.
+``collection-run-v1-running`` is the derived running-run profile (P3-1); see
+``validation.schemas.collection_run`` for the exact difference.
 """
 
 from __future__ import annotations
 
-from validation.schemas.collection_run import COLLECTION_RUN_SCHEMA
+from validation.schemas.artifact import ARTIFACT_MANIFEST_SCHEMA
+from validation.schemas.collection_plan import COLLECTION_PLAN_SCHEMA
+from validation.schemas.collection_run import (
+    COLLECTION_RUN_RUNNING_SCHEMA,
+    COLLECTION_RUN_SCHEMA,
+)
+from validation.schemas.provenance import TRANSFORMATION_SCHEMA
+from validation.schemas.query import QUERY_REGISTRY_SCHEMA, QUERY_VARIANTS_SCHEMA
+from validation.schemas.registries import (
+    COLLECTOR_REGISTRY_SCHEMA,
+    SOURCE_REGISTRY_SCHEMA,
+)
+from validation.schemas.storage_policy import (
+    PUBLICATION_DECISION_SCHEMA,
+    STORAGE_POLICY_REGISTRY_SCHEMA,
+)
+from validation.schemas.study import (
+    MEASUREMENT_REGISTRY_SCHEMA,
+    RESEARCH_VIEW_SCHEMA,
+    STUDY_REGISTRY_SCHEMA,
+)
+from validation.schemas.temporal import TEMPORAL_WINDOW_SCHEMA
 
 SCHEMA_REGISTRY: dict[str, dict] = {
+    # G5 run provenance (Phase 2) and its running-run profile (P3-1).
     "collection-run-v1": COLLECTION_RUN_SCHEMA,
+    "collection-run-v1-running": COLLECTION_RUN_RUNNING_SCHEMA,
+    # G1 source / collector registries (P3-3).
+    "source-registry-v1": SOURCE_REGISTRY_SCHEMA,
+    "collector-registry-v1": COLLECTOR_REGISTRY_SCHEMA,
+    # G2 query registry / variants (P3-4).
+    "query-registry-v1": QUERY_REGISTRY_SCHEMA,
+    "query-variants-v1": QUERY_VARIANTS_SCHEMA,
+    # G3 temporal window (P3-5).
+    "temporal-window-v1": TEMPORAL_WINDOW_SCHEMA,
+    # G4 artifact manifest (P3-6).
+    "artifact-manifest-v1": ARTIFACT_MANIFEST_SCHEMA,
+    # G5 transformation provenance (P3-7).
+    "transformation-v1": TRANSFORMATION_SCHEMA,
+    # G6 storage policy / publication decision (P3-8).
+    "storage-policy-registry-v1": STORAGE_POLICY_REGISTRY_SCHEMA,
+    "publication-decision-v1": PUBLICATION_DECISION_SCHEMA,
+    # G7 study / measurement / research view (P3-9).
+    "study-registry-v1": STUDY_REGISTRY_SCHEMA,
+    "measurement-registry-v1": MEASUREMENT_REGISTRY_SCHEMA,
+    "research-view-v1": RESEARCH_VIEW_SCHEMA,
+    # Collection plan (P6-1 initial contract).
+    "collection-plan-v1": COLLECTION_PLAN_SCHEMA,
+}
+
+#: Contract version of each registered schema.  A document's
+#: ``schema_version`` field must match this value (CV-20); changing a schema
+#: requires a version decision recorded under the §19 procedure.
+SCHEMA_VERSIONS: dict[str, str] = {
+    schema_id: "1.0.0" for schema_id in SCHEMA_REGISTRY
 }
 
 
@@ -30,6 +92,17 @@ def get_schema(schema_id: str) -> dict:
         raise ValueError(f"Unknown schema: {schema_id}") from None
 
 
+def get_schema_version(schema_id: str) -> str:
+    """Return the contract version of ``schema_id`` (CV-20).
+
+    Raises ``ValueError`` for unknown IDs, like :func:`get_schema`.
+    """
+    if schema_id not in SCHEMA_REGISTRY:
+        raise ValueError(f"Unknown schema: {schema_id}")
+    return SCHEMA_VERSIONS[schema_id]
+
+
 def list_schema_ids() -> list[str]:
     """Return the registered schema IDs in sorted order."""
     return sorted(SCHEMA_REGISTRY)
+

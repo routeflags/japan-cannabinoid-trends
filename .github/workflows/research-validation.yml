@@ -1,0 +1,44 @@
+name: Research Validation
+
+# Structural and semantic validation of the research data contracts (G1-G7)
+# plus the framework's own contract tests.
+# See docs/specs/validation-framework.md §6 for the operating contract.
+#
+# - No raw data is uploaded or published by this workflow.
+# - The JSON Schema / Cerberus difference gate (h.md §17) stays disabled until
+#   JSON Schema master files exist (see docs/specs/validation-framework.md
+#   §11 "JSON Schema 共存").
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  validation:
+    name: Cerberus validation framework
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.14
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.14"
+
+      - name: Install dependencies (pyproject.toml is the single source)
+        run: |
+          python -m pip install -e ".[dev]"
+
+      - name: Run contract tests
+        run: |
+          python -m pytest
+
+      - name: Validate registries
+        run: |
+          python -m validation.cli validate-registries

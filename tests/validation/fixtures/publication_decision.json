@@ -1,0 +1,10 @@
+{
+  "decision_id": "publication-review-001",
+  "artifact_id": "artifact-001",
+  "status": "requires_review",
+  "reviewed_at": null,
+  "reviewer": null,
+  "criteria_version": "1.0.0",
+  "evidence": [],
+  "notes": "Redistribution conditions not yet verified"
+}

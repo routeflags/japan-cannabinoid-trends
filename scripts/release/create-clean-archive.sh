@@ -17,7 +17,9 @@ echo "=== Creating Clean Archive ==="
 echo "Version: ${VERSION}"
 echo ""
 
-# Paths to include (research-relevant only)
+# Paths to include (research-relevant only; tests + pyproject.toml are
+# included so the released dataset can reproduce the validation framework
+# described in docs/specs/validation-framework.md, see P7-4)
 INCLUDE_PATHS=(
   "datasets"
   "docs/specs"
@@ -25,6 +27,8 @@ INCLUDE_PATHS=(
   "docs/migration-plan.md"
   "publication"
   "src"
+  "tests"
+  "pyproject.toml"
   "metadata"
   "LICENSE"
   "CITATION.cff"
@@ -70,6 +74,9 @@ rm -rf "${CLEAN_DIR}/.github" \
 find "${CLEAN_DIR}" -name ".DS_Store" -delete 2>/dev/null || true
 find "${CLEAN_DIR}" -name "*.DS_Store" -delete 2>/dev/null || true
 find "${CLEAN_DIR}" -name "project.yml" -delete 2>/dev/null || true
+
+# Remove Python build caches (must not ship in the release archive)
+find "${CLEAN_DIR}" -type d \( -name "__pycache__" -o -name "*.egg-info" -o -name ".pytest_cache" \) -prune -exec rm -rf {} + 2>/dev/null || true
 
 # Create zip
 ZIP_NAME="japan-cannabinoid-trends-${VERSION}-clean.zip"

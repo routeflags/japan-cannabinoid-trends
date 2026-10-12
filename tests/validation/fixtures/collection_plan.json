@@ -1,0 +1,13 @@
+{
+  "plan_id": "plan-001",
+  "study_id": "cannabinoid-social-trends",
+  "source_id": "x",
+  "collector_id": "x-apify-active",
+  "query_id": "cbx-general-ja",
+  "required_capabilities": ["absolute_date_range", "language_filter"],
+  "window": {
+    "start": "2026-08-31T15:00:00Z",
+    "end_exclusive": "2026-09-30T15:00:00Z"
+  },
+  "purpose": "compound trend observation"
+}

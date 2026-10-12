@@ -1,0 +1,23 @@
+{
+  "schema_version": "1.0.0",
+  "sources": [
+    {
+      "source_id": "x",
+      "kind": "social",
+      "measurement_types": ["post_count"],
+      "publication_review_required": true
+    },
+    {
+      "source_id": "youtube",
+      "kind": "social",
+      "measurement_types": ["video_count"],
+      "publication_review_required": true
+    },
+    {
+      "source_id": "google-trends",
+      "kind": "search",
+      "measurement_types": ["search_index"],
+      "publication_review_required": true
+    }
+  ]
+}

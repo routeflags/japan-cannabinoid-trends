@@ -25,7 +25,9 @@ jobs:
           CLEAN_DIR="clean-archive"
           mkdir -p "${CLEAN_DIR}"
           
-          # Define paths to include (research-relevant only)
+          # Define paths to include (research-relevant only; tests and
+          # pyproject.toml ship so the shipped dataset can reproduce the
+          # validation framework, P7-4)
           INCLUDE_PATHS=(
             "datasets"
             "docs/specs"
@@ -33,6 +35,8 @@ jobs:
             "docs/migration-plan.md"
             "publication"
             "src"
+            "tests"
+            "pyproject.toml"
             "metadata"
             "LICENSE"
             "CITATION.cff"
@@ -64,6 +68,8 @@ jobs:
           find "${CLEAN_DIR}" -name ".DS_Store" -delete 2>/dev/null || true
           find "${CLEAN_DIR}" -name "*.DS_Store" -delete 2>/dev/null || true
           find "${CLEAN_DIR}" -name "project.yml" -delete 2>/dev/null || true
+          # Python build caches must not ship in the release archive
+          find "${CLEAN_DIR}" -type d \( -name "__pycache__" -o -name "*.egg-info" -o -name ".pytest_cache" \) -prune -exec rm -rf {} + 2>/dev/null || true
           
           # Create zip
           VERSION="${GITHUB_REF_NAME}"

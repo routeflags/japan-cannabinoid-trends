@@ -1,0 +1,11 @@
+{
+  "view_id": "cbx-cross-platform-monthly",
+  "view_version": "1.0.0",
+  "compound_id": "CBX",
+  "granularity": "month",
+  "timezone": "Asia/Tokyo",
+  "sources": ["google_trends", "x", "youtube"],
+  "measurements": ["search_interest_index", "social_post_count", "video_publication_count"],
+  "comparison_mode": "parallel_timeseries",
+  "require_comparability_gate": true
+}

@@ -1,0 +1,12 @@
+{
+  "schema_version": "1.0.0",
+  "studies": [
+    {
+      "study_id": "cannabinoid-social-trends",
+      "title": "Cannabinoid Social Trend Observation",
+      "research_questions": ["How does posting activity change over time?"],
+      "sources": ["x"],
+      "status": "active"
+    }
+  ]
+}

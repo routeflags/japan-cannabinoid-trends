@@ -1,0 +1,15 @@
+{
+  "transformation_id": "monthly-post-count-001",
+  "transformation_name": "monthly_post_count",
+  "transformation_version": "1.0.0",
+  "executed_at": "2026-10-13T01:00:00Z",
+  "code_commit": "EXAMPLE_COMMIT",
+  "input_artifact_ids": ["artifact-001"],
+  "output_artifact_ids": ["monthly-counts-001"],
+  "parameters": {
+    "timezone": "Asia/Tokyo",
+    "granularity": "month",
+    "deduplication": "source_post_id"
+  },
+  "status": "success"
+}

@@ -1,0 +1,10 @@
+{
+  "temporal_contract_version": "1.0.0",
+  "window_id": "2026-09-jst",
+  "timezone": "Asia/Tokyo",
+  "start": "2026-09-01T00:00:00+09:00",
+  "end_exclusive": "2026-10-01T00:00:00+09:00",
+  "granularity": "day",
+  "calendar": "gregorian",
+  "week_start": null
+}

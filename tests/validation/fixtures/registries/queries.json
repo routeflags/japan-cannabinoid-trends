@@ -1,0 +1,21 @@
+{
+  "schema_version": "1.0.0",
+  "queries": [
+    {
+      "query_id": "cbx-general-ja",
+      "compound_id": "CBX",
+      "intent_id": "compound_general",
+      "language": "ja",
+      "canonical_text": "CBX",
+      "status": "active"
+    },
+    {
+      "query_id": "cbd-liquid-ja",
+      "compound_id": "CBD",
+      "intent_id": "product_liquid",
+      "language": "ja",
+      "canonical_text": "CBD リキッド",
+      "status": "deprecated"
+    }
+  ]
+}
