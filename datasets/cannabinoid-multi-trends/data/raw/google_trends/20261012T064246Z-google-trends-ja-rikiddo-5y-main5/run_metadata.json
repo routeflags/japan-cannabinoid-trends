@@ -42,5 +42,14 @@
     "occurred": true,
     "details": "CBD リキッド first attempt returned HTTP 429 tool error; retry after ~5min backoff succeeded with full 5y series. retry_errors_logged=[]"
   },
-  "errors": {}
+  "errors": {},
+  "anchor_terms": [],
+  "anchor_terms_note": "Single-term fetches; no comparison set, anchors not applicable.",
+  "zero_status": {
+    "CBD リキッド": "low_volume",
+    "THC リキッド": "low_volume",
+    "CBG リキッド": "low_volume",
+    "CBN リキッド": "low_volume",
+    "HHC リキッド": "low_volume"
+  }
 }

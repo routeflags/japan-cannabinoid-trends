@@ -39,5 +39,7 @@
   "errors": {
     "rate_limited_429": 0,
     "other_errors": 0
-  }
+  },
+  "zero_status": {},
+  "zero_status_note": "Comparison-only run; single-term zero classification not applicable."
 }
