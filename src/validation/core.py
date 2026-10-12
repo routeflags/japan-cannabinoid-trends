@@ -81,7 +81,19 @@ def validate_document(document: dict, schema: dict) -> ValidationResult:
     The document is validated exactly as given: unknown fields fail and no
     value is normalized, coerced or purged. The same document object can be
     safely reused (and hashed) after validation.
+
+    A document that is not a mapping (for example a JSON list) is reported as
+    a structural failure instead of raising. Cerberus raises ``DocumentError``
+    for those inputs, which would crash every caller that reads a file before
+    validating it. The error is shaped like a document-level Cerberus error so
+    the reporting layer normalizes it into ``DOCUMENT_FORMAT_INVALID``.
     """
+    if not isinstance(document, dict):
+        return ValidationResult(
+            valid=False,
+            errors={"": ["document is not a JSON object"]},
+        )
+
     validator = ResearchValidator(
         schema,
         allow_unknown=False,

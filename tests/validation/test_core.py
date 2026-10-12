@@ -141,3 +141,18 @@ def test_empty_false_rejects_null_and_empty(value):
     """CV-01: ``empty: False`` rejects null and empty strings alike."""
     result = validate_document({"started_at": value}, ISO_SCHEMA)
     assert result.valid is False
+
+
+@pytest.mark.parametrize(
+    "document", [[1, 2, 3], "text", 7, None], ids=["list", "string", "int", "null"]
+)
+def test_non_mapping_document_is_a_validation_failure(document):
+    """A document that is not a mapping fails validation instead of raising.
+
+    Cerberus raises ``DocumentError`` for these inputs, which used to crash
+    every caller that reads a file before validating it.
+    """
+    result = validate_document(document, ISO_SCHEMA)
+
+    assert result.valid is False
+    assert result.errors == {"": ["document is not a JSON object"]}

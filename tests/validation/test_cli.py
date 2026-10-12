@@ -723,6 +723,30 @@ def test_gate_run_refuses_a_non_object_document(capsys, tmp_path):
     assert report["issues"][0]["code"] == "DOCUMENT_FORMAT_INVALID"
 
 
+def test_validate_refuses_a_non_object_document(capsys, tmp_path):
+    """Every command that validates a file must survive a non-object JSON."""
+    path = tmp_path / "list.json"
+    path.write_text("[1, 2, 3]", encoding="utf-8")
+    code = main(
+        [
+            "validate",
+            "--schema",
+            "collection-run-v1",
+            "--file",
+            str(path),
+            "--format",
+            "json",
+            *_isolated_registry_args(tmp_path),
+        ]
+    )
+    captured = capsys.readouterr()
+    report = json.loads(captured.out)
+    assert code == EXIT_DATA
+    assert report["valid"] is False
+    assert report["issues"][0]["code"] == "DOCUMENT_FORMAT_INVALID"
+    assert report["issues"][0]["path"] == ""
+
+
 # ---------------------------------------------------------------------------
 # compare-runs (L2)
 # ---------------------------------------------------------------------------

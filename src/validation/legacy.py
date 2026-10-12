@@ -34,6 +34,13 @@ __all__ = [
 
 #: run_ids frozen by the 2026-10-13 legacy audit (P8-2).  Do not add new
 #: entries without a fresh non-destructive audit; see docs/audits/.
+#:
+#: 2026-10-13 second pass: five Google Trends runs collected on 2026-10-12 (the
+#: day before the framework landed) were imported with the origin branch.  They
+#: are pre-framework records -- none carries ``schema_version``
+#: (``test_frozen_runs_are_pre_framework`` enforces this) -- so they belong to
+#: the audit rather than to the strict gate.  Runs collected after the
+#: framework exists must never be added here.
 LEGACY_RUN_IDS = frozenset(
     {
         "20261001T115959Z-google-trends-cbx-rikiddo",
@@ -62,6 +69,11 @@ LEGACY_RUN_IDS = frozenset(
         "20261008T093228Z-google-trends-5y-baseline",
         "20261008T121338Z-google-trends-crdh-5y",
         "common-scale-missing-20261009",
+        "20261012T054920Z-google-trends-notation-presurvey",
+        "20261012T055259Z-google-trends-ja-rikiddo-phase-a-12m",
+        "20261012T060517Z-google-trends-ja-rikiddo-phase-a-repeat-12m",
+        "20261012T061614Z-google-trends-ja-rikiddo-phase-b-12m",
+        "20261012T064246Z-google-trends-ja-rikiddo-5y-main5",
     }
 )
 

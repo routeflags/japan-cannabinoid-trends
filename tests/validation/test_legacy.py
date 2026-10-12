@@ -111,15 +111,70 @@ def test_unknown_profile_is_rejected():
 
 
 def test_frozen_list_matches_the_audit_artifact():
-    """The frozen list and the non-destructive audit snapshot must agree.
+    """The audit snapshot must cover every frozen run_id.
 
-    Adding a legacy run requires a fresh audit (P8-2) and a review; the test
-    fails when someone edits only one of the two artifacts.
+    Adding a legacy run requires a fresh audit (P8-2) and a review.  The check
+    is a subset test rather than an equality: the artifact is a snapshot in
+    time, so runs collected later may appear in the snapshot without being
+    frozen -- but a frozen run must never be missing from it.
     """
     assert AUDIT_PATH.is_file(), "run `python -m validation.cli audit-legacy` first"
     audit = json.loads(AUDIT_PATH.read_text(encoding="utf-8"))
     audited = {entry["run_id"] for entry in audit["runs"]}
-    assert audited == set(LEGACY_RUN_IDS)
+    assert set(LEGACY_RUN_IDS) <= audited, (
+        "frozen run_ids absent from the audit artifact; re-run "
+        "`python -m validation.cli audit-legacy --output docs/audits/g5-legacy-runs.json`"
+    )
+
+
+def _on_disk_runs() -> dict:
+    """Map every ``run_id`` found under datasets/ to its run_metadata document."""
+    runs = {}
+    for path in sorted((REPO_ROOT / "datasets").rglob("run_metadata.json")):
+        try:
+            document = json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError, UnicodeDecodeError):
+            continue
+        run_id = document.get("run_id")
+        if isinstance(run_id, str):
+            runs[run_id] = document
+    return runs
+
+
+def test_frozen_runs_are_pre_framework():
+    """Only records that predate the contract may be frozen as legacy.
+
+    ``--profile legacy`` bypasses strict validation, so freezing a run that
+    already satisfies the current contract would create a bypass.  Every frozen
+    run must exist on disk and must not carry ``schema_version``.
+    """
+    runs = _on_disk_runs()
+    absent = sorted(LEGACY_RUN_IDS - runs.keys())
+    assert absent == [], f"frozen run_ids not found under datasets/: {absent}"
+    conforming = sorted(run_id for run_id in LEGACY_RUN_IDS if "schema_version" in runs[run_id])
+    assert conforming == [], (
+        "these run_ids already carry schema_version yet are frozen as legacy; "
+        f"a post-framework run must never be added to the list: {conforming}"
+    )
+
+
+def test_non_frozen_runs_satisfy_the_current_contract():
+    """Every on-disk run is either a frozen legacy record or contract-complete.
+
+    This is what stops a legacy-shaped run from being imported unnoticed: it is
+    neither frozen nor complete, so the suite fails and a human decides whether
+    to fix the run or freeze it with a fresh audit.
+    """
+    incomplete = {
+        run_id: missing_required_paths(document, COLLECTION_RUN_SCHEMA)
+        for run_id, document in _on_disk_runs().items()
+        if run_id not in LEGACY_RUN_IDS
+    }
+    incomplete = {run_id: fields for run_id, fields in incomplete.items() if fields}
+    assert incomplete == {}, (
+        "run_metadata files that are neither frozen legacy runs nor "
+        f"contract-complete: {incomplete}"
+    )
 
 
 def test_audit_artifact_records_raw_immutability():

@@ -603,33 +603,6 @@ def cmd_gate_run(args) -> int:
         _err(f"cannot read input file: {target}")
         return EXIT_IO
 
-    if not isinstance(document, dict):
-        # A JSON document that is not an object cannot carry the run contract;
-        # refuse it here instead of letting the structural layer crash.
-        issue = Issue(
-            code="DOCUMENT_FORMAT_INVALID",
-            path="",
-            severity="error",
-            message="run document is not a JSON object",
-            rule="structure",
-        )
-        report = {
-            "validation_version": VALIDATION_VERSION,
-            "schema_id": "collection-run-v1",
-            "target": str(target),
-            "profile": "gate",
-            "action": "quarantine",
-            "valid": False,
-            "issues": [issue.to_dict()],
-        }
-        _emit(
-            report,
-            fmt=args.format,
-            output=args.output,
-            human_lines=[f"QUARANTINE collection-run-v1 {target}"],
-        )
-        return EXIT_DATA
-
     try:
         registries = load_registries(Path(args.config_dir), Path(args.metadata_dir))
     except ConfigError as error:

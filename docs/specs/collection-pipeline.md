@@ -139,19 +139,21 @@ L1-09 の規則:
 
 ---
 
-## 6. Quarantine（暫定規約 - 親の判断待ち）
+## 6. Quarantine（2026-10-13 決定）
 
-`docs/plans/20261013a.md` §13 の記載に従った暫定実装:
-
-- 場所: `<workspace>/.quarantine/<run-id>/`（staging は `<workspace>/.staging/<run-id>/`）。
-  両方とも `.gitignore` 済み。
-- 内容: 取得した全ファイル + `quarantine-reason.json`（run_id / 時刻 / issues / contains_secrets）。
+- **場所: `<workspace>/.quarantine/<run-id>/` を正式採用**（`docs/plans/20261013a.md`
+  §13 の記載どおり。staging は `<workspace>/.staging/<run-id>/`）。
+  両方とも `.gitignore` 済みで、release アーカイブには含めない。
+- 内容: 取得した全ファイル + `quarantine-reason.json`（run_id / 時刻 / issues /
+  contains_secrets）。
 - 上書き禁止（staging / catalog / quarantine のいずれかに同じ run_id があれば停止）。
-- 自動削除しない。秘密情報検出時は `chmod 700`（＋理由フラグ）。
-- **未決**（親・ユーザーの判断事項）:
-  - (A) 現行案（repo 内 `.quarantine/`、ローカル FS）の維持
-  - (B) repo 外の保護パスへの分離
-  - 保持期間・削除レビュー手順・アクセス制御の正式化（G1 P6-4 は未設計）。
+- **自動削除しない。** 削除は人のレビュー後のみ可能とし、理由を記録する。
+- 秘密情報検出時は `chmod 700`（＋理由フラグ）。
+  **リポジトリ内での権限制限は漏洩対応ではない**: 検出された資格情報は
+  リポジトリ外で失効・ローテーションする。
+- アクセス制御は当面ローカル FS 権限のみ（単一マシン前提）。
+- **方式 (B)（repo 外の保護パス）へ切り替える条件**: ワークスペースが共有実行環境
+  （複数人・共有ランナー）へ移る場合。それまでは発見性を優先して (A) を維持する。
 
 ---
 

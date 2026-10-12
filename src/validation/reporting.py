@@ -63,6 +63,8 @@ class Issue:
 # own messages (e.g. "unallowed value <secret>") never reach the report.
 _MESSAGE_RULES = (
     # (predicate, code, rule, message)
+    (lambda m: m == "document is not a JSON object", "DOCUMENT_FORMAT_INVALID",
+     "structure", "document is not a JSON object"),
     (lambda m: m == "required field", "REQUIRED_FIELD_MISSING", "required",
      "required field is missing"),
     (lambda m: m == "unknown field", "UNKNOWN_FIELD", "unknown_field",
@@ -134,7 +136,9 @@ def _join(path: str, token: object) -> str:
 def _walk(errors: object, path: str, schema_version: str, out: list[Issue]) -> None:
     if isinstance(errors, dict):
         for key, value in errors.items():
-            _walk(value, _join(path, key), schema_version, out)
+            # An empty key carries a document-level error (the document is not
+            # a JSON object); it belongs to the root path, not to "/".
+            _walk(value, path if key == "" else _join(path, key), schema_version, out)
         return
     if isinstance(errors, list):
         for item in errors:
