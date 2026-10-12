@@ -5,10 +5,11 @@ Contract sources
 - Rollout instruction §12 (validation pipeline: Collection Plan -> ... ->
   L1 Collection Validity -> FAIL -> Quarantine -> L2 -> Catalog).
 - G1 §9 (Capability Gate) and §13 (raw storage / quarantine):
-  ``docs/plans/20261013a.md``.
+  ``docs/plans/20261013a.md``; G1 §11 L1-06/L1-07/L1-09 (raw evidence,
+  hash, missingness).
 
 These functions decide *from validation results* whether a collection may
-start / promote:
+start / be adopted:
 
 - ``pre_collection_gate``: FAIL -> do not start (fail closed; unknown
   capabilities are never auto-selected);
@@ -16,21 +17,36 @@ start / promote:
   only reports the action; moving files is the collector's job and the raw
   data is never overwritten (P6-2 acceptance).
 
-Wiring into the collection adapters (``src/collection/*``) is deliberately
-not done here: the adapters call the gate through ``scripts/validation/
-run-gates.sh`` (P6-5) so that validation logic stays in one place (h.md §6).
+L1 (Collection Integrity) additions on top of the semantic layer:
+
+- a terminal run must reference an artifact manifest whose raw artifacts
+  exist and verify (hash / byte length) - L1-06 / L1-07;
+- missingness/completeness semantics (zero vs missing vs failure) are checked
+  by ``semantic.check_missingness_consistency`` - L1-09;
+- a run whose execution **failed** is preserved in quarantine instead of
+  being adopted as research data (G1 P4: fail closed, raw retained).
+
+Wiring into the collection adapters: the G1 collection core
+(``collection.core.pipeline``) calls these gates in-process, and the shell
+entry point is ``scripts/validation/run-gates.sh`` (P6-5) so that validation
+logic stays in one place (h.md §6).
 """
 
 from __future__ import annotations
 
 from dataclasses import dataclass, field
+from pathlib import Path
 
-from validation.integrity import verify_artifact_manifest
+from validation.integrity import (
+    load_artifact_manifest,
+    verify_artifact_manifest,
+)
 from validation.reporting import Issue
 from validation.semantic import (
     Registries,
     check_capability_gate,
     check_execution_consistency,
+    check_missingness_consistency,
     check_registry_references,
     check_schema_version,
     check_temporal_semantics,
@@ -130,12 +146,16 @@ def post_collection_gate(
     base_dir=None,
     schema_id: str = "collection-run-v1",
 ) -> GateResult:
-    """P6-2: decide catalog vs quarantine for a collected run.
+    """P6-2 / L1: decide catalog vs quarantine for a collected run.
 
     Structural validation is expected to have run first (``validate_full``);
-    this gate adds semantic checks and, when ``base_dir`` is given, artifact
-    integrity.  Raw data is never moved or rewritten by the gate itself
-    (quarantine keeps the raw untouched).
+    this gate adds semantic checks, the L1 missingness / completeness rules
+    and, when ``base_dir`` is given, artifact integrity.  Raw data is never
+    moved or rewritten by the gate itself (quarantine keeps the raw
+    untouched).
+
+    A failed execution is never adopted: the raw (including the error
+    record) is preserved in quarantine instead (G1 §13, P4).
     """
     issues: list[Issue] = []
     issues.extend(check_schema_version(document, schema_id))
@@ -144,12 +164,50 @@ def post_collection_gate(
     if registries is not None:
         issues.extend(check_registry_references(document, registries))
     issues.extend(scan_for_secrets(document))
-    if base_dir is not None and isinstance(document, dict):
+
+    manifest = None
+    manifest_name = None
+    if isinstance(document, dict):
         manifest_name = document.get("artifact_manifest")
-        if isinstance(manifest_name, str) and manifest_name:
-            issues.extend(
-                verify_artifact_manifest(
-                    base_dir / manifest_name, base_dir=base_dir
+    if base_dir is not None and isinstance(manifest_name, str) and manifest_name:
+        manifest_path = Path(base_dir) / manifest_name
+        manifest, _ = load_artifact_manifest(manifest_path)
+        issues.extend(
+            verify_artifact_manifest(
+                manifest_path, base_dir=base_dir, manifest=manifest
+            )
+        )
+        if isinstance(manifest, dict):
+            document_run_id = document.get("run_id")
+            manifest_run_id = manifest.get("run_id")
+            if (
+                isinstance(document_run_id, str)
+                and isinstance(manifest_run_id, str)
+                and document_run_id != manifest_run_id
+            ):
+                issues.append(
+                    Issue(
+                        code="MANIFEST_RUN_ID_MISMATCH",
+                        path="/artifact_manifest",
+                        severity="error",
+                        message="artifact manifest belongs to a different run_id",
+                        rule="collection_integrity",
+                    )
+                )
+
+    issues.extend(check_missingness_consistency(document, manifest))
+
+    if isinstance(document, dict):
+        execution = document.get("execution")
+        if isinstance(execution, dict) and execution.get("status") == "failed":
+            issues.append(
+                Issue(
+                    code="COLLECTION_FAILED_NOT_ADOPTED",
+                    path="/execution/status",
+                    severity="error",
+                    message="a failed collection is preserved in quarantine, "
+                    "not adopted as research data",
+                    rule="collection_integrity",
                 )
             )
 

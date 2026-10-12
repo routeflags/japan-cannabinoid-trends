@@ -11,13 +11,15 @@
 #   scripts/validation/run-gates.sh run <run_metadata.json> [extra validate args]
 #
 # Exit codes (as defined for the CLI, h.md §13):
-#   0 = pass / proceed       1 = fail -> do not adopt / do not start
+#   0 = pass / proceed / catalog    1 = fail -> do not adopt / do not start
 #   2 = schema or configuration error   3 = file I/O error
 #
-# "run" verifies structure + semantics + the referenced artifact manifest
-# (--verify-artifacts).  A non-zero exit means the collected data must be
-# quarantined (kept raw, not promoted to the catalog) - the script never
-# moves or rewrites raw data itself (P6-2).
+# "run" is the post-collection L1 gate (structure + semantics + missingness +
+# artifact integrity): exit 0 means the run is adoptable (catalog), a non-zero
+# exit means it must be quarantined (kept raw, not promoted to the catalog).
+# The script never moves or rewrites raw data itself (P6-2); staging /
+# quarantine moves are done by the collection core
+# (`python -m collection.core.cli collect|adopt`).
 
 set -euo pipefail
 
@@ -44,13 +46,11 @@ case "${command}" in
   run)
     run_file="${1:?usage: run-gates.sh run <run_metadata.json> [extra args]}"
     shift
-    exec "${PYTHON}" -m validation.cli validate \
-      --schema collection-run-v1 \
-      --verify-artifacts \
-      --file "${run_file}" "$@"
+    exec "${PYTHON}" -m validation.cli gate-run --file "${run_file}" "$@"
     ;;
   *)
     echo "usage: run-gates.sh {registries|plan <plan.json>|run <run_metadata.json>}" >&2
     exit 2
     ;;
 esac
+

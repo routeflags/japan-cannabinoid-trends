@@ -17,6 +17,10 @@ Design notes
   datasets.  This is recorded in ``docs/specs/validation-framework.md``.
 - ``unknown`` is returned instead of guessing when required metadata is
   absent (AGENTS.md: no fabrication of missing values).
+- ``compare_runs`` maps the G1 §12 C1-C3 conditions onto whole
+  ``run_metadata.json`` documents (the collection core feeds L1-passed runs
+  into it).  It is a *comparison* decision, never an adoption gate: a run can
+  pass L1 (valid) and still be ``not_comparable`` (P5).
 """
 
 from __future__ import annotations
@@ -26,6 +30,7 @@ from dataclasses import dataclass, field
 __all__ = [
     "ComparabilityResult",
     "compare_measurements",
+    "compare_runs",
     "compare_temporal_windows",
 ]
 
@@ -169,3 +174,116 @@ def compare_temporal_windows(a: dict, b: dict) -> ComparabilityResult:
         conditionals.append("window_not_exact")
     conditionals.append("coverage_and_sampling_review_required")
     return ComparabilityResult(_CONDITIONAL, conditionals)
+
+
+# ---------------------------------------------------------------------------
+# G1 §12: run-level comparability (C1 / C2 / C3)
+# ---------------------------------------------------------------------------
+
+#: Comparison purposes modelled today.  Any other purpose is reported as
+#: ``unknown`` instead of being judged with the wrong criteria.
+_DIRECT_COMPARISON_PURPOSES = ("", "direct_comparison")
+
+
+def _query_identity(query_provenance: dict) -> tuple | None:
+    """C1 identity tuple, or ``None`` when it cannot be established."""
+    query_id = query_provenance.get("query_id")
+    submitted = query_provenance.get("submitted_query")
+    if not isinstance(query_id, str) or not query_id or not isinstance(submitted, str) or not submitted:
+        return None
+    return (
+        query_provenance.get("compound_id"),
+        query_id,
+        submitted,
+    )
+
+
+def compare_runs(a: dict, b: dict, *, purpose: str = "") -> ComparabilityResult:
+    """G1 §12 L2 gate for two run metadata documents.
+
+    Conditions:
+
+    - C1 (compound / query identity): differing ``compound_id`` /
+      ``query_id`` / ``submitted_query`` -> ``not_comparable`` (reason codes
+      prefixed ``c1_``); an absent ``compound_id`` on exactly one side makes
+      the identity story incomplete -> ``unknown``;
+    - C2 (period / granularity): delegated to :func:`compare_temporal_windows`
+      on ``temporal_provenance``, reason codes prefixed ``c2_``;
+    - C3 (unit / provenance explicitness): different ``source_id`` means
+      different measured units (a.md §12.2: X posts vs YouTube videos can
+      never be compared as amounts) -> ``not_comparable``; same source but a
+      different ``collector_id`` stays ``conditional`` (provenance change
+      needs review).  Unit *labels* are not carried by run metadata today;
+      the measurement registry (G7) will refine this.
+
+    Only ``direct_comparison`` is modelled as a purpose (normalized-pattern
+    comparisons are future work), matching the existing gate conventions:
+    the strongest verdict is ``conditional``.  The judgment is independent of
+    L1 (P5): a valid run pair can still be ``not_comparable``.
+
+    Read-only: neither document is modified.
+    """
+    if not isinstance(a, dict) or not isinstance(b, dict):
+        return ComparabilityResult(_UNKNOWN, ["insufficient_metadata"])
+    if purpose not in _DIRECT_COMPARISON_PURPOSES:
+        return ComparabilityResult(_UNKNOWN, ["unsupported_comparison_purpose"])
+
+    query_a = a.get("query_provenance")
+    query_b = b.get("query_provenance")
+    temporal_a = a.get("temporal_provenance")
+    temporal_b = b.get("temporal_provenance")
+    if not all(
+        isinstance(block, dict)
+        for block in (query_a, query_b, temporal_a, temporal_b)
+    ):
+        return ComparabilityResult(_UNKNOWN, ["insufficient_metadata"])
+
+    identity_a = _query_identity(query_a)
+    identity_b = _query_identity(query_b)
+    if identity_a is None or identity_b is None:
+        return ComparabilityResult(_UNKNOWN, ["insufficient_metadata"])
+
+    compound_a, compound_b = identity_a[0], identity_b[0]
+    if (compound_a in (None, "")) != (compound_b in (None, "")):
+        # One side declares the compound and the other does not: the identity
+        # story is incomplete, so C1 cannot be confirmed.
+        return ComparabilityResult(_UNKNOWN, ["insufficient_metadata"])
+
+    reasons: list[str] = []
+
+    # C1: compound / query identity.
+    if compound_a not in (None, ""):
+        if compound_a != compound_b:
+            reasons.append("c1_compound_mismatch")
+    if identity_a[1:] != identity_b[1:]:
+        reasons.append("c1_query_mismatch")
+
+    # C2: period / granularity (shared with the G3 gate).
+    window_result = compare_temporal_windows(temporal_a, temporal_b)
+    if window_result.status == _UNKNOWN:
+        return window_result
+    if window_result.status == _NOT_COMPARABLE:
+        reasons.extend(f"c2_{reason}" for reason in window_result.reasons)
+
+    # C3: unit / provenance.
+    conditionals: list[str] = []
+    source_a = a.get("source_id")
+    source_b = b.get("source_id")
+    if not isinstance(source_a, str) or not source_a or not isinstance(source_b, str) or not source_b:
+        return ComparabilityResult(_UNKNOWN, ["insufficient_metadata"])
+    if source_a != source_b:
+        reasons.append("c3_source_mismatch")
+    else:
+        collector_a = a.get("collector") if isinstance(a.get("collector"), dict) else {}
+        collector_b = b.get("collector") if isinstance(b.get("collector"), dict) else {}
+        if collector_a.get("collector_id") != collector_b.get("collector_id"):
+            conditionals.append("c3_collector_mismatch")
+
+    if reasons:
+        return ComparabilityResult(_NOT_COMPARABLE, sorted(reasons))
+
+    for reason in window_result.reasons:
+        if reason != "coverage_and_sampling_review_required":
+            conditionals.append(f"c2_{reason}")
+    conditionals.append("coverage_and_sampling_review_required")
+    return ComparabilityResult(_CONDITIONAL, sorted(conditionals))

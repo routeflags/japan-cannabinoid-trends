@@ -30,6 +30,7 @@ __all__ = [
     "IO_ISSUE_CODES",
     "check_manifest_lineage",
     "check_transformation_lineage",
+    "load_artifact_manifest",
     "sha256_file",
     "verify_artifact_integrity",
     "verify_artifact_manifest",
@@ -208,18 +209,16 @@ def check_transformation_lineage(
     return issues
 
 
-def verify_artifact_manifest(
-    path, *, base_dir=None, known_artifact_ids=()
-) -> list[Issue]:
-    """Load a manifest file and run structural + integrity + lineage checks.
+def load_artifact_manifest(path) -> tuple[dict | None, list[Issue]]:
+    """Read a manifest file for separate structural/semantic validation.
 
-    Returns issues; an unreadable / undecodable manifest yields
-    ``ARTIFACT_MANIFEST_MISSING`` (I/O class).  The manifest file itself is
-    only read, never rewritten.
+    Returns ``(manifest, issues)``.  A missing or unreadable manifest yields
+    ``(None, [ARTIFACT_MANIFEST_MISSING])`` so callers can pass the loaded
+    document to semantic checks without re-reading the file.  Read-only.
     """
     manifest_path = Path(path)
     if not manifest_path.is_file():
-        return [
+        return None, [
             _issue(
                 "ARTIFACT_MANIFEST_MISSING",
                 "/artifact_manifest",
@@ -231,7 +230,7 @@ def verify_artifact_manifest(
         with manifest_path.open(encoding="utf-8") as handle:
             manifest = json.load(handle)
     except (OSError, json.JSONDecodeError, UnicodeDecodeError):
-        return [
+        return None, [
             _issue(
                 "ARTIFACT_MANIFEST_MISSING",
                 "/artifact_manifest",
@@ -239,6 +238,25 @@ def verify_artifact_manifest(
                 "artifact_integrity",
             )
         ]
+    return manifest, []
+
+
+def verify_artifact_manifest(
+    path, *, base_dir=None, known_artifact_ids=(), manifest=None
+) -> list[Issue]:
+    """Load a manifest file and run structural + integrity + lineage checks.
+
+    Returns issues; an unreadable / undecodable manifest yields
+    ``ARTIFACT_MANIFEST_MISSING`` (I/O class).  The manifest file itself is
+    only read, never rewritten.  ``manifest`` may carry an already parsed
+    manifest (e.g. loaded once by a gate); it is validated exactly like a
+    freshly read file.
+    """
+    manifest_path = Path(path)
+    if manifest is None:
+        manifest, load_issues = load_artifact_manifest(manifest_path)
+        if load_issues:
+            return load_issues
 
     issues: list[Issue] = []
     result = validate_document(manifest, get_schema("artifact-manifest-v1"))

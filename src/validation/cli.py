@@ -7,6 +7,8 @@ Commands
 - ``validate-registries`` every known registry file that exists
 - ``validate-all``        registries + all studies (JSON report for CI)
 - ``gate-plan``           pre-collection gate for a collection plan (P6-1)
+- ``gate-run``            post-collection L1 gate: catalog vs quarantine (P6-2)
+- ``compare-runs``        L2 run-level comparability (G1 §12, C1-C3)
 - ``audit-legacy``        non-destructive G5 legacy audit (Phase 8)
 
 Exit codes (h.md §13)
@@ -36,7 +38,8 @@ import json
 import sys
 from pathlib import Path
 
-from validation.gates import pre_collection_gate
+from validation.comparability import compare_runs
+from validation.gates import post_collection_gate, pre_collection_gate
 from validation.integrity import IO_ISSUE_CODES, sha256_file
 from validation.legacy import LegacyProfileNotAllowed, audit_record
 from validation.pipeline import validate_full
@@ -582,6 +585,138 @@ def cmd_gate_plan(args) -> int:
 
 
 # ---------------------------------------------------------------------------
+# gate-run (Phase 6 / L1 post-collection decision)
+# ---------------------------------------------------------------------------
+
+
+def cmd_gate_run(args) -> int:
+    """Post-collection L1 gate: structural + semantic + missingness + artifacts.
+
+    Exit 0 = catalog (adoptable), 1 = quarantine (keep raw, do not adopt),
+    2 = config error, 3 = I/O error.  The command only decides; moving the
+    run into/out of staging is the caller's job (G1 §13).
+    """
+    target = Path(args.file)
+    try:
+        document = _load_json(target)
+    except (OSError, json.JSONDecodeError, UnicodeDecodeError):
+        _err(f"cannot read input file: {target}")
+        return EXIT_IO
+
+    if not isinstance(document, dict):
+        # A JSON document that is not an object cannot carry the run contract;
+        # refuse it here instead of letting the structural layer crash.
+        issue = Issue(
+            code="DOCUMENT_FORMAT_INVALID",
+            path="",
+            severity="error",
+            message="run document is not a JSON object",
+            rule="structure",
+        )
+        report = {
+            "validation_version": VALIDATION_VERSION,
+            "schema_id": "collection-run-v1",
+            "target": str(target),
+            "profile": "gate",
+            "action": "quarantine",
+            "valid": False,
+            "issues": [issue.to_dict()],
+        }
+        _emit(
+            report,
+            fmt=args.format,
+            output=args.output,
+            human_lines=[f"QUARANTINE collection-run-v1 {target}"],
+        )
+        return EXIT_DATA
+
+    try:
+        registries = load_registries(Path(args.config_dir), Path(args.metadata_dir))
+    except ConfigError as error:
+        _err(str(error))
+        return EXIT_CONFIG
+
+    try:
+        outcome = validate_full(
+            document,
+            schema_id="collection-run-v1",
+            target=str(target),
+            registries=registries if registries.any() else None,
+            base_dir=target.parent,
+            verify_artifacts=True,
+        )
+    except ValueError as error:
+        _err(str(error))
+        return EXIT_CONFIG
+
+    issues = list(outcome.issues)
+    if outcome.valid:
+        gate = post_collection_gate(
+            document,
+            registries=registries if registries.any() else None,
+            base_dir=target.parent,
+        )
+        issues.extend(gate.issues)
+        action = gate.action
+    else:
+        action = "quarantine"
+    issues.sort(key=lambda issue: issue.sort_key())
+
+    report = {
+        "validation_version": VALIDATION_VERSION,
+        "schema_id": "collection-run-v1",
+        "target": str(target),
+        "profile": "gate",
+        "action": action,
+        "valid": not any(issue.severity == "error" for issue in issues),
+        "issues": [issue.to_dict() for issue in issues],
+    }
+    lines = [f"{action.upper()} collection-run-v1 {target}"]
+    for issue in issues:
+        lines.append(f"  [{issue.code}] {issue.path}: {issue.message}")
+    _emit(report, fmt=args.format, output=args.output, human_lines=lines)
+    return _exit_code(issues)
+
+
+# ---------------------------------------------------------------------------
+# compare-runs (G1 §12 L2)
+# ---------------------------------------------------------------------------
+
+
+def cmd_compare_runs(args) -> int:
+    """L2 run-level comparability report (C1 / C2 / C3).
+
+    Exit code is 0 for any produced verdict: L2 restricts comparison, it does
+    not invalidate data (P5).  Unreadable inputs are I/O errors (exit 3).
+    """
+    documents = []
+    for label, path_str in (("a", args.a), ("b", args.b)):
+        path = Path(path_str)
+        try:
+            documents.append(_load_json(path))
+        except (OSError, json.JSONDecodeError, UnicodeDecodeError):
+            _err(f"cannot read input file ({label}): {path}")
+            return EXIT_IO
+
+    result = compare_runs(documents[0], documents[1], purpose=args.purpose or "")
+    report = {
+        "validation_version": VALIDATION_VERSION,
+        "gate": "L2",
+        "schema_id": "collection-run-v1",
+        "a": str(args.a),
+        "b": str(args.b),
+        "purpose": args.purpose or "direct_comparison",
+        "status": result.status,
+        "reasons": list(result.reasons),
+    }
+    lines = [f"L2 {result.status} {args.a} vs {args.b}"]
+    for reason in result.reasons:
+        lines.append(f"  reason: {reason}")
+    _emit(report, fmt=args.format, output=args.output, human_lines=lines)
+    return EXIT_OK
+
+
+# ---------------------------------------------------------------------------
 # argparse wiring
 # ---------------------------------------------------------------------------
 
@@ -645,6 +780,28 @@ def build_parser() -> argparse.ArgumentParser:
     gate.add_argument("--file", required=True)
     _add_common(gate, with_profile=False)
     gate.set_defaults(handler=cmd_gate_plan)
+
+    gate_run = sub.add_parser(
+        "gate-run",
+        help="post-collection L1 gate: catalog vs quarantine (P6-2)",
+    )
+    gate_run.add_argument("--file", required=True)
+    _add_common(gate_run, with_profile=False)
+    gate_run.set_defaults(handler=cmd_gate_run)
+
+    compare = sub.add_parser(
+        "compare-runs", help="L2 run-level comparability report (G1 §12)"
+    )
+    compare.add_argument("--a", required=True, help="first run_metadata.json")
+    compare.add_argument("--b", required=True, help="second run_metadata.json")
+    compare.add_argument(
+        "--purpose",
+        default="",
+        help="comparison purpose; only direct_comparison is modelled today",
+    )
+    compare.add_argument("--format", choices=("text", "json"), default="text")
+    compare.add_argument("--output", help="write the JSON report to this path")
+    compare.set_defaults(handler=cmd_compare_runs)
 
     audit = sub.add_parser(
         "audit-legacy", help="non-destructive G5 legacy audit (Phase 8)"

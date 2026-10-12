@@ -13,12 +13,22 @@ the G1 adapter contract (separate development line) and must be aligned when
 that lands; until then this schema is the machine-checkable minimum and is
 documented as such in ``docs/specs/validation-framework.md``.
 
+G1 alignment (2026-10-13, collection core): ``query`` (adapter-specific
+request parameters; extension area like ``temporal_provenance.
+submitted_parameters``) and ``window.granularity`` / ``window.timezone`` /
+``window.window_id`` were added as *optional* fields so that a plan carries
+everything the adapter and the run-provenance builder need.  Adding optional
+fields keeps every previous plan document valid (P6 backward compatibility);
+the schema ID and contract version are unchanged.
+
 Scope: structural only.  Registration, collector status (``active`` only),
 capability support and temporal ordering are semantic checks in
 ``validation.semantic`` / ``validation.gates``.
 """
 
 from __future__ import annotations
+
+from validation.schemas.temporal import GRANULARITIES
 
 COLLECTION_PLAN_SCHEMA = {
     "plan_id": {
@@ -40,6 +50,31 @@ COLLECTION_PLAN_SCHEMA = {
         "required": True,
         "empty": False,
     },
+    # Adapter-specific request parameters (non-secret only). This is a
+    # documented extension area: the core is source-agnostic and must not
+    # hard-code vendor parameter names.
+    "query": {
+        "type": "dict",
+        "allow_unknown": True,
+        "schema": {
+            "text": {
+                "type": "string",
+                "empty": False,
+            },
+            "geo": {
+                "type": "string",
+            },
+            "timeframe": {
+                "type": "string",
+            },
+            "compound_id": {
+                "type": "string",
+            },
+            "language": {
+                "type": "string",
+            },
+        },
+    },
     "required_capabilities": {
         "type": "list",
         "required": True,
@@ -51,6 +86,10 @@ COLLECTION_PLAN_SCHEMA = {
     "window": {
         "type": "dict",
         "schema": {
+            "window_id": {
+                "type": "string",
+                "empty": False,
+            },
             "start": {
                 "type": "string",
                 "required": True,
@@ -62,6 +101,17 @@ COLLECTION_PLAN_SCHEMA = {
                 "required": True,
                 "empty": False,
                 "iso_datetime": True,
+            },
+            "granularity": {
+                "type": "string",
+                "allowed": GRANULARITIES,
+            },
+            "week_start": {
+                "type": "string",
+            },
+            "timezone": {
+                "type": "string",
+                "empty": False,
             },
         },
     },

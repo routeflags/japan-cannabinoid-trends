@@ -4,6 +4,8 @@ Runs only after Cerberus structural validation succeeds (rollout plan P4-11;
 rollout instruction §11: "Cerberusによる構造検証に成功した後、意味検証を
 実行する").  The orchestration lives in ``validation.pipeline``; this module
 provides the individual checks:
+Functions
+---------
 
 - ``check_schema_version``      CV-20 / P3-2 (registry-managed versions)
 - ``check_temporal_semantics``  CV-08 / P4-1 (ordering, timezone,
@@ -12,6 +14,8 @@ provides the individual checks:
   evidence for the finalized profile)
 - ``check_registry_references`` P4-2 (source/collector/query/study existence,
   adapter mismatch, registered-but-legacy distinction)
+- ``check_missingness_consistency`` G1 L1-09 (zero observations vs missing
+  data vs collection failure; raw evidence requirement for terminal runs)
 - ``eligible_collectors`` / ``check_capability_gate`` P4-3 (a.md §9)
 - ``scan_for_secrets``          P4-10 (detection only, never auto-removal)
 
@@ -37,6 +41,7 @@ __all__ = [
     "Registries",
     "check_capability_gate",
     "check_execution_consistency",
+    "check_missingness_consistency",
     "check_registry_references",
     "check_schema_version",
     "check_temporal_semantics",
@@ -333,6 +338,109 @@ def check_execution_consistency(document) -> list[Issue]:
                 "/collection_finished_at",
                 "finalized runs require collection_finished_at",
                 "completion_evidence",
+            )
+        )
+
+    return issues
+
+
+# ---------------------------------------------------------------------------
+# G1 L1-09: missingness / completeness (zero vs missing vs failure)
+# ---------------------------------------------------------------------------
+
+_RAW_COMPLETENESS_INCOMPLETE = ("partial", "missing")
+
+
+def check_missingness_consistency(document, manifest=None) -> list[Issue]:
+    """G1 §11 L1-09 / AGENTS.md missing-data rules.
+
+    Distinguishes observed zero, partial collection and collection failure:
+
+    - a terminal run must have verifiable **raw artifact evidence** in its
+      artifact manifest (a run that claims ``success`` / ``partial`` /
+      ``failed`` without raw artifacts has no evidence to grade);
+    - ``success`` with ``returned_count == 0`` is an *observed zero* only when
+      an artifact declares ``record_count: 0``; otherwise the zero cannot be
+      distinguished from missing data (fail closed);
+    - ``success`` cannot coexist with raw artifacts marked ``partial`` /
+      ``missing`` (the run must say ``partial`` instead);
+    - ``failed`` requires recorded error evidence (a failure must not be
+      silently converted into a zero-observation success).
+
+    ``manifest`` is the parsed artifact manifest (``None`` when the run does
+    not reference one or it cannot be read).  A missing manifest is reported
+    here as evidence absence so that L1 refuses the run; callers that also
+    verify the manifest file get both findings (they describe different
+    problems: unreadable file vs unsubstantiated claim).
+
+    Read-only: the document and manifest are never modified.
+    """
+    if not isinstance(document, dict):
+        return []
+    execution = document.get("execution")
+    if not isinstance(execution, dict):
+        return []
+    status = execution.get("status")
+    if status not in TERMINAL_EXECUTION_STATUSES:
+        return []
+
+    issues: list[Issue] = []
+
+    artifacts = None
+    if isinstance(manifest, dict) and isinstance(manifest.get("artifacts"), list):
+        artifacts = [
+            artifact
+            for artifact in manifest["artifacts"]
+            if isinstance(artifact, dict) and artifact.get("layer") == "raw"
+        ]
+
+    if not artifacts:
+        issues.append(
+            _issue(
+                "MISSINGNESS_RAW_EVIDENCE_MISSING",
+                "/artifact_manifest",
+                "terminal run has no verifiable raw artifact evidence; "
+                "a zero or failure claim requires preserved raw data",
+                "collection_integrity",
+            )
+        )
+    else:
+        if status == "success" and any(
+            artifact.get("completeness") in _RAW_COMPLETENESS_INCOMPLETE
+            for artifact in artifacts
+        ):
+            issues.append(
+                _issue(
+                    "COMPLETENESS_INCONSISTENT_WITH_SUCCESS",
+                    "/execution/status",
+                    "a successful run cannot have partial or missing raw "
+                    "artifacts; record the run as partial instead",
+                    "collection_integrity",
+                )
+            )
+        if (
+            status == "success"
+            and execution.get("returned_count") == 0
+            and not any(artifact.get("record_count") == 0 for artifact in artifacts)
+        ):
+            issues.append(
+                _issue(
+                    "MISSINGNESS_ZERO_WITHOUT_EVIDENCE",
+                    "/execution/returned_count",
+                    "a zero observation is accepted only with an artifact "
+                    "declaring record_count 0; a collection failure must not "
+                    "be recorded as zero data",
+                    "collection_integrity",
+                )
+            )
+
+    if status == "failed" and not execution.get("errors"):
+        issues.append(
+            _issue(
+                "COLLECTION_FAILED_WITHOUT_ERROR_EVIDENCE",
+                "/execution/errors",
+                "a failed run must record at least one error entry",
+                "collection_integrity",
             )
         )
 

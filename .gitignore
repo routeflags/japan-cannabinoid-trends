@@ -40,3 +40,10 @@ __pycache__/
 # Private data (anonymization mappings, etc.)
 datasets/*/data/private/
 /tmp
+
+# G1 collection pipeline work areas (G1 §13; provisional regulation - see
+# docs/specs/collection-pipeline.md): staged runs and quarantined runs are
+# local working data, never published; quarantine contents must not be
+# redistributed before review.
+.staging/
+.quarantine/

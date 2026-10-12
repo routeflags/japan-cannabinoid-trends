@@ -13,7 +13,7 @@
 | Phase 3 | Schema Registry 拡充（G1〜G7・running profile・バージョン管理） | **実装済み**（15 スキーマ登録。P3-10 は対象不存在のため §11 の決定により終結） |
 | Phase 4 | Semantic / Integrity / Lineage / Git Policy / Comparability / Publication / Secret Scan | **実装済み** |
 | Phase 5 | CLI・JSON Validation Report・Exit Code | **実装済み** |
-| Phase 6 | 収集パイプライン統合 | 一部（ゲートライブラリ `gates.py` + `run-gates.sh`。`src/collection/*` 本体への配線は未実施） |
+| Phase 6 | 収集パイプライン統合 | **G1 垂直スライス実装済み**（registries / capability gate / adapter contract / L1 + quarantine / L2。ライブ収集は未実施、既存 shell・skill への適用は親判断待ち — §13） |
 | Phase 7 | CI | 実装済み（`research-validation.yml` 新設。初回実行成功: 2026-10-13 push `324cd55`） |
 | Phase 8 | Legacy Audit | 実装済み（24件を非破壊監査。`docs/audits/g5-legacy-runs.json`、raw sha256 前後一致） |
 
@@ -46,7 +46,8 @@ python3 -m venv .venv
 .venv/bin/python -m pytest
 ```
 
-- Contract Tests: `tests/validation/`（2026-10-13 時点: **363件**）。
+- Contract Tests: `tests/validation/`（402件）+ `tests/collection/`（59件）
+  ＝ **461件**（2026-10-13 G1 垂直スライス後。親が `.venv/bin/python -m pytest` で実測）。
 - 新しいスキーマを登録したら、対応する Contract Test を必ず追加する
   （20261013h.md §9 / §16）。`tests/validation/test_schema_coverage.py` が
   「登録済みスキーマIDを参照するテストファイルの存在」を機械的に検査するため、
@@ -82,7 +83,7 @@ report = outcome.to_report().to_dict()
 | `storage_policy.py` | Git 追跡検証（read-only git）/ Publication Gate / policy 選択 |
 | `pipeline.py` | 層順序つき統合実行（構造→意味→Artifact） |
 | `reporting.py` | Issue 正規化と JSON Validation Report（安定形式） |
-| `gates.py` | 収集前/後ゲート（Phase 6） |
+| `gates.py` | 収集前/後ゲート（Phase 6。後ゲート = L1: 欠測/完全性/artifact 検証込み） |
 | `legacy.py` | Legacy Audit Profile・凍結 run_id リスト（Phase 8） |
 | `cli.py` | CLI（下記 §5） |
 
@@ -105,7 +106,7 @@ report = outcome.to_report().to_dict()
 # Study 単位（配下の run_metadata.json を再帰検証、Artifact manifest も検証）
 .venv/bin/python -m validation.cli validate-study --study cbx-search-trends
 
-# 存在する Registry ファイルのみ検証（未実装の間は「対象なし」で exit 0）
+# Registry ファイルの検証（config/sources.json・config/collectors.json が実在）
 .venv/bin/python -m validation.cli validate-registries
 
 # 全 Study + Registry の統合レポート（CI 向け）
@@ -113,6 +114,12 @@ report = outcome.to_report().to_dict()
 
 # 収集前ゲート（Phase 6 P6-1）: proceed / stop
 .venv/bin/python -m validation.cli gate-plan --file plan.json
+
+# 収集後 L1 ゲート（Phase 6 P6-2）: catalog / quarantine
+.venv/bin/python -m validation.cli gate-run --file datasets/<study>/.../run_metadata.json
+
+# L2 比較可能性（G1 §12、C1-C3）: 常に exit 0、判定はレポートで
+.venv/bin/python -m validation.cli compare-runs --a a.json --b b.json
 
 # G5 Legacy 監査（非破壊。--output 省略時は stdout）
 .venv/bin/python -m validation.cli audit-legacy --output docs/audits/g5-legacy-runs.json
@@ -132,7 +139,10 @@ report = outcome.to_report().to_dict()
   validate-registries は `reports[]` のバンドル形式。
 - 既存の bash 検証（`scripts/validation/validate-*.sh`）は置き換えない。
 - 収集フローからの利用は `scripts/validation/run-gates.sh {registries|plan|run}`
-  経由（P6-5。検証処理の分散禁止: h.md §6）。
+  経由（P6-5。検証処理の分散禁止: h.md §6）。`run` は `gate-run`（L1）を呼ぶ。
+- G1 収集コア（registry → adapter → staging → L1 → catalog/quarantine）は
+  `python -m collection.core.cli {collect|adopt}`。詳細は
+  `docs/specs/collection-pipeline.md`。
 
 ## 6. CI（Phase 7 実装済み — 初回実行成功）
 
@@ -168,6 +178,7 @@ Cerberus は**構造検証のみ**を担当する。
 | Compound / Query / Source / Collector の Registry 存在 | Registry Validator（実装済み: `semantic.check_registry_references`） |
 | 日時・期間境界の前後関係 | Temporal / Semantic Validator（実装済み: `semantic.check_temporal_semantics`） |
 | Query と Source の整合性・Capability | Semantic Validator（実装済み: `semantic.check_capability_gate`） |
+| 欠測とゼロの区別・終端 run の raw 証拠（L1-09） | Semantic Validator（実装済み: `semantic.check_missingness_consistency`。`post_collection_gate` 経由） |
 | ファイルハッシュ | Integrity Validator（実装済み: `integrity`） |
 | Artifact 参照関係 | Lineage Validator（実装済み: `integrity.check_*_lineage`） |
 | Git 追跡状態 | Git Policy Validator（実装済み: `storage_policy.check_git_tracking`、read-only） |
@@ -218,9 +229,23 @@ Cerberus は**構造検証のみ**を担当する。
 | `study-registry-v1` | G7 | `metadata/studies/study-registry.json` |
 | `measurement-registry-v1` | G7 | `metadata/measurements/measurement-registry.json` |
 | `research-view-v1` | G7 | 研究 view 定義（合算モード禁止） |
-| `collection-plan-v1` | P6 | 収集前ゲート入力（初期契約。G1 Adapter Contract 確定時に整合を取る） |
+| `collection-plan-v1` | P6 | 収集前ゲート入力（初期契約。G1 垂直スライスで adapter 向けの任意フィールド `query` / `window.granularity|week_start|timezone|window_id` を追加 — §13） |
 
 各スキーマの未包含事項（意味検証側の担当）は各モジュールの docstring に明記してある。
+
+### 10.1 レジストリファイルの実在状況（2026-10-13）
+
+| 想定位置 | スキーマ | 実在 |
+|---|---|---|
+| `config/sources.json` | source-registry-v1 | **あり**（6 source。`validate-registries` と CI が実検証する） |
+| `config/collectors.json` | collector-registry-v1 | **あり**（6 collector。active は `google-trends-mcp` のみ） |
+| `metadata/queries/query-registry.json` | query-registry-v1 | なし（G2 の作業） |
+| `metadata/studies/study-registry.json` | study-registry-v1 | なし（G7 の作業） |
+| `metadata/measurements/measurement-registry.json` | measurement-registry-v1 | なし（G7 の作業） |
+| `config/storage-policies.json` | storage-policy-registry-v1 | なし（G6 の作業） |
+
+`validate-registries` は存在するファイルのみを検証する。上記 G2/G6/G7 の
+ファイルが置かれれば、CI が自動的に検証対象に含める。
 
 ## 11. JSON Schema 共存（P3-10）— 決定: Cerberus を構造検証の正本とする
 
@@ -283,15 +308,32 @@ Phase 1 監査のとおり、リポジトリには**実在する JSON Schema フ
 - **フレームワーク導入後の新規収集 run を凍結リストへ追加してはならない**
   （bypass 防止の意味が失われる）。追加時は収集日が導入前であることを確認する。
 
-## 13. 収集パイプライン統合（Phase 6）— 一部実装
+## 13. 収集パイプライン統合（Phase 6）— G1 垂直スライス実装済み
 
-- 実装済み: `validation/gates.py` の `pre_collection_gate` / `post_collection_gate`
-  と CLI `gate-plan`、ラッパー `scripts/validation/run-gates.sh`。
-- 未実装: `src/collection/*`（apify_run.sh 等）への配線と Quarantine 領域の運用
-  （アクセス制御・保持ポリシー）。コレクタ本体は別開発ラインのため、無断で
-  書き換えない方針とした。
-- 暫定運用: 収集実行時は `run-gates.sh run <run_metadata.json>` の exit 0 を
-  確認してから採用し、非 0 の場合は既存 raw をそのまま保持して隔離扱いとする。
+2026-10-13、G1 を 1 ソース（Google Trends）で貫通させた。
+詳細な運用契約は **`docs/specs/collection-pipeline.md`** を参照。
+
+- **実装済み**:
+  - Source / Collector Registry の実体（`config/sources.json` /
+    `config/collectors.json`）と CLI 検証（`validate-registries`、CI）。
+  - Capability / Selection Gate（`collection.core.selection`。未登録・非
+    active・unknown capability は fail closed。複数候補の自動選択はしない）。
+  - Adapter Contract（`src/collection/core/contracts.py`）と Google Trends
+    adapter（`src/collection/adapters/google_trends/`。live と recorded
+    replay を transport で分離）。**ライブ収集は未実施**。
+  - L1 ゲート（`gate-run`）と Quarantine 移動（`collection.core.pipeline`。
+    上書き禁止・自動削除なし・secret 検出時 chmod 700）。
+  - L2 最小実装（`compare-runs`、C1-C3。`comparability.compare_runs`）。
+  - `collection-plan-v1` への adapter 向け任意フィールド追加（後方互換。
+    既存 plan 文書の判定は不変 — `test_collection_plan.py`）。
+- **未実施（親・ユーザーの判断事項）**:
+  - ライブ収集（課金・レート制限・資格情報）の実行と実レスポンスでの契約照合。
+  - 既存 shell（`apify_run.sh` 等）・skill（`research-google-trends` 等）の
+    G1 フローへの移行（移行パスは `collection.core.cli adopt`）。
+  - Quarantine の正式な運用（保持期間・アクセス制御・レビュー手順）。
+    暫定規約は `docs/specs/collection-pipeline.md` §6。
+- 暫定運用: 収集実行時は `run-gates.sh run <run_metadata.json>`（= `gate-run`）の
+  exit 0 を確認してから採用し、非 0 の場合は既存 raw をそのまま保持して隔離扱いとする。
 
 ## 14. ローカル検証の再現手順
 
@@ -305,4 +347,8 @@ python3 -m venv .venv
 
 - 実データへの end-to-end: `validate --profile legacy`（監査）と
   strict（不合格 exit 1）を既存 run_metadata で確認済み（2026-10-13）。
+- G1 収集フローの再現（offline）: `python -m collection.core.cli collect --plan
+  <plan> --fixture tests/collection/fixtures/google_trends/... --workspace <root>`
+  → `python -m validation.cli compare-runs --a ... --b ...`。ライブ収集は
+  実行しない（§13）。
 - CI ワークフローは初回実行に成功している（§6）。

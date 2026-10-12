@@ -1,0 +1,41 @@
+{
+  "schema_version": "1.0.0",
+  "sources": [
+    {
+      "source_id": "google-trends",
+      "kind": "search",
+      "measurement_types": ["search_index"],
+      "publication_review_required": true
+    },
+    {
+      "source_id": "x",
+      "kind": "social",
+      "measurement_types": ["post_count"],
+      "publication_review_required": true
+    },
+    {
+      "source_id": "youtube",
+      "kind": "social",
+      "measurement_types": ["video_count"],
+      "publication_review_required": true
+    },
+    {
+      "source_id": "tiktok",
+      "kind": "social",
+      "measurement_types": ["video_count"],
+      "publication_review_required": true
+    },
+    {
+      "source_id": "instagram",
+      "kind": "social",
+      "measurement_types": ["post_count"],
+      "publication_review_required": true
+    },
+    {
+      "source_id": "google-search-console",
+      "kind": "first-party-search",
+      "measurement_types": ["query_impressions", "query_clicks", "query_position"],
+      "publication_review_required": true
+    }
+  ]
+}

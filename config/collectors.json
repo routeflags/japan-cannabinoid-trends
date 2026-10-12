@@ -1,0 +1,147 @@
+{
+  "schema_version": "1.0.0",
+  "collectors": [
+    {
+      "collector_id": "google-trends-mcp",
+      "source_id": "google-trends",
+      "provider": "mcp",
+      "transport": "mcp",
+      "external_id": "google-trends-mcp",
+      "adapter_id": "google-trends-mcp@1",
+      "version": "0.1.1",
+      "status": "active",
+      "capabilities": {
+        "absolute_date_range": "unknown",
+        "relative_date_range": "supported",
+        "language_filter": "unknown",
+        "geo_filter": "supported",
+        "pagination": "unknown",
+        "stable_item_id": "unknown"
+      },
+      "verified_at": "2026-10-12T06:42:46Z",
+      "evidence": [
+        "datasets/cannabinoid-multi-trends/data/raw/google_trends/20261012T064246Z-google-trends-ja-rikiddo-5y-main5/run_metadata.json (mcp_version=0.1.1, geo=JP, timeframe=today 5-y)",
+        "datasets/cbx-search-trends/data/raw/google_trends/20261001T115959Z-google-trends-cbx-rikiddo/run_metadata.json (mcp_version=0.1.1, geo=JP, timeframe=today 12-m)",
+        ".github/skills/research-google-trends/SKILL.md (tool list and parameters; npm google-trends-mcp, no API key)",
+        "29 run_metadata.json in datasets/**/google_trends (all mcp_server=google-trends-mcp, mcp_version=0.1.1)"
+      ]
+    },
+    {
+      "collector_id": "x-apify-twitter-search",
+      "source_id": "x",
+      "provider": "apify",
+      "transport": "actor",
+      "external_id": "cPYLH3QT9GyzKhB4S",
+      "adapter_id": "x-apify-twitter-search@1",
+      "version": "unknown",
+      "status": "unverified",
+      "capabilities": {
+        "absolute_date_range": "unknown",
+        "relative_date_range": "unknown",
+        "language_filter": "unknown",
+        "geo_filter": "unknown",
+        "pagination": "unknown",
+        "stable_item_id": "unknown"
+      },
+      "verified_at": null,
+      "evidence": [
+        ".github/skills/apify-x-search/SKILL.md (actor cPYLH3QT9GyzKhB4S = patient_discovery/twitter-search)",
+        "src/collection/x/apify-x-search.md",
+        "docs/provenance.md (2026-08 collection: 147 posts, dedup key tweet_id)",
+        "datasets/cbx-social-trends/analysis/x-data-collection-plan.md (PoC note 2026-09-17)"
+      ]
+    },
+    {
+      "collector_id": "youtube-apify-scraper",
+      "source_id": "youtube",
+      "provider": "apify",
+      "transport": "actor",
+      "external_id": "h7sDV53CddomktSi5",
+      "adapter_id": "youtube-apify-scraper@1",
+      "version": "unknown",
+      "status": "unverified",
+      "capabilities": {
+        "absolute_date_range": "unknown",
+        "relative_date_range": "unknown",
+        "language_filter": "unknown",
+        "geo_filter": "unknown",
+        "pagination": "unknown",
+        "stable_item_id": "unknown"
+      },
+      "verified_at": null,
+      "evidence": [
+        ".github/skills/apify-youtube-scraper/SKILL.md (actor h7sDV53CddomktSi5 = streamers/youtube-scraper; date filter)",
+        "datasets/cbx-social-trends/data/processed/youtube_filtered_202607/ (processed collection output)"
+      ]
+    },
+    {
+      "collector_id": "youtube-apify-search",
+      "source_id": "youtube",
+      "provider": "apify",
+      "transport": "actor",
+      "external_id": "gJvjeCYNraSfhIaNd",
+      "adapter_id": "youtube-apify-search@1",
+      "version": "unknown",
+      "status": "unverified",
+      "capabilities": {
+        "absolute_date_range": "unknown",
+        "relative_date_range": "unknown",
+        "language_filter": "unknown",
+        "geo_filter": "unknown",
+        "pagination": "unknown",
+        "stable_item_id": "unknown"
+      },
+      "verified_at": null,
+      "evidence": [
+        ".github/skills/apify-youtube-search/SKILL.md (actor gJvjeCYNraSfhIaNd = danek/youtube-search)",
+        "scripts/collect-youtube-japanese-keywords.sh"
+      ]
+    },
+    {
+      "collector_id": "tiktok-apify-search",
+      "source_id": "tiktok",
+      "provider": "apify",
+      "transport": "actor",
+      "external_id": "jQfZ1h9FrcWcliKZX",
+      "adapter_id": "tiktok-apify-search@1",
+      "version": "unknown",
+      "status": "unverified",
+      "capabilities": {
+        "absolute_date_range": "unknown",
+        "relative_date_range": "unknown",
+        "language_filter": "unknown",
+        "geo_filter": "unknown",
+        "pagination": "unknown",
+        "stable_item_id": "unknown"
+      },
+      "verified_at": null,
+      "evidence": [
+        "src/collection/tiktok/fetch_tiktok.sh (actor jQfZ1h9FrcWcliKZX, keyword/region/limit input)",
+        ".github/skills/apify-tiktok-search/SKILL.md (novi/tiktok-search-api)"
+      ]
+    },
+    {
+      "collector_id": "instagram-apify-search",
+      "source_id": "instagram",
+      "provider": "apify",
+      "transport": "actor",
+      "external_id": "TxU0ZBQIHdR20dr9C",
+      "adapter_id": "instagram-apify-search@1",
+      "version": "unknown",
+      "status": "unverified",
+      "capabilities": {
+        "absolute_date_range": "unknown",
+        "relative_date_range": "unknown",
+        "language_filter": "unknown",
+        "geo_filter": "unknown",
+        "pagination": "unknown",
+        "stable_item_id": "unknown"
+      },
+      "verified_at": null,
+      "evidence": [
+        "src/collection/instagram/fetch_instagram.sh (actor TxU0ZBQIHdR20dr9C, query/limit input)",
+        ".github/skills/apify-instagram-search/SKILL.md (patient_discovery/instagram-search-reels)"
+      ]
+    }
+  ]
+}

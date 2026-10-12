@@ -618,6 +618,165 @@ def test_gate_plan_missing_file_exit_3(capsys, tmp_path):
 
 
 # ---------------------------------------------------------------------------
+# gate-run (post-collection L1 decision)
+# ---------------------------------------------------------------------------
+
+
+def _write_staged_run(tmp_path: Path, *, with_manifest: bool) -> Path:
+    document = _valid_run(tmp_path, with_manifest=with_manifest)
+    path = tmp_path / "run_metadata.json"
+    path.write_text(json.dumps(document), encoding="utf-8")
+    return path
+
+
+def test_gate_run_catalogs_a_valid_run(capsys, tmp_path):
+    run_file = _write_staged_run(tmp_path, with_manifest=True)
+    code = main(
+        [
+            "gate-run",
+            "--file",
+            str(run_file),
+            "--format",
+            "json",
+            *_isolated_registry_args(tmp_path),
+        ]
+    )
+    captured = capsys.readouterr()
+    report = json.loads(captured.out)
+    assert code == EXIT_OK
+    assert report["action"] == "catalog"
+    assert report["valid"] is True
+
+
+def test_gate_run_quarantines_a_run_without_artifact_evidence(capsys, tmp_path):
+    run_file = _write_staged_run(tmp_path, with_manifest=False)
+    code = main(
+        [
+            "gate-run",
+            "--file",
+            str(run_file),
+            "--format",
+            "json",
+            *_isolated_registry_args(tmp_path),
+        ]
+    )
+    captured = capsys.readouterr()
+    report = json.loads(captured.out)
+    assert code == EXIT_DATA
+    assert report["action"] == "quarantine"
+    assert "MISSINGNESS_RAW_EVIDENCE_MISSING" in [
+        issue["code"] for issue in report["issues"]
+    ]
+
+
+def test_gate_run_quarantines_a_tampered_payload(capsys, tmp_path):
+    run_file = _write_staged_run(tmp_path, with_manifest=True)
+    (tmp_path / "payload.json").write_bytes(b'{"records": ["tampered"]}')
+    code = main(
+        [
+            "gate-run",
+            "--file",
+            str(run_file),
+            "--format",
+            "json",
+            *_isolated_registry_args(tmp_path),
+        ]
+    )
+    captured = capsys.readouterr()
+    report = json.loads(captured.out)
+    assert code == EXIT_DATA
+    assert report["action"] == "quarantine"
+    codes = [issue["code"] for issue in report["issues"]]
+    assert "ARTIFACT_HASH_MISMATCH" in codes
+    assert "ARTIFACT_SIZE_MISMATCH" in codes
+
+
+def test_gate_run_missing_file_exit_3(capsys, tmp_path):
+    code = main(
+        [
+            "gate-run",
+            "--file",
+            str(tmp_path / "none.json"),
+            *_isolated_registry_args(tmp_path),
+        ]
+    )
+    assert code == EXIT_IO
+
+
+def test_gate_run_refuses_a_non_object_document(capsys, tmp_path):
+    path = tmp_path / "list.json"
+    path.write_text("[1, 2, 3]", encoding="utf-8")
+    code = main(
+        [
+            "gate-run",
+            "--file",
+            str(path),
+            "--format",
+            "json",
+            *_isolated_registry_args(tmp_path),
+        ]
+    )
+    captured = capsys.readouterr()
+    report = json.loads(captured.out)
+    assert code == EXIT_DATA
+    assert report["action"] == "quarantine"
+    assert report["issues"][0]["code"] == "DOCUMENT_FORMAT_INVALID"
+
+
+# ---------------------------------------------------------------------------
+# compare-runs (L2)
+# ---------------------------------------------------------------------------
+
+
+def test_compare_runs_reports_conditional(capsys, tmp_path):
+    document = json.loads(
+        (FIXTURES / "collection_run_valid.json").read_text(encoding="utf-8")
+    )
+    a = tmp_path / "a.json"
+    b = tmp_path / "b.json"
+    for path in (a, b):
+        path.write_text(json.dumps(document), encoding="utf-8")
+    code = main(["compare-runs", "--a", str(a), "--b", str(b), "--format", "json"])
+    captured = capsys.readouterr()
+    report = json.loads(captured.out)
+    assert code == EXIT_OK  # L2 restricts comparison; it never invalidates data
+    assert report["gate"] == "L2"
+    assert report["status"] == "conditional"
+
+
+def test_compare_runs_detects_a_window_mismatch(capsys, tmp_path):
+    document = json.loads(
+        (FIXTURES / "collection_run_valid.json").read_text(encoding="utf-8")
+    )
+    other = json.loads(json.dumps(document))
+    other["temporal_provenance"]["requested_end_exclusive"] = "2026-10-01T00:00:00Z"
+    a = tmp_path / "a.json"
+    b = tmp_path / "b.json"
+    a.write_text(json.dumps(document), encoding="utf-8")
+    b.write_text(json.dumps(other), encoding="utf-8")
+    code = main(["compare-runs", "--a", str(a), "--b", str(b), "--format", "json"])
+    captured = capsys.readouterr()
+    report = json.loads(captured.out)
+    assert code == EXIT_OK
+    assert report["status"] == "not_comparable"
+    assert "c2_window_mismatch" in report["reasons"]
+
+
+def test_compare_runs_missing_file_exit_3(capsys, tmp_path):
+    document = json.loads(
+        (FIXTURES / "collection_run_valid.json").read_text(encoding="utf-8")
+    )
+    a = tmp_path / "a.json"
+    a.write_text(json.dumps(document), encoding="utf-8")
+    code = main(
+        ["compare-runs", "--a", str(a), "--b", str(tmp_path / "none.json")]
+    )
+    captured = capsys.readouterr()
+    assert code == EXIT_IO
+    assert "cannot read input file" in captured.err
+
+
+# ---------------------------------------------------------------------------
 # Module entry point (P5-6: the documented invocation form works)
 # ---------------------------------------------------------------------------
 
