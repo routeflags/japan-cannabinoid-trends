@@ -159,6 +159,9 @@ report = outcome.to_report().to_dict()
 - **初回実行（2026-10-13、push `324cd55`）: 全ステップ成功**
   （Checkout → Python 3.14 → `pip install -e ".[dev]"` → pytest → validate-registries）。
   https://github.com/routeflags/japan-cannabinoid-trends/actions/runs/38293484480
+- **G1 垂直スライス後（push `0c36ce0`）も全ステップ成功**（461 tests、`config/`
+  レジストリ2件の実検証を含む）。
+  https://github.com/routeflags/japan-cannabinoid-trends/actions/runs/38298367946
 - CI は `validate-all` を実行しない。既存の legacy run が strict 不適合で
   全件失敗するため、現時点のゲートは Contract Tests と Registry 検証である。
   legacy の扱い（凍結リストの更新要否）は §12 を参照。
