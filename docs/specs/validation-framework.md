@@ -14,7 +14,7 @@
 | Phase 4 | Semantic / Integrity / Lineage / Git Policy / Comparability / Publication / Secret Scan | **実装済み** |
 | Phase 5 | CLI・JSON Validation Report・Exit Code | **実装済み** |
 | Phase 6 | 収集パイプライン統合 | 一部（ゲートライブラリ `gates.py` + `run-gates.sh`。`src/collection/*` 本体への配線は未実施） |
-| Phase 7 | CI | 実装済み（`research-validation.yml` 新設。GitHub 上での実行は未検証＝push 後に確認） |
+| Phase 7 | CI | 実装済み（`research-validation.yml` 新設。初回実行成功: 2026-10-13 push `324cd55`） |
 | Phase 8 | Legacy Audit | 実装済み（24件を非破壊監査。`docs/audits/g5-legacy-runs.json`、raw sha256 前後一致） |
 
 ## 1. 依存管理
@@ -134,7 +134,7 @@ report = outcome.to_report().to_dict()
 - 収集フローからの利用は `scripts/validation/run-gates.sh {registries|plan|run}`
   経由（P6-5。検証処理の分散禁止: h.md §6）。
 
-## 6. CI（Phase 7 実装済み — GitHub 実行は未検証）
+## 6. CI（Phase 7 実装済み — 初回実行成功）
 
 `.github/workflows/research-validation.yml` を新設した。
 
@@ -146,7 +146,12 @@ report = outcome.to_report().to_dict()
 - JSON Schema × Cerberus 差分検出（h.md §17 / P7-3）は、JSON Schema 正本が
   存在しないため**未実装**（方針は §11）。
 - ローカルで実施した検証: YAML 構文パース（ruby yaml）・`bash -n`。
-  **GitHub Actions 上での実行は未検証（push 後に確認が必要）**。
+- **初回実行（2026-10-13、push `324cd55`）: 全ステップ成功**
+  （Checkout → Python 3.14 → `pip install -e ".[dev]"` → pytest → validate-registries）。
+  https://github.com/routeflags/japan-cannabinoid-trends/actions/runs/38293484480
+- CI は `validate-all` を実行しない。既存の legacy run が strict 不適合で
+  全件失敗するため、現時点のゲートは Contract Tests と Registry 検証である。
+  legacy の扱い（凍結リストの更新要否）は §12 を参照。
 - **決定（2026-10-13）**: CI の Python は **3.14**（開発機と同一）。ローカルと CI の
   環境差を減らすことを優先する。`requires-python` の下限 3.12 は互換性表示として維持する。
 - リリースアーカイブ（P7-4）: 検証フレームワークの再現に必要な `pyproject.toml` と
@@ -261,6 +266,23 @@ Phase 1 監査のとおり、リポジトリには**実在する JSON Schema フ
 - 限界: 不足項目は報告のみで推定補完しない。`status` は
   `complete` / `incomplete` / `unreadable` のみを記録する。
 
+### 12.1 凍結リストとファイル実体の乖離（2026-10-13 検出・未解決）
+
+- `origin/main` の取り込みにより、フレームワーク導入前（2026-10-12 収集）の
+  run_metadata が **5 件**追加され、ファイル実体は **29 件**、凍結リストは **24 件**のままである。
+  追加分: `datasets/cannabinoid-multi-trends/data/raw/google_trends/20261012T*`
+- 現在の挙動:
+  - strict: `validate-all` は **29 件を対象**（新規5件も含む）し、全件不適合で exit 1。
+  - legacy: `validate-all --profile legacy` は **凍結リストの 24 件のみ**を対象とし exit 0。
+    凍結リスト外の run に `--profile legacy` を適用すると拒否される（bypass 防止）。
+- 結果として、新規5件は strict で常に失敗し、legacy 監査の対象にもならない。
+- 選択肢（**未決**）:
+  - (a) 5 件を凍結リストへ追加する（いずれも 2026-10-12 収集でフレームワーク導入前
+    であり、「legacy」の定義に合致する）。凍結リスト・監査 JSON・テストを同時に更新する。
+  - (b) 凍結リストをそのまま維持し、5 件を「既知の不適合」として扱う。
+- **フレームワーク導入後の新規収集 run を凍結リストへ追加してはならない**
+  （bypass 防止の意味が失われる）。追加時は収集日が導入前であることを確認する。
+
 ## 13. 収集パイプライン統合（Phase 6）— 一部実装
 
 - 実装済み: `validation/gates.py` の `pre_collection_gate` / `post_collection_gate`
@@ -283,4 +305,4 @@ python3 -m venv .venv
 
 - 実データへの end-to-end: `validate --profile legacy`（監査）と
   strict（不合格 exit 1）を既存 run_metadata で確認済み（2026-10-13）。
-- CI ワークフローは YAML 構文検証のみ実施。GitHub 上での実行は未検証。
+- CI ワークフローは初回実行に成功している（§6）。
