@@ -10,10 +10,10 @@
 |---|---|---|
 | Phase 1 | 既存環境監査 | 完了（監査結果は下記 §8） |
 | Phase 2 | 依存導入・共通Validator・G5スキーマ・Contract Tests | 実装済み（コミット 654b5b9） |
-| Phase 3 | Schema Registry 拡充（G1〜G7・running profile・バージョン管理） | **実装済み**（15 スキーマ登録。P3-10 は対象不存在のため §11 の決定により終結） |
+| Phase 3 | Schema Registry 拡充（G1〜G7・running profile・バージョン管理） | **実装済み**（17 スキーマ登録。P3-10 は対象不存在のため §11 の決定により終結） |
 | Phase 4 | Semantic / Integrity / Lineage / Git Policy / Comparability / Publication / Secret Scan | **実装済み** |
 | Phase 5 | CLI・JSON Validation Report・Exit Code | **実装済み** |
-| Phase 6 | 収集パイプライン統合 | **G1 垂直スライス実装済み**（registries / capability gate / adapter contract / L1 + quarantine / L2。ライブ収集は未実施、既存 shell・skill への適用は親判断待ち — §13）。**G3 垂直スライス実装済み**（Temporal Contract / Window Compiler / Coverage / Temporal Comparability / 旧 run 監査 — §16） |
+| Phase 6 | 収集パイプライン統合 | **G1 垂直スライス実装済み**（registries / capability gate / adapter contract / L1 + quarantine / L2。ライブ収集は未実施、既存 shell・skill への適用は親判断待ち — §13）。**G3 垂直スライス実装済み**（Temporal Contract / Window Compiler / Coverage / Temporal Comparability / 旧 run 監査 — §16）。**G4 垂直スライス実装済み**（Artifact Registry / Reader Contract / Storage Integrity / Storage Inventory / Data Catalog — §17） |
 | Phase 7 | CI | 実装済み（`research-validation.yml` 新設。初回実行成功: 2026-10-13 push `324cd55`） |
 | Phase 8 | Legacy Audit | 実装済み（24件を非破壊監査。`docs/audits/g5-legacy-runs.json`、raw sha256 前後一致） |
 
@@ -46,9 +46,9 @@ python3 -m venv .venv
 .venv/bin/python -m pytest
 ```
 
-- Contract Tests: `tests/validation/`（499件）+ `tests/collection/`（77件）
-  ＝ **573件**（2026-10-13 G3 垂直スライス後。`.venv/bin/python -m pytest` で実測。
-  G2 直後は 515 件、G1 直後は 461 件）。
+- Contract Tests: `tests/validation/`（546件）+ `tests/collection/`（77件）
+  + `tests/storage/`（57件）＝ **680件**（2026-10-13 G4 垂直スライス後。
+  `.venv/bin/python -m pytest` で実測。G4 直前は 576 件、G3 直後は 573 件）。
 - 新しいスキーマを登録したら、対応する Contract Test を必ず追加する
   （20261013h.md §9 / §16）。`tests/validation/test_schema_coverage.py` が
   「登録済みスキーマIDを参照するテストファイルの存在」を機械的に検査するため、
@@ -77,9 +77,10 @@ report = outcome.to_report().to_dict()
 | module | 役割 |
 |---|---|
 | `core.py` | Cerberus 共通インターフェース（`cerberus` を import してよい唯一の場所） |
-| `schema_registry.py` | スキーマID → スキーマ文書 + 契約バージョン（15件） |
+| `schema_registry.py` | スキーマID → スキーマ文書 + 契約バージョン（17件） |
 | `semantic.py` | 意味検証: 日時、execution 整合、Registry 参照、Capability Gate、秘密情報スキャン |
 | `integrity.py` | SHA-256 / byte_length / ファイル存在 / Lineage（読取専用） |
+| `storage_contract.py` | G4: manifest の内容契約（S1/S6-S12）・reader 解決・ページング整合・SQLite lineage・registry 内部整合 |
 | `comparability.py` | L2 / G3 / G7 比較可能性ゲート |
 | `windows.py` | G3 Temporal Contract プリミティブ（半開区間変換・相対期間の名目解決・バケット生成・CompiledWindow・window レジストリ整合） |
 | `coverage.py` | G3 Coverage Validation（§9 manifest・§11 欠測状態・§15 旧 run 時系列棚卸し） |
@@ -169,6 +170,17 @@ report = outcome.to_report().to_dict()
   （exit 0 = 表現可能 / 1 = 拒否 / 2 = 設定エラー）。`collect` に
   `--now <ISO 8601>`（基準時刻の固定。決定論的リプレイ用）を追加した（§16）。
 
+```bash
+# G4 §16 旧成果物の非破壊棚卸し（sha256 前後比較。既定出力は docs/audits/）
+.venv/bin/python -m validation.cli audit-artifacts \
+  --output docs/audits/g4-storage-inventory.json
+
+# G4 storage CLI（reader / 内容判定 / catalog。いずれも read-only）
+.venv/bin/python -m storage.cli read --path <artifact> [--mode points] [--limit 10]
+.venv/bin/python -m storage.cli inspect --path <artifact>
+.venv/bin/python -m storage.cli catalog --datasets-root datasets [--check-lineage]
+```
+
 ## 6. CI（Phase 7 実装済み — 初回実行成功）
 
 `.github/workflows/research-validation.yml` を新設した。
@@ -243,7 +255,7 @@ Cerberus は**構造検証のみ**を担当する。
 6. 契約バージョンは `schema_registry.SCHEMA_VERSIONS` と文書の
    `schema_version` の両方を更新する（CV-20: 不一致は検出される）。
 
-## 10. スキーマ一覧（16件、契約バージョンはいずれも 1.0.0）
+## 10. スキーマ一覧（17件、契約バージョンはいずれも 1.0.0）
 
 | Schema ID | 契約 | 主な内容 |
 |---|---|---|
@@ -255,7 +267,8 @@ Cerberus は**構造検証のみ**を担当する。
 | `query-variants-v1` | G2 | 表記ゆれブロック |
 | `query-variants-registry-v1` | G2 | `metadata/queries/query-variants.json`（variant 束。ブロック形状は `query-variants-v1` を再利用） |
 | `temporal-window-v1` | G3 | 単独 window 文書 |
-| `artifact-manifest-v1` | G4 | Artifact manifest（sha256 は 64桁小文字 hex） |
+| `artifact-manifest-v1` | G4 | Artifact manifest（sha256 は 64桁小文字 hex。G4 垂直スライスで `contains_full_timeseries` / `page_index` / `artifact_group_id` / `database` / `artifact_groups` を任意追加 — §17） |
+| `artifact-registry-v1` | G4 | `metadata/artifacts/artifact-registry.json`（readers / artifact_schemas の対応表 — §17） |
 | `transformation-v1` | G5 | 変換来歴（input/output 参照は非空） |
 | `storage-policy-registry-v1` | G6 | `config/storage-policies.json` |
 | `publication-decision-v1` | G6 | 公開判断記録 |
@@ -279,18 +292,21 @@ contract version は 1.0.0 のまま — G2 の plan 拡張と同じ手順）。
 | `metadata/queries/query-registry.json` | query-registry-v1 | **あり**（G2 垂直スライス: 17 queries。`validate-registries` と CI が実検証する） |
 | `metadata/queries/query-variants.json` | query-variants-registry-v1 | **あり**（3 variant sets） |
 | `metadata/windows/*.json` | temporal-window-v1 | **あり**（G3 垂直スライス: 2 windows。`validate-registries` と CI が実検証する） |
+| `metadata/artifacts/artifact-registry.json` | artifact-registry-v1 | **あり**（G4 垂直スライス: 7 readers / 10 artifact schemas。`validate-registries` と CI が実検証する） |
 | `metadata/studies/study-registry.json` | study-registry-v1 | なし（G7 の作業） |
 | `metadata/measurements/measurement-registry.json` | measurement-registry-v1 | なし（G7 の作業） |
 | `config/storage-policies.json` | storage-policy-registry-v1 | なし（G6 の作業） |
 
-`validate-registries` は存在するファイルのみを検証する。上記 G6/G7 の
-ファイルが置かれれば、CI が自動的に検証対象に含める。G2 の 2 ファイルは検証
+`validate-registries` は存在するファイルのみを検証する（現在 **7 ターゲット**）。
+上記 G6/G7 のファイルが置かれれば、CI が自動的に検証対象に含める。G2 の 2 ファイルは検証
 対象に含まれ、taxonomy（`metadata/taxonomy/compound-taxonomy.skos.jsonld`）が
 存在する場合は compound 参照の意味検証も実行される（無い場合は該当チェック
 のみ無効になる）。G3 の `metadata/windows/*.json` も検証対象に含まれ、
 `temporal-window-v1` + 時系列意味検証に加えて、重複 `window_id` と
 ファイル名不一致（`WINDOW_ID_DUPLICATE` / `WINDOW_FILE_STEM_MISMATCH`）を
-機械的に検出する（ファイル名 = window_id は§16 の規則）。
+機械的に検出する（ファイル名 = window_id は§16 の規則）。G4 の
+artifact registry は `artifact-registry-v1` + 内部整合（重複 ID・未登録 reader
+参照・active だが実装なしの reader・format 被覆）を検証する（§17）。
 
 ## 11. JSON Schema 共存（P3-10）— 決定: Cerberus を構造検証の正本とする
 
@@ -392,6 +408,7 @@ python3 -m venv .venv
 .venv/bin/python -m validation.cli audit-legacy --output docs/audits/g5-legacy-runs.json
 .venv/bin/python -m validation.cli audit-queries --output docs/audits/g2-query-inventory.json
 .venv/bin/python -m validation.cli audit-temporal --output docs/audits/g3-temporal-inventory.json
+.venv/bin/python -m validation.cli audit-artifacts --output docs/audits/g4-storage-inventory.json
 ```
 
 - 実データへの end-to-end: `validate --profile legacy`（監査）と
@@ -402,6 +419,11 @@ python3 -m venv .venv
   <plan> --fixture tests/collection/fixtures/google_trends/... --workspace <root>`
   → `python -m validation.cli compare-runs --a ... --b ...`。ライブ収集は
   実行しない（§13）。
+- G4 の再現（offline）: 上記 replay で生成した run に
+  `validation.cli gate-run --file <run>/run_metadata.json`（L1 + storage
+  contract）と `storage.cli catalog --datasets-root <root>/datasets
+  --check-lineage` を実行する。改ざん検出は payload を変更したコピーに対して
+  `ARTIFACT_HASH_MISMATCH` / exit 1 を確認する（§17）。
 - CI ワークフローは初回実行に成功している（§6）。
 
 ## 15. G2 垂直スライス（Query Registry / 表記ゆれ / 意味検証）— 2026-10-13
@@ -509,4 +531,83 @@ granularity / week_start の完全一致を要求（不一致・未登録は exi
 - §10 の日次/週次のバケット集計（月次バケット生成のみ実装。分析側の集計は未接続）。
 - coverage manifest の run ディレクトリへの永続化（現状は `coverage-run` のオンデマンド評価）。
 - T6 の sampling / normalization 条件（comparison set 等）の完全モデル化（G7）。
+
+## 17. G4 垂直スライス（Artifact Registry / Storage Contract / Data Catalog）— 2026-10-13
+
+G4 仕様（`docs/plans/20261013d.md`）の垂直スライス。対象は Google Trends の
+既存 29 run（読取専用監査）と新規 run（G1 replay）の Artifact／保存形式。
+**ライブ収集・新しい外部依存の追加は行っていない**（SQLite は標準ライブラリ）。
+
+### 17.1 決定事項
+
+- **配置**: reader / schema の対応表は `metadata/artifacts/artifact-registry.json`
+  （スキーマ `artifact-registry-v1`）。`config/` は G1 の実行時 registry、
+  `config/storage-policies.json` は G6 の予約領域であり重複させない。
+- **G4 と G6 の役割分担**: G4 は「何を・どう読むか・どう識別するか」
+  （schema / reader / manifest 契約 / 棚卸し / catalog）。G6 は「どこに置けるか・
+  Git 追跡・公開可否」（policy / publication gate）。本スライスでは
+  `config/storage-policies.json` を追加していない。
+- **SQLite の扱い（決定）**: reader と schema 契約は**宣言して実装済み**
+  （read-only で存在時のみ検証）。リポジトリ範囲に実 DB が無いことは監査で
+  `sqlite_present: false` として記録し、存在しないハッシュやレコードを
+  作らない（P8）。ローカル専用 DB（Git 管理外）はリポジトリ監査の対象外。
+- **manifest の拡張**: 既存 `artifact-manifest-v1` に任意フィールド
+  （`contains_full_timeseries` / `page_index` / `artifact_group_id` /
+  `database` / `artifact_groups`）を追加（後方互換。契約バージョンは 1.0.0 の
+  まま — G2/G3 の踏襲）。**新規 manifest スキーマは作らない**。
+- **legacy の lineage**: manifest が無い 29 run は `lineage:unknown` と明示し、
+  `derived_from` を推測で埋めない（各成果物/run に
+  `verification: unverifiable_no_manifest` を記録）。catalog は manifest
+  からのみ生成する。（監査: `docs/audits/g4-storage-inventory.json` / `.md`）。
+
+### 17.2 実装済み
+
+- `src/storage/`（source-agnostic。プラットフォーム名は schema_id / registry
+  側にのみ現れる）:
+  - `contracts.py`: `ArtifactDescriptor` / `StorageReader` 契約。未実装モードは
+    `UnsupportedRead` で**拒否**し、近似・再構成をしない（§12 / P8）。
+  - `readers/`: `json-record-reader`（§9 参考実装。配列）/ `json-page-reader`
+    （`items` ラッパーと素配列の両対応）/ `json-timeseries-reader`（`date`+`value|interest`）/
+    `json-summary-reader`（集計のみ。`points` モードを持たない）/ 
+    `json-comparison-reader`（複数語の共スケール行）/ `json-object-reader` /
+    `sqlite-reader`（`mode=ro` URI・テーブル列挙・`record_lineage` 有無）。
+  - `sniff.py`: 内容ベースの識別（magic bytes / JSON 構造）。判定は
+    recognized / partial / ambiguous / unknown + evidence 文字列。
+  - `inventory.py`: §16 非破壊棚卸し（sha256 前後比較、run マーカー除外、
+    `private/` 既定除外、ページ系列の missing / observed_zero 区別）。
+  - `catalog.py` / `lineage.py`: manifest からの決定論的 catalog 生成（§14）と
+    catalog 横断の lineage 検証・祖先遡及（§15）。
+  - `cli.py`: `read` / `inspect` / `catalog`（read-only。exit 0/1/2/3）。
+- `src/validation/storage_contract.py`: §10 のうち S1 / S6-S12
+  （重複 ID・format 実体照合・reader 登録（S9）・schema 適合（S7）・
+  record_count（S8）・パス安全性（S11）・ページング整合（§11）・summary 矛盾（§12）・
+  SQLite lineage（§13））+ registry 内部整合。`integrity.verify_artifact_manifest`
+  に統合し、**L1（gate-run / collect の採用判定）で自動適用**される。
+  reader 依存検査は registry 不在時に無効（既存規約どおり false failure を出さない）。
+- schema: `artifact-registry-v1` 新設 + `artifact-manifest-v1` の後方互換拡張。
+- CLI: `validation.cli audit-artifacts`（既定出力 `docs/audits/g4-storage-inventory.json`）
+  + `storage.cli`（reader デモ・内容判定・catalog）。
+- 実測（2026-10-13、offline replay）:
+  - G1 replay（5y fixture、261 点）→ adopted。`gate-run` exit 0。manifest の
+    SHA-256 / byte_length / record_count（data_points 261）が一致。
+  - payload を 1 バイト変更したコピー → `ARTIFACT_HASH_MISMATCH` / quarantine /
+    exit 1（改ざん検出）。
+  - catalog 生成 → 同一 manifest から byte-identical（決定論）。
+  - summary を `--mode points` で読む要求 → exit 1（宣言 261 点あっても
+    フル時系列として扱わない）。
+- 旧 run 監査（§16 / Phase 1）: `docs/audits/g4-storage-inventory.json`
+  （77 成果物 / 29 run。`raw_modified: false`。テストが再計算一致を強制）。
+
+### 17.3 未実装（引き継ぎ）
+
+- 登録済み reader は recorded / synthetic fixture での検証。**ライブ収集に
+  よる実レスポンス形状の照合は未実施**（§13 と同じ制約）。
+- legacy 変種（comparison の averages のみ・related queries バッチ・no-data 応答・
+  分散解析 JSON など。監査 §6 の 16 件）の reader 登録は、実利用時に §7 の手順で
+  行う（G4-T17 の経路）。登録時は監査スナップショットの再生成が必要。
+- SQLite 実データ（ローカル専用 `trends.db`）の検証はローカル環境で実施可能
+  （CI は非公開 raw を扱わない）。`record_lineage` テーブルは既存 DB には未導入
+  （schema.sql への追加は実運用判断）。
+- Data Catalog の永続化先（`datasets/<study>/metadata/data-catalog.json` 等）は
+  未確定。現状は `storage.cli catalog --output` のオンデマンド生成。
 

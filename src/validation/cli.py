@@ -16,6 +16,7 @@ Commands
 - ``compare-queries``     definition-level query comparability (G2 §9)
 - ``audit-queries``       non-destructive G2 query inventory (b.md §13)
 - ``audit-legacy``        non-destructive G5 legacy audit (Phase 8)
+- ``audit-artifacts``     non-destructive G4 §16 artifact inventory
 
 Exit codes (h.md §13)
 ---------------------
@@ -67,10 +68,14 @@ from validation.reporting import (
 )
 from validation.schema_registry import get_schema
 from validation.semantic import Registries, check_temporal_semantics
+from validation.storage_contract import check_artifact_registry
 from validation.windows import (
     check_window_registry_files,
     load_window_documents,
 )
+
+from storage.inventory import build_artifact_inventory
+from storage.registry import ArtifactRegistry
 
 __all__ = ["main"]
 
@@ -100,6 +105,7 @@ METADATA_REGISTRY_FILES = (
     ("queries/query-variants.json", "query-variants-registry-v1"),
     ("studies/study-registry.json", "study-registry-v1"),
     ("measurements/measurement-registry.json", "measurement-registry-v1"),
+    ("artifacts/artifact-registry.json", "artifact-registry-v1"),
 )
 
 
@@ -171,6 +177,9 @@ def load_registries(config_dir: Path, metadata_dir: Path) -> Registries:
             metadata_dir / "studies" / "study-registry.json"
         ),
         window_documents=window_documents,
+        artifact_registry=_load_optional_json(
+            metadata_dir / "artifacts" / "artifact-registry.json"
+        ),
     )
 
 
@@ -513,6 +522,10 @@ def _validate_registries(args) -> tuple[ReportBundle, int]:
                         document, query_registry=_registry, vocabulary=_vocabulary
                     )
                 )
+            elif schema_id == "artifact-registry-v1":
+                extra_checks.append(
+                    lambda document: check_artifact_registry(document)
+                )
             outcome = validate_full(
                 document,
                 schema_id=schema_id,
@@ -633,6 +646,57 @@ def cmd_audit_legacy(args) -> int:
 
     incomplete = sum(1 for entry in runs if entry.get("status") != "complete")
     _err(f"legacy audit: {len(runs)} run(s), {incomplete} incomplete")
+    return EXIT_OK
+
+
+# ---------------------------------------------------------------------------
+# audit-artifacts (G4 §16)
+# ---------------------------------------------------------------------------
+
+
+def cmd_audit_artifacts(args) -> int:
+    """Non-destructive G4 §16 artifact inventory over a datasets root.
+
+    Read-only: every artifact file is hashed before and after the scan and
+    ``raw_modified`` records any drift.  Legacy artifacts without a manifest
+    are recorded as missing metadata (never reconstructed, P8); page
+    sequences distinguish a missing page (取得失敗/未収集) from an observed
+    zero page.  A malformed artifact registry is a configuration error.
+    """
+    try:
+        artifact_registry = ArtifactRegistry.load(
+            Path(args.metadata_dir) / "artifacts" / "artifact-registry.json"
+        )
+    except ValueError as error:
+        _err(str(error))
+        return EXIT_CONFIG
+    inventory = build_artifact_inventory(
+        Path(args.datasets_root),
+        artifact_registry=artifact_registry,
+        include_private=args.include_private,
+    )
+    if args.output:
+        try:
+            _write_output(args.output, inventory)
+        except OSError as error:
+            _err(
+                f"cannot write audit output: {args.output} "
+                f"({error.__class__.__name__})"
+            )
+            return EXIT_IO
+        _err(
+            f"artifact inventory written: {args.output} "
+            f"({inventory['count']} file(s), raw_modified={inventory['raw_modified']})"
+        )
+    else:
+        print(dump_json(inventory), end="")
+    summary = ", ".join(
+        f"{key}={value}" for key, value in sorted(inventory["judgment_summary"].items())
+    )
+    _err(
+        f"artifact inventory: {inventory['count']} file(s), "
+        f"{inventory['run_count']} run(s) [{summary}]"
+    )
     return EXIT_OK
 
 
@@ -1254,6 +1318,23 @@ def build_parser() -> argparse.ArgumentParser:
         "--output", default="docs/audits/g5-legacy-runs.json"
     )
     audit.set_defaults(handler=cmd_audit_legacy)
+
+    audit_artifacts = sub.add_parser(
+        "audit-artifacts",
+        help="non-destructive G4 §16 artifact inventory over a datasets root",
+    )
+    audit_artifacts.add_argument("--datasets-root", default="datasets")
+    audit_artifacts.add_argument(
+        "--output", default="docs/audits/g4-storage-inventory.json"
+    )
+    audit_artifacts.add_argument("--metadata-dir", default="metadata")
+    audit_artifacts.add_argument(
+        "--include-private",
+        action="store_true",
+        help="also scan directories named 'private' (excluded by default; "
+        "AGENTS.md private data)",
+    )
+    audit_artifacts.set_defaults(handler=cmd_audit_artifacts)
 
     return parser
 

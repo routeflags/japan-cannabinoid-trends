@@ -59,6 +59,7 @@ L2 が `not_comparable` になることはある。
 | `config/sources.json` | `source-registry-v1` | source の性質（kind / measurement_types / publication_review_required）。秘密情報は置かない |
 | `config/collectors.json` | `collector-registry-v1` | 実際の収集手段（provider / transport / external_id / adapter_id / version / status / capability 三値 / evidence） |
 | `metadata/windows/*.json` | `temporal-window-v1` | G3: 絶対期間の正本（ファイル名 = window_id、UTC 保存・半開区間）。plan が同名 window_id を名乗る場合は完全一致を要求 |
+| `metadata/artifacts/artifact-registry.json` | `artifact-registry-v1` | G4: `schema_id` / `artifact_type` / `format` → `reader_id` の対応表（readers / artifact_schemas）。L1 の storage contract 検査（S7/S8/S9）と監査の reader 注釈がこれを使う |
 
 - capability は `supported` / `unsupported` / `unknown` の三値（G1 §7.2）。
   **未確認を `unknown` のまま保つ**（推測で `supported` にしない）。
@@ -128,6 +129,14 @@ L2 が `not_comparable` になることはある。
 | `artifact-manifest.json` | `artifact-manifest-v1` | **実ファイルから** SHA-256 / byte_length を計算 |
 | `run_metadata.json` | `collection-run-v1` | 既存必須 9 項目を維持（対応表: モジュール docstring / 下記） |
 
+G4 以降の補足: manifest には任意フィールド `contains_full_timeseries` /
+`page_index` / `artifact_group_id` / `database` / `artifact_groups` を記録できる
+（後方互換。要約とフル時系列の区別、ページ分割、SQLite lineage のための枠）。
+L1 は引き続き `artifact-manifest-v1` の構造 + SHA-256 / byte_length を検証し、
+さらに storage contract（S1/S6-S12: 内容 format 照合・reader 登録・record_count・
+ページング整合・SQLite lineage）を適用する。詳細は
+`docs/specs/validation-framework.md` §17。
+
 既存 9 項目（e.md §4.1）のマッピング: `run_id`→`run_id` / `study_id`→`study_id` /
 `source`→`source_id` / 収集手段→`collector.*` / `collection_timestamp`→
 `collection_started_at` / `queries`→`query_provenance` / 件数→
@@ -161,6 +170,7 @@ G3 以降の補足: window compiler が動いた run は `temporal_provenance` �
 | L1-08 | 件数・ページング | `semantic.check_execution_consistency` |
 | L1-09 | 欠測とゼロの区別 | `semantic.check_missingness_consistency`（下記） |
 | L1-10 | 秘密情報 | `semantic.scan_for_secrets` |
+| L1-11 | Artifact storage contract（G4） | `integrity.verify_artifact_manifest` → `storage_contract`（S1/S6-S12。reader 登録・内容 format 照合・record_count・ページング・SQLite lineage。registry 不在時は reader 依存検査のみ無効） |
 
 L1-09 の規則:
 
@@ -268,3 +278,9 @@ python -m validation.cli coverage-run --file <run_dir or run_metadata.json>
   ライブ収集による境界挙動の検証（`exact=true` への昇格）は未実施。
 - G7（study / measurement registry）導入時は、plan の `study_id` 参照検証が
   自動で有効になる（CLI の `--metadata-dir` に registry が置かれればよい）。
+- G4（Artifact Registry / Storage Contract）は 2026-10-13 に導入済み（詳細は
+  `docs/specs/validation-framework.md` §17）。L1 に storage contract 検査が加わり、
+  manifest を持つ新規 run は reader 登録・record_count・ページング・SQLite lineage
+  まで機械検証される。legacy 29 run は manifest を持たず、読取専用の棚卸し
+  （`audit-artifacts` → `docs/audits/g4-storage-inventory.json`）で管理する。
+  SQLite 契約は宣言済み（存在時のみ read-only で検証。DB は Git 管理外）。

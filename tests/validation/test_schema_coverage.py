@@ -23,6 +23,7 @@ EXPECTED_COVERAGE = {
     "query-variants-registry-v1": "test_query_registry.py",
     "temporal-window-v1": "test_temporal_window.py",
     "artifact-manifest-v1": "test_artifact_manifest.py",
+    "artifact-registry-v1": "test_artifact_registry.py",
     "transformation-v1": "test_transformation.py",
     "storage-policy-registry-v1": "test_storage_policy_schemas.py",
     "publication-decision-v1": "test_storage_policy_schemas.py",

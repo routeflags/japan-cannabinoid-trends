@@ -1,0 +1,147 @@
+{
+  "schema_version": "1.0.0",
+  "readers": [
+    {
+      "reader_id": "json-record-reader",
+      "reader_version": "1.0.0",
+      "status": "active",
+      "formats": ["json"],
+      "artifact_types": ["raw_records", "normalized_records", "aggregate"],
+      "read_modes": ["records"],
+      "implemented_by": "storage.readers.records.JsonRecordReader"
+    },
+    {
+      "reader_id": "json-page-reader",
+      "reader_version": "1.0.0",
+      "status": "active",
+      "formats": ["json"],
+      "artifact_types": ["page"],
+      "read_modes": ["page_items"],
+      "implemented_by": "storage.readers.pages.JsonPageReader"
+    },
+    {
+      "reader_id": "json-timeseries-reader",
+      "reader_version": "1.0.0",
+      "status": "active",
+      "formats": ["json"],
+      "artifact_types": ["timeseries", "raw_response"],
+      "read_modes": ["points"],
+      "contains_full_timeseries": true,
+      "implemented_by": "storage.readers.timeseries.JsonTimeseriesReader"
+    },
+    {
+      "reader_id": "json-summary-reader",
+      "reader_version": "1.0.0",
+      "status": "active",
+      "formats": ["json"],
+      "artifact_types": ["summary"],
+      "read_modes": ["summary_fields"],
+      "contains_full_timeseries": false,
+      "implemented_by": "storage.readers.summary.JsonSummaryReader"
+    },
+    {
+      "reader_id": "json-comparison-reader",
+      "reader_version": "1.0.0",
+      "status": "active",
+      "formats": ["json"],
+      "artifact_types": ["comparison"],
+      "read_modes": ["comparison_rows"],
+      "contains_full_timeseries": true,
+      "implemented_by": "storage.readers.comparison.JsonComparisonReader"
+    },
+    {
+      "reader_id": "json-object-reader",
+      "reader_version": "1.0.0",
+      "status": "active",
+      "formats": ["json"],
+      "artifact_types": ["raw_response", "checkpoint"],
+      "read_modes": ["object"],
+      "implemented_by": "storage.readers.objects.JsonObjectReader"
+    },
+    {
+      "reader_id": "sqlite-reader",
+      "reader_version": "1.0.0",
+      "status": "active",
+      "formats": ["sqlite"],
+      "artifact_types": ["database"],
+      "read_modes": ["tables", "table_rows"],
+      "implemented_by": "storage.readers.sqlite.SqliteReader"
+    }
+  ],
+  "artifact_schemas": [
+    {
+      "schema_id": "google-trends-interest-over-time-v1",
+      "format": "json",
+      "artifact_types": ["raw_response", "timeseries"],
+      "reader_id": "json-timeseries-reader",
+      "record_count_mode": "data_points",
+      "contains_full_timeseries": true
+    },
+    {
+      "schema_id": "google-trends-records-v1",
+      "format": "json",
+      "artifact_types": ["timeseries", "raw_response"],
+      "reader_id": "json-timeseries-reader",
+      "record_count_mode": "data_points",
+      "contains_full_timeseries": true
+    },
+    {
+      "schema_id": "google-trends-summary-v1",
+      "format": "json",
+      "artifact_types": ["summary"],
+      "reader_id": "json-summary-reader",
+      "record_count_mode": "none",
+      "contains_full_timeseries": false
+    },
+    {
+      "schema_id": "google-trends-comparison-v1",
+      "format": "json",
+      "artifact_types": ["comparison"],
+      "reader_id": "json-comparison-reader",
+      "record_count_mode": "data_rows",
+      "contains_full_timeseries": true
+    },
+    {
+      "schema_id": "google-trends-related-queries-v1",
+      "format": "json",
+      "artifact_types": ["raw_response"],
+      "reader_id": "json-object-reader",
+      "record_count_mode": "none"
+    },
+    {
+      "schema_id": "youtube-search-result-list-v1",
+      "format": "json",
+      "artifact_types": ["raw_records"],
+      "reader_id": "json-record-reader",
+      "record_count_mode": "array_length"
+    },
+    {
+      "schema_id": "youtube-search-list-response-v1",
+      "format": "json",
+      "artifact_types": ["page"],
+      "reader_id": "json-page-reader",
+      "record_count_mode": "items_length"
+    },
+    {
+      "schema_id": "x-tweet-result-list-v1",
+      "format": "json",
+      "artifact_types": ["raw_records"],
+      "reader_id": "json-record-reader",
+      "record_count_mode": "array_length"
+    },
+    {
+      "schema_id": "collection-checkpoint-v1",
+      "format": "json",
+      "artifact_types": ["checkpoint"],
+      "reader_id": "json-object-reader",
+      "record_count_mode": "none"
+    },
+    {
+      "schema_id": "sqlite-trends-db-v1",
+      "format": "sqlite",
+      "artifact_types": ["database"],
+      "reader_id": "sqlite-reader",
+      "record_count_mode": "none"
+    }
+  ]
+}

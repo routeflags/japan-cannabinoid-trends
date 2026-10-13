@@ -1,0 +1,11 @@
+{
+  "kind": "youtube#searchListResponse",
+  "etag": "synthetic-fixture",
+  "regionCode": "JP",
+  "pageInfo": {"totalResults": 3, "resultsPerPage": 3},
+  "items": [
+    {"kind": "youtube#searchResult", "id": {"kind": "youtube#video", "videoId": "SYNTHETIC0001"}},
+    {"kind": "youtube#searchResult", "id": {"kind": "youtube#video", "videoId": "SYNTHETIC0002"}},
+    {"kind": "youtube#searchResult", "id": {"kind": "youtube#video", "videoId": "SYNTHETIC0003"}}
+  ]
+}

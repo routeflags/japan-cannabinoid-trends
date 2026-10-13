@@ -180,7 +180,12 @@ def post_collection_gate(
         manifest, _ = load_artifact_manifest(manifest_path)
         issues.extend(
             verify_artifact_manifest(
-                manifest_path, base_dir=base_dir, manifest=manifest
+                manifest_path,
+                base_dir=base_dir,
+                manifest=manifest,
+                artifact_registry=(
+                    registries.artifact_registry if registries is not None else None
+                ),
             )
         )
         if isinstance(manifest, dict):

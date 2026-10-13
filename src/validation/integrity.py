@@ -8,6 +8,13 @@ Contract sources
 - G5 §8.2 P14/P15/P18 (manifest existence, hash match, transformation
   inputs): ``docs/plans/20261013e.md``.
 
+``verify_artifact_manifest`` composes the layers for one manifest:
+structure (artifact-manifest-v1) -> integrity (S3-S5) -> lineage -> the G4
+storage contract (content format, reader registration, record counts,
+pagination groups, SQLite lineage; ``validation.storage_contract``).  The
+reader-dependent checks are disabled when no artifact registry is supplied
+(the repository convention for missing registries).
+
 All functions are read-only: files are opened for reading to compute the
 SHA-256, nothing is written, and raw data is never modified (AGENTS.md).
 
@@ -25,6 +32,7 @@ from pathlib import Path
 from validation.core import validate_document
 from validation.reporting import Issue
 from validation.schema_registry import get_schema
+from validation.storage_contract import check_manifest_storage_contract
 
 __all__ = [
     "IO_ISSUE_CODES",
@@ -242,15 +250,21 @@ def load_artifact_manifest(path) -> tuple[dict | None, list[Issue]]:
 
 
 def verify_artifact_manifest(
-    path, *, base_dir=None, known_artifact_ids=(), manifest=None
+    path,
+    *,
+    base_dir=None,
+    known_artifact_ids=(),
+    manifest=None,
+    artifact_registry=None,
 ) -> list[Issue]:
-    """Load a manifest file and run structural + integrity + lineage checks.
+    """Load a manifest file and run structural + integrity + contract checks.
 
     Returns issues; an unreadable / undecodable manifest yields
     ``ARTIFACT_MANIFEST_MISSING`` (I/O class).  The manifest file itself is
     only read, never rewritten.  ``manifest`` may carry an already parsed
     manifest (e.g. loaded once by a gate); it is validated exactly like a
-    freshly read file.
+    freshly read file.  ``artifact_registry`` (d.md §7) enables the
+    reader-dependent checks; None disables them.
     """
     manifest_path = Path(path)
     if manifest is None:
@@ -273,6 +287,12 @@ def verify_artifact_manifest(
         )
         return issues
 
-    issues.extend(verify_artifact_integrity(manifest, base_dir=base_dir or manifest_path.parent))
+    base = base_dir or manifest_path.parent
+    issues.extend(verify_artifact_integrity(manifest, base_dir=base))
     issues.extend(check_manifest_lineage(manifest, known_artifact_ids=known_artifact_ids))
+    issues.extend(
+        check_manifest_storage_contract(
+            manifest, base_dir=base, artifact_registry=artifact_registry
+        )
+    )
     return issues

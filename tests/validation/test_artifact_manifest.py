@@ -152,3 +152,103 @@ def test_unknown_artifact_field_fails(tmp_path):
     result = validate_document(document, ARTIFACT_MANIFEST_SCHEMA)
     assert result.valid is False
     assert any("checksum" in str(entry) for entry in result.errors["artifacts"])
+
+
+# ---------------------------------------------------------------------------
+# G4 vertical-slice additions (d.md §11 / §12 / §13; backward compatible)
+# ---------------------------------------------------------------------------
+
+
+def test_contains_full_timeseries_is_boolean(tmp_path):
+    document = _manifest_for(tmp_path)
+    document["artifacts"][0]["contains_full_timeseries"] = True
+    assert validate_document(document, ARTIFACT_MANIFEST_SCHEMA).valid is True
+    document["artifacts"][0]["contains_full_timeseries"] = "yes"
+    assert validate_document(document, ARTIFACT_MANIFEST_SCHEMA).valid is False
+
+
+def test_page_artifacts_carry_index_and_group(tmp_path):
+    document = _manifest_for(tmp_path)
+    document["artifacts"][0].update(
+        {"artifact_type": "page", "page_index": 1, "artifact_group_id": "pages-1"}
+    )
+    assert validate_document(document, ARTIFACT_MANIFEST_SCHEMA).valid is True
+    document["artifacts"][0]["page_index"] = 0
+    assert validate_document(document, ARTIFACT_MANIFEST_SCHEMA).valid is False
+
+
+def test_artifact_groups_shape(tmp_path):
+    """d.md §11: expected_pages may be null (total unknown)."""
+    document = _manifest_for(tmp_path)
+    document["artifacts"][0].update({"artifact_type": "page", "page_index": 1})
+    document["artifact_groups"] = [
+        {
+            "artifact_group_id": "youtube-cbd-2025",
+            "group_type": "paginated_collection",
+            "expected_pages": None,
+            "collected_pages": 1,
+            "pagination_exhausted": False,
+            "artifacts": [
+                {"artifact_id": "artifact-001", "page_index": 1, "path": "payload.json"}
+            ],
+        }
+    ]
+    assert validate_document(document, ARTIFACT_MANIFEST_SCHEMA).valid is True
+
+    document["artifact_groups"][0].pop("collected_pages")
+    assert validate_document(document, ARTIFACT_MANIFEST_SCHEMA).valid is False
+
+    document = _manifest_for(tmp_path)
+    document["artifact_groups"] = [
+        {
+            "artifact_group_id": "g",
+            "group_type": "paginated_collection",
+            "expected_pages": "three",
+            "collected_pages": 1,
+            "pagination_exhausted": False,
+            "artifacts": [],
+        }
+    ]
+    assert validate_document(document, ARTIFACT_MANIFEST_SCHEMA).valid is False
+
+
+def test_database_block_shape(tmp_path):
+    """d.md §13: tables carry the lineage facts; the block is shape-checked."""
+    document = _manifest_for(tmp_path)
+    document["artifacts"][0].update(
+        {
+            "artifact_type": "database",
+            "format": "sqlite",
+            "schema_id": "sqlite-trends-db-v1",
+            "database": {
+                "db_schema_version": "1.0.0",
+                "tables": [
+                    {
+                        "table_name": "runs",
+                        "record_count": 3,
+                        "source_run_ids": ["run-1"],
+                        "source_artifact_ids": ["artifact-0"],
+                        "deduplication_rule": "primary key",
+                        "transformation_version": "1.0.0",
+                    }
+                ],
+            },
+        }
+    )
+    assert validate_document(document, ARTIFACT_MANIFEST_SCHEMA).valid is True
+
+    del document["artifacts"][0]["database"]["tables"]
+    assert validate_document(document, ARTIFACT_MANIFEST_SCHEMA).valid is False
+
+    document = _manifest_for(tmp_path)
+    document["artifacts"][0]["database"] = {"tables": [], "unknown_key": 1}
+    result = validate_document(document, ARTIFACT_MANIFEST_SCHEMA)
+    assert result.valid is False
+
+
+def test_old_manifests_without_the_new_fields_stay_valid(tmp_path):
+    """Backward compatibility: the additions are optional and version 1.0.0
+    stays the contract version (G2/G3 precedent)."""
+    document = _manifest_for(tmp_path)
+    assert validate_document(document, ARTIFACT_MANIFEST_SCHEMA).valid is True
+    assert document["schema_version"] == "1.0.0"

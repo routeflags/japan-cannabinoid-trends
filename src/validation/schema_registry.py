@@ -23,6 +23,7 @@ Profile handling
 from __future__ import annotations
 
 from validation.schemas.artifact import ARTIFACT_MANIFEST_SCHEMA
+from validation.schemas.artifact_registry import ARTIFACT_REGISTRY_SCHEMA
 from validation.schemas.collection_plan import COLLECTION_PLAN_SCHEMA
 from validation.schemas.collection_run import (
     COLLECTION_RUN_RUNNING_SCHEMA,
@@ -63,8 +64,9 @@ SCHEMA_REGISTRY: dict[str, dict] = {
     "query-variants-registry-v1": QUERY_VARIANTS_REGISTRY_SCHEMA,
     # G3 temporal window (P3-5).
     "temporal-window-v1": TEMPORAL_WINDOW_SCHEMA,
-    # G4 artifact manifest (P3-6).
+    # G4 artifact manifest (P3-6) and artifact registry (G4 vertical slice).
     "artifact-manifest-v1": ARTIFACT_MANIFEST_SCHEMA,
+    "artifact-registry-v1": ARTIFACT_REGISTRY_SCHEMA,
     # G5 transformation provenance (P3-7).
     "transformation-v1": TRANSFORMATION_SCHEMA,
     # G6 storage policy / publication decision (P3-8).

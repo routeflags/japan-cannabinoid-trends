@@ -1,0 +1,9 @@
+{
+  "job_id": "synthetic-job-0001",
+  "run_id": "synthetic-run-0001",
+  "search_term": "synthetic fixture term",
+  "max_items": 50,
+  "status": "completed",
+  "started_at": "2026-01-01T00:00:00Z",
+  "updated_at": "2026-01-01T00:01:00Z"
+}

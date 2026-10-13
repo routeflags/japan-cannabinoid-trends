@@ -1,0 +1,12 @@
+[
+  {
+    "kind": "youtube#searchResult",
+    "id": {"kind": "youtube#video", "videoId": "SYNTHETICAAAA"},
+    "snippet": {"title": "Synthetic fixture record (not collected)"}
+  },
+  {
+    "kind": "youtube#searchResult",
+    "id": {"kind": "youtube#video", "videoId": "SYNTHETICBBBB"},
+    "snippet": {"title": "Synthetic fixture record (not collected)"}
+  }
+]

@@ -478,6 +478,10 @@ class Registries:
     #: disabled (repository convention: missing registries never produce
     #: false failures).
     windows: tuple = ()
+    #: G4 artifact registry document (``metadata/artifacts/artifact-registry.json``).
+    #: ``None`` disables the reader-dependent storage checks (S7/S8/S9) - the
+    #: same convention as the other registries.
+    artifact_registry: dict | None = None
     #: ``schema_version`` of the loaded query registry.  Stamped into new-run
     #: provenance (b.md §7) so a run records which registry definition version
     #: produced it.
@@ -493,6 +497,7 @@ class Registries:
         query_variants_registry=None,
         study_registry=None,
         window_documents=None,
+        artifact_registry=None,
     ) -> "Registries":
         def items(document, key):
             if isinstance(document, dict) and isinstance(document.get(key), list):
@@ -512,6 +517,9 @@ class Registries:
             query_variants=items(query_variants_registry, "variant_sets"),
             studies=items(study_registry, "studies"),
             windows=tuple(window_documents or ()),
+            artifact_registry=artifact_registry
+            if isinstance(artifact_registry, dict)
+            else None,
             query_registry_version=query_registry_version,
         )
 

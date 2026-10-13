@@ -59,12 +59,14 @@ class ValidationOutcome:
         )
 
 
-def _verify_run_artifacts(document, base_dir) -> list[Issue]:
+def _verify_run_artifacts(document, base_dir, artifact_registry=None) -> list[Issue]:
     manifest_name = document.get("artifact_manifest")
     if not isinstance(manifest_name, str) or not manifest_name:
         return []
     base = Path(base_dir)
-    return verify_artifact_manifest(base / manifest_name, base_dir=base)
+    return verify_artifact_manifest(
+        base / manifest_name, base_dir=base, artifact_registry=artifact_registry
+    )
 
 
 def validate_full(
@@ -126,7 +128,15 @@ def validate_full(
     for check in extra_checks:
         issues.extend(check(document))
     if verify_artifacts and base_dir is not None:
-        issues.extend(_verify_run_artifacts(document, base_dir))
+        issues.extend(
+            _verify_run_artifacts(
+                document,
+                base_dir,
+                artifact_registry=(
+                    registries.artifact_registry if registries is not None else None
+                ),
+            )
+        )
 
     # Re-stamp issues produced by semantic checks with the contract version so
     # the report has one stable schema_version per target.
