@@ -20,28 +20,28 @@
     "include_private": false
   },
   "run_count": 29,
-  "count": 77,
+  "count": 76,
   "raw_modified": false,
   "judgment_summary": {
-    "missing_metadata": 8,
+    "missing_metadata": 7,
     "partially_recognized": 16,
     "recognized": 53
   },
   "format_summary": {
-    "csv": 4,
+    "csv": 3,
     "json": 72,
     "text": 1
   },
   "artifact_type_summary": {
     "comparison": 4,
-    "none": 22,
+    "none": 21,
     "raw_records": 1,
     "raw_response": 3,
     "summary": 13,
     "timeseries": 34
   },
   "manifest_summary": {
-    "missing": 77
+    "missing": 76
   },
   "sqlite_present": false,
   "sqlite_note": "SQLite stores are local-only in this repository (see docs/specs/validation-framework.md G4 section); absence in the audit scope is recorded as not-present, never as zero content",
@@ -2388,33 +2388,6 @@
       "judgment": "partially_recognized",
       "notes": [
         "content:json_object",
-        "legacy:no-manifest",
-        "lineage:unknown"
-      ]
-    },
-    {
-      "path": "datasets/cbx-social-trends/data/processed/x_cbx_202608_summary.csv",
-      "bytes": 79044,
-      "sha256": "4e29332069e6d6e78698bd633ea2846583f9af3e86c3e7bd141b959e0b72a374",
-      "format": "csv",
-      "sniff_state": "partial",
-      "artifact_type": null,
-      "schema_id": null,
-      "contains_full_timeseries": null,
-      "record_count": null,
-      "declared_data_points": null,
-      "reader_id": null,
-      "reader_registered": null,
-      "study_id": null,
-      "run_id": null,
-      "source_id": null,
-      "run_directory": null,
-      "metadata_state": "missing",
-      "manifest_state": "missing",
-      "verification": "unverifiable_no_manifest",
-      "judgment": "missing_metadata",
-      "notes": [
-        "content:extension:csv",
         "legacy:no-manifest",
         "lineage:unknown"
       ]

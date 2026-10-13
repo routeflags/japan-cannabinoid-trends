@@ -56,6 +56,7 @@ from validation.g6_inventory import build_git_tracking_inventory
 from validation.integrity import IO_ISSUE_CODES, sha256_file
 from validation.private_catalog import build_private_catalog
 from validation.publication_eligibility import evaluate_eligibility
+from validation.x_identity import audit_x_identity
 from validation.legacy import LegacyProfileNotAllowed, audit_record
 from validation.pipeline import validate_full
 from validation.provenance import (
@@ -841,6 +842,38 @@ def cmd_audit_artifacts(args) -> int:
 # ---------------------------------------------------------------------------
 
 
+def cmd_audit_x_identity(args) -> int:
+    """Policy gate: X post text, handles, display names and post permalinks must
+    not be tracked.  Read-only; see ``validation/x_identity.py`` for the rule."""
+    try:
+        report = audit_x_identity(Path.cwd())
+    except (OSError, KeyError, ValueError) as error:
+        _err(f"x identity audit failed: {error.__class__.__name__}: {error}")
+        return EXIT_CONFIG
+    if args.output:
+        try:
+            _write_output(args.output, report)
+        except OSError as error:
+            _err(f"cannot write audit output: {args.output} ({error.__class__.__name__})")
+            return EXIT_IO
+        _err(
+            f"x identity audit written: {args.output} "
+            f"({report['finding_count']} finding(s))"
+        )
+    elif args.format == "json":
+        print(dump_json(report), end="")
+    else:
+        for finding in report["findings"]:
+            print(f"{finding['kind']:16} {finding['path']}  {finding['detail']}")
+    _err(
+        f"x identity audit: scanned={report['scanned_count']} "
+        f"findings={report['finding_count']} "
+        f"acknowledged={len(report['acknowledged'])} "
+        f"stale_acknowledgements={len(report['stale_acknowledgements'])}"
+    )
+    return EXIT_DATA if report["failures"] else EXIT_OK
+
+
 def cmd_audit_git_tracking(args) -> int:
     """Non-destructive G6 §15 git tracking inventory (read-only git only)."""
     repo_root = Path.cwd()
@@ -1590,6 +1623,14 @@ def build_parser() -> argparse.ArgumentParser:
         "AGENTS.md private data; paths only, values never read)",
     )
     audit_git.set_defaults(handler=cmd_audit_git_tracking)
+
+    audit_x = sub.add_parser(
+        "audit-x-identity",
+        help="policy gate: X handles, post text/URLs and identity columns must not be tracked",
+    )
+    audit_x.add_argument("--output", default=None)
+    audit_x.add_argument("--format", choices=("text", "json"), default="text")
+    audit_x.set_defaults(handler=cmd_audit_x_identity)
 
     audit_private = sub.add_parser(
         "audit-private-catalog",

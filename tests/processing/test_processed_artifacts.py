@@ -28,7 +28,10 @@ from processing.reproduce import (
     NON_REPRODUCIBLE,
     STATUS_DECLARED_DISCREPANCY,
     STATUS_PLACEHOLDER,
+    STATUS_PRIVATE_INPUT,
     STATUS_UNDECLARED,
+    STATUS_WITHDRAWN,
+    WITHDRAWN,
     DeclaredDiscrepancy,
     Derivation,
     audit_processed_artifacts,
@@ -39,7 +42,13 @@ from processing.rulespec import load_content_rules
 REPO_ROOT = Path(__file__).resolve().parents[2]
 PROCESSED = "datasets/cbx-social-trends/data/processed"
 ANONYMIZED = f"{PROCESSED}/x_cbx_202608_summary_anonymized.csv"
-SOURCE = f"{PROCESSED}/x_cbx_202608_summary.csv"
+SOURCE = "datasets/cbx-social-trends/data/private/x_cbx_202608_summary.csv"
+WITHDRAWN_PATH = f"{PROCESSED}/x_cbx_202608_summary.csv"
+
+requires_source = pytest.mark.skipif(
+    not (REPO_ROOT / SOURCE).is_file(),
+    reason="non-published X summary not present in this checkout",
+)
 
 
 @pytest.fixture(scope="module")
@@ -146,6 +155,7 @@ def test_missing_source_column_is_rejected(rules) -> None:
         anonymize_rows([incomplete], rules)
 
 
+@requires_source
 def test_source_columns_are_the_ones_the_source_file_carries() -> None:
     """The declared source columns must actually be present, or the rule is fiction."""
 
@@ -159,6 +169,7 @@ def test_source_columns_are_the_ones_the_source_file_carries() -> None:
 # ---------------------------------------------------------------------------
 
 
+@requires_source
 def test_anonymized_artifact_matches_every_column_but_the_declared_rows(rules) -> None:
     report = reproduce_artifact(REPO_ROOT, ANONYMIZED, rules)
     assert report["status"] == STATUS_DECLARED_DISCREPANCY
@@ -176,6 +187,7 @@ def test_anonymized_artifact_matches_every_column_but_the_declared_rows(rules) -
     ]
 
 
+@requires_source
 def test_declared_discrepancy_names_the_affected_rows(rules) -> None:
     """The three rows must be the 2026-08-31 rows, not any three rows."""
 
@@ -220,12 +232,11 @@ def test_audit_is_read_only_over_raw_data() -> None:
 def test_artifact_in_no_registry_fails_the_audit(monkeypatch) -> None:
     """A newly committed processed artifact must not skip this question."""
 
-    monkeypatch.delitem(NON_REPRODUCIBLE, f"{PROCESSED}/x_cbx_202608_summary.csv")
+    target = "datasets/cannabinoid-multi-trends/data/processed/collection-summary.md"
+    monkeypatch.delitem(NON_REPRODUCIBLE, target)
     report = audit_processed_artifacts(REPO_ROOT, REPO_ROOT / "datasets")
-    assert f"{PROCESSED}/x_cbx_202608_summary.csv" in report["failures"]
-    entry = next(
-        e for e in report["entries"] if e["artifact"] == f"{PROCESSED}/x_cbx_202608_summary.csv"
-    )
+    assert target in report["failures"]
+    entry = next(e for e in report["entries"] if e["artifact"] == target)
     assert entry["status"] == STATUS_UNDECLARED
 
 
@@ -267,8 +278,88 @@ def test_stale_declaration_is_reported(monkeypatch) -> None:
 
 def test_declarations_and_non_reproducible_entries_do_not_overlap() -> None:
     assert not set(DERIVATIONS) & set(NON_REPRODUCIBLE)
+    assert not set(DERIVATIONS) & set(WITHDRAWN)
+    assert not set(NON_REPRODUCIBLE) & set(WITHDRAWN)
     for path in list(DERIVATIONS) + list(NON_REPRODUCIBLE):
         assert (REPO_ROOT / path).is_file(), path
+
+
+def test_withdrawn_artifact_is_recorded_and_absent() -> None:
+    """Removal must be a recorded fact, not a deletion (AGENTS.md)."""
+
+    assert WITHDRAWN_PATH in WITHDRAWN
+    record = WITHDRAWN[WITHDRAWN_PATH]
+    assert not (REPO_ROOT / WITHDRAWN_PATH).exists()
+    assert record.withdrawn_on == "2026-10-13"
+    assert "zenodo" in record.exposure.lower()
+    assert "sns-redistribution-assessment" in record.reason
+    # the replacement it points at must exist
+    assert (REPO_ROOT / record.replacement.split(" ")[0]).is_file()
+
+    report = audit_processed_artifacts(REPO_ROOT, REPO_ROOT / "datasets")
+    entry = next(w for w in report["withdrawn"] if w["artifact"] == WITHDRAWN_PATH)
+    assert entry["status"] == STATUS_WITHDRAWN
+    assert entry["tracked_again"] is False
+    assert WITHDRAWN_PATH not in report["failures"]
+
+
+def test_withdrawn_artifact_fails_if_tracked_again(monkeypatch) -> None:
+    """Re-adding a withdrawn artifact must require a new decision."""
+
+    import processing.reproduce as module
+
+    monkeypatch.setattr(module, "git_tracked", lambda root, path: path == WITHDRAWN_PATH)
+    report = audit_processed_artifacts(REPO_ROOT, REPO_ROOT / "datasets")
+    assert WITHDRAWN_PATH in report["failures"]
+
+
+def test_non_published_source_reports_its_own_status(tmp_path) -> None:
+    """Absent source is a declared state, not a verification failure.
+
+    The published artifact is copied in so only the source is missing, which is
+    exactly the situation in any fresh clone and in CI.
+    """
+
+    import shutil
+
+    target = tmp_path / ANONYMIZED
+    target.parent.mkdir(parents=True, exist_ok=True)
+    shutil.copyfile(REPO_ROOT / ANONYMIZED, target)
+
+    report = reproduce_artifact(tmp_path, ANONYMIZED)
+    assert report["status"] == STATUS_PRIVATE_INPUT
+    assert report["rows"]["derived"] is None
+    assert report["undeclared_drift"] == []
+    assert report["stale_declarations"] == []
+    assert report["declared_discrepancies"][0]["column"] == "week"
+
+
+@requires_source
+def test_published_source_missing_is_an_error(tmp_path, monkeypatch) -> None:
+    """A published source that is missing is a real error, not a declared state."""
+
+    import shutil
+
+    import processing.reproduce as module
+
+    target = tmp_path / ANONYMIZED
+    target.parent.mkdir(parents=True, exist_ok=True)
+    shutil.copyfile(REPO_ROOT / ANONYMIZED, target)
+    published = Derivation(
+        source=SOURCE, columns=DERIVATIONS[ANONYMIZED].columns, kind=DERIVATIONS[ANONYMIZED].kind
+    )
+    assert published.source_published is True
+    monkeypatch.setitem(module.DERIVATIONS, ANONYMIZED, published)
+    with pytest.raises(FileNotFoundError):
+        reproduce_artifact(tmp_path, ANONYMIZED)
+
+
+@requires_source
+def test_absent_source_means_the_declaration_is_not_checked_here(rules) -> None:
+    """With the source present the derivation is verified, so nothing is skipped."""
+
+    report = reproduce_artifact(REPO_ROOT, ANONYMIZED, rules)
+    assert report["status"] == STATUS_DECLARED_DISCREPANCY
 
 
 def test_placeholder_status_is_reserved_for_gitkeep() -> None:

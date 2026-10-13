@@ -118,5 +118,6 @@
 ## データ出典
 
 - Google Trends: `datasets/cbx-search-trends/data/raw/google_trends/`
-- X: `datasets/cbx-social-trends/data/processed/x_cbx_202608_summary.csv`
+- X: `datasets/cbx-social-trends/data/processed/x_cbx_202608_summary_anonymized.csv`
+  （`x_cbx_202608_summary.csv` は 2026-10-13 に公開取り下げ。週別集計は匿名化版でも同一）
 - GSC: `datasets/cbx-search-trends/data/raw/gsc/202607_queries.csv`

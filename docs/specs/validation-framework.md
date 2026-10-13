@@ -862,15 +862,79 @@ G6 仕様（`docs/plans/20261013f.md`）の垂直スライス。Git 運用全体
 - `validate-registries` 11 ターゲット全 valid、`validate-data-schema.sh` PASS 45 /
   WARN 2 / FAIL 0、`validate-version-sync.sh` PASS 12 / WARN 1 / FAIL 0。
 
-### 20.5 レビュー事項（未決。判断はメンテナ）
+### 20.5 レビュー事項（決着済み/未決）
 
-- `datasets/cbx-social-trends/data/processed/x_cbx_202608_summary.csv` は **X の
-  username・表示名・本文・投稿 URL を含んだまま追跡**されている。AGENTS.md は
-  ソーシャル記録の公開前に再配布条件のレビューを要求し、匿名化版がそのために存在する。
-  非匿名化版を追跡し続けるかは本スライスでは決めない（`REVIEW_NOTES` に記録し、
-  レポートに出すのみ）。
+- ~~X の個別アカウント情報を含む CSV の追跡継続~~ → **2026-10-13 に公開取り下げで決着**。
+  §21 を参照。
 - `early-warning-index-v1.csv` は**導出規則が皆無**の唯一の成果物で、`cohort`・
   `persistence_class`・`emergence_score` に規則が無い。次の増分の候補。
 - `docs/audits/*.json`（機械可読の監査報告）は再生成されないままレジストリから乖離
   している（例: `g7-study-inventory.json` は 9 study 中 7 件を `registered: false`
-  と誤記録）。鮮度検査は未実装（Phase A 候補）。
+  と誤記録）。鮮度検査は未実装（Phase A 候補）。ただし G4 storage inventory には
+  既に鮮度テストがある（`tests/validation/test_storage_inventory_audit.py`、
+  §21.4 で本変更時に更新した）。
+
+## 21. X 識別情報の封じ込めと施行（2026-10-13）
+
+### 21.1 背景（文書化されていた方針が施行されていなかった）
+
+`docs/specs/sns-redistribution-assessment.md` §1.4（2026-10-01）は「DOI アーカイブに
+ツイート本文・ユーザー名・個別 URL を含めない」と定めていた。しかし施行する仕組みが
+無かったため、該当 CSV は 2026-10-01 の追加以降 **全 14 タグ・全 14 Release** の
+クリーンアーカイブに含まれ、Zenodo `10.5281/zenodo.23253840`（open access）にも
+入ったまま公開された。露出範囲・経緯は
+`docs/issues/20261013_p0_x-identity-published-in-all-releases.md`。
+
+これは本フレームワークが何度も見てきた失敗形（規則はあるが検査が無い）の再発である。
+
+### 21.2 決定（メンテナ、2026-10-13）
+
+- **X は公開前に匿名化が必要**。YouTube は現状のままでよい。
+- 原典はクラウドに保管されているため、本リポジトリ側のデータをマスキングしてよい。
+- 既公開分の対応は **前向き修正（A）を主軸**とし、プラットフォームへの削除・制限依頼（C）は
+  別途判断。履歴書き換え（B）は AGENTS.md「公開済みリリースを書き換えて隠さない」と
+  矛盾し、fork/clone/Zenodo に残るため効果も限定的で、採用しない。
+
+### 21.3 実施内容
+
+- `x_cbx_202608_summary.csv` を追跡から外し、非公開の `data/private/` へ退避。削除は
+  `processing.reproduce.WITHDRAWN` に理由・代替成果物・露出として記録（黙って消さない）。
+  非公開入力を前提とする導出は新状態
+  `reproducible_requires_non_published_input` として報告され、failure にはならない。
+- 公開ページ 1 件と分析レポート 2 件のアカウント名を**文書内の通し記号**で疑似名化
+  （文書間で対応が取れないようにし、リンクによる再識別を防ぐ）。
+- 再発防止ゲート `src/validation/x_identity.py`:
+  - `identity_column` — 追跡 CSV/TSV のヘッダが `username`・`author_name` 等を名乗る
+  - `post_permalink` — `x.com/<handle>/status/<id>` のリンク（文書例の `user` 等は除外）
+  - `known_handle` — `metadata/privacy/x-identity-denylist.json` のソルト付き
+    SHA-256 照合。**denylist はダイジェストのみを保持**するので、ゲートはアカウントを
+    再掲載せずに同名の再公開を検出できる
+- 正式な例外は `x_identity.ACKNOWLEDGED` に `(path, digest)` で書き、理由を添える。
+  一致しなくなった例外も failure（宣言の腐敗を検出）。YouTube の 2 件が該当。
+- 施行点: CI `python -m validation.cli audit-x-identity`、pre-commit チェック 6
+  （`PYTHONPATH=src python3 -m validation.x_identity`。`validation.cli` は cerberus を
+  要するため、venv を前提としないフック専用の stdlib 入口を分けている）。
+
+### 21.4 pre-commit フックの構造修正（本変更に必要だった）
+
+検出ループが 1 本の `case` で書かれていたため、**最初に一致した分岐しか実行されず**、
+processed CSV の変更ではスキーマ検証だけが走り、再現性検証と X 識別検査は黙って
+省略されていた。検証は相互排他ではないので、`case` を検証ごとに独立させた。
+
+### 21.5 実測（2026-10-13、Python 3.14）
+
+- `pytest` **844 passed**（`tests/validation/test_x_identity.py` 15 件、
+  `tests/processing/` の改訂を含む）。
+- `audit-x-identity`: 552 ファイル走査中 0 findings、認められた例外 2、stale 0。
+- `audit-processed`: 7 成果物、failure 0（`publication` 取り下げ 1 件を含む）。
+- `audit-artifacts` を再生成（77 → 76 ファイル）。G4 鮮度テストが更新漏れを検出した。
+- pre-commit フックでチェック 1/2/5/6 が実行され exit 0。
+
+### 21.6 未実施（引き継ぎ）
+
+- 既公開 14 Release・Zenodo アーカイブの削除・制限は未実施（メンテナ判断）。
+- CHANGELOG エントリは新リリースと同時に付ける（`validate-version-sync.sh` は
+  CHANGELOG の先頭見出しを最新タグと比較するため、`[Unreleased]` を先頭に置けない）。
+- 影響アカウントへの通知の要否は未判断。
+- `publication/guide_cbx_rewrite.html` の種別列から店舗地区（「麻布十番」）を除去した。
+  ハンドル以外の残余識別情報（店舗地区等）の扱いは方針未定。

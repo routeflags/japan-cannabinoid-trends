@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # =============================================================================
-# Pre-commit hook: Data Schema + Version Sync + Research Pages + Emergence Tracker + Processed Artifact Validation
+# Pre-commit hook: Data Schema + Version Sync + Research Pages + Emergence Tracker + Processed Artifact + X Identity Validation
 #
 # コミット前に以下を検証:
 # 1. Data Dictionary と実際のデータスキーマの一致
@@ -8,6 +8,7 @@
 # 3. 調査ページの完全性（publication/research_*.html）
 # 4. Search Emergence Tracker の最新性（publication/search-emergence-tracker）
 # 5. processed 成果物の再現性（再導出可能、または欠落入力を明示した再現不能宣言）
+# 6. X 識別情報の混入防止（投稿本文・handle・表示名・投稿 URL を追跡しない）
 #
 # 検証をスキップする場合:
 #   git commit --no-verify
@@ -39,16 +40,25 @@ EMERGENCE_VALIDATION_NEEDED=false
 # processed 成果物の再現性検証が必要なファイル
 PROCESSED_AUDIT_NEEDED=false
 
+# X 識別情報の混入防止検証が必要なファイル
+X_IDENTITY_AUDIT_NEEDED=false
+
+# 検証は独立している（例: processed CSV の変更はスキーマと再現性の両方に効く）
+# ため、case は 1 本にまとめず検証ごとに独立させる。1 本の case では最初に一致した
+# 分岐しか実行されず、後段のゲートが黙って走らなくなる。
 for file in $CHANGED_FILES; do
+  # 1. データスキーマ検証対象
   case $file in
-    # データスキーマ検証対象
     metadata/datapackage.json|\
     datasets/*/data/processed/*.csv|\
     docs/data-dictionary.md|\
     docs/provenance.md)
       SCHEMA_VALIDATION_NEEDED=true
       ;;
-    # バージョン同期検証対象
+  esac
+
+  # 2. バージョン同期検証対象
+  case $file in
     CITATION.cff|\
     CHANGELOG.md|\
     metadata/datapackage.json|\
@@ -57,32 +67,51 @@ for file in $CHANGED_FILES; do
     publication/guide_cbx_rewrite.html)
       VERSION_VALIDATION_NEEDED=true
       ;;
-    # 調査ページ完全性検証対象（全 study の主要 raw 種別。google_trends 例外の
-    # 追跡 raw を含む。将来の study・source 追加時はここに種別を足す）
+  esac
+
+  # 3. 調査ページ完全性検証対象（全 study の主要 raw 種別。google_trends 例外の
+  # 追跡 raw を含む。将来の study・source 追加時はここに種別を足す）
+  case $file in
     publication/research_*.html|\
-    datasets/**/data/raw/x/*|\
-    datasets/**/data/raw/youtube/*|\
-    datasets/**/data/raw/google_trends/*|\
-    datasets/**/data/raw/coa/*)
+    datasets/*/data/raw/x/*|\
+    datasets/*/data/raw/youtube/*|\
+    datasets/*/data/raw/google_trends/*|\
+    datasets/*/data/raw/coa/*)
       RESEARCH_VALIDATION_NEEDED=true
       ;;
-    # Emergence Tracker 検証対象
+  esac
+
+  # 4. Emergence Tracker 検証対象
+  case $file in
     publication/search-emergence-tracker/*|\
     project.json|\
     research/regulatory-status/*)
       EMERGENCE_VALIDATION_NEEDED=true
       ;;
-    # processed 成果物の再現性検証対象（成果物・導出規則・規則仕様のいずれが変わっても再検証）
+  esac
+
+  # 5. processed 成果物の再現性検証対象（成果物・導出規則・規則仕様のいずれが変わっても再検証）
+  case $file in
     datasets/*/data/processed/*|\
     src/processing/*|\
     metadata/taxonomy/classification-rules.yaml)
       PROCESSED_AUDIT_NEEDED=true
       ;;
   esac
+
+  # 6. X 識別情報の混入防止検証対象（データ・公開成果物・検査規則のいずれが変わっても再検証）
+  case $file in
+    datasets/*/data/*|\
+    publication/*|\
+    src/validation/x_identity.py|\
+    metadata/privacy/*)
+      X_IDENTITY_AUDIT_NEEDED=true
+      ;;
+  esac
 done
 
 # いずれの検証も不要な場合はスキップ
-if [ "$SCHEMA_VALIDATION_NEEDED" = false ] && [ "$VERSION_VALIDATION_NEEDED" = false ] && [ "$RESEARCH_VALIDATION_NEEDED" = false ] && [ "$EMERGENCE_VALIDATION_NEEDED" = false ] && [ "$PROCESSED_AUDIT_NEEDED" = false ]; then
+if [ "$SCHEMA_VALIDATION_NEEDED" = false ] && [ "$VERSION_VALIDATION_NEEDED" = false ] && [ "$RESEARCH_VALIDATION_NEEDED" = false ] && [ "$EMERGENCE_VALIDATION_NEEDED" = false ] && [ "$PROCESSED_AUDIT_NEEDED" = false ] && [ "$X_IDENTITY_AUDIT_NEEDED" = false ]; then
   exit 0
 fi
 
@@ -180,6 +209,25 @@ if [ "$PROCESSED_AUDIT_NEEDED" = true ]; then
   else
     echo ""
     echo "  ✅ processed 成果物の再現性検証に合格しました"
+  fi
+  echo ""
+fi
+
+# 6. X 識別情報の混入防止検証
+if [ "$X_IDENTITY_AUDIT_NEEDED" = true ]; then
+  echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+  echo "  6. X Identity Exposure"
+  echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+  echo ""
+
+  # 検証は標準ライブラリのみで動く（cerberus 不要の専用入口）ため、venv が無い環境でも実行できる。
+  if ! PYTHONPATH=src python3 -m validation.x_identity; then
+    echo ""
+    echo "  ❌ X 識別情報の混入防止検証に失敗しました"
+    VALIDATION_FAILED=true
+  else
+    echo ""
+    echo "  ✅ X 識別情報の混入防止検証に合格しました"
   fi
   echo ""
 fi

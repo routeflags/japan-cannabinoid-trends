@@ -43,23 +43,29 @@ __all__ = [
     "STATUS_REPRODUCIBLE",
     "STATUS_DECLARED_DISCREPANCY",
     "STATUS_NOT_REPRODUCIBLE",
+    "STATUS_PRIVATE_INPUT",
     "STATUS_PLACEHOLDER",
+    "STATUS_WITHDRAWN",
     "PLACEHOLDER_NAMES",
     "STATUS_UNDECLARED",
     "DERIVATIONS",
     "NON_REPRODUCIBLE",
-    "REVIEW_NOTES",
+    "WITHDRAWN",
     "DeclaredDiscrepancy",
+    "Derivation",
+    "Withdrawn",
     "audit_processed_artifacts",
     "reproduce_artifact",
 ]
 
-AUDIT_VERSION = "1.0.0"
+AUDIT_VERSION = "1.1.0"
 
 STATUS_REPRODUCIBLE = "reproducible"
 STATUS_DECLARED_DISCREPANCY = "reproducible_with_declared_discrepancy"
 STATUS_NOT_REPRODUCIBLE = "not_reproducible_from_repository"
+STATUS_PRIVATE_INPUT = "reproducible_requires_non_published_input"
 STATUS_PLACEHOLDER = "placeholder"
+STATUS_WITHDRAWN = "withdrawn_from_publication"
 STATUS_UNDECLARED = "undeclared"
 
 #: Tracked files that exist only to keep an empty directory in git.  They hold no
@@ -83,13 +89,21 @@ class DeclaredDiscrepancy:
 
 @dataclass(frozen=True)
 class Derivation:
-    """An executable transformation from a tracked source to an artifact."""
+    """An executable transformation from a source to an artifact.
+
+    ``source_published`` records whether the source is allowed to be published.
+    When it is ``False`` the source is expected to be absent in any clone or CI
+    run, and the artifact is reported as reproducible-but-not-verifiable-here
+    rather than as a failure (AGENTS.md: publish derived data plus methodology
+    when raw redistribution is unsuitable).
+    """
 
     source: str
     columns: tuple[str, ...]
     kind: str
     discrepancies: tuple[DeclaredDiscrepancy, ...] = ()
     notes: tuple[str, ...] = ()
+    source_published: bool = True
 
 
 @dataclass(frozen=True)
@@ -102,12 +116,29 @@ class NonReproducible:
     notes: tuple[str, ...] = ()
 
 
+@dataclass(frozen=True)
+class Withdrawn:
+    """An artifact that was tracked and has been removed from publication.
+
+    AGENTS.md forbids silently removing records, so a withdrawal is a recorded
+    fact with a reason, not a deleted registry entry.  The audit also fails if a
+    withdrawn path becomes tracked again without a new decision.
+    """
+
+    withdrawn_on: str
+    reason: str
+    replacement: str
+    exposure: str
+    notes: tuple[str, ...] = ()
+
+
 #: Executable derivations, keyed by repository-relative artifact path.
 DERIVATIONS: dict[str, Derivation] = {
     "datasets/cbx-social-trends/data/processed/x_cbx_202608_summary_anonymized.csv": Derivation(
-        source="datasets/cbx-social-trends/data/processed/x_cbx_202608_summary.csv",
+        source="datasets/cbx-social-trends/data/private/x_cbx_202608_summary.csv",
         columns=ANONYMIZED_COLUMNS,
         kind="x-summary-anonymization",
+        source_published=False,
         discrepancies=(
             DeclaredDiscrepancy(
                 column="week",
@@ -129,26 +160,43 @@ DERIVATIONS: dict[str, Derivation] = {
     ),
 }
 
-#: Declared non-reproducible artifacts, keyed by repository-relative artifact path.
-NON_REPRODUCIBLE: dict[str, NonReproducible] = {
-    "datasets/cbx-social-trends/data/processed/x_cbx_202608_summary.csv": NonReproducible(
+#: Artifacts removed from publication, keyed by the path they had while tracked.
+#: Recorded rather than deleted (AGENTS.md: never silently remove records).
+WITHDRAWN: dict[str, Withdrawn] = {
+    "datasets/cbx-social-trends/data/processed/x_cbx_202608_summary.csv": Withdrawn(
+        withdrawn_on="2026-10-13",
         reason=(
-            "Deduplicated from an Apify collection whose raw response is not in "
-            "the repository, and the collection is non-deterministic: repeating "
-            "it would not reproduce these 147 rows."
+            "Carried X post text, account handles, display names and post URLs.  "
+            "docs/specs/sns-redistribution-assessment.md 1.4 (2026-10-01) already "
+            "required exactly these fields to be kept out of DOI archives, and "
+            "docs/data-dictionary.md 1.1 already warned that username and "
+            "author_name need care on redistribution; neither was enforced, so "
+            "the file shipped in every release archive instead."
         ),
-        missing_inputs=(
-            "datasets/cbx-social-trends/data/raw/x/202608/ (declared by "
-            "cbx-social-trends/methodology.md section 2.1; absent from the "
-            "repository)",
+        replacement=(
+            "datasets/cbx-social-trends/data/processed/x_cbx_202608_summary_anonymized.csv "
+            "(same 147 records, hashed id, sequential account pseudonyms, no text "
+            "or URLs)"
         ),
-        upstream_step="raw (Apify daily JSON) -> language filter -> dedup by tweet_id",
+        exposure=(
+            "Public since 2026-10-01 (commit 2dae15b) and present in all 14 tags "
+            "and GitHub Releases, including Zenodo DOI 10.5281/zenodo.23253840 "
+            "(open access).  Withdrawing it stops further distribution; it does "
+            "not retract the published archives.  Recorded here so the exposure "
+            "is not lost."
+        ),
         notes=(
-            "This file is the input to DERIVATIONS for the anonymized summary, "
-            "so the anonymization rule is verified even though this source is "
-            "not reproducible.",
+            "The non-published copy used to verify the anonymization rule lives "
+            "at datasets/cbx-social-trends/data/private/x_cbx_202608_summary.csv "
+            "(gitignored, absent from any clone and from CI).",
+            "A PRIVACY review note: this file is the reason "
+            "src/validation/privacy.py exists.",
         ),
     ),
+}
+
+#: Declared non-reproducible artifacts, keyed by repository-relative artifact path.
+NON_REPRODUCIBLE: dict[str, NonReproducible] = {
     "datasets/cbx-social-trends/data/processed/youtube_filtered_202607/records_filtered.csv": NonReproducible(
         reason=(
             "Filtered from a YouTube collection that is not in the repository.  "
@@ -227,19 +275,6 @@ NON_REPRODUCIBLE: dict[str, NonReproducible] = {
     ),
 }
 
-#: Review notes surfaced by the report without changing any status.
-REVIEW_NOTES: dict[str, tuple[str, ...]] = {
-    "datasets/cbx-social-trends/data/processed/x_cbx_202608_summary.csv": (
-        "Privacy: this tracked file holds X usernames, display names, post text "
-        "and post URLs.  AGENTS.md requires a redistribution review before "
-        "publishing social-platform records, and the anonymized sibling exists "
-        "precisely so the publishable artifact omits them.  Whether the "
-        "non-anonymized summary should remain tracked is an open decision for "
-        "the maintainer; this audit only records it.",
-    ),
-}
-
-
 def _read_rows(path: Path) -> list[dict[str, str]]:
     with path.open(encoding="utf-8", newline="") as handle:
         return list(csv.DictReader(handle))
@@ -266,6 +301,36 @@ def reproduce_artifact(
     }
 
     committed = _read_rows(target_path)
+
+    if not source_path.is_file():
+        if derivation.source_published:
+            raise FileNotFoundError(
+                f"published source missing for {relative}: {derivation.source}"
+            )
+        report["status"] = STATUS_PRIVATE_INPUT
+        report["reason"] = (
+            "The source is deliberately not published, so the derivation cannot be "
+            "verified in this checkout.  It is verified wherever the "
+            "non-published copy is present (locally), and its rules are covered "
+            "by fixture tests unconditionally."
+        )
+        report["rows"] = {"derived": None, "committed": len(committed), "match": None}
+        report["discrepancies"] = []
+        report["declared_discrepancies"] = [
+            {
+                "column": d.column,
+                "derived_value": d.derived_value,
+                "committed_value": d.committed_value,
+                "rows": d.rows,
+                "identified_on": d.identified_on,
+                "reason": d.reason,
+            }
+            for d in derivation.discrepancies
+        ]
+        report["undeclared_drift"] = []
+        report["stale_declarations"] = []
+        return report
+
     if derivation.kind == "x-summary-anonymization":
         active = rules if rules is not None else load_content_rules(repo_root=root)
         derived = anonymize_rows(_read_rows(source_path), active)
@@ -372,6 +437,25 @@ def audit_processed_artifacts(root: Path, datasets_root: Path) -> dict:
     entries: list[dict] = []
     rules: ContentRules | None = None
     counts = Counter()
+    withdrawn_entries: list[dict] = []
+    withdrawn_errors: list[str] = []
+
+    for relative, record in sorted(WITHDRAWN.items()):
+        still_tracked = git_tracked(root, relative)
+        if still_tracked:
+            withdrawn_errors.append(relative)
+        withdrawn_entries.append(
+            {
+                "artifact": relative,
+                "status": STATUS_WITHDRAWN,
+                "withdrawn_on": record.withdrawn_on,
+                "reason": record.reason,
+                "replacement": record.replacement,
+                "exposure": record.exposure,
+                "notes": list(record.notes),
+                "tracked_again": still_tracked,
+            }
+        )
 
     for relative in _committed_processed_files(root, datasets_root):
         if Path(relative).name in PLACEHOLDER_NAMES:
@@ -404,8 +488,6 @@ def audit_processed_artifacts(root: Path, datasets_root: Path) -> dict:
                     "declare the missing inputs."
                 ),
             }
-        if relative in REVIEW_NOTES:
-            entry["review_notes"] = list(REVIEW_NOTES[relative])
         counts[entry["status"]] += 1
         entries.append(entry)
 
@@ -414,6 +496,7 @@ def audit_processed_artifacts(root: Path, datasets_root: Path) -> dict:
         for entry in entries
         if entry["status"] == STATUS_UNDECLARED
     ]
+    failures.extend(withdrawn_errors)
 
     return {
         "audit_version": AUDIT_VERSION,
@@ -423,4 +506,5 @@ def audit_processed_artifacts(root: Path, datasets_root: Path) -> dict:
         "failure_count": len(failures),
         "failures": failures,
         "entries": entries,
+        "withdrawn": withdrawn_entries,
     }

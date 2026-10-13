@@ -14,7 +14,7 @@
 | データ | 147 unique tweets (text, username, engagement metrics) |
 | 期間 | 2026-08-05 ~ 2026-09-08 |
 | 取得方法 | Apify Actor `cPYLH3QT9GyzKhB4S` (patient_discovery/twitter-search) |
-| ファイル | `datasets/cbx-social-trends/data/processed/x_cbx_202608_summary.csv` |
+| ファイル | `datasets/cbx-social-trends/data/processed/x_cbx_202608_summary.csv`（**2026-10-13 公開取り下げ**。以降は匿名化版 `x_cbx_202608_summary_anonymized.csv` のみ公開） |
 
 ### 1.2 X Terms of Service (Developer Policy)
 
@@ -54,6 +54,30 @@ X の開発者ポリシーでは、API 経由で取得したデータの再配�
 - ❌ プロフィール画像
 
 **理由:** X の Developer Policy は、コンテンツの再配布を「表示目的」に限定しており、データセットとしての再配布は想定されていない。研究用途でも、集計済みデータのみを公開し、生データは引用可能な形（URL へのリンク）で提供する方が安全。
+
+---
+
+### 1.5 施行状況（2026-10-13 追記）— 本節の推奨は施行されていなかった
+
+本評価の §1.4 は「DOI アーカイブに含めるべきでない」項目としてツイート本文・
+ユーザー名・個別 URL を挙げていたが、**それを機械的に止める仕組みが無かった**ため、
+当該ファイルは 2026-10-01 の追加以降、全 14 タグ・全 14 GitHub Release のクリーン
+アーカイブに含まれたまま公開された。Release は Zenodo へ送信されるため、DOI
+`10.5281/zenodo.23253840`（open access）のアーカイブにも含まれている（実物確認済み）。
+
+経緯・露出範囲・対応は `docs/issues/20261013_p0_x-identity-published-in-all-releases.md`
+を参照。前向き修正として:
+
+- 該当ファイルは追跡を外して非公開領域へ退避し、`src/processing/reproduce.py` の
+  `WITHDRAWN` に記録した（黙って消さない）。
+- 公開ページと分析レポートのアカウント名を疑似名化した。
+- 文書だけでは止まらないことが判明したため、施行を機械化した:
+  `src/validation/x_identity.py`（CI: `validation.cli audit-x-identity`、
+  pre-commit: チェック 6）。識別列・投稿パーマリンク・既知 handle のソルト付き
+  ダイジェスト照合で検査する。
+
+本評価は法的助言ではない。既公開アーカイブの取り下げ・制限は未実施で、判断は
+メンテナに残っている。
 
 ---
 

@@ -40,11 +40,16 @@ X データには複数の集計値があるため、整理する:
 
 > **重要（2026-10-13 追記）:** 上表の `data/raw/x/...` は本リポジトリに存在しない。
 > `data/raw/` にあるのは `.gitkeep` のみである。日別・26週の raw（2,376 / 451 件）は
-> 収集されたがリポジトリには保持されていない。したがって raw からの processed
-> 再生成は不可能であり、`data/processed/x_cbx_202608_summary.csv` は再現不能な成果物
-> として `src/processing/reproduce.py` に明示登録されている（欠落入力:
-> `data/raw/x/202608/`）。再現には Section 3 の収集再実行が必要だが、X 検索は
-> 非決定論的なため同一の 147 件は得られない。
+> 収集されたがリポジトリには保持されていない。
+>
+> `data/processed/x_cbx_202608_summary.csv` は **2026-10-13 に公開を取り下げた**。
+> X の投稿本文・handle・表示名・URL を含んでいたためで、追跡を外して非公開の
+> `data/private/` へ退避し、`src/processing/reproduce.py` の `WITHDRAWN` に記録して
+> いる（露出範囲は `docs/issues/20261013_p0_x-identity-published-in-all-releases.md`）。
+> したがって raw からの processed 再生成は不可能であり、公開される X 成果物は
+> 匿名化版のみである。同版の導出規則は実行可能で、非公開入力を用いて検証されている。
+> 再現には Section 3 の収集再実行が必要だが、X 検索は非決定論的なため同一の 147 件は
+> 得られない。
 
 > **注:** 26週データはまだ processed ファイルに統合されていない。将来的に重複排除した processed ファイルを作成予定。
 

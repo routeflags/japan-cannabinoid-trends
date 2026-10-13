@@ -50,6 +50,13 @@ jobs:
           # with its missing inputs named (src/processing/reproduce.py).
           python -m processing.cli audit-processed
 
+      - name: Audit X identity exposure
+        run: |
+          # X post text, handles, display names and post permalinks must not be
+          # tracked; publish the anonymized derivation instead.  The rule and its
+          # justified exceptions live in src/validation/x_identity.py.
+          python -m validation.cli audit-x-identity
+
       - name: Validate data schema (bash)
         run: |
           bash scripts/validation/validate-data-schema.sh

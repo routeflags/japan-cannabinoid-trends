@@ -8,7 +8,13 @@
 
 ## 1. X (Twitter) データ
 
-### 1.1 処理済みデータ: `x_cbx_202608_summary.csv`
+### 1.1 処理済みデータ（2026-10-13 公開取り下げ）: `x_cbx_202608_summary.csv`
+
+> **本ファイルは公開されていない。** 2026-10-13 に追跡を外し、非公開の
+> `datasets/cbx-social-trends/data/private/` へ退避した（露出範囲と経緯は
+> `docs/issues/20261013_p0_x-identity-published-in-all-releases.md`）。
+> 公開されている X の処理済み成果物は §4 の匿名化版のみである。以下のスキーマは
+> **取り下げ前の記録**として保持する（来歴を消さないため）。
 
 | カラム名 | 型 | 単位 | 説明 | 欠損値の扱い |
 |----------|-----|------|------|-------------|
@@ -27,7 +33,9 @@
 **データ完全率:** 全カラム 147/147 (100%)
 
 **注意事項:**
-- `username` と `author_name` は個人情報を含む可能性があるため、再配布時は注意が必要
+- `username` と `author_name` は個人情報を含む。**このファイルは公開しない。**
+  再配布可能な形は `x_cbx_202608_summary_anonymized.csv`（`author_id` に疑似名化、
+  本文・URL 削除）であり、変換規則は `src/processing/anonymize.py` にある。
 - `views` は取得時点の値であり、変動する
 - `createdAt` は UTC 表記
 

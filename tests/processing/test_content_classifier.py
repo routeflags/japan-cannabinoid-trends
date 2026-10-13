@@ -23,9 +23,19 @@ from processing.rulespec import (
 )
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
-RAW_SUMMARY = (
+ANONYMIZED = (
     REPO_ROOT
-    / "datasets/cbx-social-trends/data/processed/x_cbx_202608_summary.csv"
+    / "datasets/cbx-social-trends/data/processed/x_cbx_202608_summary_anonymized.csv"
+)
+#: The non-anonymized summary carries X identities and is deliberately not
+#: published (see ``processing.reproduce.WITHDRAWN``).  It is present only in a
+#: checkout that holds the non-published copy, so tests that need it skip in CI.
+PRIVATE_SOURCE = (
+    REPO_ROOT / "datasets/cbx-social-trends/data/private/x_cbx_202608_summary.csv"
+)
+requires_private_source = pytest.mark.skipif(
+    not PRIVATE_SOURCE.is_file(),
+    reason="non-published X summary not present in this checkout",
 )
 
 
@@ -122,11 +132,34 @@ def test_matching_is_case_insensitive(rules: ContentRules) -> None:
 
 
 def test_classifier_reproduces_recorded_distribution(rules: ContentRules) -> None:
-    """Classifier + parser must reproduce the specification's own recorded run."""
+    """The committed artifact's classifications must equal the recorded run.
+
+    This reads the published anonymized summary, so it holds in any checkout: the
+    classification columns are published even though the source text is not.
+    """
 
     import csv
 
-    with RAW_SUMMARY.open(encoding="utf-8", newline="") as handle:
+    with ANONYMIZED.open(encoding="utf-8", newline="") as handle:
+        rows = list(csv.DictReader(handle))
+
+    assert len(rows) == rules.recorded_total
+    for dimension, recorded in (
+        ("topic_id", "topic_distribution"),
+        ("intent_id", "intent_distribution"),
+        ("format_id", "format_distribution"),
+    ):
+        produced = distribution(row[dimension] for row in rows)
+        assert produced == rules.recorded_distribution[recorded], dimension
+
+
+@requires_private_source
+def test_classifier_reproduces_the_source_texts(rules: ContentRules) -> None:
+    """End-to-end check that needs the non-published source text."""
+
+    import csv
+
+    with PRIVATE_SOURCE.open(encoding="utf-8", newline="") as handle:
         rows = list(csv.DictReader(handle))
     results = [classify_text(row["text"], rules) for row in rows]
 
