@@ -187,6 +187,54 @@ compound_mapping:
 # マッピングの限界
 # =============================================================================
 
+# =============================================================================
+# 対応範囲（coverage）
+# =============================================================================
+# 初版（2026-10-02）は部分対応である。どの概念を対応させ、どれを意図的に
+# 外したかを明示する。黙って抜け落ちないようにするための宣言であり、
+# 妥当性は tests/validation/test_taxonomy_consistency.py が検査する
+# （mapped ∪ deliberately_unmapped ∪ not_applicable = taxonomy の全概念）。
+
+coverage:
+  status: "partial"
+  scope_note: |
+    対応対象は末端概念（化合物 18 + content 14 = 32）。
+    カテゴリノードは階層構造上の上位概念であり主題分類ではないため、対応対象外とする。
+
+  deliberately_unmapped:
+    - concepts:
+        - "jptr:compound-cbc"
+        - "jptr:compound-cbdv"
+        - "jptr:compound-crdh"
+        - "jptr:compound-crdp"
+        - "jptr:compound-hhc"
+        - "jptr:compound-hhch"
+        - "jptr:compound-thc-o"
+        - "jptr:compound-thch"
+        - "jptr:compound-thcv"
+      reason: "初版で未対応。IPTC Media Topics に対応する主題があるか未調査であり、推測で対応付けるよりは未対応として残す。"
+    - concepts:
+        - "jptr:intent-commercial"
+        - "jptr:intent-experiential"
+        - "jptr:intent-harm-report"
+        - "jptr:intent-informational"
+      reason: "IPTC Media Topics はニュース記事の主題を表す語彙であり、投稿の意図（情報提供 / 商業 / 体験談 / 被害報告）に対応する概念を持たない。"
+    - concepts:
+        - "jptr:format-image"
+        - "jptr:format-link"
+        - "jptr:format-text"
+        - "jptr:format-video"
+      reason: "投稿の形式（text / image / video / link）は IPTC Media Topics の対象外（主題ではなく表現形式）。"
+  not_applicable:
+    - concepts:
+        - "jptr:compound-endocannabinoid"
+        - "jptr:compound-major"
+        - "jptr:compound-minor"
+        - "jptr:compound-rare"
+        - "jptr:compound-semisynthetic"
+        - "jptr:compound-synthetic"
+      reason: "taxonomy の上位概念（カテゴリ）。主題分類ではないため IPTC との対応は定義しない。"
+
 limitations:
   - "IPTC Media Topics はニュース記事向けの語彙であり、SNS コンテンツ分類には完全に適用できない場合がある"
   - "closeMatch マッピングは概念的に近いが完全に同一ではない"

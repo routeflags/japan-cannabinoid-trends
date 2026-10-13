@@ -12,14 +12,16 @@
     {
       "@id": "jptr:compound-taxonomy",
       "@type": "skos:ConceptScheme",
-      "dct:title": {
-        "@value": "Cannabinoid Compound Taxonomy",
-        "@language": "en"
-      },
-      "dct:title": {
-        "@value": "カンナビノイド化合物タクソノミー",
-        "@language": "ja"
-      },
+      "dct:title": [
+        {
+          "@value": "Cannabinoid Compound Taxonomy",
+          "@language": "en"
+        },
+        {
+          "@value": "カンナビノイド化合物タクソノミー",
+          "@language": "ja"
+        }
+      ],
       "dct:description": {
         "@value": "Taxonomy of cannabinoid compounds tracked in this research project.",
         "@language": "en"
@@ -37,21 +39,26 @@
         "jptr:compound-endocannabinoid"
       ]
     },
-
     {
       "@id": "jptr:compound-major",
       "@type": "skos:Concept",
       "skos:inScheme": "jptr:compound-taxonomy",
       "skos:topConceptOf": "jptr:compound-taxonomy",
-      "skos:prefLabel": {
-        "@value": "Major Phytocannabinoids",
+      "skos:prefLabel": [
+        {
+          "@value": "Major Phytocannabinoids",
+          "@language": "en"
+        },
+        {
+          "@value": "主要フィトカンナビノイド",
+          "@language": "ja"
+        }
+      ],
+      "skos:notation": "compound_major",
+      "skos:scopeNote": {
+        "@value": "The phytocannabinoids that dominate research and market attention: CBD and THC.",
         "@language": "en"
       },
-      "skos:prefLabel": {
-        "@value": "主要フィトカンナビノイド",
-        "@language": "ja"
-      },
-      "skos:notation": "compound_major",
       "skos:narrower": [
         "jptr:compound-cbd",
         "jptr:compound-thc"
@@ -62,17 +69,22 @@
       "@type": "skos:Concept",
       "skos:inScheme": "jptr:compound-taxonomy",
       "skos:topConceptOf": "jptr:compound-taxonomy",
-      "skos:prefLabel": {
-        "@value": "Minor Phytocannabinoids",
+      "skos:prefLabel": [
+        {
+          "@value": "Minor Phytocannabinoids",
+          "@language": "en"
+        },
+        {
+          "@value": "主要フィトカンナビノイド以外のフィトカンナビノイド",
+          "@language": "ja"
+        }
+      ],
+      "skos:notation": "compound_minor",
+      "skos:scopeNote": {
+        "@value": "Phytocannabinoids other than the major pair: CBG, CBN, CBC, THCV, CBDV, CBX and THCH.",
         "@language": "en"
       },
-      "skos:prefLabel": {
-        "@value": "主要フィトカンナビノイド以外のフィトカンナビノイド",
-        "@language": "ja"
-      },
-      "skos:notation": "compound_minor",
-      "skos:narrower": [
-        "jptr:compound-cbg",
+      "skos:narrower": [        "jptr:compound-cbg",
         "jptr:compound-cbn",
         "jptr:compound-cbc",
         "jptr:compound-thcv",
@@ -86,32 +98,43 @@
       "@type": "skos:Concept",
       "skos:inScheme": "jptr:compound-taxonomy",
       "skos:topConceptOf": "jptr:compound-taxonomy",
-      "skos:prefLabel": {
-        "@value": "Rare Cannabinoids",
+      "skos:prefLabel": [
+        {
+          "@value": "Rare Cannabinoids",
+          "@language": "en"
+        },
+        {
+          "@value": "レアカンナビノイド",
+          "@language": "ja"
+        }
+      ],
+      "skos:notation": "compound_rare",
+      "skos:scopeNote": {
+        "@value": "Reserved for rare cannabinoids, i.e. the many phytocannabinoids found only in trace amounts (CBDP, THCP and similar). INTENTIONALLY EMPTY: no rare cannabinoid is registered as a concept yet, so this category records a dimension the taxonomy intends to cover rather than a gap or an oversight. Every other category lists its members in skos:narrower.",
         "@language": "en"
-      },
-      "skos:prefLabel": {
-        "@value": "レアカンナビノイド",
-        "@language": "ja"
-      },
-      "skos:notation": "compound_rare"
+      }
     },
     {
       "@id": "jptr:compound-semisynthetic",
       "@type": "skos:Concept",
       "skos:inScheme": "jptr:compound-taxonomy",
       "skos:topConceptOf": "jptr:compound-taxonomy",
-      "skos:prefLabel": {
-        "@value": "Semi-Synthetic Cannabinoids",
+      "skos:prefLabel": [
+        {
+          "@value": "Semi-Synthetic Cannabinoids",
+          "@language": "en"
+        },
+        {
+          "@value": "半合成カンナビノイド",
+          "@language": "ja"
+        }
+      ],
+      "skos:notation": "compound_semisynthetic",
+      "skos:scopeNote": {
+        "@value": "Cannabinoids obtained by chemically modifying a natural cannabinoid: HHC, THC-O, H4CBH and HHBD. Classified by production route, which is why HHC sits here although it is also a hydrogenated cannabinoid.",
         "@language": "en"
       },
-      "skos:prefLabel": {
-        "@value": "半合成カンナビノイド",
-        "@language": "ja"
-      },
-      "skos:notation": "compound_semisynthetic",
-      "skos:narrower": [
-        "jptr:compound-hhc",
+      "skos:narrower": [        "jptr:compound-hhc",
         "jptr:compound-thc-o",
         "jptr:compound-h4cbh",
         "jptr:compound-hhbd"
@@ -122,17 +145,22 @@
       "@type": "skos:Concept",
       "skos:inScheme": "jptr:compound-taxonomy",
       "skos:topConceptOf": "jptr:compound-taxonomy",
-      "skos:prefLabel": {
-        "@value": "Synthetic Cannabinoids",
+      "skos:prefLabel": [
+        {
+          "@value": "Synthetic Cannabinoids",
+          "@language": "en"
+        },
+        {
+          "@value": "合成カンナビノイド",
+          "@language": "ja"
+        }
+      ],
+      "skos:notation": "compound_synthetic",
+      "skos:scopeNote": {
+        "@value": "Cannabinoids with no natural counterpart: HHCH, CRDP and CRDH.",
         "@language": "en"
       },
-      "skos:prefLabel": {
-        "@value": "合成カンナビノイド",
-        "@language": "ja"
-      },
-      "skos:notation": "compound_synthetic",
-      "skos:narrower": [
-        "jptr:compound-hhch",
+      "skos:narrower": [        "jptr:compound-hhch",
         "jptr:compound-crdp",
         "jptr:compound-crdh"
       ]
@@ -142,112 +170,154 @@
       "@type": "skos:Concept",
       "skos:inScheme": "jptr:compound-taxonomy",
       "skos:topConceptOf": "jptr:compound-taxonomy",
-      "skos:prefLabel": {
-        "@value": "Endocannabinoids",
+      "skos:prefLabel": [
+        {
+          "@value": "Endocannabinoids",
+          "@language": "en"
+        },
+        {
+          "@value": "エンドカンナビノイド",
+          "@language": "ja"
+        }
+      ],
+      "skos:notation": "compound_endocannabinoid",
+      "skos:scopeNote": {
+        "@value": "Endogenous signalling molecules of the endocannabinoid system: anandamide and 2-AG. Listed because they are described in the same literature, not because they are administered products.",
         "@language": "en"
       },
-      "skos:prefLabel": {
-        "@value": "エンドカンナビノイド",
-        "@language": "ja"
-      },
-      "skos:notation": "compound_endocannabinoid",
-      "skos:narrower": [
-        "jptr:compound-anandamide",
+      "skos:narrower": [        "jptr:compound-anandamide",
         "jptr:compound-2ag"
       ]
     },
-
     {
       "@id": "jptr:compound-cbd",
       "@type": "skos:Concept",
       "skos:inScheme": "jptr:compound-taxonomy",
       "skos:broader": "jptr:compound-major",
-      "skos:prefLabel": {
-        "@value": "Cannabidiol (CBD)",
-        "@language": "en"
-      },
-      "skos:prefLabel": {
-        "@value": "カンナビジオール (CBD)",
-        "@language": "ja"
-      },
+      "skos:prefLabel": [
+        {
+          "@value": "Cannabidiol (CBD)",
+          "@language": "en"
+        },
+        {
+          "@value": "カンナビジオール (CBD)",
+          "@language": "ja"
+        }
+      ],
       "skos:altLabel": [
-        { "@value": "CBD", "@language": "en" },
-        { "@value": "カンナビジオール", "@language": "ja" }
+        {
+          "@value": "CBD",
+          "@language": "en"
+        },
+        {
+          "@value": "カンナビジオール",
+          "@language": "ja"
+        }
       ],
       "skos:notation": "compound_cbd",
       "skos:scopeNote": {
         "@value": "A major phytocannabinoid. Non-intoxicating. Widely studied.",
         "@language": "en"
       },
-      "skos:exactMatch": "chebi:33669",
-      "skos:exactMatch": "wikidata:Q141452"
+      "skos:exactMatch": [
+        "chebi:33669",
+        "wikidata:Q141452"
+      ]
     },
     {
       "@id": "jptr:compound-thc",
       "@type": "skos:Concept",
       "skos:inScheme": "jptr:compound-taxonomy",
       "skos:broader": "jptr:compound-major",
-      "skos:prefLabel": {
-        "@value": "Δ9-Tetrahydrocannabinol (THC)",
-        "@language": "en"
-      },
-      "skos:prefLabel": {
-        "@value": "デルタ9-テトラヒドロカンナビノール (THC)",
-        "@language": "ja"
-      },
+      "skos:prefLabel": [
+        {
+          "@value": "Δ9-Tetrahydrocannabinol (THC)",
+          "@language": "en"
+        },
+        {
+          "@value": "デルタ9-テトラヒドロカンナビノール (THC)",
+          "@language": "ja"
+        }
+      ],
       "skos:altLabel": [
-        { "@value": "THC", "@language": "en" },
-        { "@value": "デルタ9-THC", "@language": "ja" }
+        {
+          "@value": "THC",
+          "@language": "en"
+        },
+        {
+          "@value": "デルタ9-THC",
+          "@language": "ja"
+        }
       ],
       "skos:notation": "compound_thc",
       "skos:scopeNote": {
         "@value": "A major phytocannabinoid. Psychoactive. Controlled substance in many jurisdictions.",
         "@language": "en"
       },
-      "skos:exactMatch": "chebi:32927",
-      "skos:exactMatch": "wikidata:Q141629"
+      "skos:exactMatch": [
+        "chebi:32927",
+        "wikidata:Q141629"
+      ]
     },
     {
       "@id": "jptr:compound-cbg",
       "@type": "skos:Concept",
       "skos:inScheme": "jptr:compound-taxonomy",
       "skos:broader": "jptr:compound-minor",
-      "skos:prefLabel": {
-        "@value": "Cannabigerol (CBG)",
-        "@language": "en"
-      },
-      "skos:prefLabel": {
-        "@value": "カンナビゲロール (CBG)",
-        "@language": "ja"
-      },
+      "skos:prefLabel": [
+        {
+          "@value": "Cannabigerol (CBG)",
+          "@language": "en"
+        },
+        {
+          "@value": "カンナビゲロール (CBG)",
+          "@language": "ja"
+        }
+      ],
       "skos:altLabel": [
-        { "@value": "CBG", "@language": "en" },
-        { "@value": "カンナビゲロール", "@language": "ja" }
+        {
+          "@value": "CBG",
+          "@language": "en"
+        },
+        {
+          "@value": "カンナビゲロール",
+          "@language": "ja"
+        }
       ],
       "skos:notation": "compound_cbg",
       "skos:scopeNote": {
         "@value": "A minor phytocannabinoid. Precursor to other cannabinoids.",
         "@language": "en"
       },
-      "skos:exactMatch": "chebi:32927",
-      "skos:exactMatch": "wikidata:Q422432"
+      "skos:exactMatch": [
+        "chebi:32927",
+        "wikidata:Q422432"
+      ]
     },
     {
       "@id": "jptr:compound-cbn",
       "@type": "skos:Concept",
       "skos:inScheme": "jptr:compound-taxonomy",
       "skos:broader": "jptr:compound-minor",
-      "skos:prefLabel": {
-        "@value": "Cannabinol (CBN)",
-        "@language": "en"
-      },
-      "skos:prefLabel": {
-        "@value": "カンナビノール (CBN)",
-        "@language": "ja"
-      },
+      "skos:prefLabel": [
+        {
+          "@value": "Cannabinol (CBN)",
+          "@language": "en"
+        },
+        {
+          "@value": "カンナビノール (CBN)",
+          "@language": "ja"
+        }
+      ],
       "skos:altLabel": [
-        { "@value": "CBN", "@language": "en" },
-        { "@value": "カンナビノール", "@language": "ja" }
+        {
+          "@value": "CBN",
+          "@language": "en"
+        },
+        {
+          "@value": "カンナビノール",
+          "@language": "ja"
+        }
       ],
       "skos:notation": "compound_cbn",
       "skos:scopeNote": {
@@ -261,17 +331,25 @@
       "@type": "skos:Concept",
       "skos:inScheme": "jptr:compound-taxonomy",
       "skos:broader": "jptr:compound-minor",
-      "skos:prefLabel": {
-        "@value": "Cannabichromene (CBC)",
-        "@language": "en"
-      },
-      "skos:prefLabel": {
-        "@value": "カンナビクロメン (CBC)",
-        "@language": "ja"
-      },
+      "skos:prefLabel": [
+        {
+          "@value": "Cannabichromene (CBC)",
+          "@language": "en"
+        },
+        {
+          "@value": "カンナビクロメン (CBC)",
+          "@language": "ja"
+        }
+      ],
       "skos:altLabel": [
-        { "@value": "CBC", "@language": "en" },
-        { "@value": "カンナビクロメン", "@language": "ja" }
+        {
+          "@value": "CBC",
+          "@language": "en"
+        },
+        {
+          "@value": "カンナビクロメン",
+          "@language": "ja"
+        }
       ],
       "skos:notation": "compound_cbc",
       "skos:exactMatch": "wikidata:Q422441"
@@ -281,17 +359,25 @@
       "@type": "skos:Concept",
       "skos:inScheme": "jptr:compound-taxonomy",
       "skos:broader": "jptr:compound-minor",
-      "skos:prefLabel": {
-        "@value": "Tetrahydrocannabivarin (THCV)",
-        "@language": "en"
-      },
-      "skos:prefLabel": {
-        "@value": "テトラヒドロカンナビバリン (THCV)",
-        "@language": "ja"
-      },
+      "skos:prefLabel": [
+        {
+          "@value": "Tetrahydrocannabivarin (THCV)",
+          "@language": "en"
+        },
+        {
+          "@value": "テトラヒドロカンナビバリン (THCV)",
+          "@language": "ja"
+        }
+      ],
       "skos:altLabel": [
-        { "@value": "THCV", "@language": "en" },
-        { "@value": "THCv", "@language": "en" }
+        {
+          "@value": "THCV",
+          "@language": "en"
+        },
+        {
+          "@value": "THCv",
+          "@language": "en"
+        }
       ],
       "skos:notation": "compound_thcv",
       "skos:exactMatch": "wikidata:Q422449"
@@ -301,192 +387,278 @@
       "@type": "skos:Concept",
       "skos:inScheme": "jptr:compound-taxonomy",
       "skos:broader": "jptr:compound-minor",
-      "skos:prefLabel": {
-        "@value": "Cannabidivarin (CBDV)",
-        "@language": "en"
-      },
-      "skos:prefLabel": {
-        "@value": "カンナビジバリン (CBDV)",
-        "@language": "ja"
-      },
+      "skos:prefLabel": [
+        {
+          "@value": "Cannabidivarin (CBDV)",
+          "@language": "en"
+        },
+        {
+          "@value": "カンナビジバリン (CBDV)",
+          "@language": "ja"
+        }
+      ],
       "skos:altLabel": [
-        { "@value": "CBDV", "@language": "en" }
+        {
+          "@value": "CBDV",
+          "@language": "en"
+        }
       ],
       "skos:notation": "compound_cbdv",
       "skos:exactMatch": "wikidata:Q422426"
     },
-
     {
       "@id": "jptr:compound-cbx",
       "@type": "skos:Concept",
       "skos:inScheme": "jptr:compound-taxonomy",
       "skos:broader": "jptr:compound-minor",
-      "skos:prefLabel": {
-        "@value": "CBX (Cannabinoid)",
-        "@language": "en"
-      },
-      "skos:prefLabel": {
-        "@value": "CBX (カンナビノイド)",
-        "@language": "ja"
-      },
+      "skos:prefLabel": [
+        {
+          "@value": "CBX (Cannabinoid)",
+          "@language": "en"
+        },
+        {
+          "@value": "CBX (カンナビノイド)",
+          "@language": "ja"
+        }
+      ],
       "skos:altLabel": [
-        { "@value": "CBX", "@language": "en" },
-        { "@value": "CBX リキッド", "@language": "ja" },
-        { "@value": "CBX カンナビノイド", "@language": "ja" }
+        {
+          "@value": "CBX",
+          "@language": "en"
+        },
+        {
+          "@value": "CBX リキッド",
+          "@language": "ja"
+        },
+        {
+          "@value": "CBX カンナビノイド",
+          "@language": "ja"
+        }
       ],
       "skos:notation": "compound_cbx",
-      "skos:scopeNote": {
-        "@value": "A minor cannabinoid marketed in Japan. NOTE: 'CBX' is polysemous — also refers to Honda CBX400F motorcycle. Use discriminating queries for disambiguation.",
-        "@language": "en"
-      },
-      "skos:scopeNote": {
-        "@value": "日本で市販されているマイナーカンナビノイド。※ 'CBX' は多義語（ホンダ CBX400F バイクとも混同される）。判別クエリを使用して識別する必要あり。",
-        "@language": "ja"
-      },
-      "skos:related": ["jptr:compound-h4cbh", "jptr:compound-hhbd"]
+      "skos:scopeNote": [
+        {
+          "@value": "A minor cannabinoid marketed in Japan. NOTE: 'CBX' is polysemous — also refers to Honda CBX400F motorcycle. Use discriminating queries for disambiguation.",
+          "@language": "en"
+        },
+        {
+          "@value": "日本で市販されているマイナーカンナビノイド。※ 'CBX' は多義語（ホンダ CBX400F バイクとも混同される）。判別クエリを使用して識別する必要あり。",
+          "@language": "ja"
+        }
+      ],
+      "skos:related": [
+        "jptr:compound-h4cbh",
+        "jptr:compound-hhbd"
+      ]
     },
     {
       "@id": "jptr:compound-h4cbh",
       "@type": "skos:Concept",
       "skos:inScheme": "jptr:compound-taxonomy",
       "skos:broader": "jptr:compound-semisynthetic",
-      "skos:prefLabel": {
-        "@value": "H4CBH",
-        "@language": "en"
-      },
-      "skos:prefLabel": {
-        "@value": "H4CBH",
-        "@language": "ja"
-      },
+      "skos:prefLabel": [
+        {
+          "@value": "H4CBH",
+          "@language": "en"
+        },
+        {
+          "@value": "H4CBH",
+          "@language": "ja"
+        }
+      ],
       "skos:altLabel": [
-        { "@value": "H4CBH", "@language": "en" },
-        { "@value": "H4CBH リキッド", "@language": "ja" }
+        {
+          "@value": "H4CBH",
+          "@language": "en"
+        },
+        {
+          "@value": "H4CBH リキッド",
+          "@language": "ja"
+        }
       ],
       "skos:notation": "compound_h4cbh",
       "skos:scopeNote": {
         "@value": "A hydrogenated cannabinoid derivative marketed in Japan.",
         "@language": "en"
       },
-      "skos:related": ["jptr:compound-cbx", "jptr:compound-hhbd"]
+      "skos:related": [
+        "jptr:compound-cbx",
+        "jptr:compound-hhbd"
+      ]
     },
     {
       "@id": "jptr:compound-hhbd",
       "@type": "skos:Concept",
       "skos:inScheme": "jptr:compound-taxonomy",
       "skos:broader": "jptr:compound-semisynthetic",
-      "skos:prefLabel": {
-        "@value": "HHBD",
-        "@language": "en"
-      },
-      "skos:prefLabel": {
-        "@value": "HHBD",
-        "@language": "ja"
-      },
+      "skos:prefLabel": [
+        {
+          "@value": "HHBD",
+          "@language": "en"
+        },
+        {
+          "@value": "HHBD",
+          "@language": "ja"
+        }
+      ],
       "skos:altLabel": [
-        { "@value": "HHBD", "@language": "en" },
-        { "@value": "HHBD リキッド", "@language": "ja" }
+        {
+          "@value": "HHBD",
+          "@language": "en"
+        },
+        {
+          "@value": "HHBD リキッド",
+          "@language": "ja"
+        }
       ],
       "skos:notation": "compound_hhbd",
       "skos:scopeNote": {
         "@value": "A cannabinoid derivative marketed in Japan.",
         "@language": "en"
       },
-      "skos:related": ["jptr:compound-cbx", "jptr:compound-h4cbh"]
+      "skos:related": [
+        "jptr:compound-cbx",
+        "jptr:compound-h4cbh"
+      ]
     },
     {
       "@id": "jptr:compound-crdh",
       "@type": "skos:Concept",
       "skos:inScheme": "jptr:compound-taxonomy",
       "skos:broader": "jptr:compound-synthetic",
-      "skos:prefLabel": {
-        "@value": "CRDH",
-        "@language": "en"
-      },
-      "skos:prefLabel": {
-        "@value": "CRDH",
-        "@language": "ja"
-      },
+      "skos:prefLabel": [
+        {
+          "@value": "CRDH",
+          "@language": "en"
+        },
+        {
+          "@value": "CRDH",
+          "@language": "ja"
+        }
+      ],
       "skos:altLabel": [
-        { "@value": "CRDH", "@language": "en" },
-        { "@value": "CRDH リキッド", "@language": "ja" }
+        {
+          "@value": "CRDH",
+          "@language": "en"
+        },
+        {
+          "@value": "CRDH リキッド",
+          "@language": "ja"
+        }
       ],
       "skos:notation": "compound_crdh",
       "skos:scopeNote": {
         "@value": "A synthetic cannabinoid derivative marketed in Japan. Chemical structure unknown. Monitoring target.",
         "@language": "en"
       },
-      "skos:related": ["jptr:compound-crdp"]
+      "skos:related": [
+        "jptr:compound-crdp"
+      ]
     },
-
     {
       "@id": "jptr:compound-hhc",
       "@type": "skos:Concept",
       "skos:inScheme": "jptr:compound-taxonomy",
       "skos:broader": "jptr:compound-semisynthetic",
-      "skos:prefLabel": {
-        "@value": "Hexahydrocannabinol (HHC)",
-        "@language": "en"
-      },
-      "skos:prefLabel": {
-        "@value": "ヘキサヒドロカンナビノール (HHC)",
-        "@language": "ja"
-      },
+      "skos:prefLabel": [
+        {
+          "@value": "Hexahydrocannabinol (HHC)",
+          "@language": "en"
+        },
+        {
+          "@value": "ヘキサヒドロカンナビノール (HHC)",
+          "@language": "ja"
+        }
+      ],
       "skos:altLabel": [
-        { "@value": "HHC", "@language": "en" },
-        { "@value": "ヘキサヒドロカンナビノール", "@language": "ja" },
-        { "@value": "HHC リキッド", "@language": "ja" }
+        {
+          "@value": "HHC",
+          "@language": "en"
+        },
+        {
+          "@value": "ヘキサヒドロカンナビノール",
+          "@language": "ja"
+        },
+        {
+          "@value": "HHC リキッド",
+          "@language": "ja"
+        }
       ],
       "skos:notation": "compound_hhc",
       "skos:scopeNote": {
         "@value": "A semi-synthetic hydrogenated cannabinoid marketed in Japan.",
         "@language": "en"
       },
-      "skos:related": ["jptr:compound-hhch"]
+      "skos:related": [
+        "jptr:compound-hhch"
+      ]
     },
-
     {
       "@id": "jptr:compound-hhch",
       "@type": "skos:Concept",
       "skos:inScheme": "jptr:compound-taxonomy",
       "skos:broader": "jptr:compound-synthetic",
-      "skos:prefLabel": {
-        "@value": "Hexahydrocannabihexol (HHCH)",
-        "@language": "en"
-      },
-      "skos:prefLabel": {
-        "@value": "ヘキサヒドロカンナビヘキソール (HHCH)",
-        "@language": "ja"
-      },
+      "skos:prefLabel": [
+        {
+          "@value": "Hexahydrocannabihexol (HHCH)",
+          "@language": "en"
+        },
+        {
+          "@value": "ヘキサヒドロカンナビヘキソール (HHCH)",
+          "@language": "ja"
+        }
+      ],
       "skos:altLabel": [
-        { "@value": "HHCH", "@language": "en" },
-        { "@value": "ヘキサヒドロカンナビヘキソール", "@language": "ja" },
-        { "@value": "HHCH リキッド", "@language": "ja" }
+        {
+          "@value": "HHCH",
+          "@language": "en"
+        },
+        {
+          "@value": "ヘキサヒドロカンナビヘキソール",
+          "@language": "ja"
+        },
+        {
+          "@value": "HHCH リキッド",
+          "@language": "ja"
+        }
       ],
       "skos:notation": "compound_hhch",
       "skos:scopeNote": {
         "@value": "A synthetic cannabinoid marketed in Japan.",
         "@language": "en"
       },
-      "skos:related": ["jptr:compound-hhc"]
+      "skos:related": [
+        "jptr:compound-hhc"
+      ]
     },
-
     {
       "@id": "jptr:compound-thch",
       "@type": "skos:Concept",
       "skos:inScheme": "jptr:compound-taxonomy",
       "skos:broader": "jptr:compound-minor",
-      "skos:prefLabel": {
-        "@value": "Tetrahydrocannabihexol (THCH)",
-        "@language": "en"
-      },
-      "skos:prefLabel": {
-        "@value": "テトラヒドロカンナビヘキソール (THCH)",
-        "@language": "ja"
-      },
+      "skos:prefLabel": [
+        {
+          "@value": "Tetrahydrocannabihexol (THCH)",
+          "@language": "en"
+        },
+        {
+          "@value": "テトラヒドロカンナビヘキソール (THCH)",
+          "@language": "ja"
+        }
+      ],
       "skos:altLabel": [
-        { "@value": "THCH", "@language": "en" },
-        { "@value": "テトラヒドロカンナビヘキソール", "@language": "ja" },
-        { "@value": "THCH リキッド", "@language": "ja" }
+        {
+          "@value": "THCH",
+          "@language": "en"
+        },
+        {
+          "@value": "テトラヒドロカンナビヘキソール",
+          "@language": "ja"
+        },
+        {
+          "@value": "THCH リキッド",
+          "@language": "ja"
+        }
       ],
       "skos:notation": "compound_thch",
       "skos:scopeNote": {
@@ -494,27 +666,46 @@
         "@language": "en"
       }
     },
-
     {
       "@id": "jptr:compound-thc-o",
       "@type": "skos:Concept",
       "skos:inScheme": "jptr:compound-taxonomy",
       "skos:broader": "jptr:compound-semisynthetic",
-      "skos:prefLabel": {
-        "@value": "Tetrahydrocannabinol-O-acetate (THC-O)",
-        "@language": "en"
-      },
-      "skos:prefLabel": {
-        "@value": "テトラヒドロカンナビノール-O (THC-O)",
-        "@language": "ja"
-      },
+      "skos:prefLabel": [
+        {
+          "@value": "Tetrahydrocannabinol-O-acetate (THC-O)",
+          "@language": "en"
+        },
+        {
+          "@value": "テトラヒドロカンナビノール-O (THC-O)",
+          "@language": "ja"
+        }
+      ],
       "skos:altLabel": [
-        { "@value": "THC-O", "@language": "en" },
-        { "@value": "THCO", "@language": "en" },
-        { "@value": "THC-O-Acetate", "@language": "en" },
-        { "@value": "テトラヒドロカンナビノール-O", "@language": "ja" },
-        { "@value": "THC-アセテート", "@language": "ja" },
-        { "@value": "THC-O リキッド", "@language": "ja" }
+        {
+          "@value": "THC-O",
+          "@language": "en"
+        },
+        {
+          "@value": "THCO",
+          "@language": "en"
+        },
+        {
+          "@value": "THC-O-Acetate",
+          "@language": "en"
+        },
+        {
+          "@value": "テトラヒドロカンナビノール-O",
+          "@language": "ja"
+        },
+        {
+          "@value": "THC-アセテート",
+          "@language": "ja"
+        },
+        {
+          "@value": "THC-O リキッド",
+          "@language": "ja"
+        }
       ],
       "skos:notation": "compound_thc_o",
       "skos:scopeNote": {
@@ -522,73 +713,101 @@
         "@language": "en"
       }
     },
-
     {
       "@id": "jptr:compound-crdp",
       "@type": "skos:Concept",
       "skos:inScheme": "jptr:compound-taxonomy",
       "skos:broader": "jptr:compound-synthetic",
-      "skos:prefLabel": {
-        "@value": "CRDP",
-        "@language": "en"
-      },
-      "skos:prefLabel": {
-        "@value": "CRDP",
-        "@language": "ja"
-      },
+      "skos:prefLabel": [
+        {
+          "@value": "CRDP",
+          "@language": "en"
+        },
+        {
+          "@value": "CRDP",
+          "@language": "ja"
+        }
+      ],
       "skos:altLabel": [
-        { "@value": "CRDP", "@language": "en" },
-        { "@value": "CRDP リキッド", "@language": "ja" }
+        {
+          "@value": "CRDP",
+          "@language": "en"
+        },
+        {
+          "@value": "CRDP リキッド",
+          "@language": "ja"
+        }
       ],
       "skos:notation": "compound_crdp",
       "skos:scopeNote": {
         "@value": "A synthetic cannabinoid marketed in Japan. Chemical structure unknown. Monitoring target.",
         "@language": "en"
       },
-      "skos:related": ["jptr:compound-crdh"]
+      "skos:related": [
+        "jptr:compound-crdh"
+      ]
     },
-
     {
       "@id": "jptr:compound-anandamide",
       "@type": "skos:Concept",
       "skos:inScheme": "jptr:compound-taxonomy",
       "skos:broader": "jptr:compound-endocannabinoid",
-      "skos:prefLabel": {
-        "@value": "Anandamide (AEA)",
-        "@language": "en"
-      },
-      "skos:prefLabel": {
-        "@value": "アナンダミド (AEA)",
-        "@language": "ja"
-      },
+      "skos:prefLabel": [
+        {
+          "@value": "Anandamide (AEA)",
+          "@language": "en"
+        },
+        {
+          "@value": "アナンダミド (AEA)",
+          "@language": "ja"
+        }
+      ],
       "skos:altLabel": [
-        { "@value": "AEA", "@language": "en" },
-        { "@value": "アナンダミド", "@language": "ja" }
+        {
+          "@value": "AEA",
+          "@language": "en"
+        },
+        {
+          "@value": "アナンダミド",
+          "@language": "ja"
+        }
       ],
       "skos:notation": "compound_anandamide",
-      "skos:exactMatch": "chebi:52384",
-      "skos:exactMatch": "wikidata:Q409339"
+      "skos:exactMatch": [
+        "chebi:52384",
+        "wikidata:Q409339"
+      ]
     },
     {
       "@id": "jptr:compound-2ag",
       "@type": "skos:Concept",
       "skos:inScheme": "jptr:compound-taxonomy",
       "skos:broader": "jptr:compound-endocannabinoid",
-      "skos:prefLabel": {
-        "@value": "2-Arachidonoylglycerol (2-AG)",
-        "@language": "en"
-      },
-      "skos:prefLabel": {
-        "@value": "2-アラキドノイルグリセロール (2-AG)",
-        "@language": "ja"
-      },
+      "skos:prefLabel": [
+        {
+          "@value": "2-Arachidonoylglycerol (2-AG)",
+          "@language": "en"
+        },
+        {
+          "@value": "2-アラキドノイルグリセロール (2-AG)",
+          "@language": "ja"
+        }
+      ],
       "skos:altLabel": [
-        { "@value": "2-AG", "@language": "en" },
-        { "@value": "2AG", "@language": "en" }
+        {
+          "@value": "2-AG",
+          "@language": "en"
+        },
+        {
+          "@value": "2AG",
+          "@language": "en"
+        }
       ],
       "skos:notation": "compound_2ag",
-      "skos:exactMatch": "chebi:64901",
-      "skos:exactMatch": "wikidata:Q295793"
+      "skos:exactMatch": [
+        "chebi:64901",
+        "wikidata:Q295793"
+      ]
     }
   ]
 }

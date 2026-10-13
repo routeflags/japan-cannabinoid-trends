@@ -5,7 +5,7 @@
   },
   "@type": "schema:DefinedTermSet",
   "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-taxonomy",
-  "schema:name": "",
+  "schema:name": "Cannabinoid Compound Taxonomy",
   "schema:description": "Cannabinoid research taxonomy for social media content classification",
   "schema:dateCreated": "2026-10-02",
   "schema:license": "https://creativecommons.org/licenses/by/4.0/",
@@ -13,73 +13,79 @@
     {
       "@type": "schema:DefinedTerm",
       "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound_major",
-      "schema:name": "主要フィトカンナビノイド",
+      "schema:name": "Major Phytocannabinoids",
       "schema:inDefinedTermSet": {
         "@type": "schema:DefinedTermSet",
         "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-major-scheme"
       },
       "schema:alternateName": "主要フィトカンナビノイド",
+      "schema:description": "The phytocannabinoids that dominate research and market attention: CBD and THC.",
       "schema:termCode": "compound_major"
     },
     {
       "@type": "schema:DefinedTerm",
       "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound_minor",
-      "schema:name": "主要フィトカンナビノイド以外のフィトカンナビノイド",
+      "schema:name": "Minor Phytocannabinoids",
       "schema:inDefinedTermSet": {
         "@type": "schema:DefinedTermSet",
         "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-minor-scheme"
       },
       "schema:alternateName": "主要フィトカンナビノイド以外のフィトカンナビノイド",
+      "schema:description": "Phytocannabinoids other than the major pair: CBG, CBN, CBC, THCV, CBDV, CBX and THCH.",
       "schema:termCode": "compound_minor"
     },
     {
       "@type": "schema:DefinedTerm",
       "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound_rare",
-      "schema:name": "レアカンナビノイド",
+      "schema:name": "Rare Cannabinoids",
       "schema:inDefinedTermSet": {
         "@type": "schema:DefinedTermSet",
         "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-rare-scheme"
       },
       "schema:alternateName": "レアカンナビノイド",
+      "schema:description": "Reserved for rare cannabinoids, i.e. the many phytocannabinoids found only in trace amounts (CBDP, THCP and similar). INTENTIONALLY EMPTY: no rare cannabinoid is registered as a concept yet, so this category records a dimension the taxonomy intends to cover rather than a gap or an oversight. Every other category lists its members in skos:narrower.",
       "schema:termCode": "compound_rare"
     },
     {
       "@type": "schema:DefinedTerm",
       "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound_semisynthetic",
-      "schema:name": "半合成カンナビノイド",
+      "schema:name": "Semi-Synthetic Cannabinoids",
       "schema:inDefinedTermSet": {
         "@type": "schema:DefinedTermSet",
         "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-semisynthetic-scheme"
       },
       "schema:alternateName": "半合成カンナビノイド",
+      "schema:description": "Cannabinoids obtained by chemically modifying a natural cannabinoid: HHC, THC-O, H4CBH and HHBD. Classified by production route, which is why HHC sits here although it is also a hydrogenated cannabinoid.",
       "schema:termCode": "compound_semisynthetic"
     },
     {
       "@type": "schema:DefinedTerm",
       "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound_synthetic",
-      "schema:name": "合成カンナビノイド",
+      "schema:name": "Synthetic Cannabinoids",
       "schema:inDefinedTermSet": {
         "@type": "schema:DefinedTermSet",
         "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-synthetic-scheme"
       },
       "schema:alternateName": "合成カンナビノイド",
+      "schema:description": "Cannabinoids with no natural counterpart: HHCH, CRDP and CRDH.",
       "schema:termCode": "compound_synthetic"
     },
     {
       "@type": "schema:DefinedTerm",
       "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound_endocannabinoid",
-      "schema:name": "エンドカンナビノイド",
+      "schema:name": "Endocannabinoids",
       "schema:inDefinedTermSet": {
         "@type": "schema:DefinedTermSet",
         "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-endocannabinoid-scheme"
       },
       "schema:alternateName": "エンドカンナビノイド",
+      "schema:description": "Endogenous signalling molecules of the endocannabinoid system: anandamide and 2-AG. Listed because they are described in the same literature, not because they are administered products.",
       "schema:termCode": "compound_endocannabinoid"
     },
     {
       "@type": "schema:DefinedTerm",
       "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound_cbd",
-      "schema:name": "カンナビジオール (CBD)",
+      "schema:name": "Cannabidiol (CBD)",
       "schema:inDefinedTermSet": {
         "@type": "schema:DefinedTermSet",
         "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-cbd-scheme"
@@ -94,7 +100,7 @@
     {
       "@type": "schema:DefinedTerm",
       "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound_thc",
-      "schema:name": "デルタ9-テトラヒドロカンナビノール (THC)",
+      "schema:name": "Δ9-Tetrahydrocannabinol (THC)",
       "schema:inDefinedTermSet": {
         "@type": "schema:DefinedTermSet",
         "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-thc-scheme"
@@ -109,7 +115,7 @@
     {
       "@type": "schema:DefinedTerm",
       "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound_cbg",
-      "schema:name": "カンナビゲロール (CBG)",
+      "schema:name": "Cannabigerol (CBG)",
       "schema:inDefinedTermSet": {
         "@type": "schema:DefinedTermSet",
         "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-cbg-scheme"
@@ -124,7 +130,7 @@
     {
       "@type": "schema:DefinedTerm",
       "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound_cbn",
-      "schema:name": "カンナビノール (CBN)",
+      "schema:name": "Cannabinol (CBN)",
       "schema:inDefinedTermSet": {
         "@type": "schema:DefinedTermSet",
         "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-cbn-scheme"
@@ -139,7 +145,7 @@
     {
       "@type": "schema:DefinedTerm",
       "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound_cbc",
-      "schema:name": "カンナビクロメン (CBC)",
+      "schema:name": "Cannabichromene (CBC)",
       "schema:inDefinedTermSet": {
         "@type": "schema:DefinedTermSet",
         "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-cbc-scheme"
@@ -153,7 +159,7 @@
     {
       "@type": "schema:DefinedTerm",
       "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound_thcv",
-      "schema:name": "テトラヒドロカンナビバリン (THCV)",
+      "schema:name": "Tetrahydrocannabivarin (THCV)",
       "schema:inDefinedTermSet": {
         "@type": "schema:DefinedTermSet",
         "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-thcv-scheme"
@@ -168,7 +174,7 @@
     {
       "@type": "schema:DefinedTerm",
       "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound_cbdv",
-      "schema:name": "カンナビジバリン (CBDV)",
+      "schema:name": "Cannabidivarin (CBDV)",
       "schema:inDefinedTermSet": {
         "@type": "schema:DefinedTermSet",
         "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-cbdv-scheme"
@@ -182,7 +188,7 @@
     {
       "@type": "schema:DefinedTerm",
       "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound_cbx",
-      "schema:name": "CBX (カンナビノイド)",
+      "schema:name": "CBX (Cannabinoid)",
       "schema:inDefinedTermSet": {
         "@type": "schema:DefinedTermSet",
         "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-cbx-scheme"
@@ -191,6 +197,7 @@
         "CBX (カンナビノイド)",
         "CBX"
       ],
+      "schema:description": "A minor cannabinoid marketed in Japan. NOTE: 'CBX' is polysemous — also refers to Honda CBX400F motorcycle. Use discriminating queries for disambiguation.",
       "schema:termCode": "compound_cbx"
     },
     {
@@ -202,7 +209,6 @@
         "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-h4cbh-scheme"
       },
       "schema:alternateName": [
-        "H4CBH",
         "H4CBH"
       ],
       "schema:description": "A hydrogenated cannabinoid derivative marketed in Japan.",
@@ -217,7 +223,6 @@
         "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-hhbd-scheme"
       },
       "schema:alternateName": [
-        "HHBD",
         "HHBD"
       ],
       "schema:description": "A cannabinoid derivative marketed in Japan.",
@@ -232,7 +237,6 @@
         "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-crdh-scheme"
       },
       "schema:alternateName": [
-        "CRDH",
         "CRDH"
       ],
       "schema:description": "A synthetic cannabinoid derivative marketed in Japan. Chemical structure unknown. Monitoring target.",
@@ -241,7 +245,7 @@
     {
       "@type": "schema:DefinedTerm",
       "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound_hhc",
-      "schema:name": "ヘキサヒドロカンナビノール (HHC)",
+      "schema:name": "Hexahydrocannabinol (HHC)",
       "schema:inDefinedTermSet": {
         "@type": "schema:DefinedTermSet",
         "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-hhc-scheme"
@@ -256,7 +260,7 @@
     {
       "@type": "schema:DefinedTerm",
       "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound_hhch",
-      "schema:name": "ヘキサヒドロカンナビヘキソール (HHCH)",
+      "schema:name": "Hexahydrocannabihexol (HHCH)",
       "schema:inDefinedTermSet": {
         "@type": "schema:DefinedTermSet",
         "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-hhch-scheme"
@@ -271,7 +275,7 @@
     {
       "@type": "schema:DefinedTerm",
       "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound_thch",
-      "schema:name": "テトラヒドロカンナビヘキソール (THCH)",
+      "schema:name": "Tetrahydrocannabihexol (THCH)",
       "schema:inDefinedTermSet": {
         "@type": "schema:DefinedTermSet",
         "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-thch-scheme"
@@ -286,7 +290,7 @@
     {
       "@type": "schema:DefinedTerm",
       "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound_thc_o",
-      "schema:name": "テトラヒドロカンナビノール-O (THC-O)",
+      "schema:name": "Tetrahydrocannabinol-O-acetate (THC-O)",
       "schema:inDefinedTermSet": {
         "@type": "schema:DefinedTermSet",
         "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-thc-o-scheme"
@@ -309,7 +313,6 @@
         "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-crdp-scheme"
       },
       "schema:alternateName": [
-        "CRDP",
         "CRDP"
       ],
       "schema:description": "A synthetic cannabinoid marketed in Japan. Chemical structure unknown. Monitoring target.",
@@ -318,7 +321,7 @@
     {
       "@type": "schema:DefinedTerm",
       "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound_anandamide",
-      "schema:name": "アナンダミド (AEA)",
+      "schema:name": "Anandamide (AEA)",
       "schema:inDefinedTermSet": {
         "@type": "schema:DefinedTermSet",
         "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-anandamide-scheme"
@@ -332,7 +335,7 @@
     {
       "@type": "schema:DefinedTerm",
       "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound_2ag",
-      "schema:name": "2-アラキドノイルグリセロール (2-AG)",
+      "schema:name": "2-Arachidonoylglycerol (2-AG)",
       "schema:inDefinedTermSet": {
         "@type": "schema:DefinedTermSet",
         "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-2ag-scheme"

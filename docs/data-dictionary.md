@@ -284,17 +284,28 @@
 
 ### 6.4 化合物カテゴリ
 
-| カテゴリ ID | 成分 | SKOS Concept |
+**正本:** `metadata/taxonomy/compound-taxonomy.skos.jsonld`。本表はその写しであり、
+一致は `tests/validation/test_taxonomy_consistency.py` が検査する（以前は taxonomy が 6 カテゴリ 18 化合物
+であるのに本表は 3 カテゴリ 7 化合物しか載せておらず、カテゴリ ID も独自のものだった）。
+
+| カテゴリ（notation） | カテゴリ名（ja） | 成分 |
 |-------------|------|--------------|
-| `major_phytocannabinoid` | CBD, THC | `compound_cbd`, `compound_thc` |
-| `minor_phytocannabinoid` | CBG, THCV, THCH | `compound_cbg`, `compound_thcv`, `compound_thch` |
-| `semi_synthetic` | HHC, THC-O | `compound_hhc`, `compound_thc_o` |
+| `compound_major` | 主要フィトカンナビノイド | `compound_cbd`, `compound_thc` |
+| `compound_minor` | 主要フィトカンナビノイド以外のフィトカンナビノイド | `compound_cbg`, `compound_cbn`, `compound_cbc`, `compound_thcv`, `compound_cbdv`, `compound_cbx`, `compound_thch` |
+| `compound_rare` | レアカンナビノイド | （なし。**意図的に空**。`skos:scopeNote` 参照） |
+| `compound_semisynthetic` | 半合成カンナビノイド | `compound_hhc`, `compound_thc_o`, `compound_h4cbh`, `compound_hhbd` |
+| `compound_synthetic` | 合成カンナビノイド | `compound_hhch`, `compound_crdp`, `compound_crdh` |
+| `compound_endocannabinoid` | エンドカンナビノイド | `compound_anandamide`, `compound_2ag` |
+
+> **注:** カテゴリは**製造経路**による分類である。化学構造による分類（水素化カンナビノイド等）とは
+> 別物であり、`research/google-trends/20261004-google-trends-compound-summary.md` の「カテゴリ」列
+> は化学クラスを指すため本表とは一致しない。両者を混同しないこと。
 
 ---
 
 ## 7. 欠損値の扱い
 
-### 6.1 状態定義
+### 7.1 状態定義
 
 | 状態 | 意味 | 表記 |
 |------|------|------|
@@ -305,7 +316,7 @@
 | `partial` | 部分的なデータ | 実際の値 + 注記 |
 | `unknown` | 不明 | "unknown" |
 
-### 6.2 各データセットの欠損値状況
+### 7.2 各データセットの欠損値状況
 
 | データセット | 欠損値 | 状態 |
 |-------------|--------|------|

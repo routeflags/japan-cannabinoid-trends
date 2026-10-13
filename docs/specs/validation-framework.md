@@ -1009,3 +1009,63 @@ staged → `adopt` を案内する。パスは字句的に正規化するため 
   対象成果物（匿名化済み X CSV）は公開されている（Zenodo 含む）。ゲートは record-only
   設計だが、AGENTS.md は「公開ゲートの失敗は解決または明示的に文書化されるまで公開を
   止める」と定めており、**受容の記録が見当たらない**。記録の追記が要る。
+
+## 23. タクソノミーと文書の整合（2026-10-13）
+
+### 23.1 見つかった欠陥（最大のものは当初の想定外）
+
+1. **JSON の重複キーによる無言のデータ欠落。** 両 SKOS ファイルは 1 概念につき
+   `skos:prefLabel` を 2 回書いており（`en` と `ja`）、JSON は重複キーを後勝ちで読むため
+   **英語ラベル 38 件（compound 24 + content 14）がパース時に消えていた**。公開済みの
+   `exports/taxonomy/compound-taxonomy.ttl` の英語 `prefLabel` は **0 件**で、ソースは 24 件を
+   宣言していた。CI の export 同期検査は、エクスポータも `json.load` を使うため同じ欠落を
+   忠実に再現しており、**検知できなかった**（同じ入力から同じ出力を作る検査は、入力の
+   解釈が壊れていても通る）。
+   - 修正: 複数値を配列にする（SKOS JSON-LD の正しい形）。
+   - 副次効果として Schema.org エクスポートの `schema:name` が日本語から英語に変わり、
+     日本語が `schema:alternateName` に入った。これは**エクスポータ本来の設計**
+     （`schema:name = pref_label_en or pref_label_ja`、`alternateName = pref_label_ja`）が、
+     英語が常に空だったため黙って fallback していたものが復旧したもの。重複していた
+     `schema:alternateName`（例: H4CBH が 2 回）も解消した。
+2. `docs/data-dictionary.md` §6.4 は 3 カテゴリ 7 化合物のみを載せ、カテゴリ ID も独自
+   （`major_phytocannabinoid`）だった。taxonomy は 6 カテゴリ 18 化合物。
+   → taxonomy を正本として写し直した。
+3. `compound_rare` が空で説明も無く、欠落と読めた。→ `skos:scopeNote` に「意図的に空」と
+   明記（他の 5 カテゴリにも scopeNote を追加。全 6 カテゴリが説明を持つ状態にした）。
+4. `iptc-mapping.yaml` は 38 概念中 15 のみ対応し、残り 23 について何も言っていなかった。
+   → `coverage` 宣言を追加（mapped ∪ deliberately_unmapped ∪ not_applicable が全概念を
+   重複なく覆う）。
+5. `research/google-trends/20261004-google-trends-compound-summary.md` は THCH を
+   「ヘキサカンナビノール類」と記載していた（taxonomy にも化学クラスとしても存在しない
+   名称）。→ taxonomy と同じマイナー・フィトカンナビノイドに修正し、同列が**化学クラス**で
+   あり taxonomy の分類（**製造経路**）とは別語彙である旨を表の下に明記した。
+
+### 23.2 施行（規則）
+
+- `src/validation/json_hygiene.py` ＋ `tests/validation/test_json_hygiene.py`:
+  **追跡された JSON / JSON-LD に重複キーが無いこと**（全 156 ファイルを走査）。重複は
+  無言のデータ欠落なので、キーごと・囲んでいる概念名つき（`skos:notation` / `@id`）で報告する。
+- `tests/validation/test_taxonomy_consistency.py`:
+  §6.4 ＝ taxonomy、空カテゴリは `skos:scopeNote` 必須、IPTC coverage が全概念を覆う、
+  **公開 TTL が en / ja 両方の `prefLabel` を持つ**。
+- YAML パーサは導入していない（本リポジトリの第三者依存は cerberus のみ）。`iptc-mapping.yaml`
+  の coverage は厳格なテキスト読取で検証し、構造が読めなければ failure にする
+  （`processing/rulespec.py` と同じ方針）。
+
+### 23.3 実測（2026-10-13、Python 3.14）
+
+- `pytest` **889 passed**（+14: json_hygiene 8 / taxonomy_consistency 6）。
+- TTL の英語 `prefLabel`: compound **0 → 24**、content **0 → 14**。
+- export 同期検査（CI と同一手順）: 6 ファイルすべて一致。
+- `validate-registries` 11 valid / `audit-new-runs` failures 0 / `audit-processed` 7 成果物 /
+  `validate-data-schema` PASS 45・FAIL 0 / `validate-version-sync` PASS 12・FAIL 0 /
+  research pages 全ページ最新 / `audit-x-identity` 0 findings。
+
+### 23.4 未実施（引き継ぎ）
+
+- IPTC の 17 末端概念（化合物 9 / intent 4 / format 4）は未対応のまま。対応可否は IPTC 語彙の
+  確認後に判断する（推測で対応付けない）。
+- **化学クラス（水素化カンナビノイド等）と製造経路クラス（taxonomy）という 2 つの語彙が
+  併存している。** taxonomy は製造経路を採る。化学クラスを taxonomy の第 2 次元として持つか、
+  研究文書側の語彙として残すかは未判断。
+- `compound_rare` の会員（CBDP / THCP 等）は未登録。
