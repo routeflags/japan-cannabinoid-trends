@@ -40,6 +40,7 @@ python3 -m venv .venv
 - `.venv/`・`*.egg-info/`・`.pytest_cache/` は `.gitignore` 済み。
 - editable install により `python -m validation.<module>` と `import validation` が
   リポジトリルートから動作する。
+- pre-commit フック導入: `bash scripts/git-hooks/install.sh`（schema＋version＋research-pages＋emergence の4検証。検証は /tmp scratch clone でのみ行う）。
 
 ## 3. テスト
 
@@ -233,6 +234,39 @@ report = outcome.to_report().to_dict()
 - リリースアーカイブ（P7-4）: 検証フレームワークの再現に必要な `pyproject.toml` と
   `tests/` を INCLUDE_PATHS に追加し、`__pycache__` / `*.egg-info` / `.pytest_cache`
   を除外する（`scripts/release/create-clean-archive.sh` と `release-zenodo.yml` に反映済み）。
+
+### 6.1 追加ステップ（2026-10-13 増分）と除外の記録
+
+追加（いずれも main 上で green をローカル実測。秒単位。`release-zenodo.yml` は不変）:
+
+- `bash scripts/validation/validate-data-schema.sh`（PASS 45 / WARN 2 / FAIL 0、約0.2秒）
+- `python scripts/validation/validate-research-pages.py`（13化合物全合格、約0.05秒。stdlib のみ、network 不要）
+- `bash scripts/validation/validate-search-emergence-tracker.sh`（PASS、約0.1秒。network 不要。§3 の日付比較は WARN のみで exit に影響しない）
+- `python -m validation.cli audit-git-tracking --output /tmp/g6-git-tracking-inventory.json`
+  （read-only、report-only、常に exit 0。tracked/ignored/absent を CI ログに記録）
+- exports 同期検査（`export-taxonomy.sh --output-dir` を scratch に実行し、tracked の
+  `exports/taxonomy/*` と diff して一致を要求。regeneration は正規スクリプトのみ）
+
+除外（理由）:
+
+- `validate-version-sync.sh`: 現 main で完走不能だった（`set -euo pipefail` 下で
+  `preferred-citation.doi` 欠落時の grep 非一致が abort。ガード修正で完走するも
+  FAIL 1 件=`preferred-citation.doi` 欠落が残る）。加えて network 依存
+  （Zenodo API・`gh`・`ls-remote`）と tag 履歴依存（`fetch-depth: 1` の CI では
+  基準バージョンが定まらない）。CI 入りは `preferred-citation.doi` の人手判断
+  （CITATION.cff への doi 追記か、WARN 緩和か）の後に再評価する。
+- `validate-all`（strict）: legacy 29件で exit 1 が正常＝ゲートにできない（従来どおり）。
+- ライブ収集・認証情報・network・ローカル専用ファイル（`trends.db` 等）を要するもの。
+- リリースのブロック: `release-zenodo.yml` は published トリガ（公開後に走るため
+  公開を止められない）。公開可否は `gate-publication` の人手実行＋記録で行う
+  （`docs/specs/release-process.md` の Pre-release 項目）。
+
+非決定論の扱い:
+
+- `exports/taxonomy/*.ttl` の `# Generated:` 行は `datetime.utcnow()` 埋め込みの
+  非決定論的生成記録であり、同期検査の比較対象から除外する（`grep -v '^# Generated:'`
+  で正規化。スクリプト本体は変えない）。`schema.jsonld` の `dateCreated` は固定値
+  のため除外不要。
 
 ## 7. 責務分離（重要）
 

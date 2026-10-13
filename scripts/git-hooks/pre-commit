@@ -1,10 +1,12 @@
 #!/usr/bin/env bash
 # =============================================================================
-# Pre-commit hook: Data Schema + Version Sync Validation
+# Pre-commit hook: Data Schema + Version Sync + Research Pages + Emergence Tracker Validation
 #
 # コミット前に以下を検証:
 # 1. Data Dictionary と実際のデータスキーマの一致
 # 2. バージョン/DOI の同期（CITATION.cff, datapackage.json 等）
+# 3. 調査ページの完全性（publication/research_*.html）
+# 4. Search Emergence Tracker の最新性（publication/search-emergence-tracker）
 #
 # 検証をスキップする場合:
 #   git commit --no-verify
@@ -27,6 +29,12 @@ SCHEMA_VALIDATION_NEEDED=false
 # バージョン同期検証が必要なファイル
 VERSION_VALIDATION_NEEDED=false
 
+# 調査ページ完全性検証が必要なファイル
+RESEARCH_VALIDATION_NEEDED=false
+
+# Emergence Tracker 検証が必要なファイル
+EMERGENCE_VALIDATION_NEEDED=false
+
 for file in $CHANGED_FILES; do
   case $file in
     # データスキーマ検証対象
@@ -45,11 +53,26 @@ for file in $CHANGED_FILES; do
     publication/guide_cbx_rewrite.html)
       VERSION_VALIDATION_NEEDED=true
       ;;
+    # 調査ページ完全性検証対象（全 study の主要 raw 種別。google_trends 例外の
+    # 追跡 raw を含む。将来の study・source 追加時はここに種別を足す）
+    publication/research_*.html|\
+    datasets/**/data/raw/x/*|\
+    datasets/**/data/raw/youtube/*|\
+    datasets/**/data/raw/google_trends/*|\
+    datasets/**/data/raw/coa/*)
+      RESEARCH_VALIDATION_NEEDED=true
+      ;;
+    # Emergence Tracker 検証対象
+    publication/search-emergence-tracker/*|\
+    project.json|\
+    research/regulatory-status/*)
+      EMERGENCE_VALIDATION_NEEDED=true
+      ;;
   esac
 done
 
-# どちらの検証も不要な場合はスキップ
-if [ "$SCHEMA_VALIDATION_NEEDED" = false ] && [ "$VERSION_VALIDATION_NEEDED" = false ]; then
+# いずれの検証も不要な場合はスキップ
+if [ "$SCHEMA_VALIDATION_NEEDED" = false ] && [ "$VERSION_VALIDATION_NEEDED" = false ] && [ "$RESEARCH_VALIDATION_NEEDED" = false ] && [ "$EMERGENCE_VALIDATION_NEEDED" = false ]; then
   exit 0
 fi
 
@@ -92,6 +115,42 @@ if [ "$VERSION_VALIDATION_NEEDED" = true ]; then
   else
     echo ""
     echo "  ✅ バージョン同期検証に合格しました"
+  fi
+  echo ""
+fi
+
+# 3. 調査ページ完全性検証
+if [ "$RESEARCH_VALIDATION_NEEDED" = true ]; then
+  echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+  echo "  3. Research Pages Validation"
+  echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+  echo ""
+  
+  if ! python3 scripts/validation/validate-research-pages.py; then
+    echo ""
+    echo "  ❌ 調査ページ完全性検証に失敗しました"
+    VALIDATION_FAILED=true
+  else
+    echo ""
+    echo "  ✅ 調査ページ完全性検証に合格しました"
+  fi
+  echo ""
+fi
+
+# 4. Emergence Tracker 検証
+if [ "$EMERGENCE_VALIDATION_NEEDED" = true ]; then
+  echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+  echo "  4. Search Emergence Tracker Validation"
+  echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+  echo ""
+  
+  if ! bash scripts/validation/validate-search-emergence-tracker.sh; then
+    echo ""
+    echo "  ❌ Emergence Tracker 検証に失敗しました"
+    VALIDATION_FAILED=true
+  else
+    echo ""
+    echo "  ✅ Emergence Tracker 検証に合格しました"
   fi
   echo ""
 fi

@@ -128,8 +128,9 @@ print_header "1. CITATION.cff"
 CITATION_FILE="CITATION.cff"
 
 if [ -f "$CITATION_FILE" ]; then
-  # version (値のみ抽出)
-  CITATION_VERSION=$(grep -E '^version:' "$CITATION_FILE" | head -1 | awk -F'"' '{print $2}')
+  # version (値のみ抽出。未検出時は空にして FAIL 判定に委ねる。
+  # pipefail 下で grep の非一致が abort しないようガード)
+  CITATION_VERSION=$(grep -E '^version:' "$CITATION_FILE" | head -1 | awk -F'"' '{print $2}' || true)
   if [ "$CITATION_VERSION" = "$BASELINE_VERSION" ]; then
     print_pass "version: $CITATION_VERSION"
   else
@@ -137,7 +138,7 @@ if [ -f "$CITATION_FILE" ]; then
   fi
 
   # preferred-citation version
-  PREF_VERSION=$(sed -n '/preferred-citation:/,/^[a-z]/p' "$CITATION_FILE" | grep 'version:' | awk -F'"' '{print $2}' | head -1)
+  PREF_VERSION=$(sed -n '/preferred-citation:/,/^[a-z]/p' "$CITATION_FILE" | grep 'version:' | awk -F'"' '{print $2}' | head -1 || true)
   if [ "$PREF_VERSION" = "$BASELINE_VERSION" ]; then
     print_pass "preferred-citation.version: $PREF_VERSION"
   else
@@ -145,7 +146,7 @@ if [ -f "$CITATION_FILE" ]; then
   fi
 
   # identifiers DOI
-  CITATION_DOI=$(grep -A5 'identifiers:' "$CITATION_FILE" | grep 'value:' | head -1 | awk -F'"' '{print $2}')
+  CITATION_DOI=$(grep -A5 'identifiers:' "$CITATION_FILE" | grep 'value:' | head -1 | awk -F'"' '{print $2}' || true)
   if [ -n "$BASELINE_DOI" ]; then
     if [ "$CITATION_DOI" = "$BASELINE_DOI" ]; then
       print_pass "identifiers.doi: $CITATION_DOI"
@@ -155,7 +156,7 @@ if [ -f "$CITATION_FILE" ]; then
   fi
 
   # preferred-citation DOI
-  PREF_DOI=$(sed -n '/preferred-citation:/,$p' "$CITATION_FILE" | grep 'doi:' | awk -F'"' '{print $2}' | head -1)
+  PREF_DOI=$(sed -n '/preferred-citation:/,$p' "$CITATION_FILE" | grep 'doi:' | awk -F'"' '{print $2}' | head -1 || true)
   if [ -n "$BASELINE_DOI" ]; then
     if [ "$PREF_DOI" = "$BASELINE_DOI" ]; then
       print_pass "preferred-citation.doi: $PREF_DOI"

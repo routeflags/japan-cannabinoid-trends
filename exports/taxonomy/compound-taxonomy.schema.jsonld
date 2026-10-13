@@ -225,6 +225,98 @@
     },
     {
       "@type": "schema:DefinedTerm",
+      "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound_crdh",
+      "schema:name": "CRDH",
+      "schema:inDefinedTermSet": {
+        "@type": "schema:DefinedTermSet",
+        "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-crdh-scheme"
+      },
+      "schema:alternateName": [
+        "CRDH",
+        "CRDH"
+      ],
+      "schema:description": "A synthetic cannabinoid derivative marketed in Japan. Chemical structure unknown. Monitoring target.",
+      "schema:termCode": "compound_crdh"
+    },
+    {
+      "@type": "schema:DefinedTerm",
+      "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound_hhc",
+      "schema:name": "ヘキサヒドロカンナビノール (HHC)",
+      "schema:inDefinedTermSet": {
+        "@type": "schema:DefinedTermSet",
+        "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-hhc-scheme"
+      },
+      "schema:alternateName": [
+        "ヘキサヒドロカンナビノール (HHC)",
+        "HHC"
+      ],
+      "schema:description": "A semi-synthetic hydrogenated cannabinoid marketed in Japan.",
+      "schema:termCode": "compound_hhc"
+    },
+    {
+      "@type": "schema:DefinedTerm",
+      "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound_hhch",
+      "schema:name": "ヘキサヒドロカンナビヘキソール (HHCH)",
+      "schema:inDefinedTermSet": {
+        "@type": "schema:DefinedTermSet",
+        "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-hhch-scheme"
+      },
+      "schema:alternateName": [
+        "ヘキサヒドロカンナビヘキソール (HHCH)",
+        "HHCH"
+      ],
+      "schema:description": "A synthetic cannabinoid marketed in Japan.",
+      "schema:termCode": "compound_hhch"
+    },
+    {
+      "@type": "schema:DefinedTerm",
+      "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound_thch",
+      "schema:name": "テトラヒドロカンナビヘキソール (THCH)",
+      "schema:inDefinedTermSet": {
+        "@type": "schema:DefinedTermSet",
+        "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-thch-scheme"
+      },
+      "schema:alternateName": [
+        "テトラヒドロカンナビヘキソール (THCH)",
+        "THCH"
+      ],
+      "schema:description": "A minor phytocannabinoid marketed in Japan.",
+      "schema:termCode": "compound_thch"
+    },
+    {
+      "@type": "schema:DefinedTerm",
+      "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound_thc_o",
+      "schema:name": "テトラヒドロカンナビノール-O (THC-O)",
+      "schema:inDefinedTermSet": {
+        "@type": "schema:DefinedTermSet",
+        "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-thc-o-scheme"
+      },
+      "schema:alternateName": [
+        "テトラヒドロカンナビノール-O (THC-O)",
+        "THC-O",
+        "THCO",
+        "THC-O-Acetate"
+      ],
+      "schema:description": "A semi-synthetic cannabinoid acetate marketed in Japan.",
+      "schema:termCode": "compound_thc_o"
+    },
+    {
+      "@type": "schema:DefinedTerm",
+      "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound_crdp",
+      "schema:name": "CRDP",
+      "schema:inDefinedTermSet": {
+        "@type": "schema:DefinedTermSet",
+        "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-crdp-scheme"
+      },
+      "schema:alternateName": [
+        "CRDP",
+        "CRDP"
+      ],
+      "schema:description": "A synthetic cannabinoid marketed in Japan. Chemical structure unknown. Monitoring target.",
+      "schema:termCode": "compound_crdp"
+    },
+    {
+      "@type": "schema:DefinedTerm",
       "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound_anandamide",
       "schema:name": "アナンダミド (AEA)",
       "schema:inDefinedTermSet": {

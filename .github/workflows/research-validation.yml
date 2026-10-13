@@ -42,3 +42,41 @@ jobs:
       - name: Validate registries
         run: |
           python -m validation.cli validate-registries
+
+      - name: Validate data schema (bash)
+        run: |
+          bash scripts/validation/validate-data-schema.sh
+
+      - name: Validate research pages
+        run: |
+          python scripts/validation/validate-research-pages.py
+
+      - name: Validate search emergence tracker
+        run: |
+          bash scripts/validation/validate-search-emergence-tracker.sh
+
+      - name: Audit git tracking (report only)
+        run: |
+          python -m validation.cli audit-git-tracking --output /tmp/g6-git-tracking-inventory.json
+
+      - name: Check taxonomy exports in sync
+        run: |
+          bash scripts/export/export-taxonomy.sh --output-dir /tmp/taxonomy-exports
+          fail=0
+          for base in content-taxonomy.ttl compound-taxonomy.ttl \
+              content-taxonomy.schema.jsonld compound-taxonomy.schema.jsonld; do
+            # The `# Generated:` timestamp line in .ttl is non-deterministic
+            # (datetime.utcnow(); see docs/specs/validation-framework.md §6.1).
+            if ! diff <(grep -v '^# Generated:' "exports/taxonomy/${base}") \
+                <(grep -v '^# Generated:' "/tmp/taxonomy-exports/${base}"); then
+              echo "::error::stale export: exports/taxonomy/${base} — regenerate with bash scripts/export/export-taxonomy.sh"
+              fail=1
+            fi
+          done
+          for base in iptc-mapping.yaml classification-rules.yaml; do
+            if ! diff "exports/taxonomy/${base}" "/tmp/taxonomy-exports/${base}"; then
+              echo "::error::stale export: exports/taxonomy/${base} — regenerate with bash scripts/export/export-taxonomy.sh"
+              fail=1
+            fi
+          done
+          exit $fail
