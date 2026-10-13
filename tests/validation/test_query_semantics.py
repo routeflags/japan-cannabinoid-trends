@@ -131,7 +131,7 @@ def test_resolution_distinguishes_canonical_and_variant():
         ("ＣＢＤ", "relevant", "cbd-general-ja", None, None),
         ("Durban CBD", "irrelevant", None, None, "non-compound-durban-cbd"),
         ("CBD ペン", "ambiguous", None, None, None),
-        ("THC リキッド", "ambiguous", None, None, None),
+        ("THC リキッド", "relevant", "thc-liquid-ja", None, None),
         ("天気", "unknown", None, None, None),
     ],
 )
@@ -443,14 +443,19 @@ def test_audit_snapshot_records_the_legacy_examples():
     assert states["CBD"] == "exact_match"
     assert states["CBDリキッド"] == "variant_match"
     assert states["CBD オイル"] == "exact_match"
-    # not registered yet: recorded for review, never silently mapped
-    assert states["THC リキッド"] == "ambiguous"
-    # The five compounds missing from the taxonomy (HHC / HHCH / THCH / THC-O /
-    # CRDP) were added on 2026-10-13, so their mentions classify as ambiguous
-    # ('compound_token_without_registered_query') instead of unmapped.  Assert
-    # the partition and that review-required entries exist, rather than a fixed
-    # ``unmapped`` count: a future run may legitimately record an unmapped
-    # string, and turning that into a failure would contradict the point of
-    # recording it.
-    assert stored["summary"]["ambiguous"] > 0
+    # Registered in the 2026-10-13 G2 increment (14 queries): previously
+    # ``ambiguous``, now ``exact_match`` (recomputed audit: exact 41 -> 73).
+    assert states["THC リキッド"] == "exact_match"
+    assert states["THC"] == "exact_match"
+    assert states["CBG"] == "exact_match"
+    assert states["CBG リキッド"] == "exact_match"
+    assert states["CBN"] == "exact_match"
+    assert states["CBN リキッド"] == "exact_match"
+    # Assert the partition shape (the five states cover the corpus) rather
+    # than a fixed partition: a future run may legitimately record an
+    # ambiguous or unmapped string, and turning that into a failure would
+    # contradict the point of recording review states.  The
+    # ``recomputed == stored`` test above already forces a human-reviewed
+    # snapshot regeneration on any data or classifier change.
+    assert sum(stored["summary"].values()) == stored["query_count"]
     assert sum(stored["summary"].values()) == stored["query_count"]

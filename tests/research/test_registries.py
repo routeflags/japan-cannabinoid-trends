@@ -31,7 +31,8 @@ def _codes(issues) -> list[str]:
 
 
 # ---------------------------------------------------------------------------
-# Checked-in slice registries (2-study vertical slice, P1/P7)
+# Checked-in registries (9-study inventory, P1/P7: the 2-study vertical slice
+# plus the 2026-10-13 G7 increment registering the remaining 7 studies)
 # ---------------------------------------------------------------------------
 
 def test_study_registry_file_is_structurally_valid():
@@ -41,16 +42,27 @@ def test_study_registry_file_is_structurally_valid():
     assert check_study_registry(document) == []
 
 
-def test_study_registry_covers_exactly_the_slice_studies():
+def test_study_registry_covers_exactly_the_nine_studies():
     document = _load(STUDY_REGISTRY)
     assert [s["study_id"] for s in document["studies"]] == [
         "cbx-search-trends",
         "cannabinoid-multi-trends",
+        "cannabinoid-social-trends",
+        "cbx-liquid-online-trend",
+        "cbx-product-coa",
+        "cbx-social-trends",
+        "x-26week-trends",
+        "x-consistency",
+        "youtube-consistency",
     ]
 
 
 def test_study_registry_questions_come_from_readmes():
-    """Research questions match the study READMEs verbatim (no invention)."""
+    """Research questions match the study READMEs verbatim (no invention).
+
+    Studies without an explicit ``研究質問`` blockquote quote their README
+    purpose statement verbatim instead (G7 increment 2026-10-13); the test
+    only enforces verbatim presence, never authorship."""
     document = _load(STUDY_REGISTRY)
     by_id = {s["study_id"]: s for s in document["studies"]}
     for study_id in by_id:
@@ -95,7 +107,17 @@ def test_g7_t02_unregistered_study_reference_fails():
 
 def test_registered_slice_studies_pass_reference_check():
     registries = Registries.from_documents(study_registry=_load(STUDY_REGISTRY))
-    for study_id in ("cbx-search-trends", "cannabinoid-multi-trends"):
+    for study_id in (
+        "cbx-search-trends",
+        "cannabinoid-multi-trends",
+        "cannabinoid-social-trends",
+        "cbx-liquid-online-trend",
+        "cbx-product-coa",
+        "cbx-social-trends",
+        "x-26week-trends",
+        "x-consistency",
+        "youtube-consistency",
+    ):
         issues = check_registry_references({"study_id": study_id}, registries)
         assert "REFERENCE_STUDY_UNREGISTERED" not in _codes(issues)
 

@@ -18,6 +18,69 @@
       ],
       "sources": ["google-trends", "x", "youtube"],
       "status": "active"
+    },
+    {
+      "study_id": "cannabinoid-social-trends",
+      "title": "cannabinoid-social-trends — カンナビノイド規制前後の X (Twitter) 言及データ",
+      "research_questions": [
+        "規制イベント（指定薬物指定）前後の X (Twitter) 上の言及量・内容を比較するための\nraw 収集データセット。自然実験（pre-post 比較 + 対照系列）の設計で収集している。"
+      ],
+      "sources": ["x"],
+      "status": "active"
+    },
+    {
+      "study_id": "cbx-liquid-online-trend",
+      "title": "CBX Liquid Online Trend",
+      "research_questions": [
+        "2026年の日本国内において、X (Twitter) 上で「CBX リキッド」に言及する投稿の量・内容・時間的推移は何か？"
+      ],
+      "sources": ["x"],
+      "status": "planned"
+    },
+    {
+      "study_id": "cbx-product-coa",
+      "title": "CBX Product COA",
+      "research_questions": [
+        "市流通している CBX 配合製品の原料の純度・成分・THC 残留量はどうなっているか？"
+      ],
+      "sources": [],
+      "status": "planned"
+    },
+    {
+      "study_id": "cbx-social-trends",
+      "title": "CBX Social Media Trends",
+      "research_questions": [
+        "2026年の日本国内において、複数 SNS プラットフォーム上で CBX に言及する投稿の量・内容・時間的推移は何か？"
+      ],
+      "sources": ["instagram", "tiktok", "x", "youtube"],
+      "status": "active"
+    },
+    {
+      "study_id": "x-26week-trends",
+      "title": "x-26week-trends — CBX リキッド X 26週間トレンド調査",
+      "research_questions": [
+        "CBX リキッドに関する X (Twitter) 投稿を 26 週間分（2026-03-19 〜 2026-09-17）に\nわたって週次取得し、言及量の推移・出現時期を調査した study。"
+      ],
+      "sources": ["x"],
+      "status": "active"
+    },
+    {
+      "study_id": "x-consistency",
+      "title": "x-consistency — X (Twitter) 収集結果の一貫性・日付範囲取得データセット",
+      "research_questions": [
+        "X 検索クエリに対する複数回の収集 Run を SQLite で管理し、\n一貫性検証と日付範囲指定の冪等取得を行うデータセット。"
+      ],
+      "sources": ["x"],
+      "status": "active"
+    },
+    {
+      "study_id": "youtube-consistency",
+      "title": "youtube-consistency — YouTube 検索結果の一貫性・重複分析",
+      "research_questions": [
+        "YouTube 検索クエリに対する複数回の収集 Run の一貫性（一致率）を検証するデータセット。"
+      ],
+      "sources": ["youtube"],
+      "status": "active"
     }
   ]
 }

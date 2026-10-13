@@ -16,7 +16,7 @@
 | Phase 6 | 収集パイプライン統合 | **G1 垂直スライス実装済み**（registries / capability gate / adapter contract / L1 + quarantine / L2。ライブ収集は未実施、既存 shell・skill への適用は親判断待ち — §13）。**G3 垂直スライス実装済み**（Temporal Contract / Window Compiler / Coverage / Temporal Comparability / 旧 run 監査 — §16）。**G4 垂直スライス実装済み**（Artifact Registry / Reader Contract / Storage Integrity / Storage Inventory / Data Catalog — §17）。**G5 垂直スライス実装済み**（Provenance Contract / Evidence Registry / Audit Trail。重複整理・完全性評価・P01/P17・旧 run 監査 — §18） |
 | Phase 7 | CI | 実装済み（`research-validation.yml` 新設。初回実行成功: 2026-10-13 push `324cd55`） |
 | Phase 8 | Legacy Audit | 実装済み（29件を非破壊監査。`docs/audits/g5-legacy-runs.json`、raw sha256 前後一致） |
-| G7 垂直スライス | Study Registry / Research Catalog / Comparability Gate / Research View | **実装済み（2-study: `cbx-search-trends` + `cannabinoid-multi-trends`）**（Study/Measurement Registry 新設＋CI 検証11件。Catalog は派生索引（P2）。Gate は CS01-CS13、`comparable` は完全証拠時のみで実データ上限は `conditional`。View は `parallel_timeseries` 派生（合算なし）。9 study 非破壊監査は `docs/audits/g7-study-inventory.*`、raw sha256 前後一致） |
+| G7 垂直スライス | Study Registry / Research Catalog / Comparability Gate / Research View | **実装済み（9-study: 2026-10-13 増分で残り7件を登録。`cbx-product-coa` は sources 空（lab COA に対応する source なし）。測定は既存3件で充足のため追加なし）**（Study/Measurement Registry＋CI 検証11件。Catalog は派生索引（P2）。Gate は CS01-CS13、`comparable` は完全証拠時のみで実データ上限は `conditional`。View は `parallel_timeseries` 派生（合算なし）。9 study 非破壊監査は `docs/audits/g7-study-inventory.*`（再生成なし。registry 登録とは独立）、raw sha256 前後一致） |
 
 ## 1. 依存管理
 
@@ -48,8 +48,11 @@ python3 -m venv .venv
 ```
 
 - Contract Tests: `tests/validation/`（609件）+ `tests/collection/`（77件）
-  + `tests/storage/`（57件）+ `tests/research/`（46件）＝ **789件**（2026-10-13 G7 垂直スライス後。
+  + `tests/storage/`（57件）+ `tests/research/`（46件）＝ **789件**（2026-10-13 G2/G7 増分後も同数。
   `.venv/bin/python -m pytest` で実測（Python 3.14＋editable install）。G6 直後は 743 件）。
+  G2/G7 増分では件数を増やさず、崩れた前提の assertion を新しい真実に更新した
+  （`test_audit_snapshot_records_the_legacy_examples` の分割不変条件化、
+  `test_study_registry_covers_exactly_the_nine_studies` の 9-study 化）。
 - 新しいスキーマを登録したら、対応する Contract Test を必ず追加する
   （20261013h.md §9 / §16）。`tests/validation/test_schema_coverage.py` が
   「登録済みスキーマIDを参照するテストファイルの存在」を機械的に検査するため、
@@ -313,17 +316,16 @@ contract version は 1.0.0 のまま — G2 の plan 拡張と同じ手順）。
 |---|---|---|
 | `config/sources.json` | source-registry-v1 | **あり**（6 source。`validate-registries` と CI が実検証する） |
 | `config/collectors.json` | collector-registry-v1 | **あり**（6 collector。active は `google-trends-mcp` のみ） |
-| `metadata/queries/query-registry.json` | query-registry-v1 | **あり**（G2 垂直スライス: 17 queries。`validate-registries` と CI が実検証する） |
+| `metadata/queries/query-registry.json` | query-registry-v1 | **あり**（G2 垂直スライス + 2026-10-13 増分: 31 queries。`validate-registries` と CI が実検証する） |
 | `metadata/queries/query-variants.json` | query-variants-registry-v1 | **あり**（3 variant sets） |
 | `metadata/windows/*.json` | temporal-window-v1 | **あり**（G3 垂直スライス: 2 windows。`validate-registries` と CI が実検証する） |
 | `metadata/artifacts/artifact-registry.json` | artifact-registry-v1 | **あり**（G4 垂直スライス: 7 readers / 10 artifact schemas。`validate-registries` と CI が実検証する） |
 | `metadata/provenance/evidence-registry.json` | evidence-registry-v1 | **あり**（G5 垂直スライス: 8 証拠。`validate-registries` と CI が実検証する — §18） |
-| `metadata/studies/study-registry.json` | study-registry-v1 | なし（G7 の作業） |
-| `metadata/measurements/measurement-registry.json` | measurement-registry-v1 | なし（G7 の作業） |
-| `config/storage-policies.json` | storage-policy-registry-v1 | なし（G6 の作業） |
+| `metadata/studies/study-registry.json` | study-registry-v1 | **あり**（G7 垂直スライス + 2026-10-13 増分: 9 studies。`validate-registries` と CI が実検証する） |
+| `metadata/measurements/measurement-registry.json` | measurement-registry-v1 | **あり**（G7 垂直スライス: 3 measurements。`validate-registries` と CI が実検証する） |
+| `config/storage-policies.json` | storage-policy-registry-v1 | **あり**（G6 垂直スライス: 6 policies。`validate-registries` と CI が実検証する） |
 
-`validate-registries` は存在するファイルのみを検証する（現在 **8 ターゲット**）。
-上記 G6/G7 のファイルが置かれれば、CI が自動的に検証対象に含める。G2 の 2 ファイルは検証
+`validate-registries` は存在するファイルのみを検証する（現在 **11 ターゲット**。実測 valid）。G2 の 2 ファイルは検証
 対象に含まれ、taxonomy（`metadata/taxonomy/compound-taxonomy.skos.jsonld`）が
 存在する場合は compound 参照の意味検証も実行される（無い場合は該当チェック
 のみ無効になる）。G3 の `metadata/windows/*.json` も検証対象に含まれ、
@@ -455,13 +457,20 @@ python3 -m venv .venv
 
 G2 仕様（`docs/plans/20261013b.md`）の垂直スライス。当初の登録範囲は「taxonomy に概念が
 あり、run 実績または keywords.yaml に実在する」CBX / CBD の 7 クエリだった。
-**2026-10-13 追記**: taxonomy の欠落を解消（`docs/provenance/compound-taxonomy.md`）した
-ため、同じ基準で HHC / HHCH / THCH / THC-O / CRDP の **10 クエリ**を追加し、**計 17 クエリ**
-（6 化合物）となった。証拠台帳: `docs/provenance/query-inventory.md`。**ライブ収集・
+**2026-10-13 追記（G2 増分）**: taxonomy に概念があるのにクエリ未登録だった
+THC / CBG / CBN / CRDH / H4CBH / HHBD / THCV の **14 クエリ**（`compound_general` +
+`product_liquid` の分離を維持。表記ゆれは実収集の証拠がないため追加なし）を登録し、
+**計 31 クエリ**（14 化合物）となった。証拠は `docs/provenance/query-inventory.md` §1
+（版 1.2.0）に run 単位で追記。`audit-queries` を正規コマンドで再生成:
+exact_match 41 → **73**、`ambiguous` 32 → **0**（29 run に記録された化合物トークンは
+全て登録済みとなった正当な帰結）、`variant_match` 1 / `semantic_match_candidate` 1
+（`THC-Oリキッド`）/ `unmapped` 0 は不変、`raw_modified: false`。`test_audit_snapshot_records_the_legacy_examples`
+の旧前提（`states["THC リキッド"] == "ambiguous"`、`ambiguous > 0`）は崩れたため
+新しい真実（全分割 73/1/1/0/0）に合わせて assertion を更新した。**ライブ収集・
 新しい外部依存の追加は行っていない。**
 
 - **実装済み**:
-  - `metadata/queries/query-registry.json`（17 queries）/
+  - `metadata/queries/query-registry.json`（31 queries）/
     `metadata/queries/query-variants.json`（3 variant sets）。
     `compound_id` は taxonomy の notation（`compound_cbx` 等）。
   - 新スキーマ `query-variants-registry-v1`（variant 束ファイル。ブロック形状は
@@ -477,8 +486,8 @@ G2 仕様（`docs/plans/20261013b.md`）の垂直スライス。当初の登録�
     記録（b.md §7）。未登録 query_id は error、deprecated は info（既存
     `semantic.check_registry_references` をそのまま使用）。
   - 旧 run 棚卸し（b.md §13）: `docs/audits/g2-query-inventory.json`。
-    29 run / 75 文字列を exact_match=22 / variant_match=1 / ambiguous=36 /
-    unmapped=16 / semantic_match_candidate=0 に分類し、`raw_modified: false`
+    29 run / 75 文字列を exact_match=73 / variant_match=1 / ambiguous=0 /
+    unmapped=0 / semantic_match_candidate=1 に分類し、`raw_modified: false`
     （sha256 前後比較）。テストが再計算一致を強制する。
 - **決定（J1 は要確認）**:
   - 既存 29 run の旧形式 `queries` は registry 照合の対象にしない（形状分離＋
@@ -487,8 +496,8 @@ G2 仕様（`docs/plans/20261013b.md`）の垂直スライス。当初の登録�
     （legacy.py）側の再設計が必要になるため、採用していない。
   - 除外方式は「正規化（NFKC + casefold）＋明示フレーズ表」（正規表現なし。
     根拠: docs/collection-gap-analysis.md 原因 G2 行 + b.md §8）。
-  - THC-O / THCH / CRDP / HHC / HHCH は taxonomy に概念がなく登録できない
-    （taxonomy 側の課題として引き継ぎ。§15 ラスト参照）。
+  - THC-O / THCH / CRDP / HHC / HHBD の taxonomy 欠落は解消済み（登録済み）。
+    残る taxonomy 側の課題は §15 ラスト参照。
 - **未実装（引き継ぎ）**:
   - Platform Query Compiler（b.md Phase 3）と platform syntax の registry 表現
     （Q5 は現状 `submitted_query` の一致で代用。compiler 導入時に置換する）。

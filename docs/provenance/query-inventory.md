@@ -1,6 +1,6 @@
 # Query Inventory（クエリ証拠台帳）
 
-**版:** 1.1.0（2026-10-13）
+**版:** 1.2.0（2026-10-13）
 **目的:** G2 垂直スライスで `metadata/queries/` に登録したクエリ・表記ゆれ・除外
 規則の**証拠台帳**（G1 §18 Phase 1 の collector-inventory.md のクエリ版）。登録は
 「実 run の記録」または「既存 keywords.yaml / taxonomy」に基づき、推測の語彙は
@@ -8,7 +8,7 @@
 
 ---
 
-## 1. 登録済みクエリ（`query-registry.json`、17 件）
+## 1. 登録済みクエリ（`query-registry.json`、31 件）
 
 compound_id は compound-taxonomy の `skos:notation`（例 `compound_cbx`）。
 
@@ -31,6 +31,20 @@ compound_id は compound-taxonomy の `skos:notation`（例 `compound_cbx`）。
 | `thc-o-liquid-ja` | `compound_thc_o` | product_liquid | THC-O リキッド | active | 20261012T061614Z |
 | `crdp-general-ja` | `compound_crdp` | compound_general | CRDP | active | 20261002T085022Z / 085359Z |
 | `crdp-liquid-ja` | `compound_crdp` | product_liquid | CRDP リキッド | active | 20261012T061614Z |
+| `thc-general-ja` | `compound_thc` | compound_general | THC | active | 3 run（20261002T063852Z / comparison-setA 20261002T064236Z / 5y-baseline 20261008T093228Z） |
+| `thc-liquid-ja` | `compound_thc` | product_liquid | THC リキッド | active | 3 run（20261012T055259Z / 060517Z / 064246Z） |
+| `cbg-general-ja` | `compound_cbg` | compound_general | CBG | active | 3 run（20261002T063924Z / comparison-setA 20261002T064236Z / 5y-baseline 20261008T093228Z）/ keywords.yaml keywords |
+| `cbg-liquid-ja` | `compound_cbg` | product_liquid | CBG リキッド | active | 3 run（20261012T055259Z / 060517Z / 064246Z） |
+| `cbn-general-ja` | `compound_cbn` | compound_general | CBN | active | 2 run（20261002T081839Z / 082000Z） |
+| `cbn-liquid-ja` | `compound_cbn` | product_liquid | CBN リキッド | active | 3 run（20261012T055259Z / 060517Z / 064246Z） |
+| `crdh-general-ja` | `compound_crdh` | compound_general | CRDH | active | 2 run（20261008T121338Z / common-scale-missing-20261009）/ keywords.yaml keywords |
+| `crdh-liquid-ja` | `compound_crdh` | product_liquid | CRDH リキッド | active | 20261012T061614Z / keywords.yaml keywords |
+| `h4cbh-general-ja` | `compound_h4cbh` | compound_general | H4CBH | active | 4 run（20261002T080652Z / common-scale-missing-20261009 / 20261001T121949Z / variance_check）/ keywords.yaml keywords |
+| `h4cbh-liquid-ja` | `compound_h4cbh` | product_liquid | H4CBH リキッド | active | 20261012T061614Z / keywords.yaml keywords |
+| `hhbd-general-ja` | `compound_hhbd` | compound_general | HHBD | active | 4 run（20261002T080800Z / common-scale-missing-20261009 / 20261001T121949Z / variance_check）/ keywords.yaml keywords |
+| `hhbd-liquid-ja` | `compound_hhbd` | product_liquid | HHBD リキッド | active | 20261012T061614Z / keywords.yaml keywords |
+| `thcv-general-ja` | `compound_thcv` | compound_general | THCV | active | 20261008T093228Z（5y-baseline） |
+| `thcv-liquid-ja` | `compound_thcv` | product_liquid | THCV リキッド | active | 20261012T061614Z |
 
 注（2026-10-13 追加分・表の下 10 行）: 下の5化合物は taxonomy に概念が無かったため登録
 できずにいたものが、`compound_hhc` / `compound_hhch` / `compound_thch` / `compound_thc_o` /
@@ -74,11 +88,14 @@ compound_id は compound-taxonomy の `skos:notation`（例 `compound_cbx`）。
 ## 4. 範囲の線引きと限界
 
 - 登録範囲は「compound-taxonomy に概念があり、29 run の記録または keywords.yaml
-  に実在する」ものに限定（J3）。他成分の実クエリは
-  `docs/audits/g2-query-inventory.json` で対応状態を管理し、未登録のまま自動採用
+  に実在する」ものに限定（J3）。2026-10-13 の G2 増分で THC / CBG / CBN / CRDH /
+  H4CBH / HHBD / THCV の 14 クエリを追加し、29 run に記録された化合物トークンは
+  全て登録済みとなった（`docs/audits/g2-query-inventory.json` で再計算一致を強制。
+  `ambiguous` 32 → 0、`exact_match` 41 → 73 はその正当な帰結）。未登録のまま自動採用
   しない（状態 `unmapped` / `ambiguous` / `semantic_match_candidate`）。
-- taxonomy に概念がない成分（THC-O / THCH / CRDP / HHC / HHCH — 29 run で使用
-  実績あり）は notation を参照できないため登録しない（taxonomy 側の追加が先）。
+- 残る `semantic_match_candidate` 1 件（`THC-Oリキッド`）は空白なし表記の候補であり、
+  variant への自動昇格はしない（人手レビューが必要）。taxonomy に概念がない成分は
+  現時点で存在しない（全 14 化合物が notation を持つ）。
 - `keywords.yaml` のみに存在し run 実績がない語（例 `CBX オイル` / `CBD ペン`）は
   候補として保留（推測で intent を確定しない）。
 - 除外規則は本表に載るフレーズのみ。根拠のない語は追加しない。
