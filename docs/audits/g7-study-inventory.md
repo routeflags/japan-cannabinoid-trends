@@ -29,6 +29,11 @@
 | `youtube-consistency` | ❌ | 0 | 1 | — | ✅ | — | — | — |
 
 - runs は `run_metadata.json` の件数（G1 以前の study は別レイアウトのため 0。欠落ではなく規約前の形式）。
+
+> **2026-10-13 注記（鮮度）:** 上の表の「登録」はこのスライス時点の記録（2 study）。その後
+> `metadata/studies/study-registry.json` に全 9 study を登録し、同日に JSON を再生成した。
+> **現在は全 study が `registered: true`。** 現在の状態は JSON を参照すること。本 `.md` は
+> 日付付きの記録として残し、自動検証の対象外としている。
 - compounds は query-registry への**完全一致**で索引化できたもののみ。一致しない term は索引化しない（推測なし）。
 - 全 study の境界は不変。巨大データセットへの統合なし。
 

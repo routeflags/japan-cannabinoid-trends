@@ -2,14 +2,14 @@
   "catalog_version": "1.0.0",
   "spec": "docs/plans/20261013f.md §13 (local plan; not tracked)",
   "count": 9,
-  "present": 0,
-  "absent": 9,
+  "present": 1,
+  "absent": 8,
   "entries": [
     {
       "path": "datasets/cbx-social-trends/data/private",
-      "exists": false,
+      "exists": true,
       "tracked": false,
-      "ignored": false,
+      "ignored": true,
       "classification": "restricted",
       "availability": "private",
       "publication_status": "not_approved",

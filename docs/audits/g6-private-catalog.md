@@ -9,6 +9,11 @@
 
 ## 1. 結果（worktree 実測）
 
+> **2026-10-13 注記（鮮度）:** 下記はこのスライス時点の記録。同日に JSON を再生成し、
+> 現在は **`present 1` / `absent 8`**（`datasets/cbx-social-trends/data/private` が
+> B の作業で実在するようになったため）。**現在の状態は JSON を参照すること。** 本
+> `.md` は日付付きの記録として残し、自動検証の対象外としている。
+
 - マーカー 9 件（`datasets/*/data/private`）: `present 0` / `absent 9`。
 - 全件 `classification: restricted` / `availability: private` / `publication_status: not_approved`（Fail closed）。
 - 除外規則（`.gitignore: datasets/*/data/private/`）は有効。追跡化も参照もしない。

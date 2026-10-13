@@ -27,28 +27,47 @@
       ],
       "compound_ids": [
         "compound_cbd",
+        "compound_cbg",
+        "compound_cbn",
         "compound_cbx",
+        "compound_crdh",
         "compound_crdp",
+        "compound_h4cbh",
+        "compound_hhbd",
         "compound_hhc",
         "compound_hhch",
+        "compound_thc",
         "compound_thc_o",
-        "compound_thch"
+        "compound_thch",
+        "compound_thcv"
       ],
       "query_ids": [
         "cbd-general-ja",
         "cbd-liquid-ja",
         "cbd-oil-ja",
+        "cbg-general-ja",
+        "cbg-liquid-ja",
+        "cbn-general-ja",
+        "cbn-liquid-ja",
         "cbx-liquid-ja",
+        "crdh-liquid-ja",
         "crdp-general-ja",
         "crdp-liquid-ja",
+        "h4cbh-general-ja",
+        "h4cbh-liquid-ja",
+        "hhbd-general-ja",
+        "hhbd-liquid-ja",
         "hhc-general-ja",
         "hhc-liquid-ja",
         "hhch-general-ja",
         "hhch-liquid-ja",
+        "thc-general-ja",
+        "thc-liquid-ja",
         "thc-o-general-ja",
         "thc-o-liquid-ja",
         "thch-general-ja",
-        "thch-liquid-ja"
+        "thch-liquid-ja",
+        "thcv-liquid-ja"
       ],
       "timeframes": [
         "today 12-m",
@@ -64,7 +83,7 @@
     },
     {
       "study_id": "cannabinoid-social-trends",
-      "registered": false,
+      "registered": true,
       "title": "cannabinoid-social-trends — カンナビノイド規制前後の X (Twitter) 言及データ",
       "has_readme": true,
       "has_methodology": true,
@@ -90,7 +109,7 @@
     },
     {
       "study_id": "cbx-liquid-online-trend",
-      "registered": false,
+      "registered": true,
       "title": "CBX Liquid Online Trend",
       "has_readme": true,
       "has_methodology": true,
@@ -120,7 +139,7 @@
     },
     {
       "study_id": "cbx-product-coa",
-      "registered": false,
+      "registered": true,
       "title": "CBX Product COA",
       "has_readme": true,
       "has_methodology": false,
@@ -170,14 +189,18 @@
       ],
       "compound_ids": [
         "compound_cbd",
-        "compound_cbx"
+        "compound_cbx",
+        "compound_h4cbh",
+        "compound_hhbd"
       ],
       "query_ids": [
         "cbd-liquid-ja",
         "cbx-cannabinoid-ja",
         "cbx-cannabis-ja",
         "cbx-general-ja",
-        "cbx-liquid-ja"
+        "cbx-liquid-ja",
+        "h4cbh-general-ja",
+        "hhbd-general-ja"
       ],
       "timeframes": [
         "today 12-m"
@@ -192,7 +215,7 @@
     },
     {
       "study_id": "cbx-social-trends",
-      "registered": false,
+      "registered": true,
       "title": "CBX Social Media Trends",
       "has_readme": true,
       "has_methodology": true,
@@ -222,7 +245,7 @@
     },
     {
       "study_id": "x-26week-trends",
-      "registered": false,
+      "registered": true,
       "title": "x-26week-trends — CBX リキッド X 26週間トレンド調査",
       "has_readme": true,
       "has_methodology": true,
@@ -250,7 +273,7 @@
     },
     {
       "study_id": "x-consistency",
-      "registered": false,
+      "registered": true,
       "title": "x-consistency — X (Twitter) 収集結果の一貫性・日付範囲取得データセット",
       "has_readme": true,
       "has_methodology": false,
@@ -277,7 +300,7 @@
     },
     {
       "study_id": "youtube-consistency",
-      "registered": false,
+      "registered": true,
       "title": "youtube-consistency — YouTube 検索結果の一貫性・重複分析",
       "has_readme": true,
       "has_methodology": false,
@@ -318,6 +341,20 @@
         "cannabinoid-multi-trends",
         "cbx-search-trends"
       ]
+    },
+    {
+      "compound_id": "compound_h4cbh",
+      "study_ids": [
+        "cannabinoid-multi-trends",
+        "cbx-search-trends"
+      ]
+    },
+    {
+      "compound_id": "compound_hhbd",
+      "study_ids": [
+        "cannabinoid-multi-trends",
+        "cbx-search-trends"
+      ]
     }
   ],
   "representative_pair_verdicts": [
@@ -345,6 +382,24 @@
       "status": "not_comparable",
       "reasons": [
         "cs11_normalization_scale_mismatch"
+      ]
+    },
+    {
+      "compound_id": "compound_h4cbh",
+      "left": "cannabinoid-multi-trends:20261002T080652Z-google-trends-h4cbh-5y",
+      "right": "cbx-search-trends:20261001T121949Z-google-trends-h4cbh-hhbd",
+      "status": "not_comparable",
+      "reasons": [
+        "cs03_period_mismatch"
+      ]
+    },
+    {
+      "compound_id": "compound_hhbd",
+      "left": "cannabinoid-multi-trends:20261002T080800Z-google-trends-hhbd-5y",
+      "right": "cbx-search-trends:20261001T121949Z-google-trends-h4cbh-hhbd",
+      "status": "not_comparable",
+      "reasons": [
+        "cs03_period_mismatch"
       ]
     }
   ],

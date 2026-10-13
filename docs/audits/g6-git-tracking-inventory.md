@@ -5,6 +5,12 @@
 **機械可読版:** [`g6-git-tracking-inventory.json`](./g6-git-tracking-inventory.json)（再生成: `python -m validation.cli audit-git-tracking`）
 **非破壊:** 読取専用 git（`ls-files --error-unmatch` / `check-ignore --no-index` のみ）。raw 内容の変更なし（`raw_modified: false`）。`git add` / `git rm` / 履歴改変なし。
 
+> **2026-10-13 注記（鮮度）:** 本文の件数はこのスライス時点の記録。同日に JSON を
+> 再生成し、現在は `tracked 154` / `ignored 7` / `absent 14`（対象 133 件 + 主要非
+> dataset パス 42 件）になっている。**現在の状態は JSON を参照すること。** 本 `.md` は
+> 日付付きの記録として残し、自動検証の対象外としている（`.json` は
+> `tests/validation/test_audit_report_freshness.py` が再生成との一致を検査する）。
+
 ---
 
 ## 1. 対象と方法

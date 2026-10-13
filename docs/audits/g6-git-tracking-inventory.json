@@ -4,13 +4,13 @@
   "spec": "docs/plans/20261013f.md §15 (local plan; not tracked)",
   "target_root": "datasets",
   "include_private": false,
-  "count": 134,
-  "extra_count": 39,
+  "count": 133,
+  "extra_count": 42,
   "raw_modified": false,
   "state_summary": {
-    "absent": 15,
-    "ignored": 5,
-    "tracked": 153
+    "absent": 14,
+    "ignored": 7,
+    "tracked": 154
   },
   "entries": [
     {
@@ -889,8 +889,8 @@
       "state": "tracked",
       "tracked": true,
       "ignored": false,
-      "sha256": "3fad06842a848c5a363564ba42b8dad368385914d2e8b402e8e29725ed7ca152",
-      "sha256_after": "3fad06842a848c5a363564ba42b8dad368385914d2e8b402e8e29725ed7ca152",
+      "sha256": "e42bfd49fc4cd08fdb16ccbb743b41d9c04c28a4991e1b95077f89f5f35cdbf1",
+      "sha256_after": "e42bfd49fc4cd08fdb16ccbb743b41d9c04c28a4991e1b95077f89f5f35cdbf1",
       "unchanged": true
     },
     {
@@ -959,8 +959,8 @@
       "state": "tracked",
       "tracked": true,
       "ignored": false,
-      "sha256": "41cabd9601da2890e4ea78d3f24976fbd28e48dc7de61be2227f15effb9e5048",
-      "sha256_after": "41cabd9601da2890e4ea78d3f24976fbd28e48dc7de61be2227f15effb9e5048",
+      "sha256": "3dbeba5f311ab7a441115d8e611f406e0143a88270c85ff73224e7b3a396fb7e",
+      "sha256_after": "3dbeba5f311ab7a441115d8e611f406e0143a88270c85ff73224e7b3a396fb7e",
       "unchanged": true
     },
     {
@@ -1149,8 +1149,8 @@
       "state": "tracked",
       "tracked": true,
       "ignored": false,
-      "sha256": "235887af50de33b94575445cc68182ad6ea386926082d9ad845269ca10d74e69",
-      "sha256_after": "235887af50de33b94575445cc68182ad6ea386926082d9ad845269ca10d74e69",
+      "sha256": "595038bf72c475ee8b7018f74626a1b3f821a674c53f93622ffaa7b7661ba6f6",
+      "sha256_after": "595038bf72c475ee8b7018f74626a1b3f821a674c53f93622ffaa7b7661ba6f6",
       "unchanged": true
     },
     {
@@ -1181,16 +1181,6 @@
       "ignored": false,
       "sha256": "d1b43bf78e03e6be4239b83ce857c1d43dde61d6e81b379083c0c6af5c537de1",
       "sha256_after": "d1b43bf78e03e6be4239b83ce857c1d43dde61d6e81b379083c0c6af5c537de1",
-      "unchanged": true
-    },
-    {
-      "path": "datasets/cbx-social-trends/data/processed/x_cbx_202608_summary.csv",
-      "exists": true,
-      "state": "tracked",
-      "tracked": true,
-      "ignored": false,
-      "sha256": "4e29332069e6d6e78698bd633ea2846583f9af3e86c3e7bd141b959e0b72a374",
-      "sha256_after": "4e29332069e6d6e78698bd633ea2846583f9af3e86c3e7bd141b959e0b72a374",
       "unchanged": true
     },
     {
@@ -1239,8 +1229,8 @@
       "state": "tracked",
       "tracked": true,
       "ignored": false,
-      "sha256": "c5b8a3a5e1c668af8b73190a732be4520ec0693a59bd7cb0f251dbdbfa35b88f",
-      "sha256_after": "c5b8a3a5e1c668af8b73190a732be4520ec0693a59bd7cb0f251dbdbfa35b88f",
+      "sha256": "9f91d4b818dc7e1ff6a7c903dac55d2815340770b68b0e44a87e64e9f6292f80",
+      "sha256_after": "9f91d4b818dc7e1ff6a7c903dac55d2815340770b68b0e44a87e64e9f6292f80",
       "unchanged": true
     },
     {
@@ -1269,8 +1259,8 @@
       "state": "tracked",
       "tracked": true,
       "ignored": false,
-      "sha256": "abd0d064e6e1e98ce4b932308ad1fe2a4c09560367d69fbb380c721551330c07",
-      "sha256_after": "abd0d064e6e1e98ce4b932308ad1fe2a4c09560367d69fbb380c721551330c07",
+      "sha256": "0ebf477a1943a0ecbdfb2aee2b5227cc54b75c313a30bfd7551aab04869332ef",
+      "sha256_after": "0ebf477a1943a0ecbdfb2aee2b5227cc54b75c313a30bfd7551aab04869332ef",
       "unchanged": true
     },
     {
@@ -1460,6 +1450,22 @@
       "kind": "local_only"
     },
     {
+      "path": "docs/audits/g7-study-inventory.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "kind": "local_only"
+    },
+    {
+      "path": "docs/audits/g7-study-inventory.md",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "kind": "local_only"
+    },
+    {
       "path": "exports/taxonomy/classification-rules.yaml",
       "exists": true,
       "state": "tracked",
@@ -1540,6 +1546,14 @@
       "kind": "local_only"
     },
     {
+      "path": "docs/plans/g7-vertical-slice-plan.md",
+      "exists": true,
+      "state": "ignored",
+      "tracked": false,
+      "ignored": true,
+      "kind": "local_only"
+    },
+    {
       "path": "trends.db",
       "exists": false,
       "state": "absent",
@@ -1597,10 +1611,10 @@
     },
     {
       "path": "datasets/cbx-social-trends/data/private",
-      "exists": false,
-      "state": "absent",
+      "exists": true,
+      "state": "ignored",
       "tracked": false,
-      "ignored": false,
+      "ignored": true,
       "kind": "private_marker"
     },
     {

@@ -5,6 +5,11 @@
 **機械可読版:** [`g4-storage-inventory.json`](./g4-storage-inventory.json)（再生成: `python -m validation.cli audit-artifacts`）
 **非破壊:** 読取専用。対象ファイルの sha256 を走査前後で比較し `raw_modified: false`。
 
+> **2026-10-13 注記（鮮度）:** 本文の件数はこのスライス時点の記録。同日に JSON を
+> 再生成し、現在は **76 件 / 29 run**（X 投稿 CSV の公開取り下げ分が減）。
+> **現在の状態は JSON を参照すること。** 本 `.md` は日付付きの記録として残し、自動検証
+> の対象外としている。
+
 ---
 
 ## 1. 対象と方法
