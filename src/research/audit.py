@@ -19,6 +19,7 @@ from pathlib import Path
 
 from research import catalog as _catalog
 from research import comparability as _gate
+from validation.integrity import sha256_file
 
 __all__ = ["AUDIT_VERSION", "build_study_inventory"]
 
@@ -26,11 +27,7 @@ AUDIT_VERSION = "1.0.0"
 
 
 def _sha256_file(path: Path) -> str:
-    digest = hashlib.sha256()
-    with path.open("rb") as handle:
-        for chunk in iter(lambda: handle.read(65536), b""):
-            digest.update(chunk)
-    return digest.hexdigest()
+    return sha256_file(path)
 
 
 def _raw_snapshot(datasets: Path) -> dict[str, str]:
@@ -38,6 +35,11 @@ def _raw_snapshot(datasets: Path) -> dict[str, str]:
     if datasets.is_dir():
         for path in sorted(p for p in datasets.rglob("*") if p.is_file()):
             posix = path.as_posix()
+            # ``data/private`` is excluded by name, not by accident: the
+            # ``data/raw`` prefix test below would otherwise admit a future
+            # ``data/raw/private`` directory (AGENTS.md private data).
+            if "private" in path.parts:
+                continue
             if "data/raw" not in posix and "data\raw" not in posix:
                 continue
             try:

@@ -10,7 +10,7 @@ from pathlib import Path
 import pytest
 
 from research.catalog import build_catalog
-from research.views import build_view, validate_view_definition
+from research.views import build_view, refuse_raw_output, validate_view_definition
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 DATASETS = REPO_ROOT / "datasets"
@@ -27,6 +27,27 @@ def _series() -> list:
 
 def test_g7_t18_view_definition_satisfies_research_view_v1():
     assert validate_view_definition(_definition()) == []
+
+
+def test_view_refuses_an_unknown_source(tmp_path):
+    """A run whose source has no extractor is refused, never relabeled.
+
+    Review finding 1: rows must never carry another source's measurement, so
+    an unregistered source fails closed instead of defaulting to GT.
+    """
+    catalog = build_catalog(DATASETS, repo_root=REPO_ROOT)
+    series = _series()
+    series[0] = dict(series[0], run_id="run-without-a-registered-entry")
+    with pytest.raises(ValueError, match="no view extractor for source_id"):
+        build_view(_definition(), series, catalog, repo_root=REPO_ROOT, out_dir=tmp_path)
+
+
+def test_refuse_raw_output(tmp_path):
+    """Derived views are never written under data/raw (raw immutability)."""
+    with pytest.raises(ValueError, match="raw data is immutable"):
+        refuse_raw_output(DATASETS / "cbx-search-trends" / "data" / "raw" / "view", REPO_ROOT)
+    # A scratch directory is accepted.
+    refuse_raw_output(tmp_path, REPO_ROOT)
 
 
 def test_view_builds_four_files_with_lineage(tmp_path):

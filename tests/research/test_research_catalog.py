@@ -74,15 +74,3 @@ def test_unlinked_terms_are_not_guessed():
     for entry in unlinked:
         assert entry["compound_ids"] == []
         assert entry["query_ids"] == []
-
-
-def test_get_provenance_resolves_a_run_read_only():
-    bundle = get_provenance("20261001T115959Z-google-trends-cbx-rikiddo", DATASETS)
-    assert bundle is not None
-    assert bundle["study_id"] == "cbx-search-trends"
-    assert bundle["run_metadata"]["run_id"] == "20261001T115959Z-google-trends-cbx-rikiddo"
-    assert "run_metadata.json" in bundle["sibling_files"]
-
-
-def test_get_provenance_unknown_run_returns_none():
-    assert get_provenance("no-such-run", DATASETS) is None

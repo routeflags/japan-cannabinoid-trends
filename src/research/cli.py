@@ -22,6 +22,7 @@ from research import catalog as _catalog
 from research import audit as _audit
 from research import comparability as _gate
 from research import views as _views
+from research.views import refuse_raw_output
 from validation.reporting import dump_json
 
 EXIT_OK = 0
@@ -122,8 +123,12 @@ def cmd_audit_studies(args) -> int:
     if args.output:
         try:
             path = Path(args.output)
+            refuse_raw_output(path, Path(args.repo_root))
             path.parent.mkdir(parents=True, exist_ok=True)
             path.write_text(dump_json(inventory) + "\n", encoding="utf-8")
+        except ValueError as error:
+            _err(str(error))
+            return EXIT_DATA
         except OSError as error:
             _err(f"cannot write output: {error}")
             return EXIT_IO
