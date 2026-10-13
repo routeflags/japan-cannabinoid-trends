@@ -54,6 +54,7 @@ from validation.coverage import build_temporal_inventory, evaluate_coverage
 from validation.gates import post_collection_gate, pre_collection_gate
 from validation.g6_inventory import build_git_tracking_inventory
 from validation.integrity import IO_ISSUE_CODES, sha256_file
+from validation.new_runs import audit_new_runs
 from validation.private_catalog import build_private_catalog
 from validation.publication_eligibility import evaluate_eligibility
 from validation.x_identity import audit_x_identity
@@ -874,6 +875,46 @@ def cmd_audit_x_identity(args) -> int:
     return EXIT_DATA if report["failures"] else EXIT_OK
 
 
+def cmd_audit_new_runs(args) -> int:
+    """Runs outside the frozen legacy list must satisfy the current contract.
+
+    This is the enforceable half of the Phase 6 wiring gap: a collection that
+    bypassed the framework cannot pass strict validation, so the bypass shows up
+    as a failing gate instead of silent data (see ``validation/new_runs.py``).
+    """
+    try:
+        registries = load_registries(Path(args.config_dir), Path(args.metadata_dir))
+        report = audit_new_runs(
+            Path.cwd(), args.datasets_root, registries=registries
+        )
+    except (OSError, ValueError) as error:
+        _err(f"new-run audit failed: {error.__class__.__name__}: {error}")
+        return EXIT_CONFIG
+
+    if args.output:
+        try:
+            _write_output(args.output, report)
+        except OSError as error:
+            _err(f"cannot write audit output: {args.output} ({error.__class__.__name__})")
+            return EXIT_IO
+        _err(f"new-run audit written: {args.output}")
+    elif args.format == "json":
+        print(dump_json(report), end="")
+    else:
+        for failure in report["failures"]:
+            print(
+                f"{failure['run_id'] or '(no run_id)'} {failure['path']} "
+                f"[{', '.join(failure['issue_codes'])}]"
+            )
+    _err(
+        f"new-run audit: {report['run_count']} run(s), "
+        f"frozen_legacy_seen={report['frozen_legacy_seen']} "
+        f"(declared {report['frozen_legacy_declared']}), "
+        f"new={report['new_run_count']}, failures={report['failure_count']}"
+    )
+    return EXIT_DATA if report["failure_count"] else EXIT_OK
+
+
 def cmd_audit_git_tracking(args) -> int:
     """Non-destructive G6 §15 git tracking inventory (read-only git only)."""
     repo_root = Path.cwd()
@@ -1631,6 +1672,17 @@ def build_parser() -> argparse.ArgumentParser:
     audit_x.add_argument("--output", default=None)
     audit_x.add_argument("--format", choices=("text", "json"), default="text")
     audit_x.set_defaults(handler=cmd_audit_x_identity)
+
+    audit_new = sub.add_parser(
+        "audit-new-runs",
+        help="runs outside the frozen legacy list must satisfy the current contract",
+    )
+    audit_new.add_argument("--datasets-root", default="datasets")
+    audit_new.add_argument("--config-dir", default="config")
+    audit_new.add_argument("--metadata-dir", default="metadata")
+    audit_new.add_argument("--output", default=None)
+    audit_new.add_argument("--format", choices=("text", "json"), default="text")
+    audit_new.set_defaults(handler=cmd_audit_new_runs)
 
     audit_private = sub.add_parser(
         "audit-private-catalog",

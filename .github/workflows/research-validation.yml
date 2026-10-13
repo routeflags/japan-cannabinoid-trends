@@ -57,6 +57,14 @@ jobs:
           # justified exceptions live in src/validation/x_identity.py.
           python -m validation.cli audit-x-identity
 
+      - name: Audit runs outside the frozen legacy list
+        run: |
+          # The live collectors write raw JSON outside the framework, so nothing
+          # stopped a collection from landing in datasets/ without passing a gate.
+          # Runs in the frozen legacy list are grandfathered; every other run must
+          # satisfy the current contract, references included.
+          python -m validation.cli audit-new-runs
+
       - name: Validate data schema (bash)
         run: |
           bash scripts/validation/validate-data-schema.sh

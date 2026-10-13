@@ -945,3 +945,67 @@ processed CSV の変更ではスキーマ検証だけが走り、再現性検証
 - 影響アカウントへの通知の要否は未判断。
 - `publication/guide_cbx_rewrite.html` の種別列から店舗地区（「麻布十番」）を除去した。
   ハンドル以外の残余識別情報（店舗地区等）の扱いは方針未定。
+
+## 22. Phase 6 本体配線（ゲートの回避防止）— 2026-10-13
+
+### 22.1 判明したこと（実測）
+
+- **実収集は framework を通っていない。** `src/collection/apify_run.sh` は
+  `<actor_id> <input_json> <out_base>` で任意パスに生 JSON を書き、registry 参照・
+  run identity・provenance・ゲートのいずれも無い。`fetch_tiktok.sh` /
+  `fetch_instagram.sh` は `projects/automation/Apify/data/teiten_YYYYMMDD/` に書くが、
+  **`projects/` はリポジトリに存在しない**（tracked 0 件）。
+- framework の `collection.core.cli collect` は **offline replay 専用**（`--fixture`、
+  「live collection is not executed here」）。adapter は `google_trends` のみで、
+  X / YouTube / Instagram / TikTok 用 adapter は無い。
+- `validate-all`（strict）は正しい規則を述べているが、凍結 29 run のため常に exit 1 で
+  あり、**ゲートには使えない**（§12）。
+- `src/collection/cron_gate.sh` は検証ゲートではなく**抽選スケジューラ**（1/24 確率）。
+  名前だけが `gate` で、検証とは無関係。
+
+つまり以前は、「実収集が `datasets/` に直接着地しても誰も止めない」状態だった。
+
+### 22.2 採用した規則（CI で施行できる形）
+
+凍結 legacy 29 run は**租父条項**。それ以外の run は**現行契約**（`collection-run-v1`、
+参照整合を含む）を満たさなければならない。
+
+```bash
+python -m validation.cli audit-new-runs   # exit 0 = 非凍結 run はすべて適合
+```
+
+- 実装: `src/validation/new_runs.py`。読取専用。
+- 実測: 29 run（すべて凍結）/ new 0 / failures 0。`frozen_legacy_seen` を報告するので、
+  規則が何も照合しなくなった場合は見える（非空性の明示）。
+- 迂回した run は provenance を欠くため通れない（合成 run で `REQUIRED_FIELD_MISSING`
+  を実測）。
+- 参照整合は `registries` を渡したときだけ効く。`test_reference_checks_are_what_registries_add`
+  がその差を固定している（未登録 study を名乗る構造適合 run は registries 付きでのみ落ちる）。
+
+### 22.3 収集側の fail closed
+
+`apify_run.sh` は出力先が**このリポジトリの `datasets/` 配下**なら exit 2 で拒否し、
+staged → `adopt` を案内する。パスは字句的に正規化するため `./datasets/x`・
+`a/../datasets/x`・`/abs/.../datasets/x`・`datasets` 自身も拒否される（実測）。
+シンボリックリンクは解決しない（既知の限界）。引数検証は認証チェックより前に
+置いたため、credentials 無しでも不正な出力先を弾ける。
+
+### 22.4 未実施（引き継ぎ）
+
+- **shell / skill を staged 出力 → `adopt` へ移行する本体作業は未実施。** `adopt` は
+  staged ディレクトリに conformant な `run_metadata.json` を要求し、それは plan
+  （query registry + window compile）と collector id を要する。X / YouTube 等には
+  adapter がまだ無いので、まず adapter が必要。§22.2 のゲートは「迂回を検知して止める」
+  側であり、迂回せずに収集できるようにする側ではない。
+- `cron_gate.sh` が書く `projects/` はリポジトリに存在しない。この定点観測経路が現役か
+  どうかの確認が必要。
+- pre-commit フックには入れていない。`validation.pipeline` が cerberus を要するため、
+  stdlib のみのフック方針と両立しない（CI の pytest と audit で担保）。
+
+### 22.5 関連する未決（本作業中に発見）
+
+- `docs/audits/g6-publication-eligibility.json` は `verdict: BLOCKED`
+  （PUB-01 provenance 欠落 / PUB-04 personal-data review 欠落 / PUB-10）を記録したまま、
+  対象成果物（匿名化済み X CSV）は公開されている（Zenodo 含む）。ゲートは record-only
+  設計だが、AGENTS.md は「公開ゲートの失敗は解決または明示的に文書化されるまで公開を
+  止める」と定めており、**受容の記録が見当たらない**。記録の追記が要る。

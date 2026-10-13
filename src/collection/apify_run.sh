@@ -5,6 +5,47 @@
 set -euo pipefail
 
 ROOT="$(git rev-parse --show-toplevel 2>/dev/null || pwd)"
+
+# 引数検証を認証より先に行う（credentials 無しでも不正な出力先は弾ける）。
+ACTOR="${1:?actor_id を指定}"
+INPUT_JSON="${2:?input_json を指定}"
+OUT_BASE="${3:?out_base を指定}"
+
+# パスを字句的に正規化する（`./datasets/x` や `a/../datasets/x` を素通りさせない）。
+# シンボリックリンクは解決しない。それが問題になる場合は呼び出し側で実パスに直すこと。
+normalize_path() {
+  local p="$1" out="" part old_ifs
+  case "$p" in
+    /*) ;;
+    *) p="$PWD/$p" ;;
+  esac
+  old_ifs="$IFS"; IFS=/; set -- $p; IFS="$old_ifs"
+  for part in "$@"; do
+    case "$part" in
+      ""|.) continue ;;
+      ..) out="${out%/*}" ;;
+      *) out="$out/$part" ;;
+    esac
+  done
+  printf '%s' "${out:-/}"
+}
+
+# 生データを datasets/ へ直接書かない。framework を迂回した run は
+# collection-run-v1 の provenance を満たせないため、CI の
+# `validation.cli audit-new-runs` で落ちる（fail closed）。
+# ステージング先へ出力し、`collection.core.cli adopt` に渡すこと。
+OUT_NORM="$(normalize_path "$OUT_BASE")"
+ROOT_NORM="$(normalize_path "$ROOT")"
+case "$OUT_NORM" in
+  "$ROOT_NORM"/datasets|"$ROOT_NORM"/datasets/*)
+    echo "apify_run.sh: 出力先が datasets/ 配下です: $OUT_BASE" >&2
+    echo "  framework を迂回した run は契約を満たせません。" >&2
+    echo "  ステージング先へ出力し、次で取り込んでください:" >&2
+    echo "    python -m collection.core.cli adopt --staged <dir>" >&2
+    exit 2
+    ;;
+esac
+
 if [ -f "$ROOT/.env.d/apify.env" ]; then
   # shellcheck disable=SC1091
   source "$ROOT/.env.d/apify.env"
@@ -14,10 +55,6 @@ if [ -z "${APIFY_TOKEN:-}" ]; then
   exit 1
 fi
 command -v jq >/dev/null 2>&1 || { echo "jq が必要" >&2; exit 1; }
-
-ACTOR="${1:?actor_id を指定}"
-INPUT_JSON="${2:?input_json を指定}"
-OUT_BASE="${3:?out_base を指定}"
 
 RESP="$(curl -s -X POST "https://api.apify.com/v2/acts/${ACTOR}/runs?waitForFinish=120" \
   -H "Authorization: Bearer $APIFY_TOKEN" -H "Content-Type: application/json" \
