@@ -249,12 +249,15 @@ report = outcome.to_report().to_dict()
 
 除外（理由）:
 
-- `validate-version-sync.sh`: 現 main で完走不能だった（`set -euo pipefail` 下で
-  `preferred-citation.doi` 欠落時の grep 非一致が abort。ガード修正で完走するも
-  FAIL 1 件=`preferred-citation.doi` 欠落が残る）。加えて network 依存
-  （Zenodo API・`gh`・`ls-remote`）と tag 履歴依存（`fetch-depth: 1` の CI では
-  基準バージョンが定まらない）。CI 入りは `preferred-citation.doi` の人手判断
-  （CITATION.cff への doi 追記か、WARN 緩和か）の後に再評価する。
+- `validate-version-sync.sh`: CI ゲートから除外する（2026-10-13 再評価済み）。
+  除外理由は初期の「完走不能」ではなく、基準値の意味論にある: 基準バージョン・
+  DOI は最新 Git タグと公開済み Zenodo/GitHub Release から取るため、(1) main より
+  古いブランチの PR では無実の FAIL になる、(2) バージョン上げコミットからタグ付け
+  までの間は main でも FAIL になる、(3) network 到達不能時は基準が空になり検査が
+  静かに素通りする。リリース時の正本確認としては正しいが、push/PR 毎のゲートには
+  向かない。pre-commit フックと手動実行で使う。なお `preferred-citation.doi`
+  （`10.5281/zenodo.23253840`）の追記によりスクリプトは完走し、現 main では
+  PASS 12 / WARN 1 / FAIL 0 である。
 - `validate-all`（strict）: legacy 29件で exit 1 が正常＝ゲートにできない（従来どおり）。
 - ライブ収集・認証情報・network・ローカル専用ファイル（`trends.db` 等）を要するもの。
 - リリースのブロック: `release-zenodo.yml` は published トリガ（公開後に走るため
