@@ -304,9 +304,10 @@ if [ -f "$README_FILE" ]; then
   README_DOI=$(grep -oE '10\.5281/zenodo\.[0-9]+' "$README_FILE" | head -1 || echo "")
   
   if [ -n "$BASELINE_DOI" ]; then
-    # version DOI または concept DOI が含まれていれば OK
-    CONCEPT_DOI="${BASELINE_DOI%.*}"  # 末尾の数字を削除して concept DOI のプレフィックスに
-    if [ "$README_DOI" = "$BASELINE_DOI" ] || [[ "$README_DOI" == ${CONCEPT_DOI}* ]]; then
+    # version DOI との完全一致、または Zenodo API の concept DOI との完全一致
+    # のみ合格とする。`10.5281/zenodo*` のような接頭辞一致は任意の Zenodo DOI
+    # を通してしまうため使わない（旧バッジ ...23253839 が素通りしていた）。
+    if [ "$README_DOI" = "$BASELINE_DOI" ] || { [ -n "${ZENODO_CONCEPT_DOI:-}" ] && [ "$README_DOI" = "$ZENODO_CONCEPT_DOI" ]; }; then
       print_pass "DOI バッジ: $README_DOI"
     else
       print_fail "DOI バッジ: $README_DOI → $BASELINE_DOI"
