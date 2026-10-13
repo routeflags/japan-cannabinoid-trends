@@ -34,18 +34,34 @@
 
 ---
 
+## 修正した既知事項（2026-10-13）
+
+1. ✅ `compound-synthetic` の `skos:narrower` に `compound-crdh` を追加（親子関係の非対称を解消）。
+2. ✅ `compound_h4cbh` / `compound_hhbd` を `compound-minor` から `compound-semisynthetic` へ移動。
+   根拠: `datasets/cannabinoid-multi-trends/data/processed/early-warning-index-v1.csv`
+   の `classification` 列が両方とも `Semi-Synthetic`（`source_run_ids=EXP-20261002`）、
+   および `research/google-trends/20261002-first-mention-timeline.md`。
+   `docs/data-dictionary.md` §6.4 のカテゴリ表には両者とも掲載が無く、矛盾しない。
+3. ✅ `metadata/datapackage.json` の `skos_scheme` を `jptr:compound-scheme` →
+   `jptr:compound-taxonomy` に修正（実在する ConceptScheme の `@id`）。
+
+親子対称性は機械的に確認済み（broader と narrower の非対称 0 件）。
+
 ## 未修正の既知事項（本変更では触っていない）
 
-1. `compound-synthetic` の `skos:narrower` に `compound-crdh` が未掲載（`broader` のみ存在する非対称）。
-2. `compound_h4cbh` / `compound_hhbd` のカテゴリが、タクソノミー（minor）と EWI/timeline（Semi-Synthetic）で不一致。
-3. `metadata/datapackage.json` の `skos_scheme` が `jptr:compound-scheme` を参照しているが、実在するのは `jptr:compound-taxonomy`。
-4. `exports/taxonomy/*.ttl` / `.schema.jsonld` は 2026-10-02 生成のままで、`compound-crdh` および本追加分が未反映
-   （`bash scripts/export/export-taxonomy.sh` で再生成可能。release アーカイブの `INCLUDE_PATHS` に `exports/` は含まれない）。
-5. `metadata/taxonomy/iptc-mapping.yaml` の `compound_mapping` は部分収載（`cbc`/`thcv`/`cbdv`/`crdh` も未収載）。
-6. `THCH` の日本語名は文書間で表記ゆれがある（`THCH.md` を標準として採用）。
+1. `docs/data-dictionary.md` §6.4 の化合物カテゴリ表が不完全（`synthetic` 行が無く、
+   `h4cbh` / `hhbd` / `crdh` / `crdp` / `hhch` が未掲載）。taxonomy を正本として表を
+   補完するか要判断。
+2. `exports/taxonomy/*.ttl` / `.schema.jsonld` は 2026-10-02 生成のままで、`compound-crdh`、
+   本追加分5概念、および今回のカテゴリ移動が未反映
+   （`bash scripts/export/export-taxonomy.sh` で再生成可能。release アーカイブの
+   `INCLUDE_PATHS` に `exports/` は含まれない）。
+3. `metadata/taxonomy/iptc-mapping.yaml` の `compound_mapping` は部分収載（`cbc`/`thcv`/`cbdv`/`crdh` も未収載）。
+4. `THCH` の日本語名は文書間で表記ゆれがある（`THCH.md` を標準として採用）。
+5. `compound_rare` は `skos:narrower` を持たない空カテゴリ（現状の登録化合物には該当なし）。
 
 ## 次の作業
 
-- 追加した5化合物のクエリを `metadata/queries/query-registry.json` へ登録する（G2 の増分）。登録後、
-  `docs/audits/g2-query-inventory.json` の該当16文字列は `ambiguous` から `exact_match`/`variant_match` へ移行する。
-- 上記「未修正の既知事項」1〜6 の扱いを決める。
+- 追加した5化合物のクエリは 2026-10-13 に `metadata/queries/query-registry.json` へ登録済み
+  （10件。証拠は `docs/provenance/query-inventory.md` §1）。
+- 上記「未修正の既知事項」の扱いを決める。

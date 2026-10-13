@@ -46,7 +46,7 @@ python3 -m venv .venv
 .venv/bin/python -m pytest
 ```
 
-- Contract Tests: `tests/validation/`（496件）+ `tests/collection/`（77件）
+- Contract Tests: `tests/validation/`（499件）+ `tests/collection/`（77件）
   ＝ **573件**（2026-10-13 G3 垂直スライス後。`.venv/bin/python -m pytest` で実測。
   G2 直後は 515 件、G1 直後は 461 件）。
 - 新しいスキーマを登録したら、対応する Contract Test を必ず追加する
@@ -276,7 +276,7 @@ contract version は 1.0.0 のまま — G2 の plan 拡張と同じ手順）。
 |---|---|---|
 | `config/sources.json` | source-registry-v1 | **あり**（6 source。`validate-registries` と CI が実検証する） |
 | `config/collectors.json` | collector-registry-v1 | **あり**（6 collector。active は `google-trends-mcp` のみ） |
-| `metadata/queries/query-registry.json` | query-registry-v1 | **あり**（G2 垂直スライス: 7 queries。`validate-registries` と CI が実検証する） |
+| `metadata/queries/query-registry.json` | query-registry-v1 | **あり**（G2 垂直スライス: 17 queries。`validate-registries` と CI が実検証する） |
 | `metadata/queries/query-variants.json` | query-variants-registry-v1 | **あり**（3 variant sets） |
 | `metadata/windows/*.json` | temporal-window-v1 | **あり**（G3 垂直スライス: 2 windows。`validate-registries` と CI が実検証する） |
 | `metadata/studies/study-registry.json` | study-registry-v1 | なし（G7 の作業） |
@@ -406,13 +406,15 @@ python3 -m venv .venv
 
 ## 15. G2 垂直スライス（Query Registry / 表記ゆれ / 意味検証）— 2026-10-13
 
-G2 仕様（`docs/plans/20261013b.md`）の垂直スライス。登録範囲は「taxonomy に概念が
-あり、run 実績または keywords.yaml に実在する」CBX / CBD の 7 クエリに限定した
-（証拠台帳: `docs/provenance/query-inventory.md`）。**ライブ収集・新しい外部依存
-の追加は行っていない。**
+G2 仕様（`docs/plans/20261013b.md`）の垂直スライス。当初の登録範囲は「taxonomy に概念が
+あり、run 実績または keywords.yaml に実在する」CBX / CBD の 7 クエリだった。
+**2026-10-13 追記**: taxonomy の欠落を解消（`docs/provenance/compound-taxonomy.md`）した
+ため、同じ基準で HHC / HHCH / THCH / THC-O / CRDP の **10 クエリ**を追加し、**計 17 クエリ**
+（6 化合物）となった。証拠台帳: `docs/provenance/query-inventory.md`。**ライブ収集・
+新しい外部依存の追加は行っていない。**
 
 - **実装済み**:
-  - `metadata/queries/query-registry.json`（7 queries）/
+  - `metadata/queries/query-registry.json`（17 queries）/
     `metadata/queries/query-variants.json`（3 variant sets）。
     `compound_id` は taxonomy の notation（`compound_cbx` 等）。
   - 新スキーマ `query-variants-registry-v1`（variant 束ファイル。ブロック形状は

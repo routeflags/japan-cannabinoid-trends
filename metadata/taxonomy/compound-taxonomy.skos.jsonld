@@ -78,8 +78,6 @@
         "jptr:compound-thcv",
         "jptr:compound-cbdv",
         "jptr:compound-cbx",
-        "jptr:compound-h4cbh",
-        "jptr:compound-hhbd",
         "jptr:compound-thch"
       ]
     },
@@ -114,7 +112,9 @@
       "skos:notation": "compound_semisynthetic",
       "skos:narrower": [
         "jptr:compound-hhc",
-        "jptr:compound-thc-o"
+        "jptr:compound-thc-o",
+        "jptr:compound-h4cbh",
+        "jptr:compound-hhbd"
       ]
     },
     {
@@ -133,7 +133,8 @@
       "skos:notation": "compound_synthetic",
       "skos:narrower": [
         "jptr:compound-hhch",
-        "jptr:compound-crdp"
+        "jptr:compound-crdp",
+        "jptr:compound-crdh"
       ]
     },
     {
@@ -348,7 +349,7 @@
       "@id": "jptr:compound-h4cbh",
       "@type": "skos:Concept",
       "skos:inScheme": "jptr:compound-taxonomy",
-      "skos:broader": "jptr:compound-minor",
+      "skos:broader": "jptr:compound-semisynthetic",
       "skos:prefLabel": {
         "@value": "H4CBH",
         "@language": "en"
@@ -372,7 +373,7 @@
       "@id": "jptr:compound-hhbd",
       "@type": "skos:Concept",
       "skos:inScheme": "jptr:compound-taxonomy",
-      "skos:broader": "jptr:compound-minor",
+      "skos:broader": "jptr:compound-semisynthetic",
       "skos:prefLabel": {
         "@value": "HHBD",
         "@language": "en"

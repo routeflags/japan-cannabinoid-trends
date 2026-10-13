@@ -498,7 +498,7 @@
             },
             "references": {
               "taxonomy": "metadata/taxonomy/compound-taxonomy.skos.jsonld",
-              "skos_scheme": "jptr:compound-scheme"
+              "skos_scheme": "jptr:compound-taxonomy"
             }
           }
         ]

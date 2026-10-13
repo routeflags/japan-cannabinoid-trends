@@ -1,6 +1,6 @@
 # Query Inventory（クエリ証拠台帳）
 
-**版:** 1.0.0（2026-10-13）
+**版:** 1.1.0（2026-10-13）
 **目的:** G2 垂直スライスで `metadata/queries/` に登録したクエリ・表記ゆれ・除外
 規則の**証拠台帳**（G1 §18 Phase 1 の collector-inventory.md のクエリ版）。登録は
 「実 run の記録」または「既存 keywords.yaml / taxonomy」に基づき、推測の語彙は
@@ -8,7 +8,7 @@
 
 ---
 
-## 1. 登録済みクエリ（`query-registry.json`、7 件）
+## 1. 登録済みクエリ（`query-registry.json`、17 件）
 
 compound_id は compound-taxonomy の `skos:notation`（例 `compound_cbx`）。
 
@@ -21,6 +21,22 @@ compound_id は compound-taxonomy の `skos:notation`（例 `compound_cbx`）。
 | `cbd-general-ja` | `compound_cbd` | compound_general | CBD | active | 2 run（20261002T063821Z / comparison-setA） |
 | `cbd-liquid-ja` | `compound_cbd` | product_liquid | CBD リキッド | active | 7 run（20261001T115959Z / variance_check / 20261012T054920Z / 055259Z / 060517Z / 061614Z / 064246Z） |
 | `cbd-oil-ja` | `compound_cbd` | product_oil | CBD オイル | active | 20261012T054920Z（notation-presurvey の比較）/ keywords.yaml keywords |
+| `hhc-general-ja` | `compound_hhc` | compound_general | HHC | active | 20261002T064008Z |
+| `hhc-liquid-ja` | `compound_hhc` | product_liquid | HHC リキッド | active | 20261012T055259Z / 060517Z / 064246Z |
+| `hhch-general-ja` | `compound_hhch` | compound_general | HHCH | active | 20261002T094657Z / 094730Z |
+| `hhch-liquid-ja` | `compound_hhch` | product_liquid | HHCH リキッド | active | 20261012T061614Z |
+| `thch-general-ja` | `compound_thch` | compound_general | THCH | active | 20261002T064118Z |
+| `thch-liquid-ja` | `compound_thch` | product_liquid | THCH リキッド | active | 20261012T061614Z |
+| `thc-o-general-ja` | `compound_thc_o` | compound_general | THC-O | active | 20261002T071255Z |
+| `thc-o-liquid-ja` | `compound_thc_o` | product_liquid | THC-O リキッド | active | 20261012T061614Z |
+| `crdp-general-ja` | `compound_crdp` | compound_general | CRDP | active | 20261002T085022Z / 085359Z |
+| `crdp-liquid-ja` | `compound_crdp` | product_liquid | CRDP リキッド | active | 20261012T061614Z |
+
+注（2026-10-13 追加分・表の下 10 行）: 下の5化合物は taxonomy に概念が無かったため登録
+できずにいたものが、`compound_hhc` / `compound_hhch` / `compound_thch` / `compound_thc_o` /
+`compound_crdp` の追加により可能になった。登録した文字列は**実 run に記録されたもの**
+のみ（`docs/audits/g2-query-inventory.json` で再計算一致を強制）。表記ゆれ（空白なし形）
+は実収集に証拠がないため `query-variants.json` には追加していない。
 
 注: 判別クエリ（`CBX 大麻` / `CBX カンナビノイド`）の intent は compound_general
 （検索意図は CBX という成分の理解であり、判別語による修飾は platform 構文ではなく

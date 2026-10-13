@@ -15,10 +15,10 @@
     "unmapped": "no registered correspondence and no compound token"
   },
   "summary": {
-    "exact_match": 22,
+    "exact_match": 41,
     "variant_match": 1,
-    "semantic_match_candidate": 0,
-    "ambiguous": 52,
+    "semantic_match_candidate": 1,
+    "ambiguous": 32,
     "unmapped": 0
   },
   "runs": [
@@ -99,11 +99,11 @@
       "queries": [
         {
           "text": "HHC",
-          "state": "ambiguous",
-          "classification": "ambiguous",
-          "query_id": null,
+          "state": "exact_match",
+          "classification": "relevant",
+          "query_id": "hhc-general-ja",
           "variant_id": null,
-          "detail": "compound_token_without_registered_query",
+          "detail": "registered_canonical",
           "source_fields": [
             "queries[0].term"
           ]
@@ -121,11 +121,11 @@
       "queries": [
         {
           "text": "THCH",
-          "state": "ambiguous",
-          "classification": "ambiguous",
-          "query_id": null,
+          "state": "exact_match",
+          "classification": "relevant",
+          "query_id": "thch-general-ja",
           "variant_id": null,
-          "detail": "compound_token_without_registered_query",
+          "detail": "registered_canonical",
           "source_fields": [
             "queries[0].term"
           ]
@@ -186,22 +186,22 @@
         },
         {
           "text": "HHC",
-          "state": "ambiguous",
-          "classification": "ambiguous",
-          "query_id": null,
+          "state": "exact_match",
+          "classification": "relevant",
+          "query_id": "hhc-general-ja",
           "variant_id": null,
-          "detail": "compound_token_without_registered_query",
+          "detail": "registered_canonical",
           "source_fields": [
             "queries[0].terms[3]"
           ]
         },
         {
           "text": "THCH",
-          "state": "ambiguous",
-          "classification": "ambiguous",
-          "query_id": null,
+          "state": "exact_match",
+          "classification": "relevant",
+          "query_id": "thch-general-ja",
           "variant_id": null,
-          "detail": "compound_token_without_registered_query",
+          "detail": "registered_canonical",
           "source_fields": [
             "queries[0].terms[4]"
           ]
@@ -219,11 +219,11 @@
       "queries": [
         {
           "text": "THC-O",
-          "state": "ambiguous",
-          "classification": "ambiguous",
-          "query_id": null,
+          "state": "exact_match",
+          "classification": "relevant",
+          "query_id": "thc-o-general-ja",
           "variant_id": null,
-          "detail": "compound_token_without_registered_query",
+          "detail": "registered_canonical",
           "source_fields": [
             "queries[0].term"
           ]
@@ -329,11 +329,11 @@
       "queries": [
         {
           "text": "CRDP",
-          "state": "ambiguous",
-          "classification": "ambiguous",
-          "query_id": null,
+          "state": "exact_match",
+          "classification": "relevant",
+          "query_id": "crdp-general-ja",
           "variant_id": null,
-          "detail": "compound_token_without_registered_query",
+          "detail": "registered_canonical",
           "source_fields": [
             "queries[0].term"
           ]
@@ -351,11 +351,11 @@
       "queries": [
         {
           "text": "CRDP",
-          "state": "ambiguous",
-          "classification": "ambiguous",
-          "query_id": null,
+          "state": "exact_match",
+          "classification": "relevant",
+          "query_id": "crdp-general-ja",
           "variant_id": null,
-          "detail": "compound_token_without_registered_query",
+          "detail": "registered_canonical",
           "source_fields": [
             "queries[0].term"
           ]
@@ -373,11 +373,11 @@
       "queries": [
         {
           "text": "HHCH",
-          "state": "ambiguous",
-          "classification": "ambiguous",
-          "query_id": null,
+          "state": "exact_match",
+          "classification": "relevant",
+          "query_id": "hhch-general-ja",
           "variant_id": null,
-          "detail": "compound_token_without_registered_query",
+          "detail": "registered_canonical",
           "source_fields": [
             "queries[0].term"
           ]
@@ -395,11 +395,11 @@
       "queries": [
         {
           "text": "HHCH",
-          "state": "ambiguous",
-          "classification": "ambiguous",
-          "query_id": null,
+          "state": "exact_match",
+          "classification": "relevant",
+          "query_id": "hhch-general-ja",
           "variant_id": null,
-          "detail": "compound_token_without_registered_query",
+          "detail": "registered_canonical",
           "source_fields": [
             "queries[0].term"
           ]
@@ -460,11 +460,11 @@
         },
         {
           "text": "HHC",
-          "state": "ambiguous",
-          "classification": "ambiguous",
-          "query_id": null,
+          "state": "exact_match",
+          "classification": "relevant",
+          "query_id": "hhc-general-ja",
           "variant_id": null,
-          "detail": "compound_token_without_registered_query",
+          "detail": "registered_canonical",
           "source_fields": [
             "compounds_collected[3]"
           ]
@@ -582,22 +582,22 @@
         },
         {
           "text": "THC-O リキッド",
-          "state": "ambiguous",
-          "classification": "ambiguous",
-          "query_id": null,
+          "state": "exact_match",
+          "classification": "relevant",
+          "query_id": "thc-o-liquid-ja",
           "variant_id": null,
-          "detail": "compound_token_without_registered_query",
+          "detail": "registered_canonical",
           "source_fields": [
             "queries[1].terms[0]"
           ]
         },
         {
           "text": "THC-Oリキッド",
-          "state": "ambiguous",
+          "state": "semantic_match_candidate",
           "classification": "ambiguous",
           "query_id": null,
           "variant_id": null,
-          "detail": "compound_token_without_registered_query",
+          "detail": "loose_text_match_not_auto_adopted",
           "source_fields": [
             "queries[1].terms[1]"
           ]
@@ -674,11 +674,11 @@
         },
         {
           "text": "HHC リキッド",
-          "state": "ambiguous",
-          "classification": "ambiguous",
-          "query_id": null,
+          "state": "exact_match",
+          "classification": "relevant",
+          "query_id": "hhc-liquid-ja",
           "variant_id": null,
-          "detail": "compound_token_without_registered_query",
+          "detail": "registered_canonical",
           "source_fields": [
             "queries[4].term"
           ]
@@ -755,11 +755,11 @@
         },
         {
           "text": "HHC リキッド",
-          "state": "ambiguous",
-          "classification": "ambiguous",
-          "query_id": null,
+          "state": "exact_match",
+          "classification": "relevant",
+          "query_id": "hhc-liquid-ja",
           "variant_id": null,
-          "detail": "compound_token_without_registered_query",
+          "detail": "registered_canonical",
           "source_fields": [
             "queries[4].term"
           ]
@@ -800,11 +800,11 @@
         },
         {
           "text": "THC-O リキッド",
-          "state": "ambiguous",
-          "classification": "ambiguous",
-          "query_id": null,
+          "state": "exact_match",
+          "classification": "relevant",
+          "query_id": "thc-o-liquid-ja",
           "variant_id": null,
-          "detail": "compound_token_without_registered_query",
+          "detail": "registered_canonical",
           "source_fields": [
             "queries[1].term",
             "queries[8].terms[4]"
@@ -812,11 +812,11 @@
         },
         {
           "text": "THCH リキッド",
-          "state": "ambiguous",
-          "classification": "ambiguous",
-          "query_id": null,
+          "state": "exact_match",
+          "classification": "relevant",
+          "query_id": "thch-liquid-ja",
           "variant_id": null,
-          "detail": "compound_token_without_registered_query",
+          "detail": "registered_canonical",
           "source_fields": [
             "queries[2].term",
             "queries[9].terms[2]"
@@ -848,11 +848,11 @@
         },
         {
           "text": "HHCH リキッド",
-          "state": "ambiguous",
-          "classification": "ambiguous",
-          "query_id": null,
+          "state": "exact_match",
+          "classification": "relevant",
+          "query_id": "hhch-liquid-ja",
           "variant_id": null,
-          "detail": "compound_token_without_registered_query",
+          "detail": "registered_canonical",
           "source_fields": [
             "queries[5].term",
             "queries[10].terms[2]"
@@ -860,11 +860,11 @@
         },
         {
           "text": "CRDP リキッド",
-          "state": "ambiguous",
-          "classification": "ambiguous",
-          "query_id": null,
+          "state": "exact_match",
+          "classification": "relevant",
+          "query_id": "crdp-liquid-ja",
           "variant_id": null,
-          "detail": "compound_token_without_registered_query",
+          "detail": "registered_canonical",
           "source_fields": [
             "queries[6].term",
             "queries[10].terms[3]"
@@ -910,11 +910,11 @@
         },
         {
           "text": "HHC リキッド",
-          "state": "ambiguous",
-          "classification": "ambiguous",
-          "query_id": null,
+          "state": "exact_match",
+          "classification": "relevant",
+          "query_id": "hhc-liquid-ja",
           "variant_id": null,
-          "detail": "compound_token_without_registered_query",
+          "detail": "registered_canonical",
           "source_fields": [
             "queries[8].terms[2]"
           ]
@@ -976,11 +976,11 @@
         },
         {
           "text": "HHC リキッド",
-          "state": "ambiguous",
-          "classification": "ambiguous",
-          "query_id": null,
+          "state": "exact_match",
+          "classification": "relevant",
+          "query_id": "hhc-liquid-ja",
           "variant_id": null,
-          "detail": "compound_token_without_registered_query",
+          "detail": "registered_canonical",
           "source_fields": [
             "queries[4].term"
           ]

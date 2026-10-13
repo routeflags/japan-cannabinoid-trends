@@ -56,6 +56,86 @@
       "language": "ja",
       "canonical_text": "CBD オイル",
       "status": "active"
+    },
+    {
+      "query_id": "hhc-general-ja",
+      "compound_id": "compound_hhc",
+      "intent_id": "compound_general",
+      "language": "ja",
+      "canonical_text": "HHC",
+      "status": "active"
+    },
+    {
+      "query_id": "hhc-liquid-ja",
+      "compound_id": "compound_hhc",
+      "intent_id": "product_liquid",
+      "language": "ja",
+      "canonical_text": "HHC リキッド",
+      "status": "active"
+    },
+    {
+      "query_id": "hhch-general-ja",
+      "compound_id": "compound_hhch",
+      "intent_id": "compound_general",
+      "language": "ja",
+      "canonical_text": "HHCH",
+      "status": "active"
+    },
+    {
+      "query_id": "hhch-liquid-ja",
+      "compound_id": "compound_hhch",
+      "intent_id": "product_liquid",
+      "language": "ja",
+      "canonical_text": "HHCH リキッド",
+      "status": "active"
+    },
+    {
+      "query_id": "thch-general-ja",
+      "compound_id": "compound_thch",
+      "intent_id": "compound_general",
+      "language": "ja",
+      "canonical_text": "THCH",
+      "status": "active"
+    },
+    {
+      "query_id": "thch-liquid-ja",
+      "compound_id": "compound_thch",
+      "intent_id": "product_liquid",
+      "language": "ja",
+      "canonical_text": "THCH リキッド",
+      "status": "active"
+    },
+    {
+      "query_id": "thc-o-general-ja",
+      "compound_id": "compound_thc_o",
+      "intent_id": "compound_general",
+      "language": "ja",
+      "canonical_text": "THC-O",
+      "status": "active"
+    },
+    {
+      "query_id": "thc-o-liquid-ja",
+      "compound_id": "compound_thc_o",
+      "intent_id": "product_liquid",
+      "language": "ja",
+      "canonical_text": "THC-O リキッド",
+      "status": "active"
+    },
+    {
+      "query_id": "crdp-general-ja",
+      "compound_id": "compound_crdp",
+      "intent_id": "compound_general",
+      "language": "ja",
+      "canonical_text": "CRDP",
+      "status": "active"
+    },
+    {
+      "query_id": "crdp-liquid-ja",
+      "compound_id": "compound_crdp",
+      "intent_id": "product_liquid",
+      "language": "ja",
+      "canonical_text": "CRDP リキッド",
+      "status": "active"
     }
   ]
 }
