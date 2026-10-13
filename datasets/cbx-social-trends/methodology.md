@@ -38,6 +38,14 @@ X データには複数の集計値があるため、整理する:
 | **451** | 26週収集の全ファイル合計（detail/full 含む） | `data/raw/x/26week/` |
 | **291** | 26週収集のユニーク tweet_id 数（重複排除後） | 算出値 |
 
+> **重要（2026-10-13 追記）:** 上表の `data/raw/x/...` は本リポジトリに存在しない。
+> `data/raw/` にあるのは `.gitkeep` のみである。日別・26週の raw（2,376 / 451 件）は
+> 収集されたがリポジトリには保持されていない。したがって raw からの processed
+> 再生成は不可能であり、`data/processed/x_cbx_202608_summary.csv` は再現不能な成果物
+> として `src/processing/reproduce.py` に明示登録されている（欠落入力:
+> `data/raw/x/202608/`）。再現には Section 3 の収集再実行が必要だが、X 検索は
+> 非決定論的なため同一の 147 件は得られない。
+
 > **注:** 26週データはまだ processed ファイルに統合されていない。将来的に重複排除した processed ファイルを作成予定。
 
 ---
@@ -151,6 +159,18 @@ deduplication (tweet_id)
 processed CSV (147 rows)
 ```
 
+上流（raw → 重複排除済み CSV）は raw が本リポジトリに無いため再現できない（Section 2.1
+の注記）。一方、重複排除済み CSV → 匿名化済み CSV は実行可能な変換として
+`src/processing/anonymize.py` に実装されており、次のコマンドで列単位に検証できる:
+
+```bash
+python -m processing.cli reproduce \
+  --artifact datasets/cbx-social-trends/data/processed/x_cbx_202608_summary_anonymized.csv
+```
+
+16 列中 `week` のみ 3 行で差があり（成果物が 2026-08-31 を `unknown` としている）、その差は
+宣言済みとして `src/processing/reproduce.py` に日付付きで記録されている。
+
 **Processed CSV schema:**
 ```csv
 tweet_id,createdAt,lang,username,author_name,views,likes,reposts,replies,url,text
@@ -227,15 +247,20 @@ tweet_id,createdAt,lang,username,author_name,views,likes,reposts,replies,url,tex
 
 ## 9. Reproducibility
 
-To reproduce this dataset:
+To reproduce this dataset, separate the two steps:
+
+**再現不能（収集）:**
 
 1. Set `APIFY_TOKEN` in `.env.d/apify.env`
 2. Run the collection commands specified in Section 3
 3. Deduplicate by `tweet_id`
 4. Filter by `lang: ja`
-5. Export to CSV with schema in Section 5
 
-**Note:** X search results are non-deterministic. Repeated runs may return different results. Always preserve run metadata and dataset IDs.
+**再現可能（処理）:** 上記 4 で得た重複排除済み CSV からの匿名化は実行可能な変換であり、
+本リポジトリ内で検証済み（`src/processing/anonymize.py`、`docs/data-dictionary.md`）。
+
+**Note:** X search results are non-deterministic. Repeated runs may return different results. Always preserve run metadata and dataset IDs. 手順 2 を再実行しても、本リポジトリの
+147 件は再現されない。
 
 ---
 

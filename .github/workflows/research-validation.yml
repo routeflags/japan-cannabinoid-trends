@@ -43,6 +43,13 @@ jobs:
         run: |
           python -m validation.cli validate-registries
 
+      - name: Audit processed artifacts
+        run: |
+          # Every committed data/processed artifact must be either re-derivable by
+          # a registered transformation or explicitly declared non-reproducible
+          # with its missing inputs named (src/processing/reproduce.py).
+          python -m processing.cli audit-processed
+
       - name: Validate data schema (bash)
         run: |
           bash scripts/validation/validate-data-schema.sh

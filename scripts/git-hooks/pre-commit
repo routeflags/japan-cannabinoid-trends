@@ -1,12 +1,13 @@
 #!/usr/bin/env bash
 # =============================================================================
-# Pre-commit hook: Data Schema + Version Sync + Research Pages + Emergence Tracker Validation
+# Pre-commit hook: Data Schema + Version Sync + Research Pages + Emergence Tracker + Processed Artifact Validation
 #
 # コミット前に以下を検証:
 # 1. Data Dictionary と実際のデータスキーマの一致
 # 2. バージョン/DOI の同期（CITATION.cff, datapackage.json 等）
 # 3. 調査ページの完全性（publication/research_*.html）
 # 4. Search Emergence Tracker の最新性（publication/search-emergence-tracker）
+# 5. processed 成果物の再現性（再導出可能、または欠落入力を明示した再現不能宣言）
 #
 # 検証をスキップする場合:
 #   git commit --no-verify
@@ -34,6 +35,9 @@ RESEARCH_VALIDATION_NEEDED=false
 
 # Emergence Tracker 検証が必要なファイル
 EMERGENCE_VALIDATION_NEEDED=false
+
+# processed 成果物の再現性検証が必要なファイル
+PROCESSED_AUDIT_NEEDED=false
 
 for file in $CHANGED_FILES; do
   case $file in
@@ -68,11 +72,17 @@ for file in $CHANGED_FILES; do
     research/regulatory-status/*)
       EMERGENCE_VALIDATION_NEEDED=true
       ;;
+    # processed 成果物の再現性検証対象（成果物・導出規則・規則仕様のいずれが変わっても再検証）
+    datasets/*/data/processed/*|\
+    src/processing/*|\
+    metadata/taxonomy/classification-rules.yaml)
+      PROCESSED_AUDIT_NEEDED=true
+      ;;
   esac
 done
 
 # いずれの検証も不要な場合はスキップ
-if [ "$SCHEMA_VALIDATION_NEEDED" = false ] && [ "$VERSION_VALIDATION_NEEDED" = false ] && [ "$RESEARCH_VALIDATION_NEEDED" = false ] && [ "$EMERGENCE_VALIDATION_NEEDED" = false ]; then
+if [ "$SCHEMA_VALIDATION_NEEDED" = false ] && [ "$VERSION_VALIDATION_NEEDED" = false ] && [ "$RESEARCH_VALIDATION_NEEDED" = false ] && [ "$EMERGENCE_VALIDATION_NEEDED" = false ] && [ "$PROCESSED_AUDIT_NEEDED" = false ]; then
   exit 0
 fi
 
@@ -151,6 +161,25 @@ if [ "$EMERGENCE_VALIDATION_NEEDED" = true ]; then
   else
     echo ""
     echo "  ✅ Emergence Tracker 検証に合格しました"
+  fi
+  echo ""
+fi
+
+# 5. processed 成果物の再現性検証
+if [ "$PROCESSED_AUDIT_NEEDED" = true ]; then
+  echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+  echo "  5. Processed Artifact Reproducibility"
+  echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+  echo ""
+
+  # 検証は標準ライブラリのみで動く（cerberus 不要）ため、venv が無い環境でも実行できる。
+  if ! PYTHONPATH=src python3 -m processing.cli audit-processed; then
+    echo ""
+    echo "  ❌ processed 成果物の再現性検証に失敗しました"
+    VALIDATION_FAILED=true
+  else
+    echo ""
+    echo "  ✅ processed 成果物の再現性検証に合格しました"
   fi
   echo ""
 fi

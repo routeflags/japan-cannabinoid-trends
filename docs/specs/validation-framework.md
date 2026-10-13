@@ -246,6 +246,9 @@ report = outcome.to_report().to_dict()
   （read-only、report-only、常に exit 0。tracked/ignored/absent を CI ログに記録）
 - exports 同期検査（`export-taxonomy.sh --output-dir` を scratch に実行し、tracked の
   `exports/taxonomy/*` と diff して一致を要求。regeneration は正規スクリプトのみ）
+- `python -m processing.cli audit-processed`（Phase B 増分。read-only。コミット済み
+  processed 成果物が「再実行可能な導出」か「欠落入力を明示した再現不能宣言」の
+  どちらかであることを要求。現状 8 成果物で exit 0。§20）
 
 除外（理由）:
 
@@ -789,4 +792,85 @@ G6 仕様（`docs/plans/20261013f.md`）の垂直スライス。Git 運用全体
 - Release Manifest / GitHub Release・Zenodo 候補検証（G6-T12/T13/T19/T20）。schema（`release-manifest-v1` 等）・CLI・CI 配線は将来。`scripts/release/create-clean-archive.sh` と `release-zenodo.yml` の現行運用は変更なし。
 - 新規収集 run の追跡方針（判断待ち①）は**現状追認で確定**（2026-10-13）: `google_trends` の raw は追跡、それ以外の raw は `**/data/raw/*` により除外。変更する場合は policy の再定義と `.gitignore` 例外の見直しが必要。
 - 新規収集 run の追跡方針の確定（判断待ち①）、追跡↔除外の変更適用（判断待ち②: `*.db` 除外は追加済み・判断待ち⑤としてレビュー例外を記録、判断待ち③④は現状維持で確定）。
-- ライブ収集・CI ワークフロー変更・SQLite 実データ検証は未実施（CI は pytest + validate-registries のまま green）。
+- ライブ収集・CI ワークフロー変更・SQLite 実データ検証は未実装（CI は pytest + validate-registries のまま green）。
+
+## 20. Processed 成果物の再現性（Phase B 垂直スライス）— 2026-10-13
+
+### 20.1 背景（実測した不整合）
+
+コミット済みの `datasets/*/data/processed/**` 8 成果物を調べたところ、導出規則が
+実行可能な形では存在していなかった。AGENTS.md は「手作業のスプレッドシート操作より
+実行可能な変換を優先する」と定めているが、実際には:
+
+- どの `.py`/`.sh` も `early-warning-index-v1.csv`・`collection-summary.md`・
+  `youtube_filtered_202607/*` を生成していない（grep で確認）。
+- `classification-rules.yaml`・`iptc-mapping.yaml`・`metadata/keywords.yaml` を
+  **読む Python コードがリポジトリに 1 つも無い**。分類器は 2026-10-02 に一度
+  リポジトリ外で実行され、その出力だけがコミットされている。
+- `cbx-social-trends/methodology.md` §2.1 は `data/raw/x/202608/` を raw の場所と
+  して示すが、`data/raw/` にあるのは `.gitkeep` のみ。
+- `cannabinoid-multi-trends/methodology.md` §3.3 は `screen_name` → `author_id` を
+  「ハッシュ化」と記載していたが、実成果物の `author_id` は初出順の連番（`docs/data-dictionary.md`
+  が正しい）。
+
+### 20.2 規則（1 つの規則ですべての成果物に適用）
+
+コミット済み processed 成果物は、次のいずれかでなければならない。
+
+1. 追跡可能な入力から実行可能な変換で再導出できる（`DERIVATIONS`）
+2. リポジトリ内容からは再現不能であることを、**欠落入力を名指しして**宣言する
+   （`NON_REPRODUCIBLE`）
+
+どちらにも無い成果物は FAIL。これにより新規にコミットされた processed ファイルが
+この問いを素通りできない。さらに次の 2 状態も FAIL とする（宣言が嘘になっている
+ため）:
+
+- `undeclared_drift` — 導出結果が宣言していない差異で成果物と食い違う
+- `stale_declaration` — 宣言済みの差異がもう発生していない（成果物を直した場合など）
+
+静的ファイル（`.gitkeep`）は `placeholder` として件数を出し、黙って除外しない。
+
+### 20.3 実装
+
+- `src/processing/rulespec.py` — `classification-rules.yaml` のリーダ
+- `src/processing/classify.py` — ルールベース分類（出力は SKOS notation のみ）
+- `src/processing/anonymize.py` — 重複排除済み CSV → 匿名化 CSV の導出
+- `src/processing/reproduce.py` — 再導出監査（`DERIVATIONS` / `NON_REPRODUCIBLE` /
+  `REVIEW_NOTES`）
+- `src/processing/cli.py` — `python -m processing.cli {audit-processed,reproduce,classify}`
+
+**決定（YAML の読み方）**: 本リポジトリの第三者依存は cerberus のみと定めているため
+（`pyproject.toml`）、YAML ライブラリを追加せずに文書化されたサブセットだけを読む
+リーダを `rulespec.py` に置いた。リーダは**厳格**（キーワード集合が空・fallback 欠落・
+閾値が読めない場合は `RuleSpecError`）で、`load_content_rules` が返す記録済み分布を
+`reproduce.py` の自己検査に使う。YAML ライブラリ導入または仕様の JSON 正本化を選ぶ
+場合は `load_content_rules` 1 関数のみ差し替えればよい。
+
+**決定（同点の扱い）**: 仕様はキーワード同数時の規則を定めていない。ファイル記載順で
+先の概念を採用するという読みを `classify.py` に明記し、テストで拘束している。
+
+### 20.4 検証結果（2026-10-13 実測、Python 3.14）
+
+- `x_cbx_202608_summary_anonymized.csv` は追跡済みの非匿名化 summary から
+  **16 列中 15 列が 147/147 で一致**。残る `week` のみ 3 行差（成果物は 2026-08-31 を
+  `unknown`、規則は W5）。差は `src/processing/reproduce.py` に日付付きで宣言。
+- 分類 3 列（`topic_id`/`intent_id`/`format_id`）の再現分布は仕様自身の
+  `classification_results` と**完全一致**（147 件）。
+- 監査結果: `not_reproducible_from_repository` 6 / `placeholder` 1 /
+  `reproducible_with_declared_discrepancy` 1、`failure_count 0`。
+- `pytest` **823 passed**（`tests/processing/` 34 件追加、従来 789）。
+- `validate-registries` 11 ターゲット全 valid、`validate-data-schema.sh` PASS 45 /
+  WARN 2 / FAIL 0、`validate-version-sync.sh` PASS 12 / WARN 1 / FAIL 0。
+
+### 20.5 レビュー事項（未決。判断はメンテナ）
+
+- `datasets/cbx-social-trends/data/processed/x_cbx_202608_summary.csv` は **X の
+  username・表示名・本文・投稿 URL を含んだまま追跡**されている。AGENTS.md は
+  ソーシャル記録の公開前に再配布条件のレビューを要求し、匿名化版がそのために存在する。
+  非匿名化版を追跡し続けるかは本スライスでは決めない（`REVIEW_NOTES` に記録し、
+  レポートに出すのみ）。
+- `early-warning-index-v1.csv` は**導出規則が皆無**の唯一の成果物で、`cohort`・
+  `persistence_class`・`emergence_score` に規則が無い。次の増分の候補。
+- `docs/audits/*.json`（機械可読の監査報告）は再生成されないままレジストリから乖離
+  している（例: `g7-study-inventory.json` は 9 study 中 7 件を `registered: false`
+  と誤記録）。鮮度検査は未実装（Phase A 候補）。

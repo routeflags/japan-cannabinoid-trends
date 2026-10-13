@@ -121,11 +121,23 @@ SKOS Concept ID を使用して化合物カテゴリを分類。
 
 ### 3.3 匿名化（X データ）
 
+正本は `docs/data-dictionary.md` の匿名化マッピング。実行規則は
+`src/processing/anonymize.py` にあり、`cbx-social-trends` の匿名化済み成果物に対して
+列単位で検証されている。
+
 | 元フィールド | 匿名化後 | 方法 |
 |-------------|---------|------|
-| screen_name | author_id | ハッシュ化 |
-| text | text_length | 文字数カウント |
-| tweet_id | tweet_id_hash | SHA-256 ハッシュ |
+| `screen_name` | `author_id` | 初出順の連番 ID（`author_001` 等）に置換。**ハッシュではない** |
+| `author_name` | （削除） | 個人情報のため削除 |
+| `text` | `text_length` | 文字数のみ保持、本文は削除 |
+| `tweet_id` | `tweet_id_hash` | SHA-256 ハッシュの**先頭 16 文字** |
+| `url` | （削除） | 個人情報のため削除 |
+
+> **2026-10-13 訂正:** 本表は以前「`screen_name` → `author_id` はハッシュ化」と
+> 記載していたが誤り。実成果物の `author_id` は初出順の連番である。また
+> `tweet_id_hash` は SHA-256 全長ではなく先頭 16 文字である。本 study は X raw を
+> リポジトリに保持していないため、この変換の適用先成果物は
+> `cbx-social-trends` 側にある。
 
 ---
 
