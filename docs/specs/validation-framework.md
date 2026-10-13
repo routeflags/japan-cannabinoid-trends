@@ -16,6 +16,7 @@
 | Phase 6 | 収集パイプライン統合 | **G1 垂直スライス実装済み**（registries / capability gate / adapter contract / L1 + quarantine / L2。ライブ収集は未実施、既存 shell・skill への適用は親判断待ち — §13）。**G3 垂直スライス実装済み**（Temporal Contract / Window Compiler / Coverage / Temporal Comparability / 旧 run 監査 — §16）。**G4 垂直スライス実装済み**（Artifact Registry / Reader Contract / Storage Integrity / Storage Inventory / Data Catalog — §17）。**G5 垂直スライス実装済み**（Provenance Contract / Evidence Registry / Audit Trail。重複整理・完全性評価・P01/P17・旧 run 監査 — §18） |
 | Phase 7 | CI | 実装済み（`research-validation.yml` 新設。初回実行成功: 2026-10-13 push `324cd55`） |
 | Phase 8 | Legacy Audit | 実装済み（29件を非破壊監査。`docs/audits/g5-legacy-runs.json`、raw sha256 前後一致） |
+| G7 垂直スライス | Study Registry / Research Catalog / Comparability Gate / Research View | **実装済み（2-study: `cbx-search-trends` + `cannabinoid-multi-trends`）**（Study/Measurement Registry 新設＋CI 検証11件。Catalog は派生索引（P2）。Gate は CS01-CS13、`comparable` は完全証拠時のみで実データ上限は `conditional`。View は `parallel_timeseries` 派生（合算なし）。9 study 非破壊監査は `docs/audits/g7-study-inventory.*`、raw sha256 前後一致） |
 
 ## 1. 依存管理
 
@@ -47,9 +48,8 @@ python3 -m venv .venv
 ```
 
 - Contract Tests: `tests/validation/`（609件）+ `tests/collection/`（77件）
-  + `tests/storage/`（57件）＝ **743件**（2026-10-13 G6 垂直スライス後。
-  `.venv/bin/python -m pytest` で実測（Python 3.14＋editable install。
-  非 editable 環境では subprocess 検査が1件 skip される）。G5 直後は 721 件）。
+  + `tests/storage/`（57件）+ `tests/research/`（46件）＝ **789件**（2026-10-13 G7 垂直スライス後。
+  `.venv/bin/python -m pytest` で実測（Python 3.14＋editable install）。G6 直後は 743 件）。
 - 新しいスキーマを登録したら、対応する Contract Test を必ず追加する
   （20261013h.md §9 / §16）。`tests/validation/test_schema_coverage.py` が
   「登録済みスキーマIDを参照するテストファイルの存在」を機械的に検査するため、
@@ -92,6 +92,13 @@ report = outcome.to_report().to_dict()
 | `legacy.py` | Legacy Audit Profile・凍結 run_id リスト（Phase 8） |
 | `provenance.py` | G5 来歴評価: Completeness / Confidence / Integrity / Readiness（読取専用。`inferred` 自動付与なし）・Evidence Registry 検査・run_id 一意性・`audit-provenance` 集計 |
 | `cli.py` | CLI（下記 §5） |
+| `research/catalog.py` | G7: 派生 Research Catalog（発見索引。Manifest/Registry から再生成、決定的。P2/P4） |
+| `research/comparability.py` | G7: CS01-CS13 横断ゲート（測定/時間サブセットは `validation.comparability` に委譲。`comparable` は完全証拠時のみ） |
+| `research/views.py` | G7: Research View 生成（`parallel_timeseries` のみ。合算なし。P6/P8） |
+| `research/dedup.py` | G7: 重複使用の派生追跡（raw 不変。§12） |
+| `research/policy.py` | G7: Internal/Public Catalog 分離（宣言のみ。公開しない。§15） |
+| `research/audit.py` | G7: 既存 Study 非破壊監査（§16。raw sha256 前後一致） |
+| `research/cli.py` | G7: `catalog-find` / `compare` / `build-view` / `audit-studies` |
 
 - `cerberus` を import してよいのは `src/validation/core.py` のみ（維持）。
 - 共通設定: `allow_unknown=False` / `purge_unknown=False` / `normalize=False`。

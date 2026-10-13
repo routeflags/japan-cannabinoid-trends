@@ -1,0 +1,23 @@
+{
+  "schema_version": "1.0.0",
+  "studies": [
+    {
+      "study_id": "cbx-search-trends",
+      "title": "CBX Search Trends",
+      "research_questions": [
+        "日本国内において、CBX / H4CBH / HHBD 関連クエリの検索需要はどう推移しているか？"
+      ],
+      "sources": ["google-trends", "google-search-console"],
+      "status": "active"
+    },
+    {
+      "study_id": "cannabinoid-multi-trends",
+      "title": "Cannabinoid Multi-Trends",
+      "research_questions": [
+        "日本国内において、主要カンナビノイド化合物（CBD, THC, CBG, HHC, THCV, THC-O, THCH）の検索需要・SNS 言及・動画コンテンツはどう推移しているか？"
+      ],
+      "sources": ["google-trends", "x", "youtube"],
+      "status": "active"
+    }
+  ]
+}

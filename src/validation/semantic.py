@@ -43,10 +43,12 @@ __all__ = [
     "Registries",
     "check_capability_gate",
     "check_execution_consistency",
+    "check_measurement_registry",
     "check_missingness_consistency",
     "check_query_registry_version",
     "check_registry_references",
     "check_schema_version",
+    "check_study_registry",
     "check_temporal_semantics",
     "eligible_collectors",
     "scan_for_secrets",
@@ -996,4 +998,68 @@ def scan_for_secrets(document) -> list[Issue]:
                     walk(value, child)
 
     walk(document, "")
+    return issues
+
+
+# ---------------------------------------------------------------------------
+# G7 registries: study / measurement internal consistency (g.md §4/§6,
+# G7-T01 "Study ID重複 FAIL").  Structural shape is enforced by
+# ``study-registry-v1`` / ``measurement-registry-v1``; these checks refuse
+# mechanical duplicates the schema cannot express.
+# ---------------------------------------------------------------------------
+
+
+def check_study_registry(document) -> list:
+    """Internal consistency of one study-registry document."""
+    issues: list = []
+    if not isinstance(document, dict):
+        return issues
+    studies = document.get("studies")
+    if not isinstance(studies, list):
+        return issues
+    seen: set = set()
+    for index, study in enumerate(studies):
+        if not isinstance(study, dict):
+            continue
+        study_id = study.get("study_id")
+        if isinstance(study_id, str) and study_id:
+            if study_id in seen:
+                issues.append(
+                    _issue(
+                        "STUDY_DUPLICATE_ID",
+                        join_pointer(f"/studies/{index}", "study_id"),
+                        "study_id is registered more than once",
+                        "study_uniqueness",
+                    )
+                )
+            else:
+                seen.add(study_id)
+    return issues
+
+
+def check_measurement_registry(document) -> list:
+    """Internal consistency of one measurement-registry document."""
+    issues: list = []
+    if not isinstance(document, dict):
+        return issues
+    measurements = document.get("measurements")
+    if not isinstance(measurements, list):
+        return issues
+    seen: set = set()
+    for index, measurement in enumerate(measurements):
+        if not isinstance(measurement, dict):
+            continue
+        measurement_id = measurement.get("measurement_id")
+        if isinstance(measurement_id, str) and measurement_id:
+            if measurement_id in seen:
+                issues.append(
+                    _issue(
+                        "MEASUREMENT_DUPLICATE_ID",
+                        join_pointer(f"/measurements/{index}", "measurement_id"),
+                        "measurement_id is registered more than once",
+                        "measurement_uniqueness",
+                    )
+                )
+            else:
+                seen.add(measurement_id)
     return issues

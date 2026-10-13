@@ -1,0 +1,15 @@
+{
+  "comparison_mode": "parallel_timeseries",
+  "compound_id": "compound_cbd",
+  "granularity": "week",
+  "measurements": [
+    "search_interest_index"
+  ],
+  "require_comparability_gate": true,
+  "sources": [
+    "google-trends"
+  ],
+  "timezone": "Asia/Tokyo",
+  "view_id": "cbd-rikiddo-gt-weekly-parallel",
+  "view_version": "1.0.0"
+}

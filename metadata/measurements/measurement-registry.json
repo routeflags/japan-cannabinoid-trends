@@ -1,0 +1,26 @@
+{
+  "schema_version": "1.0.0",
+  "measurements": [
+    {
+      "measurement_id": "search_interest_index",
+      "unit": "relative_index_0_100",
+      "observation_entity": "search_interest",
+      "aggregation": "source_defined",
+      "normalization_required": true
+    },
+    {
+      "measurement_id": "social_post_count",
+      "unit": "posts",
+      "observation_entity": "post",
+      "aggregation": "count",
+      "normalization_required": false
+    },
+    {
+      "measurement_id": "video_publication_count",
+      "unit": "videos",
+      "observation_entity": "video",
+      "aggregation": "count",
+      "normalization_required": false
+    }
+  ]
+}

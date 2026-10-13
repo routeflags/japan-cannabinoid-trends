@@ -81,6 +81,8 @@ from validation.reporting import (
 from validation.schema_registry import get_schema, get_schema_version
 from validation.semantic import (
     Registries,
+    check_measurement_registry,
+    check_study_registry,
     check_temporal_semantics,
     scan_for_secrets,
 )
@@ -590,6 +592,14 @@ def _validate_registries(args) -> tuple[ReportBundle, int]:
             elif schema_id == "artifact-registry-v1":
                 extra_checks.append(
                     lambda document: check_artifact_registry(document)
+                )
+            elif schema_id == "study-registry-v1":
+                extra_checks.append(
+                    lambda document: check_study_registry(document)
+                )
+            elif schema_id == "measurement-registry-v1":
+                extra_checks.append(
+                    lambda document: check_measurement_registry(document)
                 )
             elif schema_id == "evidence-registry-v1":
                 # G5 §11: local references must exist, recorded hashes must

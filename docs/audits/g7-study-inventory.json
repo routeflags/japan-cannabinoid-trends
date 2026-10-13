@@ -1,0 +1,356 @@
+{
+  "audit_version": "1.0.0",
+  "study_count": 9,
+  "studies": [
+    {
+      "study_id": "cannabinoid-multi-trends",
+      "registered": true,
+      "title": "Cannabinoid Multi-Trends",
+      "has_readme": true,
+      "has_methodology": true,
+      "research_questions_quoted": [
+        "日本国内において、主要カンナビノイド化合物（CBD, THC, CBG, HHC, THCV, THC-O, THCH）の検索需要・SNS 言及・動画コンテンツはどう推移しているか？"
+      ],
+      "run_count": 25,
+      "catalog_entry_count": 22,
+      "layout": [
+        "README.md",
+        "data",
+        "methodology.md"
+      ],
+      "data_file_count": 86,
+      "has_data_raw": true,
+      "data_raw_file_count": 84,
+      "sources": [
+        "google-trends",
+        "google-trends-mcp"
+      ],
+      "compound_ids": [
+        "compound_cbd",
+        "compound_cbx",
+        "compound_crdp",
+        "compound_hhc",
+        "compound_hhch",
+        "compound_thc_o",
+        "compound_thch"
+      ],
+      "query_ids": [
+        "cbd-general-ja",
+        "cbd-liquid-ja",
+        "cbd-oil-ja",
+        "cbx-liquid-ja",
+        "crdp-general-ja",
+        "crdp-liquid-ja",
+        "hhc-general-ja",
+        "hhc-liquid-ja",
+        "hhch-general-ja",
+        "hhch-liquid-ja",
+        "thc-o-general-ja",
+        "thc-o-liquid-ja",
+        "thch-general-ja",
+        "thch-liquid-ja"
+      ],
+      "timeframes": [
+        "today 12-m",
+        "today 5-y"
+      ],
+      "measurement_ids": [
+        "search_interest_index"
+      ],
+      "window_ids": [],
+      "has_artifact_manifest": false,
+      "coverage": "unevidenced",
+      "publication_status": "private_by_default"
+    },
+    {
+      "study_id": "cannabinoid-social-trends",
+      "registered": false,
+      "title": "cannabinoid-social-trends — カンナビノイド規制前後の X (Twitter) 言及データ",
+      "has_readme": true,
+      "has_methodology": true,
+      "research_questions_quoted": [],
+      "run_count": 0,
+      "catalog_entry_count": 0,
+      "layout": [
+        "README.md",
+        "methodology.md"
+      ],
+      "data_file_count": 0,
+      "has_data_raw": false,
+      "data_raw_file_count": 0,
+      "sources": [],
+      "compound_ids": [],
+      "query_ids": [],
+      "timeframes": [],
+      "measurement_ids": [],
+      "window_ids": [],
+      "has_artifact_manifest": false,
+      "coverage": "unevidenced",
+      "publication_status": "private_by_default"
+    },
+    {
+      "study_id": "cbx-liquid-online-trend",
+      "registered": false,
+      "title": "CBX Liquid Online Trend",
+      "has_readme": true,
+      "has_methodology": true,
+      "research_questions_quoted": [
+        "2026年の日本国内において、X (Twitter) 上で「CBX リキッド」に言及する投稿の量・内容・時間的推移は何か？"
+      ],
+      "run_count": 0,
+      "catalog_entry_count": 0,
+      "layout": [
+        "README.md",
+        "data",
+        "metadata",
+        "methodology.md"
+      ],
+      "data_file_count": 2,
+      "has_data_raw": false,
+      "data_raw_file_count": 0,
+      "sources": [],
+      "compound_ids": [],
+      "query_ids": [],
+      "timeframes": [],
+      "measurement_ids": [],
+      "window_ids": [],
+      "has_artifact_manifest": false,
+      "coverage": "unevidenced",
+      "publication_status": "private_by_default"
+    },
+    {
+      "study_id": "cbx-product-coa",
+      "registered": false,
+      "title": "CBX Product COA",
+      "has_readme": true,
+      "has_methodology": false,
+      "research_questions_quoted": [
+        "市流通している CBX 配合製品の原料の純度・成分・THC 残留量はどうなっているか？"
+      ],
+      "run_count": 0,
+      "catalog_entry_count": 0,
+      "layout": [
+        "README.md"
+      ],
+      "data_file_count": 0,
+      "has_data_raw": false,
+      "data_raw_file_count": 0,
+      "sources": [],
+      "compound_ids": [],
+      "query_ids": [],
+      "timeframes": [],
+      "measurement_ids": [],
+      "window_ids": [],
+      "has_artifact_manifest": false,
+      "coverage": "unevidenced",
+      "publication_status": "private_by_default"
+    },
+    {
+      "study_id": "cbx-search-trends",
+      "registered": true,
+      "title": "CBX Search Trends",
+      "has_readme": true,
+      "has_methodology": true,
+      "research_questions_quoted": [
+        "日本国内において、CBX / H4CBH / HHBD 関連クエリの検索需要はどう推移しているか？"
+      ],
+      "run_count": 4,
+      "catalog_entry_count": 4,
+      "layout": [
+        "README.md",
+        "analysis",
+        "data",
+        "methodology.md"
+      ],
+      "data_file_count": 15,
+      "has_data_raw": true,
+      "data_raw_file_count": 15,
+      "sources": [
+        "google-trends"
+      ],
+      "compound_ids": [
+        "compound_cbd",
+        "compound_cbx"
+      ],
+      "query_ids": [
+        "cbd-liquid-ja",
+        "cbx-cannabinoid-ja",
+        "cbx-cannabis-ja",
+        "cbx-general-ja",
+        "cbx-liquid-ja"
+      ],
+      "timeframes": [
+        "today 12-m"
+      ],
+      "measurement_ids": [
+        "search_interest_index"
+      ],
+      "window_ids": [],
+      "has_artifact_manifest": false,
+      "coverage": "unevidenced",
+      "publication_status": "private_by_default"
+    },
+    {
+      "study_id": "cbx-social-trends",
+      "registered": false,
+      "title": "CBX Social Media Trends",
+      "has_readme": true,
+      "has_methodology": true,
+      "research_questions_quoted": [
+        "2026年の日本国内において、複数 SNS プラットフォーム上で CBX に言及する投稿の量・内容・時間的推移は何か？"
+      ],
+      "run_count": 0,
+      "catalog_entry_count": 0,
+      "layout": [
+        "README.md",
+        "analysis",
+        "data",
+        "methodology.md"
+      ],
+      "data_file_count": 7,
+      "has_data_raw": true,
+      "data_raw_file_count": 1,
+      "sources": [],
+      "compound_ids": [],
+      "query_ids": [],
+      "timeframes": [],
+      "measurement_ids": [],
+      "window_ids": [],
+      "has_artifact_manifest": false,
+      "coverage": "unevidenced",
+      "publication_status": "private_by_default"
+    },
+    {
+      "study_id": "x-26week-trends",
+      "registered": false,
+      "title": "x-26week-trends — CBX リキッド X 26週間トレンド調査",
+      "has_readme": true,
+      "has_methodology": true,
+      "research_questions_quoted": [],
+      "run_count": 0,
+      "catalog_entry_count": 0,
+      "layout": [
+        "README.md",
+        "analysis",
+        "data",
+        "methodology.md"
+      ],
+      "data_file_count": 2,
+      "has_data_raw": true,
+      "data_raw_file_count": 1,
+      "sources": [],
+      "compound_ids": [],
+      "query_ids": [],
+      "timeframes": [],
+      "measurement_ids": [],
+      "window_ids": [],
+      "has_artifact_manifest": false,
+      "coverage": "unevidenced",
+      "publication_status": "private_by_default"
+    },
+    {
+      "study_id": "x-consistency",
+      "registered": false,
+      "title": "x-consistency — X (Twitter) 収集結果の一貫性・日付範囲取得データセット",
+      "has_readme": true,
+      "has_methodology": false,
+      "research_questions_quoted": [],
+      "run_count": 0,
+      "catalog_entry_count": 0,
+      "layout": [
+        "README.md",
+        "data",
+        "schema"
+      ],
+      "data_file_count": 1,
+      "has_data_raw": false,
+      "data_raw_file_count": 0,
+      "sources": [],
+      "compound_ids": [],
+      "query_ids": [],
+      "timeframes": [],
+      "measurement_ids": [],
+      "window_ids": [],
+      "has_artifact_manifest": false,
+      "coverage": "unevidenced",
+      "publication_status": "private_by_default"
+    },
+    {
+      "study_id": "youtube-consistency",
+      "registered": false,
+      "title": "youtube-consistency — YouTube 検索結果の一貫性・重複分析",
+      "has_readme": true,
+      "has_methodology": false,
+      "research_questions_quoted": [],
+      "run_count": 0,
+      "catalog_entry_count": 0,
+      "layout": [
+        "README.md",
+        "data",
+        "queries",
+        "schema"
+      ],
+      "data_file_count": 1,
+      "has_data_raw": false,
+      "data_raw_file_count": 0,
+      "sources": [],
+      "compound_ids": [],
+      "query_ids": [],
+      "timeframes": [],
+      "measurement_ids": [],
+      "window_ids": [],
+      "has_artifact_manifest": false,
+      "coverage": "unevidenced",
+      "publication_status": "private_by_default"
+    }
+  ],
+  "cross_study_compound_overlaps": [
+    {
+      "compound_id": "compound_cbd",
+      "study_ids": [
+        "cannabinoid-multi-trends",
+        "cbx-search-trends"
+      ]
+    },
+    {
+      "compound_id": "compound_cbx",
+      "study_ids": [
+        "cannabinoid-multi-trends",
+        "cbx-search-trends"
+      ]
+    }
+  ],
+  "representative_pair_verdicts": [
+    {
+      "compound_id": "compound_cbd",
+      "left": "cannabinoid-multi-trends:20261002T063821Z-google-trends-cbd",
+      "right": "cbx-search-trends:20261001T115959Z-google-trends-cbx-rikiddo",
+      "status": "conditional",
+      "reasons": [
+        "cs03_collection_time_offset_review_required",
+        "cs04_time_axis_review_required",
+        "cs05_granularity_review_required",
+        "cs08_sampling_review_required",
+        "cs09_coverage_review_required",
+        "cs10_missingness_review_required",
+        "cs11_normalization_review_required",
+        "cs12_provenance_partial",
+        "cs13_publication_review_required"
+      ]
+    },
+    {
+      "compound_id": "compound_cbx",
+      "left": "cannabinoid-multi-trends:20261012T055259Z-google-trends-ja-rikiddo-phase-a-12m",
+      "right": "cbx-search-trends:20261001T115959Z-google-trends-cbx-rikiddo",
+      "status": "not_comparable",
+      "reasons": [
+        "cs11_normalization_scale_mismatch"
+      ]
+    }
+  ],
+  "raw_file_count": 101,
+  "raw_modified": false,
+  "raw_combined_sha256": "6fe6fba8d045784fe1ac33d25381754f41fa63b44a14118985cd29f8e131080f",
+  "note": "non-destructive: study boundaries intact, raw and old metadata only read"
+}
+

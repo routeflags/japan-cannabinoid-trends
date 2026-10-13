@@ -1,0 +1,52 @@
+{
+  "aggregation_performed": false,
+  "comparison_mode": "parallel_timeseries",
+  "direct_comparison_blocked_pairs": 2,
+  "note": "parallel display only: series with not_comparable verdicts are shown side by side, never summed or rescaled (P6)",
+  "pair_verdicts": [
+    {
+      "pair": [
+        "cbx-search-comparison-cbd",
+        "multi-phase-a-single-cbd"
+      ],
+      "reasons": [
+        "cs11_normalization_scale_mismatch"
+      ],
+      "status": "not_comparable"
+    },
+    {
+      "pair": [
+        "cbx-search-comparison-cbd",
+        "multi-phase-a-repeat-single-cbd"
+      ],
+      "reasons": [
+        "cs11_normalization_scale_mismatch"
+      ],
+      "status": "not_comparable"
+    },
+    {
+      "pair": [
+        "multi-phase-a-single-cbd",
+        "multi-phase-a-repeat-single-cbd"
+      ],
+      "reasons": [
+        "cs03_collection_time_offset_review_required",
+        "cs04_time_axis_review_required",
+        "cs05_granularity_review_required",
+        "cs08_sampling_review_required",
+        "cs09_coverage_review_required",
+        "cs10_missingness_review_required",
+        "cs11_renormalization_instability_review_required",
+        "cs12_provenance_partial",
+        "cs13_publication_review_required"
+      ],
+      "status": "conditional"
+    }
+  ],
+  "series": [
+    "cbx-search-comparison-cbd",
+    "multi-phase-a-single-cbd",
+    "multi-phase-a-repeat-single-cbd"
+  ],
+  "view_id": "cbd-rikiddo-gt-weekly-parallel"
+}

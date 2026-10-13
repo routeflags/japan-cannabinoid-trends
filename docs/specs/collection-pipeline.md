@@ -232,6 +232,25 @@ L1-09 の規則:
 - run metadata は unit ラベルを持たない（G7 measurement registry 導入時に整合
   を取る）。
 
+### 7.1 G7 横断ゲート（2026-10-13 垂直スライスで追加）
+
+実装: `research.comparability.check_cross_study_comparability`（CS01-CS13）/
+`research.cli compare`。測定サブセットは `validation.comparability.compare_measurements`
+（G7 §9 準拠）に委譲し重複実装しない。
+
+- `comparable` の定義: CS01-CS07 の同一性に加え、CS08 sampling 明示・CS09 coverage complete・
+  CS10 missingness 明示・CS11 同一正規化スケール・CS12 run+manifest 来歴・CS13 公開承認の証拠が
+  両側に揃った場合のみ（`tests/research/test_comparability_gate.py` で synthetic 完全証拠ペアにより定義を固定）。
+- 実データ（legacy 29件）には sampling/coverage/正規化スケール/承認の証拠がないため、
+  実データ上の最強判定は `conditional` のまま。`comparable` を返さないのは未実装ではなく
+  証拠不足による到達不能（`test_comparable_is_unreachable_on_repository_data` が全ペアで保証）。
+- GT 相対指数は fetch グループ（query type＋共取得 term 集合＋timeframe）が異なる場合に
+  `cs11_normalization_scale_mismatch` で直接比較を拒否（§8.3）。同一グループの再取得は
+  `conditional`＋`cs11_renormalization_instability_review_required`（`repeat_diff.json` の実践と整合）。
+- G7 measurement registry（`metadata/measurements/measurement-registry.json`）の unit
+  （`relative_index_0_100` / `posts` / `videos`）と整合。X 投稿数と YouTube 動画数は
+  同一単位として扱わない（G7-T12）。
+
 ---
 
 ## 8. コマンドと exit code
