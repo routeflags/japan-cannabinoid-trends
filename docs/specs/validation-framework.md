@@ -46,9 +46,10 @@ python3 -m venv .venv
 .venv/bin/python -m pytest
 ```
 
-- Contract Tests: `tests/validation/`（587件）+ `tests/collection/`（77件）
-  + `tests/storage/`（57件）＝ **721件**（2026-10-13 G5 垂直スライス後。
-  `.venv/bin/python -m pytest` で実測。G4 直後は 680 件）。
+- Contract Tests: `tests/validation/`（609件）+ `tests/collection/`（77件）
+  + `tests/storage/`（57件）＝ **743件**（2026-10-13 G6 垂直スライス後。
+  `.venv/bin/python -m pytest` で実測（Python 3.14＋editable install。
+  非 editable 環境では subprocess 検査が1件 skip される）。G5 直後は 721 件）。
 - 新しいスキーマを登録したら、対応する Contract Test を必ず追加する
   （20261013h.md §9 / §16）。`tests/validation/test_schema_coverage.py` が
   「登録済みスキーマIDを参照するテストファイルの存在」を機械的に検査するため、
@@ -702,3 +703,37 @@ G4 仕様（`docs/plans/20261013d.md`）の垂直スライス。対象は Google
 - ライブ収集・CI ワークフロー変更は未実施（CI は pytest + validate-registries
   のまま green）。
 
+## 19. G6 垂直スライス（Git Tracking Policy / Storage Classification / Publication Gate）— 2026-10-13
+
+G6 仕様（`docs/plans/20261013f.md`）の垂直スライス。Git 運用全体を作り替えず、政策を「宣言」し、実ツリーに対する判定が回ることを示す。**実際の公開・リリース・DOI 登録は行わない**（判定は記録のみ）。
+
+### 19.1 決定事項
+
+- **配置**: Storage Policy Registry は `config/storage-policies.json`（G4 が予約した領域。G4 §17.1 の役割分担どおり）。G4 が「読み方・識別・索引」、G6 が「保存先・追跡・公開可否」。重複なし。
+- **既存実装の扱い**: `src/validation/storage_policy.py`（P4-7/P4-9）は**作り替えず再利用**。本スライスは新規モジュール（`g6_inventory` / `publication_eligibility` / `private_catalog` / `storage.backend`）と CLI 配線（`audit-git-tracking` / `audit-private-catalog` / `gate-publication`）を追加したのみ。
+- **Policy と `.gitignore` の役割分担**: Policy は層×種別の宣言（ファイル glob を持たない）。`.gitignore` は追跡除外の実装。両者の矛盾は inventory が実 git 状態として報告し、変更は提案に留める（適用は親判断）。
+- **public-methodology の publication**: 参考例の `approved` ではなく `requires_review` とした（Fail closed P5: policy 承認 ≠ per-artifact 承認。per-artifact decision が必須）。
+- **Storage Backend の範囲**: ローカル FS 宣言まで（`LocalFilesystemBackend`）。クラウド・object storage は将来。
+- **Private Catalog**: 存在記録まで。内容分類は行わない。
+- **Release Manifest / Zenodo（§12）**: 本スライスでは未実装（引き継ぎ §19.3）。
+
+### 19.2 実装済み
+
+- `config/storage-policies.json`（6 policy。`storage-policy-registry-v1` で `validate-registries` が実検証。`*.csv` 等の一括除外なし）:
+  - `raw-search-tracked`（raw/search。google_trends 例外の宣言）/ `raw-social-default` / `raw-default`（`any` wildcard で TikTok/Instagram/LinkedIn 等の将来種別を被覆）/ `interim-default` / `processed-public-candidate`（`conditional`）/ `public-methodology`。
+- `src/validation/g6_inventory.py` + CLI `audit-git-tracking`（§15。read-only git のみ。`raw_modified` 前後 hash 証跡。`private/` は存在・除外状態のみ）:
+  - 実測: dataset 134 件全件 tracked（google_trends 99 件含む）+ extras 33 件 → `tracked 147 / ignored 4 / absent 16 / untracked_unignored 0`。`accidental_add_risk: []`、`ignore_warnings: []`。（監査: `docs/audits/g6-git-tracking-inventory.json` / `.md`）
+- `src/validation/publication_eligibility.py` + CLI `gate-publication`（§10。§11 最小規則と secret scan を再利用。`cerberus` 非 import）:
+  - 実在 1 件（`x_cbx_202608_summary_anonymized.csv`、`processed-public-candidate`）に実行 → **`BLOCKED`**（`failed: PUB-01/04/10`、`warnings: PUB-06/07/08`。PUB-02/03/05/09 PASS）。BLOCKED は成果物の問題の記録でありゲートの失敗ではない。（監査: `docs/audits/g6-publication-eligibility.json` / `.md`）
+- `src/validation/private_catalog.py` + CLI `audit-private-catalog`（§13。値は出さない）:
+  - 実測: マーカー 9 件、`present 0 / absent 9`（worktree に `private/` なし）。全件 `restricted / private / not_approved`。（監査: `docs/audits/g6-private-catalog.json` / `.md`）
+- `src/storage/backend.py`（§14 local FS。`put_immutable` は上書き拒否 G6-T18。missing は False であってゼロではない P8）。
+- 実測（2026-10-13、`.venv` + Python 3.14）: `pytest` **743 passed**（G5 直後 721 → +22）。`validate-registries` **9 ターゲット全 valid**（storage-policies 追加）。
+- §16/§17 対応表は `tests/validation/test_g6_vertical_slice.py` に機械化（T12/T13/T19/T20 = 未達を明示、T16 = wildcard 被覆のみ）。
+
+### 19.3 未実装（引き継ぎ）
+
+- Release Manifest / GitHub Release・Zenodo 候補検証（G6-T12/T13/T19/T20）。schema（`release-manifest-v1` 等）・CLI・CI 配線は将来。`scripts/release/create-clean-archive.sh` と `release-zenodo.yml` の現行運用は変更なし。
+- 新規収集 run の追跡方針（判断待ち①）は**現状追認で確定**（2026-10-13）: `google_trends` の raw は追跡、それ以外の raw は `**/data/raw/*` により除外。変更する場合は policy の再定義と `.gitignore` 例外の見直しが必要。
+- 新規収集 run の追跡方針の確定（判断待ち①）、追跡↔除外の変更適用（判断待ち②: `*.db` 除外は追加済み・判断待ち⑤としてレビュー例外を記録、判断待ち③④は現状維持で確定）。
+- ライブ収集・CI ワークフロー変更・SQLite 実データ検証は未実施（CI は pytest + validate-registries のまま green）。

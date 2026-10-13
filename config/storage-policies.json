@@ -1,0 +1,59 @@
+{
+  "schema_version": "1.0.0",
+  "policies": [
+    {
+      "policy_id": "raw-search-tracked",
+      "artifact_layer": "raw",
+      "source_kind": "search",
+      "classification": "internal",
+      "storage": "repository",
+      "git_tracking": "tracked",
+      "publication": "requires_review"
+    },
+    {
+      "policy_id": "raw-social-default",
+      "artifact_layer": "raw",
+      "source_kind": "social",
+      "classification": "restricted",
+      "storage": "private",
+      "git_tracking": "ignored",
+      "publication": "requires_review"
+    },
+    {
+      "policy_id": "raw-default",
+      "artifact_layer": "raw",
+      "source_kind": "any",
+      "classification": "restricted",
+      "storage": "private",
+      "git_tracking": "ignored",
+      "publication": "requires_review"
+    },
+    {
+      "policy_id": "interim-default",
+      "artifact_layer": "interim",
+      "source_kind": "any",
+      "classification": "internal",
+      "storage": "private",
+      "git_tracking": "ignored",
+      "publication": "requires_review"
+    },
+    {
+      "policy_id": "processed-public-candidate",
+      "artifact_layer": "processed",
+      "source_kind": "any",
+      "classification": "internal",
+      "storage": "managed",
+      "git_tracking": "conditional",
+      "publication": "requires_review"
+    },
+    {
+      "policy_id": "public-methodology",
+      "artifact_layer": "metadata",
+      "source_kind": "any",
+      "classification": "public",
+      "storage": "repository",
+      "git_tracking": "tracked",
+      "publication": "requires_review"
+    }
+  ]
+}

@@ -1,0 +1,99 @@
+{
+  "catalog_version": "1.0.0",
+  "spec": "docs/plans/20261013f.md §13 (local plan; not tracked)",
+  "count": 9,
+  "present": 0,
+  "absent": 9,
+  "entries": [
+    {
+      "path": "datasets/cbx-social-trends/data/private",
+      "exists": false,
+      "tracked": false,
+      "ignored": false,
+      "classification": "restricted",
+      "availability": "private",
+      "publication_status": "not_approved",
+      "note": "contents never inspected; existence and exclusion state only"
+    },
+    {
+      "path": "datasets/cbx-search-trends/data/private",
+      "exists": false,
+      "tracked": false,
+      "ignored": false,
+      "classification": "restricted",
+      "availability": "private",
+      "publication_status": "not_approved",
+      "note": "contents never inspected; existence and exclusion state only"
+    },
+    {
+      "path": "datasets/cannabinoid-multi-trends/data/private",
+      "exists": false,
+      "tracked": false,
+      "ignored": false,
+      "classification": "restricted",
+      "availability": "private",
+      "publication_status": "not_approved",
+      "note": "contents never inspected; existence and exclusion state only"
+    },
+    {
+      "path": "datasets/cannabinoid-social-trends/data/private",
+      "exists": false,
+      "tracked": false,
+      "ignored": false,
+      "classification": "restricted",
+      "availability": "private",
+      "publication_status": "not_approved",
+      "note": "contents never inspected; existence and exclusion state only"
+    },
+    {
+      "path": "datasets/cbx-liquid-online-trend/data/private",
+      "exists": false,
+      "tracked": false,
+      "ignored": false,
+      "classification": "restricted",
+      "availability": "private",
+      "publication_status": "not_approved",
+      "note": "contents never inspected; existence and exclusion state only"
+    },
+    {
+      "path": "datasets/cbx-product-coa/data/private",
+      "exists": false,
+      "tracked": false,
+      "ignored": false,
+      "classification": "restricted",
+      "availability": "private",
+      "publication_status": "not_approved",
+      "note": "contents never inspected; existence and exclusion state only"
+    },
+    {
+      "path": "datasets/x-26week-trends/data/private",
+      "exists": false,
+      "tracked": false,
+      "ignored": false,
+      "classification": "restricted",
+      "availability": "private",
+      "publication_status": "not_approved",
+      "note": "contents never inspected; existence and exclusion state only"
+    },
+    {
+      "path": "datasets/x-consistency/data/private",
+      "exists": false,
+      "tracked": false,
+      "ignored": true,
+      "classification": "restricted",
+      "availability": "private",
+      "publication_status": "not_approved",
+      "note": "contents never inspected; existence and exclusion state only"
+    },
+    {
+      "path": "datasets/youtube-consistency/data/private",
+      "exists": false,
+      "tracked": false,
+      "ignored": true,
+      "classification": "restricted",
+      "availability": "private",
+      "publication_status": "not_approved",
+      "note": "contents never inspected; existence and exclusion state only"
+    }
+  ]
+}

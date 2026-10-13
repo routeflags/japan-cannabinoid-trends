@@ -298,3 +298,4 @@ python -m validation.cli coverage-run --file <run_dir or run_metadata.json>
   まで機械検証される。legacy 29 run は manifest を持たず、読取専用の棚卸し
   （`audit-artifacts` → `docs/audits/g4-storage-inventory.json`）で管理する。
   SQLite 契約は宣言済み（存在時のみ read-only で検証。DB は Git 管理外）。
+- G6（Git Tracking Policy / Storage Classification / Publication Gate）は 2026-10-13 に垂直スライス導入（詳細は `docs/specs/validation-framework.md` §19）。収集完了を理由に自動で Git へ追加・公開 Release へ含めない（P7）。`config/storage-policies.json` が保存・追跡・公開方針の宣言であり、`.staging/` / `.quarantine/` は引き続きローカル作業域（追跡・公開とも対象外）。新規 run の追跡方針確定と追跡↔除外の変更適用は親判断待ちのため、本スライスは現状追認のみ。

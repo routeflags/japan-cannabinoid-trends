@@ -18,6 +18,9 @@ Commands
 - ``audit-legacy``        non-destructive G5 legacy audit (Phase 8)
 - ``audit-provenance``    non-destructive G5 provenance assessment (§9/§10)
 - ``audit-artifacts``     non-destructive G4 §16 artifact inventory
+- ``audit-git-tracking``  non-destructive G6 §15 git tracking inventory
+- ``audit-private-catalog`` non-destructive G6 §13 private data boundary catalog
+- ``gate-publication``    record-only G6 §10 publication eligibility gate
 
 Exit codes (h.md §13)
 ---------------------
@@ -49,7 +52,10 @@ from pathlib import Path
 from validation.comparability import compare_runs
 from validation.coverage import build_temporal_inventory, evaluate_coverage
 from validation.gates import post_collection_gate, pre_collection_gate
+from validation.g6_inventory import build_git_tracking_inventory
 from validation.integrity import IO_ISSUE_CODES, sha256_file
+from validation.private_catalog import build_private_catalog
+from validation.publication_eligibility import evaluate_eligibility
 from validation.legacy import LegacyProfileNotAllowed, audit_record
 from validation.pipeline import validate_full
 from validation.provenance import (
@@ -821,6 +827,96 @@ def cmd_audit_artifacts(args) -> int:
 
 
 # ---------------------------------------------------------------------------
+# audit-git-tracking / audit-private-catalog / gate-publication (G6 §10/§13/§15)
+# ---------------------------------------------------------------------------
+
+
+def cmd_audit_git_tracking(args) -> int:
+    """Non-destructive G6 §15 git tracking inventory (read-only git only)."""
+    repo_root = Path.cwd()
+    inventory = build_git_tracking_inventory(
+        repo_root,
+        datasets_root=Path(args.datasets_root),
+        include_private=args.include_private,
+    )
+    if args.output:
+        try:
+            _write_output(args.output, inventory)
+        except OSError as error:
+            _err(f"cannot write audit output: {args.output} ({error.__class__.__name__})")
+            return EXIT_IO
+        _err(
+            f"git tracking inventory written: {args.output} "
+            f"({inventory['count']} file(s), raw_modified={inventory['raw_modified']})"
+        )
+    else:
+        print(dump_json(inventory), end="")
+    summary = ", ".join(
+        f"{key}={value}" for key, value in sorted(inventory["state_summary"].items())
+    )
+    _err(f"git tracking inventory: {inventory['count']} file(s) [{summary}]")
+    return EXIT_OK
+
+
+def cmd_audit_private_catalog(args) -> int:
+    """Non-destructive G6 §13 private boundary catalog (existence only)."""
+    catalog = build_private_catalog(Path.cwd())
+    if args.output:
+        try:
+            _write_output(args.output, catalog)
+        except OSError as error:
+            _err(f"cannot write audit output: {args.output} ({error.__class__.__name__})")
+            return EXIT_IO
+        _err(
+            f"private catalog written: {args.output} "
+            f"({catalog['count']} marker(s), present={catalog['present']})"
+        )
+    else:
+        print(dump_json(catalog), end="")
+    _err(f"private catalog: {catalog['count']} marker(s), present={catalog['present']}")
+    return EXIT_OK
+
+
+def cmd_gate_publication(args) -> int:
+    """Record-only G6 §10 publication eligibility gate (never publishes)."""
+    try:
+        artifact = _load_json(Path(args.artifact))
+    except (OSError, json.JSONDecodeError, UnicodeDecodeError):
+        _err(f"cannot read artifact file: {args.artifact}")
+        return EXIT_IO
+    decision = None
+    if args.decision:
+        try:
+            decision = _load_json(Path(args.decision))
+        except (OSError, json.JSONDecodeError, UnicodeDecodeError):
+            _err(f"cannot read decision file: {args.decision}")
+            return EXIT_IO
+    evidence: dict = {}
+    if args.evidence:
+        try:
+            loaded = _load_json(Path(args.evidence))
+        except (OSError, json.JSONDecodeError, UnicodeDecodeError):
+            _err(f"cannot read evidence file: {args.evidence}")
+            return EXIT_IO
+        if isinstance(loaded, dict):
+            evidence = loaded
+    result = evaluate_eligibility(artifact, decision, evidence=evidence)
+    if args.output:
+        try:
+            _write_output(args.output, result)
+        except OSError as error:
+            _err(f"cannot write gate output: {args.output} ({error.__class__.__name__})")
+            return EXIT_IO
+        _err(f"publication gate written: {args.output} (verdict={result['verdict']})")
+    else:
+        print(dump_json(result), end="")
+    _err(f"publication gate: {result['artifact_id']} -> {result['verdict']}")
+    # Record-only: a BLOCKED verdict is an artifact finding, not a CLI
+    # failure.  Exit 0 unless the inputs themselves are unreadable (above).
+    return EXIT_OK
+
+
+# ---------------------------------------------------------------------------
 # gate-plan (Phase 6 / P6-1 initial CLI surface)
 # ---------------------------------------------------------------------------
 
@@ -1468,6 +1564,43 @@ def build_parser() -> argparse.ArgumentParser:
         "AGENTS.md private data)",
     )
     audit_artifacts.set_defaults(handler=cmd_audit_artifacts)
+
+    audit_git = sub.add_parser(
+        "audit-git-tracking",
+        help="non-destructive G6 §15 git tracking inventory (read-only git)",
+    )
+    audit_git.add_argument("--datasets-root", default="datasets")
+    audit_git.add_argument(
+        "--output", default="docs/audits/g6-git-tracking-inventory.json"
+    )
+    audit_git.add_argument(
+        "--include-private",
+        action="store_true",
+        help="also scan directories named 'private' (excluded by default; "
+        "AGENTS.md private data; paths only, values never read)",
+    )
+    audit_git.set_defaults(handler=cmd_audit_git_tracking)
+
+    audit_private = sub.add_parser(
+        "audit-private-catalog",
+        help="non-destructive G6 §13 private boundary catalog (existence only)",
+    )
+    audit_private.add_argument(
+        "--output", default="docs/audits/g6-private-catalog.json"
+    )
+    audit_private.set_defaults(handler=cmd_audit_private_catalog)
+
+    gate_pub = sub.add_parser(
+        "gate-publication",
+        help="record-only G6 §10 publication eligibility gate (never publishes)",
+    )
+    gate_pub.add_argument("--artifact", required=True, help="artifact descriptor JSON file")
+    gate_pub.add_argument("--decision", help="publication decision JSON file")
+    gate_pub.add_argument("--evidence", help="review evidence JSON file")
+    gate_pub.add_argument(
+        "--output", default="docs/audits/g6-publication-eligibility.json"
+    )
+    gate_pub.set_defaults(handler=cmd_gate_publication)
 
     return parser
 

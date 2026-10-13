@@ -37,6 +37,16 @@ __pycache__/
 # Release archives
 .release-archives/
 
+# Local SQLite databases (research-local scratch stores such as trends.db).
+# Reviewed 2026-10-13: zero *.db files are tracked (verified with git
+# ls-files), so this rule cannot hide committed research data. The tracking
+# inventory flags blanket patterns for periodic human review; this block is
+# the reviewed exception (see validation-framework.md §19).
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+
 # Private data (anonymization mappings, etc.)
 datasets/*/data/private/
 /tmp
