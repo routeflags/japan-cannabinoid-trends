@@ -69,3 +69,58 @@ AGENTS.md は「公開済みリリースを書き換えて隠さない」と定�
       させる必要があるため、リリース作業と同時に行う）。
 - [ ] Zenodo への制限依頼の可否を判断する。
 - [ ] 閲覧者が本件を追えるように、公開ページから本 issue へ言及するか判断する。
+
+---
+
+## 履歴の書き換え（B）— 2026-10-13 実施
+
+前向き修正（A）だけでは、作業ツリーから消えるだけで git 履歴からは取り出せていた
+（`git show bc651ca:<path>` で 148 行が取得できる状態）。そこで履歴そのものを書き換えた。
+
+### 実施方法
+
+`git filter-repo` を bare mirror（`/tmp/jct-b.git`）に対して実行し、検証してから
+force-push した。作業中の clone を直接書き換えず、mirror で検証してから push する手順を
+取っている。
+
+| 手順 | 内容 |
+|------|------|
+| 1 | **54** 件の handle を全履歴で `[x-account]` に置換（`--replace-text`。内容ベースなので旧パスにも効く） |
+| 2 | 投稿 CSV の**全パス変種**を全履歴から除去（`--invert-paths`） |
+| 3 | 過去の logbook を全履歴から除去 |
+
+### 履歴走査で判明した対象（作業ツリーのゲートでは見えないもの）
+
+| パス | 備考 |
+|------|------|
+| `datasets/cbx-social-trends/data/processed/x_cbx_202608_summary.csv` | 55 handle + 36 表示名 |
+| `datasets/cbx-x-trends/data/processed/x_cbx_202608_summary.csv` | study 改名前の同一ファイル |
+| `data/processed/x/x_cbx_202608_summary.csv` | さらに古いパス |
+| `artifacts/daily/20261001_logbook.md` | 14 handle。**HEAD に存在しない**（v1.5.1 で削除済み）ため、作業ツリーの検査では原理的に検出できない |
+| `publication/guide_cbx_rewrite.html`、分析レポート 2 件 | 内容置換で除去 |
+
+改名・移動を経たファイルは複数パスを持つため、1 パスだけ除去すると別パスに残る。実際に
+1 回目の除去では `cbx-x-trends` 側と `data/processed/x/` 側が残り、追加の除去が必要だった。
+
+### 意図的に残したもの
+
+1 件の handle は書き換え対象から除外した。YouTube の動画タイトル（および 26 週
+レポートの旧リビジョン）に現れるもので、「YouTube は現状維持」というメンテナ判断に
+従っている。実名はここに書かない（このゲート自身が検出してしまうため）。対象は
+`src/validation/x_identity.py` の `ACKNOWLEDGED` にダイジェストで記録している。
+書き換え後の全 1,211 blob を走査した結果、handle を含む blob はこの 1 handle のみで、
+表示名を含む blob も同一の 1 件だけであった。
+
+### 復旧手段
+
+書き換え前の全 ref を `/tmp/jct-before-b.bundle`（約 1.6 MB）に保存した。内容を確認して
+問題がなければ削除する。**この bundle には PII が含まれる**ため、残す場合は取り扱いに
+注意すること。
+
+### 副作用
+
+- 全コミット SHA が変わった。既存のリンク・参照は無効になる。
+- 14 タグも書き換えたため、**DOI が参照するスナップショットとリポジトリは一致しなくなった**。
+- 既存の clone / fork には旧履歴が残る。手元のコピーは再 clone、または
+  `git fetch --tags --force` のうえ `git reset --hard <origin>/main` が必要。
+- GitHub Release のアーカイブと Zenodo の DOI アーカイブは**残る**（削除・制限は C の範囲で未実施）。

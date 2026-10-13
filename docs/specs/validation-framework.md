@@ -932,7 +932,11 @@ processed CSV の変更ではスキーマ検証だけが走り、再現性検証
 
 ### 21.6 未実施（引き継ぎ）
 
-- 既公開 14 Release・Zenodo アーカイブの削除・制限は未実施（メンテナ判断）。
+- 既公開 14 Release・Zenodo アーカイブの削除・制限は未実施（メンテナ判断。C の範囲）。
+- **履歴書き換え（B）は 2026-10-13 に実施**（`git filter-repo`。54 handle の全履歴置換
+  ＋ 投稿 CSV の全パス変種と旧 logbook の全履歴除去）。作業ツリーのゲートでは検出
+  できない対象（改名前パス、HEAD に無い logbook）があったため、履歴側にも検査が要る。
+  経緯・副作用は `docs/issues/20261013_p0_x-identity-published-in-all-releases.md`。
 - CHANGELOG エントリは新リリースと同時に付ける（`validate-version-sync.sh` は
   CHANGELOG の先頭見出しを最新タグと比較するため、`[Unreleased]` を先頭に置けない）。
 - 影響アカウントへの通知の要否は未判断。
