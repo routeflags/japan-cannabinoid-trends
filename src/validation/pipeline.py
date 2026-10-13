@@ -28,6 +28,7 @@ from validation.schema_registry import get_schema, get_schema_version
 from validation.semantic import (
     Registries,
     check_execution_consistency,
+    check_query_registry_version,
     check_registry_references,
     check_schema_version,
     check_temporal_semantics,
@@ -124,6 +125,11 @@ def validate_full(
     issues.extend(check_execution_consistency(document))
     if registries is not None:
         issues.extend(check_registry_references(document, registries))
+        # G5 P17: version-traceability is advisory only (warning/info),
+        # so wiring it here cannot turn an existing strict pass into a
+        # failure; a missing query registry disables it (repository
+        # convention for missing registries).
+        issues.extend(check_query_registry_version(document, registries))
     issues.extend(scan_for_secrets(document))
     for check in extra_checks:
         issues.extend(check(document))

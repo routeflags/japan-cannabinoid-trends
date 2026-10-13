@@ -29,7 +29,7 @@ from validation.schemas.collection_run import (
     COLLECTION_RUN_RUNNING_SCHEMA,
     COLLECTION_RUN_SCHEMA,
 )
-from validation.schemas.provenance import TRANSFORMATION_SCHEMA
+from validation.schemas.provenance import EVIDENCE_REGISTRY_SCHEMA, TRANSFORMATION_SCHEMA
 from validation.schemas.query import (
     QUERY_REGISTRY_SCHEMA,
     QUERY_VARIANTS_REGISTRY_SCHEMA,
@@ -67,8 +67,9 @@ SCHEMA_REGISTRY: dict[str, dict] = {
     # G4 artifact manifest (P3-6) and artifact registry (G4 vertical slice).
     "artifact-manifest-v1": ARTIFACT_MANIFEST_SCHEMA,
     "artifact-registry-v1": ARTIFACT_REGISTRY_SCHEMA,
-    # G5 transformation provenance (P3-7).
+    # G5 transformation provenance (P3-7) and evidence registry (G5 slice).
     "transformation-v1": TRANSFORMATION_SCHEMA,
+    "evidence-registry-v1": EVIDENCE_REGISTRY_SCHEMA,
     # G6 storage policy / publication decision (P3-8).
     "storage-policy-registry-v1": STORAGE_POLICY_REGISTRY_SCHEMA,
     "publication-decision-v1": PUBLICATION_DECISION_SCHEMA,

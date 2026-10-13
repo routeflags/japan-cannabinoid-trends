@@ -14,6 +14,8 @@ Functions
   evidence for the finalized profile)
 - ``check_registry_references`` P4-2 (source/collector/query/study existence,
   adapter mismatch, registered-but-legacy distinction)
+- ``check_query_registry_version`` G5 P17 (stamped query-registry version
+  traceability; warning/info only, never fails a run)
 - ``check_missingness_consistency`` G1 L1-09 (zero observations vs missing
   data vs collection failure; raw evidence requirement for terminal runs)
 - ``eligible_collectors`` / ``check_capability_gate`` P4-3 (a.md §9)
@@ -42,6 +44,7 @@ __all__ = [
     "check_capability_gate",
     "check_execution_consistency",
     "check_missingness_consistency",
+    "check_query_registry_version",
     "check_registry_references",
     "check_schema_version",
     "check_temporal_semantics",
@@ -677,6 +680,57 @@ def check_registry_references(document, registries: Registries) -> list[Issue]:
             )
 
     return issues
+
+
+def check_query_registry_version(document, registries: Registries) -> list[Issue]:
+    """G5 §8.2 P17 / G5-T13: the stamped registry version must be traceable.
+
+    The builder records which query-registry definition version a run was
+    planned against (``query_provenance.query_registry_version``, b.md §7).
+    This check resolves the stamp against the loaded registry:
+
+    - stamp equals the loaded version -> traceable, no issue;
+    - stamp differs -> ``REGISTRY_VERSION_HISTORICAL`` (info): the run cites
+      a superseded definition, allowed exactly like deprecated queries;
+    - stamp absent -> ``REGISTRY_VERSION_UNTRACEABLE`` (warning, 判定不能):
+      the run cannot be traced to a definition version (G5-T13).
+
+    A missing registry version on the ``Registries`` side (no query registry
+    loaded) disables the check (repository convention: missing registries
+    never produce false failures).  Severity never exceeds warning: version
+    traceability informs readiness, it does not fail a run.
+    """
+    if not isinstance(document, dict):
+        return []
+    current = registries.query_registry_version
+    if not isinstance(current, str) or not current:
+        return []
+    provenance = document.get("query_provenance")
+    if not isinstance(provenance, dict):
+        return []
+    stamp = provenance.get("query_registry_version")
+    if not isinstance(stamp, str) or not stamp:
+        return [
+            _issue(
+                "REGISTRY_VERSION_UNTRACEABLE",
+                "/query_provenance/query_registry_version",
+                "query registry version is not recorded (traceability unknown)",
+                "registry_version",
+                severity="warning",
+            )
+        ]
+    if stamp != current:
+        return [
+            _issue(
+                "REGISTRY_VERSION_HISTORICAL",
+                "/query_provenance/query_registry_version",
+                "query registry version differs from the loaded registry "
+                "(historical reference allowed)",
+                "registry_version",
+                severity="info",
+            )
+        ]
+    return []
 
 
 # ---------------------------------------------------------------------------

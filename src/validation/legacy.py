@@ -1,6 +1,6 @@
 """Legacy audit profile (Phase 8, h.md §18).
 
-The repository contains 24 ``run_metadata.json`` files that predate the G5
+The repository contains 29 ``run_metadata.json`` files that predate the G5
 contract (see ``docs/audits/g5-legacy-runs.json``).  Legacy runs must not be
 forced through strict validation (h.md §18: "既存runには新規runと同じ必須条件を
 無条件に適用しない"), but the legacy profile must not become a bypass for new

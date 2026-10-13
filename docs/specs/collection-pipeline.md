@@ -155,6 +155,20 @@ G3 以降の補足: window compiler が動いた run は `temporal_provenance` �
 秘密情報: `submitted_parameters` は adapter が許可リスト方式で組み立てる
 （tool / terms / geo / timeframe のみ）。env ファイルや token は保存しない。
 
+G5 以降の補足（canonical contract の正本整理 — T1）: 構造の正本は
+`collection-run-v1`（`src/validation/schemas/collection_run.py`）、生成の正本は
+本モジュール（`src/collection/core/provenance.py` の対応表）、評価の正本は
+`src/validation/provenance.py`（Completeness / Confidence / Integrity /
+Readiness の機械評価。`inferred` の自動付与はしない）。証拠の登録場所は
+`metadata/provenance/evidence-registry.json`（`evidence-registry-v1`。
+`validate-registries` が実検証する）。旧 run の監査は
+`validation.cli audit-provenance`（既定出力
+`docs/audits/g5-provenance-assessment.json`。非破壊・`raw_modified: false`）。
+P01（run_id 一意性）は `validate-study` が strict run 横断で検査し、P17
+（`query_registry_version` 追跡可能性）は意味検証が warning/info で報告する
+（いずれも既存 strict 合格を FAIL に変えない）。詳細は
+`docs/specs/validation-framework.md` §18。
+
 ---
 
 ## 5. L1 — Collection Integrity

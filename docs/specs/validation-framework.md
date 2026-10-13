@@ -10,12 +10,12 @@
 |---|---|---|
 | Phase 1 | 既存環境監査 | 完了（監査結果は下記 §8） |
 | Phase 2 | 依存導入・共通Validator・G5スキーマ・Contract Tests | 実装済み（コミット 654b5b9） |
-| Phase 3 | Schema Registry 拡充（G1〜G7・running profile・バージョン管理） | **実装済み**（17 スキーマ登録。P3-10 は対象不存在のため §11 の決定により終結） |
+| Phase 3 | Schema Registry 拡充（G1〜G7・running profile・バージョン管理） | **実装済み**（18 スキーマ登録。P3-10 は対象不存在のため §11 の決定により終結） |
 | Phase 4 | Semantic / Integrity / Lineage / Git Policy / Comparability / Publication / Secret Scan | **実装済み** |
 | Phase 5 | CLI・JSON Validation Report・Exit Code | **実装済み** |
-| Phase 6 | 収集パイプライン統合 | **G1 垂直スライス実装済み**（registries / capability gate / adapter contract / L1 + quarantine / L2。ライブ収集は未実施、既存 shell・skill への適用は親判断待ち — §13）。**G3 垂直スライス実装済み**（Temporal Contract / Window Compiler / Coverage / Temporal Comparability / 旧 run 監査 — §16）。**G4 垂直スライス実装済み**（Artifact Registry / Reader Contract / Storage Integrity / Storage Inventory / Data Catalog — §17） |
+| Phase 6 | 収集パイプライン統合 | **G1 垂直スライス実装済み**（registries / capability gate / adapter contract / L1 + quarantine / L2。ライブ収集は未実施、既存 shell・skill への適用は親判断待ち — §13）。**G3 垂直スライス実装済み**（Temporal Contract / Window Compiler / Coverage / Temporal Comparability / 旧 run 監査 — §16）。**G4 垂直スライス実装済み**（Artifact Registry / Reader Contract / Storage Integrity / Storage Inventory / Data Catalog — §17）。**G5 垂直スライス実装済み**（Provenance Contract / Evidence Registry / Audit Trail。重複整理・完全性評価・P01/P17・旧 run 監査 — §18） |
 | Phase 7 | CI | 実装済み（`research-validation.yml` 新設。初回実行成功: 2026-10-13 push `324cd55`） |
-| Phase 8 | Legacy Audit | 実装済み（24件を非破壊監査。`docs/audits/g5-legacy-runs.json`、raw sha256 前後一致） |
+| Phase 8 | Legacy Audit | 実装済み（29件を非破壊監査。`docs/audits/g5-legacy-runs.json`、raw sha256 前後一致） |
 
 ## 1. 依存管理
 
@@ -46,9 +46,9 @@ python3 -m venv .venv
 .venv/bin/python -m pytest
 ```
 
-- Contract Tests: `tests/validation/`（546件）+ `tests/collection/`（77件）
-  + `tests/storage/`（57件）＝ **680件**（2026-10-13 G4 垂直スライス後。
-  `.venv/bin/python -m pytest` で実測。G4 直前は 576 件、G3 直後は 573 件）。
+- Contract Tests: `tests/validation/`（587件）+ `tests/collection/`（77件）
+  + `tests/storage/`（57件）＝ **721件**（2026-10-13 G5 垂直スライス後。
+  `.venv/bin/python -m pytest` で実測。G4 直後は 680 件）。
 - 新しいスキーマを登録したら、対応する Contract Test を必ず追加する
   （20261013h.md §9 / §16）。`tests/validation/test_schema_coverage.py` が
   「登録済みスキーマIDを参照するテストファイルの存在」を機械的に検査するため、
@@ -77,8 +77,8 @@ report = outcome.to_report().to_dict()
 | module | 役割 |
 |---|---|
 | `core.py` | Cerberus 共通インターフェース（`cerberus` を import してよい唯一の場所） |
-| `schema_registry.py` | スキーマID → スキーマ文書 + 契約バージョン（17件） |
-| `semantic.py` | 意味検証: 日時、execution 整合、Registry 参照、Capability Gate、秘密情報スキャン |
+| `schema_registry.py` | スキーマID → スキーマ文書 + 契約バージョン（18件） |
+| `semantic.py` | 意味検証: 日時、execution 整合、Registry 参照、Registry 版追跡（G5 P17。warning/info のみ）、Capability Gate、秘密情報スキャン |
 | `integrity.py` | SHA-256 / byte_length / ファイル存在 / Lineage（読取専用） |
 | `storage_contract.py` | G4: manifest の内容契約（S1/S6-S12）・reader 解決・ページング整合・SQLite lineage・registry 内部整合 |
 | `comparability.py` | L2 / G3 / G7 比較可能性ゲート |
@@ -89,6 +89,7 @@ report = outcome.to_report().to_dict()
 | `reporting.py` | Issue 正規化と JSON Validation Report（安定形式） |
 | `gates.py` | 収集前/後ゲート（Phase 6。後ゲート = L1: 欠測/完全性/artifact 検証込み） |
 | `legacy.py` | Legacy Audit Profile・凍結 run_id リスト（Phase 8） |
+| `provenance.py` | G5 来歴評価: Completeness / Confidence / Integrity / Readiness（読取専用。`inferred` 自動付与なし）・Evidence Registry 検査・run_id 一意性・`audit-provenance` 集計 |
 | `cli.py` | CLI（下記 §5） |
 
 - `cerberus` を import してよいのは `src/validation/core.py` のみ（維持）。
@@ -181,6 +182,20 @@ report = outcome.to_report().to_dict()
 .venv/bin/python -m storage.cli catalog --datasets-root datasets [--check-lineage]
 ```
 
+```bash
+# G5 §9/§10 来歴の完全性評価と旧 run 監査（非破壊。sha256 前後比較。既定出力は docs/audits/）
+.venv/bin/python -m validation.cli audit-provenance \
+  --output docs/audits/g5-provenance-assessment.json
+```
+
+- G5 追加検査: `validate-study` は strict run 横断で `run_id` 重複を
+  `RUN_ID_DUPLICATE`（error）として検出する（P01。legacy profile は対象外）。
+  `validate_full` は `query_registry_version` の追跡可能性を報告する
+  （P17。一致=沈黙、不一致=info、欠落=warning の判定不能。既存 strict 合格を
+  FAIL に変えない）。`validate-registries` は Evidence Registry
+  （`metadata/provenance/evidence-registry.json`）を構造＋参照存在＋hash＋
+  secret scan で検証する（§18）。
+
 ## 6. CI（Phase 7 実装済み — 初回実行成功）
 
 `.github/workflows/research-validation.yml` を新設した。
@@ -255,7 +270,7 @@ Cerberus は**構造検証のみ**を担当する。
 6. 契約バージョンは `schema_registry.SCHEMA_VERSIONS` と文書の
    `schema_version` の両方を更新する（CV-20: 不一致は検出される）。
 
-## 10. スキーマ一覧（17件、契約バージョンはいずれも 1.0.0）
+## 10. スキーマ一覧（18件、契約バージョンはいずれも 1.0.0）
 
 | Schema ID | 契約 | 主な内容 |
 |---|---|---|
@@ -270,6 +285,7 @@ Cerberus は**構造検証のみ**を担当する。
 | `artifact-manifest-v1` | G4 | Artifact manifest（sha256 は 64桁小文字 hex。G4 垂直スライスで `contains_full_timeseries` / `page_index` / `artifact_group_id` / `database` / `artifact_groups` を任意追加 — §17） |
 | `artifact-registry-v1` | G4 | `metadata/artifacts/artifact-registry.json`（readers / artifact_schemas の対応表 — §17） |
 | `transformation-v1` | G5 | 変換来歴（input/output 参照は非空） |
+| `evidence-registry-v1` | G5 | `metadata/provenance/evidence-registry.json`（証拠 ID / 種別 / 参照 / 任意 sha256 / 観測時刻 — §18） |
 | `storage-policy-registry-v1` | G6 | `config/storage-policies.json` |
 | `publication-decision-v1` | G6 | 公開判断記録 |
 | `study-registry-v1` | G7 | `metadata/studies/study-registry.json` |
@@ -293,11 +309,12 @@ contract version は 1.0.0 のまま — G2 の plan 拡張と同じ手順）。
 | `metadata/queries/query-variants.json` | query-variants-registry-v1 | **あり**（3 variant sets） |
 | `metadata/windows/*.json` | temporal-window-v1 | **あり**（G3 垂直スライス: 2 windows。`validate-registries` と CI が実検証する） |
 | `metadata/artifacts/artifact-registry.json` | artifact-registry-v1 | **あり**（G4 垂直スライス: 7 readers / 10 artifact schemas。`validate-registries` と CI が実検証する） |
+| `metadata/provenance/evidence-registry.json` | evidence-registry-v1 | **あり**（G5 垂直スライス: 8 証拠。`validate-registries` と CI が実検証する — §18） |
 | `metadata/studies/study-registry.json` | study-registry-v1 | なし（G7 の作業） |
 | `metadata/measurements/measurement-registry.json` | measurement-registry-v1 | なし（G7 の作業） |
 | `config/storage-policies.json` | storage-policy-registry-v1 | なし（G6 の作業） |
 
-`validate-registries` は存在するファイルのみを検証する（現在 **7 ターゲット**）。
+`validate-registries` は存在するファイルのみを検証する（現在 **8 ターゲット**）。
 上記 G6/G7 のファイルが置かれれば、CI が自動的に検証対象に含める。G2 の 2 ファイルは検証
 対象に含まれ、taxonomy（`metadata/taxonomy/compound-taxonomy.skos.jsonld`）が
 存在する場合は compound 参照の意味検証も実行される（無い場合は該当チェック
@@ -330,8 +347,8 @@ Phase 1 監査のとおり、リポジトリには**実在する JSON Schema フ
 
 ## 12. Legacy Audit（Phase 8 実装済み）
 
-- 対象: `datasets/**/run_metadata.json` 全 24 件（G5 契約以前の形式）。
-- 凍結リスト: `src/validation/legacy.py` の `LEGACY_RUN_IDS`（24件）。監査結果
+- 対象: `datasets/**/run_metadata.json` 全 29 件（G5 契約以前の形式。24→29 の経緯は §12.1）。
+- 凍結リスト: `src/validation/legacy.py` の `LEGACY_RUN_IDS`（29件）。監査結果
   `docs/audits/g5-legacy-runs.json` と一致することをテストで強制する。
 - 実行: `.venv/bin/python -m validation.cli audit-legacy`（非破壊・読取専用）。
   各ファイルの sha256 を監査前後で比較し、`unchanged: true` を記録する。
@@ -610,4 +627,78 @@ G4 仕様（`docs/plans/20261013d.md`）の垂直スライス。対象は Google
   （schema.sql への追加は実運用判断）。
 - Data Catalog の永続化先（`datasets/<study>/metadata/data-catalog.json` 等）は
   未確定。現状は `storage.cli catalog --output` のオンデマンド生成。
+
+## 18. G5 垂直スライス（Provenance Contract / Evidence Registry / Audit Trail）— 2026-10-13
+
+対象は Google Trends replay run（新規の貫通路）+ 既存 29 run（非破壊監査）。
+仕様書 `docs/plans/20261013e.md`（ローカル計画書。履歴外）の垂直スライス。
+
+### 18.1 決定事項（重複整理 T1 — canonical は1つ）
+
+| 資産 | 役割 | 扱い |
+|---|---|---|
+| `src/collection/core/provenance.py`（G1） | 生成の正本（builder） | 維持。必須9項目の対応表はここが正本 |
+| `collection-run-v1`（`src/validation/schemas/collection_run.py`） | 構造の正本 | 維持。変更なし |
+| `transformation-v1`（`src/validation/schemas/provenance.py`） | 変換来歴の構造正本 | 維持。モジュール名と内容の不一致は docstring に記録し、rename はしない |
+| `src/validation/provenance.py`（新設） | 評価の正本（assessor） | 読取専用。run_metadata を生成しない |
+| `docs/provenance.md` | 人間向け来歴ナラティブ（解釈層） | 内容は変えず、冒頭に正本への参照注記のみ追加 |
+| `docs/audits/g5-legacy-runs.json` | 旧 run の構造欠落監査（29件） | 形式凍結。G5 の証拠レベル監査は別ファイル |
+| `docs/provenance/` 台帳群 | collector/query/taxonomy の人手台帳 | 維持。Evidence Registry の種別語彙と整合 |
+
+- 親タスク文中の `src/validation/provenance.py`（G1 builder）および
+  `src/validation/schemas/transformation.py` は実在しないことを確認
+  （実体は `src/collection/core/provenance.py` と
+  `src/validation/schemas/provenance.py`）。仕様との対応表は §18.4 を参照。
+- 既存スキーマの変更はゼロ（後方互換）。追加のみ: `evidence-registry-v1`、
+  新規 CLI `audit-provenance`、意味検査 2 件（P01/P17）。
+
+### 18.2 実装済み
+
+- `src/validation/provenance.py`: §9 の4指標（Completeness=22 path の検証率
+  / Confidence=observed・unknown の機械付与 / Integrity=manifest 存在・妥当・
+  hash の要約 / Readiness=ready・partial・not_ready・unknown）と §10 の証拠
+  レベル監査。`inferred` / `ambiguous` は語彙にのみ存在し、自動付与しない
+  （contract test が固定。P2/P5）。`cerberus` 非 import・プラットフォーム名なし
+  （P8）・無変異。
+- P01: `validate-study` が strict run 横断の `run_id` 重複を
+  `RUN_ID_DUPLICATE` で FAIL（legacy は対象外。既存 29 run の run_id は重複なし
+  を実測確認）。
+- P17: `semantic.check_query_registry_version` を pipeline に接続。一致=沈黙・
+  不一致=info・欠落=warning（判定不能）。error を出さないため既存 strict 合格
+  は不変（`test_valid_document_produces_valid_outcome` の `issues == []` を維持）。
+- Evidence Registry（§11）: `metadata/provenance/evidence-registry.json`
+  （8 証拠。ローカル参照のみ。fixture 1 件のみ sha256 ピン留め、残りは未記録を
+  明示）。`evidence-registry-v1` + 参照存在・hash 照合・ID 重複検査
+  （`provenance.check_evidence_registry`）+ secret scan を `validate-registries`
+  に接続。CI は変更なしで 8 ターゲットを実検証する。
+- CLI `audit-provenance`: 既定出力 `docs/audits/g5-provenance-assessment.json`
+  （常に exit 0 の読取専用レポート。`raw_modified` + sha256 前後一致を記録）。
+  run ディレクトリ内の `transformation-*.json` があれば構造＋lineage（P18）も
+  検証する（現状 0 件を明示）。
+- 実測（2026-10-13）:
+  - 新規 run（G1 replay、12m fixture）→ adopted。strict valid（issue なし）。
+    Completeness 22/22=1.0。Integrity verified。Readiness **ready**。
+  - legacy 29 run → strict_valid 0。Completeness 0.09–0.14。Readiness **not_ready
+    29/29**。証拠レベルは observed/unknown のみ。`raw_modified: false`、全件
+    sha256 前後一致。旧 metadata・凍結リストは無変更。
+  - `pytest` **721 passed**（G4 直後 680 + G5 新規 41）。`validate-registries`
+    **8 ターゲット全 valid**。
+- §15 対応表は `tests/validation/test_provenance.py::test_g5_t_mapping_table`
+  に機械化（未達は G5-T19 のみ。新規 source がスライスに存在しないため延期）。
+
+### 18.3 未実装（引き継ぎ）
+
+- Transformation record の builder（処理パイプライン側の生成器）。schema +
+  lineage 検査 + 監査配線は済み。processed/interim 生成が始まる G6 以降で
+  `transformation-v1` 準拠の生成器を用意すること。
+- Evidence Registry と run 監査の突合（監査の unknown 項目を証拠引用で
+  inferred/observed へ昇格させる pass）。語彙と参照形式は用意済み。
+- Provenance Graph（§12）は lineage 辺（run→artifact→transformation）の JSON
+  参照まで。グラフ DB・PROV-O 変換は将来（仕様上も初期は JSON で十分）。
+- Apify クラウド側の証拠（actor 実行記録・datasets）は未取得。必要になった
+  場合は取得依頼リストを上げ、推測で埋めない（P2/P5）。現 29 run は全件
+  google-trends のため本スライスでは該当なし。X/YouTube 旧 run の実行条件は
+  引き続き unknown。
+- ライブ収集・CI ワークフロー変更は未実施（CI は pytest + validate-registries
+  のまま green）。
 

@@ -25,6 +25,7 @@ EXPECTED_COVERAGE = {
     "artifact-manifest-v1": "test_artifact_manifest.py",
     "artifact-registry-v1": "test_artifact_registry.py",
     "transformation-v1": "test_transformation.py",
+    "evidence-registry-v1": "test_provenance.py",
     "storage-policy-registry-v1": "test_storage_policy_schemas.py",
     "publication-decision-v1": "test_storage_policy_schemas.py",
     "study-registry-v1": "test_study_registry.py",

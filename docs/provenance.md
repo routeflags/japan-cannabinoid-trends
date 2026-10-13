@@ -1,5 +1,14 @@
 # Provenance
 
+> **正本注記（2026-10-13 G5 垂直スライス）**: 本書は人間向けの来歴ナラティブ
+> （解釈層）であり、機械検証の正本ではない。実行時の来歴契約は
+> `collection-run-v1`（`src/validation/schemas/collection_run.py`）とその生成器
+> `src/collection/core/provenance.py`、機械評価は `src/validation/provenance.py`、
+> 証拠登録は `metadata/provenance/evidence-registry.json`、監査出力は
+> `docs/audits/g5-provenance-assessment.json` を参照
+> （`docs/specs/validation-framework.md` §18、運用契約
+> `docs/specs/collection-pipeline.md` §4）。本書の内容自体は変更していない。
+
 **Version:** 1.0.0
 **Last Updated:** 2026-10-02
 **Purpose:** 各データ値がどこから来たか、どのように処理されたかを文書化

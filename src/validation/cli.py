@@ -16,6 +16,7 @@ Commands
 - ``compare-queries``     definition-level query comparability (G2 §9)
 - ``audit-queries``       non-destructive G2 query inventory (b.md §13)
 - ``audit-legacy``        non-destructive G5 legacy audit (Phase 8)
+- ``audit-provenance``    non-destructive G5 provenance assessment (§9/§10)
 - ``audit-artifacts``     non-destructive G4 §16 artifact inventory
 
 Exit codes (h.md §13)
@@ -51,6 +52,11 @@ from validation.gates import post_collection_gate, pre_collection_gate
 from validation.integrity import IO_ISSUE_CODES, sha256_file
 from validation.legacy import LegacyProfileNotAllowed, audit_record
 from validation.pipeline import validate_full
+from validation.provenance import (
+    build_provenance_assessment,
+    check_evidence_registry,
+    find_duplicate_run_ids,
+)
 from validation.query_semantics import (
     build_query_inventory,
     check_query_registry,
@@ -66,8 +72,12 @@ from validation.reporting import (
     ReportBundle,
     dump_json,
 )
-from validation.schema_registry import get_schema
-from validation.semantic import Registries, check_temporal_semantics
+from validation.schema_registry import get_schema, get_schema_version
+from validation.semantic import (
+    Registries,
+    check_temporal_semantics,
+    scan_for_secrets,
+)
 from validation.storage_contract import check_artifact_registry
 from validation.windows import (
     check_window_registry_files,
@@ -106,6 +116,8 @@ METADATA_REGISTRY_FILES = (
     ("studies/study-registry.json", "study-registry-v1"),
     ("measurements/measurement-registry.json", "measurement-registry-v1"),
     ("artifacts/artifact-registry.json", "artifact-registry-v1"),
+    # G5 evidence registry (e.md §11): machine-readable provenance evidence.
+    ("provenance/evidence-registry.json", "evidence-registry-v1"),
 )
 
 
@@ -354,6 +366,7 @@ def _validate_study(study_id: str, args) -> tuple[ReportBundle, int]:
         return ReportBundle(profile=args.profile), EXIT_CONFIG
 
     bundle = ReportBundle(profile=args.profile)
+    pending: list = []
     for path in files:
         try:
             document = _load_json(path)
@@ -382,9 +395,55 @@ def _validate_study(study_id: str, args) -> tuple[ReportBundle, int]:
         except LegacyProfileNotAllowed as error:
             _err(f"{path}: {error}")
             return bundle, EXIT_CONFIG
-        bundle.reports.append(outcome.to_report())
+        pending.append((outcome.to_report(), outcome.profile, document))
+
+    _apply_run_id_uniqueness(pending, schema_id=args.schema)
+    for report, _, _ in pending:
+        bundle.reports.append(report)
 
     return bundle, _exit_code_for_reports(bundle.reports)
+
+
+def _apply_run_id_uniqueness(pending, *, schema_id: str) -> None:
+    """G5 §8.2 P01: flag duplicate run_ids across strict runs (in place).
+
+    Only ``collection-run-v1`` strict reports participate: legacy-audit
+    reports describe frozen history (duplicates there, if any, belong to a
+    new audit, not to this gate), and unreadable files carry no identity.
+    Each additional claimant gets ``RUN_ID_DUPLICATE`` (error) and its
+    report flips to invalid.
+    """
+    if schema_id != "collection-run-v1":
+        return
+    entries = []
+    for report, profile, document in pending:
+        if profile != "strict":
+            continue
+        run_id = document.get("run_id") if isinstance(document, dict) else None
+        entries.append((report, run_id))
+    duplicates = find_duplicate_run_ids(
+        ((report.target, run_id) for report, run_id in entries)
+    )
+    if not duplicates:
+        return
+    try:
+        version = get_schema_version(schema_id)
+    except ValueError:
+        version = ""
+    for report, run_id in entries:
+        if run_id in duplicates:
+            report.issues.append(
+                Issue(
+                    code="RUN_ID_DUPLICATE",
+                    path="/run_id",
+                    severity="error",
+                    message="run_id is claimed by more than one run in this study",
+                    rule="run_identity",
+                    schema_version=version,
+                )
+            )
+            report.issues.sort(key=lambda issue: issue.sort_key())
+            report.valid = False
 
 
 def _io_issue(code: str, target: str):
@@ -526,6 +585,17 @@ def _validate_registries(args) -> tuple[ReportBundle, int]:
                 extra_checks.append(
                     lambda document: check_artifact_registry(document)
                 )
+            elif schema_id == "evidence-registry-v1":
+                # G5 §11: local references must exist, recorded hashes must
+                # match; external references are info-only (unverifiable).
+                # P7: the registry itself is secret-scanned (paths only).
+                repo_root = Path(args.metadata_dir).parent
+                extra_checks.append(
+                    lambda document, _root=repo_root: check_evidence_registry(
+                        document, repo_root=_root
+                    )
+                )
+                extra_checks.append(lambda document: scan_for_secrets(document))
             outcome = validate_full(
                 document,
                 schema_id=schema_id,
@@ -646,6 +716,56 @@ def cmd_audit_legacy(args) -> int:
 
     incomplete = sum(1 for entry in runs if entry.get("status") != "complete")
     _err(f"legacy audit: {len(runs)} run(s), {incomplete} incomplete")
+    return EXIT_OK
+
+
+# ---------------------------------------------------------------------------
+# audit-provenance (G5 §9 / §10)
+# ---------------------------------------------------------------------------
+
+
+def cmd_audit_provenance(args) -> int:
+    """Non-destructive G5 provenance assessment over run_metadata files.
+
+    Read-only report (always exit 0, like the other audits): per-run
+    completeness / confidence / integrity / readiness plus lineage edges.
+    Absent provenance is reported as ``unknown``, never inferred (P2/P5).
+    """
+    try:
+        registries = load_registries(
+            Path(args.config_dir), Path(args.metadata_dir)
+        )
+    except ConfigError as error:
+        _err(str(error))
+        return EXIT_CONFIG
+    assessment = build_provenance_assessment(
+        Path(args.datasets_root),
+        registries=registries if registries.any() else None,
+    )
+    if args.output:
+        try:
+            _write_output(args.output, assessment)
+        except OSError as error:
+            _err(
+                f"cannot write audit output: {args.output} "
+                f"({error.__class__.__name__})"
+            )
+            return EXIT_IO
+        _err(
+            f"provenance assessment written: {args.output} "
+            f"({assessment['count']} run(s), "
+            f"raw_modified={assessment['raw_modified']})"
+        )
+    else:
+        print(dump_json(assessment), end="")
+    summary = ", ".join(
+        f"{key}={value}"
+        for key, value in sorted(assessment["summary"]["readiness"].items())
+    )
+    _err(
+        f"provenance assessment: {assessment['count']} run(s), "
+        f"strict_valid={assessment['summary']['strict_valid']} [{summary}]"
+    )
     return EXIT_OK
 
 
@@ -1318,6 +1438,19 @@ def build_parser() -> argparse.ArgumentParser:
         "--output", default="docs/audits/g5-legacy-runs.json"
     )
     audit.set_defaults(handler=cmd_audit_legacy)
+
+    audit_provenance = sub.add_parser(
+        "audit-provenance",
+        help="non-destructive G5 provenance assessment: completeness / "
+        "confidence / integrity / readiness (e.md §9/§10)",
+    )
+    audit_provenance.add_argument("--datasets-root", default="datasets")
+    audit_provenance.add_argument(
+        "--output", default="docs/audits/g5-provenance-assessment.json"
+    )
+    audit_provenance.add_argument("--config-dir", default="config")
+    audit_provenance.add_argument("--metadata-dir", default="metadata")
+    audit_provenance.set_defaults(handler=cmd_audit_provenance)
 
     audit_artifacts = sub.add_parser(
         "audit-artifacts",
