@@ -54,6 +54,7 @@ from validation.coverage import build_temporal_inventory, evaluate_coverage
 from validation.gates import post_collection_gate, pre_collection_gate
 from validation.g6_inventory import build_git_tracking_inventory
 from validation.integrity import IO_ISSUE_CODES, sha256_file
+from validation.issues import audit_issues
 from validation.new_runs import audit_new_runs
 from validation.private_catalog import build_private_catalog
 from validation.publication_eligibility import evaluate_eligibility
@@ -915,6 +916,44 @@ def cmd_audit_new_runs(args) -> int:
     return EXIT_DATA if report["failure_count"] else EXIT_OK
 
 
+def cmd_audit_issues(args) -> int:
+    """Issue records must be machine-readable, and an OPEN P0 must not pass quietly.
+
+    Read-only; see ``validation/issues.py`` for the rule and why the
+    referenced-path check was rejected.
+    """
+    try:
+        report = audit_issues(Path.cwd(), args.issues_dir)
+    except OSError as error:
+        _err(f"issue audit failed: {error.__class__.__name__}: {error}")
+        return EXIT_IO
+
+    if args.output:
+        try:
+            _write_output(args.output, report)
+        except OSError as error:
+            _err(f"cannot write audit output: {args.output} ({error.__class__.__name__})")
+            return EXIT_IO
+        _err(f"issue audit written: {args.output}")
+    elif args.format == "json":
+        print(dump_json(report), end="")
+    else:
+        for path in report["failures"]:
+            print(path)
+    _err(
+        f"issue audit: {report['issue_count']} issue(s) "
+        f"[{', '.join(f'{k}={v}' for k, v in report['status_counts'].items())}] "
+        f"open_p0={len(report['open_critical'])} "
+        f"open_p1={len(report['open_high'])} "
+        f"failures={report['failure_count']}"
+    )
+    if report["open_critical"]:
+        _err("OPEN P0 issue(s) — resolve them, or record why not (PENDING/MITIGATED):")
+        for path in report["open_critical"]:
+            _err(f"  {path}")
+    return EXIT_DATA if report["failure_count"] else EXIT_OK
+
+
 def cmd_audit_git_tracking(args) -> int:
     """Non-destructive G6 §15 git tracking inventory (read-only git only)."""
     repo_root = Path.cwd()
@@ -1683,6 +1722,15 @@ def build_parser() -> argparse.ArgumentParser:
     audit_new.add_argument("--output", default=None)
     audit_new.add_argument("--format", choices=("text", "json"), default="text")
     audit_new.set_defaults(handler=cmd_audit_new_runs)
+
+    audit_issues_parser = sub.add_parser(
+        "audit-issues",
+        help="issue records must be well formed and an OPEN P0 must not pass quietly",
+    )
+    audit_issues_parser.add_argument("--issues-dir", default="docs/issues")
+    audit_issues_parser.add_argument("--output", default=None)
+    audit_issues_parser.add_argument("--format", choices=("text", "json"), default="text")
+    audit_issues_parser.set_defaults(handler=cmd_audit_issues)
 
     audit_private = sub.add_parser(
         "audit-private-catalog",

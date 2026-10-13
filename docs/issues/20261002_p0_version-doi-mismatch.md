@@ -4,7 +4,7 @@
 **優先度:** P0 (Critical)
 **検出日:** 2026-10-02
 **検出方法:** 独立検証 (Cannabinoid Trend Whitepaper Validator) + validate-version-sync.sh
-**ステータス:** OPEN
+**ステータス:** RESOLVED (2026-10-13)
 
 ---
 
@@ -110,3 +110,39 @@ bash scripts/validation/validate-version-sync.sh
 - 検証スクリプト: `scripts/validation/validate-version-sync.sh`
 - 検証レポート: 独立検証 2026-10-02
 - Zenodo DOI: https://doi.org/10.5281/zenodo.23087213
+
+---
+
+## 解決 (2026-10-13)
+
+本 issue が報告した 12 件の不整合は解消済みである。ただし**同種の欠陥は生存しており、
+2026-10-13 に別の 1 件を発見・修正した**。
+
+### 報告された 12 件
+
+`scripts/validation/validate-version-sync.sh` は現在 **PASS 13 / FAIL 0**。
+`CITATION.cff` は version 1.12.0 / DOI `10.5281/zenodo.23253840` で、最新タグ v1.12.0 と
+一致している。
+
+### 生存していた 1 件（今回発見）
+
+`metadata/datapackage.json` のトップレベル `doi` フィールドが **v1.11.0 の DOI**
+`10.5281/zenodo.23243495` のままで、`version: 1.12.0` と共存していた。同じファイルの
+`citation` 文字列は正しい DOI を持っており、**ファイル内で自己矛盾**していた。
+
+**なぜ見逃されていたか:** `validate-version-sync.sh` のセクション 3 は `citation` 文字列の
+中の DOI しか見ておらず、トップレベル `.doi` フィールドを読んでいなかった。そのため
+PASS 12 / FAIL 0 と報告していた。
+
+### 対応
+
+1. `metadata/datapackage.json` の `doi` を `10.5281/zenodo.23253840` に修正（`modified` も更新）。
+2. `validate-version-sync.sh` に `.doi` フィールドの検査を追加（修正前は意図的に FAIL することを
+   実測で確認: `doi: 10.5281/zenodo.23243495 → 10.5281/zenodo.23253840`）。
+3. **CI で施行できる検査を追加**: タグも network も使わずに文書間の矛盾だけを見る
+   `tests/validation/test_version_internal_consistency.py`（version / DOI が CITATION・
+   datapackage・CHANGELOG・README バッジで一致すること）。既存スクリプトは基準値を
+   タグと Zenodo/GitHub API から取るため CI に入れられない（`validate-version-sync.sh` は
+   古いブランチで無実の FAIL になり、network 断では静かに素通りする）。2 つの検査は
+   「最新リリースと一致するか」（リリース時）と「文書同士が矛盾しないか」（常時）で役割が
+   異なる。

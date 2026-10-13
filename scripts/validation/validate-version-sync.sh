@@ -230,6 +230,19 @@ if [ -f "$DATAPACKAGE_FILE" ]; then
     fi
   fi
 
+  # DOI (トップレベルの .doi フィールド)
+  # citation 文字列だけを見ていたため、.doi フィールドが前リリースの値を
+  # 残していても PASS していた（2026-10-13 に v1.11.0 の DOI が
+  # version 1.12.0 と共存しているのを発見）。
+  DP_FIELD_DOI=$(jq -r '.doi // empty' "$DATAPACKAGE_FILE" 2>/dev/null || echo "")
+  if [ -n "$BASELINE_DOI" ]; then
+    if [ "$DP_FIELD_DOI" = "$BASELINE_DOI" ]; then
+      print_pass "doi: $DP_FIELD_DOI"
+    else
+      print_fail "doi: $DP_FIELD_DOI → $BASELINE_DOI"
+    fi
+  fi
+
   print_info "modified: $DP_MODIFIED"
 else
   print_fail "$DATAPACKAGE_FILE が存在しません"

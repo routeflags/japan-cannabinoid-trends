@@ -65,6 +65,13 @@ jobs:
           # satisfy the current contract, references included.
           python -m validation.cli audit-new-runs
 
+      - name: Audit issue records
+        run: |
+          # Issue records must be machine-readable, and an OPEN P0 must not sit
+          # quietly: Critical means it is resolved or its deferral is recorded.
+          # P1 and below are reported, not fatal (a research backlog is normal).
+          python -m validation.cli audit-issues
+
       - name: Validate data schema (bash)
         run: |
           bash scripts/validation/validate-data-schema.sh

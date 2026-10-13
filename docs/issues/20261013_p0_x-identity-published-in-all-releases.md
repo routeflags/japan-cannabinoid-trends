@@ -2,7 +2,8 @@
 
 **ID:** ISS-20261013-CBX-001  
 **優先度:** P0 (Critical)  
-**ステータス:** MITIGATED (前向き修正済み。既公開分の扱いは未決)  
+**ステータス:** MITIGATED (2026-10-13)
+
 **対象:** `datasets/cbx-social-trends/data/processed/x_cbx_202608_summary.csv`（削除済み）、
 `datasets/x-26week-trends/analysis/x_26week_trend_report.md`、
 `datasets/cbx-social-trends/analysis/cbx_data_collection_report.md`、

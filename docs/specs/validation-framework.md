@@ -1069,3 +1069,61 @@ staged → `adopt` を案内する。パスは字句的に正規化するため 
   併存している。** taxonomy は製造経路を採る。化学クラスを taxonomy の第 2 次元として持つか、
   研究文書側の語彙として残すかは未判断。
 - `compound_rare` の会員（CBDP / THCP 等）は未登録。
+
+## 24. 未解決 issue の棚卸しと施行（2026-10-13）
+
+### 24.1 施行（規則）
+
+- `src/validation/issues.py` ＋ `validation.cli audit-issues` ＋ CI:
+  `docs/issues/` の全ファイルが issue レコードであること（`ID` / `優先度` / `ステータス`）、
+  優先度の整合（P0=Critical、P1=High）、**終端ステータスは決定日を伴うこと**、
+  ID が重複しないこと、そして **OPEN な P0 は failure**（解決するか、PENDING/MITIGATED として
+  理由を記録する）。P1 以下は報告のみ（研究バックログは正常状態であり欠陥ではない）。
+- 検査結果: 23 issue、OPEN 9、**OPEN P0 0**、OPEN P1 6、malformed 0、failures 0。
+- **却下した検査**: issue が参照するパスの実在確認。実測で 60 参照中 24 が設計上存在しない
+  （削除済み成果物、保持していない raw、裸のファイル名）ため、ノイズにしかならない。
+
+### 24.2 ディレクトリの意味の修復
+
+`docs/issues/` に issue でない文書が 3 件混在していた（HTML バリデーション報告、データ品質
+改善の指示書、X 収集 Actor の検証報告）。`docs/reports/` を新設して移動し、
+`docs/reports/README.md` に各ディレクトリの意味と検査の有無を記録した。これで
+`docs/issues/` が「issue レコードのみ」を意味するようになり、規則が例外なしで適用できる。
+
+### 24.3 閉じた P0（2 件）
+
+- `20261002_p0_version-doi-mismatch` → **RESOLVED**。報告された 12 件は解消済み。ただし
+  同種の欠陥が生存していた: `metadata/datapackage.json` のトップレベル `.doi` が
+  **v1.11.0 の DOI**（`10.5281/zenodo.23243495`）のまま `version: 1.12.0` と共存し、同じ
+  ファイルの `citation` 文字列と**自己矛盾**していた。release-time スクリプトは
+  `citation` 文字列中の DOI しか見ていなかったため **PASS 12 / FAIL 0** と報告していた。
+  修正（DOI 更新）+ スクリプトに `.doi` 検査を追加（修正前は意図的に FAIL することを実測）
+  + **タグも network も使わない内部整合テスト**（CI 施行）。
+- `20261002_p0_unapplied-self-corrections` → **RESOLVED**。4 件中 3 件は既に修正済み
+  （各ファイルに日付付き注記あり）、1 件（26週レポートの W23/W26 と総件数）が残っていたため
+  修正。値の根拠は `cbx-social-trends/methodology.md` §2.1/§7.3 の再収集記録で、**週次合計と
+  月次合計がともに 321 で一致することを検算**した。issue が示していた対象パスも誤っていた
+  （`cbx-social-trends/analysis/` → 実際は `x-26week-trends/analysis/`）。
+
+### 24.4 未解決 P1 の棚卸し（判断待ち・研究内容に踏み込むため未修正）
+
+5 件が「公開ページ／戦略文書の数値・カバレッジが実データを過大評価している」という同型で、
+いずれも 2026-10-13 時点で対象ファイルに記載が残っている（実測）。
+
+| issue | 現在の記載 | 実データ側の制約 |
+|---|---|---|
+| `20261012_p1_cbd-coverage-matrix-overstates-completeness` | `research/strategy/20261008-compound-research-matrix.md` L54「CBD 9/9 100% 🟢A 全ソース完備」 | X の期間指定 run は実測 2026-10 に集中（`cbd-1year` 0 件）、YouTube 2025 欠落、COA raw 不在、GT 5年は summary のみ |
+| `20261012_p1_cbd-research-page-count-period-mismatch` | `publication/research_cbd.html` が X 期間を「2026-10-01（1日間）」と「2026-07-01〜2026-10-01」の両方で記載 | 投稿 timestamp は短期間に集中 |
+| `20261012_p1_cbd-x-period-provenance` | run 名が 1年 / 1ヶ月 / 期間指定を示す | metadata に query・観測期間が無い run があり、長期系列として検証できない |
+| `20261012_p1_cbd-youtube-10year-incomplete` | 年別 83 ファイル・総件数 3,831 件 | 2025 が無く、run metadata と統合 `records.json` も未確認、quota error 記録あり |
+| `20261012_p1_cbd-coa-source-mismatch` | 公開ページが参照する COA | raw ディレクトリに該当なし |
+
+**選択肢（研究判断を含むため本作業では決めない）:**
+
+- **(i) 評価を修正**: マトリックスの CBD 評価を実データの制約に合わせて下げる。研究戦略の
+  結論そのものが変わる。
+- **(ii) 制約を併記して評価は残す**（推奨）: 評価が「プラットフォームの有無」を指すことを
+  明示し、期間系列・来歴・再現性の制約を併記する。結論は変えず、AGENTS.md の
+  「観測・派生・解釈を分ける」に沿う最小の修復。
+- **(iii) 再収集して埋める**: X の期間指定・YouTube 2025・COA を再収集し、実際に充足させる。
+  ライブ収集の承認が必要（§22.4 の adapter も前提）。
