@@ -31,6 +31,15 @@ the collection (G1 §13 "同じrun_idへの上書きは禁止").
 ``adopt_staged`` runs steps 7-8 for a run staged by an external collector
 (e.g. a shell script), which is the migration path for the existing
 ``src/collection/*.sh`` flows (decision A in the G1 slice plan).
+
+``stage_run`` is the producer side of that same boundary: an external
+collector (an MCP session, a cloud dataset export, a shell script) obtained
+the payload somewhere else, and this function turns the declaration of that
+run - the same collection plan ``collect`` takes, plus the files the collector
+produced and the execution facts it recorded - into the staged directory
+``adopt_staged`` evaluates.  Producer and verdict stay separate, so the gate
+never depends on the code that produced its input.  See
+``docs/specs/collection-pipeline.md`` section 3.3.
 """
 
 from __future__ import annotations
@@ -48,7 +57,11 @@ from validation.gates import pre_collection_gate
 from validation.pipeline import validate_full
 from validation.reporting import Issue
 from validation.semantic import Registries
-from validation.windows import WindowCompilationError
+from validation.windows import (
+    WindowCompilationError,
+    check_plan_window_registry,
+    parse_datetime,
+)
 
 from collection.core.contracts import (
     ADAPTER_CONTRACT_VERSION,
@@ -64,14 +77,16 @@ from collection.core.provenance import (
     default_run_id,
     iso_timestamp,
 )
-from collection.core.registry import load_registries
+from collection.core.registry import find_collector, load_registries
 from collection.core.selection import select_collector
 
 __all__ = [
     "PIPELINE_VERSION",
+    "CollectedArtifact",
     "PipelineResult",
     "adopt_staged",
     "run_collection",
+    "stage_run",
 ]
 
 PIPELINE_VERSION = "1.0.0"
@@ -621,4 +636,365 @@ def adopt_staged(
         datasets_root=datasets_root,
         workspace_root=workspace_root,
         registries=registries,
+    )
+
+
+# ---------------------------------------------------------------------------
+# External collector staging (producer side of the staging contract)
+# ---------------------------------------------------------------------------
+
+
+def _staging_artifact_id(run_id: str, path: str) -> str:
+    slug = "".join(
+        character if character.isalnum() else "-" for character in path.lower()
+    ).strip("-")
+    return f"{run_id}-{slug or 'artifact'}"
+
+
+@dataclass
+class CollectedArtifact:
+    """One file an external collector produced, and the claim about it.
+
+    ``source`` is where the collector left the file; ``path`` is the name it
+    gets inside the staged run (relative, no traversal).  The artifact claim
+    (type / format / schema / record_count) is *declared* here and verified by
+    L1 against the registered reader at adoption - the stager never recomputes
+    a count it cannot read, and never inspects the payload's meaning.
+    """
+
+    source: str
+    path: str
+    artifact_type: str
+    format: str
+    schema_id: str
+    completeness: str = "complete"
+    record_count: int | None = None
+    media_type: str | None = None
+    derived_from: list = field(default_factory=list)
+
+    def staged(self, run_id: str) -> StagedArtifact:
+        return StagedArtifact(
+            artifact_id=_staging_artifact_id(run_id, self.path),
+            path=self.path,
+            artifact_type=self.artifact_type,
+            format=self.format,
+            schema_id=self.schema_id,
+            completeness=self.completeness,
+            record_count=self.record_count,
+            media_type=self.media_type,
+            derived_from=list(self.derived_from),
+        )
+
+
+@dataclass(frozen=True)
+class _DeclaredCollectorIdentity:
+    """The collector identity recorded for a staged run.
+
+    ``adapter_id`` / ``version`` come from the collector registry entry, never
+    from the declaration: the registry is the record of truth and a stager
+    must not upgrade a collector (G1 §7.2).
+    """
+
+    adapter_id: str
+    version: str
+
+    def describe_execution(self) -> dict:
+        """Non-secret fingerprint.  The mode says the payload was handed
+        over rather than fetched by this repository; collector-specific detail
+        belongs to the declaration's own ``environment``."""
+        return {
+            "collection_mode": "external_staged",
+            "collector_version": self.version,
+        }
+
+
+_STAGING_WINDOW_FIELDS = ("start", "end_exclusive", "granularity", "timezone")
+
+
+def _staging_path_reason(relative) -> str | None:
+    if not isinstance(relative, str) or not relative:
+        return "artifact path must be a non-empty relative path"
+    candidate = Path(relative)
+    if candidate.is_absolute() or ".." in candidate.parts:
+        return "artifact path must stay inside the run directory"
+    return None
+
+
+def _staging_moment(value, field_name: str) -> tuple:
+    """Parse a declared timestamp; returns ``(moment, error_message)``."""
+    if isinstance(value, datetime):
+        if value.tzinfo is None:
+            return None, f"{field_name} must carry a timezone offset"
+        return value, None
+    try:
+        return parse_datetime(value), None
+    except ValueError as error:
+        return None, f"{field_name}: {error}"
+
+
+def stage_run(
+    plan: dict,
+    *,
+    artifacts,
+    execution: dict,
+    started_at,
+    finished_at,
+    workspace_root,
+    datasets_root,
+    registries: Registries | None = None,
+    temporal: dict | None = None,
+    submitted_parameters: dict | None = None,
+    environment: dict | None = None,
+    run_id: str | None = None,
+) -> PipelineResult:
+    """Write the staged directory for a run an external collector produced.
+
+    ``plan`` is the same ``collection-plan-v1`` document ``collect`` takes and
+    is structurally validated here.  It must name the collector that produced
+    the payload (``collector_id``) and the requested window completely; the
+    run-level gates and the L1 verdict are ``adopt_staged``'s job, so nothing
+    here decides adoption.  Returns ``action="staged"`` (not "adopted"): a
+    staged run has passed no gate yet.
+
+    ``artifacts`` are :class:`CollectedArtifact` declarations; each ``source``
+    file is copied into the staging directory byte-for-byte and the manifest is
+    computed from the files on disk.  ``execution`` carries the collector's
+    own outcome (``status`` / ``returned_count`` / ``errors`` / optionally
+    ``pagination_exhausted`` and ``completeness``); ``temporal`` carries what
+    only the collector can know (observed bounds, boundary semantics,
+    limitations) and is merged into ``temporal_provenance`` exactly as an
+    adapter's temporal block is.
+
+    Deliberate omissions, both documented in the module docstring:
+
+    - no capability gate: capabilities constrain a *request*, and a run that
+      has already been collected makes none.  The registry references
+      (source / collector / query / study) are still checked - by L1;
+    - no artifact inspection: the declared record count is verified against
+      the registered reader by the L1 storage contract, in one place.
+    """
+    if registries is None:
+        registries = load_registries(
+            Path(workspace_root) / "config", Path(workspace_root) / "metadata"
+        )
+
+    plan_outcome = validate_full(plan, schema_id="collection-plan-v1", target="plan")
+    if not plan_outcome.valid:
+        return PipelineResult(action="stopped", issues=list(plan_outcome.issues))
+
+    collector_entry = None
+    collector_id = plan.get("collector_id")
+    if isinstance(collector_id, str) and collector_id:
+        collector_entry = find_collector(
+            registries, plan.get("source_id"), collector_id
+        )
+    if collector_entry is None:
+        return PipelineResult(
+            action="stopped",
+            issues=[
+                _issue(
+                    "STAGING_COLLECTOR_UNKNOWN",
+                    "/collector_id",
+                    "a staged run must name the registered collector that "
+                    "produced its payload (the registry is the record of "
+                    "truth)",
+                )
+            ],
+        )
+    if not collector_entry.get("adapter_id"):
+        return PipelineResult(
+            action="stopped",
+            issues=[
+                _issue(
+                    "STAGING_COLLECTOR_INCOMPLETE",
+                    "/collector_id",
+                    "the registered collector declares no adapter_id; the "
+                    "registry entry must be completed before a run can "
+                    "reference it",
+                )
+            ],
+        )
+
+    window = plan.get("window") if isinstance(plan.get("window"), dict) else {}
+    missing = [
+        field_name
+        for field_name in _STAGING_WINDOW_FIELDS
+        if not window.get(field_name)
+    ]
+    if missing:
+        return PipelineResult(
+            action="stopped",
+            issues=[
+                _issue(
+                    "STAGING_WINDOW_INCOMPLETE",
+                    "/window",
+                    "a staged run must state the requested window "
+                    "completely (missing: " + ", ".join(missing) + ")",
+                )
+            ],
+        )
+    window_start, window_start_error = _staging_moment(
+        window.get("start"), "window.start"
+    )
+    window_end, window_end_error = _staging_moment(
+        window.get("end_exclusive"), "window.end_exclusive"
+    )
+    window_error = window_start_error or window_end_error
+    if window_error:
+        return PipelineResult(
+            action="stopped",
+            issues=[_issue("STAGING_WINDOW_INVALID", "/window", window_error)],
+        )
+    if window_end <= window_start:
+        return PipelineResult(
+            action="stopped",
+            issues=[
+                _issue(
+                    "STAGING_WINDOW_ORDER",
+                    "/window",
+                    "window.start must be earlier than window.end_exclusive",
+                )
+            ],
+        )
+    if registries.windows:
+        registry_issues = check_plan_window_registry(window, registries.windows)
+        if registry_issues:
+            return PipelineResult(action="stopped", issues=registry_issues)
+
+    started, started_error = _staging_moment(started_at, "started_at")
+    finished, finished_error = _staging_moment(finished_at, "finished_at")
+    error = started_error or finished_error
+    if error:
+        return PipelineResult(
+            action="stopped",
+            issues=[_issue("STAGING_TIMESTAMP_INVALID", "", error)],
+        )
+    if finished < started:
+        return PipelineResult(
+            action="stopped",
+            issues=[
+                _issue(
+                    "STAGING_TIMESTAMP_ORDER",
+                    "",
+                    "the run cannot finish before it started",
+                )
+            ],
+        )
+
+    effective_run_id = run_id or default_run_id(
+        str(plan.get("source_id")), str(plan.get("study_id")), started
+    )
+    staged_dir = _staging_root(workspace_root) / effective_run_id
+    study_issues = _check_study_directory(plan.get("study_id"), datasets_root)
+    if study_issues:
+        return PipelineResult(
+            action="stopped", run_id=effective_run_id, issues=study_issues
+        )
+    existing = _existing_locations(
+        staged_dir,
+        _quarantine_root(workspace_root) / effective_run_id,
+        _catalog_dir(datasets_root, str(plan.get("study_id")), effective_run_id),
+    )
+    if existing:
+        return PipelineResult(
+            action="stopped",
+            run_id=effective_run_id,
+            issues=[
+                _issue(
+                    "RUN_ID_ALREADY_EXISTS",
+                    "",
+                    "run_id already exists; overwriting a run is forbidden "
+                    "(G1 §13)",
+                )
+            ],
+        )
+
+    collected = list(artifacts or [])
+    if not collected:
+        return PipelineResult(
+            action="stopped",
+            run_id=effective_run_id,
+            issues=[
+                _issue(
+                    "STAGING_NO_ARTIFACTS",
+                    "/artifacts",
+                    "a staged run without a raw artifact has no evidence to "
+                    "adopt (a claim is not a collection)",
+                )
+            ],
+        )
+    staged_artifacts = []
+    for artifact in collected:
+        reason = _staging_path_reason(artifact.path)
+        if reason:
+            return PipelineResult(
+                action="stopped",
+                run_id=effective_run_id,
+                issues=[
+                    _issue("STAGING_ARTIFACT_PATH_UNSAFE", "/artifacts", reason)
+                ],
+            )
+        if not Path(artifact.source).is_file():
+            return PipelineResult(
+                action="stopped",
+                run_id=effective_run_id,
+                issues=[
+                    _issue(
+                        "STAGING_ARTIFACT_MISSING",
+                        "/artifacts",
+                        "the declared artifact file does not exist: "
+                        f"{artifact.source}",
+                    )
+                ],
+            )
+        staged_artifacts.append(artifact.staged(effective_run_id))
+
+    staged_dir.mkdir(parents=True)
+    for artifact, staged in zip(collected, staged_artifacts):
+        shutil.copyfile(str(artifact.source), str(staged_dir / staged.path))
+    manifest = build_artifact_manifest(effective_run_id, staged_dir, staged_artifacts)
+    _write_json(staged_dir / ARTIFACT_MANIFEST_NAME, manifest)
+
+    run_environment = dict(environment or {})
+    run_environment.setdefault("collection_core_version", COLLECTION_CORE_VERSION)
+    run_environment.setdefault("adapter_contract_version", ADAPTER_CONTRACT_VERSION)
+    run_environment.setdefault("runtime_version", f"python-{platform.python_version()}")
+    identity = _DeclaredCollectorIdentity(
+        adapter_id=str(collector_entry.get("adapter_id")),
+        version=str(collector_entry.get("version", "unknown")),
+    )
+    run_environment.setdefault("adapter", identity.describe_execution())
+    commit = _git_commit(workspace_root)
+    if commit:
+        run_environment.setdefault("code_commit", commit)
+
+    document = build_run_metadata(
+        plan=plan,
+        collector_entry=collector_entry,
+        adapter=identity,
+        result=CollectionResult(
+            raw=None,
+            status=str(execution.get("status", "success")),
+            returned_count=int(execution.get("returned_count", 0)),
+            errors=list(execution.get("errors") or []),
+            pagination_exhausted=execution.get("pagination_exhausted"),
+            completeness=str(execution.get("completeness", "complete")),
+            submitted_parameters=dict(submitted_parameters or {}),
+            temporal=dict(temporal or {}),
+        ),
+        run_id=effective_run_id,
+        started_at=started,
+        finished_at=finished,
+        artifact_manifest_name=ARTIFACT_MANIFEST_NAME,
+        window_id=window.get("window_id")
+        or f"{window.get('start')}_{window.get('end_exclusive')}",
+        environment=run_environment,
+        query_registry_version=registries.query_registry_version,
+    )
+    _write_json(staged_dir / RUN_METADATA_NAME, document)
+
+    return PipelineResult(
+        action="staged",
+        run_id=effective_run_id,
+        staging_dir=str(staged_dir),
     )

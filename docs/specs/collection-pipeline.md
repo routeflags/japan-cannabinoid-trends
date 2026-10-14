@@ -1,8 +1,12 @@
 # Collection Pipeline (G1 垂直スライス) — 運用契約
 
-**版:** 0.1.0（2026-10-13）
+**版:** 0.2.0（2026-10-13）
 **仕様:** `docs/plans/20261013a.md`（G1、リポジトリ履歴外）+ `20261013h.md` §12
 **状態:** 実装済み・**ライブ収集は未実施**（契約検証は録画リプレイ / 合成 fixture）
+
+**0.2.0 の変更:** 外部 collector の staging 産出側（`collection.core.pipeline.stage_run`）
+を実装（§3.3）。収集済み payload を契約準拠の staged run にする経路が入り、
+実記録 Google Trends 応答で rehearsal 済み（§9）。
 
 G1 の垂直スライスを Google Trends 1 ソースで貫通させた実装の運用契約。
 検証フレームワーク本体は `docs/specs/validation-framework.md` を参照。
@@ -108,12 +112,34 @@ L2 が `not_comparable` になることはある。
 - 現在 `exact=false` / `boundary_semantics=unverified` は Google Trends の
   ローリング期間の実測検証が未実施であることを反映する。
 
-### 3.3 既存 shell 収集（`src/collection/*.sh`, `scripts/collect-youtube-*.sh`）との整合
+### 3.3 外部 collector の staging（`stage_run`）と既存 shell 収集との整合
 
-- 今回は既存 shell を書き換えていない。移行パスは
-  「staged ディレクトリ（`run_metadata.json` + artifact）を出力し、
-  `python -m collection.core.cli adopt --staged <dir>` に渡す」方式（判断 A、
-  親の承認待ち）。
+- 移行パス（判断 A）の**産出側を実装した**:
+  `collection.core.pipeline.stage_run`（2026-10-13）。外部 collector
+  （MCP セッション、クラウド dataset エクスポート、既存 shell）が取得済みの
+  payload を、`plan`（`collection-plan-v1`）+ `CollectedArtifact[]` +
+  実行事実の宣言として受け取り、`.staging/<run-id>/`（payload のコピー +
+  `artifact-manifest.json` + `run_metadata.json`）を書く。
+  **判断は下さない** — `adopt` が L1 を実行して catalog / quarantine を決める
+  （producer と verdict の分離。gate が自分の入力を生成するコードに依存しない）。
+- `run_metadata.json` / `artifact-manifest.json` は `collect` と同じ
+  `collection.core.provenance` のビルダが生成するため、2 経路は乖離しない。
+  collector の同一性（`adapter_id` / `version`）は**レジストリから読む**
+  （宣言からは読まない。registry が正本 = G1 §7.2。stager は collector を
+  昇格できない）。
+- `stage_run` が検査する入力: plan 構造、`collector_id` の登録、
+  window の完全性（`start` / `end_exclusive` / `granularity` / `timezone`）と
+  順序、plan の window と window registry の一致、時刻の順序、artifact の存在と
+  パス安全性（絶対パス・`..` を拒否）、study ディレクトリ、run_id 衝突。
+  **capability gate は通さない**: capability は「要求」への制約であり、
+  収集済み run は要求を出さない。registry 参照（source / collector / query /
+  study）は L1 が検査する。
+- **artifact の中身は検査しない**: 宣言された `record_count` は L1 の storage
+  contract が登録 reader と突き合わせる（S8）。同じ規則を 2 実装しない。
+- payload は **byte 単位でコピー**し、manifest の SHA-256 / byte 長はディスク上の
+  ファイルから計算する（`collect` と同じ規則）。
+- 未実装: ソース別の staging ドライバ（Apify dataset エクスポート等）と
+  `stage` CLI サブコマンド。当面は `stage_run` を直接呼ぶ（§8）。
 - `scripts/validation/run-gates.sh run <run_metadata.json>` は新しく L1 ゲート
   （`gate-run`）を呼ぶ: exit 0 = 採用可、非 0 = 隔離。
 
@@ -269,6 +295,9 @@ python -m collection.core.cli compile-window --window-id <window_id> \
 # 外部 collector が staging に出した run の採用判定
 python -m collection.core.cli adopt --staged <staging>/<run-id> --workspace <root>
 
+# 外部 collector の payload を staged run にする（産出側。CLI 未実装のため
+# 現時点は `collection.core.pipeline.stage_run` を直接呼ぶ。§3.3）
+
 # L1 単体（任意の run ディレクトリ）
 python -m validation.cli gate-run --file <run_metadata.json>
 
@@ -296,8 +325,19 @@ python -m validation.cli coverage-run --file <run_dir or run_metadata.json>
 
 - **ライブ収集は未実施**。Google Trends の live 経路（`SessionMcpTransport`）は
   MCP セッション callable の注入のみ実装し、本リポジトリは実行しない。
-- replay fixture は合成（録画形式に基づく）。実レスポンス形状との最終照合は
-  ライブ収集承認後のタスク。
+- replay fixture は合成（録画形式に基づく）。ただし **2026-10-13 に、実記録
+  GT 応答（tracked `datasets/cannabinoid-multi-trends/data/raw/google_trends/
+  20261012T064246Z-google-trends-ja-rikiddo-5y-main5/records_cbd-rikiddo-5y.json`）
+  での照合を行った**: adapter の想定形状（`{keyword, geo, timeframe,
+  collected_at, data:[{date, value}]}`）は実レスポンスと一致し、抽出件数
+  （262 点）と観測境界（2021-10-10 .. 2026-10-11）が実データと一致する
+  （`tests/collection/test_pipeline_e2e.py::
+  test_collect_replays_a_real_recorded_response`）。**ライブ収集は未実施**
+  なので、境界挙動（`exact=true` 昇格）は依然未検証。
+- 外部 collector staging（§3.3）は実記録 GT 応答で
+  stage → adopt → 厳格検証（artifact 検証込み）まで通過済み
+  （`tests/collection/test_staging.py`）。ソース別ドライバ（Apify
+  クラウド export 等）は未実装で、CSV 等の新形式は reader 登録が前提。
 - 既存 shell / skill（`research-google-trends` 等）への強制適用は未実施
   （移行は親の判断）。
 - G2（query registry / variants）は導入済み（2026-10-13 垂直スライス）。

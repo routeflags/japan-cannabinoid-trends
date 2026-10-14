@@ -465,3 +465,66 @@ def test_existing_repo_raw_is_untouched_by_a_pipeline_run(tmp_path, registries):
 
     after = (sha256_file(RECORDED_CBD_5Y), sha256_file(metadata_path))
     assert after == before
+
+
+# ---------------------------------------------------------------------------
+# The replay shape, checked against a response the MCP server actually returned
+# ---------------------------------------------------------------------------
+
+
+def test_collect_replays_a_real_recorded_response(tmp_path, registries):
+    """The adapter's assumed response shape is exercised on a *real* recorded
+    series (the tracked 5y run), not only on the synthetic fixtures: the whole
+    response must be extracted and the observed bounds recorded as the real
+    bucket labels.
+
+    The fixture wrapper is built at test time from the tracked response, so the
+    repository keeps one copy of the data; its ``request`` block restates the
+    request recorded in that run's ``run_metadata.json``.
+    """
+    series = load_json(RECORDED_CBD_5Y)
+    labels = sorted(point["date"] for point in series["data"])
+    fixture = tmp_path / "recorded_cbd_5y.json"
+    fixture.write_text(
+        json.dumps(
+            {
+                "request": {
+                    "tool": "interest_over_time",
+                    "params": {
+                        "terms": [series["keyword"]],
+                        "geo": series["geo"],
+                        "timeframe": series["timeframe"],
+                    },
+                },
+                "response": series,
+            },
+            ensure_ascii=False,
+        ),
+        encoding="utf-8",
+    )
+
+    root = make_workspace(tmp_path)
+    result = _collect(
+        registries,
+        root,
+        fixture=fixture,
+        plan=make_plan(
+            term=series["keyword"],
+            timeframe=series["timeframe"],
+            start="2021-10-10T00:00:00Z",
+            end_exclusive="2026-10-12T00:00:00Z",
+            window_id="2021-10-10_2026-10-12",
+            query_id="cbd-liquid-ja",
+            compound_id="compound_cbd",
+        ),
+        run_id="20261012T064246Z-google-trends-recorded-5y",
+    )
+
+    assert result.action == "adopted", [i.code for i in result.issues]
+    document = load_json(Path(result.final_dir) / "run_metadata.json")
+    assert document["execution"]["returned_count"] == len(series["data"])
+    temporal = document["temporal_provenance"]
+    assert temporal["observed_min_timestamp"] == f"{labels[0]}T00:00:00Z"
+    assert temporal["observed_max_timestamp"] == f"{labels[-1]}T00:00:00Z"
+    assert temporal["collector_window_type"] == "relative_duration"
+    assert document["environment"]["adapter"]["collection_mode"] == "recorded_replay"
