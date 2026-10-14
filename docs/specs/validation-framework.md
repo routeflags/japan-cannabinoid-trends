@@ -359,7 +359,7 @@ contract version は 1.0.0 のまま — G2 の plan 拡張と同じ手順）。
 | `metadata/queries/query-registry.json` | query-registry-v1 | **あり**（G2 垂直スライス + 2026-10-13 増分: 31 queries。`validate-registries` と CI が実検証する） |
 | `metadata/queries/query-variants.json` | query-variants-registry-v1 | **あり**（3 variant sets） |
 | `metadata/windows/*.json` | temporal-window-v1 | **あり**（G3 垂直スライス: 2 windows。`validate-registries` と CI が実検証する） |
-| `metadata/artifacts/artifact-registry.json` | artifact-registry-v1 | **あり**（G4 垂直スライス: 7 readers / 10 artifact schemas。`validate-registries` と CI が実検証する） |
+| `metadata/artifacts/artifact-registry.json` | artifact-registry-v1 | **あり**（G4 垂直スライス + 2026-10-15 増分: 8 readers / 11 artifact schemas。`validate-registries` と CI が実検証する） |
 | `metadata/provenance/evidence-registry.json` | evidence-registry-v1 | **あり**（G5 垂直スライス: 8 証拠。`validate-registries` と CI が実検証する — §18） |
 | `metadata/studies/study-registry.json` | study-registry-v1 | **あり**（G7 垂直スライス + 2026-10-13 増分: 9 studies。`validate-registries` と CI が実検証する） |
 | `metadata/measurements/measurement-registry.json` | measurement-registry-v1 | **あり**（G7 垂直スライス: 3 measurements。`validate-registries` と CI が実検証する） |
@@ -648,7 +648,10 @@ G4 仕様（`docs/plans/20261013d.md`）の垂直スライス。対象は Google
     （`items` ラッパーと素配列の両対応）/ `json-timeseries-reader`（`date`+`value|interest`）/
     `json-summary-reader`（集計のみ。`points` モードを持たない）/ 
     `json-comparison-reader`（複数語の共スケール行）/ `json-object-reader` /
-    `sqlite-reader`（`mode=ro` URI・テーブル列挙・`record_lineage` 有無）。
+    `sqlite-reader`（`mode=ro` URI・テーブル列挙・`record_lineage` 有無）/
+    `csv-record-reader`（2026-10-15 追加。UTF-8+BOM / CRLF 許容、引用符内改行を保持、
+    空行は record にしない、ragged / 重複列名は拒否。`count` は physical line ではなく
+    CSV record 数。schema `youtube-dataset-csv-v1` = `data_rows`）。
   - `sniff.py`: 内容ベースの識別（magic bytes / JSON 構造）。判定は
     recognized / partial / ambiguous / unknown + evidence 文字列。
   - `inventory.py`: §16 非破壊棚卸し（sha256 前後比較、run マーカー除外、
@@ -680,6 +683,11 @@ G4 仕様（`docs/plans/20261013d.md`）の垂直スライス。対象は Google
 
 - 登録済み reader は recorded / synthetic fixture での検証。**ライブ収集に
   よる実レスポンス形状の照合は未実施**（§13 と同じ制約）。
+- CSV reader（`csv-record-reader`、2026-10-15 追加）は synthetic fixture
+  （`tests/storage/test_csv_reader.py`）に加えて、リポジトリ外の scratch
+  workspace で実 dataset export 7 件の stage → adopt → 厳格検証まで
+  rehearsal 済み（`docs/reports/20261015b-youtube-csv-staging-driver.md`）。
+  実 export は third-party メタデータのためリポジトリには置かない。
 - legacy 変種（comparison の averages のみ・related queries バッチ・no-data 応答・
   分散解析 JSON など。監査 §6 の 16 件）の reader 登録は、実利用時に §7 の手順で
   行う（G4-T17 の経路）。登録時は監査スナップショットの再生成が必要。

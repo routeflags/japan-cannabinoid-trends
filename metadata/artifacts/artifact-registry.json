@@ -66,6 +66,15 @@
       "artifact_types": ["database"],
       "read_modes": ["tables", "table_rows"],
       "implemented_by": "storage.readers.sqlite.SqliteReader"
+    },
+    {
+      "reader_id": "csv-record-reader",
+      "reader_version": "1.0.0",
+      "status": "active",
+      "formats": ["csv"],
+      "artifact_types": ["raw_records"],
+      "read_modes": ["records"],
+      "implemented_by": "storage.readers.csv.CsvRecordReader"
     }
   ],
   "artifact_schemas": [
@@ -150,6 +159,13 @@
       "reader_id": "json-object-reader",
       "record_count_mode": "none",
       "contains_full_timeseries": false
+    },
+    {
+      "schema_id": "youtube-dataset-csv-v1",
+      "format": "csv",
+      "artifact_types": ["raw_records"],
+      "reader_id": "csv-record-reader",
+      "record_count_mode": "data_rows"
     }
   ]
 }

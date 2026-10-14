@@ -1,4 +1,4 @@
-"""Collection CLI (G1 slice): ``python -m collection.core.cli collect|adopt``.
+"""Collection CLI (G1 slice): ``python -m collection.core.cli collect|adopt|stage``.
 
 Commands
 --------
@@ -12,6 +12,12 @@ Commands
 - ``adopt --staged <dir>``: L1 + catalog/quarantine for a run staged by an
   external collector (shell scripts) - the migration path for
   ``src/collection/*.sh``.
+- ``stage --declaration <file>``: write staged runs from a declaration
+  (``staging-declaration-v1``, COL-017) for payloads an external collector
+  produced outside the repository (e.g. a cloud dataset export).  Staging
+  only - ``adopt`` owns the verdict.  0 = every declared run staged, 1 = at
+  least one run refused, 2 = declaration / registry configuration error, 3 =
+  the declaration cannot be read.
 - ``compile-window``: G3 §6 dry-run: compile an absolute window into the
   collector's registered parameters and print the result (fail closed).
 
@@ -31,6 +37,11 @@ from collection.adapters import AdapterUnavailable, get_adapter_factory, get_win
 from collection.core.pipeline import PipelineResult, adopt_staged, run_collection
 from collection.core.registry import ConfigError, load_registries
 from collection.core.selection import select_collector
+from collection.core.staging import (
+    DeclarationError,
+    load_declaration,
+    stage_declaration,
+)
 from validation.windows import (
     WindowCompilationError,
     check_window_compiler,
@@ -174,6 +185,85 @@ def cmd_adopt(args) -> int:
     if result.adopted:
         return EXIT_OK
     return EXIT_GATE
+
+
+def cmd_stage(args) -> int:
+    """Stage a declared handover (declaration -> ``.staging/<run-id>/``).
+
+    Staging only: no verdict is produced here (``adopt`` owns the L1 decision,
+    spec §3.3).  Exit 0 = every declared run staged, 1 = at least one run
+    refused by ``stage_run`` (the others are still staged; each run directory
+    is an independent fail-closed unit), 2 = declaration / registry
+    configuration error, 3 = the declaration file cannot be read.
+    """
+    try:
+        registries = load_registries(
+            Path(args.config_dir), Path(args.metadata_dir)
+        )
+    except ConfigError as error:
+        _err(str(error))
+        return EXIT_CONFIG
+
+    try:
+        declaration = load_declaration(Path(args.declaration))
+    except (OSError, json.JSONDecodeError, UnicodeDecodeError):
+        _err(f"cannot read declaration file: {args.declaration}")
+        return EXIT_IO
+    except DeclarationError as error:
+        _report_declaration_error(error)
+        return EXIT_CONFIG
+
+    try:
+        report = stage_declaration(
+            declaration,
+            workspace_root=Path(args.workspace),
+            datasets_root=Path(args.datasets_root),
+            registries=registries,
+        )
+    except DeclarationError as error:
+        _report_declaration_error(error)
+        return EXIT_CONFIG
+
+    try:
+        _emit_stage(report, fmt=args.format, output=args.output)
+    except OSError as error:
+        _err(f"cannot write the stage report: {error.__class__.__name__}")
+        return EXIT_IO
+    if report["stopped"]:
+        return EXIT_GATE
+    return EXIT_OK
+
+
+def _report_declaration_error(error: DeclarationError) -> None:
+    _err(f"invalid staging declaration: {error}")
+    for issue in error.issues:
+        _err(f"  [{issue.code}] {issue.path}: {issue.message}")
+
+
+def _emit_stage(report: dict, *, fmt: str, output: str | None) -> None:
+    if fmt == "json":
+        text = json.dumps(report, ensure_ascii=False, indent=2) + "\n"
+        if output:
+            path = Path(output)
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(text, encoding="utf-8")
+        else:
+            print(text, end="")
+    for record in report["results"]:
+        target = record.get("staging_dir") or record.get("final_dir") or ""
+        lines = [
+            f"{record['action'].upper()} run_id={record['run_id']} "
+            f"{'-> ' + target if target else ''}".rstrip()
+        ]
+        for issue in record["issues"]:
+            lines.append(f"  [{issue['code']}] {issue['path']}: {issue['message']}")
+        for line in lines:
+            print(line, file=sys.stderr)
+    print(
+        f"stage: {report['staged']} staged / {report['stopped']} stopped "
+        f"of {report['runs_requested']}",
+        file=sys.stderr,
+    )
 
 
 def cmd_compile_window(args) -> int:
@@ -350,6 +440,20 @@ def build_parser() -> argparse.ArgumentParser:
     compile_window.add_argument("--format", choices=("text", "json"), default="text")
     compile_window.add_argument("--output", help="write the JSON report to this path")
     compile_window.set_defaults(handler=cmd_compile_window)
+
+    stage = sub.add_parser(
+        "stage",
+        help="write staged runs from a staging-declaration-v1 document "
+        "(external payloads; COL-017 driver)",
+    )
+    stage.add_argument(
+        "--declaration",
+        required=True,
+        help="staging-declaration-v1 JSON: the declared query mapping, "
+        "window, timestamps, execution facts and artifacts per run",
+    )
+    _add_common(stage)
+    stage.set_defaults(handler=cmd_stage)
 
     return parser
 

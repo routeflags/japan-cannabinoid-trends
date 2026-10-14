@@ -20,6 +20,16 @@ from conftest import (
     make_workspace,
 )
 
+# The stage command's declaration helper and identifiers are shared with the
+# driver's contract tests (same package under tests/collection).
+from test_staging_driver import (  # noqa: E402  (shared test helper)
+    RUN_ID as STAGE_RUN_ID,
+    STUDY_ID as STAGE_STUDY_ID,
+    _declaration as _stage_declaration_document,
+    _run as _stage_run_entry,
+    _write as _write_stage_declaration,
+)
+
 RUN_ID = "20261013T000000Z-google-trends-cli-12m"
 
 
@@ -197,3 +207,122 @@ def test_adopt_missing_staged_dir_exit_1(capsys, tmp_path):
     report = json.loads(captured.out)
     assert code == EXIT_GATE
     assert report["action"] == "stopped"
+
+
+# ---------------------------------------------------------------------------
+# stage (ISS-20261015-COL-017: declaration-driven staging driver)
+# ---------------------------------------------------------------------------
+
+
+def test_stage_command_stages_then_adopt_catalogs(capsys, tmp_path):
+    root = make_workspace(tmp_path, studies=(STAGE_STUDY_ID,))
+    declaration = _write_stage_declaration(tmp_path, _stage_declaration_document())
+    code = main(
+        [
+            "stage",
+            "--declaration",
+            str(declaration),
+            "--format",
+            "json",
+            *_base_args(root),
+        ]
+    )
+    captured = capsys.readouterr()
+    report = json.loads(captured.out)
+    assert code == EXIT_OK
+    assert report["runs_requested"] == 1
+    assert report["staged"] == 1 and report["stopped"] == 0
+    result = report["results"][0]
+    assert result["action"] == "staged"
+    assert result["run_id"] == STAGE_RUN_ID
+
+    code = main(
+        [
+            "adopt",
+            "--staged",
+            result["staging_dir"],
+            "--format",
+            "json",
+            *_base_args(root),
+        ]
+    )
+    captured = capsys.readouterr()
+    adopted = json.loads(captured.out)
+    assert code == EXIT_OK
+    assert adopted["action"] == "adopted"
+    final = root / "datasets" / STAGE_STUDY_ID / "data" / "raw" / STAGE_RUN_ID
+    assert (final / "run_metadata.json").is_file()
+
+
+def test_stage_command_reports_a_stopped_run_exit_1(capsys, tmp_path):
+    run = _stage_run_entry()
+    run["collector_id"] = "no-such-collector"
+    root = make_workspace(tmp_path, studies=(STAGE_STUDY_ID,))
+    declaration = _write_stage_declaration(tmp_path, _stage_declaration_document(run))
+    code = main(
+        [
+            "stage",
+            "--declaration",
+            str(declaration),
+            "--format",
+            "json",
+            *_base_args(root),
+        ]
+    )
+    captured = capsys.readouterr()
+    report = json.loads(captured.out)
+    assert code == EXIT_GATE
+    assert report["stopped"] == 1
+    assert "STAGING_COLLECTOR_UNKNOWN" in [
+        issue["code"] for issue in report["results"][0]["issues"]
+    ]
+
+
+def test_stage_command_declaration_error_exit_2(capsys, tmp_path):
+    document = _stage_declaration_document()
+    document["runs"][0]["query"]["query_id"] = "no-such-query"
+    root = make_workspace(tmp_path, studies=(STAGE_STUDY_ID,))
+    declaration = _write_stage_declaration(tmp_path, document)
+    code = main(
+        ["stage", "--declaration", str(declaration), *_base_args(root)]
+    )
+    captured = capsys.readouterr()
+    assert code == EXIT_CONFIG
+    assert "invalid staging declaration" in captured.err
+    assert "no-such-query" in captured.err
+    assert not (root / ".staging").exists()
+
+
+def test_stage_command_unreadable_declaration_exit_3(capsys, tmp_path):
+    root = make_workspace(tmp_path, studies=(STAGE_STUDY_ID,))
+    missing = main(
+        ["stage", "--declaration", str(tmp_path / "absent.json"), *_base_args(root)]
+    )
+    assert missing == EXIT_IO
+
+    broken = tmp_path / "broken.json"
+    broken.write_text("{not json", encoding="utf-8")
+    assert main(["stage", "--declaration", str(broken), *_base_args(root)]) == EXIT_IO
+
+
+def test_stage_command_writes_the_report_file(capsys, tmp_path):
+    root = make_workspace(tmp_path, studies=(STAGE_STUDY_ID,))
+    declaration = _write_stage_declaration(tmp_path, _stage_declaration_document())
+    output = tmp_path / "reports" / "stage.json"
+    code = main(
+        [
+            "stage",
+            "--declaration",
+            str(declaration),
+            "--format",
+            "json",
+            "--output",
+            str(output),
+            *_base_args(root),
+        ]
+    )
+    captured = capsys.readouterr()
+    assert code == EXIT_OK
+    report = json.loads(output.read_text(encoding="utf-8"))
+    assert report["declaration_name"] == "declaration.json"
+    assert "stage: 1 staged / 0 stopped of 1" in captured.err

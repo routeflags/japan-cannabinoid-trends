@@ -141,11 +141,12 @@ def _temporal_provenance(plan: dict, result: CollectionResult, window_id: str, c
     """Merge the plan's requested window with the adapter's observed facts.
 
     The adapter's ``temporal`` block carries what only the source can know
-    (granularity, week boundary, window type, observed bounds); the plan
-    supplies the requested window and, when given, granularity / timezone as
-    fallbacks.  When a G3 window compiler ran, its recorded facts (reference
-    time, limitations, window type, exactness) are included as well — the
-    requested and observed periods stay separate (P5, c.md §8).
+    (granularity, week boundary, window type, observed bounds, and — when a
+    relative period was resolved — the reference time and its limitations);
+    the plan supplies the requested window and, when given, granularity /
+    timezone as fallbacks.  When a G3 window compiler ran, its recorded facts
+    (reference time, limitations, window type, exactness) are included as well
+    — the requested and observed periods stay separate (P5, c.md §8).
 
     A staged run declares its own execution facts (docs/specs/
     collection-pipeline.md §3.3): ``reference_time`` and ``limitations`` are
@@ -171,6 +172,10 @@ def _temporal_provenance(plan: dict, result: CollectionResult, window_id: str, c
         "observed_min_timestamp",
         "observed_max_timestamp",
         "week_start",
+        # A collector that resolves a relative period - or an external
+        # stager that declares one - records the resolution basis and its
+        # limitations here; the compiled path below overrides them when a
+        # G3 window compiler actually ran.
         "reference_time",
         "limitations",
     ):

@@ -1,0 +1,4 @@
+id,url,title,date,channelName,input,hashtags/0
+synthetic-0001,https://example.invalid/watch?v=synthetic-0001,Synthetic record one,2026-01-05T00:00:00.000Z,synthetic-channel,test keyword,#synthetic
+synthetic-0002,https://example.invalid/watch?v=synthetic-0002,Synthetic record two,2026-01-06T09:30:00.000Z,synthetic-channel,test keyword,#synthetic
+synthetic-0003,https://example.invalid/watch?v=synthetic-0003,Synthetic record three,,synthetic-channel,test keyword,#synthetic

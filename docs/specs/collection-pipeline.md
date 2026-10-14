@@ -1,8 +1,15 @@
 # Collection Pipeline (G1 垂直スライス) — 運用契約
 
-**版:** 0.3.0（2026-10-15）
+**版:** 0.4.0（2026-10-15）
 **仕様:** `docs/plans/20261013a.md`（G1、リポジトリ履歴外）+ `20261013h.md` §12
 **状態:** 実装済み・**ライブ収集は未実施**（契約検証は録画リプレイ / 合成 fixture）
+
+**0.4.0 の変更:** ソース別 staging ドライバ（宣言ファイル `staging-declaration-v1`
+→ `stage_run`）と `stage` CLI サブコマンドを追加（§3.4、ISS-20261015-COL-017）。
+CSV reader（`csv-record-reader`）と artifact schema `youtube-dataset-csv-v1` を
+登録し、ダウンロード済み dataset export を CSV のまま L1 に通せるようにした
+（§3.4、ISS-20261015-ART-009）。実記録 7 件での rehearsal は
+`docs/reports/20261015b-youtube-csv-staging-driver.md`。
 
 **0.3.0 の変更:** staging 境界の独立検証（
 `docs/reports/20261015a-staging-acceptance-review.md`）で指摘された欠陥を修正。
@@ -158,8 +165,8 @@ L2 が `not_comparable` になることはある。
   contract が登録 reader と突き合わせる（S8）。同じ規則を 2 実装しない。
 - payload は **byte 単位でコピー**し、manifest の SHA-256 / byte 長はディスク上の
   ファイルから計算する（`collect` と同じ規則）。
-- 未実装: ソース別の staging ドライバ（Apify dataset エクスポート等）と
-  `stage` CLI サブコマンド。当面は `stage_run` を直接呼ぶ（§8）。
+- staging ドライバ（0.4.0 で追加・§3.4）: 宣言ファイル（`staging-declaration-v1`）
+  + `stage` CLI。`stage_run` を直接呼ぶ経路も引き続き有効（§8）。
 - **受容した限界**（2026-10-15 の独立検証で確認、修正しないと決めたもの）:
   staging は原子的でない — `mkdir` の後、manifest / run_metadata を書く前に中断すると
   部分的な `.staging/<run-id>/` が残り、再実行は `RUN_ID_ALREADY_EXISTS` で止まる
@@ -169,6 +176,49 @@ L2 が `not_comparable` になることはある。
   みを検証する — 上記記載どおり）。
 - `scripts/validation/run-gates.sh run <run_metadata.json>` は新しく L1 ゲート
   （`gate-run`）を呼ぶ: exit 0 = 採用可、非 0 = 隔離。
+
+### 3.4 staging 宣言ドライバ（`stage` CLI / `staging-declaration-v1`）— 0.4.0
+
+実装: `src/collection/core/staging.py` + `collection.core.cli stage`。
+外部で取得済みの payload（クラウド dataset export 等）を、`stage_run` の入力を
+人手で組み立てずに契約へ乗せる経路。
+
+- **宣言ファイル（判断）**: 入力は CLI 引数ではなく 1 つの JSON
+  （`staging-declaration-v1`、`stage --declaration <file>`）。run ごとに query
+  対応・窓・時刻・実行結果・artifact を持つため引数ではレビューできず、かつ
+  宣言は「どの payload がどの検索か」を人間が明示する唯一の場所である
+  （ドライバは payload の列を読んで検索を推定しない）。
+- **keyword → `query_id` は宣言**: `query_id` は query registry で照合し、
+  未登録は exit 2 で拒否する（registry への G2 準拠エントリ追加は別作業）。
+  `compound_id` / `intent_id` は registry の記載をそのまま記録する。
+- **窓**: 絶対窓（`start` / `end_exclusive` / `granularity` / `timezone`）と、
+  相対要求（`date_filter` / `reference_time`）の両方を宣言から受け取る。
+  相対→絶対の compile は行わない（GT 以外の compiler は WIN-002 の範囲）。
+  `reference_time` と `limitations` は `temporal_provenance` に、
+  `collector_window_type` / `boundary_semantics` / `exact_window_match` は
+  宣言値を記録する（ソース知識をコアに置かない = P1）。絶対窓は
+  「宣言された観測区間」であり collector が強制した境界ではない旨を
+  limitation に書く。
+- **時刻**: payload に収集時刻列が無い場合は started_at / finished_at を
+  宣言し、根拠を `environment.handover.timestamp_basis` に記録する
+  （例: export ファイル名の timestamp のみ・timezone 未確証）。捏造しない。
+- **artifact**: `record_count` 宣言時はそのまま渡す（S8 が検証 = 非空虚）。
+  未宣言時は登録 reader（`storage.readers`）で導出し、physical line ではなく
+  **CSV record 数**を数える。reader が解決・読み取りできない場合は exit 2
+  （新形式は ART-009 の手順で reader + schema を先に登録する）。
+- **run メタデータ**: `environment.handover` に宣言ファイル名 / SHA-256 /
+  timestamp basis / record_count と returned_count の導出根拠
+  （declared / derived:<reader>）を記録する。
+- **実行**: 宣言全体を先に準備（query 照合・件数導出）し、宣言レベルの失敗は
+  何も staging せず exit 2。`stage_run` レベルの拒否は run 単位で報告し、
+  他の run の staging は続ける（各 run ディレクトリは独立・fail closed）。
+- **exit code**: 0 = 全 run staged（採用は `adopt` が判定）/ 1 = 1 つ以上
+  stopped / 2 = 宣言・設定エラー / 3 = 宣言ファイル読み取り不可。
+- **検証できる範囲（制限）**: 窓・date_filter・実行 status など宣言の事実は
+  payload からは独立検証できない。L1 が検証するのは契約（件数・format・
+  reader・hash・registry 参照・欠測規則）まで。宣言の根拠は
+  `timestamp_basis` と `limitations` に、rehearsal か実採用かは運用記録に残す
+  （2026-10-15 の 7 件 rehearsal: `docs/reports/20261015b-youtube-csv-staging-driver.md`）。
 
 ---
 
@@ -322,8 +372,11 @@ python -m collection.core.cli compile-window --window-id <window_id> \
 # 外部 collector が staging に出した run の採用判定
 python -m collection.core.cli adopt --staged <staging>/<run-id> --workspace <root>
 
-# 外部 collector の payload を staged run にする（産出側。CLI 未実装のため
-# 現時点は `collection.core.pipeline.stage_run` を直接呼ぶ。§3.3）
+# 外部 collector の payload を staged run にする（産出側。宣言ファイル。§3.4）
+python -m collection.core.cli stage --declaration declaration.json \
+  --workspace <root> --datasets-root <root>/datasets
+# exit 0 = 全 run staged / 1 = stopped あり / 2 = 宣言・設定エラー / 3 = 読取不可
+# 採用判定は別途 `adopt`。`stage_run` を直接呼ぶ経路も引き続き有効。
 
 # L1 単体（任意の run ディレクトリ）
 python -m validation.cli gate-run --file <run_metadata.json>
@@ -335,12 +388,12 @@ python -m validation.cli compare-runs --a a.json --b b.json
 python -m validation.cli coverage-run --file <run_dir or run_metadata.json>
 ```
 
-| exit | 意味（collect / adopt / gate-run） |
+| exit | 意味（collect / adopt / stage / gate-run） |
 |---|---|
-| 0 | adopted（catalog） |
-| 1 | quarantined / stopped（採用しない。raw は保全） |
-| 2 | 設定エラー（registry 不正、adapter 未実装、plan 不正、compiler 未登録） |
-| 3 | I/O エラー |
+| 0 | adopted（catalog）。`stage` は「全 run staged」（採用は `adopt` の判定） |
+| 1 | quarantined / stopped（採用しない。raw は保全）。`stage` は 1 つ以上の run が stopped |
+| 2 | 設定エラー（registry 不正、adapter 未実装、plan 不正、compiler 未登録、宣言不正・query 未登録・reader 未解決） |
+| 3 | I/O エラー（計画・宣言ファイルを読めない） |
 
 `compare-runs` は常に 0（比較判定は採用可否のゲートではない）。`coverage-run`
 も常に 0（coverage はレポート。0 への変換禁止は判定側で行う）。`compile-window`
@@ -368,8 +421,13 @@ python -m validation.cli coverage-run --file <run_dir or run_metadata.json>
   なので、境界挙動（`exact=true` 昇格）は依然未検証。
 - 外部 collector staging（§3.3）は実記録 GT 応答で
   stage → adopt → 厳格検証（artifact 検証込み）まで通過済み
-  （`tests/collection/test_staging.py`）。ソース別ドライバ（Apify
-  クラウド export 等）は未実装で、CSV 等の新形式は reader 登録が前提。
+  （`tests/collection/test_staging.py`）。staging 宣言ドライバ + `stage` CLI
+  （§3.4、COL-017）と CSV reader / `youtube-dataset-csv-v1`（ART-009）を
+  0.4.0 で追加し、2026-10-14 ダウンロードの実 YouTube dataset export 7 件を
+  scratch workspace で stage → adopt → 厳格検証 + `audit-new-runs` まで
+  rehearsal 済み（`docs/reports/20261015b-youtube-csv-staging-driver.md`）。
+  **実採用は未実施**: 窓・date_filter・実行 status 等の宣言事実の確認が先
+  （§3.4 の「検証できる範囲」を参照）。
 - 2026-10-15 に staging 境界の**独立検証**を行った
   （`docs/reports/20261015a-staging-acceptance-review.md`）。実記録 GT 応答での
   stage → adopt → 厳格検証は独立スクリプトでも再現し、拒否 7 経路・改竄検出・

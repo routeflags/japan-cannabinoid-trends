@@ -2,7 +2,7 @@
 
 **ID:** ISS-20261015-ART-009  
 **優先度:** P2 (Medium)  
-**ステータス:** OPEN  
+**ステータス:** RESOLVED (2026-10-15)  
 **対象:** `metadata/artifacts/artifact-registry.json`, `src/storage/readers/`, `src/storage/sniff.py`, `src/validation/storage_contract.py`
 
 ## 概要
@@ -38,6 +38,27 @@ raw payload として保全したい場合、L1 の storage contract が
 
 ## 完了条件
 
-- [ ] CSV reader の実装と契約テスト（`tests/storage/`）
-- [ ] registry 登録（reader / schema）と `validate-registries` の green 維持
-- [ ] 実 CSV を L1 に通した検収（storage contract の S6-S9 が error 0）
+- [x] CSV reader の実装と契約テスト（`tests/storage/`）
+- [x] registry 登録（reader / schema）と `validate-registries` の green 維持
+- [x] 実 CSV を L1 に通した検収（storage contract の S6-S9 が error 0）
+
+## 対応記録（2026-10-15）
+
+- 実装: `src/storage/readers/csv.py`（`csv-record-reader`、read mode
+  `records`）。UTF-8（BOM 許容）/ CRLF・LF・CR、引用符内改行・カンマ・二重引用符
+  を保持、空行は record にしない、ragged・空列名・重複列名は拒否。`count` は
+  physical line ではなく **CSV record 数**（実 export は引用符内改行のため
+  約 55 倍差 — `dataset_youtube-scraper_*.csv` の実測で確認）。
+- 登録: `metadata/artifacts/artifact-registry.json` に reader と schema
+  `youtube-dataset-csv-v1`（`format: csv`, `artifact_types: [raw_records]`,
+  `record_count_mode: data_rows`）。`validate-registries` は 11 target valid
+  （維持）。
+- 契約テスト: `tests/storage/test_csv_reader.py`（synthetic fixture。
+  `tests/storage/fixtures/dataset_export_synthetic.csv` は `synthetic-*` /
+  `example.invalid` のみで、実メタデータを持たない）。S6 / S8 / S9 が
+  非空虚（format 不一致・件数不一致・未登録 schema をそれぞれ検出）であることも
+  テストで固定。
+- 実 CSV の検収: 実 export 7 件（`~/Downloads/dataset_youtube-scraper_*.csv`）を
+  リポジトリ外 scratch workspace で stage → adopt → `validate_full
+  (verify_artifacts=True)` 厳格 valid（S6-S9 含め error 0）。記録:
+  `docs/reports/20261015b-youtube-csv-staging-driver.md`。

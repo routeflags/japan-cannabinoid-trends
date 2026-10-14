@@ -53,6 +53,7 @@ def _descriptor(path, **overrides) -> ArtifactDescriptor:
 
 def test_reader_ids_are_stable():
     assert reader_ids() == [
+        "csv-record-reader",
         "json-comparison-reader",
         "json-object-reader",
         "json-page-reader",

@@ -27,7 +27,8 @@ Interpretations recorded for review
 - ``record_count_mode`` values: ``none`` (no file-level count is defined -
   summary, database), ``array_length`` (top-level JSON array),
   ``items_length`` (page ``items`` array), ``data_points`` (per-bucket
-  series entries), ``data_rows`` (comparison rows).  The mode is what the
+  series entries), ``data_rows`` (comparison rows / delimited-text data
+  records).  The mode is what the
   S8 check compares against; ``none`` means "never compared" (d.md §6.2:
   a summary's ``data_points`` is not a record count).
 - ``contains_full_timeseries`` mirrors the d.md §12 distinction on the
