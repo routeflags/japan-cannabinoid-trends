@@ -61,3 +61,29 @@ python3 -m validation.cli gate-publication --artifact /tmp/g6-artifact.json --de
 ```
 
 入力 3 ファイル（artifact / decision / evidence）は審査 envelope であり、raw レコード値は読まない。 verdict が `BLOCKED` でも CLI は exit 0（記録専用のため。§10.3 の decision 検証失敗と CLI 入力エラーを区別する）。
+
+---
+
+## 5. 2026-10-15 再実行（ISS-20261015-PUB-015、メンテナ指示 (b)）
+
+2026-10-13 の記録は入力 3 ファイルをその場で作り、履歴が非公開の会話に依存していた。
+再実行にあたり、審査 envelope を追跡ファイルとして移し、判定を再現可能にした。
+
+- 入力: `metadata/publication/x-cbx-202608-summary-anonymized/{artifact,evidence,decision}.json`
+  （規則は同 `metadata/publication/README.md`）。
+- 再生成: `tests/validation/test_audit_report_freshness.py` に登録。再実行一致と、
+  承認が当該 artifact hash に固定されていること（G6-T09）を機械検査する。
+
+| ID | 2026-10-13 | 2026-10-15 | 根拠の変化 |
+|---|---|---|---|
+| PUB-01 | FAIL | **PASS** | 導出宣言（`src/processing/reproduce.py`）と `audit-processed` の機械検証が入った |
+| PUB-04 | FAIL | **PASS** | §21.2（メンテナ決定 2026-10-13）+ §21.3 の施行を審査記録として引用 |
+| PUB-10 | FAIL | **PASS** | 同決定を、内容未変更の当該成果物（hash `f27f979a…`）への公開承認として記録 |
+| PUB-06/07/08 | WARNING | WARNING（変更なし） | 利用条件・再配布・著作権の「確認済み」記録が無い。`sns-redistribution-assessment.md` は評価であり確認記録ではない |
+
+**verdict: `BLOCKED` → `CONDITIONAL`**（公開は拒否されない。レビュア確認が残る）。
+
+解釈の明示: 専用の承認文書が存在しないため、`decision.json` は §21.2 の決定文を
+公開承認として転記した（`basis` フィールドに記載）。別の形にする場合は
+`decision.json` の 1 フィールドを変えて再実行すればよい。
+

@@ -1008,11 +1008,27 @@ staged → `adopt` を案内する。パスは字句的に正規化するため 
 
 ### 22.5 関連する未決（本作業中に発見）
 
-- `docs/audits/g6-publication-eligibility.json` は `verdict: BLOCKED`
-  （PUB-01 provenance 欠落 / PUB-04 personal-data review 欠落 / PUB-10）を記録したまま、
-  対象成果物（匿名化済み X CSV）は公開されている（Zenodo 含む）。ゲートは record-only
-  設計だが、AGENTS.md は「公開ゲートの失敗は解決または明示的に文書化されるまで公開を
-  止める」と定めており、**受容の記録が見当たらない**。記録の追記が要る。
+- `docs/audits/g6-publication-eligibility.json` の `verdict: BLOCKED`（PUB-01 provenance
+  欠落 / PUB-04 personal-data review 欠落 / PUB-10）と、対象成果物（匿名化済み X CSV）
+  が公開されている状態の不整合は、**2026-10-15 に ISS-20261015-PUB-015 として解消**
+  （メンテナ指示: ゲートを再実行して verdict を更新）。
+
+  再実行の結果は `BLOCKED` → `CONDITIONAL`（公開は拒否されない。PUB-06/07/08 の
+  レビュア確認が残る）。判定履歴を非公開の会話に依存させないため、審査 envelope は
+  `metadata/publication/<artifact_id>/{artifact,evidence,decision}.json` として追跡し、
+  判定は登録コマンドで再現する（`tests/validation/test_audit_report_freshness.py` が
+  再実行一致と承認 hash のピン留めを検査する）。
+
+  **ゲートと公開状態の関係（変更なし、明文化）**: `gate-publication` は record-only で、
+  公開・Release 作成・Zenodo アップロード・DOI 発行を一切行わない。したがって
+  「verdict が何であれゲートが公開を止める」のではなく、**公開を止めるのは AGENTS.md の
+  公開ゲート規則を人が適用する場合**である。判定が `BLOCKED` のまま公開が続く状態が
+  問題だったのは、未確認が失敗と区別できず、受容の記録も無かったため。現在は
+  CONDITIONAL（拒否なし）+ 残作業（PUB-06/07/08）が記録されている。
+
+  記録の解釈（要確認）: 専用の承認文書が存在しないため、`decision.json` は
+  §21.2（メンテナ決定 2026-10-13）を匿名化済み成果物の公開承認として転記した。
+  別の形にする場合はその 1 フィールドと再実行で変更できる。
 
 ## 23. タクソノミーと文書の整合（2026-10-13）
 

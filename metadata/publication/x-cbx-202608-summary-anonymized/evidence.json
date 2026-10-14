@@ -1,0 +1,39 @@
+{
+  "schema_version": "1.0.0",
+  "record": "publication_review_evidence",
+  "artifact_id": "x-cbx-202608-summary-anonymized",
+  "recorded_at": "2026-10-15",
+  "provenance_present": true,
+  "integrity": "verified",
+  "schema_valid": true,
+  "personal_data_reviewed": true,
+  "anonymization_applied": true,
+  "citations": {
+    "provenance_present": [
+      "src/processing/reproduce.py DERIVATIONS[datasets/cbx-social-trends/data/processed/x_cbx_202608_summary_anonymized.csv]: kind x-summary-anonymization, source data/private/... (非公開), 16 列, 宣言された乖離 1 件（week 3 行）",
+      "processing.cli audit-processed: reproducible_with_declared_discrepancy（機械検証。2026-10-13 の「manifest の無い legacy 派生 = provenance なし」は当時の状態で、以降に導出宣言と検証が入った）"
+    ],
+    "integrity": [
+      "sha256(実ファイル, 2026-10-15 検算) = f27f979a19e7e4925ae0b5d442beeec027e667ce5b10247934066a5b1ed463a6 = artifact.json"
+    ],
+    "schema_valid": [
+      "metadata/datapackage.json にスキーマ記載（2026-10-13 の判定を踏踏）"
+    ],
+    "personal_data_reviewed": [
+      "docs/specs/validation-framework.md §21.2（メンテナ決定 2026-10-13: X は公開前に匿名化が必要、リポジトリ側データのマスキング可）",
+      "§21.3（該当ファイルの非公開退避、疑似名化、再発防止ゲートの導入）",
+      "metadata/privacy/x-identity-denylist.json（55 アカウントのソルト付きダイジェスト）",
+      "施行: src/validation/x_identity.py（CI audit-x-identity、pre-commit チェック 6）"
+    ],
+    "anonymization_applied": [
+      "src/processing/anonymize.py: username → 連番 pseudonym、tweet_id → hash、本文は has_text / text_length のみ（本文・投稿 URL を持たない）",
+      "成果物のヘッダ 16 列（tweet_id_hash, createdAt, week, lang, author_id, ...）に識別列・本文列が無い"
+    ]
+  },
+  "unrecorded": {
+    "source_terms_confirmed": "取得元の利用条件の「確認済み」記録なし。評価は docs/specs/sns-redistribution-assessment.md §1.2（X Developer Policy の制限）にあるが、確認の記録ではない",
+    "redistribution_confirmed": "再配布条件の「確認済み」記録なし。同 §1.4/§3.1 は集計のみ公開と結論するが、§3.3 の「X 集計データの研究用途該当性」は未確認",
+    "copyright_confirmed": "著作権・契約制約の確認記録なし"
+  },
+  "notes": "フラグは日付のある根拠を持つものだけを true にする。PUB-06/07/08 は根拠が確認記録でないため未記録（WARNING のまま）。"
+}

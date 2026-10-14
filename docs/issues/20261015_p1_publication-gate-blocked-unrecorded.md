@@ -2,8 +2,8 @@
 
 **ID:** ISS-20261015-PUB-015  
 **優先度:** P1 (High)  
-**ステータス:** OPEN  
-**対象:** `docs/audits/g6-publication-eligibility.json`, `config/storage-policies.json`, `docs/specs/validation-framework.md` §22.5
+**ステータス:** RESOLVED (2026-10-15)  
+**対象:** `docs/audits/g6-publication-eligibility.json`, `metadata/publication/`, `config/storage-policies.json`, `docs/specs/validation-framework.md` §22.5
 
 ## 概要
 
@@ -30,8 +30,38 @@ AGENTS.md は「公開ゲートの失敗は解決または明示的に文書化�
 - どちらかを選んだら、その判断を文書（spec の該当節 or 監査の隣）に残す。
 - **推測で PASS にしない。**
 
+## 選択と結果（2026-10-15、メンテナ指示は (b)）
+
+指示は「(b) を実施」。ゲートを再実行し、判定を更新した。
+
+- **入力の置き場を変えた**: 従来はその場限りの入力（ad-hoc ファイル）で、判定履歴が
+  非公開の会話に依存していた。審査 envelope（artifact descriptor / evidence / decision）
+  を `metadata/publication/x-cbx-202608-summary-anonymized/` に**追跡ファイルとして**置き、
+  判定は登録された生成コマンドで再現できるようにした
+  （`tests/validation/test_audit_report_freshness.py` が再実行一致と hash ピン留めを検査）。
+- **再実行結果: `BLOCKED` → `CONDITIONAL`**（公開は拒否されない。レビュア確認は残る）
+  - PUB-01 FAIL → PASS: 導出宣言（`src/processing/reproduce.py`）と `audit-processed` の
+    機械検証が入り、"manifest の無い legacy 派生" は当時の状態になった。
+  - PUB-04 FAIL → PASS: `docs/specs/validation-framework.md` §21.2（メンテナ決定 2026-10-13）
+    と §21.3 の施行（匿名化・非公開退避・`audit-x-identity`）を審査記録として引用。
+  - PUB-10 FAIL → PASS: 同決定を、内容未変更の当該成果物（hash `f27f979a…`、2026-10-13 の
+    記録と同一）への公開承認として記録。
+  - **残る WARNING: PUB-06 / PUB-07 / PUB-08**（取得元の利用条件・再配布条件・著作権の
+    「確認済み」記録が無い）。`docs/specs/sns-redistribution-assessment.md` が評価を与えて
+    いるが確認の記録ではないため、未記録のままにした（§3.3 の未チェック項目）。
+- **解釈の明示**: 専用の承認文書は存在しないため、§21.2 の決定文を機械可読な decision に
+  転記した（`decision.json` の `basis` と spec §22.5 に明記）。別の形（例:
+  `requires_review` のまま）にする場合、フィールド 1 つと再実行で変わる。
+- 監査と公開状態の関係: ゲートは record-only で、公開・Release・Zenodo・DOI に触れない。
+  対象成果物がすでに公開済みである事実は変わらず、**今後の公開判断に効く記録**が
+  「未記録の拒否」から「記録された CONDITIONAL + 残作業 3 件」に変わった。
+
 ## 完了条件
 
-- [ ] 受容 / 再実行のいずれかを選択
-- [ ] 選んだ結果の記録（日付付き）
-- [ ] 監査と公開状態の関係を説明する文章の追記
+- [x] 受容 / 再実行のいずれかを選択（2026-10-15、(b)）
+- [x] 選んだ結果の記録（日付付き: 監査 JSON の再生成 + `metadata/publication/README.md` +
+      本節 + spec §22.5）
+- [x] 監査と公開状態の関係を説明する文章の追記（spec §22.5）
+
+
+
