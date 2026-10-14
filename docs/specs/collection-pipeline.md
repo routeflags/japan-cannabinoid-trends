@@ -1,6 +1,6 @@
 # Collection Pipeline (G1 垂直スライス) — 運用契約
 
-**版:** 0.2.0（2026-10-13）
+**版:** 0.2.0（2026-10-15）
 **仕様:** `docs/plans/20261013a.md`（G1、リポジトリ履歴外）+ `20261013h.md` §12
 **状態:** 実装済み・**ライブ収集は未実施**（契約検証は録画リプレイ / 合成 fixture）
 
@@ -115,7 +115,7 @@ L2 が `not_comparable` になることはある。
 ### 3.3 外部 collector の staging（`stage_run`）と既存 shell 収集との整合
 
 - 移行パス（判断 A）の**産出側を実装した**:
-  `collection.core.pipeline.stage_run`（2026-10-13）。外部 collector
+  `collection.core.pipeline.stage_run`（2026-10-15）。外部 collector
   （MCP セッション、クラウド dataset エクスポート、既存 shell）が取得済みの
   payload を、`plan`（`collection-plan-v1`）+ `CollectedArtifact[]` +
   実行事実の宣言として受け取り、`.staging/<run-id>/`（payload のコピー +
@@ -325,7 +325,7 @@ python -m validation.cli coverage-run --file <run_dir or run_metadata.json>
 
 - **ライブ収集は未実施**。Google Trends の live 経路（`SessionMcpTransport`）は
   MCP セッション callable の注入のみ実装し、本リポジトリは実行しない。
-- replay fixture は合成（録画形式に基づく）。ただし **2026-10-13 に、実記録
+- replay fixture は合成（録画形式に基づく）。ただし **2026-10-15 に、実記録
   GT 応答（tracked `datasets/cannabinoid-multi-trends/data/raw/google_trends/
   20261012T064246Z-google-trends-ja-rikiddo-5y-main5/records_cbd-rikiddo-5y.json`）
   での照合を行った**: adapter の想定形状（`{keyword, geo, timeframe,
