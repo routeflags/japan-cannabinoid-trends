@@ -4,13 +4,13 @@
   "spec": "docs/plans/20261013f.md §15 (local plan; not tracked)",
   "target_root": "datasets",
   "include_private": false,
-  "count": 133,
-  "extra_count": 42,
+  "count": 132,
+  "extra_count": 43,
   "raw_modified": false,
   "state_summary": {
     "absent": 14,
-    "ignored": 7,
-    "tracked": 154
+    "ignored": 8,
+    "tracked": 153
   },
   "entries": [
     {
@@ -31,16 +31,6 @@
       "ignored": false,
       "sha256": "92eee6cc8985988e67110203778ad9fd3d29237d726a00889f0b631e0f98cd99",
       "sha256_after": "92eee6cc8985988e67110203778ad9fd3d29237d726a00889f0b631e0f98cd99",
-      "unchanged": true
-    },
-    {
-      "path": "datasets/cannabinoid-multi-trends/data/processed/early-warning-index-v1.csv",
-      "exists": true,
-      "state": "tracked",
-      "tracked": true,
-      "ignored": false,
-      "sha256": "6bd4b3a45652e362322a64cdfab3d6181328a536a2aee237950df65b90802279",
-      "sha256_after": "6bd4b3a45652e362322a64cdfab3d6181328a536a2aee237950df65b90802279",
       "unchanged": true
     },
     {
@@ -1515,6 +1505,14 @@
     },
     {
       "path": "docs/plans/20261013i-cerberus-rollout-plan.md",
+      "exists": true,
+      "state": "ignored",
+      "tracked": false,
+      "ignored": true,
+      "kind": "local_only"
+    },
+    {
+      "path": "docs/plans/20261013j-decisions-and-backlog.md",
       "exists": true,
       "state": "ignored",
       "tracked": false,

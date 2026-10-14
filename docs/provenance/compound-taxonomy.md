@@ -42,6 +42,11 @@
    の `classification` 列が両方とも `Semi-Synthetic`（`source_run_ids=EXP-20261002`）、
    および `research/google-trends/20261002-first-mention-timeline.md`。
    `docs/data-dictionary.md` §6.4 のカテゴリ表には両者とも掲載が無く、矛盾しない。
+   > **2026-10-15 注記:** 上に引用した `early-warning-index-v1.csv` は公開取り下げに
+   > なった（`src/processing/reproduce.py` の `WITHDRAWN`）。分類自体は
+   > `metadata/taxonomy/compound-taxonomy.skos.jsonld` の `compound_semisynthetic` が
+   > 正本で、`docs/data-dictionary.md` §6.4 の写しとの一致を
+   > `tests/validation/test_taxonomy_consistency.py` が検査している。
 3. ✅ `metadata/datapackage.json` の `skos_scheme` を `jptr:compound-scheme` →
    `jptr:compound-taxonomy` に修正（実在する ConceptScheme の `@id`）。
 

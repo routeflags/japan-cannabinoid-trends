@@ -20,28 +20,28 @@
     "include_private": false
   },
   "run_count": 29,
-  "count": 76,
+  "count": 75,
   "raw_modified": false,
   "judgment_summary": {
-    "missing_metadata": 7,
+    "missing_metadata": 6,
     "partially_recognized": 16,
     "recognized": 53
   },
   "format_summary": {
-    "csv": 3,
+    "csv": 2,
     "json": 72,
     "text": 1
   },
   "artifact_type_summary": {
     "comparison": 4,
-    "none": 21,
+    "none": 20,
     "raw_records": 1,
     "raw_response": 3,
     "summary": 13,
     "timeseries": 34
   },
   "manifest_summary": {
-    "missing": 76
+    "missing": 75
   },
   "sqlite_present": false,
   "sqlite_note": "SQLite stores are local-only in this repository (see docs/specs/validation-framework.md G4 section); absence in the audit scope is recorded as not-present, never as zero content",
@@ -420,33 +420,6 @@
       "judgment": "missing_metadata",
       "notes": [
         "content:extension:md",
-        "legacy:no-manifest",
-        "lineage:unknown"
-      ]
-    },
-    {
-      "path": "datasets/cannabinoid-multi-trends/data/processed/early-warning-index-v1.csv",
-      "bytes": 2330,
-      "sha256": "6bd4b3a45652e362322a64cdfab3d6181328a536a2aee237950df65b90802279",
-      "format": "csv",
-      "sniff_state": "partial",
-      "artifact_type": null,
-      "schema_id": null,
-      "contains_full_timeseries": null,
-      "record_count": null,
-      "declared_data_points": null,
-      "reader_id": null,
-      "reader_registered": null,
-      "study_id": null,
-      "run_id": null,
-      "source_id": null,
-      "run_directory": null,
-      "metadata_state": "missing",
-      "manifest_state": "missing",
-      "verification": "unverifiable_no_manifest",
-      "judgment": "missing_metadata",
-      "notes": [
-        "content:extension:csv",
         "legacy:no-manifest",
         "lineage:unknown"
       ]

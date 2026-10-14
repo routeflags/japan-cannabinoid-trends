@@ -866,8 +866,12 @@ G6 仕様（`docs/plans/20261013f.md`）の垂直スライス。Git 運用全体
 
 - ~~X の個別アカウント情報を含む CSV の追跡継続~~ → **2026-10-13 に公開取り下げで決着**。
   §21 を参照。
-- `early-warning-index-v1.csv` は**導出規則が皆無**の唯一の成果物で、`cohort`・
-  `persistence_class`・`emergence_score` に規則が無い。次の増分の候補。
+- ~~`early-warning-index-v1.csv`（導出規則が皆無の唯一の成果物）~~ → **2026-10-15 に
+  公開取り下げで決着**。作業途中の成果物で、導出規則が無く、何もこのファイルから導出して
+  いないため、公開 processed 層に残す根拠が無いと判断した。理由・代替・露出（v1.8.0〜
+  v1.12.0 のアーカイブに含まれる）は `src/processing/reproduce.py` の `WITHDRAWN` に、
+  引用元の注記は `docs/provenance/compound-taxonomy.md` にある。CHANGELOG エントリは
+  次回リリース時に付ける（version-sync ゲートが `[Unreleased]` を許さない）。
 - `docs/audits/*.json`（機械可読の監査報告）は再生成されないままレジストリから乖離
   している（例: `g7-study-inventory.json` は 9 study 中 7 件を `registered: false`
   と誤記録）。鮮度検査は未実装（Phase A 候補）。ただし G4 storage inventory には

@@ -193,6 +193,45 @@ WITHDRAWN: dict[str, Withdrawn] = {
             "src/validation/privacy.py exists.",
         ),
     ),
+    "datasets/cannabinoid-multi-trends/data/processed/early-warning-index-v1.csv": Withdrawn(
+        withdrawn_on="2026-10-15",
+        reason=(
+            "Work-in-progress artifact: the maintainer withdrew it because its "
+            "derivation was never recorded (the earlier declaration here said the "
+            "same) and nothing in the repository derives from it.  A half-finished "
+            "analysis file in the published processed layer invites citing numbers "
+            "whose meaning is unstated."
+        ),
+        replacement=(
+            "None.  The publication that carried this index was renamed to "
+            "publication/search-emergence-tracker/ (2026-10-09) and does not use "
+            "this file as an input; the compound classification it once evidenced "
+            "is canonical in metadata/taxonomy/compound-taxonomy.skos.jsonld and "
+            "docs/data-dictionary.md section 6.4."
+        ),
+        exposure=(
+            "Tracked since 2026-10-02 (commit 2c9a3bc) and present in tags v1.8.0 "
+            "through v1.12.0, so it shipped in those GitHub Releases and in their "
+            "Zenodo archives.  Withdrawing it stops further distribution; it does "
+            "not retract the published archives."
+        ),
+        notes=(
+            "docs/specs/validation-framework.md section 20.5 records the decision; "
+            "docs/provenance/compound-taxonomy.md cited this file as the evidence "
+            "for the H4CBH/HHBD semi-synthetic classification and carries a dated "
+            "note at that citation.",
+            "Dated research documents that mention the file "
+            "(research/google-trends/20261004-google-trends-comparison.md, "
+            "research/strategy/20261005-collection-strategy-recommendations.md, "
+            "research/strategy/20261005-chair-data-collection-priorities.md, "
+            "docs/reports/20261010a-data-quality-reproducibility-instructions.md, "
+            "CHANGELOG.md 1.8.0) are left as they were: they record what was true "
+            "on their date.",
+            "A CHANGELOG entry belongs to the next release: the version-sync gate "
+            "compares the CHANGELOG's first heading with the latest tag, so an "
+            "[Unreleased] heading cannot be added.",
+        ),
+    ),
 }
 
 #: Declared non-reproducible artifacts, keyed by repository-relative artifact path.
@@ -252,25 +291,6 @@ NON_REPRODUCIBLE: dict[str, NonReproducible] = {
         notes=(
             "A future improvement is to regenerate the Google Trends tables and "
             "mark the X/YouTube rows as source-reported rather than re-derived.",
-        ),
-    ),
-    "datasets/cannabinoid-multi-trends/data/processed/early-warning-index-v1.csv": NonReproducible(
-        reason=(
-            "Analysis artifact whose derivation is documented nowhere: no "
-            "script, no methodology section, no recorded parameters.  The "
-            "interpretive fields (cohort, persistence_class, emergence_score) "
-            "have no stated rule at all."
-        ),
-        missing_inputs=(
-            "Derivation rule and parameters (unrecorded); some 5-year Google "
-            "Trends inputs are present under "
-            "datasets/cannabinoid-multi-trends/data/raw/google_trends/"
-        ),
-        upstream_step="Google Trends + regulatory knowledge graph -> undocumented analysis",
-        notes=(
-            "Recovering this derivation is the next increment: it is the only "
-            "committed artifact with no rule whatsoever, and its regulated-status "
-            "columns duplicate the knowledge graph.",
         ),
     ),
 }
