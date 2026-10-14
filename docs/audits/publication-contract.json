@@ -14,16 +14,12 @@
   },
   "summary": {
     "artifact_count": 15,
-    "finding_count": 48,
+    "finding_count": 4,
     "by_rule": {
-      "PC-1": 39,
-      "PC-5": 9
+      "PC-5": 4
     },
     "by_kind": {
-      "gt_timeframe_missing": 8,
-      "release_doi_not_declared": 26,
-      "release_version_behind": 13,
-      "x_interval_missing": 1
+      "gt_timeframe_missing": 4
     }
   },
   "implemented_rules": [
@@ -43,296 +39,37 @@
       "rule": "PC-7",
       "requirement": "a committed review envelope per publication artifact",
       "reason": "needs the review records (metadata/publication/)"
+    },
+    {
+      "rule": "PC-8",
+      "requirement": "the guide's own structure requirements",
+      "reason": "the guide follows generate-compound-guide, not the research-page contract, so PC-5 does not apply to it"
     }
   ],
   "findings": [
     {
       "rule": "PC-5",
       "kind": "gt_timeframe_missing",
-      "path": "publication/guide_cbx_rewrite.html",
-      "detail": "Google Trends section has no table heading for: 5年, 12ヶ月"
-    },
-    {
-      "rule": "PC-5",
-      "kind": "x_interval_missing",
-      "path": "publication/guide_cbx_rewrite.html",
-      "detail": "X section has no 95% interval"
-    },
-    {
-      "rule": "PC-1",
-      "kind": "release_doi_not_declared",
-      "path": "publication/research_cbd.html",
-      "detail": "cites 10.5281/zenodo.23164972; declared DOIs are 10.5281/zenodo.23253840"
-    },
-    {
-      "rule": "PC-1",
-      "kind": "release_doi_not_declared",
-      "path": "publication/research_cbd.html",
-      "detail": "cites 10.5281/zenodo.23164973; declared DOIs are 10.5281/zenodo.23253840"
-    },
-    {
-      "rule": "PC-1",
-      "kind": "release_version_behind",
-      "path": "publication/research_cbd.html",
-      "detail": "presents Version 1.9.0; the repository publishes 1.12.0"
-    },
-    {
-      "rule": "PC-1",
-      "kind": "release_doi_not_declared",
-      "path": "publication/research_cbg.html",
-      "detail": "cites 10.5281/zenodo.23164972; declared DOIs are 10.5281/zenodo.23253840"
-    },
-    {
-      "rule": "PC-1",
-      "kind": "release_doi_not_declared",
-      "path": "publication/research_cbg.html",
-      "detail": "cites 10.5281/zenodo.23164973; declared DOIs are 10.5281/zenodo.23253840"
-    },
-    {
-      "rule": "PC-1",
-      "kind": "release_version_behind",
-      "path": "publication/research_cbg.html",
-      "detail": "presents Version 1.9.0; the repository publishes 1.12.0"
-    },
-    {
-      "rule": "PC-5",
-      "kind": "gt_timeframe_missing",
-      "path": "publication/research_cbg.html",
-      "detail": "Google Trends section has no table heading for: 5年, 12ヶ月"
-    },
-    {
-      "rule": "PC-1",
-      "kind": "release_doi_not_declared",
       "path": "publication/research_cbn.html",
-      "detail": "cites 10.5281/zenodo.23164972; declared DOIs are 10.5281/zenodo.23253840"
-    },
-    {
-      "rule": "PC-1",
-      "kind": "release_doi_not_declared",
-      "path": "publication/research_cbn.html",
-      "detail": "cites 10.5281/zenodo.23164973; declared DOIs are 10.5281/zenodo.23253840"
-    },
-    {
-      "rule": "PC-1",
-      "kind": "release_version_behind",
-      "path": "publication/research_cbn.html",
-      "detail": "presents Version 1.9.0; the repository publishes 1.12.0"
-    },
-    {
-      "rule": "PC-5",
-      "kind": "gt_timeframe_missing",
-      "path": "publication/research_cbn.html",
-      "detail": "Google Trends section has no table heading for: 5年, 12ヶ月"
-    },
-    {
-      "rule": "PC-1",
-      "kind": "release_doi_not_declared",
-      "path": "publication/research_crdh.html",
-      "detail": "cites 10.5281/zenodo.23164972; declared DOIs are 10.5281/zenodo.23253840"
-    },
-    {
-      "rule": "PC-1",
-      "kind": "release_doi_not_declared",
-      "path": "publication/research_crdh.html",
-      "detail": "cites 10.5281/zenodo.23164973; declared DOIs are 10.5281/zenodo.23253840"
-    },
-    {
-      "rule": "PC-1",
-      "kind": "release_version_behind",
-      "path": "publication/research_crdh.html",
-      "detail": "presents Version 1.9.0; the repository publishes 1.12.0"
-    },
-    {
-      "rule": "PC-1",
-      "kind": "release_doi_not_declared",
-      "path": "publication/research_crdp.html",
-      "detail": "cites 10.5281/zenodo.23164972; declared DOIs are 10.5281/zenodo.23253840"
-    },
-    {
-      "rule": "PC-1",
-      "kind": "release_doi_not_declared",
-      "path": "publication/research_crdp.html",
-      "detail": "cites 10.5281/zenodo.23164973; declared DOIs are 10.5281/zenodo.23253840"
-    },
-    {
-      "rule": "PC-1",
-      "kind": "release_version_behind",
-      "path": "publication/research_crdp.html",
-      "detail": "presents Version 1.9.0; the repository publishes 1.12.0"
+      "detail": "Google Trends section has no table heading for: 5年"
     },
     {
       "rule": "PC-5",
       "kind": "gt_timeframe_missing",
       "path": "publication/research_crdp.html",
-      "detail": "Google Trends section has no table heading for: 5年, 12ヶ月"
-    },
-    {
-      "rule": "PC-1",
-      "kind": "release_doi_not_declared",
-      "path": "publication/research_h4cbh.html",
-      "detail": "cites 10.5281/zenodo.23164972; declared DOIs are 10.5281/zenodo.23253840"
-    },
-    {
-      "rule": "PC-1",
-      "kind": "release_doi_not_declared",
-      "path": "publication/research_h4cbh.html",
-      "detail": "cites 10.5281/zenodo.23164973; declared DOIs are 10.5281/zenodo.23253840"
-    },
-    {
-      "rule": "PC-1",
-      "kind": "release_version_behind",
-      "path": "publication/research_h4cbh.html",
-      "detail": "presents Version 1.9.0; the repository publishes 1.12.0"
-    },
-    {
-      "rule": "PC-1",
-      "kind": "release_doi_not_declared",
-      "path": "publication/research_hhbd.html",
-      "detail": "cites 10.5281/zenodo.23164972; declared DOIs are 10.5281/zenodo.23253840"
-    },
-    {
-      "rule": "PC-1",
-      "kind": "release_doi_not_declared",
-      "path": "publication/research_hhbd.html",
-      "detail": "cites 10.5281/zenodo.23164973; declared DOIs are 10.5281/zenodo.23253840"
-    },
-    {
-      "rule": "PC-1",
-      "kind": "release_version_behind",
-      "path": "publication/research_hhbd.html",
-      "detail": "presents Version 1.9.0; the repository publishes 1.12.0"
-    },
-    {
-      "rule": "PC-1",
-      "kind": "release_doi_not_declared",
-      "path": "publication/research_hhc.html",
-      "detail": "cites 10.5281/zenodo.23164972; declared DOIs are 10.5281/zenodo.23253840"
-    },
-    {
-      "rule": "PC-1",
-      "kind": "release_doi_not_declared",
-      "path": "publication/research_hhc.html",
-      "detail": "cites 10.5281/zenodo.23164973; declared DOIs are 10.5281/zenodo.23253840"
-    },
-    {
-      "rule": "PC-1",
-      "kind": "release_version_behind",
-      "path": "publication/research_hhc.html",
-      "detail": "presents Version 1.9.0; the repository publishes 1.12.0"
-    },
-    {
-      "rule": "PC-5",
-      "kind": "gt_timeframe_missing",
-      "path": "publication/research_hhc.html",
-      "detail": "Google Trends section has no table heading for: 5年, 12ヶ月"
-    },
-    {
-      "rule": "PC-1",
-      "kind": "release_doi_not_declared",
-      "path": "publication/research_hhch.html",
-      "detail": "cites 10.5281/zenodo.23164972; declared DOIs are 10.5281/zenodo.23253840"
-    },
-    {
-      "rule": "PC-1",
-      "kind": "release_doi_not_declared",
-      "path": "publication/research_hhch.html",
-      "detail": "cites 10.5281/zenodo.23164973; declared DOIs are 10.5281/zenodo.23253840"
-    },
-    {
-      "rule": "PC-1",
-      "kind": "release_version_behind",
-      "path": "publication/research_hhch.html",
-      "detail": "presents Version 1.9.0; the repository publishes 1.12.0"
+      "detail": "Google Trends section has no table heading for: 5年"
     },
     {
       "rule": "PC-5",
       "kind": "gt_timeframe_missing",
       "path": "publication/research_hhch.html",
-      "detail": "Google Trends section has no table heading for: 5年, 12ヶ月"
-    },
-    {
-      "rule": "PC-1",
-      "kind": "release_doi_not_declared",
-      "path": "publication/research_thc-o.html",
-      "detail": "cites 10.5281/zenodo.23164972; declared DOIs are 10.5281/zenodo.23253840"
-    },
-    {
-      "rule": "PC-1",
-      "kind": "release_doi_not_declared",
-      "path": "publication/research_thc-o.html",
-      "detail": "cites 10.5281/zenodo.23164973; declared DOIs are 10.5281/zenodo.23253840"
-    },
-    {
-      "rule": "PC-1",
-      "kind": "release_version_behind",
-      "path": "publication/research_thc-o.html",
-      "detail": "presents Version 1.9.0; the repository publishes 1.12.0"
-    },
-    {
-      "rule": "PC-1",
-      "kind": "release_doi_not_declared",
-      "path": "publication/research_thc.html",
-      "detail": "cites 10.5281/zenodo.23164972; declared DOIs are 10.5281/zenodo.23253840"
-    },
-    {
-      "rule": "PC-1",
-      "kind": "release_doi_not_declared",
-      "path": "publication/research_thc.html",
-      "detail": "cites 10.5281/zenodo.23164973; declared DOIs are 10.5281/zenodo.23253840"
-    },
-    {
-      "rule": "PC-1",
-      "kind": "release_version_behind",
-      "path": "publication/research_thc.html",
-      "detail": "presents Version 1.9.0; the repository publishes 1.12.0"
-    },
-    {
-      "rule": "PC-5",
-      "kind": "gt_timeframe_missing",
-      "path": "publication/research_thc.html",
-      "detail": "Google Trends section has no table heading for: 5年, 12ヶ月"
-    },
-    {
-      "rule": "PC-1",
-      "kind": "release_doi_not_declared",
-      "path": "publication/research_thch.html",
-      "detail": "cites 10.5281/zenodo.23164972; declared DOIs are 10.5281/zenodo.23253840"
-    },
-    {
-      "rule": "PC-1",
-      "kind": "release_doi_not_declared",
-      "path": "publication/research_thch.html",
-      "detail": "cites 10.5281/zenodo.23164973; declared DOIs are 10.5281/zenodo.23253840"
-    },
-    {
-      "rule": "PC-1",
-      "kind": "release_version_behind",
-      "path": "publication/research_thch.html",
-      "detail": "presents Version 1.9.0; the repository publishes 1.12.0"
+      "detail": "Google Trends section has no table heading for: 5年"
     },
     {
       "rule": "PC-5",
       "kind": "gt_timeframe_missing",
       "path": "publication/research_thch.html",
-      "detail": "Google Trends section has no table heading for: 5年, 12ヶ月"
-    },
-    {
-      "rule": "PC-1",
-      "kind": "release_doi_not_declared",
-      "path": "publication/research_thcv.html",
-      "detail": "cites 10.5281/zenodo.23164972; declared DOIs are 10.5281/zenodo.23253840"
-    },
-    {
-      "rule": "PC-1",
-      "kind": "release_doi_not_declared",
-      "path": "publication/research_thcv.html",
-      "detail": "cites 10.5281/zenodo.23164973; declared DOIs are 10.5281/zenodo.23253840"
-    },
-    {
-      "rule": "PC-1",
-      "kind": "release_version_behind",
-      "path": "publication/research_thcv.html",
-      "detail": "presents Version 1.9.0; the repository publishes 1.12.0"
+      "detail": "Google Trends section has no table heading for: 5年"
     }
   ]
 }

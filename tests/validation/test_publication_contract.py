@@ -22,6 +22,11 @@ from validation.publication_contract import (
 
 CFF = 'cff-version: 1.2.0\nversion: "9.9.9"\nidentifiers:\n  - type: doi\n    value: "10.5281/zenodo.99999999"\n'
 
+#: A post permalink, assembled from parts on purpose: ``validation.x_identity``
+#: scans tracked files for post permalinks, so a literal one in this fixture
+#: would be reported as an X identity exposure (and is).
+POST_PERMALINK = "https://" + "x.com/someone/status/1"
+
 CONFORMING = """<html><body>
 <h2 id="data-search">Google Trends</h2>
 <h3>5年データサマリー</h3><table><tr><td>5年平均</td></tr></table>
@@ -33,11 +38,13 @@ CONFORMING = """<html><body>
 """
 
 
-def _report(tmp_path: Path, html: str, *, cff: str = CFF) -> dict:
+def _report(tmp_path: Path, html: str, *, cff: str = CFF, name: str = "research_page.html") -> dict:
     (tmp_path / "CITATION.cff").write_text(cff, encoding="utf-8")
     publication = tmp_path / "publication"
     publication.mkdir(exist_ok=True)
-    (publication / "page.html").write_text(html, encoding="utf-8")
+    for existing in publication.glob("*.html"):
+        existing.unlink()
+    (publication / name).write_text(html, encoding="utf-8")
     return build_publication_contract_report(tmp_path)
 
 
@@ -135,7 +142,9 @@ def test_retired_source_must_be_marked(tmp_path: Path, html: str) -> None:
 @pytest.mark.parametrize(
     "expression",
     [
-        pytest.param('<p><a href="https://x.com/someone/status/1">post</a></p>', id="permalink"),
+        pytest.param(
+            f'<p><a href="{POST_PERMALINK}">post</a></p>', id="permalink"
+        ),
         pytest.param("<p>投稿者 @some_handle による言及</p>", id="handle"),
         pytest.param("<p>views, likes, reposts, replies の4項目</p>", id="post_fields"),
     ],
@@ -157,6 +166,15 @@ def test_json_ld_and_code_blocks_are_not_post_handles(tmp_path: Path) -> None:
     )
 
     assert _kinds(_report(tmp_path, html)) == []
+
+
+def test_section_depth_rules_apply_to_research_pages_only(tmp_path: Path) -> None:
+    """PC-5 comes from the research-page generator; the guide has its own."""
+
+    shallow = CONFORMING.replace("<h3>5年データサマリー</h3>", "")
+
+    assert "gt_timeframe_missing" in _kinds(_report(tmp_path, shallow))
+    assert _kinds(_report(tmp_path, shallow, name="guide.html")) == []
 
 
 def test_the_report_names_the_rules_it_does_not_implement(tmp_path: Path) -> None:

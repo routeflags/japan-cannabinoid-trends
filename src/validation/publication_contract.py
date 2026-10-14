@@ -31,9 +31,13 @@ Implemented (mechanical only, no judgement)
   express per-post X data (permalink, handle, or a list of post-record
   fields).  See ``ISS-20261015-XID-034``.
 - PC-4 declared metadata: ``dateModified`` and ``最終更新`` must agree.
-- PC-5 section requirements: Google Trends needs both the 12-month and the
-  5-year table, X needs the confidence interval, each YouTube section needs
-  its depth (two or more tables).
+- PC-5 section requirements on the research pages (``research_*.html``):
+  Google Trends needs both the 12-month and the 5-year table, X needs the
+  confidence interval, each YouTube section needs its depth (two or more
+  tables).  The requirement comes from the research-page generator contract
+  (``.github/skills/generate-research-data-page/SKILL.md``); the guide follows
+  its own generator (``generate-compound-guide``) whose requirements are not
+  encoded as a check yet (PC-8 below).
 - PC-6 HTML validity: section ids must be unique.
 
 Deliberately not implemented (named, so the gap cannot be silent):
@@ -41,6 +45,8 @@ Deliberately not implemented (named, so the gap cannot be silent):
 - PC-2 (every published number traceable to a run id) - needs the content
   refresh; the pages currently name collection dates only.
 - PC-7 (a review envelope per artifact) - needs the review records.
+- PC-8 (the guide's own structure requirements) - the guide is not a research
+  page, so PC-5 does not apply to it.
 """
 
 from __future__ import annotations
@@ -84,6 +90,11 @@ _SCRIPT_STYLE_RE = re.compile(
 )
 _H3_RE = re.compile(r"<h3>(.*?)</h3>", re.S)
 
+#: Artifacts the research-page structure requirements (PC-5) apply to.
+#: The requirement comes from the research-page generator contract; the guide
+#: has its own generator and is therefore not covered by PC-5.
+RESEARCH_PAGE_GLOB = "research_*.html"
+
 #: Rules without an implementation, reported so the gap is visible.
 UNIMPLEMENTED = (
     {
@@ -95,6 +106,14 @@ UNIMPLEMENTED = (
         "rule": "PC-7",
         "requirement": "a committed review envelope per publication artifact",
         "reason": "needs the review records (metadata/publication/)",
+    },
+    {
+        "rule": "PC-8",
+        "requirement": "the guide's own structure requirements",
+        "reason": (
+            "the guide follows generate-compound-guide, not the research-page "
+            "contract, so PC-5 does not apply to it"
+        ),
     },
 )
 
@@ -231,7 +250,10 @@ def _artifact_findings(path: Path, repo_root: Path, release: dict) -> list[dict]
             )
             break
 
-    # PC-5 - section depth requirements (per section, not per id lookup).
+    # PC-5 - section depth requirements on the research pages (per section, not
+    # per id lookup).
+    if not path.match(RESEARCH_PAGE_GLOB):
+        return findings
     for section_id, content in _sections(html):
         if section_id == "data-search":
             # The required shape is a 5-year table *and* a 12-month table
