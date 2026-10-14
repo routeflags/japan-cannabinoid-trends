@@ -1,8 +1,16 @@
 # Collection Pipeline (G1 垂直スライス) — 運用契約
 
-**版:** 0.2.0（2026-10-15）
+**版:** 0.3.0（2026-10-15）
 **仕様:** `docs/plans/20261013a.md`（G1、リポジトリ履歴外）+ `20261013h.md` §12
 **状態:** 実装済み・**ライブ収集は未実施**（契約検証は録画リプレイ / 合成 fixture）
+
+**0.3.0 の変更:** staging 境界の独立検証（
+`docs/reports/20261015a-staging-acceptance-review.md`）で指摘された欠陥を修正。
+外部由来の `run_id` / `study_id` を単一のパス安全な構成要素として検証
+（`RUN_ID_UNSAFE` / `STUDY_ID_UNSAFE`）、`execution.status` / `returned_count` の
+宣言を必須化（`STAGING_EXECUTION_INCOMPLETE`）、アーティファクトの相対
+サブディレクトリを配置可能に、`environment` のパイプライン所有キーの上書き禁止
+（§3.3）。
 
 **0.2.0 の変更:** 外部 collector の staging 産出側（`collection.core.pipeline.stage_run`）
 を実装（§3.3）。収集済み payload を契約準拠の staged run にする経路が入り、
@@ -129,17 +137,33 @@ L2 が `not_comparable` になることはある。
   昇格できない）。
 - `stage_run` が検査する入力: plan 構造、`collector_id` の登録、
   window の完全性（`start` / `end_exclusive` / `granularity` / `timezone`）と
-  順序、plan の window と window registry の一致、時刻の順序、artifact の存在と
-  パス安全性（絶対パス・`..` を拒否）、study ディレクトリ、run_id 衝突。
+  順序、plan の window と window registry の一致、時刻の順序、`execution` の
+  `status` / `returned_count` の**宣言**（欠落は `STAGING_EXECUTION_INCOMPLETE`
+  — stager は観測していない結果を作らない）、artifact の存在とパス安全性
+  （絶対パス・`..`・ファイル名を持たないパスを拒否。宣言された相対サブディレクトリは
+  作成して配置）、`run_id` / `study_id` が**単一のパス安全な構成要素**であること
+  （`RUN_ID_UNSAFE` / `STUDY_ID_UNSAFE`。外部由来の値がディレクトリ名になるため）、
+  study ディレクトリ、run_id 衝突。
   **capability gate は通さない**: capability は「要求」への制約であり、
   収集済み run は要求を出さない。registry 参照（source / collector / query /
   study）は L1 が検査する。
+- `environment` のパイプライン所有キー（`adapter` / `collection_core_version` /
+  `adapter_contract_version` / `runtime_version` / `code_commit`）はパイプラインが
+  書く。宣言側は収集固有の詳細を足せるだけで、上書きできない（`collect` と同一規則。
+  `code_commit` はワークスペースが git checkout のときだけ記録する）。
 - **artifact の中身は検査しない**: 宣言された `record_count` は L1 の storage
   contract が登録 reader と突き合わせる（S8）。同じ規則を 2 実装しない。
 - payload は **byte 単位でコピー**し、manifest の SHA-256 / byte 長はディスク上の
   ファイルから計算する（`collect` と同じ規則）。
 - 未実装: ソース別の staging ドライバ（Apify dataset エクスポート等）と
   `stage` CLI サブコマンド。当面は `stage_run` を直接呼ぶ（§8）。
+- **受容した限界**（2026-10-15 の独立検証で確認、修正しないと決めたもの）:
+  staging は原子的でない — `mkdir` の後、manifest / run_metadata を書く前に中断すると
+  部分的な `.staging/<run-id>/` が残り、再実行は `RUN_ID_ALREADY_EXISTS` で止まる
+  （fail closed。掃除は人）。artifact_id の slug 衝突（`a b.json` と `a-b.json`）は
+  採用時に `ARTIFACT_ID_DUPLICATE` で隔離される（遅いが fail closed）。宣言された
+  `observed_min/max_timestamp` など payload の**意味**は検査しない（byte 一致と件数の
+  みを検証する — 上記記載どおり）。
 - `scripts/validation/run-gates.sh run <run_metadata.json>` は新しく L1 ゲート
   （`gate-run`）を呼ぶ: exit 0 = 採用可、非 0 = 隔離。
 
@@ -338,6 +362,11 @@ python -m validation.cli coverage-run --file <run_dir or run_metadata.json>
   stage → adopt → 厳格検証（artifact 検証込み）まで通過済み
   （`tests/collection/test_staging.py`）。ソース別ドライバ（Apify
   クラウド export 等）は未実装で、CSV 等の新形式は reader 登録が前提。
+- 2026-10-15 に staging 境界の**独立検証**を行った
+  （`docs/reports/20261015a-staging-acceptance-review.md`）。実記録 GT 応答での
+  stage → adopt → 厳格検証は独立スクリプトでも再現し、拒否 7 経路・改竄検出・
+  `audit-new-runs` の非空虚性も確認済み。指摘のうち `run_id` のパストラバーサルは
+  0.3.0 で修正し、残りは上記の受容限界として記録した。未検証はライブ収集経路のみ。
 - 既存 shell / skill（`research-google-trends` 等）への強制適用は未実施
   （移行は親の判断）。
 - G2（query registry / variants）は導入済み（2026-10-13 垂直スライス）。
