@@ -236,8 +236,29 @@ def _quarantine_root(workspace_root) -> Path:
     return Path(workspace_root) / ".quarantine"
 
 
-def _catalog_dir(datasets_root, study_id: str, run_id: str) -> Path:
-    return Path(datasets_root) / study_id / "data" / "raw" / run_id
+def _source_slug(source_id) -> str:
+    """Directory name for a source (``google-trends`` -> ``google_trends``).
+
+    The catalog keeps the repository's existing per-source raw layout
+    (``data/raw/google_trends/<run-id>/``), which is what the storage policy and
+    .gitignore expect: search raw is tracked (``raw-search-tracked``), other
+    sources' raw stays private.  Placing every pipeline run directly under
+    ``data/raw/<run-id>/`` silently ignored the public ones (measured
+    2026-10-15: the first live Google Trends runs landed in an ignored path).
+    """
+
+    return str(source_id or "unknown").strip().replace("-", "_").lower()
+
+
+def _catalog_dir(datasets_root, study_id: str, run_id: str, source_id=None) -> Path:
+    return (
+        Path(datasets_root)
+        / study_id
+        / "data"
+        / "raw"
+        / _source_slug(source_id)
+        / run_id
+    )
 
 
 def _existing_locations(staging, quarantine, catalog) -> list[Path]:
@@ -296,7 +317,9 @@ def _finalize(
     decision = evaluate_l1(document, registries=registries, base_dir=staged_dir)
     if decision.action == "catalog":
         study_id = document.get("study_id")
-        target = _catalog_dir(datasets_root, str(study_id), run_id)
+        target = _catalog_dir(
+            datasets_root, str(study_id), run_id, document.get("source_id")
+        )
         target.parent.mkdir(parents=True, exist_ok=True)
         shutil.move(str(staged_dir), str(target))
         return PipelineResult(
@@ -507,7 +530,12 @@ def run_collection(
     existing = _existing_locations(
         staged_dir,
         _quarantine_root(workspace_root) / effective_run_id,
-        _catalog_dir(datasets_root, str(plan.get("study_id")), effective_run_id),
+        _catalog_dir(
+            datasets_root,
+            str(plan.get("study_id")),
+            effective_run_id,
+            plan.get("source_id"),
+        ),
     )
     if existing:
         return PipelineResult(
@@ -559,8 +587,10 @@ def run_collection(
     payload_path = staged_dir / result.payload_filename
     _write_json(payload_path, result.raw)
 
+    # The id follows the same rule the staging driver uses
+    # (``staging_artifact_id``), so a derived artifact can reference it.
     artifact = StagedArtifact(
-        artifact_id=f"{effective_run_id}-payload",
+        artifact_id=staging_artifact_id(effective_run_id, result.payload_filename),
         path=result.payload_filename,
         artifact_type=result.artifact_type,
         format="json",
@@ -571,7 +601,32 @@ def run_collection(
             len(observations) if result.status in ("success", "partial") else None
         ),
     )
-    manifest = build_artifact_manifest(effective_run_id, staged_dir, [artifact])
+
+    # The payload is the verbatim response (preserved as produced).  An adapter
+    # that can also parse the response may declare the derived files that belong
+    # in the same run - the parsed series a consumer reads without re-parsing the
+    # source (optional hook: see collection/core/contracts.py).
+    artifacts = [artifact]
+    hook = getattr(adapter, "derived_artifacts", None)
+    if callable(hook):
+        for derived in hook(effective_plan, result, observations, started_at) or []:
+            derived_path = staged_dir / derived["path"]
+            _write_json(derived_path, derived["document"])
+            artifacts.append(
+                StagedArtifact(
+                    artifact_id=staging_artifact_id(effective_run_id, derived["path"]),
+                    path=derived["path"],
+                    artifact_type=derived["artifact_type"],
+                    format=derived.get("format", "json"),
+                    schema_id=derived["schema_id"],
+                    layer=derived.get("layer", "raw"),
+                    completeness=derived.get("completeness", "complete"),
+                    record_count=derived.get("record_count"),
+                    derived_from=[artifact.artifact_id],
+                )
+            )
+
+    manifest = build_artifact_manifest(effective_run_id, staged_dir, artifacts)
     _write_json(staged_dir / ARTIFACT_MANIFEST_NAME, manifest)
 
     run_environment = _run_environment(environment, adapter, workspace_root)
@@ -675,7 +730,12 @@ def adopt_staged(
         path
         for path in (
             _quarantine_root(workspace_root) / run_id,
-            _catalog_dir(datasets_root, str(document.get("study_id")), run_id),
+            _catalog_dir(
+                datasets_root,
+                str(document.get("study_id")),
+                run_id,
+                document.get("source_id"),
+            ),
         )
         if path.exists()
     ]
@@ -1000,7 +1060,12 @@ def stage_run(
     existing = _existing_locations(
         staged_dir,
         _quarantine_root(workspace_root) / effective_run_id,
-        _catalog_dir(datasets_root, str(plan.get("study_id")), effective_run_id),
+        _catalog_dir(
+            datasets_root,
+            str(plan.get("study_id")),
+            effective_run_id,
+            plan.get("source_id"),
+        ),
     )
     if existing:
         return PipelineResult(

@@ -138,7 +138,7 @@ def test_staging_writes_a_run_that_adoption_catalogs(tmp_path, registries):
     )
     assert adopted.action == "adopted", [i.code for i in adopted.issues]
     assert Path(adopted.final_dir) == (
-        root / "datasets" / STUDY_ID / "data" / "raw" / RUN_ID
+        root / "datasets" / STUDY_ID / "data" / "raw" / "google_trends" / RUN_ID
     )
 
 

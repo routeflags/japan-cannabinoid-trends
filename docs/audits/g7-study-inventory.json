@@ -11,16 +11,17 @@
       "research_questions_quoted": [
         "日本国内において、主要カンナビノイド化合物（CBD, THC, CBG, HHC, THCV, THC-O, THCH）の検索需要・SNS 言及・動画コンテンツはどう推移しているか？"
       ],
-      "run_count": 25,
-      "catalog_entry_count": 22,
+      "run_count": 32,
+      "catalog_entry_count": 36,
       "layout": [
         "README.md",
         "data",
+        "metadata",
         "methodology.md"
       ],
-      "data_file_count": 85,
+      "data_file_count": 113,
       "has_data_raw": true,
-      "data_raw_file_count": 84,
+      "data_raw_file_count": 112,
       "sources": [
         "google-trends",
         "google-trends-mcp"
@@ -76,8 +77,10 @@
       "measurement_ids": [
         "search_interest_index"
       ],
-      "window_ids": [],
-      "has_artifact_manifest": false,
+      "window_ids": [
+        "2021-10-10_2026-10-12"
+      ],
+      "has_artifact_manifest": true,
       "coverage": "unevidenced",
       "publication_status": "private_by_default"
     },
@@ -403,9 +406,9 @@
       ]
     }
   ],
-  "raw_file_count": 101,
+  "raw_file_count": 129,
   "raw_modified": false,
-  "raw_combined_sha256": "6fe6fba8d045784fe1ac33d25381754f41fa63b44a14118985cd29f8e131080f",
+  "raw_combined_sha256": "39dae316a35bfa2cbe08e2ebacff7591d7b44e18190a6bee514a743a25dcab11",
   "note": "non-destructive: study boundaries intact, raw and old metadata only read"
 }
 

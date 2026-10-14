@@ -23,8 +23,15 @@ def _catalog() -> dict:
 
 
 def test_catalog_builds_from_existing_runs_only():
+    """One entry per legacy run, one per declared artifact of a run that has a
+    manifest: the catalog indexes artifacts, not only run directories."""
+
     catalog = _catalog()
-    assert catalog["entry_count"] == len(list(DATASETS.rglob("run_metadata.json")))
+    runs = list(DATASETS.rglob("run_metadata.json"))
+    manifests = [json.loads(path.read_text(encoding="utf-8")) for path in DATASETS.rglob("artifact-manifest.json")]
+    artifact_count = sum(len(manifest.get("artifacts", [])) for manifest in manifests)
+
+    assert catalog["entry_count"] == (len(runs) - len(manifests)) + artifact_count
     assert catalog["errors"] == []
 
 

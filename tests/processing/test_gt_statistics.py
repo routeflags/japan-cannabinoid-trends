@@ -20,7 +20,9 @@ from processing.gt_statistics import (
     build_gt_summary,
     classify_shape,
     find_run,
+    load_record,
     page_filename,
+    record_keyword,
     render_block,
     render_not_collected,
     replace_block,
@@ -165,9 +167,10 @@ def test_find_run_ignores_the_product_line_series() -> None:
     path = find_run(DATASETS, "CBN", TIMEFRAMES["5y"])
 
     assert path is not None
-    assert "cbn-5y" in path.parent.name
-    assert "リキッド" not in path.name
-    assert find_run(DATASETS, "THCH", TIMEFRAMES["5y"]) is None
+    record = load_record(path)
+    assert record_keyword(record) == "CBN"
+    assert record["timeframe"] == "today 5-y"
+    assert "リキッド" not in record_keyword(record)
 
 
 def test_replace_block_keeps_the_next_section() -> None:
@@ -188,25 +191,24 @@ def report() -> dict:
     return build_gt_summary(DATASETS, PUBLICATION_COMPOUNDS, TIMEFRAMES["5y"])
 
 
-def test_report_recomputes_twelve_compounds(report: dict) -> None:
+def test_report_recomputes_every_compound(report: dict) -> None:
+    """13 of 13: the 2026-10-15 live re-collection closed the last gap."""
+
     by_compound = {entry["compound"]: entry for entry in report["compounds"]}
 
-    assert report["summary"]["by_status"] == {"computed": 12, "not_collected": 1}
-    assert by_compound["THCH"]["status"] == "not_collected"
+    assert report["summary"]["by_status"] == {"computed": 13}
     assert by_compound["CBD"]["stats"]["mean"] == 32.5
+    # The re-collected compounds carry a weekly series, so their mean is
+    # computed rather than passed through.
+    for compound in ("CBN", "THC-O", "H4CBH", "HHBD", "HHCH", "CRDP", "THCH"):
+        assert by_compound[compound]["shape"] == "series", compound
+        assert by_compound[compound]["stats"]["mean"] is not None, compound
 
 
-def test_report_names_the_compounds_whose_mean_cannot_be_recomputed(report: dict) -> None:
-    """This list is the reason a 5-year re-collection is needed at all."""
+def test_means_are_no_longer_unavailable(report: dict) -> None:
+    """This list was the reason the 5-year re-collection was requested."""
 
-    assert report["summary"]["unavailable_mean"] == [
-        "CBN",
-        "THC-O",
-        "H4CBH",
-        "HHBD",
-        "HHCH",
-        "CRDP",
-    ]
+    assert report["summary"]["unavailable_mean"] == []
 
 
 def test_every_page_carries_the_generated_block(report: dict) -> None:

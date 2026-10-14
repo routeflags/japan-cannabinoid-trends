@@ -23,7 +23,15 @@ Every adapter implements:
   into observation records (``{}``-based dicts; the extraction stays in the
   adapter because only the adapter knows the source schema);
 - ``describe_execution()``: non-secret execution fingerprint recorded in the
-  run environment (tool / version / transport / collection mode).
+  run environment (tool / version / transport / collection mode);
+- ``derived_artifacts(plan, result, observations, collected_at)`` (**optional**):
+  the files derived from the payload that belong in the same run.  The pipeline
+  writes each ``{"path", "artifact_type", "format", "schema_id", "document",
+  "record_count"}`` entry beside the verbatim payload and marks it
+  ``derived_from`` that payload, so a consumer does not re-parse the source and
+  L1 validates both against their own registered schema.  Returning ``[]`` (or
+  not implementing the hook) means payload-only, which is the previous
+  behaviour.
 
 Not the adapter's job (G1 §8.2): comparability verdicts, research
 interpretation, raw rewriting, publication permission.

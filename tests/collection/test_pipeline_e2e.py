@@ -83,6 +83,15 @@ def _staged_copy(
         artifact["artifact_id"] = artifact["artifact_id"].replace(
             catalog_dir.name, new_run_id
         )
+        # Lineage references embed the run id too: rewrite them with the ids
+        # (an unrewritten reference is exactly what L1 rejects).
+        if isinstance(artifact.get("derived_from"), list):
+            artifact["derived_from"] = [
+                reference.replace(catalog_dir.name, new_run_id)
+                if isinstance(reference, str)
+                else reference
+                for reference in artifact["derived_from"]
+            ]
     if mutate_manifest is not None:
         mutate_manifest(manifest)
     manifest_path.write_text(
@@ -107,10 +116,11 @@ def test_collect_adopts_a_valid_run(tmp_path, registries):
     assert result.action == "adopted", [i.code for i in result.issues]
     assert result.l1 is not None and result.l1.valid is True
     final = Path(result.final_dir)
-    assert final == root / "datasets" / "cbx-search-trends" / "data" / "raw" / RUN_ID_12M
+    assert final == root / "datasets" / "cbx-search-trends" / "data" / "raw" / "google_trends" / RUN_ID_12M
     assert sorted(p.name for p in final.iterdir()) == [
         "artifact-manifest.json",
         "payload.json",
+        "records_cbx-リキッド.json",
         "run_metadata.json",
     ]
     # staging was moved, not copied
@@ -302,7 +312,7 @@ def test_failed_collection_is_quarantined_not_recorded_as_zero(tmp_path, registr
     assert result.action == "quarantined"
     quarantine_dir = Path(result.final_dir)
     assert quarantine_dir == root / ".quarantine" / RUN_ID_12M
-    assert not (root / "datasets" / "cbx-search-trends" / "data" / "raw" / RUN_ID_12M).exists()
+    assert not (root / "datasets" / "cbx-search-trends" / "data" / "raw" / "google_trends" / RUN_ID_12M).exists()
 
     document = load_json(quarantine_dir / "run_metadata.json")
     assert document["execution"]["status"] == "failed"
@@ -340,7 +350,7 @@ def test_adopt_valid_staged_run_is_cataloged(tmp_path, registries):
     )
     result = _adopt(registries, root, staged)
     assert result.action == "adopted", [i.code for i in (result.l1.issues if result.l1 else [])]
-    assert (root / "datasets" / "cbx-search-trends" / "data" / "raw" / RUN_ID_5Y).is_dir()
+    assert (root / "datasets" / "cbx-search-trends" / "data" / "raw" / "google_trends" / RUN_ID_5Y).is_dir()
 
 
 def test_tampered_payload_is_quarantined(tmp_path, registries):
@@ -360,7 +370,7 @@ def test_tampered_payload_is_quarantined(tmp_path, registries):
     reason = load_json(quarantine_dir / "quarantine-reason.json")
     assert "ARTIFACT_HASH_MISMATCH" in [issue["code"] for issue in reason["issues"]]
     # not adopted as research data
-    assert not (root / "datasets" / "cbx-search-trends" / "data" / "raw" / RUN_ID_5Y).exists()
+    assert not (root / "datasets" / "cbx-search-trends" / "data" / "raw" / "google_trends" / RUN_ID_5Y).exists()
 
 
 def test_metadata_missing_field_is_quarantined(tmp_path, registries):
@@ -410,7 +420,7 @@ def test_secret_in_metadata_is_quarantined_and_restricted(tmp_path, registries):
     reason = load_json(quarantine_dir / "quarantine-reason.json")
     assert reason["contains_secrets"] is True
     assert stat.S_IMODE(quarantine_dir.stat().st_mode) == 0o700
-    assert not (root / "datasets" / "cbx-search-trends" / "data" / "raw" / RUN_ID_5Y).exists()
+    assert not (root / "datasets" / "cbx-search-trends" / "data" / "raw" / "google_trends" / RUN_ID_5Y).exists()
 
 
 # ---------------------------------------------------------------------------

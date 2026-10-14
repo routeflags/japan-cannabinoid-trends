@@ -77,7 +77,7 @@ def test_collect_adopts_via_cli(capsys, tmp_path):
     assert code == EXIT_OK
     assert report["action"] == "adopted"
     assert report["l1"]["valid"] is True
-    final = root / "datasets" / "cbx-search-trends" / "data" / "raw" / RUN_ID
+    final = root / "datasets" / "cbx-search-trends" / "data" / "raw" / "google_trends" / RUN_ID
     assert (final / "run_metadata.json").is_file()
 
 
@@ -108,7 +108,7 @@ def test_collect_without_a_session_fails_closed(capsys, tmp_path):
     document = load_json(quarantine / "run_metadata.json")
     assert document["execution"]["status"] == "failed"
     assert document["execution"]["errors"]
-    assert not (root / "datasets" / "cbx-search-trends" / "data" / "raw" / RUN_ID).exists()
+    assert not (root / "datasets" / "cbx-search-trends" / "data" / "raw" / "google_trends" / RUN_ID).exists()
 
 
 def test_collect_unknown_source_exit_2(capsys, tmp_path):
@@ -250,7 +250,7 @@ def test_stage_command_stages_then_adopt_catalogs(capsys, tmp_path):
     adopted = json.loads(captured.out)
     assert code == EXIT_OK
     assert adopted["action"] == "adopted"
-    final = root / "datasets" / STAGE_STUDY_ID / "data" / "raw" / STAGE_RUN_ID
+    final = root / "datasets" / STAGE_STUDY_ID / "data" / "raw" / "youtube" / STAGE_RUN_ID
     assert (final / "run_metadata.json").is_file()
 
 

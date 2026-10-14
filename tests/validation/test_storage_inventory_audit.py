@@ -33,23 +33,45 @@ def test_committed_inventory_is_reproducible():
 
 def test_inventory_covers_the_legacy_runs_and_is_non_destructive():
     inventory = _committed()
-    assert inventory["run_count"] == 29
+    # Derived: one entry per run on disk (the legacy 29 plus every run the
+    # pipeline has collected since), so the count cannot rot.
+    assert inventory["run_count"] == len(
+        list((REPO_ROOT / "datasets").rglob("run_metadata.json"))
+    )
     assert inventory["raw_modified"] is False
     assert inventory["count"] > 0
 
 
-def test_legacy_artifacts_are_recorded_without_manifests():
+def test_artifacts_without_manifests_are_unverifiable_not_invented():
+    """A run with no artifact manifest is recorded, never hashed.
+
+    Runs collected through the pipeline do carry one, so the rule is asserted
+    where it applies and the split is asserted rather than assumed.
+    """
+
     inventory = _committed()
-    assert inventory["manifest_summary"] == {"missing": inventory["count"]}
-    for run in inventory["runs"]:
+    unverifiable = [run for run in inventory["runs"] if run["manifest_state"] != "present"]
+    files = inventory["files"]
+    missing = [entry for entry in files if entry["manifest_state"] != "present"]
+    present = [entry for entry in files if entry["manifest_state"] == "present"]
+
+    assert present, "no run carries a manifest: the split is not exercised"
+    assert inventory["manifest_summary"] == {
+        "missing": len(missing),
+        "present": len(present),
+    }
+    for run in unverifiable:
         assert run["manifest_state"] == "missing"
         assert run["verification"] == "unverifiable_no_manifest"
         assert run["lineage_note"].startswith("unknown")
-    # every legacy artifact is explicitly unverifiable (no fabricated hashes)
+    for entry in missing:
+        assert entry["verification"] == "unverifiable_no_manifest"
+    # every artifact without a manifest is explicitly unverifiable (no hashes
+    # are invented for it), and the manifest-carrying ones are not.
     assert all(
-        entry["verification"] == "unverifiable_no_manifest"
-        for entry in inventory["files"]
+        entry["verification"] == "unverifiable_no_manifest" for entry in missing
     )
+    assert all(entry["verification"] != "unverifiable_no_manifest" for entry in present)
 
 
 def test_summary_and_timeseries_are_not_conflated():

@@ -430,7 +430,9 @@ def test_audit_snapshot_matches_the_real_inventory():
     )
     assert recomputed == stored
     assert stored["raw_modified"] is False
-    assert stored["count"] == 29
+    assert stored["count"] == len(
+        list((REPO_ROOT / "datasets").rglob("run_metadata.json"))
+    )
 
 
 def test_audit_snapshot_records_the_legacy_examples():

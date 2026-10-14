@@ -26,13 +26,14 @@ import re
 from pathlib import Path
 
 from collection.core.contracts import CollectionResult, TransportError
-from validation.windows import RELATIVE_TIMEFRAME_MODELS
+from validation.windows import RELATIVE_TIMEFRAME_MODELS, format_datetime
 
 __all__ = [
     "GoogleTrendsMcpAdapter",
     "RecordedResponseTransport",
     "SessionMcpTransport",
     "build_adapter",
+    "term_slug",
 ]
 
 TOOL_INTEREST_OVER_TIME = "interest_over_time"
@@ -122,7 +123,11 @@ class GoogleTrendsMcpAdapter:
     source_id = "google-trends"
     collector_id = "google-trends-mcp"
     version = "0.1.1"
-    payload_schema_id = "google-trends-interest-over-time-v1"
+    #: The payload is the verbatim MCP tool result (preserved as produced); the
+    #: parsed weekly series is written beside it by :meth:`derived_artifacts`.
+    payload_schema_id = "google-trends-mcp-tool-result-v1"
+    #: Schema of the parsed series (the shape every recorded run uses).
+    series_schema_id = "google-trends-interest-over-time-v1"
 
     def __init__(self, transport, capabilities=None):
         self._transport = transport
@@ -225,20 +230,39 @@ class GoogleTrendsMcpAdapter:
         )
 
     def extract_observations(self, raw) -> list:
+        """Parse the source response into ``{date, value}`` observations.
+
+        Two shapes reach this method:
+
+        - the **verbatim MCP tool result** (``content`` text table) - what a
+          live session returns and what the raw artifact keeps;
+        - the **recorded series document** (``data``) - the replay fixture and
+          the derived artifact.
+
+        The text table is parsed by the instrument's verified parser
+        (``boundary.parse_tool_result``, spec §4.4); the import is local because
+        that module imports this one.
+        """
+
         if not isinstance(raw, dict):
             return []
         data = raw.get("data")
-        if not isinstance(data, list):
-            return []
-        observations = []
-        for point in data:
-            if (
-                isinstance(point, dict)
-                and isinstance(point.get("date"), str)
-                and isinstance(point.get("value"), int)
-            ):
-                observations.append({"date": point["date"], "value": point["value"]})
-        return observations
+        if isinstance(data, list):
+            observations = []
+            for point in data:
+                if (
+                    isinstance(point, dict)
+                    and isinstance(point.get("date"), str)
+                    and isinstance(point.get("value"), int)
+                ):
+                    observations.append({"date": point["date"], "value": point["value"]})
+            return observations
+        if "content" in raw:
+            from collection.adapters.google_trends.boundary import parse_tool_result
+
+            parsed = parse_tool_result(raw)
+            return [{"date": point.date, "value": point.value} for point in parsed.points]
+        return []
 
     def describe_execution(self) -> dict:
         description = {
@@ -248,6 +272,66 @@ class GoogleTrendsMcpAdapter:
         }
         description.update(self._transport.describe())
         return description
+
+    # -- optional pipeline hook (see collection/core/contracts.py) -----------
+
+    def derived_artifacts(self, plan: dict, result, observations, collected_at) -> list:
+        """The parsed weekly series, written beside the verbatim payload.
+
+        The raw artifact stays the server's response; this file is the same
+        run's readable series (``records_<term>.json``), so a consumer (the
+        publication summary, a reader, a reviewer) does not have to re-parse
+        the tool result.  Nothing is invented: it holds exactly the
+        observations this adapter already extracted.
+        """
+
+        points = [point for point in (observations or []) if isinstance(point, dict)]
+        if not points:
+            return []
+        query = plan.get("query") if isinstance(plan.get("query"), dict) else {}
+        document = {
+            "keyword": query.get("text"),
+            "geo": query.get("geo", ""),
+            "timeframe": query.get("timeframe"),
+            "collected_at": _iso_moment(collected_at),
+            "data": [
+                {"date": point.get("date"), "value": point.get("value")}
+                for point in points
+            ],
+        }
+        return [
+            {
+                "path": f"records_{term_slug(str(query.get('text', 'term'))) }.json",
+                "artifact_type": "timeseries",
+                "format": "json",
+                "schema_id": self.series_schema_id,
+                "document": document,
+                "record_count": len(points),
+            }
+        ]
+
+
+def _iso_moment(value):
+    """ISO 8601 UTC string for a datetime (or the value unchanged if a string)."""
+
+    if hasattr(value, "isoformat"):
+        return format_datetime(value)
+    return value
+
+
+def term_slug(term: str) -> str:
+    """Filename-safe form of a query term (``H4CBH`` -> ``h4cbh``).
+
+    One implementation: the collection pipeline and the boundary instrument both
+    name the parsed series file with it.
+    """
+
+    slug = "".join(
+        character if character.isalnum() else "-" for character in str(term).lower()
+    ).strip("-")
+    while "--" in slug:
+        slug = slug.replace("--", "-")
+    return slug or "term"
 
 
 def _observed_range_label(observations) -> str:
@@ -269,17 +353,18 @@ def _observed_bounds(observations) -> tuple:
     return f"{labels[0]}T00:00:00Z", f"{labels[-1]}T00:00:00Z"
 
 
-def build_adapter(fixture=None, capabilities=None) -> GoogleTrendsMcpAdapter:
+def build_adapter(fixture=None, capabilities=None, live=None) -> GoogleTrendsMcpAdapter:
     """Build the adapter for the collection CLI.
 
-    Without a fixture no live session is available in this repository, so the
-    adapter is built on :class:`SessionMcpTransport` with no callable: any
-    ``collect`` attempt fails closed and is recorded as a failed run (never
-    fabricated data).  Tests and the demo pass ``fixture=`` to use the
-    recorded replay transport.
+    ``live`` is an MCP session callable (``mcp_session.McpStdioSession.call``),
+    supplied by ``collection.adapters.get_live_session`` when the caller asks
+    for live collection (``collect --live``).  Without a fixture and without
+    ``live`` the transport refuses every call, and the pipeline records a failed
+    run rather than fabricated data.  Tests and the demo pass ``fixture=`` to
+    use the recorded replay transport.
     """
     if fixture is not None:
         transport = RecordedResponseTransport(fixture)
     else:
-        transport = SessionMcpTransport()
+        transport = SessionMcpTransport(live)
     return GoogleTrendsMcpAdapter(transport, capabilities=capabilities)

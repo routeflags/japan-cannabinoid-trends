@@ -3,15 +3,16 @@
   "profile": "provenance_assessment",
   "schema_id": "collection-run-v1",
   "target_glob": "datasets/**/run_metadata.json",
-  "count": 29,
+  "count": 36,
   "raw_modified": false,
   "summary": {
     "readiness": {
-      "not_ready": 29
+      "not_ready": 29,
+      "ready": 7
     },
-    "mean_completeness": 0.1019,
-    "strict_valid": 0,
-    "integrity_verified": 0
+    "mean_completeness": 0.2765,
+    "strict_valid": 7,
+    "integrity_verified": 7
   },
   "runs": [
     {
@@ -2350,6 +2351,461 @@
       "lineage": {
         "run_id": "20261012T064246Z-google-trends-ja-rikiddo-5y-main5",
         "artifact_ids": [],
+        "transformations": []
+      },
+      "evidence_refs": []
+    },
+    {
+      "run_id": "20261014T204841Z-google-trends-cannabinoid-multi-trends",
+      "path": "datasets/cannabinoid-multi-trends/data/raw/google_trends/20261014T204841Z-google-trends-cannabinoid-multi-trends/run_metadata.json",
+      "sha256": "6180b0954a7a19ec2737528fe422d1fb0c8c225f643e61f5dfd7b20c31823e64",
+      "sha256_after": "6180b0954a7a19ec2737528fe422d1fb0c8c225f643e61f5dfd7b20c31823e64",
+      "unchanged": true,
+      "strict_valid": true,
+      "strict_error_codes": [],
+      "completeness": {
+        "total": 22,
+        "verified": 22,
+        "score": 1.0,
+        "missing": [],
+        "essential_missing": []
+      },
+      "confidence": {
+        "fields": {
+          "schema_version": "observed",
+          "run_id": "observed",
+          "study_id": "observed",
+          "source_id": "observed",
+          "purpose": "observed",
+          "collector": "observed",
+          "collector.collector_id": "observed",
+          "collector.adapter_id": "observed",
+          "collection_started_at": "observed",
+          "query_provenance": "observed",
+          "query_provenance.query_id": "observed",
+          "query_provenance.submitted_query": "observed",
+          "temporal_provenance": "observed",
+          "temporal_provenance.window_id": "observed",
+          "temporal_provenance.requested_start": "observed",
+          "temporal_provenance.requested_end_exclusive": "observed",
+          "temporal_provenance.granularity": "observed",
+          "temporal_provenance.timezone": "observed",
+          "execution": "observed",
+          "execution.status": "observed",
+          "execution.returned_count": "observed",
+          "execution.errors": "observed"
+        },
+        "observed_count": 22,
+        "unknown_count": 0
+      },
+      "integrity": {
+        "manifest_reference": "artifact-manifest.json",
+        "manifest_present": true,
+        "manifest_valid": true,
+        "verified": true,
+        "artifact_issues": [],
+        "note": ""
+      },
+      "readiness": "ready",
+      "readiness_reasons": [
+        "strict valid, references resolve, artifacts verified"
+      ],
+      "lineage": {
+        "run_id": "20261014T204841Z-google-trends-cannabinoid-multi-trends",
+        "artifact_ids": [
+          "20261014T204841Z-google-trends-cannabinoid-multi-trends-payload",
+          "20261014T204841Z-google-trends-cannabinoid-multi-trends-records-cbn-json"
+        ],
+        "transformations": []
+      },
+      "evidence_refs": []
+    },
+    {
+      "run_id": "20261014T204852Z-google-trends-cannabinoid-multi-trends",
+      "path": "datasets/cannabinoid-multi-trends/data/raw/google_trends/20261014T204852Z-google-trends-cannabinoid-multi-trends/run_metadata.json",
+      "sha256": "5667fd8e45cb0ca9e0687c2394b8309fdc6ccfb4384fb7570a66c05a2d17ba0b",
+      "sha256_after": "5667fd8e45cb0ca9e0687c2394b8309fdc6ccfb4384fb7570a66c05a2d17ba0b",
+      "unchanged": true,
+      "strict_valid": true,
+      "strict_error_codes": [],
+      "completeness": {
+        "total": 22,
+        "verified": 22,
+        "score": 1.0,
+        "missing": [],
+        "essential_missing": []
+      },
+      "confidence": {
+        "fields": {
+          "schema_version": "observed",
+          "run_id": "observed",
+          "study_id": "observed",
+          "source_id": "observed",
+          "purpose": "observed",
+          "collector": "observed",
+          "collector.collector_id": "observed",
+          "collector.adapter_id": "observed",
+          "collection_started_at": "observed",
+          "query_provenance": "observed",
+          "query_provenance.query_id": "observed",
+          "query_provenance.submitted_query": "observed",
+          "temporal_provenance": "observed",
+          "temporal_provenance.window_id": "observed",
+          "temporal_provenance.requested_start": "observed",
+          "temporal_provenance.requested_end_exclusive": "observed",
+          "temporal_provenance.granularity": "observed",
+          "temporal_provenance.timezone": "observed",
+          "execution": "observed",
+          "execution.status": "observed",
+          "execution.returned_count": "observed",
+          "execution.errors": "observed"
+        },
+        "observed_count": 22,
+        "unknown_count": 0
+      },
+      "integrity": {
+        "manifest_reference": "artifact-manifest.json",
+        "manifest_present": true,
+        "manifest_valid": true,
+        "verified": true,
+        "artifact_issues": [],
+        "note": ""
+      },
+      "readiness": "ready",
+      "readiness_reasons": [
+        "strict valid, references resolve, artifacts verified"
+      ],
+      "lineage": {
+        "run_id": "20261014T204852Z-google-trends-cannabinoid-multi-trends",
+        "artifact_ids": [
+          "20261014T204852Z-google-trends-cannabinoid-multi-trends-payload",
+          "20261014T204852Z-google-trends-cannabinoid-multi-trends-records-crdp-json"
+        ],
+        "transformations": []
+      },
+      "evidence_refs": []
+    },
+    {
+      "run_id": "20261014T204855Z-google-trends-cannabinoid-multi-trends",
+      "path": "datasets/cannabinoid-multi-trends/data/raw/google_trends/20261014T204855Z-google-trends-cannabinoid-multi-trends/run_metadata.json",
+      "sha256": "7803e0afa9e5a82acb7879eb304ed97d93bf16b1fb633ae6b7d42bb569838eda",
+      "sha256_after": "7803e0afa9e5a82acb7879eb304ed97d93bf16b1fb633ae6b7d42bb569838eda",
+      "unchanged": true,
+      "strict_valid": true,
+      "strict_error_codes": [],
+      "completeness": {
+        "total": 22,
+        "verified": 22,
+        "score": 1.0,
+        "missing": [],
+        "essential_missing": []
+      },
+      "confidence": {
+        "fields": {
+          "schema_version": "observed",
+          "run_id": "observed",
+          "study_id": "observed",
+          "source_id": "observed",
+          "purpose": "observed",
+          "collector": "observed",
+          "collector.collector_id": "observed",
+          "collector.adapter_id": "observed",
+          "collection_started_at": "observed",
+          "query_provenance": "observed",
+          "query_provenance.query_id": "observed",
+          "query_provenance.submitted_query": "observed",
+          "temporal_provenance": "observed",
+          "temporal_provenance.window_id": "observed",
+          "temporal_provenance.requested_start": "observed",
+          "temporal_provenance.requested_end_exclusive": "observed",
+          "temporal_provenance.granularity": "observed",
+          "temporal_provenance.timezone": "observed",
+          "execution": "observed",
+          "execution.status": "observed",
+          "execution.returned_count": "observed",
+          "execution.errors": "observed"
+        },
+        "observed_count": 22,
+        "unknown_count": 0
+      },
+      "integrity": {
+        "manifest_reference": "artifact-manifest.json",
+        "manifest_present": true,
+        "manifest_valid": true,
+        "verified": true,
+        "artifact_issues": [],
+        "note": ""
+      },
+      "readiness": "ready",
+      "readiness_reasons": [
+        "strict valid, references resolve, artifacts verified"
+      ],
+      "lineage": {
+        "run_id": "20261014T204855Z-google-trends-cannabinoid-multi-trends",
+        "artifact_ids": [
+          "20261014T204855Z-google-trends-cannabinoid-multi-trends-payload",
+          "20261014T204855Z-google-trends-cannabinoid-multi-trends-records-h4cbh-json"
+        ],
+        "transformations": []
+      },
+      "evidence_refs": []
+    },
+    {
+      "run_id": "20261014T204857Z-google-trends-cannabinoid-multi-trends",
+      "path": "datasets/cannabinoid-multi-trends/data/raw/google_trends/20261014T204857Z-google-trends-cannabinoid-multi-trends/run_metadata.json",
+      "sha256": "0c8f5247b49e2fbe0b9c03e239d6b01eb15056d3af494ac232cbd3465e68497e",
+      "sha256_after": "0c8f5247b49e2fbe0b9c03e239d6b01eb15056d3af494ac232cbd3465e68497e",
+      "unchanged": true,
+      "strict_valid": true,
+      "strict_error_codes": [],
+      "completeness": {
+        "total": 22,
+        "verified": 22,
+        "score": 1.0,
+        "missing": [],
+        "essential_missing": []
+      },
+      "confidence": {
+        "fields": {
+          "schema_version": "observed",
+          "run_id": "observed",
+          "study_id": "observed",
+          "source_id": "observed",
+          "purpose": "observed",
+          "collector": "observed",
+          "collector.collector_id": "observed",
+          "collector.adapter_id": "observed",
+          "collection_started_at": "observed",
+          "query_provenance": "observed",
+          "query_provenance.query_id": "observed",
+          "query_provenance.submitted_query": "observed",
+          "temporal_provenance": "observed",
+          "temporal_provenance.window_id": "observed",
+          "temporal_provenance.requested_start": "observed",
+          "temporal_provenance.requested_end_exclusive": "observed",
+          "temporal_provenance.granularity": "observed",
+          "temporal_provenance.timezone": "observed",
+          "execution": "observed",
+          "execution.status": "observed",
+          "execution.returned_count": "observed",
+          "execution.errors": "observed"
+        },
+        "observed_count": 22,
+        "unknown_count": 0
+      },
+      "integrity": {
+        "manifest_reference": "artifact-manifest.json",
+        "manifest_present": true,
+        "manifest_valid": true,
+        "verified": true,
+        "artifact_issues": [],
+        "note": ""
+      },
+      "readiness": "ready",
+      "readiness_reasons": [
+        "strict valid, references resolve, artifacts verified"
+      ],
+      "lineage": {
+        "run_id": "20261014T204857Z-google-trends-cannabinoid-multi-trends",
+        "artifact_ids": [
+          "20261014T204857Z-google-trends-cannabinoid-multi-trends-payload",
+          "20261014T204857Z-google-trends-cannabinoid-multi-trends-records-hhbd-json"
+        ],
+        "transformations": []
+      },
+      "evidence_refs": []
+    },
+    {
+      "run_id": "20261014T204859Z-google-trends-cannabinoid-multi-trends",
+      "path": "datasets/cannabinoid-multi-trends/data/raw/google_trends/20261014T204859Z-google-trends-cannabinoid-multi-trends/run_metadata.json",
+      "sha256": "cbc46a60cd27d6df12645019089f5b394fffd9b344e288bfa76daaf24bd24a53",
+      "sha256_after": "cbc46a60cd27d6df12645019089f5b394fffd9b344e288bfa76daaf24bd24a53",
+      "unchanged": true,
+      "strict_valid": true,
+      "strict_error_codes": [],
+      "completeness": {
+        "total": 22,
+        "verified": 22,
+        "score": 1.0,
+        "missing": [],
+        "essential_missing": []
+      },
+      "confidence": {
+        "fields": {
+          "schema_version": "observed",
+          "run_id": "observed",
+          "study_id": "observed",
+          "source_id": "observed",
+          "purpose": "observed",
+          "collector": "observed",
+          "collector.collector_id": "observed",
+          "collector.adapter_id": "observed",
+          "collection_started_at": "observed",
+          "query_provenance": "observed",
+          "query_provenance.query_id": "observed",
+          "query_provenance.submitted_query": "observed",
+          "temporal_provenance": "observed",
+          "temporal_provenance.window_id": "observed",
+          "temporal_provenance.requested_start": "observed",
+          "temporal_provenance.requested_end_exclusive": "observed",
+          "temporal_provenance.granularity": "observed",
+          "temporal_provenance.timezone": "observed",
+          "execution": "observed",
+          "execution.status": "observed",
+          "execution.returned_count": "observed",
+          "execution.errors": "observed"
+        },
+        "observed_count": 22,
+        "unknown_count": 0
+      },
+      "integrity": {
+        "manifest_reference": "artifact-manifest.json",
+        "manifest_present": true,
+        "manifest_valid": true,
+        "verified": true,
+        "artifact_issues": [],
+        "note": ""
+      },
+      "readiness": "ready",
+      "readiness_reasons": [
+        "strict valid, references resolve, artifacts verified"
+      ],
+      "lineage": {
+        "run_id": "20261014T204859Z-google-trends-cannabinoid-multi-trends",
+        "artifact_ids": [
+          "20261014T204859Z-google-trends-cannabinoid-multi-trends-payload",
+          "20261014T204859Z-google-trends-cannabinoid-multi-trends-records-hhch-json"
+        ],
+        "transformations": []
+      },
+      "evidence_refs": []
+    },
+    {
+      "run_id": "20261014T204901Z-google-trends-cannabinoid-multi-trends",
+      "path": "datasets/cannabinoid-multi-trends/data/raw/google_trends/20261014T204901Z-google-trends-cannabinoid-multi-trends/run_metadata.json",
+      "sha256": "523b2caafabe5b5868d7982330c4b0b068caf4662e485ed3050ad6102a5a7211",
+      "sha256_after": "523b2caafabe5b5868d7982330c4b0b068caf4662e485ed3050ad6102a5a7211",
+      "unchanged": true,
+      "strict_valid": true,
+      "strict_error_codes": [],
+      "completeness": {
+        "total": 22,
+        "verified": 22,
+        "score": 1.0,
+        "missing": [],
+        "essential_missing": []
+      },
+      "confidence": {
+        "fields": {
+          "schema_version": "observed",
+          "run_id": "observed",
+          "study_id": "observed",
+          "source_id": "observed",
+          "purpose": "observed",
+          "collector": "observed",
+          "collector.collector_id": "observed",
+          "collector.adapter_id": "observed",
+          "collection_started_at": "observed",
+          "query_provenance": "observed",
+          "query_provenance.query_id": "observed",
+          "query_provenance.submitted_query": "observed",
+          "temporal_provenance": "observed",
+          "temporal_provenance.window_id": "observed",
+          "temporal_provenance.requested_start": "observed",
+          "temporal_provenance.requested_end_exclusive": "observed",
+          "temporal_provenance.granularity": "observed",
+          "temporal_provenance.timezone": "observed",
+          "execution": "observed",
+          "execution.status": "observed",
+          "execution.returned_count": "observed",
+          "execution.errors": "observed"
+        },
+        "observed_count": 22,
+        "unknown_count": 0
+      },
+      "integrity": {
+        "manifest_reference": "artifact-manifest.json",
+        "manifest_present": true,
+        "manifest_valid": true,
+        "verified": true,
+        "artifact_issues": [],
+        "note": ""
+      },
+      "readiness": "ready",
+      "readiness_reasons": [
+        "strict valid, references resolve, artifacts verified"
+      ],
+      "lineage": {
+        "run_id": "20261014T204901Z-google-trends-cannabinoid-multi-trends",
+        "artifact_ids": [
+          "20261014T204901Z-google-trends-cannabinoid-multi-trends-payload",
+          "20261014T204901Z-google-trends-cannabinoid-multi-trends-records-thch-json"
+        ],
+        "transformations": []
+      },
+      "evidence_refs": []
+    },
+    {
+      "run_id": "20261014T204904Z-google-trends-cannabinoid-multi-trends",
+      "path": "datasets/cannabinoid-multi-trends/data/raw/google_trends/20261014T204904Z-google-trends-cannabinoid-multi-trends/run_metadata.json",
+      "sha256": "f6b19a33ba2812a10db969cde7387a2b1f2160effca123ab77601539302e9fec",
+      "sha256_after": "f6b19a33ba2812a10db969cde7387a2b1f2160effca123ab77601539302e9fec",
+      "unchanged": true,
+      "strict_valid": true,
+      "strict_error_codes": [],
+      "completeness": {
+        "total": 22,
+        "verified": 22,
+        "score": 1.0,
+        "missing": [],
+        "essential_missing": []
+      },
+      "confidence": {
+        "fields": {
+          "schema_version": "observed",
+          "run_id": "observed",
+          "study_id": "observed",
+          "source_id": "observed",
+          "purpose": "observed",
+          "collector": "observed",
+          "collector.collector_id": "observed",
+          "collector.adapter_id": "observed",
+          "collection_started_at": "observed",
+          "query_provenance": "observed",
+          "query_provenance.query_id": "observed",
+          "query_provenance.submitted_query": "observed",
+          "temporal_provenance": "observed",
+          "temporal_provenance.window_id": "observed",
+          "temporal_provenance.requested_start": "observed",
+          "temporal_provenance.requested_end_exclusive": "observed",
+          "temporal_provenance.granularity": "observed",
+          "temporal_provenance.timezone": "observed",
+          "execution": "observed",
+          "execution.status": "observed",
+          "execution.returned_count": "observed",
+          "execution.errors": "observed"
+        },
+        "observed_count": 22,
+        "unknown_count": 0
+      },
+      "integrity": {
+        "manifest_reference": "artifact-manifest.json",
+        "manifest_present": true,
+        "manifest_valid": true,
+        "verified": true,
+        "artifact_issues": [],
+        "note": ""
+      },
+      "readiness": "ready",
+      "readiness_reasons": [
+        "strict valid, references resolve, artifacts verified"
+      ],
+      "lineage": {
+        "run_id": "20261014T204904Z-google-trends-cannabinoid-multi-trends",
+        "artifact_ids": [
+          "20261014T204904Z-google-trends-cannabinoid-multi-trends-payload",
+          "20261014T204904Z-google-trends-cannabinoid-multi-trends-records-thc-o-json"
+        ],
         "transformations": []
       },
       "evidence_refs": []

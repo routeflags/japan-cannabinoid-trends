@@ -4,13 +4,14 @@
   "spec": "docs/plans/20261013f.md §15 (local plan; not tracked)",
   "target_root": "datasets",
   "include_private": false,
-  "count": 132,
-  "extra_count": 43,
+  "count": 167,
+  "extra_count": 46,
   "raw_modified": false,
   "state_summary": {
-    "absent": 14,
-    "ignored": 8,
-    "tracked": 153
+    "absent": 12,
+    "ignored": 10,
+    "tracked": 156,
+    "untracked_unignored": 35
   },
   "entries": [
     {
@@ -874,6 +875,356 @@
       "unchanged": true
     },
     {
+      "path": "datasets/cannabinoid-multi-trends/data/raw/google_trends/20261014T204841Z-google-trends-cannabinoid-multi-trends/artifact-manifest.json",
+      "exists": true,
+      "state": "untracked_unignored",
+      "tracked": false,
+      "ignored": false,
+      "sha256": "e878a0c62ae354d103313d072391cad2021e54de109c2b00a224292f36652064",
+      "sha256_after": "e878a0c62ae354d103313d072391cad2021e54de109c2b00a224292f36652064",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-multi-trends/data/raw/google_trends/20261014T204841Z-google-trends-cannabinoid-multi-trends/payload.json",
+      "exists": true,
+      "state": "untracked_unignored",
+      "tracked": false,
+      "ignored": false,
+      "sha256": "eebd50d9be52765e30b6570b3ba98960cc4d8f6535737e048d6ba801b2ec54d7",
+      "sha256_after": "eebd50d9be52765e30b6570b3ba98960cc4d8f6535737e048d6ba801b2ec54d7",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-multi-trends/data/raw/google_trends/20261014T204841Z-google-trends-cannabinoid-multi-trends/records_cbn.json",
+      "exists": true,
+      "state": "untracked_unignored",
+      "tracked": false,
+      "ignored": false,
+      "sha256": "691f225d4558158b934b80a93c3a403f950ae57f8d6772b9ccd9847820e31b3c",
+      "sha256_after": "691f225d4558158b934b80a93c3a403f950ae57f8d6772b9ccd9847820e31b3c",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-multi-trends/data/raw/google_trends/20261014T204841Z-google-trends-cannabinoid-multi-trends/run_metadata.json",
+      "exists": true,
+      "state": "untracked_unignored",
+      "tracked": false,
+      "ignored": false,
+      "sha256": "6180b0954a7a19ec2737528fe422d1fb0c8c225f643e61f5dfd7b20c31823e64",
+      "sha256_after": "6180b0954a7a19ec2737528fe422d1fb0c8c225f643e61f5dfd7b20c31823e64",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-multi-trends/data/raw/google_trends/20261014T204852Z-google-trends-cannabinoid-multi-trends/artifact-manifest.json",
+      "exists": true,
+      "state": "untracked_unignored",
+      "tracked": false,
+      "ignored": false,
+      "sha256": "1c5ac7a58adce7c5bca6da972c7fc3cb5f2e699789840ab1ccd0433a33228b7d",
+      "sha256_after": "1c5ac7a58adce7c5bca6da972c7fc3cb5f2e699789840ab1ccd0433a33228b7d",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-multi-trends/data/raw/google_trends/20261014T204852Z-google-trends-cannabinoid-multi-trends/payload.json",
+      "exists": true,
+      "state": "untracked_unignored",
+      "tracked": false,
+      "ignored": false,
+      "sha256": "07c507b3f83bb2b3952bd681190860add6e7d0f2e85621ea154fdfcd4a4366ca",
+      "sha256_after": "07c507b3f83bb2b3952bd681190860add6e7d0f2e85621ea154fdfcd4a4366ca",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-multi-trends/data/raw/google_trends/20261014T204852Z-google-trends-cannabinoid-multi-trends/records_crdp.json",
+      "exists": true,
+      "state": "untracked_unignored",
+      "tracked": false,
+      "ignored": false,
+      "sha256": "684beffb4b83e3c2454230fc01c1591007967c8abf0df80c831b30bacdbf3d8b",
+      "sha256_after": "684beffb4b83e3c2454230fc01c1591007967c8abf0df80c831b30bacdbf3d8b",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-multi-trends/data/raw/google_trends/20261014T204852Z-google-trends-cannabinoid-multi-trends/run_metadata.json",
+      "exists": true,
+      "state": "untracked_unignored",
+      "tracked": false,
+      "ignored": false,
+      "sha256": "5667fd8e45cb0ca9e0687c2394b8309fdc6ccfb4384fb7570a66c05a2d17ba0b",
+      "sha256_after": "5667fd8e45cb0ca9e0687c2394b8309fdc6ccfb4384fb7570a66c05a2d17ba0b",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-multi-trends/data/raw/google_trends/20261014T204855Z-google-trends-cannabinoid-multi-trends/artifact-manifest.json",
+      "exists": true,
+      "state": "untracked_unignored",
+      "tracked": false,
+      "ignored": false,
+      "sha256": "8c29c6db878abd23f73228c82400fc06a9f0ed58b9b8745e7998cbf82ae20f82",
+      "sha256_after": "8c29c6db878abd23f73228c82400fc06a9f0ed58b9b8745e7998cbf82ae20f82",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-multi-trends/data/raw/google_trends/20261014T204855Z-google-trends-cannabinoid-multi-trends/payload.json",
+      "exists": true,
+      "state": "untracked_unignored",
+      "tracked": false,
+      "ignored": false,
+      "sha256": "30bbe387d0716b9505bd39c2d3363cfb8569f06aa2d9aba0cd28cd2e66afc66e",
+      "sha256_after": "30bbe387d0716b9505bd39c2d3363cfb8569f06aa2d9aba0cd28cd2e66afc66e",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-multi-trends/data/raw/google_trends/20261014T204855Z-google-trends-cannabinoid-multi-trends/records_h4cbh.json",
+      "exists": true,
+      "state": "untracked_unignored",
+      "tracked": false,
+      "ignored": false,
+      "sha256": "e1b4d3e9432f800b6820bedff364870e2e8ff42ca6480d02c625587328be7d1e",
+      "sha256_after": "e1b4d3e9432f800b6820bedff364870e2e8ff42ca6480d02c625587328be7d1e",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-multi-trends/data/raw/google_trends/20261014T204855Z-google-trends-cannabinoid-multi-trends/run_metadata.json",
+      "exists": true,
+      "state": "untracked_unignored",
+      "tracked": false,
+      "ignored": false,
+      "sha256": "7803e0afa9e5a82acb7879eb304ed97d93bf16b1fb633ae6b7d42bb569838eda",
+      "sha256_after": "7803e0afa9e5a82acb7879eb304ed97d93bf16b1fb633ae6b7d42bb569838eda",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-multi-trends/data/raw/google_trends/20261014T204857Z-google-trends-cannabinoid-multi-trends/artifact-manifest.json",
+      "exists": true,
+      "state": "untracked_unignored",
+      "tracked": false,
+      "ignored": false,
+      "sha256": "19ceb61ecae366d0c47eaeb6e947a912bcb3291c7beaaf14df5eb81c78614fce",
+      "sha256_after": "19ceb61ecae366d0c47eaeb6e947a912bcb3291c7beaaf14df5eb81c78614fce",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-multi-trends/data/raw/google_trends/20261014T204857Z-google-trends-cannabinoid-multi-trends/payload.json",
+      "exists": true,
+      "state": "untracked_unignored",
+      "tracked": false,
+      "ignored": false,
+      "sha256": "95a89ef75454d1350ebeb16c1c718ce9f496d8f96f11931d5c279277acf3ee1d",
+      "sha256_after": "95a89ef75454d1350ebeb16c1c718ce9f496d8f96f11931d5c279277acf3ee1d",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-multi-trends/data/raw/google_trends/20261014T204857Z-google-trends-cannabinoid-multi-trends/records_hhbd.json",
+      "exists": true,
+      "state": "untracked_unignored",
+      "tracked": false,
+      "ignored": false,
+      "sha256": "5f1f8ec29daed8f87a5751438f7d0f959f28cdac7959229ba091f44568784691",
+      "sha256_after": "5f1f8ec29daed8f87a5751438f7d0f959f28cdac7959229ba091f44568784691",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-multi-trends/data/raw/google_trends/20261014T204857Z-google-trends-cannabinoid-multi-trends/run_metadata.json",
+      "exists": true,
+      "state": "untracked_unignored",
+      "tracked": false,
+      "ignored": false,
+      "sha256": "0c8f5247b49e2fbe0b9c03e239d6b01eb15056d3af494ac232cbd3465e68497e",
+      "sha256_after": "0c8f5247b49e2fbe0b9c03e239d6b01eb15056d3af494ac232cbd3465e68497e",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-multi-trends/data/raw/google_trends/20261014T204859Z-google-trends-cannabinoid-multi-trends/artifact-manifest.json",
+      "exists": true,
+      "state": "untracked_unignored",
+      "tracked": false,
+      "ignored": false,
+      "sha256": "0e27bb70a1dc5a0f8c87d13703ba54422991ba6c072733a880080f2a368e5f67",
+      "sha256_after": "0e27bb70a1dc5a0f8c87d13703ba54422991ba6c072733a880080f2a368e5f67",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-multi-trends/data/raw/google_trends/20261014T204859Z-google-trends-cannabinoid-multi-trends/payload.json",
+      "exists": true,
+      "state": "untracked_unignored",
+      "tracked": false,
+      "ignored": false,
+      "sha256": "f9a2799275d17e446ea38a3de123262e935e18ae75dfa9ba3c9caa6cd643c1eb",
+      "sha256_after": "f9a2799275d17e446ea38a3de123262e935e18ae75dfa9ba3c9caa6cd643c1eb",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-multi-trends/data/raw/google_trends/20261014T204859Z-google-trends-cannabinoid-multi-trends/records_hhch.json",
+      "exists": true,
+      "state": "untracked_unignored",
+      "tracked": false,
+      "ignored": false,
+      "sha256": "c1510c99aa8238a32fcc9287bdfce44ac3fe3db2aa64f3acb939182fe35d1af0",
+      "sha256_after": "c1510c99aa8238a32fcc9287bdfce44ac3fe3db2aa64f3acb939182fe35d1af0",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-multi-trends/data/raw/google_trends/20261014T204859Z-google-trends-cannabinoid-multi-trends/run_metadata.json",
+      "exists": true,
+      "state": "untracked_unignored",
+      "tracked": false,
+      "ignored": false,
+      "sha256": "cbc46a60cd27d6df12645019089f5b394fffd9b344e288bfa76daaf24bd24a53",
+      "sha256_after": "cbc46a60cd27d6df12645019089f5b394fffd9b344e288bfa76daaf24bd24a53",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-multi-trends/data/raw/google_trends/20261014T204901Z-google-trends-cannabinoid-multi-trends/artifact-manifest.json",
+      "exists": true,
+      "state": "untracked_unignored",
+      "tracked": false,
+      "ignored": false,
+      "sha256": "c82f87467218ff7517dfcdd618aca28c454d22a757e1f1ef35fe712b9fda4dfe",
+      "sha256_after": "c82f87467218ff7517dfcdd618aca28c454d22a757e1f1ef35fe712b9fda4dfe",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-multi-trends/data/raw/google_trends/20261014T204901Z-google-trends-cannabinoid-multi-trends/payload.json",
+      "exists": true,
+      "state": "untracked_unignored",
+      "tracked": false,
+      "ignored": false,
+      "sha256": "52522e1e9416d722e63b21ad13008493ae9681c354a285cf1fc9c5c813444bd8",
+      "sha256_after": "52522e1e9416d722e63b21ad13008493ae9681c354a285cf1fc9c5c813444bd8",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-multi-trends/data/raw/google_trends/20261014T204901Z-google-trends-cannabinoid-multi-trends/records_thch.json",
+      "exists": true,
+      "state": "untracked_unignored",
+      "tracked": false,
+      "ignored": false,
+      "sha256": "e975fccf30b70e38706b8b12bcdf117513feb1e404ff95a9b8c900c852b0af17",
+      "sha256_after": "e975fccf30b70e38706b8b12bcdf117513feb1e404ff95a9b8c900c852b0af17",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-multi-trends/data/raw/google_trends/20261014T204901Z-google-trends-cannabinoid-multi-trends/run_metadata.json",
+      "exists": true,
+      "state": "untracked_unignored",
+      "tracked": false,
+      "ignored": false,
+      "sha256": "523b2caafabe5b5868d7982330c4b0b068caf4662e485ed3050ad6102a5a7211",
+      "sha256_after": "523b2caafabe5b5868d7982330c4b0b068caf4662e485ed3050ad6102a5a7211",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-multi-trends/data/raw/google_trends/20261014T204904Z-google-trends-cannabinoid-multi-trends/artifact-manifest.json",
+      "exists": true,
+      "state": "untracked_unignored",
+      "tracked": false,
+      "ignored": false,
+      "sha256": "1c8be11b1b59b68fcf6f25a7123968cfbfff19febd1bc9319fda79c4c7989815",
+      "sha256_after": "1c8be11b1b59b68fcf6f25a7123968cfbfff19febd1bc9319fda79c4c7989815",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-multi-trends/data/raw/google_trends/20261014T204904Z-google-trends-cannabinoid-multi-trends/payload.json",
+      "exists": true,
+      "state": "untracked_unignored",
+      "tracked": false,
+      "ignored": false,
+      "sha256": "d8dc377b2c53cf2b67ab11487c41745440e830a8bc8f83d8876a0952ed067fd2",
+      "sha256_after": "d8dc377b2c53cf2b67ab11487c41745440e830a8bc8f83d8876a0952ed067fd2",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-multi-trends/data/raw/google_trends/20261014T204904Z-google-trends-cannabinoid-multi-trends/records_thc-o.json",
+      "exists": true,
+      "state": "untracked_unignored",
+      "tracked": false,
+      "ignored": false,
+      "sha256": "0a4431c78de61b1eb9c2886c9c3facc5d265c41d01bfdbd4b00a6dc4918094f0",
+      "sha256_after": "0a4431c78de61b1eb9c2886c9c3facc5d265c41d01bfdbd4b00a6dc4918094f0",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-multi-trends/data/raw/google_trends/20261014T204904Z-google-trends-cannabinoid-multi-trends/run_metadata.json",
+      "exists": true,
+      "state": "untracked_unignored",
+      "tracked": false,
+      "ignored": false,
+      "sha256": "f6b19a33ba2812a10db969cde7387a2b1f2160effca123ab77601539302e9fec",
+      "sha256_after": "f6b19a33ba2812a10db969cde7387a2b1f2160effca123ab77601539302e9fec",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-multi-trends/metadata/plans/gt-5y-recollect-cbn.json",
+      "exists": true,
+      "state": "untracked_unignored",
+      "tracked": false,
+      "ignored": false,
+      "sha256": "8326623c83b324b422fc6ecf0aa619648b4b4bdd2a426709ad4b2288ce9eec79",
+      "sha256_after": "8326623c83b324b422fc6ecf0aa619648b4b4bdd2a426709ad4b2288ce9eec79",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-multi-trends/metadata/plans/gt-5y-recollect-crdp.json",
+      "exists": true,
+      "state": "untracked_unignored",
+      "tracked": false,
+      "ignored": false,
+      "sha256": "8cc3f6da6db8eb1ca9ee13ea3631ae79088d89274c05a03ecf5cf66874555b33",
+      "sha256_after": "8cc3f6da6db8eb1ca9ee13ea3631ae79088d89274c05a03ecf5cf66874555b33",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-multi-trends/metadata/plans/gt-5y-recollect-h4cbh.json",
+      "exists": true,
+      "state": "untracked_unignored",
+      "tracked": false,
+      "ignored": false,
+      "sha256": "caf4b3565432e9585de68608234cb2c85e3bde8ee612fd397d6487ca73935e27",
+      "sha256_after": "caf4b3565432e9585de68608234cb2c85e3bde8ee612fd397d6487ca73935e27",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-multi-trends/metadata/plans/gt-5y-recollect-hhbd.json",
+      "exists": true,
+      "state": "untracked_unignored",
+      "tracked": false,
+      "ignored": false,
+      "sha256": "3847b31aadf72f37f2cc0f576d07d56159044b183df9de4e59c4ec87077931b4",
+      "sha256_after": "3847b31aadf72f37f2cc0f576d07d56159044b183df9de4e59c4ec87077931b4",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-multi-trends/metadata/plans/gt-5y-recollect-hhch.json",
+      "exists": true,
+      "state": "untracked_unignored",
+      "tracked": false,
+      "ignored": false,
+      "sha256": "58c3e9554db5ac1d0243572c961717bbd6fd41141830dd3c8c476422d7515cb7",
+      "sha256_after": "58c3e9554db5ac1d0243572c961717bbd6fd41141830dd3c8c476422d7515cb7",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-multi-trends/metadata/plans/gt-5y-recollect-thch.json",
+      "exists": true,
+      "state": "untracked_unignored",
+      "tracked": false,
+      "ignored": false,
+      "sha256": "64456ad14e4adf48ce6f9eadde329d28662b9eab65b714ce1c39b49a2c3f2fc3",
+      "sha256_after": "64456ad14e4adf48ce6f9eadde329d28662b9eab65b714ce1c39b49a2c3f2fc3",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-multi-trends/metadata/plans/gt-5y-recollect-thco.json",
+      "exists": true,
+      "state": "untracked_unignored",
+      "tracked": false,
+      "ignored": false,
+      "sha256": "c2fede53e04d8c7553537b061c679415b8c91b452afa71b1140595ad2d60fb09",
+      "sha256_after": "c2fede53e04d8c7553537b061c679415b8c91b452afa71b1140595ad2d60fb09",
+      "unchanged": true
+    },
+    {
       "path": "datasets/cannabinoid-multi-trends/methodology.md",
       "exists": true,
       "state": "tracked",
@@ -1336,6 +1687,14 @@
   ],
   "extras": [
     {
+      "path": "docs/audits/contract-ledger.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "kind": "local_only"
+    },
+    {
       "path": "docs/audits/g2-query-inventory.json",
       "exists": true,
       "state": "tracked",
@@ -1449,6 +1808,22 @@
     },
     {
       "path": "docs/audits/g7-study-inventory.md",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "kind": "local_only"
+    },
+    {
+      "path": "docs/audits/gt-summary.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "kind": "local_only"
+    },
+    {
+      "path": "docs/audits/publication-contract.json",
       "exists": true,
       "state": "tracked",
       "tracked": true,
@@ -1577,18 +1952,18 @@
     },
     {
       "path": ".staging",
-      "exists": false,
-      "state": "absent",
+      "exists": true,
+      "state": "ignored",
       "tracked": false,
-      "ignored": false,
+      "ignored": true,
       "kind": "local_only"
     },
     {
       "path": ".quarantine",
-      "exists": false,
-      "state": "absent",
+      "exists": true,
+      "state": "ignored",
       "tracked": false,
-      "ignored": false,
+      "ignored": true,
       "kind": "local_only"
     },
     {
@@ -1680,7 +2055,43 @@
       "kind": "private_marker"
     }
   ],
-  "accidental_add_risk": [],
+  "accidental_add_risk": [
+    "datasets/cannabinoid-multi-trends/data/raw/google_trends/20261014T204841Z-google-trends-cannabinoid-multi-trends/artifact-manifest.json",
+    "datasets/cannabinoid-multi-trends/data/raw/google_trends/20261014T204841Z-google-trends-cannabinoid-multi-trends/payload.json",
+    "datasets/cannabinoid-multi-trends/data/raw/google_trends/20261014T204841Z-google-trends-cannabinoid-multi-trends/records_cbn.json",
+    "datasets/cannabinoid-multi-trends/data/raw/google_trends/20261014T204841Z-google-trends-cannabinoid-multi-trends/run_metadata.json",
+    "datasets/cannabinoid-multi-trends/data/raw/google_trends/20261014T204852Z-google-trends-cannabinoid-multi-trends/artifact-manifest.json",
+    "datasets/cannabinoid-multi-trends/data/raw/google_trends/20261014T204852Z-google-trends-cannabinoid-multi-trends/payload.json",
+    "datasets/cannabinoid-multi-trends/data/raw/google_trends/20261014T204852Z-google-trends-cannabinoid-multi-trends/records_crdp.json",
+    "datasets/cannabinoid-multi-trends/data/raw/google_trends/20261014T204852Z-google-trends-cannabinoid-multi-trends/run_metadata.json",
+    "datasets/cannabinoid-multi-trends/data/raw/google_trends/20261014T204855Z-google-trends-cannabinoid-multi-trends/artifact-manifest.json",
+    "datasets/cannabinoid-multi-trends/data/raw/google_trends/20261014T204855Z-google-trends-cannabinoid-multi-trends/payload.json",
+    "datasets/cannabinoid-multi-trends/data/raw/google_trends/20261014T204855Z-google-trends-cannabinoid-multi-trends/records_h4cbh.json",
+    "datasets/cannabinoid-multi-trends/data/raw/google_trends/20261014T204855Z-google-trends-cannabinoid-multi-trends/run_metadata.json",
+    "datasets/cannabinoid-multi-trends/data/raw/google_trends/20261014T204857Z-google-trends-cannabinoid-multi-trends/artifact-manifest.json",
+    "datasets/cannabinoid-multi-trends/data/raw/google_trends/20261014T204857Z-google-trends-cannabinoid-multi-trends/payload.json",
+    "datasets/cannabinoid-multi-trends/data/raw/google_trends/20261014T204857Z-google-trends-cannabinoid-multi-trends/records_hhbd.json",
+    "datasets/cannabinoid-multi-trends/data/raw/google_trends/20261014T204857Z-google-trends-cannabinoid-multi-trends/run_metadata.json",
+    "datasets/cannabinoid-multi-trends/data/raw/google_trends/20261014T204859Z-google-trends-cannabinoid-multi-trends/artifact-manifest.json",
+    "datasets/cannabinoid-multi-trends/data/raw/google_trends/20261014T204859Z-google-trends-cannabinoid-multi-trends/payload.json",
+    "datasets/cannabinoid-multi-trends/data/raw/google_trends/20261014T204859Z-google-trends-cannabinoid-multi-trends/records_hhch.json",
+    "datasets/cannabinoid-multi-trends/data/raw/google_trends/20261014T204859Z-google-trends-cannabinoid-multi-trends/run_metadata.json",
+    "datasets/cannabinoid-multi-trends/data/raw/google_trends/20261014T204901Z-google-trends-cannabinoid-multi-trends/artifact-manifest.json",
+    "datasets/cannabinoid-multi-trends/data/raw/google_trends/20261014T204901Z-google-trends-cannabinoid-multi-trends/payload.json",
+    "datasets/cannabinoid-multi-trends/data/raw/google_trends/20261014T204901Z-google-trends-cannabinoid-multi-trends/records_thch.json",
+    "datasets/cannabinoid-multi-trends/data/raw/google_trends/20261014T204901Z-google-trends-cannabinoid-multi-trends/run_metadata.json",
+    "datasets/cannabinoid-multi-trends/data/raw/google_trends/20261014T204904Z-google-trends-cannabinoid-multi-trends/artifact-manifest.json",
+    "datasets/cannabinoid-multi-trends/data/raw/google_trends/20261014T204904Z-google-trends-cannabinoid-multi-trends/payload.json",
+    "datasets/cannabinoid-multi-trends/data/raw/google_trends/20261014T204904Z-google-trends-cannabinoid-multi-trends/records_thc-o.json",
+    "datasets/cannabinoid-multi-trends/data/raw/google_trends/20261014T204904Z-google-trends-cannabinoid-multi-trends/run_metadata.json",
+    "datasets/cannabinoid-multi-trends/metadata/plans/gt-5y-recollect-cbn.json",
+    "datasets/cannabinoid-multi-trends/metadata/plans/gt-5y-recollect-crdp.json",
+    "datasets/cannabinoid-multi-trends/metadata/plans/gt-5y-recollect-h4cbh.json",
+    "datasets/cannabinoid-multi-trends/metadata/plans/gt-5y-recollect-hhbd.json",
+    "datasets/cannabinoid-multi-trends/metadata/plans/gt-5y-recollect-hhch.json",
+    "datasets/cannabinoid-multi-trends/metadata/plans/gt-5y-recollect-thch.json",
+    "datasets/cannabinoid-multi-trends/metadata/plans/gt-5y-recollect-thco.json"
+  ],
   "ignore_warnings": [
     {
       "code": "GITIGNORE_BLANKET_PATTERN",

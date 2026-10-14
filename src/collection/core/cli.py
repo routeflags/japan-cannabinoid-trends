@@ -33,7 +33,12 @@ import json
 import sys
 from pathlib import Path
 
-from collection.adapters import AdapterUnavailable, get_adapter_factory, get_window_compiler
+from collection.adapters import (
+    AdapterUnavailable,
+    get_adapter_factory,
+    get_window_compiler,
+    start_live_session,
+)
 from collection.core.pipeline import PipelineResult, adopt_staged, run_collection
 from collection.core.registry import ConfigError, load_registries
 from collection.core.selection import select_collector
@@ -144,9 +149,41 @@ def cmd_collect(args) -> int:
         _emit(result, fmt=args.format, output=args.output)
         return EXIT_GATE
 
+    live_session = None
+    if args.live:
+        if args.fixture:
+            _err("--live and --fixture are mutually exclusive")
+            return EXIT_CONFIG
+        try:
+            live_session = start_live_session(source_id)
+        except AdapterUnavailable as error:
+            _err(str(error))
+            return EXIT_CONFIG
+        _err(
+            "live collection: "
+            f"{live_session.describe().get('server')} "
+            f"{live_session.describe().get('server_version')} "
+            f"(run_id {args.run_id or 'timestamped'})"
+        )
+
+    try:
+        return _run_live_collection(
+            args, plan, factory, collector_entry, registries, workspace, now, live_session
+        )
+    finally:
+        if live_session is not None:
+            live_session.close()
+
+
+def _run_live_collection(
+    args, plan, factory, collector_entry, registries, workspace, now, live_session
+) -> int:
+    """Run the pipeline with the adapter built for this invocation."""
+
     adapter = factory(
         fixture=args.fixture,
         capabilities=collector_entry.get("capabilities"),
+        live=live_session.call if live_session is not None else None,
     )
     result = run_collection(
         plan,
@@ -400,8 +437,17 @@ def build_parser() -> argparse.ArgumentParser:
     collect.add_argument("--plan", required=True)
     collect.add_argument(
         "--fixture",
-        help="recorded response fixture (required for offline replay; live "
-        "collection is not executed here)",
+        help="recorded response fixture (offline replay; mutually exclusive "
+        "with --live)",
+    )
+    collect.add_argument(
+        "--live",
+        action="store_true",
+        help=(
+            "collect live through the MCP session (the collector named in "
+            "config/collectors.json). Off by default: the pipeline records a "
+            "failed run instead of fabricating data"
+        ),
     )
     collect.add_argument("--run-id", help="explicit run_id (default: timestamped)")
     collect.add_argument(

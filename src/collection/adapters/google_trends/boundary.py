@@ -46,6 +46,7 @@ from pathlib import Path
 from collection.adapters.google_trends.adapter import (
     SUPPORTED_TIMEFRAMES,
     TOOL_INTEREST_OVER_TIME,
+    term_slug,
 )
 from collection.core.pipeline import (
     CollectedArtifact,
@@ -109,6 +110,15 @@ _RANGE_LABEL = re.compile(
 )
 _SINGLE_LABEL = re.compile(
     r"^(?P<month>[A-Za-z]{3})\s+(?P<day>\d{1,2}),\s*(?P<year>\d{4})$"
+)
+#: A ranged label that names the year on *both* sides (``Dec 26, 2021 – Jan 1,
+#: 2022``).  The documented shape puts the year only at the end, but the live
+#: server emits both, so one grammar accepts both spellings (spec §4.4 change
+#: note, 2026-10-15).
+_RANGE_LABEL_WITH_YEARS = re.compile(
+    r"^(?P<month1>[A-Za-z]{3})\s+(?P<day1>\d{1,2}),\s*(?P<year1>\d{4})\s*"
+    r"[-\u2013\u2014]\s*(?P<month2>[A-Za-z]{3})\s+(?P<day2>\d{1,2}),\s*"
+    r"(?P<year2>\d{4})$"
 )
 _ISO_LABEL = re.compile(r"^(?P<year>\d{4})-(?P<month>\d{2})-(?P<day>\d{2})$")
 
@@ -220,8 +230,19 @@ def _range_start(match: "re.Match[str]") -> str:
     return _iso_date(year, month1, int(match.group("day1")))
 
 
+#: Space characters the live server puts around the range dash.  The documented
+#: shape uses a plain space; the instrument measured ``Dec 26, 2021<U+2009>–<U+2009>Jan 1, 2022``
+#: on 2026-10-15 (spec §4.4 change note), so the two spellings are one grammar.
+_UNICODE_SPACES = {ord("\u2009"): " ", ord("\u202f"): " ", ord("\u00a0"): " "}
+
+
 def _label_to_date(label: str) -> str:
     """Map one accepted tool-output label to the bucket-start ISO date."""
+    label = label.translate(_UNICODE_SPACES)
+    match = _RANGE_LABEL_WITH_YEARS.match(label)
+    if match:
+        month = _month_number(match.group("month1"))
+        return _iso_date(int(match.group("year1")), month, int(match.group("day1")))
     match = _RANGE_LABEL.match(label)
     if match:
         return _range_start(match)
@@ -516,12 +537,9 @@ def _timeframe_slug(timeframe: str) -> str:
 
 
 def _term_slug(term: str) -> str:
-    slug = "".join(
-        character if character.isalnum() else "-" for character in term.lower()
-    ).strip("-")
-    while "--" in slug:
-        slug = slug.replace("--", "-")
-    return slug or "term"
+    """Kept as a local name; the rule lives with the adapter (one owner)."""
+
+    return term_slug(term)
 
 
 def _resolve_registered_query(registries, term: str) -> dict:

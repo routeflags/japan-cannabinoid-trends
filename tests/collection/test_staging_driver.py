@@ -143,7 +143,7 @@ def test_declared_run_is_staged_then_cataloged_strictly_valid(tmp_path, registri
     )
     assert adopted.action == "adopted", [issue.code for issue in adopted.issues]
     final = Path(adopted.final_dir)
-    assert final == workspace / "datasets" / STUDY_ID / "data" / "raw" / RUN_ID
+    assert final == workspace / "datasets" / STUDY_ID / "data" / "raw" / "youtube" / RUN_ID
 
     document = load_json(final / RUN_METADATA_NAME)
     outcome = validate_full(

@@ -35,14 +35,15 @@ def test_stored_inventory_matches_a_fresh_recomputation():
 
 def test_inventory_is_complete_and_non_destructive():
     inventory = build_temporal_inventory(DATASETS_ROOT)
-    assert inventory["count"] == 29
+    assert inventory["count"] == len(list(DATASETS_ROOT.rglob("run_metadata.json")))
     assert inventory["raw_modified"] is False
-    assert inventory["classification_summary"] == {
-        "verified": 0,
-        "inferred": 29,
-        "unknown": 0,
-        "ambiguous": 0,
-    }
+    summary = inventory["classification_summary"]
+    # Contract runs (collected through the pipeline) carry temporal provenance,
+    # so they are *verified*; the legacy runs stay *inferred*.
+    assert summary["unknown"] == 0
+    assert summary["ambiguous"] == 0
+    assert summary["verified"] > 0
+    assert summary["verified"] + summary["inferred"] == inventory["count"]
 
 
 def test_inventory_never_converts_relative_periods_into_absolute_windows():
@@ -93,5 +94,5 @@ def test_audit_cli_writes_the_inventory(tmp_path):
     )
     assert code == EXIT_OK
     written = json.loads(output.read_text(encoding="utf-8"))
-    assert written["count"] == 29
+    assert written["count"] == len(list(DATASETS_ROOT.rglob("run_metadata.json")))
     assert written["raw_modified"] is False

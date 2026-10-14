@@ -45,22 +45,30 @@ def _place(datasets_root: Path, run_id: str, document: dict) -> Path:
 
 
 def test_repository_check_is_not_vacuous() -> None:
-    """Green must mean "nothing new to check", not "nothing was checked"."""
+    """Green must mean "every run on disk was checked", not "nothing was
+    checked".  The repository now holds both kinds of run: the frozen legacy
+    list and runs collected through the pipeline, and the second kind is what
+    makes the gate non-vacuous."""
 
     report = audit_new_runs(REPO_ROOT, REPO_ROOT / "datasets")
     assert report["failure_count"] == 0
-    assert report["new_run_count"] == 0
     assert report["frozen_legacy_seen"] == report["frozen_legacy_declared"] == len(
         LEGACY_RUN_IDS
     )
-    assert report["run_count"] == report["frozen_legacy_seen"]
+    assert report["run_count"] == report["frozen_legacy_seen"] + report["new_run_count"]
+    assert report["new_run_count"] > 0, "no run outside the frozen list would be checked"
 
 
-def test_every_frozen_run_on_disk_is_grandfathered() -> None:
+def test_every_on_disk_run_is_frozen_or_passes_the_current_contract() -> None:
     report = audit_new_runs(REPO_ROOT, REPO_ROOT / "datasets")
+
     for run in report["runs"]:
-        assert run["frozen_legacy"] is True, run["path"]
-        assert run["run_id"] in LEGACY_RUN_IDS
+        if run["frozen_legacy"]:
+            assert run["run_id"] in LEGACY_RUN_IDS, run["path"]
+            continue
+        # A run collected through the pipeline is checked against the current
+        # contract and must pass it (it is not grandfathered).
+        assert run["valid"] is True, (run["path"], run["issue_codes"])
 
 
 # ---------------------------------------------------------------------------
