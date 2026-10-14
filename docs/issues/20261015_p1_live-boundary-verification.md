@@ -27,6 +27,29 @@ Google Trends の window compiler は、現時点で**すべての compile で `
 - 公開文書で窓を「正確な期間」として扱えない（要求窓と観測範囲を併記する必要がある）。
 - capability が `unknown` のままなので、他ソースとの比較可能性判断にも波及する。
 
+## ライブ収集の実行経路（2026-10-15 実装）
+
+本 issue の行列（`CBX` × 4 timeframe × 2 pass）は従来 harness（`boundary`）と
+外部 MCP セッションの組み合わせを前提としていた。**パイプライン側にライブ収集の経路が実装された**ので、
+今後は次の 2 経路がある。
+
+| 経路 | 実装 | 用途 |
+|---|---|---|
+| pipeline のライブ収集 | `collection.core.cli collect --live`（`SessionMcpTransport` + `mcp_session.McpStdioSession`）。run には **verbatim な tool result（生）** と **解析済み系列（派生）** の 2 成果物が入り、L1 を通ったものだけ catalog に入る | 研究データの収集（本 issue の 7 run はこちら） |
+| boundary harness | `collection.adapters.google_trends.boundary`（capture manifest → verify → stage） | 境界計測。**計測用の窓は study window ではない**ため、登録済み window を要求する pipeline の plan とは意図的に分離している（spec §4.2） |
+
+- 両経路は MCP サーバ（`google-trends-mcp@0.1.1`）と**同じ parser（spec §4.4）**を使う。
+- 2026-10-15 のライブ計測で**実形式の差異を 2 件検出して parser を更新**した（細い空白 U+2009、年を両側に書く範囲ラベル）。
+  詳細は `docs/specs/gt-boundary-verification.md` §4.4 の追記と、当該 run の生 payload（保全済み）。
+- 通常の 5 年・12ヶ月系列（土曜起点ではなく日曜起点の週次）では、実測の初回ラベルは
+  **2021-10-10**（登録済み 5y window の start と一致）。
+
+### 未実施
+
+- 本 issue の行列（pass 1 = 4 call / pass 2 は参照時刻を **7 日以上**離す必要がある）はまだ実行していない。
+  pass 1 だけでは `eligible=true` にできない（spec §3 の昇格規則は 2 pass の一致を要求）。
+  実行するか、または pipeline 側の run で代用するかをメンテナに確認する。
+
 ## 対応方針
 
 - ライブ収集（別途承認）で同一クエリを複数の相対 timeframe で取得し、観測境界を記録する。

@@ -2,7 +2,7 @@
 
 **ID:** ISS-20261015-GT-003  
 **優先度:** P1 (High)  
-**ステータス:** PENDING (2026-10-15) — 生成による修正は完了。残りは 6 化合物の 5 年系列の再取得判断  
+**ステータス:** RESOLVED (2026-10-15) — 5 年系列を再取得し、ページの数値をすべて run から生成。PC-2 は公開契約の未実装項目として別途追跡  
 **対象:** `publication/research_h4cbh.html`, `publication/research_hhbd.html`,
 `publication/research_thc-o.html`, `datasets/cannabinoid-multi-trends/data/raw/google_trends/20261002T*/`,
 `src/processing/gt_statistics.py`, `src/validation/publication_contract.py`（PC-2）
@@ -59,6 +59,29 @@
   生成されたブロックは各表の下に出所（run_id・収集日）を必ず含む。
 - 同じ問題が guide と search-emergence-tracker にないか確認する。
 
+## 対応（2026-10-15）
+
+メンテナ指示により**ライブ収集をパイプライン経由で実行**し、この issue の原因（系列が保存されていない）を解消した。
+
+- 実装: `collection.core.cli collect --live`（`SessionMcpTransport` + `mcp_session.McpStdioSession`）
+  + pipeline が「verbatim な tool result（生）」と「解析済み系列（派生、`records_<term>.json`）」の
+  **2 成果物**を 1 run に書くようにした。7 run（CBN / THC-O / H4CBH / HHBD / HHCH / CRDP / THCH）を
+  `today 5-y` / geo=JP で収集し、L1 を通過して catalog に採用（`audit-new-runs`: new=7 / failures=0）。
+- `processing.cli gt-summary` の結果: **13 化合物すべて computed、`unavailable_mean` は空**になり、
+  7 ページの 5 年表がライブ系列から生成された。
+- `thc-o` のピークは記録どおり **2022-04-10**（旧記載の 2023-03 を置換）。
+- 旧 2026-10-02 の要約との差（実例）: `h4cbh` の初出は旧記録 2025-04-06 だったが、
+  実系列では **2022-12-04**（値 44）。`hhbd` も 2025-11-30 → 2022-09-18。
+  **要約形の記録は系列から検算できない**という本 issue の主張を裏付ける事例。
+- 監査: `docs/audits/publication-contract.json` の findings 0、宣言済みギャップは 1 件
+  （`crdh` の最新値のみ。crdh は 2026-10-08 の要約形のままで、系列がない）。
+
+## 残り
+
+- `PC-2`（各数値が run / 記録項目を指すことの機械検査）は `publication_contract` の
+  `unimplemented_rules` に記載され、**別作業**として追跡される。
+- 生成ブロックは各表の下に出所（run_id / 収集日）を含むが、検査はまだ無い。
+
 ## 未解決
 
 - **6 化合物（CBN / THC-O / H4CBH / HHBD / HHCH / CRDP）の 5 年系列**はリポジトリに存在しない。
@@ -70,12 +93,12 @@
 - [x] 5 年表の数値がすべて run 記録から生成される（手書きをやめた）
 - [x] `thc-o` のピークの不一致が解消（記録の 2022-04-10）
 - [x] 記録にない値は「算出不能」として理由付きで表示される
-- [ ] 6 化合物の 5 年系列を再取得し、実の平均値を出す（承認待ち）
-- [ ] PC-2 の検査（非空虚性テスト付き）
+- [x] **6 化合物の 5 年系列を再取得し、実の平均値を出した**（2026-10-15、パイプライン経由のライブ収集）
+- [ ] PC-2 の検査（非空虚性テスト付き）→ `publication_contract` の未実装項目として追跡
 
 ## 依存
 
 - 本 issue は `ISS-20261015-GT-001`（境界計測）とは独立。
-- 再取得は GT-001 の承認に相乗りできる。
+- 再取得は `ISS-20261015-GT-001` のライブ計測承認に相乗りした（2026-10-15）。
 - `docs/reports/20261015c-publication-refresh-plan.md` §11-U9（形式）と §11-U10（THCH）は
-  本 issue と同じ問題を共有する。
+  本 issue と同じ問題を共有し、どちらも 2026-10-15 に解消。
