@@ -10,6 +10,7 @@ Everything runs offline in a tmp workspace: staging copies the collector's file
 into ``.staging/``, adoption moves it to the catalog.
 """
 
+import json
 from dataclasses import replace
 from pathlib import Path
 
@@ -190,6 +191,25 @@ def test_repository_raw_is_only_read(tmp_path, registries):
     assert sha256_file(RECORDED_CBD_5Y) == before
 
 
+def test_artifact_in_a_subdirectory_is_staged_and_cataloged(tmp_path, registries):
+    root = make_workspace(tmp_path, studies=(STUDY_ID,))
+    artifact = replace(_artifact(_series()), path="series/payload.json")
+    staged = _stage(root, registries, artifacts=[artifact])
+
+    assert staged.action == "staged", [i.code for i in staged.issues]
+    copied = Path(staged.staging_dir) / "series" / "payload.json"
+    assert copied.read_bytes() == RECORDED_CBD_5Y.read_bytes()
+
+    adopted = adopt_staged(
+        Path(staged.staging_dir),
+        workspace_root=root,
+        datasets_root=root / "datasets",
+        registries=registries,
+    )
+    assert adopted.action == "adopted", [i.code for i in adopted.issues]
+    assert (Path(adopted.final_dir) / "series" / "payload.json").is_file()
+
+
 def test_collector_identity_comes_from_the_registry(tmp_path, registries):
     root = make_workspace(tmp_path, studies=(STUDY_ID,))
     staged = Path(_stage(root, registries).staging_dir)
@@ -310,6 +330,100 @@ def test_finish_before_start_is_refused(tmp_path, registries):
     _assert_stopped(
         _stage(root, registries, finished_at="2026-10-11T00:00:00Z"),
         "STAGING_TIMESTAMP_ORDER",
+    )
+
+
+def test_run_id_that_is_not_a_path_component_is_refused(tmp_path, registries):
+    root = make_workspace(tmp_path, studies=(STUDY_ID,))
+    _assert_stopped(_stage(root, registries, run_id="../escaped-run"), "RUN_ID_UNSAFE")
+    assert not (tmp_path / "escaped-run").exists()
+    assert not (root / ".staging").exists()
+
+
+def test_adoption_refuses_a_declared_run_id_that_escapes_the_run_directory(
+    tmp_path, registries
+):
+    root = make_workspace(tmp_path, studies=(STUDY_ID,))
+    staged = root / ".staging" / "20261012T064246Z-google-trends-handover"
+    staged.mkdir(parents=True)
+    (staged / RUN_METADATA_NAME).write_text(
+        json.dumps({"run_id": "../escaped-adopt"}), encoding="utf-8"
+    )
+
+    result = adopt_staged(
+        staged,
+        workspace_root=root,
+        datasets_root=root / "datasets",
+        registries=registries,
+    )
+
+    _assert_stopped(result, "RUN_ID_UNSAFE")
+    assert staged.is_dir()  # a refused run is not moved anywhere
+    assert not (root / "escaped-adopt").exists()
+    assert not (root / "datasets" / STUDY_ID / "data" / "escaped-adopt").exists()
+
+
+def test_study_id_that_is_not_a_path_component_is_refused(tmp_path, registries):
+    root = make_workspace(tmp_path, studies=(STUDY_ID,))
+    # ``datasets/../escaped-study`` resolves to a real directory, so the
+    # "does the study directory exist" check alone would let it through.
+    (root / "escaped-study").mkdir()
+    plan = _staging_plan()
+    plan["study_id"] = "../escaped-study"
+    series = _series()
+
+    result = stage_run(
+        plan,
+        artifacts=[_artifact(series)],
+        execution={"status": "success", "returned_count": len(series["data"]), "errors": []},
+        started_at=series["collected_at"],
+        finished_at=series["collected_at"],
+        workspace_root=root,
+        datasets_root=root / "datasets",
+        registries=registries,
+    )
+
+    _assert_stopped(result, "STUDY_ID_UNSAFE")
+    assert not (root / ".staging").exists()
+
+
+def test_undeclared_execution_outcome_is_refused(tmp_path, registries):
+    root = make_workspace(tmp_path, studies=(STUDY_ID,))
+    _assert_stopped(_stage(root, registries, execution={}), "STAGING_EXECUTION_INCOMPLETE")
+    assert not (root / ".staging").exists()
+
+
+def test_declared_environment_cannot_restate_the_fingerprint(tmp_path, registries):
+    root = make_workspace(tmp_path, studies=(STUDY_ID,))
+    staged = _stage(
+        root,
+        registries,
+        environment={
+            "collection_mode": "recorded_replay",
+            "adapter": {"collection_mode": "live_fetched", "collector_version": "9.9.9"},
+            "collection_core_version": "0.0.1",
+            "runtime_version": "python-0.0.0",
+            "code_commit": "0" * 40,
+        },
+    )
+    environment = load_json(Path(staged.staging_dir) / RUN_METADATA_NAME)["environment"]
+
+    assert environment["adapter"] == {
+        "collection_mode": "external_staged",
+        "collector_version": "0.1.1",
+    }
+    assert environment["collection_mode"] == "recorded_replay"
+    assert environment["collection_core_version"] == "1.0.0"
+    assert environment["runtime_version"] != "python-0.0.0"
+    assert environment.get("code_commit") != "0" * 40
+
+
+def test_artifact_path_without_a_filename_is_refused(tmp_path, registries):
+    root = make_workspace(tmp_path, studies=(STUDY_ID,))
+    artifact = replace(_artifact(_series()), path=".")
+    _assert_stopped(
+        _stage(root, registries, artifacts=[artifact]),
+        "STAGING_ARTIFACT_PATH_UNSAFE",
     )
 
 

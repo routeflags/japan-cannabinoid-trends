@@ -47,6 +47,7 @@ from __future__ import annotations
 import json
 import os
 import platform
+import re
 import shutil
 import subprocess
 from dataclasses import dataclass, field
@@ -122,6 +123,63 @@ def _git_commit(workspace_root) -> str | None:
         commit = result.stdout.strip()
         return commit or None
     return None
+
+
+#: A run id / study id becomes a directory name (``.staging/<run-id>/``,
+#: ``<datasets-root>/<study-id>/data/raw/<run-id>/``) and arrives from outside
+#: the repository (a handover directory, a staged ``run_metadata.json``), so it
+#: is validated as one path-safe component wherever the pipeline accepts it.
+_IDENTIFIER_COMPONENT = re.compile(r"[A-Za-z0-9][A-Za-z0-9._-]*\Z")
+_MAX_IDENTIFIER_LENGTH = 128
+
+#: ``environment`` keys the pipeline owns.  ``environment`` adds
+#: collector-specific detail; it cannot restate what ran here.
+_FINGERPRINT_KEYS = (
+    "adapter",
+    "adapter_contract_version",
+    "code_commit",
+    "collection_core_version",
+    "runtime_version",
+)
+
+
+def _identifier_component_reason(value, field_name: str) -> str | None:
+    """Why ``value`` cannot be used as one directory name (None = it can)."""
+    if not isinstance(value, str) or not value:
+        return f"{field_name} must be a non-empty string"
+    if len(value) > _MAX_IDENTIFIER_LENGTH:
+        return f"{field_name} must be at most {_MAX_IDENTIFIER_LENGTH} characters"
+    if not _IDENTIFIER_COMPONENT.match(value):
+        return (
+            f"{field_name} must be one path-safe component (letters, digits, "
+            "'.', '_' or '-', starting with a letter or digit)"
+        )
+    return None
+
+
+def _run_environment(environment, adapter, workspace_root) -> dict:
+    """Merge a caller's ``environment`` with the pipeline-owned fingerprint.
+
+    The fingerprint (adapter identity, core / contract versions, code commit)
+    describes what ran here, so the pipeline writes it and a caller cannot
+    replace it; ``environment`` contributes collector detail only.
+    ``code_commit`` is recorded only when the workspace really is a git
+    checkout - an unverifiable claim is dropped rather than repeated.
+    """
+    merged = {
+        key: value
+        for key, value in (environment or {}).items()
+        if key not in _FINGERPRINT_KEYS
+    }
+    merged["collection_core_version"] = COLLECTION_CORE_VERSION
+    merged["adapter_contract_version"] = ADAPTER_CONTRACT_VERSION
+    merged["runtime_version"] = f"python-{platform.python_version()}"
+    if hasattr(adapter, "describe_execution"):
+        merged["adapter"] = adapter.describe_execution()
+    commit = _git_commit(workspace_root)
+    if commit:
+        merged["code_commit"] = commit
+    return merged
 
 
 def _resolve_window_compiler(collector_id):
@@ -263,9 +321,13 @@ def _finalize(
 
 def _check_study_directory(plan_study_id, datasets_root) -> list[Issue]:
     """A study is a curated unit (README / methodology); the pipeline never
-    invents one (AGENTS.md dataset structure)."""
+    invents one (AGENTS.md dataset structure), and ``study_id`` names a
+    directory under the datasets root, so it must be one safe component."""
     if not plan_study_id:
         return [_issue("STUDY_ID_MISSING", "/study_id", "plan has no study_id")]
+    unsafe = _identifier_component_reason(plan_study_id, "study_id")
+    if unsafe:
+        return [_issue("STUDY_ID_UNSAFE", "/study_id", unsafe)]
     if not (Path(datasets_root) / plan_study_id).is_dir():
         return [
             _issue(
@@ -511,15 +573,7 @@ def run_collection(
     manifest = build_artifact_manifest(effective_run_id, staged_dir, [artifact])
     _write_json(staged_dir / ARTIFACT_MANIFEST_NAME, manifest)
 
-    run_environment = dict(environment or {})
-    run_environment.setdefault("collection_core_version", COLLECTION_CORE_VERSION)
-    run_environment.setdefault("adapter_contract_version", ADAPTER_CONTRACT_VERSION)
-    run_environment.setdefault("runtime_version", f"python-{platform.python_version()}")
-    if hasattr(adapter, "describe_execution"):
-        run_environment.setdefault("adapter", adapter.describe_execution())
-    commit = _git_commit(workspace_root)
-    if commit:
-        run_environment.setdefault("code_commit", commit)
+    run_environment = _run_environment(environment, adapter, workspace_root)
 
     window_id = window.get("window_id") or f"{window.get('start')}_{window.get('end_exclusive')}"
     document = build_run_metadata(
@@ -560,7 +614,8 @@ def adopt_staged(
     The staged directory must contain ``run_metadata.json`` (plus the
     artifacts its manifest references).  Nothing is modified: the directory
     is only read, then moved (catalog) or moved with an added reason file
-    (quarantine).
+    (quarantine).  The declared ``run_id`` is untrusted input that names the
+    catalog / quarantine directory, so it must be one path-safe component.
     """
     staged_path = Path(staged_dir)
     metadata_path = staged_path / RUN_METADATA_NAME
@@ -596,6 +651,14 @@ def adopt_staged(
             issues=[
                 _issue("RUN_ID_MISSING", "/run_id", "staged run has no run_id")
             ],
+        )
+
+    unsafe_run_id = _identifier_component_reason(run_id, "run_id")
+    if unsafe_run_id:
+        return PipelineResult(
+            action="stopped",
+            run_id=run_id,
+            issues=[_issue("RUN_ID_UNSAFE", "/run_id", unsafe_run_id)],
         )
 
     if registries is None:
@@ -717,6 +780,8 @@ def _staging_path_reason(relative) -> str | None:
     candidate = Path(relative)
     if candidate.is_absolute() or ".." in candidate.parts:
         return "artifact path must stay inside the run directory"
+    if candidate.name in ("", ".", ".."):
+        return "artifact path must name a file inside the run directory"
     return None
 
 
@@ -760,10 +825,18 @@ def stage_run(
     file is copied into the staging directory byte-for-byte and the manifest is
     computed from the files on disk.  ``execution`` carries the collector's
     own outcome (``status`` / ``returned_count`` / ``errors`` / optionally
-    ``pagination_exhausted`` and ``completeness``); ``temporal`` carries what
-    only the collector can know (observed bounds, boundary semantics,
-    limitations) and is merged into ``temporal_provenance`` exactly as an
-    adapter's temporal block is.
+    ``pagination_exhausted``); the outcome itself must be declared - the two
+    fields above are required, because a stager that did not observe them must
+    not have them invented here.  Completeness is declared per artifact
+    (:attr:`CollectedArtifact.completeness`): the run metadata contract has no
+    run-level field for it.  ``temporal`` carries what only the collector can
+    know (observed bounds, boundary semantics, limitations) and is merged into
+    ``temporal_provenance`` exactly as an adapter's temporal block is.
+
+    Everything accepted here arrives from outside the repository, so the names
+    that become directories (``run_id`` / ``study_id``) are validated as single
+    path-safe components and the pipeline-owned fingerprint keys in
+    ``environment`` cannot be replaced by the declaration.
 
     Deliberate omissions, both documented in the module docstring:
 
@@ -881,9 +954,36 @@ def stage_run(
             ],
         )
 
+    if not isinstance(execution, dict):
+        execution = {}
+    undeclared = [
+        field_name
+        for field_name in ("status", "returned_count")
+        if execution.get(field_name) is None
+    ]
+    if undeclared:
+        return PipelineResult(
+            action="stopped",
+            issues=[
+                _issue(
+                    "STAGING_EXECUTION_INCOMPLETE",
+                    "/execution",
+                    "a staged run must declare what the collector observed "
+                    "(missing: " + ", ".join(undeclared) + ")",
+                )
+            ],
+        )
+
     effective_run_id = run_id or default_run_id(
         str(plan.get("source_id")), str(plan.get("study_id")), started
     )
+    unsafe_run_id = _identifier_component_reason(effective_run_id, "run_id")
+    if unsafe_run_id:
+        return PipelineResult(
+            action="stopped",
+            run_id=effective_run_id,
+            issues=[_issue("RUN_ID_UNSAFE", "/run_id", unsafe_run_id)],
+        )
     staged_dir = _staging_root(workspace_root) / effective_run_id
     study_issues = _check_study_directory(plan.get("study_id"), datasets_root)
     if study_issues:
@@ -951,22 +1051,17 @@ def stage_run(
 
     staged_dir.mkdir(parents=True)
     for artifact, staged in zip(collected, staged_artifacts):
-        shutil.copyfile(str(artifact.source), str(staged_dir / staged.path))
+        target = staged_dir / staged.path
+        target.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(str(artifact.source), str(target))
     manifest = build_artifact_manifest(effective_run_id, staged_dir, staged_artifacts)
     _write_json(staged_dir / ARTIFACT_MANIFEST_NAME, manifest)
 
-    run_environment = dict(environment or {})
-    run_environment.setdefault("collection_core_version", COLLECTION_CORE_VERSION)
-    run_environment.setdefault("adapter_contract_version", ADAPTER_CONTRACT_VERSION)
-    run_environment.setdefault("runtime_version", f"python-{platform.python_version()}")
     identity = _DeclaredCollectorIdentity(
         adapter_id=str(collector_entry.get("adapter_id")),
         version=str(collector_entry.get("version", "unknown")),
     )
-    run_environment.setdefault("adapter", identity.describe_execution())
-    commit = _git_commit(workspace_root)
-    if commit:
-        run_environment.setdefault("code_commit", commit)
+    run_environment = _run_environment(environment, identity, workspace_root)
 
     document = build_run_metadata(
         plan=plan,
@@ -974,11 +1069,10 @@ def stage_run(
         adapter=identity,
         result=CollectionResult(
             raw=None,
-            status=str(execution.get("status", "success")),
-            returned_count=int(execution.get("returned_count", 0)),
+            status=execution.get("status"),
+            returned_count=execution.get("returned_count"),
             errors=list(execution.get("errors") or []),
             pagination_exhausted=execution.get("pagination_exhausted"),
-            completeness=str(execution.get("completeness", "complete")),
             submitted_parameters=dict(submitted_parameters or {}),
             temporal=dict(temporal or {}),
         ),

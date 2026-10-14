@@ -155,6 +155,35 @@ def test_adopted_run_is_strict_valid(tmp_path, registries):
     assert artifact["completeness"] == "complete"
 
 
+def test_collect_environment_cannot_restate_the_fingerprint(tmp_path, registries):
+    """The run environment is caller-extensible, but the fingerprint that says
+    what ran here is written by the pipeline (same rule as ``stage_run``)."""
+    root = make_workspace(tmp_path)
+    adapter = build_replay_adapter(registries, FIXTURE_12M)
+    result = run_collection(
+        make_plan(),
+        adapter=adapter,
+        workspace_root=root,
+        datasets_root=root / "datasets",
+        registries=registries,
+        run_id=RUN_ID_12M,
+        now=REFERENCE_NOW,
+        environment={
+            "collection_mode": "declared_by_caller",
+            "adapter": {"collection_mode": "live_fetched"},
+            "collection_core_version": "0.0.1",
+            "code_commit": "0" * 40,
+        },
+    )
+    assert result.action == "adopted", [i.code for i in result.issues]
+    environment = load_json(Path(result.final_dir) / "run_metadata.json")["environment"]
+
+    assert environment["adapter"]["collection_mode"] == "recorded_replay"
+    assert environment["collection_mode"] == "declared_by_caller"
+    assert environment["collection_core_version"] == "1.0.0"
+    assert environment.get("code_commit") != "0" * 40
+
+
 def test_observed_zero_run_keeps_its_evidence(tmp_path, registries):
     """A zero-observation run is adopted only with a record_count:0 artifact
     (L1-09: zero is not indistinguishable from missing)."""
