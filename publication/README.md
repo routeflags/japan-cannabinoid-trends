@@ -6,13 +6,27 @@ CBX / カンナビノイド関連ガイドページの公開用アーティフ�
 
 ## 更新方法
 
-月次更新はスキル `update-cbx-guide` を使用します。
+ページはスキルで生成する。数値の出所（run_id）は生成時に記録する。
 
-```
-「CBX ガイドを更新」
+| 対象 | 手段 |
+|------|------|
+| `research_*.html` | スキル `generate-research-data-page`（`.github/skills/generate-research-data-page/SKILL.md`） |
+| `guide_cbx_rewrite.html` | スキル `generate-compound-guide`（`.github/skills/generate-compound-guide/SKILL.md`） |
+
+更新後は公開契約を検査して結果を記録する（**record-only**。判定は記録し、公開を止めるかは
+AGENTS.md の公開規則に従って人が決める）:
+
+```bash
+python -m validation.cli audit-publication --output docs/audits/publication-contract.json
 ```
 
-詳細: `.github/skills/update-cbx-guide/SKILL.md`
+規則（PC-1 / PC-3 / PC-4 / PC-5 / PC-6）と未実装項目は
+`src/validation/publication_contract.py` と `docs/specs/contracts.md` が正本。
+
+> 旧手順はスキル `update-cbx-guide` を参照していたが、同スキルは存在しない
+> （2026-10-15 に確認・修正）。同じ日に不活性だった
+> `scripts/validation/validate-research-pages.py`（到達不能な規則と存在しないパス）
+> も削除し、上記の監査へ置換した。
 
 ---
 
@@ -52,4 +66,12 @@ CBX / カンナビノイド関連ガイドページの公開用アーティフ�
 
 - [ ] 元リポジトリ（symphony_workspaces）への反映
 - [ ] Google Trends データの定期更新（四半期）
-- [ ] Instagram/TikTok データの反映（別リポジトリで定点観測中）
+- [ ] 公開物の投稿単位 X 表現の除去（投稿単位の表現は格納禁止と同じく禁止。
+      `ISS-20261015-XID-034` / `docs/specs/contracts.md`）
+- [ ] 契約の未解消分: 版・DOI（13 ページ）、GT 5 年表（7 ページ）、X の信頼区間（guide）。
+      `docs/audits/publication-contract.json` を参照
+
+**Instagram / TikTok**: Instagram の定点観測は 2026-10-01 に廃止された（カンナビノイド関連 0 件、
+化粧品・バイクノイズ支配）。共有仕様 `docs/specs/instagram-tiktok-data-sharing-spec.md` は
+Instagram を含む DRAFT のままなので、改訂または ARCHIVED 化が必要。TikTok の定点観測データは
+データ所有側リポジトリにあり、本リポジトリへは未取り込み。

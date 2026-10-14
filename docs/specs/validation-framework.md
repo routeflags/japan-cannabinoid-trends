@@ -240,7 +240,9 @@ report = outcome.to_report().to_dict()
 追加（いずれも main 上で green をローカル実測。秒単位。`release-zenodo.yml` は不変）:
 
 - `bash scripts/validation/validate-data-schema.sh`（PASS 45 / WARN 2 / FAIL 0、約0.2秒）
-- `python scripts/validation/validate-research-pages.py`（13化合物全合格、約0.05秒。stdlib のみ、network 不要）
+- `python -m validation.cli audit-publication --output docs/audits/publication-contract.json`
+  （公開契約 PC-1/3/4/5/6。read-only、record-only、常に exit 0。2026-10-15 に
+  `scripts/validation/validate-research-pages.py`（不活性）を削除して置換）
 - `bash scripts/validation/validate-search-emergence-tracker.sh`（PASS、約0.1秒。network 不要。§3 の日付比較は WARN のみで exit に影響しない）
 - `python -m validation.cli audit-git-tracking --output /tmp/g6-git-tracking-inventory.json`
   （read-only、report-only、常に exit 0。tracked/ignored/absent を CI ログに記録）
@@ -305,7 +307,7 @@ Cerberus は**構造検証のみ**を担当する。
 | Python | 3.14.6（Homebrew）/ pip 26.1.2 |
 | 依存管理ファイル | 導入前は存在しなかった（本 `pyproject.toml` が最初） |
 | 既存 Python コード | 全17ファイルが標準ライブラリのみ |
-| 既存検証資産 | `scripts/validation/*.sh`（3本）+ `validate-research-pages.py`（stdlib） |
+| 既存検証資産 | `scripts/validation/*.sh`（3本）※ `validate-research-pages.py` は 2026-10-15 に不活性（到達不能な規則・存在しないパス）のため削除し、公開契約の監査へ置換（`docs/specs/contracts.md` の PC 規則） |
 | pytest | 導入前は未導入・`tests/` なし |
 | JSON Schema Draft 2020-12 | 存在しない |
 | GitHub Actions | `release-zenodo.yml` のみ（PR/push 検証なし） |

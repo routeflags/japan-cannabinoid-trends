@@ -293,10 +293,23 @@ if [ -f "$GUIDE_FILE" ]; then
 
   # DOI チェック（version DOI または concept DOI が含まれていれば OK）
   if [ -n "$BASELINE_DOI" ]; then
-    if echo "$GUIDE_DOIS" | grep -qE "$BASELINE_DOI|${BASELINE_DOI%.*}"; then
+    # version DOI または concept DOI との完全一致のみ合格とする。
+    # `${BASELINE_DOI%.*}` のような接頭辞一致は任意の Zenodo DOI を通してしまう
+    # （旧 DOI 23164972/23164973 が素通りしていた。README の同種チェックと同じ規則）。
+    UNEXPECTED_DOIS=""
+    for doi in $GUIDE_DOIS; do
+      if [ "$doi" = "$BASELINE_DOI" ]; then
+        continue
+      fi
+      if [ -n "${ZENODO_CONCEPT_DOI:-}" ] && [ "$doi" = "$ZENODO_CONCEPT_DOI" ]; then
+        continue
+      fi
+      UNEXPECTED_DOIS="${UNEXPECTED_DOIS} ${doi}"
+    done
+    if [ -z "$UNEXPECTED_DOIS" ]; then
       print_pass "引用 DOI: $(echo $GUIDE_DOIS | tr '\n' ' ')"
     else
-      print_fail "引用 DOI: $(echo $GUIDE_DOIS | tr '\n' ' ') → $BASELINE_DOI"
+      print_fail "引用 DOI:${UNEXPECTED_DOIS} → ${BASELINE_DOI}（または concept DOI ${ZENODO_CONCEPT_DOI:-N/A}）"
     fi
   fi
 

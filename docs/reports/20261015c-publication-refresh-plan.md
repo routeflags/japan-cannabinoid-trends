@@ -180,8 +180,16 @@ flowchart TD
 
 ### 6.2 実装方針（推奨）
 
-- 既存の `scripts/validation/validate-research-pages.py` は**検査器として不活性**（P5）なので、PC-5/PC-6 を満たすよう修正し、**公開契約の検査**として `validation.cli` 側へ接続する（CI = `.github/workflows/research-validation.yml` に 1 ステップ追加）。
-- PC-1 は既存 `scripts/validation/validate-version-sync.sh` の対象を `publication/*.html` 全体へ拡張する（版・DOI の正本は `CITATION.cff` / `metadata/datapackage.json`）。
+- **実装済み（2026-10-15）**: 規則は `src/validation/publication_contract.py`、実行は
+  `python -m validation.cli audit-publication`（**record-only**、常に exit 0、結果は
+  `docs/audits/publication-contract.json`）。不活性だった `scripts/validation/validate-research-pages.py`
+  は**削除**し、CI のステップ（`.github/workflows/research-validation.yml`）も監査へ差し替えた
+  （規則の二重実装を作らないため）。
+- PC-1 は既存 `scripts/validation/validate-version-sync.sh` の対象を `publication/*.html` 全体へ拡張する
+  （版・DOI の正本は `CITATION.cff` / `metadata/datapackage.json`）。
+  - **実装済み（2026-10-15）**: 公開 HTML 全体の版・DOI は `audit-publication` が検査する。
+    `validate-version-sync.sh` 側は guide の DOI 比較が `${BASELINE_DOI%.*}` により任意の
+    Zenodo DOI を通してしまうバグを修正した（README の同種チェックと同じ完全一致規則）。
 - PC-3 は方針の語彙を `config/storage-policies.json` の `publication` 値に追加して表現する（現在は `requires_review` のみ。公開禁止・公開可の区別が語彙に無い）。
 - 判断記録（PC-7）は既存 envelope 形式（`metadata/publication/README.md`）を再利用する。
 
@@ -216,6 +224,25 @@ flowchart TD
 | リキッド軸 | `20261012-ja-rikiddo-expansion-report.md` の 12ヶ月平均・初出週（HHC 2021-12-05、CBG 2024-02-04 など）を guide / 該当ページへ反映 |
 | 限定事項 | 単独取得と比較取得のスケール不可比、低ボリューム語の断続表示、最新週の変動、`no-data` は **unknown**（需要ゼロと断定しない）を必ず併記 |
 | 比較可能性 | 別 run・別言語間の数値比較を行わない旨を明記（`research_views/cbd-rikiddo-gt-weekly-parallel/` の comparability レポートと整合させる） |
+
+#### 5 年表を持たない 7 ページの根拠状況（2026-10-15 実測）
+
+5 年系列の run は存在するが、結果が「系列なし」の化合物がある。**未取得を 0 と書かない**ため、
+run ごとに区別して記録する。
+
+| ページ | 使える 5 年証拠 | 反映の仕方 |
+|---|---|---|
+| `cbg` / `hhc` / `thc` | `20261008T093228Z-google-trends-5y-baseline`（`cbg_5y_summary.json` 等） | 5 年平均・ピーク・最新値を表にする |
+| `cbn` | `20261002T082000Z-google-trends-cbn-5y` → `no_series_observed` | 「5 年系列を取得したが Google Trends は系列を返さなかった（閾値以下）。
+需要ゼロとは断定しない」と記録（`unknown`） |
+| `crdp` | `20261002T085359Z-google-trends-crdp-5y` → `no_series_observed` | 同上 |
+| `hhch` | `20261002T094730Z-google-trends-hhch-5y` → `no_series_observed` | 同上 |
+| `thch` | **5 年 run が存在しない**（`20261002T064118Z-google-trends-thch` は 12ヶ月のみ） | 新規収集が必要（**ライブ GT 収集は未承認**）。それまでは「未取得」と記録し、
+表を作らない |
+
+なお `ja-rikiddo-5y-main5`（2026-10-12）は「○○ リキッド」クエリであり、単独クエリ
+（`○○`）の 5 年系列とは**同一視しない**（別クエリ・別スケール）。リキッド軸は guide と
+該当ページで別途扱う。
 
 ### 7.2 YouTube
 
@@ -268,10 +295,13 @@ flowchart TD
 .venv/bin/python -m validation.cli audit-x-identity                    # findings=0
 .venv/bin/python -m validation.cli contract-ledger                     # 新規。台帳を再生成
 .venv/bin/python -m validation.cli gate-publication ...                # 公開判断の再実行（PC-7）
-bash scripts/validation/validate-version-sync.sh                       # FAIL 0（PC-1 拡張後も維持）
+bash scripts/validation/validate-version-sync.sh                       # FAIL 0（PC-1）
 bash scripts/validation/validate-data-schema.sh
-python3 scripts/validation/validate-research-pages.py                  # PC-5/PC-6 修正後に意味を持つ
+.venv/bin/python -m validation.cli audit-publication                    # 公開契約（record-only、findings を記録）
 ```
+
+> 2026-10-15 の実測: `audit-publication` は 15 artifact・**48 findings**
+> （PC-1 39 ＝ 13 ページの版・DOI、PC-5 9 ＝ GT 5 年表 8 + guide の X 信頼区間 1）。
 
 完了条件: PC-1〜PC-7 がすべて機械検査で PASS し、かつ**検査器が意図的に失敗させたときに落ちる**こと（非空虚性。P5 の再発防止）。
 
@@ -311,3 +341,7 @@ python3 scripts/validation/validate-research-pages.py                  # PC-5/PC
 |------|------|------|
 | 2026-10-15 | 初版作成（契約の DDD 整理、新契約の publication 反映、GT / YouTube 差分反映の計画） | 未 |
 | 2026-10-15 | U4 決定を反映: 投稿単位の表現を公開物でも禁止（§6.5 X-PUB-1）。§6.3 の依存を PUB-035 のみに縮小。P9 / PC-3 / §7.2 を更新 | メンテナ決定（U4） |
+| 2026-10-15 | 実施①（段階 1・2）: 契約のドメインモデルと台帳、公開契約の規則と record-only 監査。不活性な検証器を削除 | メンテナ（その他は進めてよい） |
+| 2026-10-15 | 実施②（段階 3）: 重複 id 13 件、v3 出典の明示 13 件、guide のメタ（版・DOI・dateModified）、
+X の投稿レコード記述を修正。`validate-version-sync.sh` の DOI 比較の真空性を修正 | 同上 |
+| 2026-10-15 | 実施③（段階 5）: `publication/README.md` の更新手順と未完了タスクを実態に合わせ、監査コマンドを記載 | 同上 |

@@ -76,9 +76,15 @@ jobs:
         run: |
           bash scripts/validation/validate-data-schema.sh
 
-      - name: Validate research pages
+      - name: Audit the publication contract (record only)
         run: |
-          python scripts/validation/validate-research-pages.py
+          # The page validator that used to run here was inert: its depth rules
+          # were unreachable and the data paths it checked did not exist, so it
+          # reported 13 green pages while 13 of them cited a stale release.  The
+          # rules now live in src/validation/publication_contract.py and run
+          # record-only until the content refresh
+          # (docs/reports/20261015c-publication-refresh-plan.md, phase 4) lands.
+          python -m validation.cli audit-publication --output /tmp/publication-contract.json
 
       - name: Validate search emergence tracker
         run: |

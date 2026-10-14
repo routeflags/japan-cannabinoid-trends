@@ -21,6 +21,7 @@ Commands
 - ``audit-git-tracking``  non-destructive G6 §15 git tracking inventory
 - ``audit-private-catalog`` non-destructive G6 §13 private data boundary catalog
 - ``contract-ledger``     the derived inventory of every declared contract
+- ``audit-publication``   the publication contract (record-only; see the module)
 - ``gate-publication``    record-only G6 §10 publication eligibility gate
 
 Exit codes (h.md §13)
@@ -69,6 +70,7 @@ from validation.provenance import (
     check_evidence_registry,
     find_duplicate_run_ids,
 )
+from validation.publication_contract import build_publication_contract_report
 from validation.query_semantics import (
     build_query_inventory,
     check_query_registry,
@@ -955,6 +957,51 @@ def cmd_audit_issues(args) -> int:
         for path in report["open_critical"]:
             _err(f"  {path}")
     return EXIT_DATA if report["failure_count"] else EXIT_OK
+
+
+def cmd_audit_publication(args) -> int:
+    """Publication contract audit.  Record-only: the rules need a content
+    refresh to pass, so findings are recorded and the exit code stays 0 (same
+    treatment as ``gate-publication`` and ``boundary-report``).
+
+    Read-only; the rule set and why it is not fatal live in
+    ``validation/publication_contract.py``.
+    """
+    try:
+        report = build_publication_contract_report(Path.cwd())
+    except (OSError, ValueError) as error:
+        _err(f"publication contract audit failed: {error.__class__.__name__}: {error}")
+        return EXIT_CONFIG
+
+    summary = report["summary"]
+    if args.output:
+        try:
+            _write_output(args.output, report)
+        except OSError as error:
+            _err(
+                f"cannot write audit output: {args.output} "
+                f"({error.__class__.__name__})"
+            )
+            return EXIT_IO
+        _err(
+            f"publication contract written: {args.output} "
+            f"({summary['finding_count']} finding(s))"
+        )
+    elif args.format == "json":
+        print(dump_json(report), end="")
+    else:
+        for finding in report["findings"]:
+            print(
+                f"{finding['rule']:5} {finding['kind']:28} "
+                f"{finding['path']}  {finding['detail']}"
+            )
+    _err(
+        f"publication contract: {summary['artifact_count']} artifact(s) "
+        f"findings={summary['finding_count']} "
+        f"[{', '.join(f'{key}={value}' for key, value in summary['by_rule'].items())}] "
+        f"(record-only)"
+    )
+    return EXIT_OK
 
 
 def cmd_contract_ledger(args) -> int:
@@ -1849,6 +1896,19 @@ def build_parser() -> argparse.ArgumentParser:
         "--format", choices=("text", "json"), default="text"
     )
     contract_ledger_parser.set_defaults(handler=cmd_contract_ledger)
+
+    audit_publication_parser = sub.add_parser(
+        "audit-publication",
+        help=(
+            "publication contract: release version/DOI, section depth, policy-out "
+            "sources (record-only)"
+        ),
+    )
+    audit_publication_parser.add_argument("--output", default=None)
+    audit_publication_parser.add_argument(
+        "--format", choices=("text", "json"), default="text"
+    )
+    audit_publication_parser.set_defaults(handler=cmd_audit_publication)
     audit_issues_parser.set_defaults(handler=cmd_audit_issues)
 
     audit_private = sub.add_parser(
