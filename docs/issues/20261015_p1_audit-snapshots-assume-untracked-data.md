@@ -45,12 +45,23 @@
   g6-private-catalog と g7 は同じ問題を抱えたまま snapshot として登録された。
 - `.github/workflows/research-validation.yml` は push / pull_request で
   `python -m pytest` を実行する。clean checkout でこの 3 件が落ちることから、
-  **CI でも同じ 3 件が落ちると推定される**（これは導出。CI 実行そのものは未確認）。
+  **CI でも同じ 3 件が落ちる**（2026-10-15 に実測で確定。下記）。
+- **CI での実測（2026-10-15、`gh run view`）**:
+  - run `38587265312`（commit `fae7fe2`）: **failure 21 秒**。「Run contract tests」で停止し、
+    以降のステップはすべて skip。ログの失敗は 3 件で、上記の想定と一致
+    （`FileNotFoundError: published source missing for datasets/cbx-social-trends/data/processed/x_cbx_202608_summary_anonymized.csv: data/private/x_cbx_202608_summary.csv`（`src/processing/reproduce.py`）、
+    `docs/audits/g6-private-catalog.json is stale`、`docs/audits/g7-study-inventory.json is stale`）。
+  - run `38628877292`（commit `9475d09`、公開契約の CI ステップ追加後）: **同じ 3 件で failure**。
+    追加した「Audit the publication contract (record only)」ステップは **pytest の失敗で skip される**ため、
+    この CI ステップはまだ CI 上で一度も実行されていない（unit テストでは検証済み）。
+  - したがって「CI は緑」は現状成立しない。**ローカルで green でも CI は落ちる**という状態が続いている。
 
 ## 影響
 
 - 「全ゲート green」が作者のマシンでしか成立しない。第三者の検証・引用時に同じ
   結果を再現できない（今回の staging 境界の独立検証でもこの 1 点だけ再現しなかった）。
+- **CI（push ごとに実行）が常に赤**である。実測で確定（上記）。pytest で停止して以降の
+  ステップが skip されるため、後続の検証（公開契約の監査を含む）が CI では動いていない。
 - 監査スナップショットの鮮度ゲートが、リポジトリに存在しないデータの存在を要求する。
 - 追跡外の private データの**存在**が、公開されている追跡済みファイルの数値
   （`data_file_count`）に現れる。
