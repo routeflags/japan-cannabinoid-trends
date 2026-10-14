@@ -30,6 +30,7 @@ than an empty series (AGENTS.md: a collection failure is not zero).
 from __future__ import annotations
 
 import json
+import os
 import select
 import subprocess
 import time
@@ -79,6 +80,8 @@ class McpStdioSession:
         ]
         self._process: subprocess.Popen | None = None
         self._next_id = 0
+        #: Line buffer for the server's stdout (see :meth:`_read_message`).
+        self._buffer = b""
 
     # -- lifecycle ---------------------------------------------------------
 
@@ -98,8 +101,6 @@ class McpStdioSession:
                 stdin=subprocess.PIPE,
                 stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE,
-                text=True,
-                bufsize=1,
                 cwd=self.cwd,
             )
         except OSError as error:
@@ -135,6 +136,7 @@ class McpStdioSession:
             for stream in (process.stdout, process.stderr):
                 if stream and not stream.closed:
                     stream.close()
+        self._buffer = b""
 
     # -- calls -------------------------------------------------------------
 
@@ -194,7 +196,7 @@ class McpStdioSession:
         if process is None or process.stdin is None:
             raise McpSessionError("the MCP session is not running")
         try:
-            process.stdin.write(json.dumps(message) + "\n")
+            process.stdin.write((json.dumps(message) + "\n").encode("utf-8"))
             process.stdin.flush()
         except (OSError, ValueError) as error:
             raise McpSessionError(
@@ -202,11 +204,31 @@ class McpStdioSession:
             ) from error
 
     def _read_message(self) -> dict:
+        """Return the next JSON-RPC message from the server.
+
+        Reads the pipe in binary with ``os.read`` and keeps its own line buffer:
+        a text wrapper (or a buffered reader) may swallow the bytes after the
+        first line, which makes the following ``select`` report "no data" and
+        the session time out even though the server answered.
+        """
+
         process = self._process
         if process is None or process.stdout is None:
             raise McpSessionError("the MCP session is not running")
         deadline = time.monotonic() + self.timeout
         while True:
+            while b"\n" in self._buffer:
+                raw, self._buffer = self._buffer.split(b"\n", 1)
+                line = raw.decode("utf-8", "replace").strip()
+                if not line:
+                    continue
+                try:
+                    message = json.loads(line)
+                except json.JSONDecodeError:
+                    continue  # server banner / log line, not a JSON-RPC message
+                if isinstance(message, dict):
+                    return message
+
             remaining = deadline - time.monotonic()
             if remaining <= 0:
                 raise McpSessionError(
@@ -215,20 +237,11 @@ class McpStdioSession:
             ready, _writable, _error = select.select([process.stdout], [], [], remaining)
             if not ready:
                 continue
-            line = process.stdout.readline()
-            if line == "":
-                hint = ""
-                if process.poll() is not None and process.stderr is not None:
-                    tail = (process.stderr.read() or "").strip().splitlines()
-                    if tail:
-                        hint = f": {tail[-1]}"
+            chunk = os.read(process.stdout.fileno(), 65536)
+            if chunk == b"":
+                trailing = self._buffer.decode("utf-8", "replace").strip()
+                hint = f" (last output: {trailing[:120]!r})" if trailing else ""
+                if process.poll() is None:
+                    hint += " (the server is still running)"
                 raise McpSessionError(f"the MCP server closed the session{hint}")
-            line = line.strip()
-            if not line:
-                continue
-            try:
-                message = json.loads(line)
-            except json.JSONDecodeError:
-                continue  # server banner / log line, not a JSON-RPC message
-            if isinstance(message, dict):
-                return message
+            self._buffer += chunk
