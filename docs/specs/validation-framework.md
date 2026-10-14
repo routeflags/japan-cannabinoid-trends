@@ -1165,3 +1165,37 @@ staged → `adopt` を案内する。パスは字句的に正規化するため 
   「観測・派生・解釈を分ける」に沿う最小の修復。
 - **(iii) 再収集して埋める**: X の期間指定・YouTube 2025・COA を再収集し、実際に充足させる。
   ライブ収集の承認が必要（§22.4 の adapter も前提）。
+
+---
+
+## 25. 監査スナップショットの鮮度規則（ISS-20261015-AUD-028、2026-10-15）
+
+### 25.1 規則（1 つだけ）
+
+**コミットされる監査スナップショット（`docs/audits/*.json`）は、追跡ファイルだけで
+再生成できなければならない。** ローカルのディスク状態に依存する事実は、次のどちらかに
+寄せる。
+
+| 扱い | 適用先 | 実装 |
+|---|---|---|
+| (a) **追跡対象の事実に置き換える** | g7 study inventory の `data_file_count` | `private` を**名前で除外**（`src/research/audit.py`）。gitignored な `data/private/` の中身はチェックアウトごとに違い、公開レポートに現れる理由も無い。境界の存在は `audit-private-catalog` が扱う（**内容は数えない**） |
+| (b) **事実としては残し、検査対象から外す** | g6 private catalog の `exists` / `present` / `absent` | `tests/validation/test_audit_report_freshness.py` の normalizer `boundary_only`。ディレクトリの実在はローカルの事実で、2 台のマシンでは一致しない |
+| 既存の先例 | g6 git tracking の `state_summary` / `count` | normalizer `tracked_only`（`ignored` / `absent` も排除）。**追跡されているかどうか**はリポジトリの事実 |
+
+- 検査は `tests/validation/test_audit_report_freshness.py` の **1 つの登録表**（`REPORTS`）
+  が持つ。新しいレポートは登録しないと落ちる。
+- ローカルの disk 事実を検証したい場合は、そのレポートを normalizer で除外するか、
+  事実を追跡対象に限定する。**「このマシンでしか green にならない」検査を増やさない。**
+- 個人入力（`datasets/*/data/private/`）からしか再導出できない検証は、既存の
+  `requires_source` マーカー（`tests/processing/test_processed_artifacts.py`）と同じく
+  **スキップ**にする（private 入力がある環境では実行される）。
+
+### 25.2 実測（2026-10-15）
+
+- clean checkout（private ディレクトリ無し）での `pytest` は 3 件失敗していた:
+  `test_stale_declaration_is_reported`（private 入力が無いと `reproduce_artifact` が
+  `FileNotFoundError` を送出。`source_published=False` の導出に対してテストだけが
+  既定値 `True` の `Derivation` を作っていた）、g6-private-catalog 鮮度、g7 鮮度。
+  CI（`38587265312` / `38628877292`）も同じ 3 件で停止していた。
+- 修正後は clean checkout でも**スキップのみ**（private 入力に依存する検証は実行される
+  環境で走る）。「ローカルで green でも CI は落ちる」状態は解消。

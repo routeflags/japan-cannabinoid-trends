@@ -4,13 +4,13 @@
   "spec": "docs/plans/20261013f.md §15 (local plan; not tracked)",
   "target_root": "datasets",
   "include_private": false,
-  "count": 167,
+  "count": 172,
   "extra_count": 46,
   "raw_modified": false,
   "state_summary": {
     "absent": 12,
     "ignored": 10,
-    "tracked": 191
+    "tracked": 196
   },
   "entries": [
     {
@@ -1154,6 +1154,46 @@
       "unchanged": true
     },
     {
+      "path": "datasets/cannabinoid-multi-trends/data/raw/google_trends/20261014T215738Z-google-trends-cannabinoid-multi-trends/artifact-manifest.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "b564bff232b1edfb87b177f33a4757bc46e67ad9218f486f9eacb2d86cfaf9ba",
+      "sha256_after": "b564bff232b1edfb87b177f33a4757bc46e67ad9218f486f9eacb2d86cfaf9ba",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-multi-trends/data/raw/google_trends/20261014T215738Z-google-trends-cannabinoid-multi-trends/payload.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "965e7ab305b3b970d35afcbc56a9c9002369601e917527a07b607d47cc329e5f",
+      "sha256_after": "965e7ab305b3b970d35afcbc56a9c9002369601e917527a07b607d47cc329e5f",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-multi-trends/data/raw/google_trends/20261014T215738Z-google-trends-cannabinoid-multi-trends/records_crdh.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "631f74d1c333655d04eb601023f1903b60e8be1f1ee1549db13c9171e33d0550",
+      "sha256_after": "631f74d1c333655d04eb601023f1903b60e8be1f1ee1549db13c9171e33d0550",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-multi-trends/data/raw/google_trends/20261014T215738Z-google-trends-cannabinoid-multi-trends/run_metadata.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "f2e1da0c33e9f176d883dad5c947a5a406c2bf00bbf97e0d3cbcef0fe6e6520d",
+      "sha256_after": "f2e1da0c33e9f176d883dad5c947a5a406c2bf00bbf97e0d3cbcef0fe6e6520d",
+      "unchanged": true
+    },
+    {
       "path": "datasets/cannabinoid-multi-trends/metadata/plans/gt-5y-recollect-cbn.json",
       "exists": true,
       "state": "tracked",
@@ -1161,6 +1201,16 @@
       "ignored": false,
       "sha256": "8326623c83b324b422fc6ecf0aa619648b4b4bdd2a426709ad4b2288ce9eec79",
       "sha256_after": "8326623c83b324b422fc6ecf0aa619648b4b4bdd2a426709ad4b2288ce9eec79",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-multi-trends/metadata/plans/gt-5y-recollect-crdh.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "3282919508550a5b026f043910abf7a067bc7de2d8deffb41361757dcbc1080f",
+      "sha256_after": "3282919508550a5b026f043910abf7a067bc7de2d8deffb41361757dcbc1080f",
       "unchanged": true
     },
     {

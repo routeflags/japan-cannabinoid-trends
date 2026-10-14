@@ -20,8 +20,9 @@ AGENTS.md の公開規則に従って人が決める）:
 python -m validation.cli audit-publication --output docs/audits/publication-contract.json
 ```
 
-規則（PC-1 / PC-3 / PC-4 / PC-5 / PC-6）と未実装項目は
+規則（PC-1〜PC-6）と未実装項目（PC-7 / PC-8）は
 `src/validation/publication_contract.py` と `docs/specs/contracts.md` が正本。
+現在の判定と宣言済みギャップは `docs/audits/publication-contract.json`。
 
 > 旧手順はスキル `update-cbx-guide` を参照していたが、同スキルは存在しない
 > （2026-10-15 に確認・修正）。同じ日に不活性だった
@@ -43,14 +44,20 @@ python -m validation.cli audit-publication --output docs/audits/publication-cont
 
 ### 統合データ
 
-| データソース | Study ID | 内容 | 区分 |
-|-------------|----------|------|------|
-| Google Trends | `cbx-search-trends` | CBX / H4CBH / HHBD / CBX リキッド（12ヶ月週次） | **一次データ** |
-| X (Twitter) | `cbx-social-trends` | 147件（2026-08-05 ~ 09-08） | **一次データ** |
-| YouTube | `cbx-social-trends` | 24件（2026-10-01 取得、フィルタ後） | **一次データ** |
-| COA | `cbx-product-coa` | ISO認定2社 | **一次データ** |
-| GSC | `cbx-search-trends` | 2026-07 月次 | 参考データ |
-| OpenSEO | — | キーワードボリューム | 参考データ |
+run_id は数値の出所（どの収集実行から出たか）を示す（公開契約 PC-2）。run_id を持たない
+ソースは、**収集日と study_id** で示す（旧契約の収集で run 記録が無いため）。
+
+| データソース | Study ID | run_id / 収集 | 内容 | 区分 |
+|-------------|----------|----------------|------|------|
+| Google Trends | `cbx-search-trends` | 収集日 2026-08〜09（旧契約。run 記録なし） | CBX / H4CBH / HHBD / CBX リキッド（12ヶ月週次） | **一次データ** |
+| X (Twitter) | `cbx-social-trends` | 収集日 2026-08-05 〜 09-08（旧契約。run 記録なし） | 147件 | **一次データ** |
+| YouTube | `cbx-social-trends` | 収集日 2026-10-01（旧契約。run 記録なし） | 24件（フィルタ後） | **一次データ** |
+| COA | `cbx-product-coa` | 収集日 2026-10-01 | ISO認定2社 | **一次データ** |
+| GSC | `cbx-search-trends` | 2026-07 月次 | キーワード別クリック | 参考データ |
+| OpenSEO | — | — | キーワードボリューム | 参考データ |
+
+<!-- run_id は付与しない: これらのソースは collector 登録前の収集で、run_metadata.json が無い。
+数値の出所は収集日と study_id までしか遡れないことを隠さない（欠測 ≠ 捏造）。 -->
 
 ### 2026-10-01 更新内容
 
@@ -66,12 +73,10 @@ python -m validation.cli audit-publication --output docs/audits/publication-cont
 
 - [ ] 元リポジトリ（symphony_workspaces）への反映
 - [ ] Google Trends データの定期更新（四半期）
-- [ ] 公開物の投稿単位 X 表現の除去（投稿単位の表現は格納禁止と同じく禁止。
-      `ISS-20261015-XID-034` / `docs/specs/contracts.md`）
-- [ ] 契約の未解消分: 版・DOI（13 ページ）、GT 5 年表（7 ページ）、X の信頼区間（guide）。
-      `docs/audits/publication-contract.json` を参照
+- [ ] 公開の判断記録（PC-7）と guide の構造要件（PC-8）は未実装。公開前に
+      `docs/audits/publication-contract.json` の `unimplemented_rules` を確認する
 
 **Instagram / TikTok**: Instagram の定点観測は 2026-10-01 に廃止された（カンナビノイド関連 0 件、
-化粧品・バイクノイズ支配）。共有仕様 `docs/specs/instagram-tiktok-data-sharing-spec.md` は
-Instagram を含む DRAFT のままなので、改訂または ARCHIVED 化が必要。TikTok の定点観測データは
-データ所有側リポジトリにあり、本リポジトリへは未取り込み。
+化粧品・バイクノイズ支配）。共有仕様は `docs/specs/tiktok-data-sharing-spec.md` として
+**TikTok のみ**に改訂済み（2026-10-15）。TikTok の定点観測データはデータ所有側リポジトリにあり、
+本リポジトリへは未取り込み（取り込み時は `data/raw/tiktok/<run-id>/` に置く）。

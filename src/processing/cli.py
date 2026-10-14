@@ -22,6 +22,8 @@ from processing.gt_statistics import (
     PUBLICATION_COMPOUNDS,
     TIMEFRAMES,
     build_gt_summary,
+    page_filename,
+    replace_block,
 )
 from processing.reproduce import audit_processed_artifacts, reproduce_artifact
 from processing.rulespec import RuleSpecError, load_content_rules
@@ -119,13 +121,36 @@ def cmd_classify(args) -> int:
     return EXIT_OK
 
 
+def _write_page_blocks(report: dict, repo_root: Path) -> list[str]:
+    """Put each generated block into its page.  Returns the compounds written.
+
+    The block is swapped for the one the record produces, so a re-collection
+    reaches the page with one command and a hand-edited page is visibly
+    overwritten rather than silently kept (``test_every_page_carries_the_
+    generated_block`` fails first anyway).
+    """
+
+    written: list[str] = []
+    for entry in report["compounds"]:
+        page = repo_root / "publication" / page_filename(entry["compound"])
+        if not page.is_file():
+            continue
+        html = page.read_text(encoding="utf-8")
+        replaced = replace_block(html, entry["block"])
+        if replaced != html:
+            page.write_text(replaced, encoding="utf-8")
+            written.append(entry["compound"])
+    return written
+
+
 def cmd_gt_summary(args) -> int:
     """Recompute the Google Trends summary the publication pages show.
 
-    Read-only.  A value the run record cannot support is reported as 算出不能
+    A value the run record cannot support is reported as 算出不能
     (with the missing input named) instead of being recomputed from nothing;
-    ``--html`` prints the block to paste into a page.  See
-    ``processing/gt_statistics.py`` for the record shapes and the limits.
+    ``--html`` prints the block to paste into a page and ``--write`` replaces
+    the block in the page itself.  See ``processing/gt_statistics.py`` for the
+    record shapes and the limits.
     """
     compounds = (
         [args.compound.upper()] if args.compound else list(PUBLICATION_COMPOUNDS)
@@ -141,6 +166,10 @@ def cmd_gt_summary(args) -> int:
         target = Path(args.output)
         target.parent.mkdir(parents=True, exist_ok=True)
         target.write_text(dump_json(report), encoding="utf-8")
+
+    if args.write:
+        written = _write_page_blocks(report, Path(args.repo_root))
+        _err(f"updated {len(written)} page(s): {', '.join(written) or 'none'}")
 
     if args.html:
         for entry in report["compounds"]:
@@ -196,13 +225,18 @@ def build_parser() -> argparse.ArgumentParser:
         "gt-summary",
         help=(
             "recompute the Google Trends summary for the publication pages "
-            "(read-only; --html prints the block)"
+            "(--html prints the block, --write puts it in the page)"
         ),
     )
     gt_summary.add_argument("--datasets-root", default="datasets")
     gt_summary.add_argument("--timeframe", choices=tuple(TIMEFRAMES), default="5y")
     gt_summary.add_argument("--compound", default=None)
     gt_summary.add_argument("--html", action="store_true")
+    gt_summary.add_argument(
+        "--write",
+        action="store_true",
+        help="replace each page's 5-year block with the generated one",
+    )
     gt_summary.add_argument("--output", default=None)
     gt_summary.add_argument("--format", choices=("text", "json"), default="text")
     gt_summary.set_defaults(func=cmd_gt_summary)

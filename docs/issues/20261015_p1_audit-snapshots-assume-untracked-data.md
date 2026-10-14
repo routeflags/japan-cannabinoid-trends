@@ -2,7 +2,7 @@
 
 **ID:** ISS-20261015-AUD-028  
 **優先度:** P1 (High)  
-**ステータス:** OPEN  
+**ステータス:** RESOLVED (2026-10-15) — 規則を 1 つにし、ローカル事実を排除（§対応記録）  
 **対象:** `docs/audits/g7-study-inventory.json`（生成: `research.cli … audit-studies`）、
 `docs/audits/g6-private-catalog.json`（生成: `validation.cli audit-private-catalog`）、
 `tests/validation/test_audit_report_freshness.py`、
@@ -88,8 +88,27 @@
 
 ## 完了条件
 
-- [ ] clean checkout（private ディレクトリなし）の `python -m pytest` が green
+- [x] clean checkout（private ディレクトリなし）の `python -m pytest` が green
       （skip は許容）
-- [ ] `docs/audits/` のスナップショットが追跡ファイルのみから再生成できる
+- [x] `docs/audits/` のスナップショットが追跡ファイルのみから再生成できる
       （ローカル事実を排除、または検査対象外にした）
-- [ ] 選んだ扱いを `docs/specs/validation-framework.md` に明記
+- [x] 選んだ扱いを `docs/specs/validation-framework.md` に明記（§25）
+
+## 対応記録（2026-10-15）
+
+修正は 3 経路すべて（issue の「対応方針」どおり）:
+
+- **g7 `data_file_count`**: `private` を名前で除外（`src/research/audit.py`）。gitignored な
+  `data/private/` の中身（実測で差は 1 ファイル）はチェックアウトごとに異なるため数えない。
+  境界の存在は `audit-private-catalog`（存在のみ、内容は数えない）が引き続き記録する。
+- **g6-private-catalog**: freshness の normalizer `boundary_only` を追加し、
+  `exists` / `present` / `absent` を検査から外した。`tracked` / `ignored` / 分類は
+  規則ベースでチェックアウト非依存なので検査対象のまま。
+- **`test_stale_declaration_is_reported`**: 既存の `requires_source` マーカーを付与。
+  ソースが無い環境ではスキップする（非公開入力の検証は入力がある環境で走る）。
+  観測された `FileNotFoundError` の原因も特定した: テストが
+  `Derivation(..., source_published=False)` を再構築せず、既定値 `True` の新しい
+  `Derivation` を作っていたため、ソース不在時に `reproduce_artifact` が送出していた。
+- 規則の文言は `docs/specs/validation-framework.md` §25（1 つの規則 + 3 経路の表）。
+- 実測: clean checkout（private 無し）で `pytest` は **3 件失敗 → skip のみ**。
+  CI の 3 件失敗（`38587265312` / `38628877292`）も同じ原因だった。

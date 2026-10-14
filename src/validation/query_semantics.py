@@ -725,6 +725,9 @@ def extract_query_strings(document) -> list:
 
     - ``queries[].term`` / ``queries[].terms[]`` (the standard G1-era shape);
     - top-level ``terms[]`` and ``keyword`` (used by single-term legacy runs);
+    - ``query_provenance.submitted_query`` - the G5-era/contract shape the
+      pipeline writes, where the single submitted query is the provenance of the
+      run (the earlier fields are legacy shapes);
     - ``compounds_collected[]`` - compound identifiers recorded by the
       collector; kept as transparent candidates (``source_field``), not as a
       verified submitted query.
@@ -756,6 +759,11 @@ def extract_query_strings(document) -> list:
     keyword = document.get("keyword")
     if isinstance(keyword, str) and keyword:
         pairs.append((keyword, "keyword"))
+    provenance = document.get("query_provenance")
+    if isinstance(provenance, dict):
+        submitted = provenance.get("submitted_query")
+        if isinstance(submitted, str) and submitted:
+            pairs.append((submitted, "query_provenance.submitted_query"))
     compounds = document.get("compounds_collected")
     if isinstance(compounds, list):
         for index, item in enumerate(compounds):

@@ -240,8 +240,13 @@ def test_artifact_in_no_registry_fails_the_audit(monkeypatch) -> None:
     assert entry["status"] == STATUS_UNDECLARED
 
 
+@requires_source
 def test_stale_declaration_is_reported(monkeypatch) -> None:
-    """A declaration that no longer describes reality is itself a failure."""
+    """A declaration that no longer describes reality is itself a failure.
+
+    Needs the non-published source: with it absent the artifact is reported as
+    reproducible-elsewhere and no declaration is checked here.
+    """
 
     original = DERIVATIONS[ANONYMIZED]
     monkeypatch.setitem(

@@ -398,6 +398,31 @@ def test_extraction_covers_legacy_shapes_and_deduplicates():
     ]
 
 
+def test_extraction_reads_the_pipeline_query_provenance():
+    """The contract-shaped runs record one submitted query under
+    ``query_provenance``; without it the G2 inventory said nothing about every
+    run the pipeline has collected (10 of 37 runs in the 2026-10-15 snapshot)."""
+
+    document = {
+        "query_provenance": {
+            "query_id": "crdh-general-ja",
+            "submitted_query": "CRDH",
+            "compound_id": "compound_crdh",
+        }
+    }
+    extracted = extract_query_strings(document)
+
+    assert [entry["text"] for entry in extracted] == ["CRDH"]
+    assert extracted[0]["source_fields"] == ["query_provenance.submitted_query"]
+    # the legacy shapes and the provenance field must merge by normalized text
+    merged = extract_query_strings({**document, "keyword": "CRDH"})
+    assert [entry["text"] for entry in merged] == ["CRDH"]
+    assert merged[0]["source_fields"] == [
+        "keyword",
+        "query_provenance.submitted_query",
+    ]
+
+
 def _real_run_entries():
     entries = []
     datasets_root = REPO_ROOT / "datasets"

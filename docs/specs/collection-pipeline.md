@@ -1,8 +1,16 @@
 # Collection Pipeline (G1 垂直スライス) — 運用契約
 
-**版:** 0.4.0（2026-10-15）
+**ドメイン名:** 生産 (Production)。「パイプライン」は実装（モジュール・CLI）の名前で、
+ドメイン上の名前は生産である（`docs/specs/contracts.md` §3.1）。
+
+**版:** 0.5.0（2026-10-15）
 **仕様:** `docs/plans/20261013a.md`（G1、リポジトリ履歴外）+ `20261013h.md` §12
-**状態:** 実装済み・**ライブ収集は未実施**（契約検証は録画リプレイ / 合成 fixture）
+**状態:** 実装済み・**ライブ収集実施済み**（2026-10-15 に 8 run をパイプライン経由で採用。
+契約検証は録画リプレイ / 合成 fixture でも継続）
+
+**0.5.0 の変更:** ドメイン名 **生産 (Production)** を明記（契約内容の変更なし）。
+同じ日に `collect --live` で 8 run をライブ収集し採用した（§9 の制限事項を更新）。
+契約検証は録画リプレイ / 合成 fixture でも継続。
 
 **0.4.0 の変更:** ソース別 staging ドライバ（宣言ファイル `staging-declaration-v1`
 → `stage_run`）と `stage` CLI サブコマンドを追加（§3.4、ISS-20261015-COL-017）。
@@ -125,9 +133,10 @@ L2 が `not_comparable` になることはある。
   `exact=false` の collector では `WINDOW_EXACTNESS_UNAVAILABLE` で停止。
 - ドライラン: `python -m collection.core.cli compile-window`（収集しない）。
 - 現在 `exact=false` / `boundary_semantics=unverified` は Google Trends の
-  ローリング期間の実測検証が未実施であることを反映する。昇格条件とライブ計測
+  ローリング期間の**境界計測**が未実施であることを反映する（データ収集は
+  ライブで実施済みだが、2 pass の境界計測は別作業）。昇格条件と計測
   プロトコルは `docs/specs/gt-boundary-verification.md`（2026-10-15）。
-  ライブ計測は承認待ちで、現状は引き続き `exact=false`（ISS-20261015-GT-001
+  行列は未実行で、現状は引き続き `exact=false`（ISS-20261015-GT-001
   PENDING）。
 
 ### 3.3 外部 collector の staging（`stage_run`）と既存 shell 収集との整合
@@ -403,13 +412,16 @@ python -m validation.cli coverage-run --file <run_dir or run_metadata.json>
 
 ## 9. 制限事項と引き継ぎ
 
-- **ライブ収集は未実施**。Google Trends の live 経路（`SessionMcpTransport`）は
-  MCP セッション callable の注入のみ実装し、本リポジトリは実行しない。
-- 境界挙動の実測検証（`exact=true` への昇格）も未実施のまま。キャプチャ検証 /
+- **ライブ収集は実施済み（2026-10-15）**。`collection.core.cli collect --live`
+  （`SessionMcpTransport` + `mcp_session.McpStdioSession`、MCP stdio で
+  `google-trends-mcp@0.1.1` を起動）で 8 run を採用した（CBN / THC-O / H4CBH /
+  HHBD / HHCH / CRDP / THCH / CRDH、`today 5-y` / geo=JP）。ライブはオプトインで、
+  セッションを起動できない環境では従来どおり fail closed（失敗として記録）。
+- 境界挙動の実測検証（`exact=true` への昇格）は**未実施のまま**。キャプチャ検証 /
   staging（`collection.adapters.google_trends.boundary`）と対応表・昇格規則の
   評価器（`validation.cli boundary-report`）および実行手順を 2026-10-15 に実装
-  （`docs/specs/gt-boundary-verification.md`）。ライブ実行は承認待ちで、
-  ISS-20261015-GT-001 は PENDING。
+  （`docs/specs/gt-boundary-verification.md`）。行列（4 timeframe × 2 pass。pass 2 は
+  参照時刻を 7 日以上離す必要がある）は未実行で、ISS-20261015-GT-001 は PENDING。
 - replay fixture は合成（録画形式に基づく）。ただし **2026-10-15 に、実記録
   GT 応答（tracked `datasets/cannabinoid-multi-trends/data/raw/google_trends/
   20261012T064246Z-google-trends-ja-rikiddo-5y-main5/records_cbd-rikiddo-5y.json`）
@@ -417,8 +429,9 @@ python -m validation.cli coverage-run --file <run_dir or run_metadata.json>
   collected_at, data:[{date, value}]}`）は実レスポンスと一致し、抽出件数
   （262 点）と観測境界（2021-10-10 .. 2026-10-11）が実データと一致する
   （`tests/collection/test_pipeline_e2e.py::
-  test_collect_replays_a_real_recorded_response`）。**ライブ収集は未実施**
-  なので、境界挙動（`exact=true` 昇格）は依然未検証。
+  `test_collect_replays_a_real_recorded_response`）。**境界挙動（`exact=true`
+  昇格）は依然未検証**（ライブ収集は系列取得のために実施したが、境界計測は
+  未実施）。
 - 外部 collector staging（§3.3）は実記録 GT 応答で
   stage → adopt → 厳格検証（artifact 検証込み）まで通過済み
   （`tests/collection/test_staging.py`）。staging 宣言ドライバ + `stage` CLI

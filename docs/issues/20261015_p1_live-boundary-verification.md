@@ -49,6 +49,15 @@ Google Trends の window compiler は、現時点で**すべての compile で `
 - 本 issue の行列（pass 1 = 4 call / pass 2 は参照時刻を **7 日以上**離す必要がある）はまだ実行していない。
   pass 1 だけでは `eligible=true` にできない（spec §3 の昇格規則は 2 pass の一致を要求）。
   実行するか、または pipeline 側の run で代用するかをメンテナに確認する。
+- **追記（2026-10-15、実施⑧）**: 同じ日に**研究データ用のライブ収集は 8 run 実施した**
+  （`collect --live`、CBN / THC-O / H4CBH / HHBD / HHCH / CRDP / THCH / CRDH）。
+  これでライブ経路（MCP stdio セッション）は end-to-end で実証されたが、
+  **それらは本 issue の証拠にはならない**: 行列の run は
+  `environment.measurement.protocol` を持ち `evidence class = measurement` である必要があり
+  （spec §2）、pipeline の run は `recorded_legacy` と同様に昇格には使えない。
+  したがって本 issue は **PENDING のまま**で、残る作業は**行列（4 timeframe × 2 pass、
+  参照時刻を 7 日以上離す）**だけである。pass 1 を今実行するかどうかはメンテナ判断
+  （pass 2 は 7 日以上経ってからでないと実行できない）。
 
 ## 対応方針
 
@@ -59,7 +68,8 @@ Google Trends の window compiler は、現時点で**すべての compile で `
 
 ## 完了条件
 
-- [ ] ライブ収集 1 回以上の実測 run（`run_metadata.json` として保存）
+- [ ] ライブ収集 1 回以上の実測 run（`run_metadata.json` として保存。上記「追記」のとおり
+      **measurement クラス**を指す。研究データ用の pipeline run では代替できない）
 - [ ] 要求窓と観測境界の対応表（timeframe 別）
 - [ ] `exact` 昇格条件の文書化、または昇格しない場合の理由の記録
 

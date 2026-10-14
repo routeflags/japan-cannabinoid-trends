@@ -27,10 +27,16 @@ CFF = 'cff-version: 1.2.0\nversion: "9.9.9"\nidentifiers:\n  - type: doi\n    va
 #: would be reported as an X identity exposure (and is).
 POST_PERMALINK = "https://" + "x.com/someone/status/1"
 
-CONFORMING = """<html><body>
+#: The run the conforming page cites.  ``_report`` catalogs it (a directory with
+#: ``run_metadata.json`` under ``datasets/*/data/raw/**``), so PC-2 can resolve
+#: the reference; a page may only name runs the catalog has.
+RUN_ID = "20261014T204841Z-google-trends-example-study"
+
+CONFORMING = f"""<html><body>
 <h2 id="data-search">Google Trends</h2>
 <h3>5年データサマリー</h3><table><tr><td>5年平均</td></tr></table>
 <h3>12ヶ月データサマリー</h3><table><tr><td>12ヶ月平均</td></tr></table>
+<p>出所: run <code>{RUN_ID}</code>（2026-10-14 収集）。</p>
 <h2 id="data-x">X (Twitter)</h2><table><tr><th>95% CI</th></tr></table>
 <h2 id="data-youtube">YouTube</h2><table></table><table></table>
 <p>Version 9.9.9 DOI 10.5281/zenodo.99999999</p>
@@ -38,8 +44,24 @@ CONFORMING = """<html><body>
 """
 
 
+def _catalog(tmp_path: Path, *run_ids: str) -> None:
+    for run_id in run_ids:
+        run_dir = (
+            tmp_path
+            / "datasets"
+            / "example-study"
+            / "data"
+            / "raw"
+            / "google_trends"
+            / run_id
+        )
+        run_dir.mkdir(parents=True, exist_ok=True)
+        (run_dir / "run_metadata.json").write_text("{}", encoding="utf-8")
+
+
 def _report(tmp_path: Path, html: str, *, cff: str = CFF, name: str = "research_page.html") -> dict:
     (tmp_path / "CITATION.cff").write_text(cff, encoding="utf-8")
+    _catalog(tmp_path, RUN_ID)
     publication = tmp_path / "publication"
     publication.mkdir(exist_ok=True)
     for existing in publication.glob("*.html"):
@@ -204,4 +226,28 @@ def test_the_report_names_the_rules_it_does_not_implement(tmp_path: Path) -> Non
     assert {entry["rule"] for entry in report["unimplemented_rules"]} == {
         entry["rule"] for entry in UNIMPLEMENTED
     }
-    assert {entry["rule"] for entry in report["unimplemented_rules"]} >= {"PC-2", "PC-7"}
+    assert {entry["rule"] for entry in report["unimplemented_rules"]} >= {"PC-7", "PC-8"}
+
+
+def test_google_trends_section_must_name_its_run(tmp_path: Path) -> None:
+    """PC-2: the generated numbers must not lose the run they came from."""
+
+    html = CONFORMING.replace(f"<p>出所: run <code>{RUN_ID}</code>（2026-10-14 収集）。</p>", "")
+
+    assert "gt_run_not_named" in _kinds(_report(tmp_path, html))
+
+
+def test_a_page_cannot_cite_a_run_the_catalog_does_not_have(tmp_path: Path) -> None:
+    """PC-2: a citation of a withdrawn or mistyped run is a broken claim."""
+
+    html = CONFORMING.replace(RUN_ID, "20200101T000000Z-google-trends-gone")
+    findings = _report(tmp_path, html)["findings"]
+
+    assert [finding["kind"] for finding in findings] == ["run_reference_unresolved"]
+    assert "20200101T000000Z-google-trends-gone" in findings[0]["detail"]
+
+
+def test_the_run_catalog_is_reported(tmp_path: Path) -> None:
+    """The resolution target is part of the report, so a reader can size it."""
+
+    assert _report(tmp_path, CONFORMING)["catalog_run_count"] == 1

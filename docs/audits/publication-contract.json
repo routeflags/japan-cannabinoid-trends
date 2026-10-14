@@ -12,26 +12,23 @@
       "metadata/datapackage.json"
     ]
   },
+  "catalog_run_count": 37,
   "summary": {
     "artifact_count": 15,
     "finding_count": 0,
-    "declared_gap_count": 1,
+    "declared_gap_count": 0,
     "by_rule": {},
     "by_kind": {}
   },
   "implemented_rules": [
     "PC-1",
+    "PC-2",
     "PC-3",
     "PC-4",
     "PC-5",
     "PC-6"
   ],
   "unimplemented_rules": [
-    {
-      "rule": "PC-2",
-      "requirement": "every published number names its source run",
-      "reason": "needs the content refresh (phase 4 of the refresh plan)"
-    },
     {
       "rule": "PC-7",
       "requirement": "a committed review envelope per publication artifact",
@@ -44,11 +41,5 @@
     }
   ],
   "findings": [],
-  "declared_gaps": [
-    {
-      "path": "publication/research_crdh.html",
-      "kind": "five_year_value_uncomputable",
-      "detail": "a value is declared 算出不能 from its run record"
-    }
-  ]
+  "declared_gaps": []
 }

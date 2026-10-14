@@ -39,6 +39,10 @@ from validation.schema_registry import SCHEMA_REGISTRY, SCHEMA_VERSIONS
 LEDGER_SCHEMA_VERSION = "1.0.0"
 
 #: Bounded contexts of the contract model (docs/specs/contracts.md).
+#: ``collection`` and ``processing`` are the producing side the model names
+#: 生産 (Production) - the pipeline; ``owner`` records the sub-context that
+#: produces a contract, because that is what the declaration paths line up with
+#: (contracts.md 3.1/3.2).
 CONTEXTS = ("collection", "storage", "validation", "research", "publication")
 
 KIND_SCHEMA = "schema_contract"

@@ -4,8 +4,8 @@
   "schema_id": "query-registry-v1",
   "registry_version": "1.0.0",
   "target_glob": "datasets/**/run_metadata.json",
-  "count": 36,
-  "query_count": 75,
+  "count": 37,
+  "query_count": 83,
   "raw_modified": false,
   "states": {
     "exact_match": "the collected text equals a registered canonical_text",
@@ -15,7 +15,7 @@
     "unmapped": "no registered correspondence and no compound token"
   },
   "summary": {
-    "exact_match": 73,
+    "exact_match": 81,
     "variant_match": 1,
     "semantic_match_candidate": 1,
     "ambiguous": 0,
@@ -994,8 +994,20 @@
       "sha256": "6180b0954a7a19ec2737528fe422d1fb0c8c225f643e61f5dfd7b20c31823e64",
       "sha256_after": "6180b0954a7a19ec2737528fe422d1fb0c8c225f643e61f5dfd7b20c31823e64",
       "unchanged": true,
-      "extracted_query_count": 0,
-      "queries": []
+      "extracted_query_count": 1,
+      "queries": [
+        {
+          "text": "CBN",
+          "state": "exact_match",
+          "classification": "relevant",
+          "query_id": "cbn-general-ja",
+          "variant_id": null,
+          "detail": "registered_canonical",
+          "source_fields": [
+            "query_provenance.submitted_query"
+          ]
+        }
+      ]
     },
     {
       "run_id": "20261014T204852Z-google-trends-cannabinoid-multi-trends",
@@ -1004,8 +1016,20 @@
       "sha256": "5667fd8e45cb0ca9e0687c2394b8309fdc6ccfb4384fb7570a66c05a2d17ba0b",
       "sha256_after": "5667fd8e45cb0ca9e0687c2394b8309fdc6ccfb4384fb7570a66c05a2d17ba0b",
       "unchanged": true,
-      "extracted_query_count": 0,
-      "queries": []
+      "extracted_query_count": 1,
+      "queries": [
+        {
+          "text": "CRDP",
+          "state": "exact_match",
+          "classification": "relevant",
+          "query_id": "crdp-general-ja",
+          "variant_id": null,
+          "detail": "registered_canonical",
+          "source_fields": [
+            "query_provenance.submitted_query"
+          ]
+        }
+      ]
     },
     {
       "run_id": "20261014T204855Z-google-trends-cannabinoid-multi-trends",
@@ -1014,8 +1038,20 @@
       "sha256": "7803e0afa9e5a82acb7879eb304ed97d93bf16b1fb633ae6b7d42bb569838eda",
       "sha256_after": "7803e0afa9e5a82acb7879eb304ed97d93bf16b1fb633ae6b7d42bb569838eda",
       "unchanged": true,
-      "extracted_query_count": 0,
-      "queries": []
+      "extracted_query_count": 1,
+      "queries": [
+        {
+          "text": "H4CBH",
+          "state": "exact_match",
+          "classification": "relevant",
+          "query_id": "h4cbh-general-ja",
+          "variant_id": null,
+          "detail": "registered_canonical",
+          "source_fields": [
+            "query_provenance.submitted_query"
+          ]
+        }
+      ]
     },
     {
       "run_id": "20261014T204857Z-google-trends-cannabinoid-multi-trends",
@@ -1024,8 +1060,20 @@
       "sha256": "0c8f5247b49e2fbe0b9c03e239d6b01eb15056d3af494ac232cbd3465e68497e",
       "sha256_after": "0c8f5247b49e2fbe0b9c03e239d6b01eb15056d3af494ac232cbd3465e68497e",
       "unchanged": true,
-      "extracted_query_count": 0,
-      "queries": []
+      "extracted_query_count": 1,
+      "queries": [
+        {
+          "text": "HHBD",
+          "state": "exact_match",
+          "classification": "relevant",
+          "query_id": "hhbd-general-ja",
+          "variant_id": null,
+          "detail": "registered_canonical",
+          "source_fields": [
+            "query_provenance.submitted_query"
+          ]
+        }
+      ]
     },
     {
       "run_id": "20261014T204859Z-google-trends-cannabinoid-multi-trends",
@@ -1034,8 +1082,20 @@
       "sha256": "cbc46a60cd27d6df12645019089f5b394fffd9b344e288bfa76daaf24bd24a53",
       "sha256_after": "cbc46a60cd27d6df12645019089f5b394fffd9b344e288bfa76daaf24bd24a53",
       "unchanged": true,
-      "extracted_query_count": 0,
-      "queries": []
+      "extracted_query_count": 1,
+      "queries": [
+        {
+          "text": "HHCH",
+          "state": "exact_match",
+          "classification": "relevant",
+          "query_id": "hhch-general-ja",
+          "variant_id": null,
+          "detail": "registered_canonical",
+          "source_fields": [
+            "query_provenance.submitted_query"
+          ]
+        }
+      ]
     },
     {
       "run_id": "20261014T204901Z-google-trends-cannabinoid-multi-trends",
@@ -1044,8 +1104,20 @@
       "sha256": "523b2caafabe5b5868d7982330c4b0b068caf4662e485ed3050ad6102a5a7211",
       "sha256_after": "523b2caafabe5b5868d7982330c4b0b068caf4662e485ed3050ad6102a5a7211",
       "unchanged": true,
-      "extracted_query_count": 0,
-      "queries": []
+      "extracted_query_count": 1,
+      "queries": [
+        {
+          "text": "THCH",
+          "state": "exact_match",
+          "classification": "relevant",
+          "query_id": "thch-general-ja",
+          "variant_id": null,
+          "detail": "registered_canonical",
+          "source_fields": [
+            "query_provenance.submitted_query"
+          ]
+        }
+      ]
     },
     {
       "run_id": "20261014T204904Z-google-trends-cannabinoid-multi-trends",
@@ -1054,8 +1126,42 @@
       "sha256": "f6b19a33ba2812a10db969cde7387a2b1f2160effca123ab77601539302e9fec",
       "sha256_after": "f6b19a33ba2812a10db969cde7387a2b1f2160effca123ab77601539302e9fec",
       "unchanged": true,
-      "extracted_query_count": 0,
-      "queries": []
+      "extracted_query_count": 1,
+      "queries": [
+        {
+          "text": "THC-O",
+          "state": "exact_match",
+          "classification": "relevant",
+          "query_id": "thc-o-general-ja",
+          "variant_id": null,
+          "detail": "registered_canonical",
+          "source_fields": [
+            "query_provenance.submitted_query"
+          ]
+        }
+      ]
+    },
+    {
+      "run_id": "20261014T215738Z-google-trends-cannabinoid-multi-trends",
+      "path": "datasets/cannabinoid-multi-trends/data/raw/google_trends/20261014T215738Z-google-trends-cannabinoid-multi-trends/run_metadata.json",
+      "status": "read",
+      "sha256": "f2e1da0c33e9f176d883dad5c947a5a406c2bf00bbf97e0d3cbcef0fe6e6520d",
+      "sha256_after": "f2e1da0c33e9f176d883dad5c947a5a406c2bf00bbf97e0d3cbcef0fe6e6520d",
+      "unchanged": true,
+      "extracted_query_count": 1,
+      "queries": [
+        {
+          "text": "CRDH",
+          "state": "exact_match",
+          "classification": "relevant",
+          "query_id": "crdh-general-ja",
+          "variant_id": null,
+          "detail": "registered_canonical",
+          "source_fields": [
+            "query_provenance.submitted_query"
+          ]
+        }
+      ]
     },
     {
       "run_id": "20261001T115959Z-google-trends-cbx-rikiddo",

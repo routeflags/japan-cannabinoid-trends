@@ -35,12 +35,20 @@ def build_private_catalog(repo_root) -> dict:
     for relative in KNOWN_PRIVATE_MARKERS:
         target = repo_root / relative
         exists = target.exists()
+        # The markers are directories, so the ignore rule is checked in its
+        # directory form: ``.gitignore`` declares ``datasets/*/data/private/``,
+        # and git matches a trailing-slash path against a directory-only pattern
+        # even when nothing exists there.  Without the slash a checkout that
+        # does not have the private data reads "not ignored", which would make
+        # this catalog depend on the checkout instead of the rule
+        # (ISS-20261015-AUD-028).
+        as_directory = f"{relative}/"
         entries.append(
             {
                 "path": relative,
                 "exists": exists,
                 "tracked": git_tracked(repo_root, relative) if exists else False,
-                "ignored": git_ignored(repo_root, relative),
+                "ignored": git_ignored(repo_root, as_directory),
                 "classification": "restricted",
                 "availability": "private",
                 "publication_status": "not_approved",

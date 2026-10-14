@@ -88,7 +88,16 @@ def build_study_inventory(datasets_root, *, repo_root=None) -> dict:
         entries = by_study.get(study_id, [])
         facts = _readme_facts(study_dir)
         run_files = sorted(study_dir.rglob("run_metadata.json"))
-        data_files = [p for p in study_dir.rglob("*") if p.is_file() and "/data/" in p.as_posix()]
+        # ``private`` is excluded by name, not by accident: it is gitignored, so
+        # its contents are local-disk facts that differ between checkouts, and a
+        # committed snapshot must be re-derivable from tracked files alone
+        # (ISS-20261015-AUD-028).  The boundary itself is inventoried by
+        # ``audit-private-catalog`` (existence only, contents never counted).
+        data_files = [
+            p
+            for p in study_dir.rglob("*")
+            if p.is_file() and "/data/" in p.as_posix() and "private" not in p.parts
+        ]
         raw_dir = study_dir / "data" / "raw"
         raw_files = [p for p in raw_dir.rglob("*") if p.is_file()] if raw_dir.is_dir() else []
         has_manifest = any((p.parent / "artifact-manifest.json").is_file() for p in run_files)

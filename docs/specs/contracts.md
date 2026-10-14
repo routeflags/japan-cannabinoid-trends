@@ -1,9 +1,12 @@
 # 契約（Contract）のドメインモデル
 
-**版:** 1.0.0（2026-10-15）
+**版:** 1.1.0（2026-10-15）
 **目的:** リポジトリ内で多義的に使われてきた「契約」を、境界づけられたコンテキストごとの
 **版を持つ検証可能な合意**として定義し、宣言場所・所有者・検査手段を 1 つの台帳に集約する。
+併せて、**パイプライン**をドメイン上 **生産 (Production)** として定義し、判定側（検証）
+との分離を規則にする（§3.1）。
 **関連:** `docs/specs/validation-framework.md`（Cerberus の正本）、
+`docs/specs/collection-pipeline.md`（パイプラインの運用契約）、
 `docs/reports/20261015c-publication-refresh-plan.md`（導入の経緯）、
 `docs/audits/contract-ledger.json`（本モデルの機械生成台帳）
 
@@ -29,6 +32,7 @@
 | 用語 | 定義 | 所有コンテキスト | 宣言場所 | 版 | 検査 |
 |---|---|---|---|---|---|
 | **契約 (Contract)** | 境界を越えて渡されるデータ／振る舞いについて、版を持ち機械検証可能な形で宣言した合意 | 検証 | — | — | — |
+| **生産 (Production)** | **パイプライン**。上流の入力から契約準拠の**記録**（run / artifact / 加工成果物 / 生成値）を産出する側（収集・加工）。判定はしない（§3.1） | 生産 | `src/collection/`、`src/processing/` | モジュール定数（`ADAPTER_CONTRACT_VERSION` 等） | 検証側が判定する（`gate-run` / `audit-new-runs` / `audit-processed`） |
 | **スキーマ契約** | 文書形状の宣言（必須項目・型・列挙・余分なフィールド） | 検証 | `src/validation/schemas/*.py`、`schema_registry.SCHEMA_REGISTRY` | `SCHEMA_VERSIONS` | Cerberus（`validate-*`）、`test_schema_coverage.py` |
 | **レジストリ文書** | スキーマ契約が検証する実体一覧（source / query / window / study 等） | 産出したコンテキスト | `config/`、`metadata/` | 文書の `schema_version` | `validation.cli validate-registries` |
 | **インターフェース契約** | 実装が満たすべき型・振る舞いの宣言 | 収集・保管 | `collection/core/contracts.py`、`collection/core/staging.py`、`storage/contracts.py` | モジュール定数 | 各 contract test |
@@ -42,7 +46,9 @@
 
 | コンテキスト | 「契約」と呼んでいるもの |
 |---|---|
-| 収集 Collection | source / collector / plan（レジストリ・スキーマ）、query、temporal window、adapter インターフェース |
+| 生産 Production（パイプライン） | plan（スキーマ・レジストリ）、query、temporal window、adapter インターフェース、staging 宣言。産出はするが判定しない |
+| 収集 Collection（生産の下位） | source / collector / 収集 run の記録 |
+| 加工 Processing（生産の下位） | 派生成果物の導出宣言と生成値 |
 | 保管 Storage | artifact manifest、artifact registry、storage policy、reader インターフェース |
 | 検証 Validation | スキーマ契約全体、ゲート契約、監査 |
 | 研究 Research | transformation 来歴、evidence、study / measurement / research view |
@@ -52,14 +58,48 @@
 
 ## 3. バウンズコンテキストとコンテキストマップ
 
-AGENTS.md のパイプライン段階と `src/` パッケージを対応させる。
+AGENTS.md のパイプライン段階と `src/` パッケージを対応させる。段階のうち
+**記録を作る側**を 1 つのコンテキスト **生産 (Production)** にまとめ、**判定する側**
+（検証）と対置する。
+
+### 3.1 生産（パイプライン）
+
+| 項目 | 内容 |
+|---|---|
+| ドメイン名 | **生産 (Production)** |
+| コード名 | **パイプライン**（`collection.core.pipeline` / `collection.core.cli`） |
+| 産出物 | 収集 run（`collection-run-v1`）、staged run、catalog 配置、加工成果物（`data/processed/`）、公開ページに載る生成値（`processing.cli gt-summary`） |
+| 実装 | `src/collection/`（pipeline / staging / adapters）、`src/processing/` |
+| 宣言場所 | 実装モジュール（plan・宣言ファイル・adapter 契約） |
+| 検査 | 検証コンテキスト（L1 = `validation.cli gate-run`、`audit-new-runs`、`audit-processed`） |
+
+規則:
+
+1. **生産は判定しない。** 産出側は staging（`.staging/<run-id>/`）までを行い、
+   採用・隔離（catalog / quarantine）は L1 判定が決める。gate が自分の入力を
+   生成するコードに依存しない（`docs/specs/collection-pipeline.md` §3.3、P5）。
+2. **検証は産出しない。** 検証コンテキストはレポートを書くが、収集記録・加工成果物は
+   作らない。
+3. 生産の出力は**記録**（run / artifact / 派生表）であって解釈ではない。解釈は
+   研究・公開のコンテキストにある（AGENTS.md: 観測と解釈の分離）。
+
+「パイプライン」は実装（モジュール・CLI）の名前、「生産」はドメインの名前である。
+AGENTS.md の段階列（SOURCE → … → PUBLICATION）は生産・保管・検証・研究・公開を
+またぐ**全体フロー**で、本コンテキストはその産出側だけを指す。
+
+### 3.2 コンテキストマップ
 
 ```mermaid
 flowchart TD
-  C["収集 Collection (src/collection)"] -->|"raw artifact + 収集事実"| S["保管 Storage (src/storage)"]
-  S -->|"artifact descriptor"| V["検証 Validation (src/validation)"]
+  subgraph PR["生産 Production（パイプライン）"]
+    C["収集 Collection (src/collection)"]
+    W["加工 Processing (src/processing)"]
+  end
+  C -->|"raw artifact + 収集事実"| S["保管 Storage (src/storage)"]
+  W -->|"processed 成果物"| V["検証 Validation (src/validation)"]
+  S -->|"artifact descriptor"| V
   V -->|"検証済み来歴"| R["研究 Research (src/research)"]
-  R -->|"research view"| P["公開 Publication (publication/)"]
+  R -->|"研究 view"| P["公開 Publication (publication/)"]
   V -.->|"ゲート判定"| P
   P -.->|"公開判断の記録"| V
 ```
@@ -67,6 +107,9 @@ flowchart TD
 - 上流の契約は下流にしか流れない（公開が収集の契約を書き換えない）。
 - 公開は現在ソースコードを持たない（HTML と Markdown）。それでも契約の適用対象として
   他のコンテキストと同じように扱う（判断記録は `metadata/publication/`）。
+- 台帳（§8）の `owner` は**産出した下位コンテキスト**を記録する（現在は
+  `collection` / `storage` / `research` / `publication` / `validation`）。生産は
+  `collection` と `processing` をまとめた上位名なので、`owner` の値は改名しない。
 
 ---
 
@@ -181,4 +224,5 @@ python -m validation.cli contract-ledger --output docs/audits/contract-ledger.js
 
 | 日付 | 版 | 内容 |
 |---|---|---|
+| 2026-10-15 | 1.1.0 | §3 を「生産（パイプライン）とコンテキストマップ」に拡張。**パイプライン**をドメイン上 **生産 (Production)** と定義し、判定側との分離を規則化（§3.1）。ユビキタス言語と §2.1 に 生産 / 下位コンテキストを追加 |
 | 2026-10-15 | 1.0.0 | 初版。5 種の宣言をモデル化し、台帳 `validation.cli contract-ledger` と `docs/audits/contract-ledger.json` を導入 |

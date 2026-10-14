@@ -26,6 +26,13 @@ Implemented (mechanical only, no judgement)
 - PC-1 release version and DOI: a publication artifact must present the
   release the repository currently publishes (``CITATION.cff`` /
   ``metadata/datapackage.json`` are the declaration).
+- PC-2 run references: a research page's Google Trends section must name the run
+  its 5-year table was generated from (``processing.cli gt-summary`` writes the
+  source line), and every run id named anywhere on a page must be present in the
+  dataset catalog.  A page cannot cite a run that does not exist, and the
+  generated numbers cannot lose their source without a finding.  The other
+  sections (X / YouTube / COA) are backed by legacy study data that has no run
+  record to cite, so naming a run there is not required - resolving it is.
 - PC-3 policy-out sources: a page citing ``YouTube Data API`` must also record
   that the source was retired by the 2026-10-12 decision; a page must not
   express per-post X data (permalink, handle, or a list of post-record
@@ -42,8 +49,6 @@ Implemented (mechanical only, no judgement)
 
 Deliberately not implemented (named, so the gap cannot be silent):
 
-- PC-2 (every published number traceable to a run id) - needs the content
-  refresh; the pages currently name collection dates only.
 - PC-7 (a review envelope per artifact) - needs the review records.
 - PC-8 (the guide's own structure requirements) - the guide is not a research
   page, so PC-5 does not apply to it.
@@ -90,6 +95,10 @@ _SCRIPT_STYLE_RE = re.compile(
 )
 _H3_RE = re.compile(r"<h3>(.*?)</h3>", re.S)
 
+#: A collection run id as the pipeline writes it (``YYYYMMDDTHHMMSSZ-source-study``).
+#: This is what a page cites to say which run produced its numbers (PC-2).
+_RUN_ID_RE = re.compile(r"\b\d{8}T\d{6}Z-[A-Za-z0-9-]+")
+
 #: Artifacts the research-page structure requirements (PC-5) apply to.
 #: The requirement comes from the research-page generator contract; the guide
 #: has its own generator and is therefore not covered by PC-5.
@@ -104,11 +113,6 @@ UNCOMPUTABLE_MARKER = "算出不能"
 
 #: Rules without an implementation, reported so the gap is visible.
 UNIMPLEMENTED = (
-    {
-        "rule": "PC-2",
-        "requirement": "every published number names its source run",
-        "reason": "needs the content refresh (phase 4 of the refresh plan)",
-    },
     {
         "rule": "PC-7",
         "requirement": "a committed review envelope per publication artifact",
@@ -191,7 +195,9 @@ def _as_tuple(version: str) -> tuple[int, ...]:
     return tuple(int(part) for part in version.split("."))
 
 
-def _artifact_findings(path: Path, repo_root: Path, release: dict) -> list[dict]:
+def _artifact_findings(
+    path: Path, repo_root: Path, release: dict, catalog_run_ids: set[str]
+) -> list[dict]:
     raw = _reading(path)
     html = _strip_non_content(raw)
     relative = path.relative_to(repo_root).as_posix()
@@ -256,6 +262,26 @@ def _artifact_findings(path: Path, repo_root: Path, release: dict) -> list[dict]
                 "describes the post-record shape: " + ", ".join(named),
             )
             break
+
+    # PC-2 - the run a number came from must be named and must exist.  The run
+    # id sits inside ``<code>`` in the generated source line and
+    # ``_strip_non_content`` removes code blocks (it exists so ``@`` inside them
+    # cannot read as a handle), so this rule reads the raw text.
+    if path.match(RESEARCH_PAGE_GLOB):
+        for section_id, content in _sections(raw):
+            if section_id == "data-search" and not _RUN_ID_RE.search(content):
+                add(
+                    "PC-2",
+                    "gt_run_not_named",
+                    "the Google Trends section names no collection run",
+                )
+    for run_id in sorted(set(_RUN_ID_RE.findall(raw))):
+        if run_id not in catalog_run_ids:
+            add(
+                "PC-2",
+                "run_reference_unresolved",
+                f"cites run {run_id}, which is not in the catalog",
+            )
 
     # PC-5 - section depth requirements on the research pages (per section, not
     # per id lookup).
@@ -327,6 +353,22 @@ def _declared_gaps(path: Path, html: str, relative: str) -> list[dict]:
     return gaps
 
 
+def _catalog_run_ids(repo_root: Path) -> set[str]:
+    """Run ids present in the dataset catalog (PC-2's resolution target).
+
+    A cataloged run is a directory under ``datasets/*/data/raw/**`` that carries
+    its ``run_metadata.json`` (L1 writes it); the run id is that directory's
+    name.  A page citing anything else is making a provenance claim the
+    repository cannot support - a withdrawn or mistyped run is exactly the case
+    this rule exists for.
+    """
+
+    datasets = repo_root / "datasets"
+    if not datasets.is_dir():
+        return set()
+    return {path.parent.name for path in datasets.rglob("run_metadata.json")}
+
+
 def build_publication_contract_report(repo_root: Path) -> dict:
     """Check every committed publication HTML artifact.  Read-only."""
 
@@ -334,12 +376,13 @@ def build_publication_contract_report(repo_root: Path) -> dict:
     publication_root = repo_root / "publication"
     release = _release(repo_root)
     artifacts = sorted(publication_root.rglob("*.html")) if publication_root.is_dir() else []
+    catalog_run_ids = _catalog_run_ids(repo_root)
 
     findings: list[dict] = []
     declared_gaps: list[dict] = []
     for artifact in artifacts:
         relative = artifact.relative_to(repo_root).as_posix()
-        findings.extend(_artifact_findings(artifact, repo_root, release))
+        findings.extend(_artifact_findings(artifact, repo_root, release, catalog_run_ids))
         declared_gaps.extend(
             _declared_gaps(artifact, _strip_non_content(_reading(artifact)), relative)
         )
@@ -357,6 +400,7 @@ def build_publication_contract_report(repo_root: Path) -> dict:
         "generated_by": "validation.cli audit-publication",
         "publication_root": "publication",
         "release": release,
+        "catalog_run_count": len(catalog_run_ids),
         "summary": {
             "artifact_count": len(artifacts),
             "finding_count": len(findings),
@@ -364,7 +408,7 @@ def build_publication_contract_report(repo_root: Path) -> dict:
             "by_rule": count("rule"),
             "by_kind": count("kind"),
         },
-        "implemented_rules": ["PC-1", "PC-3", "PC-4", "PC-5", "PC-6"],
+        "implemented_rules": ["PC-1", "PC-2", "PC-3", "PC-4", "PC-5", "PC-6"],
         "unimplemented_rules": list(UNIMPLEMENTED),
         "findings": findings,
         "declared_gaps": declared_gaps,

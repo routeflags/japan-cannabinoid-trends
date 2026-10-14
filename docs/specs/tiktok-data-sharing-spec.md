@@ -1,8 +1,9 @@
-# Instagram / TikTok データ共有仕様書
+# TikTok データ共有仕様書
 
 **作成日:** 2026-10-01
-**目的:** 別リポジトリで定点観測されている Instagram / TikTok データを `japan-cannabinoid-trends` と共有するための仕様書
-**ステータス:** DRAFT
+**改訂:** 2026-10-15（Instagram を対象外に。定点観測の廃止に合わせて TikTok のみに改訂）
+**目的:** 別リポジトリで定点観測されている TikTok データを `japan-cannabinoid-trends` と共有するための仕様書
+**ステータス:** DRAFT（TikTok のみ。Instagram は廃止済み = §2.1）
 
 ---
 
@@ -12,7 +13,7 @@
 |------|------|
 | データ所有リポジトリ | social-media-operations（仮称） |
 | 共有先リポジトリ | japan-cannabinoid-trends |
-| 対象プラットフォーム | Instagram, TikTok |
+| 対象プラットフォーム | TikTok（Instagram は 2026-10-01 に廃止 — §2.1） |
 | 収集方法 | Apify Actor（定点観測） |
 | 共有の目的 | CBX トレンド分析のクロスプラットフォーム対応 |
 
@@ -20,29 +21,17 @@
 
 ## 2. 共有データの定義
 
-### 2.1 Instagram
+### 2.1 Instagram（対象外: 2026-10-01 廃止）
 
-| 項目 | 値 |
-|------|-----|
-| Actor | `TxU0ZBQIHdR20dr9C` (patient_discovery/instagram-search-reels) |
-| 検索クエリ | `CBX リキッド`（または定点観測用クエリ） |
-| 取得上限 | maxPages=1~3 |
-| 収集頻度 | 週次（または定点観測スケジュールに従う） |
+Instagram の定点観測は **2026-10-01 に廃止**された（カンナビノイド関連が 0 件で、
+化粧品・バイクのノイズが支配的だったため）。共有仕様の対象から外す。
 
-**出力フィールド:**
-
-| フィールド | 型 | 説明 |
-|-----------|-----|------|
-| `id` | string | Reel ID |
-| `code` | string | ショートコード (`https://instagram.com/reel/{code}`) |
-| `caption.text` | string | キャプション全文 |
-| `caption.hashtags` | array | ハッシュタグ配列 |
-| `user.username` | string | 投稿者ユーザー名 |
-| `ig_play_count` | integer | 再生数 |
-| `like_count` | integer | いいね数 |
-| `comment_count` | integer | コメント数 |
-| `share_count` | integer | 共有数 |
-| `taken_at_date` | string | 投稿日時 (ISO8601) |
+- 廃止前に想定していた Actor は `TxU0ZBQIHdR20dr9C`
+  (patient_discovery/instagram-search-reels)、クエリは `CBX リキッド`、取得上限 maxPages=1〜3。
+  投稿単位のフィールド（Reel ID / キャプション / ユーザー名 / 再生数 / 投稿日時など）を
+  想定していたが、**共有も取り込みも行っていない**（`data/raw/instagram/` は存在しない）。
+- 再開する場合は、投稿単位の表現の扱いを含めて本仕様を先に改訂する
+  （`ISS-20261015-XID-034`、`publication/research_*.html` の X と同様の粒度規則）。
 
 ### 2.2 TikTok
 
@@ -78,10 +67,6 @@
 
 ```
 datasets/cbx-social-trends/data/raw/
-├── instagram/
-│   └── <run-id>/
-│       ├── records.json
-│       └── run_metadata.json
 └── tiktok/
     └── <run-id>/
         ├── records.json
@@ -91,18 +76,19 @@ datasets/cbx-social-trends/data/raw/
 **run-id 形式:**
 
 ```
-YYYYMMDDTHHMMSSZ-instagram-cbx-liquid
 YYYYMMDDTHHMMSSZ-tiktok-cbx-liquid
 ```
 
-例: `20261001T120000Z-instagram-cbx-liquid`
+例: `20261001T120000Z-tiktok-cbx-liquid`
+
+（`instagram/` 配下は存在しない。§2.1）
 
 ### 3.2 run_metadata.json スキーマ
 
 ```json
 {
-  "run_id": "20261001T120000Z-instagram-cbx-liquid",
-  "source": "instagram",
+  "run_id": "20261001T120000Z-tiktok-cbx-liquid",
+  "source": "tiktok",
   "actor_id": "TxU0ZBQIHdR20dr9C",
   "query": "CBX リキッド",
   "parameters": {
@@ -152,9 +138,6 @@ YYYYMMDDTHHMMSSZ-tiktok-cbx-liquid
 ### 4.3 コピー先パス
 
 ```
-# Instagram
-japan-cannabinoid-trends/datasets/cbx-social-trends/data/raw/instagram/<run-id>/
-
 # TikTok
 japan-cannabinoid-trends/datasets/cbx-social-trends/data/raw/tiktok/<run-id>/
 ```
@@ -179,10 +162,12 @@ japan-cannabinoid-trends/datasets/cbx-social-trends/data/raw/tiktok/<run-id>/
 
 | 問題 | 対策 |
 |------|------|
-| Instagram のシャドウバン | クエリ多様化 (`CBX リキッド`, `cannabinoid`, `CBD リキッド`) |
 | TikTok の description 空 | API バージョン確認、別 Actor への切替検討 |
 | クエリ非決定性 | 複数回収集、run-id で区別 |
-| 課金超過 | maxPages/limit で制限、都度コスト確認 |
+| 課金超過 | limit で制限、都度コスト確認 |
+
+過去に想定していた Instagram のシャドウバン対策（クエリ多様化）は、2026-10-01 の
+定点観測廃止により対象外（§2.1）。
 
 ---
 
@@ -219,7 +204,6 @@ japan-cannabinoid-trends/datasets/cbx-social-trends/data/raw/tiktok/<run-id>/
 
 ### japan-cannabinoid-trends 側
 
-- [ ] `data/raw/instagram/` ディレクトリを確認
 - [ ] `data/raw/tiktok/` ディレクトリを確認
 - [ ] README.md のデータソース表を更新
 - [ ] methodology.md に共有プロトコルを記載
@@ -251,3 +235,6 @@ japan-cannabinoid-trends/datasets/cbx-social-trends/data/raw/tiktok/<run-id>/
 | 日付 | 変更内容 |
 |------|---------|
 | 2026-10-01 | 初版作成 |
+| 2026-10-15 | Instagram を対象外に改訂（2026-10-01 の定点観測廃止に合わせる）。
+タイトル・背景・保存先・コピー先・チェックリストを TikTok のみにし、
+廃止の事実は §2.1 に日付付きで残す |
