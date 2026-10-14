@@ -40,6 +40,7 @@ import re
 import sys
 import tempfile
 from dataclasses import dataclass, field
+from datetime import date
 from pathlib import Path
 
 from collection.adapters.google_trends.adapter import (
@@ -188,6 +189,22 @@ def _month_number(name: str) -> int:
         ) from None
 
 
+def _iso_date(year: int, month: int, day: int) -> str:
+    """Format a parsed label as an ISO date, refusing an impossible one.
+
+    A label can name a day that does not exist (``Feb 30``, ``2025-13-45``);
+    the parser must not turn that into a fabricated bucket-start date, so the
+    calendar is the check (spec §4.4).
+    """
+    try:
+        return date(year, month, day).isoformat()
+    except ValueError:
+        raise BoundaryCaptureError(
+            "label_date_invalid",
+            f"label names no real calendar date: {year:04d}-{month:02d}-{day:02d}",
+        ) from None
+
+
 def _range_start(match: "re.Match[str]") -> str:
     """Start date of a ranged week label.
 
@@ -200,7 +217,7 @@ def _range_start(match: "re.Match[str]") -> str:
     month2 = match.group("month2")
     if month2 is not None and month1 > _month_number(month2):
         year -= 1
-    return f"{year:04d}-{month1:02d}-{int(match.group('day1')):02d}"
+    return _iso_date(year, month1, int(match.group("day1")))
 
 
 def _label_to_date(label: str) -> str:
@@ -211,10 +228,14 @@ def _label_to_date(label: str) -> str:
     match = _SINGLE_LABEL.match(label)
     if match:
         month = _month_number(match.group("month"))
-        return f"{int(match.group('year')):04d}-{month:02d}-{int(match.group('day')):02d}"
+        return _iso_date(int(match.group("year")), month, int(match.group("day")))
     match = _ISO_LABEL.match(label)
     if match:
-        return label
+        return _iso_date(
+            int(match.group("year")),
+            int(match.group("month")),
+            int(match.group("day")),
+        )
     raise BoundaryCaptureError(
         "label_format_unknown",
         "label does not match a documented shape (range / single date / ISO): "
@@ -290,12 +311,35 @@ def parse_tool_result(result) -> ParsedSeries:
                 "text_line_unknown", f"unrecognized response line: {line!r}"
             )
         label, _, raw_value = line.partition("\t")
+        fields = [field.strip() for field in raw_value.split("\t")]
+        expected_values = len(header_terms) if header_terms is not None else 1
+        if len(fields) != expected_values:
+            if expected_values > 1:
+                # A comparison table: the measurement protocol is single-term,
+                # so its columns are refused instead of reduced to the first.
+                raise BoundaryCaptureError(
+                    "multi_term_unsupported",
+                    "the measurement protocol is single-term "
+                    f"({expected_values} terms in response)",
+                )
+            raise BoundaryCaptureError(
+                "row_shape_unknown",
+                "a data row must carry one label and one value; "
+                f"{len(fields)} value fields found: {line!r}",
+            )
         try:
-            value = int(raw_value.split("\t")[0])
+            value = int(fields[0])
         except ValueError:
             raise BoundaryCaptureError(
                 "value_not_integer", f"non-integer value for label {label!r}: {raw_value!r}"
             ) from None
+        if not 0 <= value <= 100:
+            # The recorded convention is a relative index 0-100; a value
+            # outside it is not an observation this protocol can use.
+            raise BoundaryCaptureError(
+                "value_out_of_range",
+                f"relative index must be within 0-100: {value} for label {label!r}",
+            )
         points.append(ParsedPoint(date=_label_to_date(label.strip()), value=value))
 
     if not points:
@@ -303,6 +347,13 @@ def parse_tool_result(result) -> ParsedSeries:
             "empty_series",
             "response carries no data rows (a no-data response is not observed "
             "zero and cannot anchor a boundary measurement)",
+        )
+    dates = [point.date for point in points]
+    if any(later <= earlier for earlier, later in zip(dates, dates[1:])):
+        raise BoundaryCaptureError(
+            "labels_out_of_order",
+            "tool labels are not in strictly ascending order; the documented "
+            "rules do not cover an unordered or duplicated series",
         )
     if not header_terms or not geo or not timeframe:
         raise BoundaryCaptureError(

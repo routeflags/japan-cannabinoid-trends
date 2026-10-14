@@ -386,6 +386,12 @@ def evaluate_promotion_rule(
             and row.get("execution_status") == "success"
             and row.get("raw_artifact_present") is True
         ]
+        # R2 counts *runs*, not rows: two rows sharing a run_id are one run and
+        # must not satisfy the two-run minimum on their own.
+        by_run_id: dict[str, dict] = {}
+        for row in consistent:
+            by_run_id.setdefault(str(row.get("run_id")), row)
+        consistent = list(by_run_id.values())
         days = sorted(
             {row["reference_time"][:10] for row in consistent if row.get("reference_time")}
         )

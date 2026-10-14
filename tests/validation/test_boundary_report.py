@@ -356,6 +356,24 @@ def test_rule_ignores_runs_without_a_present_raw_artifact():
     assert "insufficient_consistent_runs" in verdict["timeframes"]["today 1-m"]["reasons"]
 
 
+def test_rule_counts_distinct_runs_not_rows():
+    """R2 requires two runs; two rows sharing a run_id are one run and must not
+    satisfy the minimum on their own (found by the 2026-10-15 review, D5)."""
+
+    rows = _full_cohort()
+    shared = "20261101T030000Z-google-trends-boundary-1m"
+    for row in rows:
+        if row["timeframe"] == "today 1-m":
+            row["run_id"] = shared
+    verdict = evaluate_promotion_rule(rows)
+
+    entry = verdict["timeframes"]["today 1-m"]
+    assert entry["consistent_runs"] == 1
+    assert entry["consistent_run_ids"] == [shared]
+    assert "insufficient_consistent_runs" in entry["reasons"]
+    assert verdict["eligible"] is False
+
+
 def test_rule_blocks_on_a_failed_run_in_the_cohort():
     rows = _full_cohort()
     rows.append(

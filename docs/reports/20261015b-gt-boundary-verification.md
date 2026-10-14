@@ -153,7 +153,9 @@ capture は「承認された MCP セッションが得た **verbatim の tool r
 
 設計上の要点:
 
-- capture の生 envelope は常に byte 単位で run に保全し、系列はそこから**導出**したものとして
+- capture の生 envelope は常に run に保全する（`mcp-tool-result.json`。この経路は
+  JSON を再直列化するため**値の往復は完全だが byte 同一ではない**。byte 単位のコピーが
+  必要な場合は `stage_run` の一般経路を使う）。系列はそこから**導出**したものとして
   別 artifact にする（`derived_from` で参照）。パースできない形式は推測せず拒否する。
 - 計測 run の `requested_start/end_exclusive` は名目解決値であることを `limitations` に明記し、
   分析は `submitted_parameters.timeframe` + `reference_time` を正とする（P5 の requested /
@@ -165,7 +167,7 @@ capture は「承認された MCP セッションが得た **verbatim の tool r
 
 | # | コマンド | 結果 |
 |---|---|---|
-| 1 | `.venv/bin/python -m pytest -q` | `3 failed, 959 passed, 6 skipped`。失敗 3 件は既知の AUD-028（未追跡ローカルデータ依存、clean checkout のベースラインと同じで増えていない）。新規 37 件を含む |
+| 1 | `.venv/bin/python -m pytest -q` | clean checkout（未追跡ローカルデータ無し）で `3 failed, 960 passed, 6 skipped`。失敗 3 件は既知の AUD-028（未追跡ローカルデータ依存）で、親 commit のベースラインと同じ・増えていない（ローカルデータを持つマシンでは `969 passed / 0 failed`）。新規 37 件を含む。2026-10-15 の独立検証で実測し直した値（当初の記載 959 は 1 件ずれ。ローカルデータ依存テストの差） |
 | 2 | `.venv/bin/python -m validation.cli validate-registries` | exit 0、`11 target(s), valid`（info 7 件は既存の evidence hash 未記録。新規 artifact schema 登録は strict 通過） |
 | 3 | `.venv/bin/python -m validation.cli audit-new-runs` | exit 0、`29 run(s), frozen_legacy_seen=29, new=0, failures=0`（run を追加していないため new=0 のまま） |
 | 4 | `.venv/bin/python -m validation.cli audit-issues` | exit 0、`51 issue(s) [OPEN=36, PENDING=2, ...] failures=0`。GT-001 の PENDING 化と GT-002 追加後の値 |
@@ -286,3 +288,34 @@ timeframe 別サマリ（observed）:
 | issue 完了条件 (2) 対応表 | 生成器・テスト実装済み。オフライン 29 行の表を §10 に記録。ライブ行は未取得 |
 | issue 完了条件 (3) 昇格条件 / 非昇格理由 | 昇格規則を spec に文書化 + 機械評価器を実装。現状 non-eligible を記録 |
 | issue ステータス | `PENDING`（2026-10-15） |
+
+## 14. 独立検証（2026-10-15）と指摘への対応
+
+commit `6d1c624` を独立 worktree・独自スクリプトで検証した（リポジトリ非改変）。
+9 主張はすべて**実質 verified**（span 1 件の指摘は下記 D1・D5）。
+
+- verified: 拒否動作（独自 30 入力。未知ラベル・空系列・非数値・形状不明・
+  `isError` をそれぞれ拒否、生 envelope の再解釈で同一系列）、staging 境界（`../../evil`
+  等の run_id / study_id / パスが既存コードで拒否され何も書かない）、昇格規則（cohort は
+  marker 定義。legacy は入れない。手書き判定は不可。現状 `eligible=false`）、
+  `boundary-report` の読取専用性（敵対的 root でも exit 0・無書込）、provenance 修正
+  （compiler 優先を維持しつつ宣言値が残る。L1 厳格 valid）、テストの非トートロジー性
+  （6 種の変異で 1〜2 件が落ちる）、GT-002 の事実（8 ファイル、53 点、
+  インデックス 11 のずれ、raw 不変）、衛生（依存・秘密・`docs/audits` 不変）。
+- **D1（Medium）→ 修正済み**: 実在しない日付（`Feb 30` 等）を受理し架空の bucket
+  開始日を作っていた → `label_date_invalid` で拒否（`datetime.date` 検証）。
+- **D2（Low）→ 修正済み**: 昇順でない / 重複ラベルの系列を受理していた →
+  `labels_out_of_order` で拒否（spec §4.4 に明記）。
+- **D3（Info）→ 修正済み**: 余分な value 列を黙って切り捨てていた → `row_shape_unknown`。
+  比較表は従来どおり `multi_term_unsupported`。
+- **D4（Info）→ 修正済み**: 負値・100 超を受理していた → `value_out_of_range`。
+- **D5（Low）→ 修正済み**: R2「run_id が相異なる」を規則が行数で数えていた →
+  評価前に run_id で重複除去（同一 run_id の 2 行では最小数に届かない）。
+- **D6（Info）→ 修正済み**: §9 の pytest 件数が clean checkout で再現しなかった →
+  実測値（960 passed / 3 failed / 6 skipped）と環境注記に訂正。
+- **D7（Info）→ 修正済み**: capture envelope を「byte 単位」と書いていたが、この経路は
+  JSON 再直列化（値の往復は完全、byte 同一ではない）→ §8 の記述を訂正し、byte 同一が
+  必要な場合は `stage_run` の一般経路を使うと明記。
+
+未検証である旨の指摘: ライブ MCP セッションを要する事項（実形式・8 run 行列・429
+挙動・昇格後の `exact=true`）は変更の範囲外で、引き続き承認待ち。

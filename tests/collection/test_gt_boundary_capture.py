@@ -252,6 +252,82 @@ def test_parser_refuses_a_multi_term_comparison_table():
         raise AssertionError("a comparison table must be refused")
 
 
+def test_parser_refuses_an_impossible_calendar_date():
+    """A label can name a day that does not exist; deriving a bucket start from
+    it would fabricate an observation (found by the 2026-10-15 review, D1)."""
+
+    for label in ("Feb 30, 2025", "Oct 0 – 6, 2025", "2025-13-45"):
+        text = (
+            "Interest over time for: CBX\n"
+            "Geo: JP | Timeframe: today 12-m\n\n"
+            "Date\tCBX\n"
+            f"{label}\t54\n"
+        )
+        try:
+            parse_tool_result(_envelope(text))
+        except BoundaryCaptureError as error:
+            assert error.codes == ["label_date_invalid"], (label, error.codes)
+        else:  # pragma: no cover
+            raise AssertionError(f"impossible calendar date must be refused: {label}")
+
+
+def test_parser_refuses_an_unordered_series():
+    """The documented rules describe an ascending series; unordered or
+    duplicated labels are not covered, so they are refused (review D2)."""
+
+    for rows in (
+        "Oct 12 – 18, 2025\t54\nOct 5 – 11, 2025\t48\n",
+        "Oct 12 – 18, 2025\t54\nOct 12 – 18, 2025\t48\n",
+    ):
+        text = (
+            "Interest over time for: CBX\n"
+            "Geo: JP | Timeframe: today 12-m\n\n"
+            "Date\tCBX\n" + rows
+        )
+        try:
+            parse_tool_result(_envelope(text))
+        except BoundaryCaptureError as error:
+            assert error.codes == ["labels_out_of_order"], error.codes
+        else:  # pragma: no cover
+            raise AssertionError("an unordered series must be refused")
+
+
+def test_parser_refuses_a_row_with_extra_fields():
+    """A single-term table with more value fields than terms is refused rather
+    than silently truncated to its first value (review D3)."""
+
+    text = (
+        "Interest over time for: CBX\n"
+        "Geo: JP | Timeframe: today 12-m\n\n"
+        "Date\tCBX\n"
+        "Oct 12 – 18, 2025\t54\t21\n"
+    )
+    try:
+        parse_tool_result(_envelope(text))
+    except BoundaryCaptureError as error:
+        assert error.codes == ["row_shape_unknown"]
+    else:  # pragma: no cover
+        raise AssertionError("a row with extra value fields must be refused")
+
+
+def test_parser_refuses_a_value_outside_the_relative_index():
+    """The recorded convention is a relative index 0-100 (review D4)."""
+
+    for value in ("101", "-5"):
+        text = (
+            "Interest over time for: CBX\n"
+            "Geo: JP | Timeframe: today 12-m\n\n"
+            "Date\tCBX\n"
+            f"Oct 12 – 18, 2025\t{value}\n"
+        )
+        try:
+            parse_tool_result(_envelope(text))
+        except BoundaryCaptureError as error:
+            assert error.codes == ["value_out_of_range"], (value, error.codes)
+        else:  # pragma: no cover
+            raise AssertionError(f"value outside 0-100 must be refused: {value}")
+
+
 def test_verify_refuses_unconventional_manifest_content():
     cases = [
         (lambda m: m["captures"][0].__setitem__("run_id", "boundary-12m"), "run_id_unconventional"),

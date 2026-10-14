@@ -127,7 +127,14 @@ Date	<term>
 
 - `label` の許容形: 範囲 `Oct 12 – 18, 2025`（en dash / em dash / hyphen、年跨ぎは `Dec 28 – Jan 3, 2026` →
   開始 2025-12-28）、単日 `Oct 12, 2025`、ISO `2025-10-12`。
-- 上記以外は**拒否**（推測補完しない）。`isError:true` または本文が `Error:` で始まる場合は
+- 上記以外は**拒否**（推測補完しない）。具体的には:
+  - 実在しない日付（`Feb 30`、`2025-13-45` 等）→ `label_date_invalid`
+    （架空の bucket 開始日を作らない）
+  - 系列が昇順でない / 重複ラベル → `labels_out_of_order`（文書化された規則は昇順系列のためのもの）
+  - 単一 term なのに value が複数ある行 → `row_shape_unknown`。比較表（複数 term）は
+    従来どおり `multi_term_unsupported`
+  - value が相対指数の範囲外（0–100 外）→ `value_out_of_range`
+- `isError:true` または本文が `Error:` で始まる場合は
   失敗 capture として記録する（系列を作らない）。
 - **形式検証（必須）:** 行列を回す前に**最初の 1 capture だけ**で `verify` を実行し、
   実形式が parser の許容形と一致することを確認する。不一致の場合は行列を停止し、
