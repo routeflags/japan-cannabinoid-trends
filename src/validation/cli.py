@@ -995,10 +995,13 @@ def cmd_audit_publication(args) -> int:
                 f"{finding['rule']:5} {finding['kind']:28} "
                 f"{finding['path']}  {finding['detail']}"
             )
+        for gap in report["declared_gaps"]:
+            print(f"GAP   {gap['kind']:28} {gap['path']}  {gap['detail']}")
     _err(
         f"publication contract: {summary['artifact_count']} artifact(s) "
         f"findings={summary['finding_count']} "
         f"[{', '.join(f'{key}={value}' for key, value in summary['by_rule'].items())}] "
+        f"declared_gaps={summary['declared_gap_count']} "
         f"(record-only)"
     )
     return EXIT_OK

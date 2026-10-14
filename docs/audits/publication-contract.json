@@ -14,13 +14,10 @@
   },
   "summary": {
     "artifact_count": 15,
-    "finding_count": 4,
-    "by_rule": {
-      "PC-5": 4
-    },
-    "by_kind": {
-      "gt_timeframe_missing": 4
-    }
+    "finding_count": 0,
+    "declared_gap_count": 4,
+    "by_rule": {},
+    "by_kind": {}
   },
   "implemented_rules": [
     "PC-1",
@@ -46,30 +43,27 @@
       "reason": "the guide follows generate-compound-guide, not the research-page contract, so PC-5 does not apply to it"
     }
   ],
-  "findings": [
+  "findings": [],
+  "declared_gaps": [
     {
-      "rule": "PC-5",
-      "kind": "gt_timeframe_missing",
       "path": "publication/research_cbn.html",
-      "detail": "Google Trends section has no table heading for: 5年"
+      "kind": "five_year_value_uncomputable",
+      "detail": "a value is declared 算出不能 from its run record"
     },
     {
-      "rule": "PC-5",
-      "kind": "gt_timeframe_missing",
       "path": "publication/research_crdp.html",
-      "detail": "Google Trends section has no table heading for: 5年"
+      "kind": "five_year_value_uncomputable",
+      "detail": "a value is declared 算出不能 from its run record"
     },
     {
-      "rule": "PC-5",
-      "kind": "gt_timeframe_missing",
       "path": "publication/research_hhch.html",
-      "detail": "Google Trends section has no table heading for: 5年"
+      "kind": "five_year_value_uncomputable",
+      "detail": "a value is declared 算出不能 from its run record"
     },
     {
-      "rule": "PC-5",
-      "kind": "gt_timeframe_missing",
       "path": "publication/research_thch.html",
-      "detail": "Google Trends section has no table heading for: 5年"
+      "kind": "five_year_not_collected",
+      "detail": "the Google Trends section declares 未取得"
     }
   ]
 }

@@ -58,10 +58,29 @@ def test_conforming_artifact_produces_no_findings(tmp_path: Path) -> None:
     assert report["summary"] == {
         "artifact_count": 1,
         "finding_count": 0,
+        "declared_gap_count": 0,
         "by_rule": {},
         "by_kind": {},
     }
     assert report["release"]["version"] == "9.9.9"
+    assert report["declared_gaps"] == []
+
+
+def test_declared_gaps_keep_a_missing_5_year_series_visible(tmp_path: Path) -> None:
+    """A page may declare the series missing; that must not read as "nothing to see"."""
+
+    declared = CONFORMING.replace(
+        "<h3>5年データサマリー</h3><table><tr><td>5年平均</td></tr></table>",
+        "<h3>5年データサマリー</h3><p>5 年系列は未取得。需要ゼロを意味しない。</p>"
+        "<p>5年平均は算出不能（run に平均値の記録なし）。</p>",
+    )
+    report = _report(tmp_path, declared)
+
+    assert report["summary"]["finding_count"] == 0
+    assert {gap["kind"] for gap in report["declared_gaps"]} == {
+        "five_year_not_collected",
+        "five_year_value_uncomputable",
+    }
 
 
 def test_release_version_and_doi_are_compared_to_the_declaration(tmp_path: Path) -> None:

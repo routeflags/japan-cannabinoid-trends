@@ -95,6 +95,13 @@ _H3_RE = re.compile(r"<h3>(.*?)</h3>", re.S)
 #: has its own generator and is therefore not covered by PC-5.
 RESEARCH_PAGE_GLOB = "research_*.html"
 
+#: Markers a page uses when the section the contract requires exists but a
+#: value cannot be given.  These are extracted into ``declared_gaps`` (a report
+#: list, not a finding): the page is compliant, but the missing evidence has to
+#: stay visible in the report instead of turning into a green "write 未取得".
+MISSING_MARKER = "未取得"
+UNCOMPUTABLE_MARKER = "算出不能"
+
 #: Rules without an implementation, reported so the gap is visible.
 UNIMPLEMENTED = (
     {
@@ -286,6 +293,40 @@ def _artifact_findings(path: Path, repo_root: Path, release: dict) -> list[dict]
     return findings
 
 
+def _declared_gaps(path: Path, html: str, relative: str) -> list[dict]:
+    """Evidence the page itself declares as missing (research pages only).
+
+    A 5-year section may legitimately say the series was never collected or that
+    a value cannot be computed from its run record (ISS-20261015-GT-003).  The
+    section requirement (PC-5) is then satisfied, so this list is what keeps the
+    gap reviewable rather than making it disappear into a green report.
+    """
+
+    gaps = []
+    if not path.match(RESEARCH_PAGE_GLOB):
+        return gaps
+    for section_id, content in _sections(html):
+        if section_id != "data-search":
+            continue
+        if MISSING_MARKER in content:
+            gaps.append(
+                {
+                    "path": relative,
+                    "kind": "five_year_not_collected",
+                    "detail": f"the Google Trends section declares {MISSING_MARKER}",
+                }
+            )
+        if UNCOMPUTABLE_MARKER in content:
+            gaps.append(
+                {
+                    "path": relative,
+                    "kind": "five_year_value_uncomputable",
+                    "detail": f"a value is declared {UNCOMPUTABLE_MARKER} from its run record",
+                }
+            )
+    return gaps
+
+
 def build_publication_contract_report(repo_root: Path) -> dict:
     """Check every committed publication HTML artifact.  Read-only."""
 
@@ -295,9 +336,15 @@ def build_publication_contract_report(repo_root: Path) -> dict:
     artifacts = sorted(publication_root.rglob("*.html")) if publication_root.is_dir() else []
 
     findings: list[dict] = []
+    declared_gaps: list[dict] = []
     for artifact in artifacts:
+        relative = artifact.relative_to(repo_root).as_posix()
         findings.extend(_artifact_findings(artifact, repo_root, release))
+        declared_gaps.extend(
+            _declared_gaps(artifact, _strip_non_content(_reading(artifact)), relative)
+        )
     findings.sort(key=lambda entry: (entry["path"], entry["rule"], entry["kind"]))
+    declared_gaps.sort(key=lambda entry: (entry["path"], entry["kind"]))
 
     def count(field: str) -> dict:
         counts: dict[str, int] = {}
@@ -313,10 +360,12 @@ def build_publication_contract_report(repo_root: Path) -> dict:
         "summary": {
             "artifact_count": len(artifacts),
             "finding_count": len(findings),
+            "declared_gap_count": len(declared_gaps),
             "by_rule": count("rule"),
             "by_kind": count("kind"),
         },
         "implemented_rules": ["PC-1", "PC-3", "PC-4", "PC-5", "PC-6"],
         "unimplemented_rules": list(UNIMPLEMENTED),
         "findings": findings,
+        "declared_gaps": declared_gaps,
     }
