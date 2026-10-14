@@ -20,6 +20,7 @@ Commands
 - ``audit-artifacts``     non-destructive G4 §16 artifact inventory
 - ``audit-git-tracking``  non-destructive G6 §15 git tracking inventory
 - ``audit-private-catalog`` non-destructive G6 §13 private data boundary catalog
+- ``contract-ledger``     the derived inventory of every declared contract
 - ``gate-publication``    record-only G6 §10 publication eligibility gate
 
 Exit codes (h.md §13)
@@ -52,6 +53,7 @@ from pathlib import Path
 from validation.boundary import build_boundary_report
 from validation.comparability import compare_runs
 from validation.coverage import build_temporal_inventory, evaluate_coverage
+from validation.contract_ledger import build_contract_ledger
 from validation.gates import post_collection_gate, pre_collection_gate
 from validation.g6_inventory import build_git_tracking_inventory
 from validation.integrity import IO_ISSUE_CODES, sha256_file
@@ -955,6 +957,50 @@ def cmd_audit_issues(args) -> int:
     return EXIT_DATA if report["failure_count"] else EXIT_OK
 
 
+def cmd_contract_ledger(args) -> int:
+    """The contract ledger: every declared contract in one derived inventory.
+
+    Read-only; see ``validation/contract_ledger.py`` for what is derived there
+    and what is declared in that module (and why the ledger exists at all).
+    """
+    try:
+        ledger = build_contract_ledger(Path.cwd())
+    except (OSError, ValueError) as error:
+        _err(f"contract ledger failed: {error.__class__.__name__}: {error}")
+        return EXIT_CONFIG
+
+    summary = ledger["summary"]
+    if args.output:
+        try:
+            _write_output(args.output, ledger)
+        except OSError as error:
+            _err(
+                f"cannot write ledger output: {args.output} "
+                f"({error.__class__.__name__})"
+            )
+            return EXIT_IO
+        _err(
+            f"contract ledger written: {args.output} "
+            f"({summary['contract_count']} contract(s))"
+        )
+    elif args.format == "json":
+        print(dump_json(ledger), end="")
+    else:
+        for contract in ledger["contracts"]:
+            print(
+                f"{contract['kind']:18} {contract['contract_id']:32} "
+                f"{contract['group']:3} {contract['owner']}"
+            )
+        for gap in ledger["gaps"]:
+            print(f"GAP {gap['kind']:20} {gap['contract_id']}  {gap['detail']}")
+    _err(
+        f"contract ledger: {summary['contract_count']} contract(s) "
+        f"[{', '.join(f'{key}={value}' for key, value in summary['by_kind'].items())}] "
+        f"documents={summary['document_count']} gaps={summary['gap_count']}"
+    )
+    return EXIT_OK
+
+
 def cmd_audit_git_tracking(args) -> int:
     """Non-destructive G6 §15 git tracking inventory (read-only git only)."""
     repo_root = Path.cwd()
@@ -1790,6 +1836,19 @@ def build_parser() -> argparse.ArgumentParser:
     audit_issues_parser.add_argument("--issues-dir", default="docs/issues")
     audit_issues_parser.add_argument("--output", default=None)
     audit_issues_parser.add_argument("--format", choices=("text", "json"), default="text")
+
+    contract_ledger_parser = sub.add_parser(
+        "contract-ledger",
+        help=(
+            "the derived inventory of every declared contract "
+            "(schema / interface / gate)"
+        ),
+    )
+    contract_ledger_parser.add_argument("--output", default=None)
+    contract_ledger_parser.add_argument(
+        "--format", choices=("text", "json"), default="text"
+    )
+    contract_ledger_parser.set_defaults(handler=cmd_contract_ledger)
     audit_issues_parser.set_defaults(handler=cmd_audit_issues)
 
     audit_private = sub.add_parser(

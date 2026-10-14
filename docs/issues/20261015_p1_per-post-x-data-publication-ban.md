@@ -3,7 +3,7 @@
 **ID:** ISS-20261015-XID-034  
 **優先度:** P1 (High)  
 **ステータス:** OPEN  
-**対象:** `src/validation/x_identity.py`, `config/storage-policies.json`, `docs/specs/validation-framework.md`（§21 / §22）, `docs/data-dictionary.md` §1.2, `docs/specs/raw-data-policy.md`, `docs/specs/sns-redistribution-assessment.md`
+**対象:** `src/validation/x_identity.py`, `config/storage-policies.json`, `docs/specs/validation-framework.md`（§21 / §22）, `docs/data-dictionary.md` §1.2, `docs/specs/raw-data-policy.md`, `docs/specs/sns-redistribution-assessment.md`, `publication/`
 
 ## 概要
 
@@ -13,6 +13,9 @@
 
 この issue は**施行（検査と語彙・文書）**を担当する。既存公開物の取り下げは
 `ISS-20261015-PUB-035`。
+
+施行点は 2 つある: **格納・追跡の禁止**（既存方針）と、**公開物における投稿単位の表現の禁止**
+（2026-10-15 のメンテナ決定で追加。§決定記録）。
 
 ## 確認された観測
 
@@ -34,6 +37,19 @@
 - 方針変更が文書だけで、機械的な施行点が無い（同型の失敗は §21.1 で記録済み）。
 - 今後も投稿単位 CSV が知らずに追跡される（公開ゲートも通してしまう）。
 
+## 決定記録（2026-10-15）
+
+**メンテナ決定:** 投稿単位の表現は、リポジトリへの格納禁止と同じく**禁止**とする。
+したがって方針は「格納しない」だけでなく「**表現しない**」に及ぶ。
+
+| 区分 | 内容 |
+|---|---|
+| 禁止 | 1 行 = 1 投稿の表・列挙、投稿本文の引用、投稿 ID / permalink、投稿日時の列、投稿ごとのエンゲージメント値、`username` / `author_id` の掲載、**投稿レコードの列構成に言及する記述**（例: フィールド別の完全率） |
+| 許可 | 集計（件数・比率・分布・中央値等）、収集メタデータ（クエリ・期間・件数）、分類カテゴリ別の集計 |
+| 境界（別途確認） | 「1 行 = 1 アカウント」の表は投稿単位ではないが境界事例（`publication/guide_cbx_rewrite.html` の「上位投稿者」表。現状は疑似名 A〜E で実名非公開）。判断は `docs/reports/20261015c-publication-refresh-plan.md` §11-U4b |
+
+決定は「投稿単位データを公開しない」であり、集計値の公開は妨げない。
+
 ## 対応方針
 
 - **新しい検査を 1 つ追加**する（既存規則と同じ実行点 = `validation.cli audit-x-identity` と
@@ -46,7 +62,12 @@
 - 文書を方針変更に合わせる: `data-dictionary.md` §1.2（用途）、
   `sns-redistribution-assessment.md`（日付付き追記）、`validation-framework.md` §21/§22、
   `raw-data-policy.md`（X の扱い）。既存の日付付き記述は当時の事実として残す。
+- **公開物側の検査を追加する**（本決定で追加された施行点）: publication の成果物が投稿単位の表現
+  （permalink、`@handle`、投稿単位の列見出し、投稿レコードの列構成への言及）を含む場合に fail させる。
+  `src/validation/x_identity.py` の検査対象に `publication/` を加え、既存の「識別子の混入検査」と同じ
+  実行点（`validation.cli audit-x-identity`）で動かす。判定パターンは 1 か所で持つ。
 - 検査自体のテスト（非空虚性: 投稿単位 CSV を検体にすると落ち、集計 CSV は通る）。
+  公開物側も同様に、投稿単位の表現を含むフィクスチャで落ち、集計のみのフィクスチャで通ることを固定する。
 
 ## 完了条件
 
@@ -54,6 +75,7 @@
 - [ ] 保存方針の語彙拡張と `validate-registries` green
 - [ ] 文書の整合（§21 / §22 / data-dictionary / redistribution assessment / raw-data-policy）
 - [ ] 既存の追跡対象が 0 件になったことを検査で確認（PUB-035 と連携）
+- [ ] 公開物に投稿単位の表現が 0 件であることを検査で確認（`publication/`、テスト付き・非空虚）
 
 ## 依存
 

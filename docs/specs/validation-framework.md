@@ -323,7 +323,11 @@ Cerberus は**構造検証のみ**を担当する。
 
 ## 10. スキーマ一覧（18件、契約バージョンはいずれも 1.0.0）
 
-| Schema ID | 契約 | 主な内容 |
+「契約」は総称である。用語の定義・所有コンテキスト・宣言場所・検査手段は
+`docs/specs/contracts.md`（契約のドメインモデル）を正本とする。下表の**グループ**列は
+Cerberus の作業グループ（`G1`〜`G7` / `P6`）を指す。
+
+| Schema ID | グループ | 主な内容 |
 |---|---|---|
 | `collection-run-v1` | G5 | run_metadata（finalized） |
 | `collection-run-v1-running` | G5 | 実行中 profile。`status=running` のみ許容、`collection_finished_at` は未知フィールド扱い（復帰ラベルによる回避を検出） |
@@ -359,7 +363,7 @@ contract version は 1.0.0 のまま — G2 の plan 拡張と同じ手順）。
 | `metadata/queries/query-registry.json` | query-registry-v1 | **あり**（G2 垂直スライス + 2026-10-13 増分: 31 queries。`validate-registries` と CI が実検証する） |
 | `metadata/queries/query-variants.json` | query-variants-registry-v1 | **あり**（3 variant sets） |
 | `metadata/windows/*.json` | temporal-window-v1 | **あり**（G3 垂直スライス: 2 windows。`validate-registries` と CI が実検証する） |
-| `metadata/artifacts/artifact-registry.json` | artifact-registry-v1 | **あり**（G4 垂直スライス + 2026-10-15 増分: 8 readers / 11 artifact schemas。`validate-registries` と CI が実検証する） |
+| `metadata/artifacts/artifact-registry.json` | artifact-registry-v1 | **あり**（G4 垂直スライス + 2026-10-15 増分: 8 readers / 12 artifact schemas。`validate-registries` と CI が実検証する） |
 | `metadata/provenance/evidence-registry.json` | evidence-registry-v1 | **あり**（G5 垂直スライス: 8 証拠。`validate-registries` と CI が実検証する — §18） |
 | `metadata/studies/study-registry.json` | study-registry-v1 | **あり**（G7 垂直スライス + 2026-10-13 増分: 9 studies。`validate-registries` と CI が実検証する） |
 | `metadata/measurements/measurement-registry.json` | measurement-registry-v1 | **あり**（G7 垂直スライス: 3 measurements。`validate-registries` と CI が実検証する） |

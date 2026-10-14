@@ -1,0 +1,414 @@
+{
+  "schema_version": "1.0.0",
+  "generated_by": "validation.cli contract-ledger",
+  "summary": {
+    "contract_count": 27,
+    "document_count": 12,
+    "by_kind": {
+      "gate_contract": 6,
+      "interface_contract": 3,
+      "schema_contract": 18
+    },
+    "by_owner": {
+      "collection": 11,
+      "publication": 1,
+      "research": 6,
+      "storage": 4,
+      "validation": 5
+    },
+    "by_group": {
+      "G1": 4,
+      "G2": 3,
+      "G3": 2,
+      "G4": 3,
+      "G5": 4,
+      "G6": 3,
+      "G7": 4,
+      "P6": 4
+    },
+    "gap_count": 7
+  },
+  "contracts": [
+    {
+      "contract_id": "gate-comparability-run",
+      "group": "G1",
+      "owner": "validation",
+      "version": null,
+      "declared_at": "src/validation/comparability.py",
+      "enforced_by": "validation.cli compare-runs",
+      "test": "tests/validation/test_comparability.py",
+      "kind": "gate_contract"
+    },
+    {
+      "contract_id": "gate-comparability-study",
+      "group": "G7",
+      "owner": "research",
+      "version": null,
+      "declared_at": "src/research/comparability.py",
+      "enforced_by": "research.cli compare",
+      "test": "tests/research/test_research_catalog.py",
+      "kind": "gate_contract"
+    },
+    {
+      "contract_id": "gate-coverage",
+      "group": "G3",
+      "owner": "validation",
+      "version": null,
+      "declared_at": "src/validation/coverage.py",
+      "enforced_by": "validation.cli coverage-run",
+      "test": "tests/validation/test_coverage.py",
+      "kind": "gate_contract"
+    },
+    {
+      "contract_id": "gate-plan",
+      "group": "P6",
+      "owner": "validation",
+      "version": null,
+      "declared_at": "src/validation/gates.py",
+      "enforced_by": "validation.cli gate-plan",
+      "test": "tests/validation/test_gates.py",
+      "kind": "gate_contract"
+    },
+    {
+      "contract_id": "gate-publication",
+      "group": "G6",
+      "owner": "validation",
+      "version": null,
+      "declared_at": "src/validation/publication_eligibility.py",
+      "enforced_by": "validation.cli gate-publication",
+      "test": "tests/validation/test_publication_gate.py",
+      "kind": "gate_contract"
+    },
+    {
+      "contract_id": "gate-run",
+      "group": "P6",
+      "owner": "validation",
+      "version": null,
+      "declared_at": "src/validation/gates.py",
+      "enforced_by": "validation.cli gate-run",
+      "test": "tests/validation/test_pipeline.py",
+      "kind": "gate_contract"
+    },
+    {
+      "contract_id": "adapter-contract-v1",
+      "group": "G1",
+      "owner": "collection",
+      "version": "1.0.0",
+      "declared_at": "src/collection/core/contracts.py",
+      "enforced_by": "collection.core.pipeline (adapter contract check)",
+      "test": "tests/collection/test_adapter_contract.py",
+      "kind": "interface_contract"
+    },
+    {
+      "contract_id": "staging-declaration-v1",
+      "group": "P6",
+      "owner": "collection",
+      "version": "1.0.0",
+      "declared_at": "src/collection/core/staging.py",
+      "enforced_by": "collection.core.cli stage",
+      "test": "tests/collection/test_staging_driver.py",
+      "kind": "interface_contract"
+    },
+    {
+      "contract_id": "storage-reader-contract-v1",
+      "group": "G4",
+      "owner": "storage",
+      "version": null,
+      "declared_at": "src/storage/contracts.py",
+      "enforced_by": "validation.storage_contract",
+      "test": "tests/validation/test_storage_contract.py",
+      "kind": "interface_contract"
+    },
+    {
+      "contract_id": "artifact-manifest-v1",
+      "kind": "schema_contract",
+      "group": "G4",
+      "owner": "storage",
+      "version": "1.0.0",
+      "declared_at": "src/validation/schemas/",
+      "enforced_by": "validation.cli validate-all",
+      "test": "tests/validation/test_schema_coverage.py"
+    },
+    {
+      "contract_id": "artifact-registry-v1",
+      "kind": "schema_contract",
+      "group": "G4",
+      "owner": "storage",
+      "version": "1.0.0",
+      "declared_at": "src/validation/schemas/",
+      "enforced_by": "validation.cli validate-all",
+      "test": "tests/validation/test_schema_coverage.py"
+    },
+    {
+      "contract_id": "collection-plan-v1",
+      "kind": "schema_contract",
+      "group": "P6",
+      "owner": "collection",
+      "version": "1.0.0",
+      "declared_at": "src/validation/schemas/",
+      "enforced_by": "validation.cli validate-all",
+      "test": "tests/validation/test_schema_coverage.py"
+    },
+    {
+      "contract_id": "collection-run-v1",
+      "kind": "schema_contract",
+      "group": "G5",
+      "owner": "collection",
+      "version": "1.0.0",
+      "declared_at": "src/validation/schemas/",
+      "enforced_by": "validation.cli validate-all",
+      "test": "tests/validation/test_schema_coverage.py"
+    },
+    {
+      "contract_id": "collection-run-v1-running",
+      "kind": "schema_contract",
+      "group": "G5",
+      "owner": "collection",
+      "version": "1.0.0",
+      "declared_at": "src/validation/schemas/",
+      "enforced_by": "validation.cli validate-all",
+      "test": "tests/validation/test_schema_coverage.py"
+    },
+    {
+      "contract_id": "collector-registry-v1",
+      "kind": "schema_contract",
+      "group": "G1",
+      "owner": "collection",
+      "version": "1.0.0",
+      "declared_at": "src/validation/schemas/",
+      "enforced_by": "validation.cli validate-all",
+      "test": "tests/validation/test_schema_coverage.py"
+    },
+    {
+      "contract_id": "evidence-registry-v1",
+      "kind": "schema_contract",
+      "group": "G5",
+      "owner": "research",
+      "version": "1.0.0",
+      "declared_at": "src/validation/schemas/",
+      "enforced_by": "validation.cli validate-all",
+      "test": "tests/validation/test_schema_coverage.py"
+    },
+    {
+      "contract_id": "measurement-registry-v1",
+      "kind": "schema_contract",
+      "group": "G7",
+      "owner": "research",
+      "version": "1.0.0",
+      "declared_at": "src/validation/schemas/",
+      "enforced_by": "validation.cli validate-all",
+      "test": "tests/validation/test_schema_coverage.py"
+    },
+    {
+      "contract_id": "publication-decision-v1",
+      "kind": "schema_contract",
+      "group": "G6",
+      "owner": "publication",
+      "version": "1.0.0",
+      "declared_at": "src/validation/schemas/",
+      "enforced_by": "validation.cli validate-all",
+      "test": "tests/validation/test_schema_coverage.py"
+    },
+    {
+      "contract_id": "query-registry-v1",
+      "kind": "schema_contract",
+      "group": "G2",
+      "owner": "collection",
+      "version": "1.0.0",
+      "declared_at": "src/validation/schemas/",
+      "enforced_by": "validation.cli validate-all",
+      "test": "tests/validation/test_schema_coverage.py"
+    },
+    {
+      "contract_id": "query-variants-registry-v1",
+      "kind": "schema_contract",
+      "group": "G2",
+      "owner": "collection",
+      "version": "1.0.0",
+      "declared_at": "src/validation/schemas/",
+      "enforced_by": "validation.cli validate-all",
+      "test": "tests/validation/test_schema_coverage.py"
+    },
+    {
+      "contract_id": "query-variants-v1",
+      "kind": "schema_contract",
+      "group": "G2",
+      "owner": "collection",
+      "version": "1.0.0",
+      "declared_at": "src/validation/schemas/",
+      "enforced_by": "validation.cli validate-all",
+      "test": "tests/validation/test_schema_coverage.py"
+    },
+    {
+      "contract_id": "research-view-v1",
+      "kind": "schema_contract",
+      "group": "G7",
+      "owner": "research",
+      "version": "1.0.0",
+      "declared_at": "src/validation/schemas/",
+      "enforced_by": "validation.cli validate-all",
+      "test": "tests/validation/test_schema_coverage.py"
+    },
+    {
+      "contract_id": "source-registry-v1",
+      "kind": "schema_contract",
+      "group": "G1",
+      "owner": "collection",
+      "version": "1.0.0",
+      "declared_at": "src/validation/schemas/",
+      "enforced_by": "validation.cli validate-all",
+      "test": "tests/validation/test_schema_coverage.py"
+    },
+    {
+      "contract_id": "storage-policy-registry-v1",
+      "kind": "schema_contract",
+      "group": "G6",
+      "owner": "storage",
+      "version": "1.0.0",
+      "declared_at": "src/validation/schemas/",
+      "enforced_by": "validation.cli validate-all",
+      "test": "tests/validation/test_schema_coverage.py"
+    },
+    {
+      "contract_id": "study-registry-v1",
+      "kind": "schema_contract",
+      "group": "G7",
+      "owner": "research",
+      "version": "1.0.0",
+      "declared_at": "src/validation/schemas/",
+      "enforced_by": "validation.cli validate-all",
+      "test": "tests/validation/test_schema_coverage.py"
+    },
+    {
+      "contract_id": "temporal-window-v1",
+      "kind": "schema_contract",
+      "group": "G3",
+      "owner": "collection",
+      "version": "1.0.0",
+      "declared_at": "src/validation/schemas/",
+      "enforced_by": "validation.cli validate-all",
+      "test": "tests/validation/test_schema_coverage.py"
+    },
+    {
+      "contract_id": "transformation-v1",
+      "kind": "schema_contract",
+      "group": "G5",
+      "owner": "research",
+      "version": "1.0.0",
+      "declared_at": "src/validation/schemas/",
+      "enforced_by": "validation.cli validate-all",
+      "test": "tests/validation/test_schema_coverage.py"
+    }
+  ],
+  "documents": [
+    {
+      "path": "config/sources.json",
+      "kind": "registry_document",
+      "schema_contract": "source-registry-v1",
+      "exists": true
+    },
+    {
+      "path": "config/collectors.json",
+      "kind": "registry_document",
+      "schema_contract": "collector-registry-v1",
+      "exists": true
+    },
+    {
+      "path": "config/storage-policies.json",
+      "kind": "registry_document",
+      "schema_contract": "storage-policy-registry-v1",
+      "exists": true
+    },
+    {
+      "path": "metadata/queries/query-registry.json",
+      "kind": "registry_document",
+      "schema_contract": "query-registry-v1",
+      "exists": true
+    },
+    {
+      "path": "metadata/queries/query-variants.json",
+      "kind": "registry_document",
+      "schema_contract": "query-variants-registry-v1",
+      "exists": true
+    },
+    {
+      "path": "metadata/studies/study-registry.json",
+      "kind": "registry_document",
+      "schema_contract": "study-registry-v1",
+      "exists": true
+    },
+    {
+      "path": "metadata/measurements/measurement-registry.json",
+      "kind": "registry_document",
+      "schema_contract": "measurement-registry-v1",
+      "exists": true
+    },
+    {
+      "path": "metadata/artifacts/artifact-registry.json",
+      "kind": "registry_document",
+      "schema_contract": "artifact-registry-v1",
+      "exists": true
+    },
+    {
+      "path": "metadata/provenance/evidence-registry.json",
+      "kind": "registry_document",
+      "schema_contract": "evidence-registry-v1",
+      "exists": true
+    },
+    {
+      "path": "metadata/windows/2021-10-10_2026-10-12.json",
+      "kind": "registry_document",
+      "schema_contract": "temporal-window-v1",
+      "exists": true
+    },
+    {
+      "path": "metadata/windows/2025-10-12_2026-10-12.json",
+      "kind": "registry_document",
+      "schema_contract": "temporal-window-v1",
+      "exists": true
+    },
+    {
+      "path": "metadata/publication/x-cbx-202608-summary-anonymized/",
+      "kind": "decision_record",
+      "schema_contract": "publication-decision-v1",
+      "exists": true
+    }
+  ],
+  "gaps": [
+    {
+      "kind": "version_undeclared",
+      "contract_id": "gate-comparability-run",
+      "detail": "contract version is not declared"
+    },
+    {
+      "kind": "version_undeclared",
+      "contract_id": "gate-comparability-study",
+      "detail": "contract version is not declared"
+    },
+    {
+      "kind": "version_undeclared",
+      "contract_id": "gate-coverage",
+      "detail": "contract version is not declared"
+    },
+    {
+      "kind": "version_undeclared",
+      "contract_id": "gate-plan",
+      "detail": "contract version is not declared"
+    },
+    {
+      "kind": "version_undeclared",
+      "contract_id": "gate-publication",
+      "detail": "contract version is not declared"
+    },
+    {
+      "kind": "version_undeclared",
+      "contract_id": "gate-run",
+      "detail": "contract version is not declared"
+    },
+    {
+      "kind": "version_undeclared",
+      "contract_id": "storage-reader-contract-v1",
+      "detail": "contract version is not declared"
+    }
+  ]
+}
