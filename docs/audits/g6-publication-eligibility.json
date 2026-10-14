@@ -4,7 +4,7 @@
   "artifact_id": "x-cbx-202608-summary-anonymized",
   "artifact_sha256": "f27f979a19e7e4925ae0b5d442beeec027e667ce5b10247934066a5b1ed463a6",
   "decision_id": "publication-review-x-cbx-202608-summary",
-  "verdict": "CONDITIONAL",
+  "verdict": "BLOCKED",
   "checks": [
     {
       "id": "PUB-01",
@@ -63,11 +63,13 @@
     {
       "id": "PUB-10",
       "title": "publication approval recorded",
-      "status": "PASS",
-      "detail": "approved decision pins this artifact hash"
+      "status": "FAIL",
+      "detail": "approval missing or invalid (PUBLICATION_NOT_APPROVED); publication refused"
     }
   ],
-  "failed": [],
+  "failed": [
+    "PUB-10"
+  ],
   "warnings": [
     "PUB-06",
     "PUB-07",

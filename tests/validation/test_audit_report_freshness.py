@@ -55,6 +55,11 @@ class Report:
     normalizer: str = "identity"
     #: For an invocation record: the artifact the recorded verdict was about.
     artifact_path: str = ""
+    #: For an invocation record whose artifact was withdrawn: the committed review
+    #: envelope that keeps the hash the verdict reviewed.  The artifact file is
+    #: deliberately absent, so the hash is checked against the envelope instead of
+    #: the disk (ISS-20261015-PUB-035).
+    envelope: str = ""
     notes: str = ""
 
 
@@ -156,12 +161,16 @@ REPORTS: tuple[Report, ...] = (
         artifact_path=(
             "datasets/cbx-social-trends/data/processed/x_cbx_202608_summary_anonymized.csv"
         ),
+        envelope="metadata/publication/x-cbx-202608-summary-anonymized",
         notes=(
             "Records one G6 §10.2 publication gate invocation.  The review envelope "
             "(artifact descriptor / evidence / decision) is committed under "
             "metadata/publication/x-cbx-202608-summary-anonymized/, so the recorded "
             "verdict is checked both against the artifact hash it approves and "
-            "against a re-run from its own inputs."
+            "against a re-run from its own inputs.  The artifact itself was "
+            "withdrawn on 2026-10-15 (per-post X data is not published even "
+            "anonymized), so the hash is checked against the envelope and the "
+            "absence of the file is asserted."
         ),
     ),
 )
@@ -221,6 +230,20 @@ def test_invocation_record_still_describes_its_artifact(report: Report) -> None:
 
     assert report.artifact_path, f"{report.path}: register the artifact it judged"
     recorded = _load(report.path)
+    if report.envelope:
+        # Withdrawn artifact: the file is gone by decision, so the reviewed hash is
+        # pinned to the committed descriptor and the absence is asserted.
+        descriptor = json.loads(
+            (REPO_ROOT / report.envelope / "artifact.json").read_text(encoding="utf-8")
+        )
+        assert recorded["artifact_sha256"] == descriptor["sha256"], (
+            f"{report.path} records sha256 {recorded['artifact_sha256']} but "
+            f"{report.envelope}/artifact.json records {descriptor['sha256']}"
+        )
+        assert not (REPO_ROOT / report.artifact_path).exists(), (
+            f"{report.artifact_path} is withdrawn but present; re-run gate-publication"
+        )
+        return
     current = hashlib.sha256((REPO_ROOT / report.artifact_path).read_bytes()).hexdigest()
     assert recorded["artifact_sha256"] == current, (
         f"{report.path} records sha256 {recorded['artifact_sha256']} but "

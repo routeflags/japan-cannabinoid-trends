@@ -968,6 +968,29 @@ processed CSV の変更ではスキーマ検証だけが走り、再現性検証
 - `publication/guide_cbx_rewrite.html` の種別列から店舗地区（「麻布十番」）を除去した。
   ハンドル以外の残余識別情報（店舗地区等）の扱いは方針未定。
 
+### 21.7 追記（2026-10-15）: 投稿単位の X データは匿名化後も公開しない
+
+§21 は「識別子を落とせば公開してよい」という前提で匿名化版 CSV を公開対象にしていた。
+2026-10-15 のメンテナ決定（`ISS-20261015-COL-030` §4.1）でその前提を閉じた。
+
+- 施行（格納・追跡側）: `src/validation/x_identity.py` の `per_post_dataset`。追跡下の
+  `datasets/` 配下ファイルの**構造**（列セット: `POST_RECORD_FIELDS` の 3 件以上）から
+  投稿単位の表を検出する。列名の一覧はこのモジュールが単一の正本で、公開契約 PC-3 の
+  散文規則も同じ一覧から派生する（規則を二重実装しない）。
+- 施行（公開物側）: 公開契約 PC-3（`src/validation/publication_contract.py`、§22 の監査）。
+- 成果物: `x_cbx_202608_summary_anonymized.csv` を `git rm` し、`src/processing/reproduce.py`
+  の `WITHDRAWN` に理由・代替・露出（8 タグ + Zenodo DOI）を日付付きで記録した
+  （`ISS-20261015-PUB-035`）。これで `DERIVATIONS` は空になり、再導出経路の検証は
+  fixture テスト（`tests/processing/test_processed_artifacts.py`）に移った。
+- 公開判断の記録: `metadata/publication/x-cbx-202608-summary-anonymized/decision.json` を
+  `status: denied`（2026-10-15、根拠は §4.1 の決定文）に置き換え、2026-10-13 の approved は
+  `notes` に残した。ゲート再実行の verdict は `BLOCKED`（PUB-10 FAIL = 公開拒否）。
+  既公開アーカイブの取り下げは §21.6 の判断（不要 = 受容済み）を維持する。
+- 語彙: 保存方針の `publication` は既存の `denied` を使う。`config/storage-policies.json` への
+  新しい policy 追加は**しない**: その registry の次元は layer × source_kind であり、
+  X 投稿単位と他の social 処理済み成果物を区別できないため、追加すると YouTube 等を
+  誤分類する。判断は成果物単位の decision で表す。
+
 ## 22. Phase 6 本体配線（ゲートの回避防止）— 2026-10-13
 
 ### 22.1 判明したこと（実測）

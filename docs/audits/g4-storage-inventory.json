@@ -20,28 +20,28 @@
     "include_private": false
   },
   "run_count": 37,
-  "count": 91,
+  "count": 90,
   "raw_modified": false,
   "judgment_summary": {
-    "missing_metadata": 6,
+    "missing_metadata": 5,
     "partially_recognized": 24,
     "recognized": 61
   },
   "format_summary": {
-    "csv": 2,
+    "csv": 1,
     "json": 88,
     "text": 1
   },
   "artifact_type_summary": {
     "comparison": 4,
-    "none": 28,
+    "none": 27,
     "raw_records": 1,
     "raw_response": 3,
     "summary": 13,
     "timeseries": 42
   },
   "manifest_summary": {
-    "missing": 75,
+    "missing": 74,
     "present": 16
   },
   "sqlite_present": false,
@@ -2866,33 +2866,6 @@
       "judgment": "partially_recognized",
       "notes": [
         "content:json_object",
-        "legacy:no-manifest",
-        "lineage:unknown"
-      ]
-    },
-    {
-      "path": "datasets/cbx-social-trends/data/processed/x_cbx_202608_summary_anonymized.csv",
-      "bytes": 20538,
-      "sha256": "f27f979a19e7e4925ae0b5d442beeec027e667ce5b10247934066a5b1ed463a6",
-      "format": "csv",
-      "sniff_state": "partial",
-      "artifact_type": null,
-      "schema_id": null,
-      "contains_full_timeseries": null,
-      "record_count": null,
-      "declared_data_points": null,
-      "reader_id": null,
-      "reader_registered": null,
-      "study_id": null,
-      "run_id": null,
-      "source_id": null,
-      "run_directory": null,
-      "metadata_state": "missing",
-      "manifest_state": "missing",
-      "verification": "unverifiable_no_manifest",
-      "judgment": "missing_metadata",
-      "notes": [
-        "content:extension:csv",
         "legacy:no-manifest",
         "lineage:unknown"
       ]

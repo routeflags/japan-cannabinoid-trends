@@ -130,200 +130,24 @@ fi
 print_info "datapackage.json を読み込み中..."
 
 # =============================================================================
-# 1. X データ（匿名化版）の検証
+# 1. X 投稿単位データ（匿名化後も公開しない: 2026-10-15 の決定）
 # =============================================================================
 
-print_header "1. X データ（匿名化版）"
+print_header "1. X 投稿単位データ（公開しない）"
 
 X_CSV="datasets/cbx-social-trends/data/processed/x_cbx_202608_summary_anonymized.csv"
 
-if [ ! -f "$X_CSV" ]; then
-  print_warn "$X_CSV が存在しません（スキップ）"
+# 2026-10-15 の決定（ISS-20261015-COL-030 §4.1、施行は ISS-20261015-XID-034）で、
+# 投稿単位の X データは**匿名化後も公開しない**。成果物（147 行 = 147 投稿）は
+# 取り下げ済み（src/processing/reproduce.py の WITHDRAWN、ISS-20261015-PUB-035）なので、
+# ここでは「追跡下に無いこと」を検査する。列セットによる構造の判定は
+# src/validation/x_identity.py の per_post_dataset が担当する（規則を二重実装しない）。
+if git ls-files --error-unmatch -- "$X_CSV" >/dev/null 2>&1; then
+  print_fail "$X_CSV が追跡下にあります（投稿単位 X データは公開しない）"
+elif [ -f "$X_CSV" ]; then
+  print_warn "$X_CSV は作業ツリーにありますが追跡されていません（公開対象ではない）"
 else
-  # CSV のヘッダーを取得
-  CSV_HEADERS=$(get_csv_headers "$X_CSV" | tr '\n' ' ' | sed 's/ $//')
-  CSV_COL_COUNT=$(get_csv_column_count "$X_CSV")
-  CSV_RECORD_COUNT=$(get_csv_record_count "$X_CSV")
-  
-  print_info "CSV: $X_CSV"
-  print_info "カラム数: $CSV_COL_COUNT"
-  print_info "レコード数: $CSV_RECORD_COUNT"
-  print_info "カラム: $CSV_HEADERS"
-  
-  # datapackage.json のスキーマを取得
-  SCHEMA_FIELDS=$(get_json_field_names "$DATAPACKAGE" "x_cbx_202608_summary_anonymized")
-  SCHEMA_COL_COUNT=$(echo "$SCHEMA_FIELDS" | grep -c '.' || echo "0")
-  
-  print_info "スキーマ定義: $SCHEMA_COL_COUNT フィールド"
-  
-  # カラム名の比較
-  echo ""
-  echo "  カラム名の比較:"
-  
-  # CSV の各カラムがスキーマに定義されているか確認
-  MISSING_IN_SCHEMA=""
-  for col in $CSV_HEADERS; do
-    if echo "$SCHEMA_FIELDS" | grep -q "^${col}$"; then
-      print_pass "カラム '$col' はスキーマに定義済み"
-    else
-      print_fail "カラム '$col' はスキーマに未定義"
-      MISSING_IN_SCHEMA="$MISSING_IN_SCHEMA $col"
-    fi
-  done
-  
-  # スキーマに定義されているが CSV に存在しないカラムを確認
-  echo ""
-  echo "  スキーマ定義の確認:"
-  
-  for field in $SCHEMA_FIELDS; do
-    if echo "$CSV_HEADERS" | grep -q "${field}"; then
-      print_pass "スキーマフィールド '$field' は CSV に存在"
-    else
-      print_warn "スキーマフィールド '$field' は CSV に存在しない"
-    fi
-  done
-  
-  # カラム数の一致確認
-  echo ""
-  if [ "$CSV_COL_COUNT" -eq "$SCHEMA_COL_COUNT" ]; then
-    print_pass "カラム数が一致 ($CSV_COL_COUNT)"
-  else
-    print_fail "カラム数が不一致 (CSV: $CSV_COL_COUNT, スキーマ: $SCHEMA_COL_COUNT)"
-  fi
-  
-  # レコード数の確認
-  echo ""
-  if [ "$CSV_RECORD_COUNT" -gt 0 ]; then
-    print_pass "レコード数: $CSV_RECORD_COUNT 件"
-  else
-    print_warn "レコード数が 0 件"
-  fi
-fi
-
-# =============================================================================
-# 2. データ型の検証（サンプル）
-# =============================================================================
-
-print_header "2. データ型検証（サンプル）"
-
-if [ -f "$X_CSV" ]; then
-  python3 << 'PYTHON'
-import csv
-import re
-from collections import Counter
-
-csv_file = "datasets/cbx-social-trends/data/processed/x_cbx_202608_summary_anonymized.csv"
-schema_file = "metadata/datapackage.json"
-
-# スキーマを読み込み
-import json
-with open(schema_file) as f:
-    datapackage = json.load(f)
-
-# 匿名化版のスキーマを取得
-schema = None
-for resource in datapackage.get('resources', []):
-    if resource.get('name') == 'x_cbx_202608_summary_anonymized':
-        schema = resource.get('schema', {})
-        break
-
-if not schema:
-    print("  ⚠️  WARN  スキーマが見つかりません")
-else:
-    field_specs = {f['name']: f for f in schema.get('fields', [])}
-    
-    # CSV を読み込み
-    with open(csv_file) as f:
-        reader = csv.DictReader(f)
-        rows = list(reader)
-    
-    print(f"  ℹ️  INFO  レコード数: {len(rows)}")
-    
-    # 各カラムの型を検証
-    for field_name, spec in field_specs.items():
-        field_type = spec.get('type', 'unknown')
-        constraints = spec.get('constraints', {})
-        
-        if field_name not in reader.fieldnames:
-            print(f"  ❌ FAIL  カラム '{field_name}' が CSV に存在しません")
-            continue
-        
-        # サンプル値を取得
-        values = [row.get(field_name, '') for row in rows[:10]]
-        non_empty = [v for v in values if v.strip()]
-        
-        if not non_empty:
-            print(f"  ⚠️  WARN  '{field_name}': 全ての値が空です")
-            continue
-        
-        # 型チェック
-        type_ok = True
-        error_msg = ""
-        
-        if field_type == 'integer':
-            for v in non_empty:
-                try:
-                    int(v)
-                except:
-                    type_ok = False
-                    error_msg = f"整数でない値: '{v}'"
-                    break
-        elif field_type == 'number':
-            for v in non_empty:
-                try:
-                    float(v)
-                except:
-                    type_ok = False
-                    error_msg = f"数値でない値: '{v}'"
-                    break
-        elif field_type == 'datetime':
-            for v in non_empty:
-                # ISO 8601 パターンチェック
-                if not re.match(r'\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}', v):
-                    type_ok = False
-                    error_msg = f"ISO 8601 形式でない値: '{v}'"
-                    break
-        
-        # 制約チェック
-        constraint_ok = True
-        constraint_msg = ""
-        
-        if 'enum' in constraints:
-            allowed = constraints['enum']
-            for v in non_empty:
-                if v not in allowed:
-                    constraint_ok = False
-                    constraint_msg = f"許可されていない値: '{v}' (許可値: {allowed})"
-                    break
-        
-        if 'pattern' in constraints:
-            pattern = constraints['pattern']
-            for v in non_empty:
-                if not re.match(pattern, v):
-                    constraint_ok = False
-                    constraint_msg = f"パターンに不一致: '{v}' (パターン: {pattern})"
-                    break
-        
-        if 'minimum' in constraints:
-            min_val = constraints['minimum']
-            for v in non_empty:
-                try:
-                    if int(v) < min_val:
-                        constraint_ok = False
-                        constraint_msg = f"最小値未満: '{v}' (最小値: {min_val})"
-                        break
-                except:
-                    pass
-        
-        # 結果出力
-        if type_ok and constraint_ok:
-            print(f"  ✅ PASS  '{field_name}' ({field_type}): OK")
-        elif not type_ok:
-            print(f"  ❌ FAIL  '{field_name}' ({field_type}): {error_msg}")
-        else:
-            print(f"  ❌ FAIL  '{field_name}' ({field_type}): {constraint_msg}")
-
-PYTHON
+  print_pass "X 投稿単位 CSV は取り下げ済み（${X_CSV}）"
 fi
 
 # =============================================================================
@@ -411,63 +235,6 @@ PYTHON
   fi
 done
 
-# CSV の分類フィールドがスキーマ Concept ID と一致するか確認
-echo ""
-echo "  分類フィールドの Concept ID 検証:"
-
-X_CSV="datasets/cbx-social-trends/data/processed/x_cbx_202608_summary_anonymized.csv"
-SKOS_TAXONOMY="metadata/taxonomy/content-taxonomy.skos.jsonld"
-
-if [ -f "$X_CSV" ] && [ -f "$SKOS_TAXONOMY" ]; then
-  python3 << PYTHON
-import csv
-import json
-
-# SKOS タクソノミーから有効な Concept ID を取得
-with open("$SKOS_TAXONOMY") as f:
-    skos_data = json.load(f)
-
-valid_notations = set()
-for item in skos_data.get('@graph', []):
-    if item.get('@type') == 'skos:Concept':
-        notation = item.get('skos:notation', '')
-        if notation:
-            valid_notations.add(notation)
-
-# CSV から分類フィールドの値を取得
-with open("$X_CSV") as f:
-    reader = csv.DictReader(f)
-    rows = list(reader)
-
-# topic_id の検証
-topic_values = set(row.get('topic_id', '') for row in rows)
-invalid_topics = topic_values - valid_notations - {'unclassified'}
-
-if invalid_topics:
-    print(f"  ❌ FAIL  無効な topic_id: {invalid_topics}")
-else:
-    print(f"  ✅ PASS  topic_id: 全値が有効な Concept ID または unclassified")
-
-# intent_id の検証
-intent_values = set(row.get('intent_id', '') for row in rows)
-invalid_intents = intent_values - valid_notations - {'unclassified'}
-
-if invalid_intents:
-    print(f"  ❌ FAIL  無効な intent_id: {invalid_intents}")
-else:
-    print(f"  ✅ PASS  intent_id: 全値が有効な Concept ID または unclassified")
-
-# format_id の検証
-format_values = set(row.get('format_id', '') for row in rows)
-invalid_formats = format_values - valid_notations - {'unclassified'}
-
-if invalid_formats:
-    print(f"  ❌ FAIL  無効な format_id: {invalid_formats}")
-else:
-    print(f"  ✅ PASS  format_id: 全値が有効な Concept ID または unclassified")
-
-PYTHON
-fi
 
 # =============================================================================
 # 4. ファイル存在確認
@@ -479,7 +246,6 @@ REQUIRED_FILES=(
   "metadata/datapackage.json"
   "docs/data-dictionary.md"
   "docs/provenance.md"
-  "datasets/cbx-social-trends/data/processed/x_cbx_202608_summary_anonymized.csv"
   "metadata/taxonomy/content-taxonomy.skos.jsonld"
   "metadata/taxonomy/compound-taxonomy.skos.jsonld"
 )

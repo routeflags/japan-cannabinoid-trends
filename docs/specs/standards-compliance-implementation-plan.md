@@ -109,6 +109,8 @@ X コンテンツ分類が未検証である問題（ISS-004）を解決する�
 
 **成果物:**
 - 更新版 `x_cbx_202608_summary_anonymized.csv`
+  （**2026-10-15 以降、この成果物は公開できない**。投稿単位の X データは匿名化後も
+  公開しない: `docs/specs/sns-redistribution-assessment.md` §5、`ISS-20261015-PUB-035`）
 - 分類結果の検証レポート
 
 **内容:**
@@ -164,7 +166,7 @@ X コンテンツ分類が未検証である問題（ISS-004）を解決する�
 | `metadata/schema/socialmediaposting.jsonld` | Phase 3 | Schema.org |
 | `metadata/datapackage.json` (更新) | Phase 4 | Frictionless |
 | `docs/data-dictionary.md` (更新) | Phase 4 | — |
-| `x_cbx_202608_summary_anonymized.csv` (更新) | Phase 5 | — |
+| `x_cbx_202608_summary_anonymized.csv` (更新) | Phase 5 | — （2026-10-15 に公開対象外へ。同上） |
 | `scripts/export/skos-to-rdf.py` | Phase 6 | RDF |
 | `scripts/export/skos-to-jsonld.py` | Phase 6 | JSON-LD |
 | `scripts/validation/validate-data-schema.sh` (更新) | Phase 7 | — |

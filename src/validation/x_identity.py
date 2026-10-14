@@ -1,13 +1,19 @@
 """X (Twitter) identity exposure gate over tracked files.
 
-Policy (decided 2026-10-13, enforced here):
+Policy (decided 2026-10-13, extended 2026-10-15, enforced here):
 
 - X post text, account handles, display names and post permalinks must not be
-  tracked.  Publish the anonymized derivation instead
-  (``x_cbx_202608_summary_anonymized.csv``) plus the executable rule
-  (:mod:`processing.anonymize`).
+tracked.  Publish the anonymized derivation instead - except that **per-post X
+data is not published even anonymized** (2026-10-15 decision,
+``ISS-20261015-COL-030`` 4.1): 147 anonymized rows are still 147 posts, with
+post timestamps and per-post engagement.  The 2026-10-13 gate allowed the
+anonymized per-post CSV; the ``per_post_dataset`` rule below replaces that
+allowance, and the artifact itself was withdrawn
+(``ISS-20261015-PUB-035``).
+- Aggregate derivations (classification distributions, counts) remain publishable:
+the unit, not the anonymization, is what the rule is about.
 - YouTube metadata is out of scope: ``docs/specs/sns-redistribution-assessment.md``
-  section 2 permits video titles and channel names.
+section 2 permits video titles and channel names.
 
 Why this gate exists: the repository had already written that policy down.  The
 assessment (2026-10-01) and ``docs/data-dictionary.md`` section 1.1 both required
@@ -19,6 +25,9 @@ without an executable check is what failed, so the check is the fix.
 Detection is deliberately narrow, because a noisy gate gets switched off:
 
 - ``identity_column`` -- a tracked CSV/TSV whose header names an identity column;
+- ``per_post_dataset`` -- a tracked file under ``datasets/`` whose structure is a
+  post-level table: three or more of :data:`POST_RECORD_FIELDS` in a delimited
+  header or in the keys of a JSON object (2026-10-15 decision);
 - ``post_permalink`` -- an ``x.com/<handle>/status/<id>`` link, i.e. redistributed
   post data.  Documentation placeholders (``x.com/user/status/123``) are excluded
   by :data:`PLACEHOLDER_HANDLES`, which is a rule about placeholder literals, not a
@@ -54,6 +63,8 @@ __all__ = [
     "DEFAULT_DENYLIST",
     "TEXT_SUFFIXES",
     "IDENTITY_COLUMNS",
+    "POST_RECORD_FIELDS",
+    "POST_RECORD_THRESHOLD",
     "PLACEHOLDER_HANDLES",
     "ACKNOWLEDGED",
     "audit_x_identity",
@@ -94,6 +105,35 @@ TEXT_SUFFIXES = frozenset(
 IDENTITY_COLUMNS = frozenset(
     {"username", "author_name", "screen_name", "display_name", "user_name", "screenname"}
 )
+
+#: Names a per-post X record carries - the structural signature of a post-level
+#: dataset, and the single list of them in the repository (the publication contract
+#: imports it for its prose rule, so the two surfaces cannot drift apart).
+#:
+#: Anonymizing a per-post table does not change its unit: ``tweet_id_hash`` is still
+#: one row per post.  Three or more of these names in a delimited header, or in the
+#: keys of a JSON object under ``datasets/``, is what
+#: :data:`POST_RECORD_THRESHOLD` counts as a per-post dataset.
+POST_RECORD_FIELDS = (
+    "tweet_id",
+    "tweet_id_hash",
+    "createdAt",
+    "author_id",
+    "username",
+    "text_length",
+    "has_text",
+    "views",
+    "likes",
+    "reposts",
+    "replies",
+    "lang",
+    "week",
+)
+
+#: How many :data:`POST_RECORD_FIELDS` a structure must carry to be post-level.
+#: Three, because a single shared column name (``views`` on a video table) is not a
+#: post record while a post record always carries several of them.
+POST_RECORD_THRESHOLD = 3
 
 #: Handles used in documentation examples.  A permalink on one of these is an
 #: illustration, not redistributed post data.
@@ -215,6 +255,44 @@ def _permalinks(text: str) -> list[str]:
     return sorted(found)
 
 
+#: Suffixes whose structure can carry the post-record signature.
+_STRUCTURED_SUFFIXES = frozenset({".csv", ".tsv", ".json", ".jsonl", ".ndjson"})
+
+
+def _post_record_fields(text: str, suffix: str) -> list[str]:
+    """Names from :data:`POST_RECORD_FIELDS` the file's own structure carries.
+
+    A delimited file is read from its header; JSON is read from the keys of its
+    top-level objects (a list of records, or a single record).  Only the header /
+    keys are inspected, never the values, and only files under ``datasets/`` are
+    candidates: a document that *names* these fields (this module, a spec, an
+    issue) is not a post-level dataset.
+    """
+
+    if suffix not in _STRUCTURED_SUFFIXES:
+        return []
+    names: set[str] = set()
+    if suffix in {".csv", ".tsv"}:
+        delimiter = "\t" if suffix == ".tsv" else ","
+        first_line = text.splitlines()[0] if text.splitlines() else ""
+        try:
+            header = next(csv.reader(io.StringIO(first_line), delimiter=delimiter))
+        except (StopIteration, csv.Error):
+            header = []
+        names = {name.strip().strip('"') for name in header}
+    else:
+        try:
+            document = json.loads(text)
+        except (json.JSONDecodeError, ValueError):
+            return []
+        records = document if isinstance(document, list) else [document]
+        for record in records[:20]:
+            if isinstance(record, dict):
+                names |= {str(key) for key in record}
+    matched = [name for name in POST_RECORD_FIELDS if name in names]
+    return matched if len(matched) >= POST_RECORD_THRESHOLD else []
+
+
 def audit_x_identity(
     root: str | Path,
     *,
@@ -281,6 +359,18 @@ def audit_x_identity(
                     "detail": f"{len(links)} link(s)",
                 }
             )
+
+        if relative.startswith("datasets/"):
+            post_fields = _post_record_fields(text, suffix)
+            if post_fields:
+                findings.append(
+                    {
+                        "path": relative,
+                        "kind": "per_post_dataset",
+                        "detail": ", ".join(post_fields)
+                        + " (per-post X data is not published even anonymized)",
+                    }
+                )
 
         for token in sorted(tokens[relative] & flagged):
             digest = digest_token(token, denylist.salt)

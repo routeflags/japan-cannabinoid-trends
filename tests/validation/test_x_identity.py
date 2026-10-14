@@ -2,11 +2,15 @@
 
 Contract sources: ``docs/specs/sns-redistribution-assessment.md`` (the policy the
 gate enforces), ``docs/data-dictionary.md`` section 1.1, AGENTS.md section on
-social data, and ``metadata/privacy/x-identity-denylist.json``.
+social data, ``metadata/privacy/x-identity-denylist.json``, and the 2026-10-15
+decision that per-post X data is not published even anonymized
+(``ISS-20261015-COL-030`` 4.1).
 
 The decisive test is :func:`test_repository_has_no_x_identity_exposure`: the gate
-must pass on the real tracked tree.  The rest use a synthetic denylist so that no
-real account handle is ever written into the test suite.
+must pass on the real tracked tree - including the ``per_post_dataset`` rule, so a
+post-level table cannot be tracked again without a finding.  The rest use a
+synthetic denylist so that no real account handle is ever written into the test
+suite.
 """
 
 import json
@@ -67,19 +71,23 @@ def test_repository_has_no_x_identity_exposure() -> None:
     assert report["scanned_count"] >= 500
 
 
-def test_anonymized_summary_is_the_published_x_artifact() -> None:
-    """The published X CSV must carry pseudonyms, not identity columns."""
+def test_the_withdrawn_per_post_summary_is_recorded_and_gone() -> None:
+    """The file the gate used to point at is what the 2026-10-15 decision removed.
 
-    import csv
+    Anonymization answered the identity rule but not the unit question: 147
+    pseudonymized rows are still 147 posts, so the artifact is withdrawn
+    (``ISS-20261015-PUB-035``) and no per-post representation replaces it.
+    """
 
-    published = (
-        REPO_ROOT
-        / "datasets/cbx-social-trends/data/processed/x_cbx_202608_summary_anonymized.csv"
+    from processing.reproduce import WITHDRAWN
+
+    path = (
+        "datasets/cbx-social-trends/data/processed/"
+        "x_cbx_202608_summary_anonymized.csv"
     )
-    with published.open(encoding="utf-8", newline="") as handle:
-        header = next(csv.reader(handle))
-    assert not set(header) & x_identity.IDENTITY_COLUMNS
-    assert "author_id" in header
+    assert path in WITHDRAWN
+    assert WITHDRAWN[path].withdrawn_on == "2026-10-15"
+    assert not (REPO_ROOT / path).exists()
 
 
 # ---------------------------------------------------------------------------
@@ -95,10 +103,71 @@ def test_identity_column_is_flagged(tmp_path: Path, denylist: Path) -> None:
     assert "data/out.csv" in report["failures"]
 
 
-def test_pseudonymised_column_is_not_flagged(tmp_path: Path, denylist: Path) -> None:
+def test_pseudonymised_post_payload_is_not_an_identity_column(tmp_path: Path, denylist: Path) -> None:
+    """Pseudonymization answers the identity rule; it does not change the unit.
+
+    The per-post rule is separate and is tested below.
+    """
+
     _write(tmp_path, "data/out.csv", "tweet_id_hash,author_id,text_length\n1,author_001,7\n")
     report = _audit(tmp_path, denylist, ["data/out.csv"])
     assert report["findings"] == []
+
+
+# ---------------------------------------------------------------------------
+# per-post datasets (2026-10-15 decision)
+# ---------------------------------------------------------------------------
+
+PER_POST_HEADER = "tweet_id_hash,createdAt,author_id,week,views,likes,text_length"
+
+
+def test_a_per_post_dataset_under_datasets_is_flagged(tmp_path: Path, denylist: Path) -> None:
+    """Three or more post-record columns is a post-level table, anonymized or not."""
+
+    relative = "datasets/stub-study/data/processed/out.csv"
+    _write(
+        tmp_path,
+        relative,
+        PER_POST_HEADER + "\n1,2026-08-03,author_001,W1,10,1,7\n",
+    )
+
+    report = _audit(tmp_path, denylist, [relative])
+
+    assert [f["kind"] for f in report["findings"]] == ["per_post_dataset"]
+    assert "tweet_id_hash" in report["findings"][0]["detail"]
+    # containment, not equality: scanning one synthetic file leaves the real
+    # repository's acknowledgements unmatched, which is reported as stale
+    assert relative in report["failures"]
+
+
+def test_json_post_records_are_flagged_by_their_keys(tmp_path: Path, denylist: Path) -> None:
+    relative = "datasets/stub-study/data/raw/x/run/records.json"
+    _write(
+        tmp_path,
+        relative,
+        json.dumps([{"tweet_id": "1", "createdAt": "2026-08-03", "author_id": "a", "text_length": 7}]),
+    )
+
+    report = _audit(tmp_path, denylist, [relative])
+
+    assert [f["kind"] for f in report["findings"]] == ["per_post_dataset"]
+
+
+def test_an_aggregate_dataset_under_datasets_is_not_flagged(tmp_path: Path, denylist: Path) -> None:
+    """The rule is about the unit: a weekly aggregate stays publishable."""
+
+    relative = "datasets/stub-study/data/processed/weekly.csv"
+    _write(tmp_path, relative, "week,topic_id,count\nW1,ingredient,12\n")
+
+    assert _audit(tmp_path, denylist, [relative])["findings"] == []
+
+
+def test_naming_the_post_fields_outside_datasets_is_not_a_dataset(tmp_path: Path, denylist: Path) -> None:
+    """A document that names the fields is not a post-level dataset."""
+
+    _write(tmp_path, "docs/notes.csv", PER_POST_HEADER + "\n")
+
+    assert _audit(tmp_path, denylist, ["docs/notes.csv"])["findings"] == []
 
 
 # ---------------------------------------------------------------------------

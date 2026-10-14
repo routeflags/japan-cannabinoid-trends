@@ -59,24 +59,35 @@ from __future__ import annotations
 import re
 from pathlib import Path
 
+from validation.x_identity import POST_RECORD_FIELDS
+
 REPORT_SCHEMA_VERSION = "1.0.0"
 
 #: The note a page must carry when it cites the retired YouTube Data API v3.
 V3_POLICY_MARKER = "方針判断により使用を取り止め"
 
-#: Post-record fields from the now banned per-post X dataset.  Naming three or
+#: Post-record field names from the now banned per-post X dataset.  Naming three or
 #: more of them in one paragraph describes the post-record shape, which the
-#: 2026-10-15 decision bans together with storage (ISS-20261015-XID-034).
-POST_FIELD_NAMES = (
-    "views",
-    "likes",
-    "reposts",
-    "replies",
-    "username",
-    "createdAt",
-    "author_id",
-    "text_length",
+#: 2026-10-15 decision bans together with storage and the post-level dataset
+#: (ISS-20261015-XID-034).  The list itself lives in :mod:`validation.x_identity`
+#: (one list, two surfaces: the tracked-file structure and published prose).
+_PROSE_VISIBLE = frozenset(
+    {
+        "views",
+        "likes",
+        "reposts",
+        "replies",
+        "username",
+        "createdAt",
+        "author_id",
+        "text_length",
+    }
 )
+
+#: The prose-visible subset, in the canonical order.  Column names that are X-only
+#: (``tweet_id_hash``, ``has_text``) do not occur in published prose, so counting
+#: them here would only make the paragraph rule noisier.
+POST_FIELD_NAMES = tuple(name for name in POST_RECORD_FIELDS if name in _PROSE_VISIBLE)
 POST_FIELD_THRESHOLD = 3
 
 _VERSION_RE = re.compile(r"Version\s+([0-9]+\.[0-9]+\.[0-9]+)")

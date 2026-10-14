@@ -35,5 +35,5 @@
     "redistribution_confirmed": "再配布条件の「確認済み」記録なし。同 §1.4/§3.1 は集計のみ公開と結論するが、§3.3 の「X 集計データの研究用途該当性」は未確認",
     "copyright_confirmed": "著作権・契約制約の確認記録なし"
   },
-  "notes": "フラグは日付のある根拠を持つものだけを true にする。PUB-06/07/08 は根拠が確認記録でないため未記録（WARNING のまま）。"
+  "notes": "フラグは日付のある根拠を持つものだけを true にする。PUB-06/07/08 は根拠が確認記録でないため未記録（WARNING のまま）。**追記（2026-10-15）**: 本 envelope は 2026-10-13 の審査の記録であり、公開可否の現在の判断は decision.json（status: denied、2026-10-15）である。審査内容（provenance / integrity / anonymization）は当時の事実として変更しない。"
 }

@@ -46,8 +46,11 @@ X データには複数の集計値があるため、整理する:
 > X の投稿本文・handle・表示名・URL を含んでいたためで、追跡を外して非公開の
 > `data/private/` へ退避し、`src/processing/reproduce.py` の `WITHDRAWN` に記録して
 > いる（露出範囲は `docs/issues/20261013_p0_x-identity-published-in-all-releases.md`）。
-> したがって raw からの processed 再生成は不可能であり、公開される X 成果物は
-> 匿名化版のみである。同版の導出規則は実行可能で、非公開入力を用いて検証されている。
+> したがって raw からの processed 再生成は不可能であり、**公開される X 成果物は存在しない**
+> （2026-10-13 に非匿名化版、2026-10-15 に匿名化版をそれぞれ取り下げ。投稿単位の X データは
+> 匿名化後も公開しない: `ISS-20261015-COL-030` §4.1 / `ISS-20261015-PUB-035`）。
+> 導出規則（`src/processing/anonymize.py`）は実行可能なまま、非公開入力を用いる
+> fixture テストで検証されている。
 > 再現には Section 3 の収集再実行が必要だが、X 検索は非決定論的なため同一の 147 件は
 > 得られない。
 
@@ -166,12 +169,14 @@ processed CSV (147 rows)
 
 上流（raw → 重複排除済み CSV）は raw が本リポジトリに無いため再現できない（Section 2.1
 の注記）。一方、重複排除済み CSV → 匿名化済み CSV は実行可能な変換として
-`src/processing/anonymize.py` に実装されており、次のコマンドで列単位に検証できる:
+`src/processing/anonymize.py` に実装されており、導出規則のテスト（列単位の比較）が
+`tests/processing/test_processed_artifacts.py` にある。
 
-```bash
-python -m processing.cli reproduce \
-  --artifact datasets/cbx-social-trends/data/processed/x_cbx_202608_summary_anonymized.csv
-```
+> **注記（2026-10-15）**: 変換の**成果物**（`x_cbx_202608_summary_anonymized.csv`）は
+> 公開取り下げになった（投稿単位の X データは匿名化後も公開しない）ため、以前の
+> `python -m processing.cli reproduce --artifact <匿名化版>` は実行できない
+> （`src/processing/reproduce.py` の `WITHDRAWN`、`ISS-20261015-PUB-035`）。
+> 変換の検証は非公開入力を用いる fixture テストで継続する。
 
 16 列中 `week` のみ 3 行で差があり（成果物が 2026-08-31 を `unknown` としている）、その差は
 宣言済みとして `src/processing/reproduce.py` に日付付きで記録されている。
@@ -263,6 +268,8 @@ To reproduce this dataset, separate the two steps:
 
 **再現可能（処理）:** 上記 4 で得た重複排除済み CSV からの匿名化は実行可能な変換であり、
 本リポジトリ内で検証済み（`src/processing/anonymize.py`、`docs/data-dictionary.md`）。
+**ただし匿名化版の成果物は 2026-10-15 に公開取り下げになった**（投稿単位の X データは
+匿名化後も公開しない。`ISS-20261015-COL-030` §4.1）。
 
 **Note:** X search results are non-deterministic. Repeated runs may return different results. Always preserve run metadata and dataset IDs. 手順 2 を再実行しても、本リポジトリの
 147 件は再現されない。

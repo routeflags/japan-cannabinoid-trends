@@ -13,6 +13,7 @@ artifact cannot skip the reproducible-or-declared question).
 
 import csv
 import hashlib
+import re
 from pathlib import Path
 
 import pytest
@@ -29,6 +30,7 @@ from processing.reproduce import (
     STATUS_DECLARED_DISCREPANCY,
     STATUS_PLACEHOLDER,
     STATUS_PRIVATE_INPUT,
+    STATUS_REPRODUCIBLE,
     STATUS_UNDECLARED,
     STATUS_WITHDRAWN,
     WITHDRAWN,
@@ -41,9 +43,13 @@ from processing.rulespec import load_content_rules
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 PROCESSED = "datasets/cbx-social-trends/data/processed"
-ANONYMIZED = f"{PROCESSED}/x_cbx_202608_summary_anonymized.csv"
+#: The published per-post artifact was withdrawn on 2026-10-15 (per-post X data
+#: is not published even anonymized); the rule that produced it is still covered
+#: here, the artifact no longer is.  ``SOURCE`` remains the non-published copy the
+#: rule needs where it exists.
 SOURCE = "datasets/cbx-social-trends/data/private/x_cbx_202608_summary.csv"
 WITHDRAWN_PATH = f"{PROCESSED}/x_cbx_202608_summary.csv"
+ANONYMIZED_PATH = f"{PROCESSED}/x_cbx_202608_summary_anonymized.csv"
 
 requires_source = pytest.mark.skipif(
     not (REPO_ROOT / SOURCE).is_file(),
@@ -165,44 +171,135 @@ def test_source_columns_are_the_ones_the_source_file_carries() -> None:
 
 
 # ---------------------------------------------------------------------------
-# re-derivation against the committed artifact
+# re-derivation (fixture-based since the real artifact was withdrawn)
 # ---------------------------------------------------------------------------
+#
+# The only committed derivation used to be the anonymized per-post X summary.
+# Per-post X data is not published in any form since 2026-10-15
+# (ISS-20261015-COL-030 4.1), so that artifact is withdrawn and the real-data
+# check ended with it (see ``WITHDRAWN`` in src/processing/reproduce.py).  The
+# machinery is what makes an artifact re-derivable rather than merely declared,
+# so it is exercised here on a fixture repository instead.
+
+STUDY_SOURCE = "datasets/stub-study/data/private/source.csv"
+STUDY_ARTIFACT = "datasets/stub-study/data/processed/out.csv"
 
 
-@requires_source
-def test_anonymized_artifact_matches_every_column_but_the_declared_rows(rules) -> None:
-    report = reproduce_artifact(REPO_ROOT, ANONYMIZED, rules)
+def _write_csv(path: Path, rows: list[dict[str, str]]) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("w", encoding="utf-8", newline="") as handle:
+        writer = csv.DictWriter(handle, fieldnames=list(rows[0]))
+        writer.writeheader()
+        writer.writerows(rows)
+
+
+def _fixture_repo(tmp_path: Path, rules) -> tuple[list[dict], list[dict]]:
+    """Write a source and its correct derivation; return both row lists."""
+
+    source_rows = [
+        _source_row(tweet_id="1", createdAt="2026-08-03T00:00:00.000Z"),
+        _source_row(tweet_id="2", username="bob", createdAt="2026-08-31T00:01:33.000Z"),
+    ]
+    derived_rows = anonymize_rows(source_rows, rules)
+    _write_csv(tmp_path / STUDY_SOURCE, source_rows)
+    _write_csv(tmp_path / STUDY_ARTIFACT, derived_rows)
+    return source_rows, derived_rows
+
+
+def _register(monkeypatch, **overrides) -> None:
+    import processing.reproduce as module
+
+    monkeypatch.setitem(
+        module.DERIVATIONS,
+        STUDY_ARTIFACT,
+        Derivation(
+            source=STUDY_SOURCE,
+            columns=ANONYMIZED_COLUMNS,
+            kind="x-summary-anonymization",
+            source_published=overrides.get("source_published", False),
+            discrepancies=overrides.get("discrepancies", ()),
+        ),
+    )
+
+
+def test_a_registered_derivation_is_re_derived_and_matches(tmp_path, rules, monkeypatch) -> None:
+    _fixture_repo(tmp_path, rules)
+    _register(monkeypatch)
+
+    report = reproduce_artifact(tmp_path, STUDY_ARTIFACT, rules)
+
+    assert report["status"] == STATUS_REPRODUCIBLE
+    assert report["rows"] == {"derived": 2, "committed": 2, "match": True}
+    assert report["discrepancies"] == []
+
+
+def test_an_undeclared_difference_is_reported_with_its_rows(
+    tmp_path, rules, monkeypatch
+) -> None:
+    """The artifact is the output of the rule, so a difference is drift, not noise."""
+
+    _, derived_rows = _fixture_repo(tmp_path, rules)
+    derived_rows[1]["likes"] = "999"
+    _write_csv(tmp_path / STUDY_ARTIFACT, derived_rows)
+    _register(monkeypatch)
+
+    report = reproduce_artifact(tmp_path, STUDY_ARTIFACT, rules)
+
+    assert report["status"] == STATUS_UNDECLARED
+    assert report["undeclared_drift"] == [
+        {"column": "likes", "derived_value": "1", "committed_value": "999", "rows": 1}
+    ]
+
+
+def test_a_declared_discrepancy_is_accepted_and_reported(tmp_path, rules, monkeypatch) -> None:
+    _, derived_rows = _fixture_repo(tmp_path, rules)
+    derived_rows[1]["week"] = "unknown"
+    _write_csv(tmp_path / STUDY_ARTIFACT, derived_rows)
+    _register(
+        monkeypatch,
+        discrepancies=(
+            DeclaredDiscrepancy(
+                column="week",
+                derived_value="W5",
+                committed_value="unknown",
+                rows=1,
+                identified_on="2026-10-15",
+                reason="fabricated for the test",
+            ),
+        ),
+    )
+
+    report = reproduce_artifact(tmp_path, STUDY_ARTIFACT, rules)
+
     assert report["status"] == STATUS_DECLARED_DISCREPANCY
-    assert report["rows"]["match"] is True
-    assert report["rows"]["derived"] == 147
     assert report["undeclared_drift"] == []
     assert report["stale_declarations"] == []
     assert report["discrepancies"] == [
-        {
-            "column": "week",
-            "derived_value": "W5",
-            "committed_value": "unknown",
-            "rows": 3,
-        }
+        {"column": "week", "derived_value": "W5", "committed_value": "unknown", "rows": 1}
     ]
 
 
-@requires_source
-def test_declared_discrepancy_names_the_affected_rows(rules) -> None:
-    """The three rows must be the 2026-08-31 rows, not any three rows."""
+def test_an_absent_source_is_a_declared_state_not_a_failure(tmp_path, rules, monkeypatch) -> None:
+    """A source that is deliberately not published cannot be verified here."""
 
-    derived = anonymize_rows(_rows(REPO_ROOT / SOURCE), rules)
-    committed = _rows(REPO_ROOT / ANONYMIZED)
-    differing = [
-        (source["createdAt"], got["week"], want["week"])
-        for source, got, want in zip(_rows(REPO_ROOT / SOURCE), derived, committed)
-        if got["week"] != want["week"]
-    ]
-    assert differing == [
-        ("2026-08-31T08:30:51.000Z", "W5", "unknown"),
-        ("2026-08-31T06:01:24.000Z", "W5", "unknown"),
-        ("2026-08-31T00:01:33.000Z", "W5", "unknown"),
-    ]
+    _, derived_rows = _fixture_repo(tmp_path, rules)
+    (tmp_path / STUDY_SOURCE).unlink()
+    _register(monkeypatch)
+
+    report = reproduce_artifact(tmp_path, STUDY_ARTIFACT, rules)
+
+    assert report["status"] == STATUS_PRIVATE_INPUT
+    assert report["rows"] == {"derived": None, "committed": 2, "match": None}
+    assert report["undeclared_drift"] == []
+
+
+def test_a_published_source_that_is_missing_is_an_error(tmp_path, rules, monkeypatch) -> None:
+    _fixture_repo(tmp_path, rules)
+    (tmp_path / STUDY_SOURCE).unlink()
+    _register(monkeypatch, source_published=True)
+
+    with pytest.raises(FileNotFoundError, match="published source missing"):
+        reproduce_artifact(tmp_path, STUDY_ARTIFACT, rules)
 
 
 # ---------------------------------------------------------------------------
@@ -240,42 +337,32 @@ def test_artifact_in_no_registry_fails_the_audit(monkeypatch) -> None:
     assert entry["status"] == STATUS_UNDECLARED
 
 
-@requires_source
-def test_stale_declaration_is_reported(monkeypatch) -> None:
-    """A declaration that no longer describes reality is itself a failure.
+def test_stale_declaration_is_reported(tmp_path, rules, monkeypatch) -> None:
+    """A declaration that no longer describes reality is itself a failure."""
 
-    Needs the non-published source: with it absent the artifact is reported as
-    reproducible-elsewhere and no declaration is checked here.
-    """
-
-    original = DERIVATIONS[ANONYMIZED]
-    monkeypatch.setitem(
-        DERIVATIONS,
-        ANONYMIZED,
-        Derivation(
-            source=original.source,
-            columns=original.columns,
-            kind=original.kind,
-            discrepancies=original.discrepancies
-            + (
-                DeclaredDiscrepancy(
-                    column="has_text",
-                    derived_value="yes",
-                    committed_value="no",
-                    rows=7,
-                    identified_on="2026-10-13",
-                    reason="fabricated for the test",
-                ),
+    _fixture_repo(tmp_path, rules)
+    _register(
+        monkeypatch,
+        discrepancies=(
+            DeclaredDiscrepancy(
+                column="likes",
+                derived_value="1",
+                committed_value="999",
+                rows=7,
+                identified_on="2026-10-15",
+                reason="fabricated for the test",
             ),
         ),
     )
-    report = reproduce_artifact(REPO_ROOT, ANONYMIZED)
+
+    report = reproduce_artifact(tmp_path, STUDY_ARTIFACT, rules)
+
     assert report["status"] == STATUS_UNDECLARED
     assert report["stale_declarations"] == [
         {
-            "column": "has_text",
-            "derived_value": "yes",
-            "committed_value": "no",
+            "column": "likes",
+            "derived_value": "1",
+            "committed_value": "999",
             "declared_rows": 7,
         }
     ]
@@ -289,23 +376,38 @@ def test_declarations_and_non_reproducible_entries_do_not_overlap() -> None:
         assert (REPO_ROOT / path).is_file(), path
 
 
-def test_withdrawn_artifact_is_recorded_and_absent() -> None:
-    """Removal must be a recorded fact, not a deletion (AGENTS.md)."""
+def test_every_withdrawn_artifact_is_recorded_absent_and_absent_from_git() -> None:
+    """Removal must be a recorded fact, not a deletion (AGENTS.md).
 
-    assert WITHDRAWN_PATH in WITHDRAWN
-    record = WITHDRAWN[WITHDRAWN_PATH]
-    assert not (REPO_ROOT / WITHDRAWN_PATH).exists()
-    assert record.withdrawn_on == "2026-10-13"
-    assert "zenodo" in record.exposure.lower()
-    assert "sns-redistribution-assessment" in record.reason
-    # the replacement it points at must exist
-    assert (REPO_ROOT / record.replacement.split(" ")[0]).is_file()
+    Withdrawals differ in why they happened, so the shared rules are checked for
+    all of them and the entries keep their own dated narrative.
+    """
 
+    from validation.storage_policy import git_tracked
+
+    assert WITHDRAWN
+    for path, record in sorted(WITHDRAWN.items()):
+        assert not (REPO_ROOT / path).exists(), path
+        assert re.fullmatch(r"\d{4}-\d{2}-\d{2}", record.withdrawn_on), path
+        assert record.reason and record.exposure and record.notes, path
+        assert "zenodo" in record.exposure.lower() or "not retract" in record.exposure, path
+        # ``replacement`` is either a repository path that exists, or "None"
+        # followed by what stands in for the artifact (nothing, when a policy
+        # forbids it in any form).
+        head = record.replacement.split(" ")[0].strip()
+        if not head.startswith("None"):
+            assert (REPO_ROOT / head).is_file(), path
+        assert not git_tracked(REPO_ROOT, path), path
+
+
+def test_withdrawn_artifacts_are_listed_by_the_audit() -> None:
     report = audit_processed_artifacts(REPO_ROOT, REPO_ROOT / "datasets")
-    entry = next(w for w in report["withdrawn"] if w["artifact"] == WITHDRAWN_PATH)
-    assert entry["status"] == STATUS_WITHDRAWN
-    assert entry["tracked_again"] is False
-    assert WITHDRAWN_PATH not in report["failures"]
+    reported = {entry["artifact"] for entry in report["withdrawn"]}
+    assert reported == set(WITHDRAWN)
+    for entry in report["withdrawn"]:
+        assert entry["status"] == STATUS_WITHDRAWN
+        assert entry["tracked_again"] is False
+        assert entry["artifact"] not in report["failures"]
 
 
 def test_withdrawn_artifact_fails_if_tracked_again(monkeypatch) -> None:
@@ -318,53 +420,23 @@ def test_withdrawn_artifact_fails_if_tracked_again(monkeypatch) -> None:
     assert WITHDRAWN_PATH in report["failures"]
 
 
-def test_non_published_source_reports_its_own_status(tmp_path) -> None:
+def test_non_published_source_reports_its_own_status(tmp_path, rules, monkeypatch) -> None:
     """Absent source is a declared state, not a verification failure.
 
-    The published artifact is copied in so only the source is missing, which is
-    exactly the situation in any fresh clone and in CI.
+    The published artifact is written without its source, which is exactly the
+    situation in any fresh clone and in CI.
     """
 
-    import shutil
+    _, derived_rows = _fixture_repo(tmp_path, rules)
+    (tmp_path / STUDY_SOURCE).unlink()
+    _register(monkeypatch)
 
-    target = tmp_path / ANONYMIZED
-    target.parent.mkdir(parents=True, exist_ok=True)
-    shutil.copyfile(REPO_ROOT / ANONYMIZED, target)
-
-    report = reproduce_artifact(tmp_path, ANONYMIZED)
+    report = reproduce_artifact(tmp_path, STUDY_ARTIFACT, rules)
     assert report["status"] == STATUS_PRIVATE_INPUT
     assert report["rows"]["derived"] is None
     assert report["undeclared_drift"] == []
     assert report["stale_declarations"] == []
-    assert report["declared_discrepancies"][0]["column"] == "week"
-
-
-@requires_source
-def test_published_source_missing_is_an_error(tmp_path, monkeypatch) -> None:
-    """A published source that is missing is a real error, not a declared state."""
-
-    import shutil
-
-    import processing.reproduce as module
-
-    target = tmp_path / ANONYMIZED
-    target.parent.mkdir(parents=True, exist_ok=True)
-    shutil.copyfile(REPO_ROOT / ANONYMIZED, target)
-    published = Derivation(
-        source=SOURCE, columns=DERIVATIONS[ANONYMIZED].columns, kind=DERIVATIONS[ANONYMIZED].kind
-    )
-    assert published.source_published is True
-    monkeypatch.setitem(module.DERIVATIONS, ANONYMIZED, published)
-    with pytest.raises(FileNotFoundError):
-        reproduce_artifact(tmp_path, ANONYMIZED)
-
-
-@requires_source
-def test_absent_source_means_the_declaration_is_not_checked_here(rules) -> None:
-    """With the source present the derivation is verified, so nothing is skipped."""
-
-    report = reproduce_artifact(REPO_ROOT, ANONYMIZED, rules)
-    assert report["status"] == STATUS_DECLARED_DISCREPANCY
+    assert len(derived_rows) == 2
 
 
 def test_placeholder_status_is_reserved_for_gitkeep() -> None:

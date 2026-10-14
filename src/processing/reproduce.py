@@ -133,36 +133,59 @@ class Withdrawn:
 
 
 #: Executable derivations, keyed by repository-relative artifact path.
-DERIVATIONS: dict[str, Derivation] = {
-    "datasets/cbx-social-trends/data/processed/x_cbx_202608_summary_anonymized.csv": Derivation(
-        source="datasets/cbx-social-trends/data/private/x_cbx_202608_summary.csv",
-        columns=ANONYMIZED_COLUMNS,
-        kind="x-summary-anonymization",
-        source_published=False,
-        discrepancies=(
-            DeclaredDiscrepancy(
-                column="week",
-                derived_value="W5",
-                committed_value="unknown",
-                rows=3,
-                identified_on="2026-10-13",
-                reason=(
-                    "The committed artifact labels the three 2026-08-31 rows "
-                    "'unknown' while the Monday-anchored week rule (WEEK_ANCHOR "
-                    "2026-08-03) yields W5.  Every other row matches the rule.  "
-                    "The artifact is left unchanged: correcting it would rewrite "
-                    "published derived data, which AGENTS.md forbids.  The "
-                    "discrepancy is recorded so a future correction is a new "
-                    "version, not a silent edit."
-                ),
-            ),
-        ),
-    ),
-}
+#:
+#: Empty since 2026-10-15: the only committed derivation was the anonymized
+#: per-post X summary, and per-post X data is no longer published in any form
+#: (``ISS-20261015-COL-030`` 4.1).  The machinery stays because the rule is what
+#: makes an artifact re-derivable rather than merely declared, and the next
+#: processed artifact is expected to use it; its behaviour is covered by fixture
+#: tests in ``tests/processing/test_processed_artifacts.py`` (the real-data check
+#: ended with the artifact it verified).
+DERIVATIONS: dict[str, Derivation] = {}
 
 #: Artifacts removed from publication, keyed by the path they had while tracked.
 #: Recorded rather than deleted (AGENTS.md: never silently remove records).
 WITHDRAWN: dict[str, Withdrawn] = {
+    "datasets/cbx-social-trends/data/processed/x_cbx_202608_summary_anonymized.csv": Withdrawn(
+        withdrawn_on="2026-10-15",
+        reason=(
+            "Per-post X data.  The 2026-10-15 decision (ISS-20261015-COL-030 "
+            "4.1, transcribed in ISS-20261015-XID-034) is that a post-level X "
+            "dataset is not published even anonymized: 147 rows are 147 posts, "
+            "with post timestamps and per-post engagement, so publishing it "
+            "redistributes the collection's structure.  It was tracked (and "
+            "shipped in the release archives) until this withdrawal."
+        ),
+        replacement=(
+            "None: no per-post representation is published.  The classification "
+            "distributions the pages cite are recorded in "
+            "config/content-classification-rules.json, and the anonymization rule "
+            "stays executable in src/processing/anonymize.py."
+        ),
+        exposure=(
+            "Tracked since 2026-10-13 (commit 6ef52a9) and present in tags "
+            "v1.6.2 / v1.7.0 / v1.7.1 / v1.8.0 / v1.9.0 / v1.10.0 / v1.11.0 / "
+            "v1.12.0, i.e. in those GitHub Releases and their Zenodo archives "
+            "(DOI 10.5281/zenodo.23253840, open access).  Withdrawing it stops "
+            "further distribution; it does not retract the published archives "
+            "(the same posture as the withdrawal below, spec section 21.6)."
+        ),
+        notes=(
+            "The derivation this artifact declared, kept here so the record is "
+            "not lost: kind x-summary-anonymization, source "
+            "datasets/cbx-social-trends/data/private/x_cbx_202608_summary.csv "
+            "(gitignored, absent from any clone and from CI), 16 columns, and one "
+            "declared discrepancy - column week, the rule yields W5 for the three "
+            "2026-08-31 rows while the artifact said unknown (identified_on "
+            "2026-10-13).  With the artifact withdrawn the discrepancy is "
+            "history, not a live correction.",
+            "The 2026-10-13 publication approval in metadata/publication/"
+            "x-cbx-202608-summary-anonymized/ is superseded by a denied decision "
+            "(2026-10-15) naming this policy; the review envelope is kept because "
+            "it is the record of the earlier review, not because the artifact is "
+            "publishable.",
+        ),
+    ),
     "datasets/cbx-social-trends/data/processed/x_cbx_202608_summary.csv": Withdrawn(
         withdrawn_on="2026-10-13",
         reason=(
@@ -174,9 +197,11 @@ WITHDRAWN: dict[str, Withdrawn] = {
             "the file shipped in every release archive instead."
         ),
         replacement=(
+            "None since 2026-10-15.  It pointed at "
             "datasets/cbx-social-trends/data/processed/x_cbx_202608_summary_anonymized.csv "
             "(same 147 records, hashed id, sequential account pseudonyms, no text "
-            "or URLs)"
+            "or URLs), which was withdrawn as well: per-post X data is not "
+            "published even anonymized (ISS-20261015-COL-030 4.1)."
         ),
         exposure=(
             "Public since 2026-10-01 (commit 2dae15b) and present in all 14 tags "

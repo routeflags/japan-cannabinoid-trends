@@ -60,7 +60,8 @@ raw: data/raw/x/202608/*.json (31ファイル, 2,376件)
 処理: 重複排除 (tweet_id ベース)
     ↓
 processed: data/processed/x_cbx_202608_summary.csv (147件)
-         ※ 2026-10-13 に公開取り下げ。匿名化版のみ公開
+         ※ 2026-10-13 に公開取り下げ。匿名化版（下の processed 行）も
+           2026-10-15 に公開取り下げ（投稿単位 X データは匿名化後も公開しない）
     ↓
 分析: 週別集計、統計量算出
     ↓
@@ -329,7 +330,9 @@ with open('processed.json', 'w') as f:
 
 # 3. 週別集計
 # 対象ファイルは 2026-10-13 に公開取り下げ（非公開の data/private/ に退避）。
-# 週別集計は匿名化版 x_cbx_202608_summary_anonymized.csv からも同一に得られる。
+# 週別集計は匿名化版 x_cbx_202608_summary_anonymized.csv からも同一に得られたが、
+# 同版も 2026-10-15 に公開取り下げ（投稿単位 X データは匿名化後も公開しない）。
+# 集計は非公開入力がある環境で src/processing/anonymize.py を通して再実行できる。
 python3 -c "
 import csv
 from datetime import datetime

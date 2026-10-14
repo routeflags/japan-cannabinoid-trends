@@ -14,7 +14,7 @@
 | データ | 147 unique tweets (text, username, engagement metrics) |
 | 期間 | 2026-08-05 ~ 2026-09-08 |
 | 取得方法 | Apify Actor `cPYLH3QT9GyzKhB4S` (patient_discovery/twitter-search) |
-| ファイル | `datasets/cbx-social-trends/data/processed/x_cbx_202608_summary.csv`（**2026-10-13 公開取り下げ**。以降は匿名化版 `x_cbx_202608_summary_anonymized.csv` のみ公開） |
+| ファイル | `datasets/cbx-social-trends/data/processed/x_cbx_202608_summary.csv`（**2026-10-13 公開取り下げ**。匿名化版 `x_cbx_202608_summary_anonymized.csv` も **2026-10-15 公開取り下げ** = 下の追記） |
 
 ### 1.2 X Terms of Service (Developer Policy)
 
@@ -166,3 +166,30 @@ YouTube の利用規約では、API 経由で取得したデータの再配布�
 - X Developer Policy: https://developer.x.com/en/developer-terms/policy
 - YouTube ToS: https://www.youtube.com/t/terms
 - Google Trends: https://support.google.com/trends/answer/6247921
+
+---
+
+## 5. 追記（2026-10-15）: 投稿単位の X データは公開しない
+
+§1.4 と §3.1 は「集計のみ公開」を結論していたが、**匿名化した投稿単位 CSV** は
+その結論の外にあった（当時は公開対象とされ、8 タグと Zenodo アーカイブに含まれた）。
+2026-10-15 の決定でこの抜けを閉じた:
+
+- **決定**: 投稿単位の X データは、リポジトリへの格納禁止と同じく**公開もしない**
+  （メンテナ決定 2026-10-15、`metadata/publication/x-cbx-202608-summary-anonymized/
+  decision.json` の `status: denied`。決定文は `ISS-20261015-COL-030` §4.1、施行は
+  `ISS-20261015-XID-034`）。
+- **理由**: 147 行の匿名化版は 147 投稿であり、投稿時刻と投稿ごとのエンゲージメントを持つ。
+  匿名化は識別子を消すが**単位を変えない**（再配布可能なのは集計値）。
+- **施行**: `src/validation/x_identity.py` の `per_post_dataset` が、追跡下の
+  `datasets/` 配下ファイルの列セットから投稿単位の表を検出して fail させる
+  （非空虚テスト付き）。保存方針の語彙は既存の `publication: denied` を使う
+  （新しい値は追加しない。方針 registry の次元は layer × source_kind であり、
+  X 投稿単位と他の social 処理済み成果物を区別できないため、成果物単位の判断記録で表す）。
+- **既存公開物**: `x_cbx_202608_summary_anonymized.csv` を追跡から取り下げた
+  （`ISS-20261015-PUB-035`）。既公開アーカイブ（8 タグ・Zenodo DOI
+  10.5281/zenodo.23253840）の取り下げは §1.5/§21.6 の先例どおり行わず、
+  到達範囲を記録として残す。
+
+§3.1 の表は変更しない（集計統計値・収集方法論・run metadata は引き続き公開可能で、
+投稿単位の行は表に無い）。

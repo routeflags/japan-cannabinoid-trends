@@ -4,11 +4,16 @@ Contract sources: ``metadata/taxonomy/classification-rules.yaml`` (the
 specification), ``docs/data-dictionary.md`` sections 3-4 (schema + notations),
 AGENTS.md (classifier-agnostic taxonomy, Concept IDs, executable transformations).
 
-The decisive test is :func:`test_classifier_reproduces_recorded_distribution`: it
-runs the classifier over the committed X texts and requires the result to equal the
-distribution the specification itself records from its 2026-10-02 run.  A parser or
-classifier regression therefore fails against the specification's own expected
+The decisive test is :func:`test_classifier_reproduces_the_source_texts`: it runs
+the classifier over the source texts and requires the result to equal the
+distribution the specification itself records from its 2026-10-02 run.  A parser
+or classifier regression therefore fails against the specification's own expected
 output, not against a hand-copied constant.
+
+It needs the non-published source, which is the only place the texts exist now:
+the per-post anonymized CSV that used to carry the classification columns was
+withdrawn on 2026-10-15 (per-post X data is not published in any form,
+``ISS-20261015-COL-030`` 4.1).
 """
 
 from pathlib import Path
@@ -23,10 +28,6 @@ from processing.rulespec import (
 )
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
-ANONYMIZED = (
-    REPO_ROOT
-    / "datasets/cbx-social-trends/data/processed/x_cbx_202608_summary_anonymized.csv"
-)
 #: The non-anonymized summary carries X identities and is deliberately not
 #: published (see ``processing.reproduce.WITHDRAWN``).  It is present only in a
 #: checkout that holds the non-published copy, so tests that need it skip in CI.
@@ -129,28 +130,6 @@ def test_matching_is_case_insensitive(rules: ContentRules) -> None:
     assert classify_text("CBD liquid", rules)["topic_id"] == classify_text(
         "cbd liquid", rules
     )["topic_id"]
-
-
-def test_classifier_reproduces_recorded_distribution(rules: ContentRules) -> None:
-    """The committed artifact's classifications must equal the recorded run.
-
-    This reads the published anonymized summary, so it holds in any checkout: the
-    classification columns are published even though the source text is not.
-    """
-
-    import csv
-
-    with ANONYMIZED.open(encoding="utf-8", newline="") as handle:
-        rows = list(csv.DictReader(handle))
-
-    assert len(rows) == rules.recorded_total
-    for dimension, recorded in (
-        ("topic_id", "topic_distribution"),
-        ("intent_id", "intent_distribution"),
-        ("format_id", "format_distribution"),
-    ):
-        produced = distribution(row[dimension] for row in rows)
-        assert produced == rules.recorded_distribution[recorded], dimension
 
 
 @requires_private_source
