@@ -146,6 +146,11 @@ def _temporal_provenance(plan: dict, result: CollectionResult, window_id: str, c
     fallbacks.  When a G3 window compiler ran, its recorded facts (reference
     time, limitations, window type, exactness) are included as well — the
     requested and observed periods stay separate (P5, c.md §8).
+
+    A staged run declares its own execution facts (docs/specs/
+    collection-pipeline.md §3.3): ``reference_time`` and ``limitations`` are
+    producer observations like the observed bounds, so they are carried the
+    same way (the compiler's values still take precedence when one ran).
     """
     plan_window = plan.get("window") if isinstance(plan.get("window"), dict) else {}
     temporal = result.temporal if isinstance(result.temporal, dict) else {}
@@ -166,6 +171,8 @@ def _temporal_provenance(plan: dict, result: CollectionResult, window_id: str, c
         "observed_min_timestamp",
         "observed_max_timestamp",
         "week_start",
+        "reference_time",
+        "limitations",
     ):
         if key in temporal:
             block[key] = temporal[key]

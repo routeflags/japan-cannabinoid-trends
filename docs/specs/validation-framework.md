@@ -599,7 +599,11 @@ granularity / week_start の完全一致を要求（不一致・未登録は exi
 ### 16.3 未実装（引き継ぎ）
 
 - ライブ収集による Google Trends の境界挙動検証（`exact=true` への昇格条件）。
-  それまでは全 compile が `exact=false` / `boundary_semantics=unverified`。
+  2026-10-15 に計測プロトコル・昇格規則（`docs/specs/gt-boundary-verification.md`）
+  とオフライン計測基盤（`collection.adapters.google_trends.boundary` /
+  `validation.cli boundary-report`）を実装した。ライブ実行はメンテナ承認待ちで、
+  それまでは全 compile が `exact=false` / `boundary_semantics=unverified`
+  （ISS-20261015-GT-001 PENDING）。
 - 他ソース（X / YouTube / TikTok / Instagram / LinkedIn）の Window Compiler と
   `dateFilter=month` 等のローリング語彙の検証。
 - §10 の日次/週次のバケット集計（月次バケット生成のみ実装。分析側の集計は未接続）。

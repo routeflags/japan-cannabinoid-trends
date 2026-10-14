@@ -49,6 +49,7 @@ import json
 import sys
 from pathlib import Path
 
+from validation.boundary import build_boundary_report
 from validation.comparability import compare_runs
 from validation.coverage import build_temporal_inventory, evaluate_coverage
 from validation.gates import post_collection_gate, pre_collection_gate
@@ -1261,6 +1262,51 @@ def cmd_coverage_run(args) -> int:
     return EXIT_OK
 
 
+def cmd_boundary_report(args) -> int:
+    """Relative-timeframe boundary evidence table + promotion rule (read-only).
+
+    ISS-20261015-GT-001 / ``docs/specs/gt-boundary-verification.md``: reports,
+    per run, the collected relative timeframe, the nominal resolution and the
+    observed bucket labels, and evaluates the `exact` promotion rule over the
+    measurement cohort.  The command reports; it never promotes and never
+    writes anything except the ``--output`` path, so the exit code is always 0
+    (like ``coverage-run``).
+    """
+    report = build_boundary_report(
+        Path(args.datasets_root), study=args.study, run=args.run
+    )
+    rule = report["rule"]
+    lines = [
+        f"BOUNDARY rows={report['row_count']} "
+        f"measurement_runs={report['measurement_row_count']} "
+        f"eligible={rule['eligible']}"
+    ]
+    for row in report["rows"]:
+        parts = [
+            f"run_id={row.get('run_id')}",
+            f"class={row.get('evidence_class')}",
+            f"timeframe={row.get('timeframe')}",
+            f"verdict={row['verdict']}",
+        ]
+        if row.get("first_offset_days") is not None:
+            parts.append(f"first_offset_days={row['first_offset_days']}")
+            parts.append(f"last_end_offset_days={row['last_end_offset_days']}")
+        if row.get("reasons"):
+            parts.append("reasons=" + ",".join(row["reasons"]))
+        lines.append("  row " + " ".join(parts))
+    for timeframe, verdict in sorted(rule["timeframes"].items()):
+        lines.append(
+            f"  timeframe {timeframe}: consistent_runs={verdict['consistent_runs']} "
+            f"reference_days={len(verdict['reference_days'])} "
+            f"reference_span_days={verdict['reference_span_days']} "
+            f"satisfied={verdict['satisfied']}"
+        )
+    for reason in rule["reasons"]:
+        lines.append(f"  rule_reason: {reason}")
+    _emit(report, fmt=args.format, output=args.output, human_lines=lines)
+    return EXIT_OK
+
+
 # ---------------------------------------------------------------------------
 # audit-temporal (G3 §15)
 # ---------------------------------------------------------------------------
@@ -1609,6 +1655,20 @@ def build_parser() -> argparse.ArgumentParser:
     coverage_run.add_argument("--format", choices=("text", "json"), default="text")
     coverage_run.add_argument("--output", help="write the JSON manifest to this path")
     coverage_run.set_defaults(handler=cmd_coverage_run)
+
+    boundary_report = sub.add_parser(
+        "boundary-report",
+        help="relative-timeframe boundary evidence table + `exact` promotion "
+        "rule (ISS-20261015-GT-001; read-only report)",
+    )
+    boundary_report.add_argument("--datasets-root", default="datasets")
+    boundary_report.add_argument("--study", help="restrict the scan to one study id")
+    boundary_report.add_argument(
+        "--run", help="inspect one run directory instead of the datasets root"
+    )
+    boundary_report.add_argument("--format", choices=("text", "json"), default="text")
+    boundary_report.add_argument("--output", help="write the JSON report to this path")
+    boundary_report.set_defaults(handler=cmd_boundary_report)
 
     audit_temporal = sub.add_parser(
         "audit-temporal",

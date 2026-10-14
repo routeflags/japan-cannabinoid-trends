@@ -2,7 +2,7 @@
 
 **ID:** ISS-20261015-GT-001  
 **優先度:** P1 (High)  
-**ステータス:** OPEN  
+**ステータス:** PENDING (2026-10-15: ライブ計測はメンテナ承認待ち。オフライン計測基盤・手順・昇格規則は実装・文書化済み — `docs/specs/gt-boundary-verification.md`, `docs/reports/20261015b-gt-boundary-verification.md`)  
 **対象:** `src/collection/adapters/google_trends/compiler.py`, `config/collectors.json`（`google-trends-mcp`）, `metadata/windows/`
 
 ## 概要
@@ -39,3 +39,21 @@ Google Trends の window compiler は、現時点で**すべての compile で `
 - [ ] ライブ収集 1 回以上の実測 run（`run_metadata.json` として保存）
 - [ ] 要求窓と観測境界の対応表（timeframe 別）
 - [ ] `exact` 昇格条件の文書化、または昇格しない場合の理由の記録
+
+## 経過（2026-10-15）
+
+オフラインで可能な部分を実装・検証し、ライブ実行は未実施のため `PENDING` とした。
+完了条件の checkbox は意図的に未チェックのまま（実測 run はまだ存在しない）。
+
+- 実装: キャプチャ検証 / staging（`collection.adapters.google_trends.boundary`）、
+  対応表と昇格規則の評価器（`validation.cli boundary-report`）、テスト 37 件。
+- 文書: 実行プロトコルと昇格規則 = `docs/specs/gt-boundary-verification.md`。
+  計画・レビュー・オフライン結果・**メンテナへの単一の承認質問（D1）** =
+  `docs/reports/20261015b-gt-boundary-verification.md`。
+- オフライン証拠: tracked な実記録 5y run（2026-10-12）は名目モデルと `consistent`
+  （offset −2.28 / +5.72 日）だが `recorded_legacy` クラスであり昇格には使わない。
+- 副産物: `boundary-report` が旧 run のラベル年誤りを検出
+  （ISS-20261015-GT-002）。
+
+完了条件の充足には、承認後のライブ計測（4 timeframe × 2 UTC 日 = 8 run）と
+`boundary-report` の `eligible=true`、および証拠を伴う昇格変更が必要。

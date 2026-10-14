@@ -118,7 +118,10 @@ L2 が `not_comparable` になることはある。
   `exact=false` の collector では `WINDOW_EXACTNESS_UNAVAILABLE` で停止。
 - ドライラン: `python -m collection.core.cli compile-window`（収集しない）。
 - 現在 `exact=false` / `boundary_semantics=unverified` は Google Trends の
-  ローリング期間の実測検証が未実施であることを反映する。
+  ローリング期間の実測検証が未実施であることを反映する。昇格条件とライブ計測
+  プロトコルは `docs/specs/gt-boundary-verification.md`（2026-10-15）。
+  ライブ計測は承認待ちで、現状は引き続き `exact=false`（ISS-20261015-GT-001
+  PENDING）。
 
 ### 3.3 外部 collector の staging（`stage_run`）と既存 shell 収集との整合
 
@@ -349,6 +352,11 @@ python -m validation.cli coverage-run --file <run_dir or run_metadata.json>
 
 - **ライブ収集は未実施**。Google Trends の live 経路（`SessionMcpTransport`）は
   MCP セッション callable の注入のみ実装し、本リポジトリは実行しない。
+- 境界挙動の実測検証（`exact=true` への昇格）も未実施のまま。キャプチャ検証 /
+  staging（`collection.adapters.google_trends.boundary`）と対応表・昇格規則の
+  評価器（`validation.cli boundary-report`）および実行手順を 2026-10-15 に実装
+  （`docs/specs/gt-boundary-verification.md`）。ライブ実行は承認待ちで、
+  ISS-20261015-GT-001 は PENDING。
 - replay fixture は合成（録画形式に基づく）。ただし **2026-10-15 に、実記録
   GT 応答（tracked `datasets/cannabinoid-multi-trends/data/raw/google_trends/
   20261012T064246Z-google-trends-ja-rikiddo-5y-main5/records_cbd-rikiddo-5y.json`）

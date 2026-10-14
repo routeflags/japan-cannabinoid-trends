@@ -88,6 +88,7 @@ __all__ = [
     "adopt_staged",
     "run_collection",
     "stage_run",
+    "staging_artifact_id",
 ]
 
 PIPELINE_VERSION = "1.0.0"
@@ -707,7 +708,13 @@ def adopt_staged(
 # ---------------------------------------------------------------------------
 
 
-def _staging_artifact_id(run_id: str, path: str) -> str:
+def staging_artifact_id(run_id: str, path: str) -> str:
+    """The artifact_id a staged artifact is registered under.
+
+    Public because producers that declare lineage (``derived_from``) must
+    reference the id the manifest will actually carry; the rule stays here so
+    it is implemented once.
+    """
     slug = "".join(
         character if character.isalnum() else "-" for character in path.lower()
     ).strip("-")
@@ -737,7 +744,7 @@ class CollectedArtifact:
 
     def staged(self, run_id: str) -> StagedArtifact:
         return StagedArtifact(
-            artifact_id=_staging_artifact_id(run_id, self.path),
+            artifact_id=staging_artifact_id(run_id, self.path),
             path=self.path,
             artifact_type=self.artifact_type,
             format=self.format,
