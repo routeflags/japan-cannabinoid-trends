@@ -282,6 +282,19 @@ flowchart TD
 ### 7.3 生成方法（手編集しない）
 
 - ページは既存スキル `.github/skills/generate-research-data-page/`（`generate_research_data_page.py`）、guide は `generate-compound-guide/` で生成し、**数値の出所（run_id）を記録**する。
+- **5 年表は `processing.cli gt-summary` の出力を使う（恒久対応）**:
+
+  ```bash
+  python -m processing.cli gt-summary --html | head      # 各化合物のブロックを出力
+  python -m processing.cli gt-summary --compound H4CBH --html
+  python -m processing.cli gt-summary --output docs/audits/gt-summary.json
+  ```
+
+  記録の形状（系列 / baseline / partial / averaged）ごとに計算できる値を計算し、できない値は
+  **「算出不能（run に記録なし）」と理由付き**で出す（推測で埋めない）。ページの更新は
+  ブロックを差し替えるだけで、**成分が増えても同し計算を手でやらない**。
+  `tests/processing/test_gt_statistics.py` が「各ページが生成ブロックを持つこと」を固定するので、
+  手編集でドリフトしたらテストが落ちる。
 - 手作業が避けられない箇所は、変更内容・理由・日時・担当を追記する（AGENTS.md 再現性）。
 - 数値は raw から再計算する。既存の記載値を「きれいに見せるため」に調整しない。
 
@@ -357,10 +370,13 @@ bash scripts/validation/validate-data-schema.sh
 | U6 | 未採用 7 export の採用可否 | `ISS-20261015-COL-017` の確認 4 点が先 |
 | U7 | Instagram/TikTok の扱い | (a) 共有仕様を TikTok のみに改訂（**推奨**）／(b) 仕様を ARCHIVED 化 |
 | U8 | 本計画書の置き場所 | (a) `docs/reports/`（**現状の配置**。`docs/plans/` は gitignore のため追跡されない）／(b) 承認後に `docs/issues/` へ追跡イシュー化 |
-| U9 | 5 年表の形式（`avg_5y` を持たない run をどう表にするか） | **決定済み（2026-10-15）: (b)** 4 項目形式を維持し、記録にない値は「算出不能（run に記録なし）」と明記。
-実装済み（`cbn` / `crdp` / `hhch`）。出所（run_id）を表の下に記載した |
+| U9 | 5 年表の形式 | **決定済み（2026-10-15）: (b)** 4 項目形式を維持し、記録にない値は「算出不能（run に記録なし）」と明記。
+**さらに恒久対応として `processing.cli gt-summary` で生成化**（手書きをやめた。§7.3） |
 | U10 | THCH の 5 年系列の再取得 | **決定済み: 後日再取得**。それまではページに「未取得」と明記（実施済み）。
 ライブ GT 計測の承認が前提（`ISS-20261015-GT-001` に 1 本追加するのが素直） |
+| U11 | 6 化合物（CBN / THC-O / H4CBH / HHBD / HHCH / CRDP）の 5 年系列の再取得 | **未決**。2026-10-02 の run は系列も平均も保存しておらず、
+リポジトリからは平均を再計算できない（`gt-summary` の `unavailable_mean` が実測で列挙）。
+再取得すれば同じスクリプトがコード変更なしに実の平均値を出す。`ISS-20261015-GT-003` が追跡 |
 
 ---
 
@@ -383,3 +399,7 @@ cbg / hhc / thc に 5 年表を追加、7 ページの 12ヶ月見出しを改�
 | 2026-10-15 | 実施⑤: メンテナ決定（U9 = (b)、thch = (b) + 後日再取得）を反映。`cbn` / `crdp` / `hhch` に
 4 項目表（記録にない値は「算出不能」、出所 run_id 付き）、`thch` に「未取得」を明記。
 監査は findings 0・宣言済みギャップ 4 件を記録（書けば green になる抜け道を可視化） | メンテナ決定（U9 / thch） |
+| 2026-10-15 | 実施⑥: **5 年表を生成化（恒久対応）**。`src/processing/gt_statistics.py` +
+`processing.cli gt-summary` を追加し、13 ページの 5 年ブロックを run 記録から再生成。
+実測で「平均を再計算できないのは 6 化合物（系列も平均も未保存）」と確定し、`ISS-20261015-GT-003` を
+PENDING 化（残りは再取得判断 U11）。監査の宣言済みギャップは 8 件（算出不能 7 + 未取得 1） | メンテナ指示（恒久対応） |

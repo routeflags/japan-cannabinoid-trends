@@ -18,6 +18,11 @@ import sys
 from pathlib import Path
 
 from processing.classify import classify_text
+from processing.gt_statistics import (
+    PUBLICATION_COMPOUNDS,
+    TIMEFRAMES,
+    build_gt_summary,
+)
 from processing.reproduce import audit_processed_artifacts, reproduce_artifact
 from processing.rulespec import RuleSpecError, load_content_rules
 from validation.reporting import dump_json
@@ -114,6 +119,56 @@ def cmd_classify(args) -> int:
     return EXIT_OK
 
 
+def cmd_gt_summary(args) -> int:
+    """Recompute the Google Trends summary the publication pages show.
+
+    Read-only.  A value the run record cannot support is reported as 算出不能
+    (with the missing input named) instead of being recomputed from nothing;
+    ``--html`` prints the block to paste into a page.  See
+    ``processing/gt_statistics.py`` for the record shapes and the limits.
+    """
+    compounds = (
+        [args.compound.upper()] if args.compound else list(PUBLICATION_COMPOUNDS)
+    )
+    timeframe = TIMEFRAMES[args.timeframe]
+    try:
+        report = build_gt_summary(Path(args.datasets_root), compounds, timeframe)
+    except (OSError, ValueError) as error:
+        _err(f"gt summary failed: {error.__class__.__name__}: {error}")
+        return EXIT_CONFIG
+
+    if args.output:
+        target = Path(args.output)
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_text(dump_json(report), encoding="utf-8")
+
+    if args.html:
+        for entry in report["compounds"]:
+            print(entry["block"], end="")
+    elif args.format == "json":
+        print(dump_json(report), end="")
+    else:
+        for entry in report["compounds"]:
+            if entry["status"] == "not_collected":
+                print(f"{entry['compound']:6} not collected ({report['timeframe']})")
+                continue
+            stats = entry["stats"]
+            print(
+                f"{entry['compound']:6} {entry['shape']:8} run={entry['run_id']}\n"
+                f"        weeks={stats.get('weeks')} mean={stats.get('mean')} "
+                f"peak={stats.get('peak_date')} last={stats.get('last_value')}"
+            )
+            for field, reason in sorted(entry["unavailable"].items()):
+                print(f"        {field}: {reason}")
+    summary = report["summary"]
+    _err(
+        f"gt summary ({report['timeframe']}): {summary['compound_count']} compound(s) "
+        f"[{', '.join(f'{k}={v}' for k, v in summary['by_status'].items())}] "
+        f"mean unavailable={len(summary['unavailable_mean'])}"
+    )
+    return EXIT_OK
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="python -m processing.cli")
     parser.add_argument("--repo-root", default=".")
@@ -136,6 +191,21 @@ def build_parser() -> argparse.ArgumentParser:
     classify.add_argument("--text", required=True)
     classify.add_argument("--format", choices=("text", "json"), default="text")
     classify.set_defaults(func=cmd_classify)
+
+    gt_summary = sub.add_parser(
+        "gt-summary",
+        help=(
+            "recompute the Google Trends summary for the publication pages "
+            "(read-only; --html prints the block)"
+        ),
+    )
+    gt_summary.add_argument("--datasets-root", default="datasets")
+    gt_summary.add_argument("--timeframe", choices=tuple(TIMEFRAMES), default="5y")
+    gt_summary.add_argument("--compound", default=None)
+    gt_summary.add_argument("--html", action="store_true")
+    gt_summary.add_argument("--output", default=None)
+    gt_summary.add_argument("--format", choices=("text", "json"), default="text")
+    gt_summary.set_defaults(func=cmd_gt_summary)
 
     return parser
 

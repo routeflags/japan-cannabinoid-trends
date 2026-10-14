@@ -2,10 +2,10 @@
 
 **ID:** ISS-20261015-GT-003  
 **優先度:** P1 (High)  
-**ステータス:** OPEN  
+**ステータス:** PENDING (2026-10-15) — 生成による修正は完了。残りは 6 化合物の 5 年系列の再取得判断  
 **対象:** `publication/research_h4cbh.html`, `publication/research_hhbd.html`,
 `publication/research_thc-o.html`, `datasets/cannabinoid-multi-trends/data/raw/google_trends/20261002T*/`,
-`src/validation/publication_contract.py`（PC-2）
+`src/processing/gt_statistics.py`, `src/validation/publication_contract.py`（PC-2）
 
 ## 概要
 
@@ -45,21 +45,37 @@
 
 ## 対応方針
 
-- 3 ページの 5 年表を、**記録に存在する項目だけ**で再構成する（形状 (iii) なら
-  初出・初出値・ピーク・非ゼロ週数・データあり期間）。平均を残す場合は別途根拠を記録する。
-- `thc-o` のピークを記録（2022-04-10）と突合し、不一致を解消する（記録を正とするか、
-  別の根拠を日付付きで記録するかはメンテナ判断）。
-- PC-2（公開ページの各数値が run / 記録項目を指す）を実装し、非空虚なテストで固定する。
+- ページの 5 年表は**手書きせず、run 記録から生成する**（**恒久対応**）。
+  実装: `src/processing/gt_statistics.py` + `python -m processing.cli gt-summary`
+  （`--html` でブロックを出力、`--output docs/audits/gt-summary.json` で機械可読レポート）。
+  記録の形状（系列 / baseline / partial / averaged）ごとに計算できことを計算し、
+  **できない項目は「算出不能」と理由付きで報告**する（推測で埋めない）。
+- 3 ページの出所未詳の平均はどうなったか: 2026-10-02 の run は**系列も平均も保存していない**
+  ため、**リポジトリからは再計算できない**（実測。`gt-summary` の `unavailable_mean` が
+  6 化合物を列挙）。再計算するには当該の 5 年系列を**再取得**する必要がある（§未解決）。
+  再取得が済べば、同じスクリプトがコード変更なしに平均を出す。
+- `thc-o` のピークは生成により記録の **2022-04-10** に修正された（日付単位）。
+- PC-2（各数値が run / 記録項目を指す）の完全な検査は今後の作業だが、
+  生成されたブロックは各表の下に出所（run_id・収集日）を必ず含む。
 - 同じ問題が guide と search-emergence-tracker にないか確認する。
+
+## 未解決
+
+- **6 化合物（CBN / THC-O / H4CBH / HHBD / HHCH / CRDP）の 5 年系列**はリポジトリに存在しない。
+  平均値を出すには再取得が必要で、ライブ GT 計測の承認が前提（`ISS-20261015-GT-001` に
+  6 本追加する形が素直）。THCH の 5 年系列と同じ扱い。
 
 ## 完了条件
 
-- [ ] 3 ページの 5 年表の数値がすべて run 記録から再現できる
-- [ ] `thc-o` のピークの不一致が解消または根拠付きで説明されている
+- [x] 5 年表の数値がすべて run 記録から生成される（手書きをやめた）
+- [x] `thc-o` のピークの不一致が解消（記録の 2022-04-10）
+- [x] 記録にない値は「算出不能」として理由付きで表示される
+- [ ] 6 化合物の 5 年系列を再取得し、実の平均値を出す（承認待ち）
 - [ ] PC-2 の検査（非空虚性テスト付き）
 
 ## 依存
 
 - 本 issue は `ISS-20261015-GT-001`（境界計測）とは独立。
-- `docs/reports/20261015c-publication-refresh-plan.md` §11-U9（`cbn` / `crdp` / `hhch` の
-  5 年表の形式）は本 issue と同じ形状 (iii) の問題を共有する。
+- 再取得は GT-001 の承認に相乗りできる。
+- `docs/reports/20261015c-publication-refresh-plan.md` §11-U9（形式）と §11-U10（THCH）は
+  本 issue と同じ問題を共有する。

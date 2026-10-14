@@ -1,0 +1,308 @@
+{
+  "schema_version": "1.0.0",
+  "generated_by": "processing.cli gt-summary",
+  "datasets_root": "datasets",
+  "timeframe": "today 5-y",
+  "summary": {
+    "compound_count": 13,
+    "by_status": {
+      "computed": 12,
+      "not_collected": 1
+    },
+    "by_shape": {
+      "None": 1,
+      "averaged": 1,
+      "baseline": 5,
+      "partial": 6
+    },
+    "unavailable_mean": [
+      "CBN",
+      "THC-O",
+      "H4CBH",
+      "HHBD",
+      "HHCH",
+      "CRDP"
+    ]
+  },
+  "compounds": [
+    {
+      "compound": "CBD",
+      "status": "computed",
+      "run_id": "20261008T093228Z-google-trends-5y-baseline",
+      "path": "datasets/cannabinoid-multi-trends/data/raw/google_trends/20261008T093228Z-google-trends-5y-baseline/cbd_5y_summary.json",
+      "shape": "baseline",
+      "stats": {
+        "weeks": 261,
+        "mean": 32.5,
+        "peak_date": "2025-08-31",
+        "peak_value": 100,
+        "last_value": 14,
+        "first_value": 42
+      },
+      "unavailable": {
+        "first_nonzero_date": "run が初出を記録していない",
+        "nonzero_weeks": "run が非ゼロ週数を記録していない",
+        "data_period": "run がデータあり期間を記録していない"
+      },
+      "block": "  <h3>5年データサマリー（個別正規化値）</h3>\n  <table>\n    <thead>\n      <tr>\n        <th>指標</th>\n        <th>値</th>\n      </tr>\n    </thead>\n    <tbody>\n      <tr>\n        <td>収集期間</td>\n        <td>過去5年（週次）・261週</td>\n      </tr>\n      <tr>\n        <td>5年平均</td>\n        <td><strong>32.5</strong></td>\n      </tr>\n      <tr>\n        <td>ピーク</td>\n        <td>2025-08-31（値: 100）</td>\n      </tr>\n      <tr>\n        <td>最新値</td>\n        <td>14</td>\n      </tr>\n    </tbody>\n  </table>\n  <p><strong>出所:</strong> run <code>20261008T093228Z-google-trends-5y-baseline</code>（JP / today 5-y / 2026-10-06 収集）。</p>"
+    },
+    {
+      "compound": "THC",
+      "status": "computed",
+      "run_id": "20261008T093228Z-google-trends-5y-baseline",
+      "path": "datasets/cannabinoid-multi-trends/data/raw/google_trends/20261008T093228Z-google-trends-5y-baseline/thc_5y_summary.json",
+      "shape": "baseline",
+      "stats": {
+        "weeks": 261,
+        "mean": 12.2,
+        "peak_date": "2025-08-31",
+        "peak_value": 100,
+        "last_value": 7,
+        "first_value": 8
+      },
+      "unavailable": {
+        "first_nonzero_date": "run が初出を記録していない",
+        "nonzero_weeks": "run が非ゼロ週数を記録していない",
+        "data_period": "run がデータあり期間を記録していない"
+      },
+      "block": "  <h3>5年データサマリー（個別正規化値）</h3>\n  <table>\n    <thead>\n      <tr>\n        <th>指標</th>\n        <th>値</th>\n      </tr>\n    </thead>\n    <tbody>\n      <tr>\n        <td>収集期間</td>\n        <td>過去5年（週次）・261週</td>\n      </tr>\n      <tr>\n        <td>5年平均</td>\n        <td><strong>12.2</strong></td>\n      </tr>\n      <tr>\n        <td>ピーク</td>\n        <td>2025-08-31（値: 100）</td>\n      </tr>\n      <tr>\n        <td>最新値</td>\n        <td>7</td>\n      </tr>\n    </tbody>\n  </table>\n  <p><strong>出所:</strong> run <code>20261008T093228Z-google-trends-5y-baseline</code>（JP / today 5-y / 2026-10-06 収集）。</p>"
+    },
+    {
+      "compound": "CBG",
+      "status": "computed",
+      "run_id": "20261008T093228Z-google-trends-5y-baseline",
+      "path": "datasets/cannabinoid-multi-trends/data/raw/google_trends/20261008T093228Z-google-trends-5y-baseline/cbg_5y_summary.json",
+      "shape": "baseline",
+      "stats": {
+        "weeks": 261,
+        "mean": 45.6,
+        "peak_date": "2023-11-19",
+        "peak_value": 100,
+        "last_value": 44,
+        "first_value": 28
+      },
+      "unavailable": {
+        "first_nonzero_date": "run が初出を記録していない",
+        "nonzero_weeks": "run が非ゼロ週数を記録していない",
+        "data_period": "run がデータあり期間を記録していない"
+      },
+      "block": "  <h3>5年データサマリー（個別正規化値）</h3>\n  <table>\n    <thead>\n      <tr>\n        <th>指標</th>\n        <th>値</th>\n      </tr>\n    </thead>\n    <tbody>\n      <tr>\n        <td>収集期間</td>\n        <td>過去5年（週次）・261週</td>\n      </tr>\n      <tr>\n        <td>5年平均</td>\n        <td><strong>45.6</strong></td>\n      </tr>\n      <tr>\n        <td>ピーク</td>\n        <td>2023-11-19（値: 100）</td>\n      </tr>\n      <tr>\n        <td>最新値</td>\n        <td>44</td>\n      </tr>\n    </tbody>\n  </table>\n  <p><strong>出所:</strong> run <code>20261008T093228Z-google-trends-5y-baseline</code>（JP / today 5-y / 2026-10-06 収集）。</p>"
+    },
+    {
+      "compound": "CBN",
+      "status": "computed",
+      "run_id": "20261002T082000Z-google-trends-cbn-5y",
+      "path": "datasets/cannabinoid-multi-trends/data/raw/google_trends/20261002T082000Z-google-trends-cbn-5y/records_cbn_5y.json",
+      "shape": "partial",
+      "stats": {
+        "weeks": 261,
+        "mean": null,
+        "peak_date": "2025-04-20",
+        "peak_value": 100,
+        "first_nonzero_date": "2021-09-26以前",
+        "first_value": 20,
+        "nonzero_weeks": 261,
+        "zero_weeks": 0,
+        "data_period": "2021-09-26 〜 2026-10-03 (通年)",
+        "average_nonzero": null
+      },
+      "unavailable": {
+        "mean": "run が平均値を記録していない（系列も未保存）",
+        "last_value": "run が最新値を記録していない"
+      },
+      "block": "  <h3>5年データサマリー（個別正規化値）</h3>\n  <table>\n    <thead>\n      <tr>\n        <th>指標</th>\n        <th>値</th>\n      </tr>\n    </thead>\n    <tbody>\n      <tr>\n        <td>収集期間</td>\n        <td>2021-09-26 〜 2026-10-03 (通年)（261週）</td>\n      </tr>\n      <tr>\n        <td>5年平均</td>\n        <td>算出不能（run に記録なし）</td>\n      </tr>\n      <tr>\n        <td>ピーク</td>\n        <td>2025-04-20（値: 100）</td>\n      </tr>\n      <tr>\n        <td>最新値</td>\n        <td>算出不能（run に記録なし）</td>\n      </tr>\n    </tbody>\n  </table>\n  <p><strong>出所:</strong> run <code>20261002T082000Z-google-trends-cbn-5y</code>（JP / today 5-y / 2026-10-02 収集）。記録にある項目: 初出 2021-09-26以前（値 20）、非ゼロ 261 週 / ゼロ 0 週、データあり期間 2021-09-26 〜 2026-10-03 (通年)、mean: run が平均値を記録していない（系列も未保存）、last_value: run が最新値を記録していない。</p>"
+    },
+    {
+      "compound": "THCV",
+      "status": "computed",
+      "run_id": "20261008T093228Z-google-trends-5y-baseline",
+      "path": "datasets/cannabinoid-multi-trends/data/raw/google_trends/20261008T093228Z-google-trends-5y-baseline/thcv_5y_summary.json",
+      "shape": "baseline",
+      "stats": {
+        "weeks": 261,
+        "mean": 5.2,
+        "peak_date": "2023-09-03",
+        "peak_value": 100,
+        "last_value": 0,
+        "first_value": 0
+      },
+      "unavailable": {
+        "first_nonzero_date": "run が初出を記録していない",
+        "nonzero_weeks": "run が非ゼロ週数を記録していない",
+        "data_period": "run がデータあり期間を記録していない"
+      },
+      "block": "  <h3>5年データサマリー（個別正規化値）</h3>\n  <table>\n    <thead>\n      <tr>\n        <th>指標</th>\n        <th>値</th>\n      </tr>\n    </thead>\n    <tbody>\n      <tr>\n        <td>収集期間</td>\n        <td>過去5年（週次）・261週</td>\n      </tr>\n      <tr>\n        <td>5年平均</td>\n        <td><strong>5.2</strong></td>\n      </tr>\n      <tr>\n        <td>ピーク</td>\n        <td>2023-09-03（値: 100）</td>\n      </tr>\n      <tr>\n        <td>最新値</td>\n        <td>0</td>\n      </tr>\n    </tbody>\n  </table>\n  <p><strong>出所:</strong> run <code>20261008T093228Z-google-trends-5y-baseline</code>（JP / today 5-y / 2026-10-06 収集）。</p>"
+    },
+    {
+      "compound": "THCH",
+      "status": "not_collected",
+      "timeframe": "today 5-y",
+      "block": "  <h3>5年データサマリー（個別正規化値）</h3>\n  <p>5 年系列は未取得（収集 run が存在しない）。これは<strong>欠測であり、需要ゼロを意味しない</strong>。後日再取得する。</p>"
+    },
+    {
+      "compound": "HHC",
+      "status": "computed",
+      "run_id": "20261008T093228Z-google-trends-5y-baseline",
+      "path": "datasets/cannabinoid-multi-trends/data/raw/google_trends/20261008T093228Z-google-trends-5y-baseline/hhc_5y_summary.json",
+      "shape": "baseline",
+      "stats": {
+        "weeks": 261,
+        "mean": 1.2,
+        "peak_date": "2022-03-06",
+        "peak_value": 100,
+        "last_value": 0,
+        "first_value": 0
+      },
+      "unavailable": {
+        "first_nonzero_date": "run が初出を記録していない",
+        "nonzero_weeks": "run が非ゼロ週数を記録していない",
+        "data_period": "run がデータあり期間を記録していない"
+      },
+      "block": "  <h3>5年データサマリー（個別正規化値）</h3>\n  <table>\n    <thead>\n      <tr>\n        <th>指標</th>\n        <th>値</th>\n      </tr>\n    </thead>\n    <tbody>\n      <tr>\n        <td>収集期間</td>\n        <td>過去5年（週次）・261週</td>\n      </tr>\n      <tr>\n        <td>5年平均</td>\n        <td><strong>1.2</strong></td>\n      </tr>\n      <tr>\n        <td>ピーク</td>\n        <td>2022-03-06（値: 100）</td>\n      </tr>\n      <tr>\n        <td>最新値</td>\n        <td>0</td>\n      </tr>\n    </tbody>\n  </table>\n  <p><strong>出所:</strong> run <code>20261008T093228Z-google-trends-5y-baseline</code>（JP / today 5-y / 2026-10-06 収集）。</p>"
+    },
+    {
+      "compound": "THC-O",
+      "status": "computed",
+      "run_id": "20261002T071255Z-google-trends-thc-o-5y",
+      "path": "datasets/cannabinoid-multi-trends/data/raw/google_trends/20261002T071255Z-google-trends-thc-o-5y/records_thc_o_5y.json",
+      "shape": "partial",
+      "stats": {
+        "weeks": 262,
+        "mean": null,
+        "peak_date": "2022-04-10",
+        "peak_value": 100,
+        "first_nonzero_date": "2022-03-13",
+        "first_value": 71,
+        "nonzero_weeks": 22,
+        "zero_weeks": 240,
+        "data_period": "2022-03-13 〜 2023-06-17 (断続的)",
+        "average_nonzero": null
+      },
+      "unavailable": {
+        "mean": "run が平均値を記録していない（系列も未保存）",
+        "last_value": "run が最新値を記録していない"
+      },
+      "block": "  <h3>5年データサマリー（個別正規化値）</h3>\n  <table>\n    <thead>\n      <tr>\n        <th>指標</th>\n        <th>値</th>\n      </tr>\n    </thead>\n    <tbody>\n      <tr>\n        <td>収集期間</td>\n        <td>2022-03-13 〜 2023-06-17 (断続的)（262週）</td>\n      </tr>\n      <tr>\n        <td>5年平均</td>\n        <td>算出不能（run に記録なし）</td>\n      </tr>\n      <tr>\n        <td>ピーク</td>\n        <td>2022-04-10（値: 100）</td>\n      </tr>\n      <tr>\n        <td>最新値</td>\n        <td>算出不能（run に記録なし）</td>\n      </tr>\n    </tbody>\n  </table>\n  <p><strong>出所:</strong> run <code>20261002T071255Z-google-trends-thc-o-5y</code>（JP / today 5-y / 2026-10-02 収集）。記録にある項目: 初出 2022-03-13（値 71）、非ゼロ 22 週 / ゼロ 240 週、データあり期間 2022-03-13 〜 2023-06-17 (断続的)、mean: run が平均値を記録していない（系列も未保存）、last_value: run が最新値を記録していない。</p>"
+    },
+    {
+      "compound": "H4CBH",
+      "status": "computed",
+      "run_id": "20261002T080652Z-google-trends-h4cbh-5y",
+      "path": "datasets/cannabinoid-multi-trends/data/raw/google_trends/20261002T080652Z-google-trends-h4cbh-5y/records_h4cbh_5y.json",
+      "shape": "partial",
+      "stats": {
+        "weeks": 262,
+        "mean": null,
+        "peak_date": "2026-07-26",
+        "peak_value": 100,
+        "first_nonzero_date": "2025-04-06",
+        "first_value": 41,
+        "nonzero_weeks": 65,
+        "zero_weeks": 197,
+        "data_period": "2025-04-06 〜 2026-10-03 (断続的)",
+        "average_nonzero": null
+      },
+      "unavailable": {
+        "mean": "run が平均値を記録していない（系列も未保存）",
+        "last_value": "run が最新値を記録していない"
+      },
+      "block": "  <h3>5年データサマリー（個別正規化値）</h3>\n  <table>\n    <thead>\n      <tr>\n        <th>指標</th>\n        <th>値</th>\n      </tr>\n    </thead>\n    <tbody>\n      <tr>\n        <td>収集期間</td>\n        <td>2025-04-06 〜 2026-10-03 (断続的)（262週）</td>\n      </tr>\n      <tr>\n        <td>5年平均</td>\n        <td>算出不能（run に記録なし）</td>\n      </tr>\n      <tr>\n        <td>ピーク</td>\n        <td>2026-07-26（値: 100）</td>\n      </tr>\n      <tr>\n        <td>最新値</td>\n        <td>算出不能（run に記録なし）</td>\n      </tr>\n    </tbody>\n  </table>\n  <p><strong>出所:</strong> run <code>20261002T080652Z-google-trends-h4cbh-5y</code>（JP / today 5-y / 2026-10-02 収集）。記録にある項目: 初出 2025-04-06（値 41）、非ゼロ 65 週 / ゼロ 197 週、データあり期間 2025-04-06 〜 2026-10-03 (断続的)、mean: run が平均値を記録していない（系列も未保存）、last_value: run が最新値を記録していない。</p>"
+    },
+    {
+      "compound": "HHBD",
+      "status": "computed",
+      "run_id": "20261002T080800Z-google-trends-hhbd-5y",
+      "path": "datasets/cannabinoid-multi-trends/data/raw/google_trends/20261002T080800Z-google-trends-hhbd-5y/records_hhbd_5y.json",
+      "shape": "partial",
+      "stats": {
+        "weeks": 262,
+        "mean": null,
+        "peak_date": "2025-12-07",
+        "peak_value": 100,
+        "first_nonzero_date": "2025-11-30",
+        "first_value": 37,
+        "nonzero_weeks": 35,
+        "zero_weeks": 227,
+        "data_period": "2025-11-30 〜 2026-10-03 (断続的)",
+        "average_nonzero": null
+      },
+      "unavailable": {
+        "mean": "run が平均値を記録していない（系列も未保存）",
+        "last_value": "run が最新値を記録していない"
+      },
+      "block": "  <h3>5年データサマリー（個別正規化値）</h3>\n  <table>\n    <thead>\n      <tr>\n        <th>指標</th>\n        <th>値</th>\n      </tr>\n    </thead>\n    <tbody>\n      <tr>\n        <td>収集期間</td>\n        <td>2025-11-30 〜 2026-10-03 (断続的)（262週）</td>\n      </tr>\n      <tr>\n        <td>5年平均</td>\n        <td>算出不能（run に記録なし）</td>\n      </tr>\n      <tr>\n        <td>ピーク</td>\n        <td>2025-12-07（値: 100）</td>\n      </tr>\n      <tr>\n        <td>最新値</td>\n        <td>算出不能（run に記録なし）</td>\n      </tr>\n    </tbody>\n  </table>\n  <p><strong>出所:</strong> run <code>20261002T080800Z-google-trends-hhbd-5y</code>（JP / today 5-y / 2026-10-02 収集）。記録にある項目: 初出 2025-11-30（値 37）、非ゼロ 35 週 / ゼロ 227 週、データあり期間 2025-11-30 〜 2026-10-03 (断続的)、mean: run が平均値を記録していない（系列も未保存）、last_value: run が最新値を記録していない。</p>"
+    },
+    {
+      "compound": "HHCH",
+      "status": "computed",
+      "run_id": "20261002T094730Z-google-trends-hhch-5y",
+      "path": "datasets/cannabinoid-multi-trends/data/raw/google_trends/20261002T094730Z-google-trends-hhch-5y/records_hhch_5y.json",
+      "shape": "partial",
+      "stats": {
+        "weeks": 261,
+        "mean": null,
+        "peak_date": "2023-11-12",
+        "peak_value": 100,
+        "first_nonzero_date": "2023-03-26",
+        "first_value": 1,
+        "nonzero_weeks": 48,
+        "zero_weeks": 213,
+        "data_period": "2023-03-26 〜 2024-03-17 (主に)",
+        "average_nonzero": null
+      },
+      "unavailable": {
+        "mean": "run が平均値を記録していない（系列も未保存）",
+        "last_value": "run が最新値を記録していない"
+      },
+      "block": "  <h3>5年データサマリー（個別正規化値）</h3>\n  <table>\n    <thead>\n      <tr>\n        <th>指標</th>\n        <th>値</th>\n      </tr>\n    </thead>\n    <tbody>\n      <tr>\n        <td>収集期間</td>\n        <td>2023-03-26 〜 2024-03-17 (主に)（261週）</td>\n      </tr>\n      <tr>\n        <td>5年平均</td>\n        <td>算出不能（run に記録なし）</td>\n      </tr>\n      <tr>\n        <td>ピーク</td>\n        <td>2023-11-12（値: 100）</td>\n      </tr>\n      <tr>\n        <td>最新値</td>\n        <td>算出不能（run に記録なし）</td>\n      </tr>\n    </tbody>\n  </table>\n  <p><strong>出所:</strong> run <code>20261002T094730Z-google-trends-hhch-5y</code>（JP / today 5-y / 2026-10-02 収集）。記録にある項目: 初出 2023-03-26（値 1）、非ゼロ 48 週 / ゼロ 213 週、データあり期間 2023-03-26 〜 2024-03-17 (主に)、mean: run が平均値を記録していない（系列も未保存）、last_value: run が最新値を記録していない。</p>"
+    },
+    {
+      "compound": "CRDP",
+      "status": "computed",
+      "run_id": "20261002T085359Z-google-trends-crdp-5y",
+      "path": "datasets/cannabinoid-multi-trends/data/raw/google_trends/20261002T085359Z-google-trends-crdp-5y/records_crdp_5y.json",
+      "shape": "partial",
+      "stats": {
+        "weeks": 261,
+        "mean": null,
+        "peak_date": "2025-06-08",
+        "peak_value": 100,
+        "first_nonzero_date": "2022-07-31",
+        "first_value": 29,
+        "nonzero_weeks": 48,
+        "zero_weeks": 213,
+        "data_period": "2022-07-31 〜 2026-10-03 (断続的)",
+        "average_nonzero": null
+      },
+      "unavailable": {
+        "mean": "run が平均値を記録していない（系列も未保存）",
+        "last_value": "run が最新値を記録していない"
+      },
+      "block": "  <h3>5年データサマリー（個別正規化値）</h3>\n  <table>\n    <thead>\n      <tr>\n        <th>指標</th>\n        <th>値</th>\n      </tr>\n    </thead>\n    <tbody>\n      <tr>\n        <td>収集期間</td>\n        <td>2022-07-31 〜 2026-10-03 (断続的)（261週）</td>\n      </tr>\n      <tr>\n        <td>5年平均</td>\n        <td>算出不能（run に記録なし）</td>\n      </tr>\n      <tr>\n        <td>ピーク</td>\n        <td>2025-06-08（値: 100）</td>\n      </tr>\n      <tr>\n        <td>最新値</td>\n        <td>算出不能（run に記録なし）</td>\n      </tr>\n    </tbody>\n  </table>\n  <p><strong>出所:</strong> run <code>20261002T085359Z-google-trends-crdp-5y</code>（JP / today 5-y / 2026-10-02 収集）。記録にある項目: 初出 2022-07-31（値 29）、非ゼロ 48 週 / ゼロ 213 週、データあり期間 2022-07-31 〜 2026-10-03 (断続的)、mean: run が平均値を記録していない（系列も未保存）、last_value: run が最新値を記録していない。</p>"
+    },
+    {
+      "compound": "CRDH",
+      "status": "computed",
+      "run_id": "20261008T121338Z-google-trends-crdh-5y",
+      "path": "datasets/cannabinoid-multi-trends/data/raw/google_trends/20261008T121338Z-google-trends-crdh-5y/records_crdh_5y.json",
+      "shape": "averaged",
+      "stats": {
+        "weeks": 261,
+        "mean": 15.3,
+        "peak_date": "2024-12-15",
+        "peak_value": 100,
+        "first_nonzero_date": "2023-09-24",
+        "first_value": 48,
+        "nonzero_weeks": 38,
+        "zero_weeks": 223,
+        "data_period": null,
+        "average_nonzero": 73.4
+      },
+      "unavailable": {
+        "last_value": "run が最新値を記録していない",
+        "data_period": "run がデータあり期間を記録していない"
+      },
+      "block": "  <h3>5年データサマリー（個別正規化値）</h3>\n  <table>\n    <thead>\n      <tr>\n        <th>指標</th>\n        <th>値</th>\n      </tr>\n    </thead>\n    <tbody>\n      <tr>\n        <td>収集期間</td>\n        <td>過去5年（週次）・261週</td>\n      </tr>\n      <tr>\n        <td>5年平均</td>\n        <td><strong>15.3</strong></td>\n      </tr>\n      <tr>\n        <td>ピーク</td>\n        <td>2024-12-15（値: 100）</td>\n      </tr>\n      <tr>\n        <td>最新値</td>\n        <td>算出不能（run に記録なし）</td>\n      </tr>\n    </tbody>\n  </table>\n  <p><strong>出所:</strong> run <code>20261008T121338Z-google-trends-crdh-5y</code>（JP / today 5-y / 2026-10-08 収集）。記録にある項目: 初出 2023-09-24（値 48）、非ゼロ 38 週 / ゼロ 223 週、非ゼロ平均 73.4、last_value: run が最新値を記録していない。</p>"
+    }
+  ]
+}

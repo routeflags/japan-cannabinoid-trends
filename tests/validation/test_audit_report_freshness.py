@@ -84,6 +84,7 @@ NORMALIZERS = {"identity": _identity, "tracked_only": _tracked_only}
 REPORTS: tuple[Report, ...] = (
     Report("docs/audits/contract-ledger.json", ("validation.cli", "contract-ledger")),
     Report("docs/audits/g2-query-inventory.json", ("validation.cli", "audit-queries")),
+    Report("docs/audits/gt-summary.json", ("processing.cli", "gt-summary")),
     Report("docs/audits/publication-contract.json", ("validation.cli", "audit-publication")),
     Report("docs/audits/g3-temporal-inventory.json", ("validation.cli", "audit-temporal")),
     Report("docs/audits/g4-storage-inventory.json", ("validation.cli", "audit-artifacts")),

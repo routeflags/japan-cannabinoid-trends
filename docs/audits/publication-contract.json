@@ -15,7 +15,7 @@
   "summary": {
     "artifact_count": 15,
     "finding_count": 0,
-    "declared_gap_count": 4,
+    "declared_gap_count": 8,
     "by_rule": {},
     "by_kind": {}
   },
@@ -51,12 +51,32 @@
       "detail": "a value is declared 算出不能 from its run record"
     },
     {
+      "path": "publication/research_crdh.html",
+      "kind": "five_year_value_uncomputable",
+      "detail": "a value is declared 算出不能 from its run record"
+    },
+    {
       "path": "publication/research_crdp.html",
       "kind": "five_year_value_uncomputable",
       "detail": "a value is declared 算出不能 from its run record"
     },
     {
+      "path": "publication/research_h4cbh.html",
+      "kind": "five_year_value_uncomputable",
+      "detail": "a value is declared 算出不能 from its run record"
+    },
+    {
+      "path": "publication/research_hhbd.html",
+      "kind": "five_year_value_uncomputable",
+      "detail": "a value is declared 算出不能 from its run record"
+    },
+    {
       "path": "publication/research_hhch.html",
+      "kind": "five_year_value_uncomputable",
+      "detail": "a value is declared 算出不能 from its run record"
+    },
+    {
+      "path": "publication/research_thc-o.html",
       "kind": "five_year_value_uncomputable",
       "detail": "a value is declared 算出不能 from its run record"
     },
