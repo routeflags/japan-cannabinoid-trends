@@ -57,11 +57,16 @@ payload へ追記 → `ARTIFACT_HASH_MISMATCH` + `ARTIFACT_SIZE_MISMATCH`、raw 
 - 追跡済みの `docs/audits/g7-study-inventory.json` は `cbx-social-trends` の
   `data_file_count` を **7** と記録しているが、これは未追跡ファイルを含む数で、
   clean checkout での再生成は **6** になる（`test_audit_report_freshness` が落ちる）。
+  同じ型の依存が `docs/audits/g6-private-catalog.json`（private ディレクトリの
+  `exists`）と `test_processed_artifacts.py::test_stale_declaration_is_reported`
+  （private 入力からの再導出を前提）にもある。
 - つまり「`pytest` 全 green」は**作者のマシンにしか成立しない**主張であり、
   コミット済みスナップショットが未追跡データに依存している。
 
-対応の推奨: gitignore されたパスを g7 の棚卸しから除外する（追跡可能性の観点では
-「そのファイルは Git に無い」ことも記録に値する）。**未対応**（親の判断待ち）。
+対応: 追跡外データへの依存を **ISS-20261015-AUD-028** として記録した
+（`docs/issues/20261015_p1_audit-snapshots-assume-untracked-data.md`）。
+規則は「コミットされる監査スナップショットは追跡ファイルだけで再生成できる」。
+**未修正**（issue で追跡）。
 
 ## 4. 検証が覆っていない範囲
 
