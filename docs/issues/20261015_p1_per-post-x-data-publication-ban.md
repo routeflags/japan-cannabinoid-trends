@@ -52,9 +52,15 @@
 
 ## 対応方針
 
-- **新しい検査を 1 つ追加**する（既存規則と同じ実行点 = `validation.cli audit-x-identity` と
-  pre-commit チェック 6）: 追跡下のファイルが「X の投稿単位データ」と判定される場合に fail させる。
-  判定は**構造**（行単位の X 投稿を示す列セット / datasets 配下の data 層にある X 由来の
+- **公開物側の検査は実装済み（2026-10-15）**。ただし実行点は当初案の `audit-x-identity` ではなく
+  **公開契約**（`src/validation/publication_contract.py` の PC-3、`validation.cli audit-publication`）
+  とした。理由: この規則が対象とするのは `publication/` の成果物であり、同一の走査を 2 か所に
+  置かないため（`x_identity.py` は追跡データファイル、公開契約は公開 HTML を見る）。判定パターンは
+  PC-3 側の 1 か所にある（permalink / `@handle` / 投稿レコードの列名 3 つ以上）。
+  実測（2026-10-15）: guide の「全フィールド（views, likes, …）147件中147件」記述を検出→
+  集計表現に修正済み（現在 findings 0）。
+- **格納・追跡側**の検査を追加する: 追跡下のファイルが「X の投稿単位データ」と判定される場合に
+  fail させる。判定は**構造**（行単位の X 投稿を示す列セット / datasets 配下の data 層にある X 由来の
   行指向ファイル）で行い、列名のリストを 1 か所で持つ（規則を二重実装しない）。
   依存する既存宣言（`src/processing/reproduce.py`）と設定語彙（storage policy）は参照するだけにする。
 - 保存方針の語彙を拡張する（例 `publication: not_permitted` を X 投稿単位データに与える）。
@@ -64,8 +70,7 @@
   `raw-data-policy.md`（X の扱い）。既存の日付付き記述は当時の事実として残す。
 - **公開物側の検査を追加する**（本決定で追加された施行点）: publication の成果物が投稿単位の表現
   （permalink、`@handle`、投稿単位の列見出し、投稿レコードの列構成への言及）を含む場合に fail させる。
-  `src/validation/x_identity.py` の検査対象に `publication/` を加え、既存の「識別子の混入検査」と同じ
-  実行点（`validation.cli audit-x-identity`）で動かす。判定パターンは 1 か所で持つ。
+  → 2026-10-15 実装済み（上記「対応方針」のとおり公開契約 PC-3 として）。
 - 検査自体のテスト（非空虚性: 投稿単位 CSV を検体にすると落ち、集計 CSV は通る）。
   公開物側も同様に、投稿単位の表現を含むフィクスチャで落ち、集計のみのフィクスチャで通ることを固定する。
 
@@ -75,7 +80,8 @@
 - [ ] 保存方針の語彙拡張と `validate-registries` green
 - [ ] 文書の整合（§21 / §22 / data-dictionary / redistribution assessment / raw-data-policy）
 - [ ] 既存の追跡対象が 0 件になったことを検査で確認（PUB-035 と連携）
-- [ ] 公開物に投稿単位の表現が 0 件であることを検査で確認（`publication/`、テスト付き・非空虚）
+- [x] 公開物に投稿単位の表現が 0 件（2026-10-15 実装。公開契約 PC-3 の実施で guide の
+      投稿レコード列記述を修正。`docs/audits/publication-contract.json` で findings 0）
 
 ## 依存
 
