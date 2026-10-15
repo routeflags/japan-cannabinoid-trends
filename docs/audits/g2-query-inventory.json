@@ -4,8 +4,8 @@
   "schema_id": "query-registry-v1",
   "registry_version": "1.0.0",
   "target_glob": "datasets/**/run_metadata.json",
-  "count": 37,
-  "query_count": 83,
+  "count": 41,
+  "query_count": 87,
   "raw_modified": false,
   "states": {
     "exact_match": "the collected text equals a registered canonical_text",
@@ -15,7 +15,7 @@
     "unmapped": "no registered correspondence and no compound token"
   },
   "summary": {
-    "exact_match": 81,
+    "exact_match": 85,
     "variant_match": 1,
     "semantic_match_candidate": 1,
     "ambiguous": 0,
@@ -1363,6 +1363,94 @@
           "detail": "registered_canonical",
           "source_fields": [
             "queries[1].terms[0]"
+          ]
+        }
+      ]
+    },
+    {
+      "run_id": "20261015T042845Z-google-trends-boundary-1m",
+      "path": "datasets/cbx-search-trends/data/raw/google_trends/20261015T042845Z-google-trends-boundary-1m/run_metadata.json",
+      "status": "read",
+      "sha256": "09f3e2b12a357a05813c68af73956a695d78c7ef98018f600600727a523be750",
+      "sha256_after": "09f3e2b12a357a05813c68af73956a695d78c7ef98018f600600727a523be750",
+      "unchanged": true,
+      "extracted_query_count": 1,
+      "queries": [
+        {
+          "text": "CBX",
+          "state": "exact_match",
+          "classification": "relevant",
+          "query_id": "cbx-general-ja",
+          "variant_id": null,
+          "detail": "registered_canonical",
+          "source_fields": [
+            "query_provenance.submitted_query"
+          ]
+        }
+      ]
+    },
+    {
+      "run_id": "20261015T042849Z-google-trends-boundary-3m",
+      "path": "datasets/cbx-search-trends/data/raw/google_trends/20261015T042849Z-google-trends-boundary-3m/run_metadata.json",
+      "status": "read",
+      "sha256": "9754b238384521db5dfbce94bbbc7e1a3de974e51526e6672d396815db3d7d68",
+      "sha256_after": "9754b238384521db5dfbce94bbbc7e1a3de974e51526e6672d396815db3d7d68",
+      "unchanged": true,
+      "extracted_query_count": 1,
+      "queries": [
+        {
+          "text": "CBX",
+          "state": "exact_match",
+          "classification": "relevant",
+          "query_id": "cbx-general-ja",
+          "variant_id": null,
+          "detail": "registered_canonical",
+          "source_fields": [
+            "query_provenance.submitted_query"
+          ]
+        }
+      ]
+    },
+    {
+      "run_id": "20261015T042853Z-google-trends-boundary-12m",
+      "path": "datasets/cbx-search-trends/data/raw/google_trends/20261015T042853Z-google-trends-boundary-12m/run_metadata.json",
+      "status": "read",
+      "sha256": "ef949859719ae324483bcf09e08623655a982defada86d1d0610ca512e1d6817",
+      "sha256_after": "ef949859719ae324483bcf09e08623655a982defada86d1d0610ca512e1d6817",
+      "unchanged": true,
+      "extracted_query_count": 1,
+      "queries": [
+        {
+          "text": "CBX",
+          "state": "exact_match",
+          "classification": "relevant",
+          "query_id": "cbx-general-ja",
+          "variant_id": null,
+          "detail": "registered_canonical",
+          "source_fields": [
+            "query_provenance.submitted_query"
+          ]
+        }
+      ]
+    },
+    {
+      "run_id": "20261015T042857Z-google-trends-boundary-5y",
+      "path": "datasets/cbx-search-trends/data/raw/google_trends/20261015T042857Z-google-trends-boundary-5y/run_metadata.json",
+      "status": "read",
+      "sha256": "2014e033d1862ae9cb123ca86b22fe47e93f5e3a75b1c870e7bf0954771a1672",
+      "sha256_after": "2014e033d1862ae9cb123ca86b22fe47e93f5e3a75b1c870e7bf0954771a1672",
+      "unchanged": true,
+      "extracted_query_count": 1,
+      "queries": [
+        {
+          "text": "CBX",
+          "state": "exact_match",
+          "classification": "relevant",
+          "query_id": "cbx-general-ja",
+          "variant_id": null,
+          "detail": "registered_canonical",
+          "source_fields": [
+            "query_provenance.submitted_query"
           ]
         }
       ]

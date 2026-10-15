@@ -4,13 +4,13 @@
   "spec": "docs/plans/20261013f.md §15 (local plan; not tracked)",
   "target_root": "datasets",
   "include_private": false,
-  "count": 171,
+  "count": 187,
   "extra_count": 46,
   "raw_modified": false,
   "state_summary": {
     "absent": 12,
     "ignored": 10,
-    "tracked": 195
+    "tracked": 211
   },
   "entries": [
     {
@@ -1511,6 +1511,166 @@
       "ignored": false,
       "sha256": "d967acecc1e40fc9d6b3344ebe4f2d7725a5f5e2f14664b7f871219b5e9e0bc7",
       "sha256_after": "d967acecc1e40fc9d6b3344ebe4f2d7725a5f5e2f14664b7f871219b5e9e0bc7",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cbx-search-trends/data/raw/google_trends/20261015T042845Z-google-trends-boundary-1m/artifact-manifest.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "f541597e4b7af5bfa259992b084332ae55c1f90f97f2cf02bb14522528634630",
+      "sha256_after": "f541597e4b7af5bfa259992b084332ae55c1f90f97f2cf02bb14522528634630",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cbx-search-trends/data/raw/google_trends/20261015T042845Z-google-trends-boundary-1m/mcp-tool-result.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "50fd6ce9999ce403f28a0994c3fbe0e1f76919ec5aa45ae964399a130abee779",
+      "sha256_after": "50fd6ce9999ce403f28a0994c3fbe0e1f76919ec5aa45ae964399a130abee779",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cbx-search-trends/data/raw/google_trends/20261015T042845Z-google-trends-boundary-1m/records_cbx.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "166af5b6f518d1a797e9112a13fb9176d775cd3760c2160c31cb5a6beb87fb85",
+      "sha256_after": "166af5b6f518d1a797e9112a13fb9176d775cd3760c2160c31cb5a6beb87fb85",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cbx-search-trends/data/raw/google_trends/20261015T042845Z-google-trends-boundary-1m/run_metadata.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "09f3e2b12a357a05813c68af73956a695d78c7ef98018f600600727a523be750",
+      "sha256_after": "09f3e2b12a357a05813c68af73956a695d78c7ef98018f600600727a523be750",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cbx-search-trends/data/raw/google_trends/20261015T042849Z-google-trends-boundary-3m/artifact-manifest.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "9af3dd7a8e859ae0320b3ebfd20884c1edcfac7ac029547fa295c0c65e5eb4c0",
+      "sha256_after": "9af3dd7a8e859ae0320b3ebfd20884c1edcfac7ac029547fa295c0c65e5eb4c0",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cbx-search-trends/data/raw/google_trends/20261015T042849Z-google-trends-boundary-3m/mcp-tool-result.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "948021bd094bb61041062cf4b9fe8f51cbb2fd663a1466dc2d24100c625d27c9",
+      "sha256_after": "948021bd094bb61041062cf4b9fe8f51cbb2fd663a1466dc2d24100c625d27c9",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cbx-search-trends/data/raw/google_trends/20261015T042849Z-google-trends-boundary-3m/records_cbx.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "53adb1696e4d39268914faea0d934350fb389a4e74478cc7492bbad777a3eca4",
+      "sha256_after": "53adb1696e4d39268914faea0d934350fb389a4e74478cc7492bbad777a3eca4",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cbx-search-trends/data/raw/google_trends/20261015T042849Z-google-trends-boundary-3m/run_metadata.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "9754b238384521db5dfbce94bbbc7e1a3de974e51526e6672d396815db3d7d68",
+      "sha256_after": "9754b238384521db5dfbce94bbbc7e1a3de974e51526e6672d396815db3d7d68",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cbx-search-trends/data/raw/google_trends/20261015T042853Z-google-trends-boundary-12m/artifact-manifest.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "78162863ae4f4db64b0254bb61166110477021c70e6e5a6b743e69609f3b52dc",
+      "sha256_after": "78162863ae4f4db64b0254bb61166110477021c70e6e5a6b743e69609f3b52dc",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cbx-search-trends/data/raw/google_trends/20261015T042853Z-google-trends-boundary-12m/mcp-tool-result.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "fcca21617d64868ebac073321bdb444cbea301edbdde8cc8af48466685150c48",
+      "sha256_after": "fcca21617d64868ebac073321bdb444cbea301edbdde8cc8af48466685150c48",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cbx-search-trends/data/raw/google_trends/20261015T042853Z-google-trends-boundary-12m/records_cbx.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "9bdd2526f2850cab6e24e84c632192062dffa7093752a228a229aeaab2ed2a8b",
+      "sha256_after": "9bdd2526f2850cab6e24e84c632192062dffa7093752a228a229aeaab2ed2a8b",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cbx-search-trends/data/raw/google_trends/20261015T042853Z-google-trends-boundary-12m/run_metadata.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "ef949859719ae324483bcf09e08623655a982defada86d1d0610ca512e1d6817",
+      "sha256_after": "ef949859719ae324483bcf09e08623655a982defada86d1d0610ca512e1d6817",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cbx-search-trends/data/raw/google_trends/20261015T042857Z-google-trends-boundary-5y/artifact-manifest.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "165d010a945979132b42c7829df9036fd3e5171e6221e5192d6baf9b74cf39ab",
+      "sha256_after": "165d010a945979132b42c7829df9036fd3e5171e6221e5192d6baf9b74cf39ab",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cbx-search-trends/data/raw/google_trends/20261015T042857Z-google-trends-boundary-5y/mcp-tool-result.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "6e4573f717e0db7bdb94ade6f31190222bb8f8b51e057c7db9cabc29ca77d740",
+      "sha256_after": "6e4573f717e0db7bdb94ade6f31190222bb8f8b51e057c7db9cabc29ca77d740",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cbx-search-trends/data/raw/google_trends/20261015T042857Z-google-trends-boundary-5y/records_cbx.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "6a571738d83495aa9630e3487b4642c679c2d8fac8fd410b2a3b2c33048244cc",
+      "sha256_after": "6a571738d83495aa9630e3487b4642c679c2d8fac8fd410b2a3b2c33048244cc",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cbx-search-trends/data/raw/google_trends/20261015T042857Z-google-trends-boundary-5y/run_metadata.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "2014e033d1862ae9cb123ca86b22fe47e93f5e3a75b1c870e7bf0954771a1672",
+      "sha256_after": "2014e033d1862ae9cb123ca86b22fe47e93f5e3a75b1c870e7bf0954771a1672",
       "unchanged": true
     },
     {

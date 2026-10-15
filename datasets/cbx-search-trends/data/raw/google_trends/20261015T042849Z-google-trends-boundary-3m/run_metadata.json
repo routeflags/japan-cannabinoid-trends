@@ -1,0 +1,78 @@
+{
+  "schema_version": "1.0.0",
+  "run_id": "20261015T042849Z-google-trends-boundary-3m",
+  "study_id": "cbx-search-trends",
+  "source_id": "google-trends",
+  "purpose": "GT boundary measurement probe (today 3-m @ 2026-10-15T04:28:49Z; docs/specs/gt-boundary-verification.md)",
+  "collector": {
+    "collector_id": "google-trends-mcp",
+    "adapter_id": "google-trends-mcp@1",
+    "version": "0.1.1",
+    "provider": "mcp",
+    "transport": "mcp",
+    "external_id": "google-trends-mcp"
+  },
+  "collection_started_at": "2026-10-15T04:28:49Z",
+  "collection_finished_at": "2026-10-15T04:28:50Z",
+  "query_provenance": {
+    "query_id": "cbx-general-ja",
+    "submitted_query": "CBX",
+    "compound_id": "compound_cbx",
+    "intent_id": "compound_general",
+    "query_registry_version": "1.0.0"
+  },
+  "temporal_provenance": {
+    "window_id": "2026-07-17T04:28:49Z_2026-10-15T04:28:49Z",
+    "requested_start": "2026-07-17T04:28:49Z",
+    "requested_end_exclusive": "2026-10-15T04:28:49Z",
+    "granularity": "week",
+    "timezone": "Asia/Tokyo",
+    "week_start": "sunday",
+    "collector_window_type": "relative_duration",
+    "boundary_semantics": "relative timeframe resolved by the collector at request time; weekly buckets (Sunday start); observed range 2026-07-15..2026-10-15",
+    "exact_window_match": false,
+    "observed_min_timestamp": "2026-07-15T00:00:00Z",
+    "observed_max_timestamp": "2026-10-15T00:00:00Z",
+    "reference_time": "2026-10-15T04:28:49Z",
+    "limitations": [
+      "requested_start/end_exclusive record the nominal resolution of the relative request 'today 3-m' at the reference time; they are not a study-requested absolute window (P5)",
+      "the collector resolves the relative timeframe at request time; this run measures the observed boundaries (spec: gt-boundary-verification)",
+      "weekly buckets (Sunday start) quantize both boundaries to at most one bucket; exact calendar-day equality is not claimable"
+    ],
+    "submitted_parameters": {
+      "tool": "interest_over_time",
+      "terms": [
+        "CBX"
+      ],
+      "geo": "JP",
+      "timeframe": "today 3-m"
+    }
+  },
+  "execution": {
+    "status": "success",
+    "returned_count": 93,
+    "errors": [],
+    "pagination_exhausted": true
+  },
+  "artifact_manifest": "artifact-manifest.json",
+  "environment": {
+    "measurement": {
+      "protocol": "gt-boundary-verification@1",
+      "instrument": {
+        "kind": "mcp_session",
+        "server": "google-trends-mcp",
+        "server_version": "0.1.1"
+      },
+      "capture_manifest": "manifest.json",
+      "capture_index": 1
+    },
+    "collection_core_version": "1.0.0",
+    "adapter_contract_version": "1.0.0",
+    "runtime_version": "python-3.14.6",
+    "adapter": {
+      "collection_mode": "external_staged",
+      "collector_version": "0.1.1"
+    },
+    "code_commit": "eb78853742ee98c67b1e3a2c9cc774cfa91ab239"
+  }
+}

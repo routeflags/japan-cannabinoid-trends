@@ -68,10 +68,30 @@ Google Trends の window compiler は、現時点で**すべての compile で `
 
 ## 完了条件
 
-- [ ] ライブ収集 1 回以上の実測 run（`run_metadata.json` として保存。上記「追記」のとおり
-      **measurement クラス**を指す。研究データ用の pipeline run では代替できない）
-- [ ] 要求窓と観測境界の対応表（timeframe 別）
-- [ ] `exact` 昇格条件の文書化、または昇格しない場合の理由の記録
+- [x] ライブ収集 1 回以上の実測 run（`run_metadata.json` として保存。`environment.measurement.protocol` を持つ **measurement クラス**）
+      — 2026-10-15 にパス 1（4 timeframe × 1）を実行し、4 run を `cbx-search-trends` に採用
+      （`docs/reports/20261015b-gt-boundary-verification.md` §15）
+- [x] 要求窓と観測境界の対応表（timeframe 別）— 同 §15.2 の表 + `validation.cli boundary-report`
+      の `rule` / `rows`（名目解との差は 4/4 週次 1 バケット以内 = `consistent`）
+- [x] `exact` 昇格条件の文書化、または昇格しない場合の理由の記録 — 条件は
+      `docs/specs/gt-boundary-verification.md` §3（timeframe ごとに 2 run、参照日が 7 日以上
+      離れる、境界が再現する）。現在 `eligible=false`（timeframe あたり 1 run）で、
+      理由はカレンダー（パス 2 が 7 日以上後）
+
+## パス 1 の実行記録（2026-10-15）
+
+行列の **パス 1**（4 timeframe）を実行し、4 run を採用した（上述の完了条件）。
+計測 manifest の sha256 は `f39995eb24e3008367ee776b6763037aa704c1a5594f1c413b5bb4410bcdecd8`
+（ワークスペース外の一時入力。証拠は採用済み run 側に保全されている）。
+詳細・コマンド・観測値は `docs/reports/20261015b-gt-boundary-verification.md` §15。
+
+**残りはパス 2 のみ**（同じ行列を参照時刻 7 日以上後に実行）。パス 2 まで `eligible=true` には
+できない（spec §3 の昇格規則）ため、本 issue は **PENDING のまま**とする。
+
+### 未実施（更新）
+
+- パス 2（参照時刻を 7 日以上離す）。その後 `rule.eligible` を確認し、昇格する場合は
+  `config/collectors.json` / compiler を変更として記録する（**推測で `exact=true` にしない**）。
 
 ## 経過（2026-10-15）
 

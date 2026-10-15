@@ -5,6 +5,7 @@ Exit code paths are exercised individually:
 """
 
 import json
+import re
 import shutil
 import subprocess
 import sys
@@ -13,6 +14,7 @@ from pathlib import Path
 import pytest
 
 from validation.cli import EXIT_CONFIG, EXIT_DATA, EXIT_IO, EXIT_OK, main
+from validation.legacy import LEGACY_RUN_IDS
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 FIXTURES = Path(__file__).parent / "fixtures"
@@ -408,8 +410,17 @@ def test_validate_study_missing_manifest_exit_3(capsys, tmp_path):
 
 
 def test_validate_study_real_legacy_default_cbsearch(capsys, tmp_path):
-    """P5-2 acceptance: the existing study reports strict failures, and the
-    same study passes under the legacy audit profile."""
+    """P5-2 acceptance: the existing study reports strict failures, and the legacy
+    profile stays usable for its frozen runs.
+
+    The study also holds contract-era runs now (the 2026-10-15 boundary
+    measurements), so the study as a whole no longer passes under either profile:
+    strict fails on the legacy runs, and legacy refuses exactly the runs outside
+    the frozen list (a new run may not be validated under an audit profile built
+    for that list).  Asserting on that set rather than on ids keeps this true when
+    pass 2 of the measurement protocol adds runs.
+    """
+
     strict = main(
         [
             "validate-study",
@@ -429,7 +440,17 @@ def test_validate_study_real_legacy_default_cbsearch(capsys, tmp_path):
             *_isolated_registry_args(tmp_path),
         ]
     )
-    assert legacy == EXIT_OK
+    # Refusing an audit profile for a run outside the frozen list is a
+    # configuration error (2), not a data verdict on that run.
+    assert legacy == EXIT_CONFIG
+
+    captured = capsys.readouterr()
+    output = captured.out + captured.err
+    assert "legacy profile is only allowed for run_ids in the frozen legacy audit list" in output
+    refused = re.findall(r"\(got '([^']+)'\)", output)
+    assert refused, output
+    for run_id in refused:
+        assert run_id not in LEGACY_RUN_IDS, run_id
 
 
 def test_validate_registries_no_files_exit_0(capsys, tmp_path):

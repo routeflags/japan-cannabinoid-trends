@@ -177,17 +177,17 @@
       "research_questions_quoted": [
         "日本国内において、CBX / H4CBH / HHBD 関連クエリの検索需要はどう推移しているか？"
       ],
-      "run_count": 4,
-      "catalog_entry_count": 4,
+      "run_count": 8,
+      "catalog_entry_count": 12,
       "layout": [
         "README.md",
         "analysis",
         "data",
         "methodology.md"
       ],
-      "data_file_count": 15,
+      "data_file_count": 31,
       "has_data_raw": true,
-      "data_raw_file_count": 15,
+      "data_raw_file_count": 31,
       "sources": [
         "google-trends"
       ],
@@ -212,8 +212,13 @@
       "measurement_ids": [
         "search_interest_index"
       ],
-      "window_ids": [],
-      "has_artifact_manifest": false,
+      "window_ids": [
+        "2021-10-15T04:28:57Z_2026-10-15T04:28:57Z",
+        "2025-10-15T04:28:53Z_2026-10-15T04:28:53Z",
+        "2026-07-17T04:28:49Z_2026-10-15T04:28:49Z",
+        "2026-09-15T04:28:45Z_2026-10-15T04:28:45Z"
+      ],
+      "has_artifact_manifest": true,
       "coverage": "unevidenced",
       "publication_status": "private_by_default"
     },
@@ -407,9 +412,9 @@
       ]
     }
   ],
-  "raw_file_count": 133,
+  "raw_file_count": 149,
   "raw_modified": false,
-  "raw_combined_sha256": "c6ca9f0e8491eebb619202465a633571af4bc774a0b96013500dd042233e383b",
+  "raw_combined_sha256": "ee7600509c3d8e01eddd827b31e7b764351af7eb52a8d025e02aa98266d89cfb",
   "note": "non-destructive: study boundaries intact, raw and old metadata only read"
 }
 

@@ -3,10 +3,10 @@
   "profile": "g3_temporal_inventory",
   "spec": "docs/plans/20261013c.md §15 (local plan; not tracked)",
   "target_glob": "datasets/**/run_metadata.json",
-  "count": 37,
+  "count": 41,
   "raw_modified": false,
   "classification_summary": {
-    "verified": 8,
+    "verified": 12,
     "inferred": 29,
     "unknown": 0,
     "ambiguous": 0
@@ -1232,6 +1232,106 @@
       "pagination": null,
       "completeness_evidence": [],
       "classification": "inferred",
+      "resolved_absolute_window": null,
+      "resolution_note": "not derived: conversion of legacy relative periods into absolute windows is prohibited (P1, c.md §15)"
+    },
+    {
+      "run_id": "20261015T042845Z-google-trends-boundary-1m",
+      "path": "datasets/cbx-search-trends/data/raw/google_trends/20261015T042845Z-google-trends-boundary-1m/run_metadata.json",
+      "sha256": "09f3e2b12a357a05813c68af73956a695d78c7ef98018f600600727a523be750",
+      "timeframes": [
+        {
+          "value": "today 1-m",
+          "source": "records_cbx.json"
+        }
+      ],
+      "reference": {
+        "value": "2026-10-15T04:28:46Z",
+        "source": "records_cbx.json"
+      },
+      "observed_bounds": {
+        "start": "2026-09-15T00:00:00Z",
+        "end_exclusive": "2026-10-16T00:00:00Z",
+        "basis": "bucket_labels"
+      },
+      "pagination": true,
+      "completeness_evidence": [],
+      "classification": "verified",
+      "resolved_absolute_window": null,
+      "resolution_note": "not derived: conversion of legacy relative periods into absolute windows is prohibited (P1, c.md §15)"
+    },
+    {
+      "run_id": "20261015T042849Z-google-trends-boundary-3m",
+      "path": "datasets/cbx-search-trends/data/raw/google_trends/20261015T042849Z-google-trends-boundary-3m/run_metadata.json",
+      "sha256": "9754b238384521db5dfbce94bbbc7e1a3de974e51526e6672d396815db3d7d68",
+      "timeframes": [
+        {
+          "value": "today 3-m",
+          "source": "records_cbx.json"
+        }
+      ],
+      "reference": {
+        "value": "2026-10-15T04:28:50Z",
+        "source": "records_cbx.json"
+      },
+      "observed_bounds": {
+        "start": "2026-07-15T00:00:00Z",
+        "end_exclusive": "2026-10-16T00:00:00Z",
+        "basis": "bucket_labels"
+      },
+      "pagination": true,
+      "completeness_evidence": [],
+      "classification": "verified",
+      "resolved_absolute_window": null,
+      "resolution_note": "not derived: conversion of legacy relative periods into absolute windows is prohibited (P1, c.md §15)"
+    },
+    {
+      "run_id": "20261015T042853Z-google-trends-boundary-12m",
+      "path": "datasets/cbx-search-trends/data/raw/google_trends/20261015T042853Z-google-trends-boundary-12m/run_metadata.json",
+      "sha256": "ef949859719ae324483bcf09e08623655a982defada86d1d0610ca512e1d6817",
+      "timeframes": [
+        {
+          "value": "today 12-m",
+          "source": "records_cbx.json"
+        }
+      ],
+      "reference": {
+        "value": "2026-10-15T04:28:54Z",
+        "source": "records_cbx.json"
+      },
+      "observed_bounds": {
+        "start": "2025-10-12T00:00:00Z",
+        "end_exclusive": "2026-10-18T00:00:00Z",
+        "basis": "bucket_labels"
+      },
+      "pagination": true,
+      "completeness_evidence": [],
+      "classification": "verified",
+      "resolved_absolute_window": null,
+      "resolution_note": "not derived: conversion of legacy relative periods into absolute windows is prohibited (P1, c.md §15)"
+    },
+    {
+      "run_id": "20261015T042857Z-google-trends-boundary-5y",
+      "path": "datasets/cbx-search-trends/data/raw/google_trends/20261015T042857Z-google-trends-boundary-5y/run_metadata.json",
+      "sha256": "2014e033d1862ae9cb123ca86b22fe47e93f5e3a75b1c870e7bf0954771a1672",
+      "timeframes": [
+        {
+          "value": "today 5-y",
+          "source": "records_cbx.json"
+        }
+      ],
+      "reference": {
+        "value": "2026-10-15T04:28:57Z",
+        "source": "records_cbx.json"
+      },
+      "observed_bounds": {
+        "start": "2021-10-10T00:00:00Z",
+        "end_exclusive": "2026-10-18T00:00:00Z",
+        "basis": "bucket_labels"
+      },
+      "pagination": true,
+      "completeness_evidence": [],
+      "classification": "verified",
       "resolved_absolute_window": null,
       "resolution_note": "not derived: conversion of legacy relative periods into absolute windows is prohibited (P1, c.md §15)"
     }

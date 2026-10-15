@@ -319,3 +319,57 @@ commit `6d1c624` を独立 worktree・独自スクリプトで検証した（リ
 
 未検証である旨の指摘: ライブ MCP セッションを要する事項（実形式・8 run 行列・429
 挙動・昇格後の `exact=true`）は変更の範囲外で、引き続き承認待ち。
+
+---
+
+## 15. パス 1 のライブ実行（2026-10-15）
+
+メンテナの指示（このスレッドの「go」=増分作業の続行）により、**行列のパス 1**（4 timeframe × 1）を
+実行した。パス 2 は参照時刻を **7 日以上**離す必要があるため別途（spec §3）。
+
+### 15.1 実行
+
+| 項目 | 値 |
+|---|---|
+| 計測器 | `google-trends-mcp@0.1.1`（MIT、API キー不要・無料）を MCP stdio セッションで起動（`collection.adapters.google_trends.mcp_session`） |
+| 行列 | term `CBX`（登録クエリ `cbx-general-ja`）/ geo `JP` / `today 1-m`, `today 3-m`, `today 12-m`, `today 5-y` |
+| capture manifest | `manifest.json`（ワークスペース外。spec §4.3 により証拠の正本ではない）、sha256 `f39995eb24e3008367ee776b6763037aa704c1a5594f1c413b5bb4410bcdecd8`、絶対パスは記録しない（一時ディレクトリ） |
+| 429 / retry | なし（4 call すべて 1 回で成功、`isError` なし） |
+
+### 15.2 検証と採用
+
+```bash
+python -m collection.adapters.google_trends.boundary verify --manifest <manifest.json>
+# → format_verified=true、4/4 parsed（1m 31 点 / 3m 93 点 / 12m 53 点 / 5y 262 点）
+python -m collection.adapters.google_trends.boundary stage --manifest <manifest.json> --study cbx-search-trends
+# → 4 staged / 0 stopped
+python -m collection.core.cli adopt --staged .staging/<run-id>   # 4 run
+# → 4 ADOPTED（L1 通過）
+```
+
+| run_id | timeframe | observed（先頭..末尾） | 点 | boundary-report |
+|---|---|---|---|---|
+| `20261015T042845Z-google-trends-boundary-1m` | today 1-m | 2026-09-15 .. 2026-10-15 | 31 | measurement / consistent |
+| `20261015T042849Z-google-trends-boundary-3m` | today 3-m | 2026-07-15 .. 2026-10-15 | 93 | measurement / consistent |
+| `20261015T042853Z-google-trends-boundary-12m` | today 12-m | 2025-10-12 .. 2026-10-11 | 53 | measurement / consistent |
+| `20261015T042857Z-google-trends-boundary-5y` | today 5-y | 2021-10-10 .. 2026-10-11 | 262 | measurement / consistent |
+
+要求（名目解）との差はすべて**週次 1 バケット以内**で、報告は 4/4 `consistent`。
+`exact=true` への昇格には spec §3 の規則（timeframe ごとに 2 run、参照日が 7 日以上離れ、
+境界が再現すること）が必要で、**現時点ではコホートが 4 run（timeframe あたり 1）なので
+`eligible=false`**（規則は `boundary-report` の `rule` に出力される）。
+
+### 15.3 副次的な影響（実測）
+
+- 監査スナップショットを再生成した（g2 / g3 / g4 / g5-legacy / g5-prov / g6-git / g7）。
+  g2 は本件の 4 run のクエリ（`CBX` → `exact_match`）も抽出する。
+- `cbx-search-trends` は legacy と契約期の run が混在する study になったため、
+  `validate-study --profile legacy` は**凍結リスト外の run を拒否**して exit 2 になる
+  （strict は legacy run で exit 1）。テストは id ではなく集合でこれを固定した
+  （`tests/validation/test_cli.py`）。
+
+### 15.4 残り
+
+- **パス 2**（同じ行列を参照時刻 7 日以上後に実行）→ その後 `boundary-report` の
+  `rule.eligible` を確認し、昇格するかどうかを判断し、昇格する場合は
+  `config/collectors.json` / compiler を変更として記録する。

@@ -3,16 +3,16 @@
   "profile": "provenance_assessment",
   "schema_id": "collection-run-v1",
   "target_glob": "datasets/**/run_metadata.json",
-  "count": 37,
+  "count": 41,
   "raw_modified": false,
   "summary": {
     "readiness": {
       "not_ready": 29,
-      "ready": 8
+      "ready": 12
     },
-    "mean_completeness": 0.2961,
-    "strict_valid": 8,
-    "integrity_verified": 8
+    "mean_completeness": 0.3647,
+    "strict_valid": 12,
+    "integrity_verified": 12
   },
   "runs": [
     {
@@ -3243,6 +3243,266 @@
       "lineage": {
         "run_id": "variance_check",
         "artifact_ids": [],
+        "transformations": []
+      },
+      "evidence_refs": []
+    },
+    {
+      "run_id": "20261015T042845Z-google-trends-boundary-1m",
+      "path": "datasets/cbx-search-trends/data/raw/google_trends/20261015T042845Z-google-trends-boundary-1m/run_metadata.json",
+      "sha256": "09f3e2b12a357a05813c68af73956a695d78c7ef98018f600600727a523be750",
+      "sha256_after": "09f3e2b12a357a05813c68af73956a695d78c7ef98018f600600727a523be750",
+      "unchanged": true,
+      "strict_valid": true,
+      "strict_error_codes": [],
+      "completeness": {
+        "total": 22,
+        "verified": 22,
+        "score": 1.0,
+        "missing": [],
+        "essential_missing": []
+      },
+      "confidence": {
+        "fields": {
+          "schema_version": "observed",
+          "run_id": "observed",
+          "study_id": "observed",
+          "source_id": "observed",
+          "purpose": "observed",
+          "collector": "observed",
+          "collector.collector_id": "observed",
+          "collector.adapter_id": "observed",
+          "collection_started_at": "observed",
+          "query_provenance": "observed",
+          "query_provenance.query_id": "observed",
+          "query_provenance.submitted_query": "observed",
+          "temporal_provenance": "observed",
+          "temporal_provenance.window_id": "observed",
+          "temporal_provenance.requested_start": "observed",
+          "temporal_provenance.requested_end_exclusive": "observed",
+          "temporal_provenance.granularity": "observed",
+          "temporal_provenance.timezone": "observed",
+          "execution": "observed",
+          "execution.status": "observed",
+          "execution.returned_count": "observed",
+          "execution.errors": "observed"
+        },
+        "observed_count": 22,
+        "unknown_count": 0
+      },
+      "integrity": {
+        "manifest_reference": "artifact-manifest.json",
+        "manifest_present": true,
+        "manifest_valid": true,
+        "verified": true,
+        "artifact_issues": [],
+        "note": ""
+      },
+      "readiness": "ready",
+      "readiness_reasons": [
+        "strict valid, references resolve, artifacts verified"
+      ],
+      "lineage": {
+        "run_id": "20261015T042845Z-google-trends-boundary-1m",
+        "artifact_ids": [
+          "20261015T042845Z-google-trends-boundary-1m-mcp-tool-result-json",
+          "20261015T042845Z-google-trends-boundary-1m-records-cbx-json"
+        ],
+        "transformations": []
+      },
+      "evidence_refs": []
+    },
+    {
+      "run_id": "20261015T042849Z-google-trends-boundary-3m",
+      "path": "datasets/cbx-search-trends/data/raw/google_trends/20261015T042849Z-google-trends-boundary-3m/run_metadata.json",
+      "sha256": "9754b238384521db5dfbce94bbbc7e1a3de974e51526e6672d396815db3d7d68",
+      "sha256_after": "9754b238384521db5dfbce94bbbc7e1a3de974e51526e6672d396815db3d7d68",
+      "unchanged": true,
+      "strict_valid": true,
+      "strict_error_codes": [],
+      "completeness": {
+        "total": 22,
+        "verified": 22,
+        "score": 1.0,
+        "missing": [],
+        "essential_missing": []
+      },
+      "confidence": {
+        "fields": {
+          "schema_version": "observed",
+          "run_id": "observed",
+          "study_id": "observed",
+          "source_id": "observed",
+          "purpose": "observed",
+          "collector": "observed",
+          "collector.collector_id": "observed",
+          "collector.adapter_id": "observed",
+          "collection_started_at": "observed",
+          "query_provenance": "observed",
+          "query_provenance.query_id": "observed",
+          "query_provenance.submitted_query": "observed",
+          "temporal_provenance": "observed",
+          "temporal_provenance.window_id": "observed",
+          "temporal_provenance.requested_start": "observed",
+          "temporal_provenance.requested_end_exclusive": "observed",
+          "temporal_provenance.granularity": "observed",
+          "temporal_provenance.timezone": "observed",
+          "execution": "observed",
+          "execution.status": "observed",
+          "execution.returned_count": "observed",
+          "execution.errors": "observed"
+        },
+        "observed_count": 22,
+        "unknown_count": 0
+      },
+      "integrity": {
+        "manifest_reference": "artifact-manifest.json",
+        "manifest_present": true,
+        "manifest_valid": true,
+        "verified": true,
+        "artifact_issues": [],
+        "note": ""
+      },
+      "readiness": "ready",
+      "readiness_reasons": [
+        "strict valid, references resolve, artifacts verified"
+      ],
+      "lineage": {
+        "run_id": "20261015T042849Z-google-trends-boundary-3m",
+        "artifact_ids": [
+          "20261015T042849Z-google-trends-boundary-3m-mcp-tool-result-json",
+          "20261015T042849Z-google-trends-boundary-3m-records-cbx-json"
+        ],
+        "transformations": []
+      },
+      "evidence_refs": []
+    },
+    {
+      "run_id": "20261015T042853Z-google-trends-boundary-12m",
+      "path": "datasets/cbx-search-trends/data/raw/google_trends/20261015T042853Z-google-trends-boundary-12m/run_metadata.json",
+      "sha256": "ef949859719ae324483bcf09e08623655a982defada86d1d0610ca512e1d6817",
+      "sha256_after": "ef949859719ae324483bcf09e08623655a982defada86d1d0610ca512e1d6817",
+      "unchanged": true,
+      "strict_valid": true,
+      "strict_error_codes": [],
+      "completeness": {
+        "total": 22,
+        "verified": 22,
+        "score": 1.0,
+        "missing": [],
+        "essential_missing": []
+      },
+      "confidence": {
+        "fields": {
+          "schema_version": "observed",
+          "run_id": "observed",
+          "study_id": "observed",
+          "source_id": "observed",
+          "purpose": "observed",
+          "collector": "observed",
+          "collector.collector_id": "observed",
+          "collector.adapter_id": "observed",
+          "collection_started_at": "observed",
+          "query_provenance": "observed",
+          "query_provenance.query_id": "observed",
+          "query_provenance.submitted_query": "observed",
+          "temporal_provenance": "observed",
+          "temporal_provenance.window_id": "observed",
+          "temporal_provenance.requested_start": "observed",
+          "temporal_provenance.requested_end_exclusive": "observed",
+          "temporal_provenance.granularity": "observed",
+          "temporal_provenance.timezone": "observed",
+          "execution": "observed",
+          "execution.status": "observed",
+          "execution.returned_count": "observed",
+          "execution.errors": "observed"
+        },
+        "observed_count": 22,
+        "unknown_count": 0
+      },
+      "integrity": {
+        "manifest_reference": "artifact-manifest.json",
+        "manifest_present": true,
+        "manifest_valid": true,
+        "verified": true,
+        "artifact_issues": [],
+        "note": ""
+      },
+      "readiness": "ready",
+      "readiness_reasons": [
+        "strict valid, references resolve, artifacts verified"
+      ],
+      "lineage": {
+        "run_id": "20261015T042853Z-google-trends-boundary-12m",
+        "artifact_ids": [
+          "20261015T042853Z-google-trends-boundary-12m-mcp-tool-result-json",
+          "20261015T042853Z-google-trends-boundary-12m-records-cbx-json"
+        ],
+        "transformations": []
+      },
+      "evidence_refs": []
+    },
+    {
+      "run_id": "20261015T042857Z-google-trends-boundary-5y",
+      "path": "datasets/cbx-search-trends/data/raw/google_trends/20261015T042857Z-google-trends-boundary-5y/run_metadata.json",
+      "sha256": "2014e033d1862ae9cb123ca86b22fe47e93f5e3a75b1c870e7bf0954771a1672",
+      "sha256_after": "2014e033d1862ae9cb123ca86b22fe47e93f5e3a75b1c870e7bf0954771a1672",
+      "unchanged": true,
+      "strict_valid": true,
+      "strict_error_codes": [],
+      "completeness": {
+        "total": 22,
+        "verified": 22,
+        "score": 1.0,
+        "missing": [],
+        "essential_missing": []
+      },
+      "confidence": {
+        "fields": {
+          "schema_version": "observed",
+          "run_id": "observed",
+          "study_id": "observed",
+          "source_id": "observed",
+          "purpose": "observed",
+          "collector": "observed",
+          "collector.collector_id": "observed",
+          "collector.adapter_id": "observed",
+          "collection_started_at": "observed",
+          "query_provenance": "observed",
+          "query_provenance.query_id": "observed",
+          "query_provenance.submitted_query": "observed",
+          "temporal_provenance": "observed",
+          "temporal_provenance.window_id": "observed",
+          "temporal_provenance.requested_start": "observed",
+          "temporal_provenance.requested_end_exclusive": "observed",
+          "temporal_provenance.granularity": "observed",
+          "temporal_provenance.timezone": "observed",
+          "execution": "observed",
+          "execution.status": "observed",
+          "execution.returned_count": "observed",
+          "execution.errors": "observed"
+        },
+        "observed_count": 22,
+        "unknown_count": 0
+      },
+      "integrity": {
+        "manifest_reference": "artifact-manifest.json",
+        "manifest_present": true,
+        "manifest_valid": true,
+        "verified": true,
+        "artifact_issues": [],
+        "note": ""
+      },
+      "readiness": "ready",
+      "readiness_reasons": [
+        "strict valid, references resolve, artifacts verified"
+      ],
+      "lineage": {
+        "run_id": "20261015T042857Z-google-trends-boundary-5y",
+        "artifact_ids": [
+          "20261015T042857Z-google-trends-boundary-5y-mcp-tool-result-json",
+          "20261015T042857Z-google-trends-boundary-5y-records-cbx-json"
+        ],
         "transformations": []
       },
       "evidence_refs": []

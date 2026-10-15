@@ -3,7 +3,7 @@
   "profile": "legacy_audit",
   "schema_id": "collection-run-v1",
   "target_glob": "datasets/**/run_metadata.json",
-  "count": 37,
+  "count": 41,
   "raw_modified": false,
   "runs": [
     {
@@ -628,6 +628,46 @@
       "path": "datasets/cbx-search-trends/data/raw/google_trends/20261001T135424Z-google-trends-variance-check/run_metadata.json",
       "sha256": "65f3d8489cd55d12c2c07767f8498e2416ce48104472f377c389b9c25227fe35",
       "sha256_after": "65f3d8489cd55d12c2c07767f8498e2416ce48104472f377c389b9c25227fe35",
+      "unchanged": true
+    },
+    {
+      "profile": "legacy_audit",
+      "run_id": "20261015T042845Z-google-trends-boundary-1m",
+      "status": "complete",
+      "missing_fields": [],
+      "path": "datasets/cbx-search-trends/data/raw/google_trends/20261015T042845Z-google-trends-boundary-1m/run_metadata.json",
+      "sha256": "09f3e2b12a357a05813c68af73956a695d78c7ef98018f600600727a523be750",
+      "sha256_after": "09f3e2b12a357a05813c68af73956a695d78c7ef98018f600600727a523be750",
+      "unchanged": true
+    },
+    {
+      "profile": "legacy_audit",
+      "run_id": "20261015T042849Z-google-trends-boundary-3m",
+      "status": "complete",
+      "missing_fields": [],
+      "path": "datasets/cbx-search-trends/data/raw/google_trends/20261015T042849Z-google-trends-boundary-3m/run_metadata.json",
+      "sha256": "9754b238384521db5dfbce94bbbc7e1a3de974e51526e6672d396815db3d7d68",
+      "sha256_after": "9754b238384521db5dfbce94bbbc7e1a3de974e51526e6672d396815db3d7d68",
+      "unchanged": true
+    },
+    {
+      "profile": "legacy_audit",
+      "run_id": "20261015T042853Z-google-trends-boundary-12m",
+      "status": "complete",
+      "missing_fields": [],
+      "path": "datasets/cbx-search-trends/data/raw/google_trends/20261015T042853Z-google-trends-boundary-12m/run_metadata.json",
+      "sha256": "ef949859719ae324483bcf09e08623655a982defada86d1d0610ca512e1d6817",
+      "sha256_after": "ef949859719ae324483bcf09e08623655a982defada86d1d0610ca512e1d6817",
+      "unchanged": true
+    },
+    {
+      "profile": "legacy_audit",
+      "run_id": "20261015T042857Z-google-trends-boundary-5y",
+      "status": "complete",
+      "missing_fields": [],
+      "path": "datasets/cbx-search-trends/data/raw/google_trends/20261015T042857Z-google-trends-boundary-5y/run_metadata.json",
+      "sha256": "2014e033d1862ae9cb123ca86b22fe47e93f5e3a75b1c870e7bf0954771a1672",
+      "sha256_after": "2014e033d1862ae9cb123ca86b22fe47e93f5e3a75b1c870e7bf0954771a1672",
       "unchanged": true
     }
   ]
