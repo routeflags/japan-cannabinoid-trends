@@ -10,17 +10,17 @@
   },
   "summary": {
     "issue_count": 65,
-    "active_count": 43,
-    "closed_count": 22,
+    "active_count": 38,
+    "closed_count": 27,
     "status_counts": {
       "DOCUMENTED": 1,
       "MITIGATED": 1,
-      "OPEN": 39,
-      "PENDING": 4,
-      "RESOLVED": 20
+      "OPEN": 36,
+      "PENDING": 2,
+      "RESOLVED": 25
     },
     "open_p0": 0,
-    "open_p1": 16,
+    "open_p1": 11,
     "failure_count": 0
   },
   "layout": {
@@ -48,33 +48,19 @@
         "YouTube exports 採用に必要な actor run ID / dataset ID / dateFilter / status / timezone / no-tracking 方針が確認される",
         "管理画面・公開方針依存の PENDING issue の実施または再分類が記録される"
       ],
-      "issue_count": 4,
+      "issue_count": 2,
       "status_counts": {
-        "OPEN": 2,
-        "PENDING": 2
+        "OPEN": 2
       },
       "priority_counts": {
-        "P0": 1,
-        "P1": 3
+        "P1": 2
       },
       "issues": [
         {
-          "id": "ISS-20261002-003",
-          "priority": "P0",
-          "status": "PENDING",
-          "path": "docs/issues/active/00-needs-user-confirmation/20261002_p0_commercial-cta-separation.md"
-        },
-        {
           "id": "ISS-20261014-PUB-029",
           "priority": "P1",
-          "status": "PENDING",
-          "path": "docs/issues/active/00-needs-user-confirmation/20261014.md"
-        },
-        {
-          "id": "ISS-20261015-COL-033",
-          "priority": "P1",
           "status": "OPEN",
-          "path": "docs/issues/active/00-needs-user-confirmation/20261015_p1_unadopted-youtube-exports.md"
+          "path": "docs/issues/active/00-needs-user-confirmation/20261014.md"
         },
         {
           "id": "ISS-20261015-XID-035",
@@ -125,13 +111,13 @@
         "datapackage / disclosure / relationship notes が最新状態に更新される",
         "公開前に publication artifact の review decision を approved または denied に確定する"
       ],
-      "issue_count": 3,
+      "issue_count": 2,
       "status_counts": {
-        "OPEN": 3
+        "OPEN": 2
       },
       "priority_counts": {
         "P1": 1,
-        "P2": 2
+        "P2": 1
       },
       "issues": [
         {
@@ -139,12 +125,6 @@
           "priority": "P2",
           "status": "OPEN",
           "path": "docs/issues/active/10-publication-release-readiness/20261002_p2_datapackage-stale-date.md"
-        },
-        {
-          "id": "ISS-20261002-011",
-          "priority": "P2",
-          "status": "OPEN",
-          "path": "docs/issues/active/10-publication-release-readiness/20261002_p2_hempbin-relationship.md"
         },
         {
           "id": "ISS-20261015-REL-014",
@@ -164,21 +144,15 @@
         "coverage matrix と page counts が上流記録と一致する",
         "修正後の publication contract と issue audit が failures=0 になる"
       ],
-      "issue_count": 6,
+      "issue_count": 5,
       "status_counts": {
-        "OPEN": 6
+        "OPEN": 5
       },
       "priority_counts": {
-        "P1": 5,
+        "P1": 4,
         "P2": 1
       },
       "issues": [
-        {
-          "id": "ISS-20261012-CBD-005",
-          "priority": "P1",
-          "status": "OPEN",
-          "path": "docs/issues/active/20-cbd-publication-corrections/20261012_p1_cbd-coa-source-mismatch.md"
-        },
         {
           "id": "ISS-20261012-CBD-001",
           "priority": "P1",
@@ -221,26 +195,20 @@
         "X official API は request-only evidence と cost control を持つまでは実収集しない",
         "new-run tracking policy と legacy label year defect が検証ルールに反映される"
       ],
-      "issue_count": 10,
+      "issue_count": 9,
       "status_counts": {
-        "OPEN": 10
+        "OPEN": 9
       },
       "priority_counts": {
-        "P1": 6,
-        "P2": 4
+        "P1": 4,
+        "P2": 5
       },
       "issues": [
         {
           "id": "ISS-20261015-COL-030",
-          "priority": "P1",
+          "priority": "P2",
           "status": "OPEN",
           "path": "docs/issues/active/30-production-collection-expansion/20261015.md"
-        },
-        {
-          "id": "ISS-20261015-COL-018",
-          "priority": "P1",
-          "status": "OPEN",
-          "path": "docs/issues/active/30-production-collection-expansion/20261015_p1_new-run-tracking-policy-mismatch.md"
         },
         {
           "id": "ISS-20261015-COL-016",
@@ -307,15 +275,14 @@
         "OPEN": 11
       },
       "priority_counts": {
-        "P1": 1,
-        "P2": 10
+        "P2": 11
       },
       "issues": [
         {
           "id": "ISS-20261015-PRV-033",
-          "priority": "P1",
+          "priority": "P2",
           "status": "OPEN",
-          "path": "docs/issues/active/40-provenance-storage-reproducibility/20261015_p1_x-request-only-evidence.md"
+          "path": "docs/issues/active/40-provenance-storage-reproducibility/20261015_p2_x-request-only-evidence.md"
         },
         {
           "id": "ISS-20261015-PRV-013",
@@ -464,11 +431,11 @@
     }
   ],
   "closed": {
-    "issue_count": 22,
+    "issue_count": 25,
     "status_counts": {
       "DOCUMENTED": 1,
       "MITIGATED": 1,
-      "RESOLVED": 20
+      "RESOLVED": 23
     },
     "issues": [
       {
@@ -482,6 +449,12 @@
         "priority": "P0",
         "status": "MITIGATED",
         "path": "docs/issues/closed/mitigated/20261013_p0_x-identity-published-in-all-releases.md"
+      },
+      {
+        "id": "ISS-20261002-003",
+        "priority": "P0",
+        "status": "RESOLVED",
+        "path": "docs/issues/closed/resolved/20261002_p0_commercial-cta-separation.md"
       },
       {
         "id": "ISS-20261002-002",
@@ -520,6 +493,12 @@
         "path": "docs/issues/closed/resolved/20261002_p2_gitignore-policy-conflict.md"
       },
       {
+        "id": "ISS-20261002-011",
+        "priority": "P2",
+        "status": "RESOLVED",
+        "path": "docs/issues/closed/resolved/20261002_p2_hempbin-relationship.md"
+      },
+      {
         "id": "ISS-20261002-013",
         "priority": "P2",
         "status": "RESOLVED",
@@ -548,6 +527,12 @@
         "priority": "P2",
         "status": "RESOLVED",
         "path": "docs/issues/closed/resolved/20261002_p2_unique-author-timeseries.md"
+      },
+      {
+        "id": "ISS-20261012-CBD-005",
+        "priority": "P1",
+        "status": "RESOLVED",
+        "path": "docs/issues/closed/resolved/20261012_p1_cbd-coa-source-mismatch.md"
       },
       {
         "id": "ISS-20261015-AUD-028",
