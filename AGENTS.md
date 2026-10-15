@@ -131,12 +131,17 @@ datasets/<study-id>/
 ├── methodology.md
 ├── data/
 │   ├── raw/
+│   │   └── <source>/
+│   │       └── <run-id>/
 │   ├── interim/
 │   └── processed/
 ├── metadata/
 └── analysis/
 
 ```
+
+Cataloged raw runs live under `data/raw/<source>/<run-id>/` (COL-018(a)).
+Do not place run directories directly under `data/raw/`.
 
 A study must be understandable independently from unrelated studies in the repository.
 
@@ -166,6 +171,15 @@ deduplicated record count
 ```
 
 If a field is unavailable, do not fabricate it.
+
+Payloads obtained outside the pipeline are adopted through a committed
+`staging-declaration-v1` document (`metadata/provenance/declarations/`),
+never by guessing the mapping from the payload. The declaration schema has
+no `unknown`: unconfirmed values block adoption instead of being recorded
+as placeholders.
+
+Record the API request (relative filters, reference time) separately from
+the observed data range. Never treat an observed range as the search condition.
 
 ---
 
@@ -366,6 +380,11 @@ Public accessibility does not automatically mean unrestricted redistribution.
 
 When raw redistribution is unsuitable, publish derived or aggregated data plus methodology.
 
+Per-post social-platform datasets are not published, even anonymized
+(2026-10-15, COL-030 §4.1): row-level records stay identifiable by time and
+engagement patterns. Publish aggregates only, and hold even aggregates behind
+the publication review until approved.
+
 ---
 
 # Evidence Levels
@@ -447,6 +466,28 @@ by whom
 ```
 
 Processing code should preferably accept immutable inputs and produce new outputs.
+
+---
+
+# Production Entry Points
+
+Run production through the repository Makefile so invocations stay reproducible:
+
+```text
+make test | make stage DECLARATION=<file> | make adopt-all
+make audit-new-runs | make audit-publication | make audit-snapshots | make gates
+
+```
+
+Behind `stage` / `adopt-all` sits the collection pipeline
+(`docs/specs/collection-pipeline.md`): a `staging-declaration-v1` document
+declares externally obtained payloads, `stage` writes them to `.staging/`
+without judging them, and `adopt` applies the L1 verdict
+(catalog to `data/raw/<source>/<run-id>/`, or quarantine with the reason
+recorded). The producer never decides adoption; the gate never depends on
+the code that produced its input.
+
+Do not add side channels that publish, push, or delete data.
 
 ---
 

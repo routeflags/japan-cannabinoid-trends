@@ -58,6 +58,7 @@ japan-cannabinoid-trends/
 │       ├── methodology.md
 │       ├── data/
 │       │   ├── raw/
+│       │   │   └── <source>/<run-id>/
 │       │   ├── interim/
 │       │   └── processed/
 │       └── metadata/
@@ -75,6 +76,29 @@ japan-cannabinoid-trends/
 │
 └── metadata/
 ```
+
+Domain terms used across this repository (Production, Research, Validation,
+Publication, contract, gate, …) are defined as ubiquitous language in
+`docs/specs/contracts.md` §2. Agent operating rules live in `AGENTS.md`.
+
+### Running production
+
+All production scripts run through the `Makefile` (`make help` lists targets):
+
+```text
+make test                  # full test suite
+make stage DECLARATION=<f> # stage externally obtained payloads for review
+make adopt-all             # adopt staged runs (L1 verdict each)
+make audit-snapshots       # regenerate tracked docs/audits snapshots
+make gates                 # validation gate scripts
+```
+
+Behind `stage` / `adopt-all` sits the collection pipeline
+(`docs/specs/collection-pipeline.md`): a declared payload is staged without
+judgement, then `adopt` applies the L1 verdict — catalog to
+`data/raw/<source>/<run-id>/`, or quarantine with the recorded reason.
+Adoption never happens silently: payloads from outside the pipeline require a
+committed `staging-declaration-v1` document first.
 
 ### JSON Files
 
@@ -146,7 +170,7 @@ Platform terms, copyright, privacy, contractual restrictions, and applicable law
 Original collected data.
 
 ```text
-data/raw/
+data/raw/<source>/<run-id>/
 ```
 
 Raw data exists primarily for reproducibility and internal verification.
