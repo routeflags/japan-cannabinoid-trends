@@ -1,0 +1,30 @@
+{
+  "schema_version": "1.0.0",
+  "record": "x_aggregate_schema",
+  "aggregator_version": "1.0.0",
+  "artifacts": [
+    "datasets/cbx-social-trends/data/processed/x_cbx_202608_weekly_aggregates.csv",
+    "datasets/cbx-social-trends/data/processed/x_cbx_202608_monthly_aggregates.csv"
+  ],
+  "encoding": "UTF-8 without BOM",
+  "line_ending": "LF",
+  "row_order": "ascending sort over all grouping keys (deterministic)",
+  "columns": [
+    {"name": "week_start", "files": ["weekly"], "type": "string", "nullable": true, "meaning": "ISO Monday of the UTC post date (YYYY-MM-DD); empty means unknown period"},
+    {"name": "month", "files": ["monthly"], "type": "string", "nullable": true, "meaning": "first day of the UTC post month (YYYY-MM-01); empty means unknown period"},
+    {"name": "compound", "files": ["weekly", "monthly"], "type": "string", "nullable": false, "meaning": "collection compound (CBX)"},
+    {"name": "topic_id", "files": ["weekly", "monthly"], "type": "string", "nullable": true, "meaning": "content topic notation (incl. unclassified); empty means missing"},
+    {"name": "intent_id", "files": ["weekly", "monthly"], "type": "string", "nullable": true, "meaning": "content intent notation (incl. unclassified); empty means missing"},
+    {"name": "format_id", "files": ["weekly", "monthly"], "type": "string", "nullable": true, "meaning": "content format notation; empty means missing"},
+    {"name": "views_bin", "files": ["weekly", "monthly"], "type": "string", "nullable": true, "meaning": "views bin 0-7 (issue 4-1); empty means missing"},
+    {"name": "likes_bin", "files": ["weekly", "monthly"], "type": "string", "nullable": true, "meaning": "likes bin 0-7; empty means missing"},
+    {"name": "reposts_bin", "files": ["weekly", "monthly"], "type": "string", "nullable": true, "meaning": "reposts bin 0-7; empty means missing"},
+    {"name": "replies_bin", "files": ["weekly", "monthly"], "type": "string", "nullable": true, "meaning": "replies bin 0-7; empty means missing"},
+    {"name": "text_length_bin", "files": ["weekly", "monthly"], "type": "string", "nullable": true, "meaning": "text_length bin 0-6 (issue 5); empty means missing"},
+    {"name": "has_text", "files": ["weekly", "monthly"], "type": "string", "nullable": true, "meaning": "yes / no; empty means missing"},
+    {"name": "post_count", "files": ["weekly", "monthly"], "type": "integer", "nullable": false, "meaning": "number of input posts in this group (>= 1)"}
+  ],
+  "unit": "one row = one group of posts (never one post); sum(post_count) equals the input row count per file",
+  "observed_vs_derived": "post_count and all bins are derived; period/compound/classification are observed group keys carried from the private input and collection metadata",
+  "not_present": "no tweet_id_hash, author_id, text, URL, exact datetime, or exact engagement count appears in any column or value"
+}

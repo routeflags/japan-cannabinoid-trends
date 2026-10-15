@@ -1,0 +1,14 @@
+{
+  "schema_version": "1.0.0",
+  "record": "publication_decision",
+  "decision_id": "publication-review-x-cbx-202608-weekly-aggregates",
+  "artifact_id": "x-cbx-202608-weekly-aggregates",
+  "artifact_sha256": "49b4e2eb4cdcf8da2b0b908f1609a3783e8de8e81c1aec9300e17635ff6ea362",
+  "status": "requires_review",
+  "reviewed_at": "2026-10-15",
+  "reviewer": "owner (approval pending; implementation records the verdict only)",
+  "criteria_version": "G6 §10.2 / §11 (minimal publication rule)",
+  "recorded_at": "2026-10-15",
+  "basis": "ISS-20261014-PUB-029 option ii: implementation complete is not publication approval. Release follows the gate verdict (expected BLOCKED until approved + same sha256).",
+  "notes": "Small-cell REVIEW stands (106 n=1 / 117 n<=2 of 122); no suppression applied (k-anonymity undecided, issue section 8)."
+}

@@ -1,0 +1,78 @@
+{
+  "gate": "publication_eligibility",
+  "criteria": "G6 §10.2 (PUB-01..PUB-10)",
+  "artifact_id": "x-cbx-202608-weekly-aggregates",
+  "artifact_sha256": "49b4e2eb4cdcf8da2b0b908f1609a3783e8de8e81c1aec9300e17635ff6ea362",
+  "decision_id": "publication-review-x-cbx-202608-weekly-aggregates",
+  "verdict": "BLOCKED",
+  "checks": [
+    {
+      "id": "PUB-01",
+      "title": "provenance exists",
+      "status": "PASS",
+      "detail": "provenance reference supplied"
+    },
+    {
+      "id": "PUB-02",
+      "title": "artifact integrity passes",
+      "status": "PASS",
+      "detail": "artifact hash verified"
+    },
+    {
+      "id": "PUB-03",
+      "title": "publication schema valid",
+      "status": "PASS",
+      "detail": "publication schema reviewed"
+    },
+    {
+      "id": "PUB-04",
+      "title": "personal-data review",
+      "status": "PASS",
+      "detail": "personal-data review recorded"
+    },
+    {
+      "id": "PUB-05",
+      "title": "secret scan",
+      "status": "PASS",
+      "detail": "no credential-like fields or values in the review envelope"
+    },
+    {
+      "id": "PUB-06",
+      "title": "source terms confirmed",
+      "status": "WARNING",
+      "detail": "confirmation not recorded; reviewer must confirm"
+    },
+    {
+      "id": "PUB-07",
+      "title": "redistribution conditions confirmed",
+      "status": "WARNING",
+      "detail": "confirmation not recorded; reviewer must confirm"
+    },
+    {
+      "id": "PUB-08",
+      "title": "copyright / contract constraints confirmed",
+      "status": "WARNING",
+      "detail": "confirmation not recorded; reviewer must confirm"
+    },
+    {
+      "id": "PUB-09",
+      "title": "anonymization / aggregation applied",
+      "status": "PASS",
+      "detail": "anonymization / aggregation recorded"
+    },
+    {
+      "id": "PUB-10",
+      "title": "publication approval recorded",
+      "status": "FAIL",
+      "detail": "approval missing or invalid (PUBLICATION_NOT_APPROVED); publication refused"
+    }
+  ],
+  "failed": [
+    "PUB-10"
+  ],
+  "warnings": [
+    "PUB-06",
+    "PUB-07",
+    "PUB-08"
+  ]
+}

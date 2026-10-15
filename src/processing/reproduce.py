@@ -134,14 +134,60 @@ class Withdrawn:
 
 #: Executable derivations, keyed by repository-relative artifact path.
 #:
-#: Empty since 2026-10-15: the only committed derivation was the anonymized
-#: per-post X summary, and per-post X data is no longer published in any form
-#: (``ISS-20261015-COL-030`` 4.1).  The machinery stays because the rule is what
-#: makes an artifact re-derivable rather than merely declared, and the next
-#: processed artifact is expected to use it; its behaviour is covered by fixture
-#: tests in ``tests/processing/test_processed_artifacts.py`` (the real-data check
-#: ended with the artifact it verified).
-DERIVATIONS: dict[str, Derivation] = {}
+#: Since 2026-10-15 the per-post derivation is withdrawn (see WITHDRAWN);
+#: the live derivations are the weekly / monthly X aggregates (option ii of
+#: ISS-20261014-PUB-029).  Their source is the private per-post input
+#: (gitignored, absent from any clone and from CI), so in a fresh checkout
+#: they report ``reproducible_requires_non_published_input`` rather than
+#: failing; fixture tests cover the rule unconditionally.
+DERIVATIONS: dict[str, Derivation] = {
+    "datasets/cbx-social-trends/data/processed/x_cbx_202608_weekly_aggregates.csv": Derivation(
+        source="datasets/cbx-social-trends/data/private/x_cbx_202608_summary_anonymized.csv",
+        columns=(
+            "week_start",
+            "compound",
+            "topic_id",
+            "intent_id",
+            "format_id",
+            "views_bin",
+            "likes_bin",
+            "reposts_bin",
+            "replies_bin",
+            "text_length_bin",
+            "has_text",
+            "post_count",
+        ),
+        kind="x-aggregate-weekly",
+        source_published=False,
+        notes=(
+            "ISS-20261014-PUB-029 option ii (2026-10-15): weekly group counts "
+            "(period x compound x classification x engagement-bin). No per-post row.",
+        ),
+    ),
+    "datasets/cbx-social-trends/data/processed/x_cbx_202608_monthly_aggregates.csv": Derivation(
+        source="datasets/cbx-social-trends/data/private/x_cbx_202608_summary_anonymized.csv",
+        columns=(
+            "month",
+            "compound",
+            "topic_id",
+            "intent_id",
+            "format_id",
+            "views_bin",
+            "likes_bin",
+            "reposts_bin",
+            "replies_bin",
+            "text_length_bin",
+            "has_text",
+            "post_count",
+        ),
+        kind="x-aggregate-monthly",
+        source_published=False,
+        notes=(
+            "ISS-20261014-PUB-029 option ii (2026-10-15): monthly group counts "
+            "(period x compound x classification x engagement-bin). No per-post row.",
+        ),
+    ),
+}
 
 #: Artifacts removed from publication, keyed by the path they had while tracked.
 #: Recorded rather than deleted (AGENTS.md: never silently remove records).
@@ -379,6 +425,12 @@ def reproduce_artifact(
     if derivation.kind == "x-summary-anonymization":
         active = rules if rules is not None else load_content_rules(repo_root=root)
         derived = anonymize_rows(_read_rows(source_path), active)
+    elif derivation.kind in ("x-aggregate-weekly", "x-aggregate-monthly"):
+        from processing.aggregate_x import aggregate_rows
+
+        source_rows = _read_rows(source_path)
+        weekly, monthly, _diagnostics = aggregate_rows(source_rows)
+        derived = weekly if derivation.kind == "x-aggregate-weekly" else monthly
     else:  # pragma: no cover - registry is closed; guarded by tests
         raise ValueError(f"unknown derivation kind: {derivation.kind!r}")
 

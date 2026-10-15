@@ -3,6 +3,8 @@
 - ``audit-processed``  every committed ``data/processed`` artifact is either
   verifiably re-derivable or explicitly declared non-reproducible
 - ``classify``         classify one text against the content taxonomy notations
+- ``aggregate-x``        weekly/monthly group counts from the private per-post
+  X input (read-only; no per-post output)
 
 The Python API (:mod:`processing.reproduce`, :mod:`processing.classify`) is the
 primary interface; this CLI exposes it for operators and CI.
@@ -18,6 +20,18 @@ import sys
 from pathlib import Path
 
 from processing.classify import classify_text
+from processing.aggregate_x import (
+    AGGREGATOR_VERSION,
+    COMPOUND_DEFAULT,
+    MONTHLY_COLUMNS,
+    WEEKLY_COLUMNS,
+    AggregateError,
+    aggregate_rows,
+    read_private_input,
+    scan_output_for_identifiers,
+    sha256_file,
+    write_aggregate_csv,
+)
 from processing.gt_statistics import (
     PUBLICATION_COMPOUNDS,
     TIMEFRAMES,
@@ -121,6 +135,94 @@ def cmd_classify(args) -> int:
     return EXIT_OK
 
 
+def cmd_aggregate_x(args) -> int:
+    """Aggregate the private per-post X input (read-only) into group counts."""
+    from processing.aggregate_x import COMPOUND_PROVENANCE
+
+    try:
+        rows, digest_before = read_private_input(args.input)
+    except AggregateError as error:
+        _err(f"aggregate-x: invalid input: {error}")
+        return EXIT_CONFIG
+    except OSError as error:
+        _err(f"aggregate-x: cannot read input: {error}")
+        return EXIT_IO
+    try:
+        weekly, monthly, diagnostics = aggregate_rows(rows, compound=args.compound)
+    except AggregateError as error:
+        _err(f"aggregate-x: validation error: {error}")
+        return EXIT_DATA
+    for columns, table in ((WEEKLY_COLUMNS, weekly), (MONTHLY_COLUMNS, monthly)):
+        findings = scan_output_for_identifiers(columns, table)
+        if findings:
+            for finding in findings:
+                _err(f"aggregate-x: identifier scan: {finding}")
+            return EXIT_DATA
+    weekly_total = sum(int(r["post_count"]) for r in weekly)
+    monthly_total = sum(int(r["post_count"]) for r in monthly)
+    if weekly_total != len(rows) or monthly_total != len(rows):
+        _err(
+            "aggregate-x: totals do not reconcile "
+            f"(input={len(rows)} weekly={weekly_total} monthly={monthly_total})"
+        )
+        return EXIT_DATA
+    try:
+        weekly_sha = write_aggregate_csv(args.weekly_out, WEEKLY_COLUMNS, weekly)
+        monthly_sha = write_aggregate_csv(args.monthly_out, MONTHLY_COLUMNS, monthly)
+    except OSError as error:
+        _err(f"aggregate-x: cannot write output: {error}")
+        return EXIT_IO
+    digest_after = sha256_file(args.input)
+    if digest_after != digest_before:
+        _err("aggregate-x: private input changed during the run; refusing output")
+        return EXIT_DATA
+    if args.report:
+        import json
+
+        small_weekly = [int(r["post_count"]) for r in weekly]
+        small_monthly = [int(r["post_count"]) for r in monthly]
+        report = {
+            "aggregator_version": AGGREGATOR_VERSION,
+            "compound": args.compound,
+            "compound_provenance": COMPOUND_PROVENANCE,
+            "input": {
+                "path": args.input,
+                "sha256_before": digest_before,
+                "sha256_after": digest_after,
+                "unchanged": digest_before == digest_after,
+                "rows": len(rows),
+            },
+            "diagnostics": diagnostics,
+            "reconciliation": {
+                "input_rows": len(rows),
+                "weekly_sum": weekly_total,
+                "monthly_sum": monthly_total,
+                "match": weekly_total == len(rows) and monthly_total == len(rows),
+            },
+            "small_cell": {
+                "weekly_groups": len(weekly),
+                "weekly_n1": sum(1 for n in small_weekly if n == 1),
+                "weekly_n_le2": sum(1 for n in small_weekly if n <= 2),
+                "monthly_groups": len(monthly),
+                "monthly_n1": sum(1 for n in small_monthly if n == 1),
+                "monthly_n_le2": sum(1 for n in small_monthly if n <= 2),
+            },
+            "identifier_scan": "pass",
+            "output": {
+                "weekly": {"path": args.weekly_out, "sha256": weekly_sha},
+                "monthly": {"path": args.monthly_out, "sha256": monthly_sha},
+            },
+        }
+        target = Path(args.report)
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    print(
+        f"aggregate-x: input={len(rows)} weekly_groups={len(weekly)} "
+        f"monthly_groups={len(monthly)} version={AGGREGATOR_VERSION}"
+    )
+    return EXIT_OK
+
+
 def _write_page_blocks(report: dict, repo_root: Path) -> list[str]:
     """Put each generated block into its page.  Returns the compounds written.
 
@@ -220,6 +322,17 @@ def build_parser() -> argparse.ArgumentParser:
     classify.add_argument("--text", required=True)
     classify.add_argument("--format", choices=("text", "json"), default="text")
     classify.set_defaults(func=cmd_classify)
+
+    aggregate = sub.add_parser(
+        "aggregate-x",
+        help=("weekly/monthly group counts from the private per-post X input"),
+    )
+    aggregate.add_argument("--input", required=True)
+    aggregate.add_argument("--weekly-out", required=True)
+    aggregate.add_argument("--monthly-out", required=True)
+    aggregate.add_argument("--compound", default=COMPOUND_DEFAULT)
+    aggregate.add_argument("--report", default=None)
+    aggregate.set_defaults(func=cmd_aggregate_x)
 
     gt_summary = sub.add_parser(
         "gt-summary",

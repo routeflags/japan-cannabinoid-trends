@@ -1,0 +1,66 @@
+{
+  "schema_version": "1.0.0",
+  "record": "x_aggregation_conditions",
+  "issue": "ISS-20261014-PUB-029",
+  "decision": "option ii (owner-decided 2026-10-15): aggregator only; per-post CSV sections 2-2/10/11 WITHDRAWN history",
+  "aggregator_version": "1.0.0",
+  "implementation": "src/processing/aggregate_x.py",
+  "cli": "python -m processing.cli aggregate-x --input <private> --weekly-out <weekly> --monthly-out <monthly> --compound CBX --report <report>",
+  "input": {
+    "path": "datasets/cbx-social-trends/data/private/x_cbx_202608_summary_anonymized.csv",
+    "columns": 16,
+    "rows": 147,
+    "sha256": "f27f979a19e7e4925ae0b5d442beeec027e667ce5b10247934066a5b1ed463a6",
+    "access": "read-only; never modified (hash verified before and after each run)",
+    "management": "ISS-20261015-PRV-036 (non-public retention)"
+  },
+  "dimensions": {
+    "period": ["weekly week_start (ISO Monday YYYY-MM-DD)", "monthly month (YYYY-MM-01)"],
+    "compound": ["CBX (fixed; see compound_provenance)"],
+    "classification": ["topic_id", "intent_id", "format_id (reused as-is; no reclassification)"],
+    "engagement_bin": ["views_bin", "likes_bin", "reposts_bin", "replies_bin"],
+    "text": ["text_length_bin", "has_text"]
+  },
+  "compound_provenance": "datasets/cbx-social-trends/methodology.md section 3.1 (query CBX liquid) + metadata/queries/query-registry.json (cbx-liquid-ja -> compound_cbx)",
+  "engagement_bins": {
+    "0": "0",
+    "1": "1-4",
+    "2": "5-19",
+    "3": "20-99",
+    "4": "100-499",
+    "5": "500-1999",
+    "6": "2000-9999",
+    "7": "10000+"
+  },
+  "text_length_bins": {
+    "0": "0",
+    "1": "1-20",
+    "2": "21-50",
+    "3": "51-100",
+    "4": "101-200",
+    "5": "201-280",
+    "6": "281+"
+  },
+  "text_length_definition": "len(text) in Python code points (src/processing/anonymize.py)",
+  "datetime_rules": {
+    "interpretation": "createdAt as UTC; tz-aware values converted to UTC",
+    "naive_datetime": "validation error (never assumed UTC)",
+    "missing_or_unparseable": "unknown period (empty string); grouped, counted, never guessed",
+    "month": "first day of UTC month (YYYY-MM-01)",
+    "week": "ISO Monday of UTC date (YYYY-MM-DD)",
+    "legacy_week_column": "not a grouping key; legacy unknown with valid timestamp recorded as discrepancy (3 rows of 2026-08-31 -> week_start 2026-08-31)"
+  },
+  "missingness": {
+    "missing": "empty cell stays empty; forms its own group; counted in validation report",
+    "zero": "0 bins to bin 0; never merged with missing",
+    "invalid": "negative / decimal / non-numeric counts, bad has_text, naive datetimes are validation errors (fail closed, no partial output)"
+  },
+  "identifier_removal": "allowlist output of 12 columns only; tweet_id_hash, author_id, text, URLs, exact datetimes and exact counts never enter outputs (verified by scan_output_for_identifiers)",
+  "classification_codebook": {
+    "rules": "metadata/taxonomy/classification-rules.yaml (classifier_version 1.0.0, applied 2026-10-02)",
+    "taxonomy": "metadata/taxonomy/content-taxonomy.skos.jsonld",
+    "note": "aggregation reuses input topic_id/intent_id/format_id as-is; unclassified (fallback) and missing (empty) stay distinct"
+  },
+  "small_cell_policy": "reported, never suppressed or merged (k-anonymity threshold undecided per issue section 8)",
+  "platform_language_note": "input platform=x_twitter mapped to x and language/ja uniform across all 147 rows; constants carry no grouping information and are not output columns"
+}
