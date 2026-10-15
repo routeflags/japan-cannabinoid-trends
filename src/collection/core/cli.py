@@ -404,9 +404,12 @@ def cmd_compile_window(args) -> int:
         "message": None,
         "compiled": compiled.to_dict(),
     }
+    parameters = ", ".join(
+        f"{key}={value}" for key, value in sorted(compiled.parameters.items())
+    )
     lines = [
         f"COMPILED window_id={window_id} collector={args.collector} "
-        f"timeframe={compiled.parameters.get('timeframe')} exact={compiled.exact}",
+        f"parameters={parameters or '{}'} exact={compiled.exact}",
         f"  resolved: {compiled.resolved_start} .. {compiled.resolved_end_exclusive}",
     ]
     for limitation in compiled.limitations:

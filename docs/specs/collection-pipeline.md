@@ -123,7 +123,9 @@ L2 が `not_comparable` になることはある。
 
 ### 3.2 Window Compiler（G3 §6）
 
-- 実装: `src/collection/adapters/google_trends/compiler.py`（collector 別）。共通
+- 実装: `src/collection/adapters/google_trends/compiler.py` と
+  `src/collection/adapters/youtube/compiler.py`（collector 別）。YouTube は
+  `dateFilter=year` の MVP のみで、未測定 `dateFilter` は fail closed。共通
   プリミティブは `validation/windows.py`（platform 名は adapters のみ = P1）。
 - `collect` は収集前に plan の絶対 window を compile し、結果を `query` 拡張
   領域へ source-agnostic にマージする。plan が同キーに非空の異なる値を宣言して
@@ -132,12 +134,11 @@ L2 が `not_comparable` になることはある。
   絶対能力 supported なのに実装なし）。`window.exact_required: true` の plan は
   `exact=false` の collector では `WINDOW_EXACTNESS_UNAVAILABLE` で停止。
 - ドライラン: `python -m collection.core.cli compile-window`（収集しない）。
-- 現在 `exact=false` / `boundary_semantics=unverified` は Google Trends の
-  ローリング期間の**境界計測**が未実施であることを反映する（データ収集は
-  ライブで実施済みだが、2 pass の境界計測は別作業）。昇格条件と計測
-  プロトコルは `docs/specs/gt-boundary-verification.md`（2026-10-15）。
-  行列は未実行で、現状は引き続き `exact=false`（ISS-20261015-GT-001
-  PENDING）。
+- 現在 `exact=false` は、Google Trends が pass 2 の time gate 待ちであること、
+  YouTube `dateFilter=year` が adoption-level の測定根拠に留まり live 境界検証済み
+  ではないことを反映する。Google Trends の昇格条件と計測プロトコルは
+  `docs/specs/gt-boundary-verification.md`（2026-10-15）。GT pass 2 までは
+  `exact=false`（ISS-20261015-GT-001 PENDING）。
 
 ### 3.3 外部 collector の staging（`stage_run`）と既存 shell 収集との整合
 
@@ -202,7 +203,9 @@ L2 が `not_comparable` になることはある。
   `compound_id` / `intent_id` は registry の記載をそのまま記録する。
 - **窓**: 絶対窓（`start` / `end_exclusive` / `granularity` / `timezone`）と、
   相対要求（`date_filter` / `reference_time`）の両方を宣言から受け取る。
-  相対→絶対の compile は行わない（GT 以外の compiler は WIN-002 の範囲）。
+  staging 宣言は取得済み payload の handover なので宣言値を正とし、ここでは
+  相対→絶対の compile を行わない。別途、収集前 dry-run / plan gate 用として
+  YouTube Apify `dateFilter=year` の window compiler MVP は WIN-002 で実装済み。
   `reference_time` と `limitations` は `temporal_provenance` に、
   `collector_window_type` / `boundary_semantics` / `exact_window_match` は
   宣言値を記録する（ソース知識をコアに置かない = P1）。絶対窓は

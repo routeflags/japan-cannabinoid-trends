@@ -618,17 +618,23 @@ granularity / week_start の完全一致を要求（不一致・未登録は exi
   併せて `expected_buckets_undetermined` 分岐の潜在例外（未定義 `reasons` への
   追加）を修正し、bucket 化不能な exact window を欠測証拠として記録する
   （`observed_zero` 化しない）。
+- YouTube Apify `dateFilter=year` compiler MVP（ISS-20261015-WIN-002 部分実装、
+  2026-10-15）: `collection.adapters.youtube.compiler` を追加し、
+  `youtube-apify-scraper` の window compiler として登録した。COL-033 の採用済み
+  宣言に基づく trailing ~365 days のみ compile し、`month` / `week` / `today` /
+  `hour` / `all` は推測せず fail closed。`youtube` の live source factory は未登録の
+  まま、registry capability も `unknown` のまま維持する。
 
 ### 16.3 未実装（引き継ぎ）
 
 - ライブ収集による Google Trends の境界挙動検証（`exact=true` への昇格条件）。
   2026-10-15 に計測プロトコル・昇格規則（`docs/specs/gt-boundary-verification.md`）
   とオフライン計測基盤（`collection.adapters.google_trends.boundary` /
-  `validation.cli boundary-report`）を実装した。ライブ実行はメンテナ承認待ちで、
-  それまでは全 compile が `exact=false` / `boundary_semantics=unverified`
-  （ISS-20261015-GT-001 PENDING）。
-- 他ソース（X / YouTube / TikTok / Instagram / LinkedIn）の Window Compiler と
-  `dateFilter=month` 等のローリング語彙の検証。
+  `validation.cli boundary-report`）を実装した。owner `go` により pass 1 は実行・
+  採用済みで、pass 2 は 2026-10-22T04:28Z 以降の time gate 待ち。それまでは
+  `exact=false` / `boundary_semantics=unverified`（ISS-20261015-GT-001 PENDING）。
+- 他ソース（X / TikTok / Instagram / LinkedIn）の Window Compiler と、YouTube の
+  未測定 `dateFilter=month` / `week` / `today` / `hour` / `all` ローリング語彙の検証。
 - T6 の sampling / normalization 条件（comparison set 等）の完全モデル化（G7）。
 
 ## 17. G4 垂直スライス（Artifact Registry / Storage Contract / Data Catalog）— 2026-10-13

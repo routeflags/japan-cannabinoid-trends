@@ -166,11 +166,12 @@ def test_unknown_collector_is_refused_before_anything_is_built(registries):
         collector_identity(type("R", (), {"collectors": ()})())
 
 
-def test_youtube_has_no_live_dispatch_or_window_compiler():
+def test_youtube_has_no_live_dispatch_but_limited_window_compiler():
     """The MVP is handover-only: registering a source that cannot collect
-    would imply an unevidenced capability, so dispatch stays closed."""
+    would imply an unevidenced capability, so live dispatch stays closed.
+    Window compilation is allowed only for measured request filters."""
     assert "youtube" not in registered_sources()
-    assert get_window_compiler("youtube-apify-scraper") is None
+    assert get_window_compiler("youtube-apify-scraper") is not None
 
 
 def test_collect_fails_closed_without_a_live_transport(registries):

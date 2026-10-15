@@ -13,16 +13,17 @@ What this module is NOT:
 - not a live Apify client: there is no token handling, no HTTP transport,
   no pagination, and no dataset export fetching.  ``collect`` always fails
   closed until a live transport lands under a separate plan;
-- not a window compiler: ``date_filter`` values are recorded as the request
-  parameter they are and are never compiled into absolute windows (WIN-002
-  stays open);
+- not a live collection window compiler: the separate YouTube compiler only
+  covers measured ``dateFilter=year`` dry-run/planning semantics; this handover
+  path still records ``date_filter`` values as request parameters and does not
+  infer windows from payload columns;
 - not a CSV normalizer: the payload is staged byte-for-byte and never
   re-expressed as JSON or mapped onto a generic YouTube schema (observed
   exports vary from ~100 to ~500 columns);
-- not registered in ``collection.adapters`` dispatch (``_FACTORIES`` /
-  ``_WINDOW_COMPILERS``): registering a source that cannot collect would
-  imply a capability that has no evidence.  Build the adapter explicitly
-  with :func:`build_adapter`.
+- not registered as a live source in ``collection.adapters`` dispatch
+  (``_FACTORIES``): registering a source that cannot collect would imply a
+  capability that has no evidence.  Build the adapter explicitly with
+  :func:`build_adapter`.
 
 Fail-closed rules (one rule, applied uniformly):
 
@@ -90,7 +91,8 @@ ARTIFACT_TYPE = "raw_records"
 #: (``metadata/provenance/declarations/20261015-youtube-csv-adoption.json``)
 #: for the unbounded request.  The *meanings* are deliberately not encoded
 #: here: resolving a relative filter against a reference time is the window
-#: compiler's job (WIN-002, not implemented in this MVP).
+#: compiler's job.  The current compiler MVP covers only measured
+#: ``dateFilter=year`` semantics; all other filters remain fail-closed.
 DATE_FILTERS = ("all", "hour", "today", "week", "month", "year")
 
 #: Default description of what the absolute window means for these runs

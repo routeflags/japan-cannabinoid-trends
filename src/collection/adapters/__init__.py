@@ -18,6 +18,9 @@ from collection.adapters.google_trends.compiler import (
 from collection.adapters.google_trends.mcp_session import (
     McpStdioSession as _google_trends_live_session,
 )
+from collection.adapters.youtube.compiler import (
+    YouTubeApifyWindowCompiler as _youtube_apify_window_compiler,
+)
 
 __all__ = [
     "AdapterUnavailable",
@@ -43,6 +46,7 @@ _FACTORIES = {
 #: falls back to another collector's compiler).
 _WINDOW_COMPILERS = {
     "google-trends-mcp": _google_trends_window_compiler,
+    "youtube-apify-scraper": _youtube_apify_window_compiler,
 }
 
 #: source_id -> live MCP session class.  Live collection is opt-in (the CLI's
