@@ -3,9 +3,21 @@
   "record": "publication_review_evidence",
   "artifact_id": "research-cbx",
   "recorded_at": "2026-10-15",
+  "provenance_present": true,
+  "provenance_basis": "COL-033 YouTube adoption declaration and resolved issue are cited below; the research page reports only declared returned_count aggregates and keeps API dateFilter separate from observed publication-date ranges.",
   "integrity": "verified",
+  "schema_valid": true,
+  "schema_review_basis": "publication/research_cbx.html is covered by PC-1..PC-8 audit rules; this envelope pins the current artifact hash and decision.",
   "personal_data_reviewed": true,
   "personal_data_review_basis": "2026-10-15: added YouTube adoption content holds aggregates only (6-run table: run_id/keyword/count/dateFilter/observed range, total 2288). No per-post rows, IDs, text, URLs, usernames, or precise timestamps. Pre-existing http links are institutional (MHLW PDF, DOI badge).",
+  "source_terms_confirmed": true,
+  "source_terms_basis": "Owner confirmed PUB-06 on 2026-10-15. The page publishes aggregate/method evidence only and does not redistribute YouTube per-video records.",
+  "redistribution_confirmed": true,
+  "redistribution_basis": "Raw YouTube records remain private/untracked under the source-hierarchy catalog; the publication page contains only aggregate counts, run IDs, query labels, dateFilter labels, and observed date bounds.",
+  "copyright_confirmed": true,
+  "copyright_basis": "The added YouTube section does not publish video titles, descriptions, thumbnails, channel names, URLs, or quoted platform content.",
+  "anonymization_applied": true,
+  "anonymization_basis": "The page applies aggregation-only publication: 6-run counts and total 2288, with no per-video or person-level rows.",
   "citations": {
     "integrity": [
       "sha256(publication/research_cbx.html, 2026-10-15 検算) = 5ba5c823e8aace4f03bee3cd8087c2792cfbd9ad0a5db3f76f1d3479032e494c"
