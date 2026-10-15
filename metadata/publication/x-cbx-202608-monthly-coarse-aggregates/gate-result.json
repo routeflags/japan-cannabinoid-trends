@@ -4,7 +4,7 @@
   "artifact_id": "x-cbx-202608-monthly-coarse-aggregates",
   "artifact_sha256": "d4832bd21dda6069ff0aed2105ec95458370dc9b503d46a94d63704bfe475cc0",
   "decision_id": "publication-review-x-cbx-202608-monthly-coarse-aggregates",
-  "verdict": "SUPPORTED",
+  "verdict": "BLOCKED",
   "checks": [
     {
       "id": "PUB-01",
@@ -63,10 +63,12 @@
     {
       "id": "PUB-10",
       "title": "publication approval recorded",
-      "status": "PASS",
-      "detail": "approved decision pins this artifact hash"
+      "status": "FAIL",
+      "detail": "approval missing or invalid (PUBLICATION_NOT_APPROVED); publication refused"
     }
   ],
-  "failed": [],
+  "failed": [
+    "PUB-10"
+  ],
   "warnings": []
 }

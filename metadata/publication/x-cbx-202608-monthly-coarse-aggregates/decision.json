@@ -4,11 +4,11 @@
   "decision_id": "publication-review-x-cbx-202608-monthly-coarse-aggregates",
   "artifact_id": "x-cbx-202608-monthly-coarse-aggregates",
   "artifact_sha256": "d4832bd21dda6069ff0aed2105ec95458370dc9b503d46a94d63704bfe475cc0",
-  "status": "approved",
-  "reviewed_at": "2026-10-15",
-  "reviewer": "owner (thread approval 2026-10-15: aggregate outputs may become publication candidates; use coarser aggregation)",
+  "status": "requires_review",
+  "reviewed_at": null,
+  "reviewer": null,
   "criteria_version": "G6 §10.2 / §11 (minimal publication rule)",
   "recorded_at": "2026-10-15",
-  "basis": "Owner selected coarse aggregation for PUB-029 after the small-cell explanation. This artifact replaces the fine weekly/monthly crossed aggregate candidates with monthly marginal breakdowns and merges topic cells below 5 into other_topic_lt5.",
-  "notes": "PUB-10 passes only for this exact sha256. Recompute the gate after any artifact edit."
+  "basis": "オーナーは 2026-10-15 のスレッドで、集計結果を公開「候補」として扱うことと、細かい集計ではなく粗い月次集計にすることを承認した。この artifact hash に対する公開承認（publish）はまだ記録されていないため requires_review とする。",
+  "notes": "PUB-10 は同一 sha256 に対する approved な decision を要求する。公開承認が下りたら approved に更新し gate-publication を再実行する。"
 }
