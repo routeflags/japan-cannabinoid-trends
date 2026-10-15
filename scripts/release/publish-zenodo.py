@@ -329,8 +329,8 @@ def repair_record(record_id: str, keep_pattern: str, api_key: str) -> dict:
 
 def main(argv=None) -> int:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    parser.add_argument("--archive", required=True)
-    parser.add_argument("--version", required=True, help="release tag, e.g. v1.13.2")
+    parser.add_argument("--archive", help="clean release archive (publish mode)")
+    parser.add_argument("--version", help="release tag, e.g. v1.13.2 (publish mode)")
     parser.add_argument(
         "--github-release-url",
         help="https://github.com/routeflags/japan-cannabinoid-trends/releases/tag/<tag>; "
@@ -359,7 +359,9 @@ def main(argv=None) -> int:
     parser.add_argument("--format", choices=("text", "json"), default="text")
     args = parser.parse_args(argv)
 
-    version = args.version
+    if not args.repair_record and (not args.archive or not args.version):
+        parser.error("--archive and --version are required unless --repair-record is used")
+    version = args.version or ""
     tag = version if version.startswith("v") else f"v{version}"
     github_release_url = args.github_release_url or (
         "https://github.com/routeflags/japan-cannabinoid-trends/releases/tag/" + tag
