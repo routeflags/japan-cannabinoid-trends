@@ -3,7 +3,7 @@
   "profile": "legacy_audit",
   "schema_id": "collection-run-v1",
   "target_glob": "datasets/**/run_metadata.json",
-  "count": 41,
+  "count": 47,
   "raw_modified": false,
   "runs": [
     {
@@ -668,6 +668,66 @@
       "path": "datasets/cbx-search-trends/data/raw/google_trends/20261015T042857Z-google-trends-boundary-5y/run_metadata.json",
       "sha256": "2014e033d1862ae9cb123ca86b22fe47e93f5e3a75b1c870e7bf0954771a1672",
       "sha256_after": "2014e033d1862ae9cb123ca86b22fe47e93f5e3a75b1c870e7bf0954771a1672",
+      "unchanged": true
+    },
+    {
+      "profile": "legacy_audit",
+      "run_id": "20261010T141947Z-youtube-youtube-consistency",
+      "status": "complete",
+      "missing_fields": [],
+      "path": "datasets/youtube-consistency/data/raw/youtube/20261010T141947Z-youtube-youtube-consistency/run_metadata.json",
+      "sha256": "5465562b31a426d43cdacafe9c47134f5c32fa12d45e8e7f4f0aa5d7da86a35b",
+      "sha256_after": "5465562b31a426d43cdacafe9c47134f5c32fa12d45e8e7f4f0aa5d7da86a35b",
+      "unchanged": true
+    },
+    {
+      "profile": "legacy_audit",
+      "run_id": "20261010T143429Z-youtube-youtube-consistency",
+      "status": "complete",
+      "missing_fields": [],
+      "path": "datasets/youtube-consistency/data/raw/youtube/20261010T143429Z-youtube-youtube-consistency/run_metadata.json",
+      "sha256": "81b33c88197a1b52fa859c962dbaf133ff6436f23d58976d851d574e1ad2e369",
+      "sha256_after": "81b33c88197a1b52fa859c962dbaf133ff6436f23d58976d851d574e1ad2e369",
+      "unchanged": true
+    },
+    {
+      "profile": "legacy_audit",
+      "run_id": "20261010T144421Z-youtube-youtube-consistency",
+      "status": "complete",
+      "missing_fields": [],
+      "path": "datasets/youtube-consistency/data/raw/youtube/20261010T144421Z-youtube-youtube-consistency/run_metadata.json",
+      "sha256": "d585b5b3bde9f4c6b2c2f3d026f5dbd54eb1e108815490a1e267e51d483c285b",
+      "sha256_after": "d585b5b3bde9f4c6b2c2f3d026f5dbd54eb1e108815490a1e267e51d483c285b",
+      "unchanged": true
+    },
+    {
+      "profile": "legacy_audit",
+      "run_id": "20261010T145727Z-youtube-youtube-consistency",
+      "status": "complete",
+      "missing_fields": [],
+      "path": "datasets/youtube-consistency/data/raw/youtube/20261010T145727Z-youtube-youtube-consistency/run_metadata.json",
+      "sha256": "2594b7f46df39e1ac82d31bf23930577190ae1b35807d169cd2a9ce56ea5fa00",
+      "sha256_after": "2594b7f46df39e1ac82d31bf23930577190ae1b35807d169cd2a9ce56ea5fa00",
+      "unchanged": true
+    },
+    {
+      "profile": "legacy_audit",
+      "run_id": "20261010T164915Z-youtube-youtube-consistency",
+      "status": "complete",
+      "missing_fields": [],
+      "path": "datasets/youtube-consistency/data/raw/youtube/20261010T164915Z-youtube-youtube-consistency/run_metadata.json",
+      "sha256": "98f95c66ca01b5309f3148777357dde0fee292d99cfadf3d2be7902b81864276",
+      "sha256_after": "98f95c66ca01b5309f3148777357dde0fee292d99cfadf3d2be7902b81864276",
+      "unchanged": true
+    },
+    {
+      "profile": "legacy_audit",
+      "run_id": "20261011T191900Z-youtube-youtube-consistency",
+      "status": "complete",
+      "missing_fields": [],
+      "path": "datasets/youtube-consistency/data/raw/youtube/20261011T191900Z-youtube-youtube-consistency/run_metadata.json",
+      "sha256": "1765f319f208db03730465400ef32a57565c46e6173ff164178706dcb58ef8c6",
+      "sha256_after": "1765f319f208db03730465400ef32a57565c46e6173ff164178706dcb58ef8c6",
       "unchanged": true
     }
   ]

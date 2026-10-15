@@ -4,13 +4,13 @@
   "spec": "docs/plans/20261013f.md §15 (local plan; not tracked)",
   "target_root": "datasets",
   "include_private": false,
-  "count": 187,
+  "count": 211,
   "extra_count": 46,
   "raw_modified": false,
   "state_summary": {
     "absent": 12,
-    "ignored": 10,
-    "tracked": 211
+    "ignored": 28,
+    "tracked": 217
   },
   "entries": [
     {
@@ -1734,6 +1734,66 @@
       "unchanged": true
     },
     {
+      "path": "datasets/cbx-social-trends/analysis/x_cbx_202608_aggregates_README.md",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "5631a393094aba3efe0e6dc575221c7f9c10b0b03d82b5f640a454dab793212d",
+      "sha256_after": "5631a393094aba3efe0e6dc575221c7f9c10b0b03d82b5f640a454dab793212d",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cbx-social-trends/analysis/x_cbx_202608_aggregates_schema.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "50ad678163b6f26cf762f9baeb3e9b8224e76bcd04527e9a12332ae0fde1e8b5",
+      "sha256_after": "50ad678163b6f26cf762f9baeb3e9b8224e76bcd04527e9a12332ae0fde1e8b5",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cbx-social-trends/analysis/x_cbx_202608_aggregates_validation.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "31c2afc3ab7137637d592aeb2269eb76edfdf853149026af6e05f05c82540cc3",
+      "sha256_after": "31c2afc3ab7137637d592aeb2269eb76edfdf853149026af6e05f05c82540cc3",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cbx-social-trends/analysis/x_cbx_202608_aggregation_conditions.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "244425c1d37f62c367dbc7155e1d793bfecd5a4d936f1b0d2b1b68bd07249bed",
+      "sha256_after": "244425c1d37f62c367dbc7155e1d793bfecd5a4d936f1b0d2b1b68bd07249bed",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cbx-social-trends/data/processed/x_cbx_202608_monthly_aggregates.csv",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "8131ce0336b15fc92d8b12b164404a522b21c875cf728bdf66ddb0e9af5260b9",
+      "sha256_after": "8131ce0336b15fc92d8b12b164404a522b21c875cf728bdf66ddb0e9af5260b9",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cbx-social-trends/data/processed/x_cbx_202608_weekly_aggregates.csv",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "49b4e2eb4cdcf8da2b0b908f1609a3783e8de8e81c1aec9300e17635ff6ea362",
+      "sha256_after": "49b4e2eb4cdcf8da2b0b908f1609a3783e8de8e81c1aec9300e17635ff6ea362",
+      "unchanged": true
+    },
+    {
       "path": "datasets/cbx-social-trends/data/processed/youtube_filtered_202607/filter_metadata.json",
       "exists": true,
       "state": "tracked",
@@ -1841,6 +1901,186 @@
       "ignored": false,
       "sha256": "eb17b4910a0f08aba304e6eabcde1d7e6d279162d79091764859e01d68db7c07",
       "sha256_after": "eb17b4910a0f08aba304e6eabcde1d7e6d279162d79091764859e01d68db7c07",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/youtube-consistency/data/raw/youtube/20261010T141947Z-youtube-youtube-consistency/artifact-manifest.json",
+      "exists": true,
+      "state": "ignored",
+      "tracked": false,
+      "ignored": true,
+      "sha256": "70dd68dbc2a8a27ca20edfc305a28169098fe875214470c52308aedc7adedc16",
+      "sha256_after": "70dd68dbc2a8a27ca20edfc305a28169098fe875214470c52308aedc7adedc16",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/youtube-consistency/data/raw/youtube/20261010T141947Z-youtube-youtube-consistency/dataset_youtube-scraper_2026-10-10_14-19-47-693.csv",
+      "exists": true,
+      "state": "ignored",
+      "tracked": false,
+      "ignored": true,
+      "sha256": "98617d1c25f55329805dbd2a433e06979fc624fa836e137e139f7a13eed25f13",
+      "sha256_after": "98617d1c25f55329805dbd2a433e06979fc624fa836e137e139f7a13eed25f13",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/youtube-consistency/data/raw/youtube/20261010T141947Z-youtube-youtube-consistency/run_metadata.json",
+      "exists": true,
+      "state": "ignored",
+      "tracked": false,
+      "ignored": true,
+      "sha256": "5465562b31a426d43cdacafe9c47134f5c32fa12d45e8e7f4f0aa5d7da86a35b",
+      "sha256_after": "5465562b31a426d43cdacafe9c47134f5c32fa12d45e8e7f4f0aa5d7da86a35b",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/youtube-consistency/data/raw/youtube/20261010T143429Z-youtube-youtube-consistency/artifact-manifest.json",
+      "exists": true,
+      "state": "ignored",
+      "tracked": false,
+      "ignored": true,
+      "sha256": "1823370de3d2f8587a67a1b25b25659f814525cc5e9f748be9522558d3640865",
+      "sha256_after": "1823370de3d2f8587a67a1b25b25659f814525cc5e9f748be9522558d3640865",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/youtube-consistency/data/raw/youtube/20261010T143429Z-youtube-youtube-consistency/dataset_youtube-scraper_2026-10-10_14-34-29-080.csv",
+      "exists": true,
+      "state": "ignored",
+      "tracked": false,
+      "ignored": true,
+      "sha256": "7eece62b331248cf1ae28b8db39453ef5c2f4b39b625542784d0fe793d4b7c27",
+      "sha256_after": "7eece62b331248cf1ae28b8db39453ef5c2f4b39b625542784d0fe793d4b7c27",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/youtube-consistency/data/raw/youtube/20261010T143429Z-youtube-youtube-consistency/run_metadata.json",
+      "exists": true,
+      "state": "ignored",
+      "tracked": false,
+      "ignored": true,
+      "sha256": "81b33c88197a1b52fa859c962dbaf133ff6436f23d58976d851d574e1ad2e369",
+      "sha256_after": "81b33c88197a1b52fa859c962dbaf133ff6436f23d58976d851d574e1ad2e369",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/youtube-consistency/data/raw/youtube/20261010T144421Z-youtube-youtube-consistency/artifact-manifest.json",
+      "exists": true,
+      "state": "ignored",
+      "tracked": false,
+      "ignored": true,
+      "sha256": "be136781f565412c40d68a8e83bb828a921f6549ebe2e810eecbeedc1ad34e8d",
+      "sha256_after": "be136781f565412c40d68a8e83bb828a921f6549ebe2e810eecbeedc1ad34e8d",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/youtube-consistency/data/raw/youtube/20261010T144421Z-youtube-youtube-consistency/dataset_youtube-scraper_2026-10-10_14-44-21-126.csv",
+      "exists": true,
+      "state": "ignored",
+      "tracked": false,
+      "ignored": true,
+      "sha256": "cc2dfbf4f0249233b8e8fb188cae74670968708a33a9a24a9375e6d64aa199a1",
+      "sha256_after": "cc2dfbf4f0249233b8e8fb188cae74670968708a33a9a24a9375e6d64aa199a1",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/youtube-consistency/data/raw/youtube/20261010T144421Z-youtube-youtube-consistency/run_metadata.json",
+      "exists": true,
+      "state": "ignored",
+      "tracked": false,
+      "ignored": true,
+      "sha256": "d585b5b3bde9f4c6b2c2f3d026f5dbd54eb1e108815490a1e267e51d483c285b",
+      "sha256_after": "d585b5b3bde9f4c6b2c2f3d026f5dbd54eb1e108815490a1e267e51d483c285b",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/youtube-consistency/data/raw/youtube/20261010T145727Z-youtube-youtube-consistency/artifact-manifest.json",
+      "exists": true,
+      "state": "ignored",
+      "tracked": false,
+      "ignored": true,
+      "sha256": "74b46a8fb8ae3010d5fde618b65f19414522e8530e2dda5df7df3f4769189eb8",
+      "sha256_after": "74b46a8fb8ae3010d5fde618b65f19414522e8530e2dda5df7df3f4769189eb8",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/youtube-consistency/data/raw/youtube/20261010T145727Z-youtube-youtube-consistency/dataset_youtube-scraper_2026-10-10_14-57-27-682.csv",
+      "exists": true,
+      "state": "ignored",
+      "tracked": false,
+      "ignored": true,
+      "sha256": "f644cb0315930882aea82731a05a0919996838e3fc7f25f18527e875a231599e",
+      "sha256_after": "f644cb0315930882aea82731a05a0919996838e3fc7f25f18527e875a231599e",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/youtube-consistency/data/raw/youtube/20261010T145727Z-youtube-youtube-consistency/run_metadata.json",
+      "exists": true,
+      "state": "ignored",
+      "tracked": false,
+      "ignored": true,
+      "sha256": "2594b7f46df39e1ac82d31bf23930577190ae1b35807d169cd2a9ce56ea5fa00",
+      "sha256_after": "2594b7f46df39e1ac82d31bf23930577190ae1b35807d169cd2a9ce56ea5fa00",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/youtube-consistency/data/raw/youtube/20261010T164915Z-youtube-youtube-consistency/artifact-manifest.json",
+      "exists": true,
+      "state": "ignored",
+      "tracked": false,
+      "ignored": true,
+      "sha256": "661cf0661ff14f44128fb099f84c7a75bcee45d02d268eb77c40568b98ffd7b1",
+      "sha256_after": "661cf0661ff14f44128fb099f84c7a75bcee45d02d268eb77c40568b98ffd7b1",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/youtube-consistency/data/raw/youtube/20261010T164915Z-youtube-youtube-consistency/dataset_youtube-scraper_2026-10-10_16-49-15-671.csv",
+      "exists": true,
+      "state": "ignored",
+      "tracked": false,
+      "ignored": true,
+      "sha256": "2d9f0b1cab94631cedaf6eab5f63b682e3c62058a855bb0125497ef7c389ffca",
+      "sha256_after": "2d9f0b1cab94631cedaf6eab5f63b682e3c62058a855bb0125497ef7c389ffca",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/youtube-consistency/data/raw/youtube/20261010T164915Z-youtube-youtube-consistency/run_metadata.json",
+      "exists": true,
+      "state": "ignored",
+      "tracked": false,
+      "ignored": true,
+      "sha256": "98f95c66ca01b5309f3148777357dde0fee292d99cfadf3d2be7902b81864276",
+      "sha256_after": "98f95c66ca01b5309f3148777357dde0fee292d99cfadf3d2be7902b81864276",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/youtube-consistency/data/raw/youtube/20261011T191900Z-youtube-youtube-consistency/artifact-manifest.json",
+      "exists": true,
+      "state": "ignored",
+      "tracked": false,
+      "ignored": true,
+      "sha256": "603b54f75ddbc7b921f3da723428840428d816834fccd5252119e5eab668c4bc",
+      "sha256_after": "603b54f75ddbc7b921f3da723428840428d816834fccd5252119e5eab668c4bc",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/youtube-consistency/data/raw/youtube/20261011T191900Z-youtube-youtube-consistency/dataset_youtube-scraper_2026-10-11_19-19-00-950.csv",
+      "exists": true,
+      "state": "ignored",
+      "tracked": false,
+      "ignored": true,
+      "sha256": "77aae4113ccbdb6de275315835a543a631cd44c16d32f1b77cbdbcd6433066e5",
+      "sha256_after": "77aae4113ccbdb6de275315835a543a631cd44c16d32f1b77cbdbcd6433066e5",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/youtube-consistency/data/raw/youtube/20261011T191900Z-youtube-youtube-consistency/run_metadata.json",
+      "exists": true,
+      "state": "ignored",
+      "tracked": false,
+      "ignored": true,
+      "sha256": "1765f319f208db03730465400ef32a57565c46e6173ff164178706dcb58ef8c6",
+      "sha256_after": "1765f319f208db03730465400ef32a57565c46e6173ff164178706dcb58ef8c6",
       "unchanged": true
     },
     {

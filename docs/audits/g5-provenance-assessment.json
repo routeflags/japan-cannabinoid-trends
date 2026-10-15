@@ -3,16 +3,16 @@
   "profile": "provenance_assessment",
   "schema_id": "collection-run-v1",
   "target_glob": "datasets/**/run_metadata.json",
-  "count": 41,
+  "count": 47,
   "raw_modified": false,
   "summary": {
     "readiness": {
       "not_ready": 29,
-      "ready": 12
+      "ready": 18
     },
-    "mean_completeness": 0.3647,
-    "strict_valid": 12,
-    "integrity_verified": 12
+    "mean_completeness": 0.4458,
+    "strict_valid": 18,
+    "integrity_verified": 18
   },
   "runs": [
     {
@@ -3502,6 +3502,390 @@
         "artifact_ids": [
           "20261015T042857Z-google-trends-boundary-5y-mcp-tool-result-json",
           "20261015T042857Z-google-trends-boundary-5y-records-cbx-json"
+        ],
+        "transformations": []
+      },
+      "evidence_refs": []
+    },
+    {
+      "run_id": "20261010T141947Z-youtube-youtube-consistency",
+      "path": "datasets/youtube-consistency/data/raw/youtube/20261010T141947Z-youtube-youtube-consistency/run_metadata.json",
+      "sha256": "5465562b31a426d43cdacafe9c47134f5c32fa12d45e8e7f4f0aa5d7da86a35b",
+      "sha256_after": "5465562b31a426d43cdacafe9c47134f5c32fa12d45e8e7f4f0aa5d7da86a35b",
+      "unchanged": true,
+      "strict_valid": true,
+      "strict_error_codes": [],
+      "completeness": {
+        "total": 22,
+        "verified": 22,
+        "score": 1.0,
+        "missing": [],
+        "essential_missing": []
+      },
+      "confidence": {
+        "fields": {
+          "schema_version": "observed",
+          "run_id": "observed",
+          "study_id": "observed",
+          "source_id": "observed",
+          "purpose": "observed",
+          "collector": "observed",
+          "collector.collector_id": "observed",
+          "collector.adapter_id": "observed",
+          "collection_started_at": "observed",
+          "query_provenance": "observed",
+          "query_provenance.query_id": "observed",
+          "query_provenance.submitted_query": "observed",
+          "temporal_provenance": "observed",
+          "temporal_provenance.window_id": "observed",
+          "temporal_provenance.requested_start": "observed",
+          "temporal_provenance.requested_end_exclusive": "observed",
+          "temporal_provenance.granularity": "observed",
+          "temporal_provenance.timezone": "observed",
+          "execution": "observed",
+          "execution.status": "observed",
+          "execution.returned_count": "observed",
+          "execution.errors": "observed"
+        },
+        "observed_count": 22,
+        "unknown_count": 0
+      },
+      "integrity": {
+        "manifest_reference": "artifact-manifest.json",
+        "manifest_present": true,
+        "manifest_valid": true,
+        "verified": true,
+        "artifact_issues": [],
+        "note": ""
+      },
+      "readiness": "ready",
+      "readiness_reasons": [
+        "strict valid, references resolve, artifacts verified"
+      ],
+      "lineage": {
+        "run_id": "20261010T141947Z-youtube-youtube-consistency",
+        "artifact_ids": [
+          "20261010T141947Z-youtube-youtube-consistency-dataset-youtube-scraper-2026-10-10-14-19-47-693-csv"
+        ],
+        "transformations": []
+      },
+      "evidence_refs": []
+    },
+    {
+      "run_id": "20261010T143429Z-youtube-youtube-consistency",
+      "path": "datasets/youtube-consistency/data/raw/youtube/20261010T143429Z-youtube-youtube-consistency/run_metadata.json",
+      "sha256": "81b33c88197a1b52fa859c962dbaf133ff6436f23d58976d851d574e1ad2e369",
+      "sha256_after": "81b33c88197a1b52fa859c962dbaf133ff6436f23d58976d851d574e1ad2e369",
+      "unchanged": true,
+      "strict_valid": true,
+      "strict_error_codes": [],
+      "completeness": {
+        "total": 22,
+        "verified": 22,
+        "score": 1.0,
+        "missing": [],
+        "essential_missing": []
+      },
+      "confidence": {
+        "fields": {
+          "schema_version": "observed",
+          "run_id": "observed",
+          "study_id": "observed",
+          "source_id": "observed",
+          "purpose": "observed",
+          "collector": "observed",
+          "collector.collector_id": "observed",
+          "collector.adapter_id": "observed",
+          "collection_started_at": "observed",
+          "query_provenance": "observed",
+          "query_provenance.query_id": "observed",
+          "query_provenance.submitted_query": "observed",
+          "temporal_provenance": "observed",
+          "temporal_provenance.window_id": "observed",
+          "temporal_provenance.requested_start": "observed",
+          "temporal_provenance.requested_end_exclusive": "observed",
+          "temporal_provenance.granularity": "observed",
+          "temporal_provenance.timezone": "observed",
+          "execution": "observed",
+          "execution.status": "observed",
+          "execution.returned_count": "observed",
+          "execution.errors": "observed"
+        },
+        "observed_count": 22,
+        "unknown_count": 0
+      },
+      "integrity": {
+        "manifest_reference": "artifact-manifest.json",
+        "manifest_present": true,
+        "manifest_valid": true,
+        "verified": true,
+        "artifact_issues": [],
+        "note": ""
+      },
+      "readiness": "ready",
+      "readiness_reasons": [
+        "strict valid, references resolve, artifacts verified"
+      ],
+      "lineage": {
+        "run_id": "20261010T143429Z-youtube-youtube-consistency",
+        "artifact_ids": [
+          "20261010T143429Z-youtube-youtube-consistency-dataset-youtube-scraper-2026-10-10-14-34-29-080-csv"
+        ],
+        "transformations": []
+      },
+      "evidence_refs": []
+    },
+    {
+      "run_id": "20261010T144421Z-youtube-youtube-consistency",
+      "path": "datasets/youtube-consistency/data/raw/youtube/20261010T144421Z-youtube-youtube-consistency/run_metadata.json",
+      "sha256": "d585b5b3bde9f4c6b2c2f3d026f5dbd54eb1e108815490a1e267e51d483c285b",
+      "sha256_after": "d585b5b3bde9f4c6b2c2f3d026f5dbd54eb1e108815490a1e267e51d483c285b",
+      "unchanged": true,
+      "strict_valid": true,
+      "strict_error_codes": [],
+      "completeness": {
+        "total": 22,
+        "verified": 22,
+        "score": 1.0,
+        "missing": [],
+        "essential_missing": []
+      },
+      "confidence": {
+        "fields": {
+          "schema_version": "observed",
+          "run_id": "observed",
+          "study_id": "observed",
+          "source_id": "observed",
+          "purpose": "observed",
+          "collector": "observed",
+          "collector.collector_id": "observed",
+          "collector.adapter_id": "observed",
+          "collection_started_at": "observed",
+          "query_provenance": "observed",
+          "query_provenance.query_id": "observed",
+          "query_provenance.submitted_query": "observed",
+          "temporal_provenance": "observed",
+          "temporal_provenance.window_id": "observed",
+          "temporal_provenance.requested_start": "observed",
+          "temporal_provenance.requested_end_exclusive": "observed",
+          "temporal_provenance.granularity": "observed",
+          "temporal_provenance.timezone": "observed",
+          "execution": "observed",
+          "execution.status": "observed",
+          "execution.returned_count": "observed",
+          "execution.errors": "observed"
+        },
+        "observed_count": 22,
+        "unknown_count": 0
+      },
+      "integrity": {
+        "manifest_reference": "artifact-manifest.json",
+        "manifest_present": true,
+        "manifest_valid": true,
+        "verified": true,
+        "artifact_issues": [],
+        "note": ""
+      },
+      "readiness": "ready",
+      "readiness_reasons": [
+        "strict valid, references resolve, artifacts verified"
+      ],
+      "lineage": {
+        "run_id": "20261010T144421Z-youtube-youtube-consistency",
+        "artifact_ids": [
+          "20261010T144421Z-youtube-youtube-consistency-dataset-youtube-scraper-2026-10-10-14-44-21-126-csv"
+        ],
+        "transformations": []
+      },
+      "evidence_refs": []
+    },
+    {
+      "run_id": "20261010T145727Z-youtube-youtube-consistency",
+      "path": "datasets/youtube-consistency/data/raw/youtube/20261010T145727Z-youtube-youtube-consistency/run_metadata.json",
+      "sha256": "2594b7f46df39e1ac82d31bf23930577190ae1b35807d169cd2a9ce56ea5fa00",
+      "sha256_after": "2594b7f46df39e1ac82d31bf23930577190ae1b35807d169cd2a9ce56ea5fa00",
+      "unchanged": true,
+      "strict_valid": true,
+      "strict_error_codes": [],
+      "completeness": {
+        "total": 22,
+        "verified": 22,
+        "score": 1.0,
+        "missing": [],
+        "essential_missing": []
+      },
+      "confidence": {
+        "fields": {
+          "schema_version": "observed",
+          "run_id": "observed",
+          "study_id": "observed",
+          "source_id": "observed",
+          "purpose": "observed",
+          "collector": "observed",
+          "collector.collector_id": "observed",
+          "collector.adapter_id": "observed",
+          "collection_started_at": "observed",
+          "query_provenance": "observed",
+          "query_provenance.query_id": "observed",
+          "query_provenance.submitted_query": "observed",
+          "temporal_provenance": "observed",
+          "temporal_provenance.window_id": "observed",
+          "temporal_provenance.requested_start": "observed",
+          "temporal_provenance.requested_end_exclusive": "observed",
+          "temporal_provenance.granularity": "observed",
+          "temporal_provenance.timezone": "observed",
+          "execution": "observed",
+          "execution.status": "observed",
+          "execution.returned_count": "observed",
+          "execution.errors": "observed"
+        },
+        "observed_count": 22,
+        "unknown_count": 0
+      },
+      "integrity": {
+        "manifest_reference": "artifact-manifest.json",
+        "manifest_present": true,
+        "manifest_valid": true,
+        "verified": true,
+        "artifact_issues": [],
+        "note": ""
+      },
+      "readiness": "ready",
+      "readiness_reasons": [
+        "strict valid, references resolve, artifacts verified"
+      ],
+      "lineage": {
+        "run_id": "20261010T145727Z-youtube-youtube-consistency",
+        "artifact_ids": [
+          "20261010T145727Z-youtube-youtube-consistency-dataset-youtube-scraper-2026-10-10-14-57-27-682-csv"
+        ],
+        "transformations": []
+      },
+      "evidence_refs": []
+    },
+    {
+      "run_id": "20261010T164915Z-youtube-youtube-consistency",
+      "path": "datasets/youtube-consistency/data/raw/youtube/20261010T164915Z-youtube-youtube-consistency/run_metadata.json",
+      "sha256": "98f95c66ca01b5309f3148777357dde0fee292d99cfadf3d2be7902b81864276",
+      "sha256_after": "98f95c66ca01b5309f3148777357dde0fee292d99cfadf3d2be7902b81864276",
+      "unchanged": true,
+      "strict_valid": true,
+      "strict_error_codes": [],
+      "completeness": {
+        "total": 22,
+        "verified": 22,
+        "score": 1.0,
+        "missing": [],
+        "essential_missing": []
+      },
+      "confidence": {
+        "fields": {
+          "schema_version": "observed",
+          "run_id": "observed",
+          "study_id": "observed",
+          "source_id": "observed",
+          "purpose": "observed",
+          "collector": "observed",
+          "collector.collector_id": "observed",
+          "collector.adapter_id": "observed",
+          "collection_started_at": "observed",
+          "query_provenance": "observed",
+          "query_provenance.query_id": "observed",
+          "query_provenance.submitted_query": "observed",
+          "temporal_provenance": "observed",
+          "temporal_provenance.window_id": "observed",
+          "temporal_provenance.requested_start": "observed",
+          "temporal_provenance.requested_end_exclusive": "observed",
+          "temporal_provenance.granularity": "observed",
+          "temporal_provenance.timezone": "observed",
+          "execution": "observed",
+          "execution.status": "observed",
+          "execution.returned_count": "observed",
+          "execution.errors": "observed"
+        },
+        "observed_count": 22,
+        "unknown_count": 0
+      },
+      "integrity": {
+        "manifest_reference": "artifact-manifest.json",
+        "manifest_present": true,
+        "manifest_valid": true,
+        "verified": true,
+        "artifact_issues": [],
+        "note": ""
+      },
+      "readiness": "ready",
+      "readiness_reasons": [
+        "strict valid, references resolve, artifacts verified"
+      ],
+      "lineage": {
+        "run_id": "20261010T164915Z-youtube-youtube-consistency",
+        "artifact_ids": [
+          "20261010T164915Z-youtube-youtube-consistency-dataset-youtube-scraper-2026-10-10-16-49-15-671-csv"
+        ],
+        "transformations": []
+      },
+      "evidence_refs": []
+    },
+    {
+      "run_id": "20261011T191900Z-youtube-youtube-consistency",
+      "path": "datasets/youtube-consistency/data/raw/youtube/20261011T191900Z-youtube-youtube-consistency/run_metadata.json",
+      "sha256": "1765f319f208db03730465400ef32a57565c46e6173ff164178706dcb58ef8c6",
+      "sha256_after": "1765f319f208db03730465400ef32a57565c46e6173ff164178706dcb58ef8c6",
+      "unchanged": true,
+      "strict_valid": true,
+      "strict_error_codes": [],
+      "completeness": {
+        "total": 22,
+        "verified": 22,
+        "score": 1.0,
+        "missing": [],
+        "essential_missing": []
+      },
+      "confidence": {
+        "fields": {
+          "schema_version": "observed",
+          "run_id": "observed",
+          "study_id": "observed",
+          "source_id": "observed",
+          "purpose": "observed",
+          "collector": "observed",
+          "collector.collector_id": "observed",
+          "collector.adapter_id": "observed",
+          "collection_started_at": "observed",
+          "query_provenance": "observed",
+          "query_provenance.query_id": "observed",
+          "query_provenance.submitted_query": "observed",
+          "temporal_provenance": "observed",
+          "temporal_provenance.window_id": "observed",
+          "temporal_provenance.requested_start": "observed",
+          "temporal_provenance.requested_end_exclusive": "observed",
+          "temporal_provenance.granularity": "observed",
+          "temporal_provenance.timezone": "observed",
+          "execution": "observed",
+          "execution.status": "observed",
+          "execution.returned_count": "observed",
+          "execution.errors": "observed"
+        },
+        "observed_count": 22,
+        "unknown_count": 0
+      },
+      "integrity": {
+        "manifest_reference": "artifact-manifest.json",
+        "manifest_present": true,
+        "manifest_valid": true,
+        "verified": true,
+        "artifact_issues": [],
+        "note": ""
+      },
+      "readiness": "ready",
+      "readiness_reasons": [
+        "strict valid, references resolve, artifacts verified"
+      ],
+      "lineage": {
+        "run_id": "20261011T191900Z-youtube-youtube-consistency",
+        "artifact_ids": [
+          "20261011T191900Z-youtube-youtube-consistency-dataset-youtube-scraper-2026-10-11-19-19-00-950-csv"
         ],
         "transformations": []
       },

@@ -239,7 +239,7 @@
         "data",
         "methodology.md"
       ],
-      "data_file_count": 5,
+      "data_file_count": 7,
       "has_data_raw": true,
       "data_raw_file_count": 1,
       "sources": [],
@@ -314,24 +314,47 @@
       "has_readme": true,
       "has_methodology": false,
       "research_questions_quoted": [],
-      "run_count": 0,
-      "catalog_entry_count": 0,
+      "run_count": 6,
+      "catalog_entry_count": 6,
       "layout": [
         "README.md",
         "data",
         "queries",
         "schema"
       ],
-      "data_file_count": 1,
-      "has_data_raw": false,
-      "data_raw_file_count": 0,
-      "sources": [],
-      "compound_ids": [],
-      "query_ids": [],
+      "data_file_count": 19,
+      "has_data_raw": true,
+      "data_raw_file_count": 18,
+      "sources": [
+        "youtube"
+      ],
+      "compound_ids": [
+        "compound_cbd",
+        "compound_cbn",
+        "compound_crdh",
+        "compound_h4cbh",
+        "compound_hhbd"
+      ],
+      "query_ids": [
+        "cbd-liquid-ja",
+        "cbn-liquid-ja",
+        "crdh-liquid-ja",
+        "h4cbh-liquid-ja",
+        "hhbd-liquid-ja"
+      ],
       "timeframes": [],
-      "measurement_ids": [],
-      "window_ids": [],
-      "has_artifact_manifest": false,
+      "measurement_ids": [
+        "video_publication_count"
+      ],
+      "window_ids": [
+        "2008-08-01T00:00:00Z_2026-09-24T00:00:00Z",
+        "2014-11-17T00:00:00Z_2026-10-10T00:00:00Z",
+        "2020-09-30T00:00:00Z_2026-10-06T00:00:00Z",
+        "2020-10-01T00:00:00Z_2026-10-02T00:00:00Z",
+        "2022-09-29T00:00:00Z_2026-09-12T00:00:00Z",
+        "2025-10-11T00:00:00Z_2026-10-10T00:00:00Z"
+      ],
+      "has_artifact_manifest": true,
       "coverage": "unevidenced",
       "publication_status": "private_by_default"
     }
@@ -341,7 +364,15 @@
       "compound_id": "compound_cbd",
       "study_ids": [
         "cannabinoid-multi-trends",
-        "cbx-search-trends"
+        "cbx-search-trends",
+        "youtube-consistency"
+      ]
+    },
+    {
+      "compound_id": "compound_cbn",
+      "study_ids": [
+        "cannabinoid-multi-trends",
+        "youtube-consistency"
       ]
     },
     {
@@ -352,17 +383,26 @@
       ]
     },
     {
+      "compound_id": "compound_crdh",
+      "study_ids": [
+        "cannabinoid-multi-trends",
+        "youtube-consistency"
+      ]
+    },
+    {
       "compound_id": "compound_h4cbh",
       "study_ids": [
         "cannabinoid-multi-trends",
-        "cbx-search-trends"
+        "cbx-search-trends",
+        "youtube-consistency"
       ]
     },
     {
       "compound_id": "compound_hhbd",
       "study_ids": [
         "cannabinoid-multi-trends",
-        "cbx-search-trends"
+        "cbx-search-trends",
+        "youtube-consistency"
       ]
     }
   ],
@@ -385,12 +425,48 @@
       ]
     },
     {
+      "compound_id": "compound_cbd",
+      "left": "cannabinoid-multi-trends:20261002T063821Z-google-trends-cbd",
+      "right": "youtube-consistency:20261010T144421Z-youtube-youtube-consistency:20261010T144421Z-youtube-youtube-consistency-dataset-youtube-scraper-2026-10-10-14-44-21-126-csv",
+      "status": "unknown",
+      "reasons": [
+        "period_unknown"
+      ]
+    },
+    {
+      "compound_id": "compound_cbd",
+      "left": "cbx-search-trends:20261001T115959Z-google-trends-cbx-rikiddo",
+      "right": "youtube-consistency:20261010T144421Z-youtube-youtube-consistency:20261010T144421Z-youtube-youtube-consistency-dataset-youtube-scraper-2026-10-10-14-44-21-126-csv",
+      "status": "unknown",
+      "reasons": [
+        "period_unknown"
+      ]
+    },
+    {
+      "compound_id": "compound_cbn",
+      "left": "cannabinoid-multi-trends:20261002T081839Z-google-trends-cbn-12m",
+      "right": "youtube-consistency:20261010T145727Z-youtube-youtube-consistency:20261010T145727Z-youtube-youtube-consistency-dataset-youtube-scraper-2026-10-10-14-57-27-682-csv",
+      "status": "unknown",
+      "reasons": [
+        "period_unknown"
+      ]
+    },
+    {
       "compound_id": "compound_cbx",
       "left": "cannabinoid-multi-trends:20261012T055259Z-google-trends-ja-rikiddo-phase-a-12m",
       "right": "cbx-search-trends:20261001T115959Z-google-trends-cbx-rikiddo",
       "status": "not_comparable",
       "reasons": [
         "cs11_normalization_scale_mismatch"
+      ]
+    },
+    {
+      "compound_id": "compound_crdh",
+      "left": "cannabinoid-multi-trends:20261012T061614Z-google-trends-ja-rikiddo-phase-b-12m",
+      "right": "youtube-consistency:20261010T164915Z-youtube-youtube-consistency:20261010T164915Z-youtube-youtube-consistency-dataset-youtube-scraper-2026-10-10-16-49-15-671-csv",
+      "status": "unknown",
+      "reasons": [
+        "period_unknown"
       ]
     },
     {
@@ -403,6 +479,24 @@
       ]
     },
     {
+      "compound_id": "compound_h4cbh",
+      "left": "cannabinoid-multi-trends:20261002T080652Z-google-trends-h4cbh-5y",
+      "right": "youtube-consistency:20261010T143429Z-youtube-youtube-consistency:20261010T143429Z-youtube-youtube-consistency-dataset-youtube-scraper-2026-10-10-14-34-29-080-csv",
+      "status": "unknown",
+      "reasons": [
+        "period_unknown"
+      ]
+    },
+    {
+      "compound_id": "compound_h4cbh",
+      "left": "cbx-search-trends:20261001T121949Z-google-trends-h4cbh-hhbd",
+      "right": "youtube-consistency:20261010T143429Z-youtube-youtube-consistency:20261010T143429Z-youtube-youtube-consistency-dataset-youtube-scraper-2026-10-10-14-34-29-080-csv",
+      "status": "unknown",
+      "reasons": [
+        "period_unknown"
+      ]
+    },
+    {
       "compound_id": "compound_hhbd",
       "left": "cannabinoid-multi-trends:20261002T080800Z-google-trends-hhbd-5y",
       "right": "cbx-search-trends:20261001T121949Z-google-trends-h4cbh-hhbd",
@@ -410,11 +504,29 @@
       "reasons": [
         "cs03_period_mismatch"
       ]
+    },
+    {
+      "compound_id": "compound_hhbd",
+      "left": "cannabinoid-multi-trends:20261002T080800Z-google-trends-hhbd-5y",
+      "right": "youtube-consistency:20261010T141947Z-youtube-youtube-consistency:20261010T141947Z-youtube-youtube-consistency-dataset-youtube-scraper-2026-10-10-14-19-47-693-csv",
+      "status": "unknown",
+      "reasons": [
+        "period_unknown"
+      ]
+    },
+    {
+      "compound_id": "compound_hhbd",
+      "left": "cbx-search-trends:20261001T121949Z-google-trends-h4cbh-hhbd",
+      "right": "youtube-consistency:20261010T141947Z-youtube-youtube-consistency:20261010T141947Z-youtube-youtube-consistency-dataset-youtube-scraper-2026-10-10-14-19-47-693-csv",
+      "status": "unknown",
+      "reasons": [
+        "period_unknown"
+      ]
     }
   ],
-  "raw_file_count": 149,
+  "raw_file_count": 167,
   "raw_modified": false,
-  "raw_combined_sha256": "ee7600509c3d8e01eddd827b31e7b764351af7eb52a8d025e02aa98266d89cfb",
+  "raw_combined_sha256": "9dab14f1994a014a6deae57fae84eef9e184d43130f37ccd2513e847f49c8a16",
   "note": "non-destructive: study boundaries intact, raw and old metadata only read"
 }
 
