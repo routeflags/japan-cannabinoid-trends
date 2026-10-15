@@ -373,3 +373,41 @@ python -m collection.core.cli adopt --staged .staging/<run-id>   # 4 run
 - **パス 2**（同じ行列を参照時刻 7 日以上後に実行）→ その後 `boundary-report` の
   `rule.eligible` を確認し、昇格するかどうかを判断し、昇格する場合は
   `config/collectors.json` / compiler を変更として記録する。
+
+### 15.5 実行手順の記録（パス 1 で行ったこと = パス 2 の手順）
+
+パス 1 は `collection.adapters.google_trends.boundary` のオフライン側（`verify` / `stage`）に、
+承認済み MCP セッションの計測結果を capture manifest として渡す形で実行した
+（spec §4.1/§4.3。ライブ計測自体は harness の外）。
+
+1. **計測**（1 セッション、4 call、call 間に数秒の間隔。429 が出たら spec §4.2 の backoff）:
+
+   ```python
+   from collection.adapters.google_trends.mcp_session import McpStdioSession
+   from datetime import datetime, timezone
+
+   session = McpStdioSession()  # google-trends-mcp@0.1.1（MIT、キー不要・無料）
+   session.start()
+   try:
+       for timeframe in ("today 1-m", "today 3-m", "today 12-m", "today 5-y"):
+           started = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+           result = session.call("interest_over_time", {"terms": ["CBX"], "geo": "JP", "timeframe": timeframe})
+           finished = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+           # capture 1 件: run_id / request / started_at / finished_at / result（verbatim）
+   finally:
+       session.close()
+   ```
+
+   - `result` はサーバが返した形のまま（`{content: [...], isError: ...}`）入れる。整形・要約しない。
+   - `run_id` は `<YYYYMMDDTHHMMSSZ>-google-trends-boundary-<timeframe slug>`
+     （例: `20261015T042845Z-google-trends-boundary-1m`。slug は `today 1-m` → `1m`）。
+   - manifest 全体: `capture_version: "1.0.0"` + `instrument: {kind: "mcp_session", server: "google-trends-mcp", server_version: "0.1.1"}`。
+   - manifest は実行中の入力であり証拠の正本ではない（正本は採用済み run）。
+     パス 1 の manifest sha256 は §15 の表に記録した。
+2. **形式検証**: `python -m collection.adapters.google_trends.boundary verify --manifest <manifest.json>`
+   （`format_verified=true`、全 capture parsed でなければ行列を止めて parser を更新。spec §4.4）
+3. **staging**: `python -m collection.adapters.google_trends.boundary stage --manifest <manifest.json> --study cbx-search-trends`
+4. **採用**: staged run ごとに `python -m collection.core.cli adopt --staged .staging/<run-id>`（L1 通過のみ catalog）
+5. **評価**: `python -m validation.cli boundary-report --datasets-root datasets`（`rule.eligible` を確認）
+6. 監査スナップショットの再生成（g2 / g3 / g4 / g5-legacy / g5-prov / g6-git / g7）と
+   `ISS-20261015-GT-001` / 本レポートの更新。
