@@ -16,6 +16,7 @@ from __future__ import annotations
 from storage.contracts import StorageReader
 from storage.readers.comparison import JsonComparisonReader
 from storage.readers.csv import CsvRecordReader
+from storage.readers.nodata import JsonNoDataReader
 from storage.readers.objects import JsonObjectReader
 from storage.readers.pages import JsonPageReader
 from storage.readers.records import JsonRecordReader
@@ -32,6 +33,7 @@ READER_CLASSES: tuple[type[StorageReader], ...] = (
     JsonTimeseriesReader,
     JsonSummaryReader,
     JsonComparisonReader,
+    JsonNoDataReader,
     JsonObjectReader,
     SqliteReader,
     CsvRecordReader,

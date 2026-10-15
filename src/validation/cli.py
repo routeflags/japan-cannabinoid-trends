@@ -25,6 +25,10 @@ Commands
 - ``contract-ledger``     the derived inventory of every declared contract
 - ``audit-publication``   the publication contract (record-only; see the module)
 - ``gate-publication``    record-only G6 §10 publication eligibility gate
+- ``validate-release-manifest``
+                        read-only G6 release-manifest check: a clean archive
+                        against a ``release-manifest-v1`` document (never
+                        publishes or uploads)
 
 Exit codes (h.md §13)
 ---------------------
@@ -94,6 +98,11 @@ from validation.reporting import (
     Report,
     ReportBundle,
     dump_json,
+)
+from validation.release_manifest import (
+    SCHEMA_ID as RELEASE_MANIFEST_SCHEMA_ID,
+    check_release_manifest,
+    structural_problems as release_manifest_structural_problems,
 )
 from validation.schema_registry import get_schema, get_schema_version
 from validation.semantic import (
@@ -1146,6 +1155,84 @@ def cmd_gate_publication(args) -> int:
 
 
 # ---------------------------------------------------------------------------
+# validate-release-manifest (ISS-20261015-REL-014; validation only)
+# ---------------------------------------------------------------------------
+
+
+def _release_manifest_report(manifest_path: str, archive_path: str, problems: list[str]) -> dict:
+    """Stable JSON report for ``validate-release-manifest`` (sorted problems)."""
+    return {
+        "validation_version": VALIDATION_VERSION,
+        "schema_id": RELEASE_MANIFEST_SCHEMA_ID,
+        "manifest": manifest_path,
+        "archive": archive_path,
+        "valid": not problems,
+        "problems": sorted(problems),
+    }
+
+
+def cmd_validate_release_manifest(args) -> int:
+    """Validate a clean release archive against a release manifest (read-only).
+
+    Exit semantics: 0 == archive matches the manifest; 1 == archive content
+    defect (missing required path, forbidden path, out-of-scope path,
+    version/DOI mismatch); 2 == malformed manifest (schema/config error);
+    3 == unreadable manifest/archive file.  Nothing is created, published,
+    pushed, or uploaded; only ``--output`` writes a JSON report.
+    """
+    manifest_path = Path(args.file)
+    try:
+        manifest = _load_json(manifest_path)
+    except (OSError, json.JSONDecodeError, UnicodeDecodeError) as error:
+        _err(f"cannot read manifest file: {manifest_path} ({error.__class__.__name__})")
+        return EXIT_IO
+
+    structural = (
+        release_manifest_structural_problems(manifest)
+        if isinstance(manifest, dict)
+        else ["manifest is not a JSON object"]
+    )
+    archive_text = str(args.archive) if args.archive else ""
+    if not archive_text and isinstance(manifest, dict):
+        block = manifest.get("archive")
+        if isinstance(block, dict) and block.get("path"):
+            archive_text = str(block["path"])
+    if structural:
+        _emit(
+            _release_manifest_report(str(manifest_path), archive_text, structural),
+            fmt=args.format,
+            output=args.output,
+            human_lines=[
+                f"FAIL {RELEASE_MANIFEST_SCHEMA_ID} {archive_text or manifest_path}",
+                *(_human_manifest_problems(structural)),
+            ],
+        )
+        return EXIT_CONFIG
+
+    archive_path = Path(archive_text)
+    if not archive_text or not archive_path.is_file():
+        _err(f"cannot read archive file: {archive_text or '(no archive path in manifest)'}")
+        return EXIT_IO
+    problems = check_release_manifest(manifest, archive=archive_path)
+    verdict = "OK" if not problems else "FAIL"
+    _emit(
+        _release_manifest_report(str(manifest_path), str(archive_path), problems),
+        fmt=args.format,
+        output=args.output,
+        human_lines=[
+            f"{verdict} {RELEASE_MANIFEST_SCHEMA_ID} {archive_path}",
+            *(_human_manifest_problems(problems)),
+        ],
+    )
+    return EXIT_OK if not problems else EXIT_DATA
+
+
+def _human_manifest_problems(problems: list[str]) -> list[str]:
+    """One stable ``  - <problem>`` line per finding (stderr only)."""
+    return [f"  - {problem}" for problem in sorted(problems)]
+
+
+# ---------------------------------------------------------------------------
 # gate-plan (Phase 6 / P6-1 initial CLI surface)
 # ---------------------------------------------------------------------------
 
@@ -1984,6 +2071,20 @@ def build_parser() -> argparse.ArgumentParser:
         "--output", default="docs/audits/g6-publication-eligibility.json"
     )
     gate_pub.set_defaults(handler=cmd_gate_publication)
+
+    manifest = sub.add_parser(
+        "validate-release-manifest",
+        help="read-only G6 release-manifest check: a clean archive against a "
+        "release-manifest-v1 document (ISS-20261015-REL-014; never publishes)",
+    )
+    manifest.add_argument("--file", required=True, help="release-manifest-v1 JSON document")
+    manifest.add_argument(
+        "--archive",
+        help="zip archive to check (overrides the manifest archive.path)",
+    )
+    manifest.add_argument("--format", choices=("text", "json"), default="text")
+    manifest.add_argument("--output", help="write the JSON report to this path")
+    manifest.set_defaults(handler=cmd_validate_release_manifest)
 
     return parser
 

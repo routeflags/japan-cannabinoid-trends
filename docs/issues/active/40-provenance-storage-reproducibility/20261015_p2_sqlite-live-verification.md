@@ -31,6 +31,34 @@ storage contract は SQLite 形式を宣言済み（`sqlite-trends-db-v1`）だ�
 
 ## 完了条件
 
-- [ ] ローカル検証手順（コマンドと期待出力）の文書化
-- [ ] `record_lineage` 導入の要否決定
-- [ ] raw との対応（run ↔ DB 行）の記録方法の決定
+- [x] ローカル検証手順（コマンドと期待出力）の文書化
+- [x] `record_lineage` 導入の要否決定
+- [~] raw との対応（run ↔ DB 行）の記録方法の決定
+
+## 実装メモ（2026-10-15、OPEN のまま）
+
+検証経路と `record_lineage` 判断は実装・文書化したが、run ↔ DB 行対応の
+機械検証はクラウド証拠（ISS-20261015-PRV-013）待ちのため本 issue は
+OPEN のまま残す。DB は Git に入れていない。外部 API は一切呼んでいない。
+
+- 検証コマンド: `python3 -m storage.cli verify-trends-db`
+  （`src/storage/cli.py`。既定 DB は `datasets/youtube-consistency/data/trends.db`。
+  `SqliteReader` の `mode=ro` 接続のみを用いる read-only 検査で、期待表
+  `runs` / `videos` / `run_videos`、期待ビュー `v_run_summary` /
+  `v_video_appearance`、表ごとの行数、`record_lineage` 有無を JSON 報告する。
+  DB 不在・非 DB・読み取り不可は traceback なしの exit 3。
+  本 worktree に DB は無いため、不在時の優雅な失敗を実実行で確認済み）
+- テスト: `tests/storage/test_verify_trends_db.py`（6 件。実 `schema.sql`
+  を合成 DB に適用して期待表と突合するため、schema 変更時は検出される。
+  実 DB は一切要求しない）
+- 文書化: `datasets/youtube-consistency/README.md` に「ローカル検証」節を
+  追加（コマンド・exit コード・出力形式例。形式例の値は観測値ではない旨を明示）
+- `record_lineage` 決定: **導入見送り（deferred）**。理由は README 記載の
+  とおり（空テーブルによる誤読防止／backfill 材料のクラウド証拠が未取得／
+  推測で埋めない）。将来 migration 形（`record_lineage` の CREATE TABLE 概形＋
+  `apify_dataset_id` ↔ 宣言突合の backfill 原則）も README に記録した。
+  `schema.sql` は未変更。
+- 検証: `python3 -m pytest tests/storage/test_verify_trends_db.py tests/storage/test_sqlite_reader.py tests/storage/test_storage_cli.py -q`
+
+残りのオーナー作業: PRV-013 のクラウド証拠（actor input・run 対応）が
+取得された後に migration を実施し、run ↔ DB 行対応の機械検証を通すこと。

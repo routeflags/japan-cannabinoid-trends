@@ -104,6 +104,9 @@ When uploading manually, use:
   - clean archive の作成（`metadata/artifacts/` 等の正規パスを除外判定に含めない）
   - `scripts/validation/check-release-archive.py`（アーカイブ内 CITATION /
     datapackage / README の version・concept DOI と release の一致を検証。不一致なら失敗）
+  - `validate-release-manifest`（`scripts/release/make-release-manifest.py` で
+    `release-manifest-v1` を生成し、required / 禁止パス / scope と上記 identity
+    を検証。不一致なら Zenodo 送信前に失敗。ISS-20261015-REL-014）
   - `scripts/release/publish-zenodo.py`（`CITATION.cff` の concept DOI の
     record に newversion で公開。`related_identifiers` の GitHub Release URL が
     展開済み URL で保存されたことを公開後に照合し、不一致なら失敗）

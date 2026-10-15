@@ -10,17 +10,17 @@
   },
   "summary": {
     "issue_count": 69,
-    "active_count": 25,
-    "closed_count": 44,
+    "active_count": 23,
+    "closed_count": 46,
     "status_counts": {
       "DOCUMENTED": 1,
       "MITIGATED": 1,
-      "OPEN": 23,
+      "OPEN": 21,
       "PENDING": 2,
-      "RESOLVED": 42
+      "RESOLVED": 44
     },
     "open_p0": 0,
-    "open_p1": 4,
+    "open_p1": 3,
     "failure_count": 0
   },
   "layout": {
@@ -94,28 +94,10 @@
         "datapackage / disclosure / relationship notes が最新状態に更新される",
         "公開前に publication artifact の review decision を approved または denied に確定する"
       ],
-      "issue_count": 2,
-      "status_counts": {
-        "OPEN": 2
-      },
-      "priority_counts": {
-        "P1": 1,
-        "P2": 1
-      },
-      "issues": [
-        {
-          "id": "ISS-20261002-016",
-          "priority": "P2",
-          "status": "OPEN",
-          "path": "docs/issues/active/10-publication-release-readiness/20261002_p2_datapackage-stale-date.md"
-        },
-        {
-          "id": "ISS-20261015-REL-014",
-          "priority": "P1",
-          "status": "OPEN",
-          "path": "docs/issues/active/10-publication-release-readiness/20261015_p1_release-manifest-validation.md"
-        }
-      ]
+      "issue_count": 0,
+      "status_counts": {},
+      "priority_counts": {},
+      "issues": []
     },
     {
       "id": "M2",
@@ -347,11 +329,11 @@
     }
   ],
   "closed": {
-    "issue_count": 44,
+    "issue_count": 46,
     "status_counts": {
       "DOCUMENTED": 1,
       "MITIGATED": 1,
-      "RESOLVED": 42
+      "RESOLVED": 44
     },
     "issues": [
       {
@@ -617,6 +599,18 @@
         "priority": "P2",
         "status": "RESOLVED",
         "path": "docs/issues/closed/resolved/20261015_p2_affected-account-notification.md"
+      },
+      {
+        "id": "ISS-20261002-016",
+        "priority": "P2",
+        "status": "RESOLVED",
+        "path": "docs/issues/closed/resolved/20261002_p2_datapackage-stale-date.md"
+      },
+      {
+        "id": "ISS-20261015-REL-014",
+        "priority": "P1",
+        "status": "RESOLVED",
+        "path": "docs/issues/closed/resolved/20261015_p1_release-manifest-validation.md"
       }
     ]
   }

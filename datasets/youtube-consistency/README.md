@@ -79,6 +79,86 @@ sqlite3 datasets/youtube-consistency/data/trends.db \
   < datasets/youtube-consistency/schema/schema.sql
 ```
 
+## ローカル検証（read-only）
+
+`data/trends.db` は Git 管理外のため CI では検証しない。ローカルでは
+以下の読み取り専用コマンドで schema 整合・表の存在・件数を確認する
+（DB を作成・変更しない。`record_lineage` の扱いは次節参照）。
+
+```bash
+PYTHONPATH=src python3 -m storage.cli verify-trends-db
+# 既定 DB: datasets/youtube-consistency/data/trends.db
+# 別コピーの検査: python3 -m storage.cli verify-trends-db --db <path>
+```
+
+DB が無い checkout では優雅に失敗する（traceback なし、exit 3）:
+
+```text
+database not found: datasets/youtube-consistency/data/trends.db (local-only store; ...)
+```
+
+DB が有る場合の出力形式（値は環境依存。以下は形式例であり観測値ではない）:
+
+```json
+{
+  "db": "datasets/youtube-consistency/data/trends.db",
+  "read_only": true,
+  "tables": {
+    "expected": ["run_videos", "runs", "videos"],
+    "present": ["run_videos", "runs", "videos"],
+    "missing": [],
+    "row_counts": {"runs": "<int>", "videos": "<int>", "run_videos": "<int>"}
+  },
+  "views": {
+    "expected": ["v_run_summary", "v_video_appearance"],
+    "present": ["v_run_summary", "v_video_appearance"],
+    "missing": []
+  },
+  "lineage": {
+    "table": "record_lineage",
+    "present": false,
+    "row_count": null,
+    "status": "deferred_absent"
+  },
+  "ok": true,
+  "problems": []
+}
+```
+
+exit コード: 0 = 正常（`record_lineage` 不在を含む）/ 1 = 表・ビュー不足 /
+3 = DB 不在・非 DB・読み取り不可。テストは合成 DB のみを用い、実 DB を
+要求しない（`tests/storage/test_verify_trends_db.py`）。
+
+## `record_lineage` の扱い（決定: 導入見送り）
+
+- **決定**: `record_lineage` テーブルは現時点では導入しない（deferred）。
+  `schema.sql` は変更しない。検証コマンドは不在を `deferred_absent` と
+  報告し、失敗にしない。
+- **理由**:
+  1. 空の lineage テーブルを作ると来歴が存在するかのような誤読を招く
+     （推測で埋めない方針）。
+  2. backfill の材料である Apify クラウド証拠（actor input・run 対応、
+     ISS-20261015-PRV-013）が未取得のため、行対応を機械的に埋められない。
+  3. raw との対応（run ↔ DB 行）の暫定キーとして
+     `runs.apify_dataset_id` と採用宣言の `payload_sha256` を用いる方針は
+     決めたが、機械検証はクラウド証拠の取得待ち。
+- **将来の migration 形**（クラウド証拠の取得後に schema 変更として実施）:
+
+```sql
+CREATE TABLE IF NOT EXISTS record_lineage (
+    record_id TEXT NOT NULL,
+    source_run_id TEXT NOT NULL REFERENCES runs(run_id),
+    source_artifact_id TEXT NOT NULL,
+    source_record_id TEXT,
+    PRIMARY KEY (record_id, source_run_id, source_artifact_id)
+);
+```
+
+  形状は `storage.readers.sqlite.SqliteReader.lineage_table` の概念テーブル
+  と一致させる。backfill は `runs.apify_dataset_id` ↔ 採用宣言の
+  `environment.apify_dataset_id` ↔ `payload_sha256` の突合を原則とし、
+  実施時は `schema.sql` の更新として記録する。
+
 ## テーブル
 
 | テーブル | 役割 |

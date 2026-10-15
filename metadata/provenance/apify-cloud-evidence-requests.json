@@ -1,0 +1,436 @@
+{
+  "schema_version": "1.0.0",
+  "issue": "ISS-20261015-PRV-013",
+  "collector_id": "youtube-apify-scraper",
+  "source_declaration": "metadata/provenance/declarations/20261015-youtube-csv-adoption.json",
+  "derived_offline_at": "2026-10-15",
+  "note": "Offline request list derived deterministically from the adopted YouTube Apify CSV declaration (6 runs). No live/ external API was called. Values marked pending are transcribed verbatim from the declaration and still await cloud corroboration; values marked missing are absent everywhere and must be obtained later by the owner. Nothing here promotes collector capabilities.",
+  "required_fields": [
+    {
+      "field": "actor_run_id",
+      "description": "Apify actor run ID that produced the dataset export.",
+      "obtain_via": "Apify Console Runs list or runs API (owner action); corroborate the transcribed value and capture the run URL and access timestamp as evidence_source."
+    },
+    {
+      "field": "apify_dataset_id",
+      "description": "Apify dataset ID holding the run output items.",
+      "obtain_via": "Apify Console dataset view or datasets API (owner action); corroborate the transcribed value and capture the dataset URL and access timestamp as evidence_source."
+    },
+    {
+      "field": "actor_input",
+      "description": "Full actor input JSON for the run (search query, maxResults, dateFilter, proxy, language and other parameters).",
+      "obtain_via": "Apify Console run detail input tab or runs API input endpoint (owner action). Never reconstructed from the CSV payload."
+    },
+    {
+      "field": "started_at",
+      "description": "Run start timestamp (UTC) as recorded by Apify.",
+      "obtain_via": "Apify Console Runs list or runs API (owner action); corroborate the transcribed value."
+    },
+    {
+      "field": "finished_at",
+      "description": "Run finish timestamp (UTC) as recorded by Apify.",
+      "obtain_via": "Apify Console Runs list or runs API (owner action); corroborate the transcribed value."
+    },
+    {
+      "field": "status",
+      "description": "Terminal run status as recorded by Apify (e.g. SUCCEEDED).",
+      "obtain_via": "Apify Console Runs list or runs API (owner action); corroborate the transcribed value."
+    },
+    {
+      "field": "evidence_source",
+      "description": "Where the cloud evidence was observed (console URL, API endpoint, export filename) and when, so a later evidence-registry entry can cite it.",
+      "obtain_via": "Recorded by the owner at retrieval time (URL + accessed_at + method). Left missing until retrieval happens."
+    }
+  ],
+  "status_vocabulary": {
+    "pending": "Value transcribed from the declaration; cloud corroboration and evidence-registry registration are still outstanding.",
+    "missing": "No value exists anywhere in the repository; retrieval is required. The value stays null until then.",
+    "observed": "Reserved for the future closed state: value corroborated against cloud evidence and registered. Not used in this revision."
+  },
+  "requests": [
+    {
+      "run_id": "20261010T141947Z-youtube-youtube-consistency",
+      "query_keyword": "HHBD リキッド",
+      "export_filename": "dataset_youtube-scraper_2026-10-10_14-19-47-693.csv",
+      "returned_count": 224,
+      "fields": [
+        {
+          "field": "actor_run_id",
+          "required": true,
+          "status": "pending",
+          "value": "P6Fd5BGjiR0qqrbMO",
+          "source": "source_declaration environment.actor_run_id",
+          "obtain_via": "Apify Console Runs list or runs API (owner action); corroborate and capture evidence_source."
+        },
+        {
+          "field": "apify_dataset_id",
+          "required": true,
+          "status": "pending",
+          "value": "yrzTkTmakOVdQXNNU",
+          "source": "source_declaration environment.apify_dataset_id",
+          "obtain_via": "Apify Console dataset view or datasets API (owner action); corroborate and capture evidence_source."
+        },
+        {
+          "field": "actor_input",
+          "required": true,
+          "status": "missing",
+          "value": null,
+          "source": null,
+          "obtain_via": "Apify Console run detail input tab or runs API input endpoint (owner action)."
+        },
+        {
+          "field": "started_at",
+          "required": true,
+          "status": "pending",
+          "value": "2026-10-10T14:15:44Z",
+          "source": "source_declaration timestamps.started_at (basis: Apify console Runs list provided by owner 2026-10-15)",
+          "obtain_via": "Apify Console Runs list or runs API (owner action); corroborate."
+        },
+        {
+          "field": "finished_at",
+          "required": true,
+          "status": "pending",
+          "value": "2026-10-10T14:19:48Z",
+          "source": "source_declaration timestamps.finished_at (basis: Apify console Runs list provided by owner 2026-10-15)",
+          "obtain_via": "Apify Console Runs list or runs API (owner action); corroborate."
+        },
+        {
+          "field": "status",
+          "required": true,
+          "status": "pending",
+          "value": "success",
+          "source": "source_declaration execution.status",
+          "obtain_via": "Apify Console Runs list or runs API (owner action); corroborate against the cloud terminal status."
+        },
+        {
+          "field": "evidence_source",
+          "required": true,
+          "status": "missing",
+          "value": null,
+          "source": null,
+          "obtain_via": "Recorded by the owner at retrieval time (URL + accessed_at + method)."
+        }
+      ]
+    },
+    {
+      "run_id": "20261010T143429Z-youtube-youtube-consistency",
+      "query_keyword": "H4CBH リキッド",
+      "export_filename": "dataset_youtube-scraper_2026-10-10_14-34-29-080.csv",
+      "returned_count": 395,
+      "fields": [
+        {
+          "field": "actor_run_id",
+          "required": true,
+          "status": "pending",
+          "value": "KfZADENLkkauQBlX5",
+          "source": "source_declaration environment.actor_run_id",
+          "obtain_via": "Apify Console Runs list or runs API (owner action); corroborate and capture evidence_source."
+        },
+        {
+          "field": "apify_dataset_id",
+          "required": true,
+          "status": "pending",
+          "value": "qXUt9LbuJrH7esPUc",
+          "source": "source_declaration environment.apify_dataset_id",
+          "obtain_via": "Apify Console dataset view or datasets API (owner action); corroborate and capture evidence_source."
+        },
+        {
+          "field": "actor_input",
+          "required": true,
+          "status": "missing",
+          "value": null,
+          "source": null,
+          "obtain_via": "Apify Console run detail input tab or runs API input endpoint (owner action)."
+        },
+        {
+          "field": "started_at",
+          "required": true,
+          "status": "pending",
+          "value": "2026-10-10T14:26:03Z",
+          "source": "source_declaration timestamps.started_at (basis: Apify console Runs list provided by owner 2026-10-15)",
+          "obtain_via": "Apify Console Runs list or runs API (owner action); corroborate."
+        },
+        {
+          "field": "finished_at",
+          "required": true,
+          "status": "pending",
+          "value": "2026-10-10T14:34:30Z",
+          "source": "source_declaration timestamps.finished_at (basis: Apify console Runs list provided by owner 2026-10-15)",
+          "obtain_via": "Apify Console Runs list or runs API (owner action); corroborate."
+        },
+        {
+          "field": "status",
+          "required": true,
+          "status": "pending",
+          "value": "success",
+          "source": "source_declaration execution.status",
+          "obtain_via": "Apify Console Runs list or runs API (owner action); corroborate against the cloud terminal status."
+        },
+        {
+          "field": "evidence_source",
+          "required": true,
+          "status": "missing",
+          "value": null,
+          "source": null,
+          "obtain_via": "Recorded by the owner at retrieval time (URL + accessed_at + method)."
+        }
+      ]
+    },
+    {
+      "run_id": "20261010T144421Z-youtube-youtube-consistency",
+      "query_keyword": "CBD リキッド",
+      "export_filename": "dataset_youtube-scraper_2026-10-10_14-44-21-126.csv",
+      "returned_count": 456,
+      "fields": [
+        {
+          "field": "actor_run_id",
+          "required": true,
+          "status": "pending",
+          "value": "4sp0DTonaTlGihAfc",
+          "source": "source_declaration environment.actor_run_id",
+          "obtain_via": "Apify Console Runs list or runs API (owner action); corroborate and capture evidence_source."
+        },
+        {
+          "field": "apify_dataset_id",
+          "required": true,
+          "status": "pending",
+          "value": "1IU9x7a0fR6OcDaAa",
+          "source": "source_declaration environment.apify_dataset_id",
+          "obtain_via": "Apify Console dataset view or datasets API (owner action); corroborate and capture evidence_source."
+        },
+        {
+          "field": "actor_input",
+          "required": true,
+          "status": "missing",
+          "value": null,
+          "source": null,
+          "obtain_via": "Apify Console run detail input tab or runs API input endpoint (owner action)."
+        },
+        {
+          "field": "started_at",
+          "required": true,
+          "status": "pending",
+          "value": "2026-10-10T14:35:13Z",
+          "source": "source_declaration timestamps.started_at (basis: Apify console Runs list provided by owner 2026-10-15)",
+          "obtain_via": "Apify Console Runs list or runs API (owner action); corroborate."
+        },
+        {
+          "field": "finished_at",
+          "required": true,
+          "status": "pending",
+          "value": "2026-10-10T14:44:22Z",
+          "source": "source_declaration timestamps.finished_at (basis: Apify console Runs list provided by owner 2026-10-15)",
+          "obtain_via": "Apify Console Runs list or runs API (owner action); corroborate."
+        },
+        {
+          "field": "status",
+          "required": true,
+          "status": "pending",
+          "value": "success",
+          "source": "source_declaration execution.status",
+          "obtain_via": "Apify Console Runs list or runs API (owner action); corroborate against the cloud terminal status."
+        },
+        {
+          "field": "evidence_source",
+          "required": true,
+          "status": "missing",
+          "value": null,
+          "source": null,
+          "obtain_via": "Recorded by the owner at retrieval time (URL + accessed_at + method)."
+        }
+      ]
+    },
+    {
+      "run_id": "20261010T145727Z-youtube-youtube-consistency",
+      "query_keyword": "CBN リキッド",
+      "export_filename": "dataset_youtube-scraper_2026-10-10_14-57-27-682.csv",
+      "returned_count": 468,
+      "fields": [
+        {
+          "field": "actor_run_id",
+          "required": true,
+          "status": "pending",
+          "value": "rlwl2NvYNp1SJgbmW",
+          "source": "source_declaration environment.actor_run_id",
+          "obtain_via": "Apify Console Runs list or runs API (owner action); corroborate and capture evidence_source."
+        },
+        {
+          "field": "apify_dataset_id",
+          "required": true,
+          "status": "pending",
+          "value": "CObrnRDoGsgFS41LY",
+          "source": "source_declaration environment.apify_dataset_id",
+          "obtain_via": "Apify Console dataset view or datasets API (owner action); corroborate and capture evidence_source."
+        },
+        {
+          "field": "actor_input",
+          "required": true,
+          "status": "missing",
+          "value": null,
+          "source": null,
+          "obtain_via": "Apify Console run detail input tab or runs API input endpoint (owner action)."
+        },
+        {
+          "field": "started_at",
+          "required": true,
+          "status": "pending",
+          "value": "2026-10-10T14:47:52Z",
+          "source": "source_declaration timestamps.started_at (basis: Apify console Runs list provided by owner 2026-10-15)",
+          "obtain_via": "Apify Console Runs list or runs API (owner action); corroborate."
+        },
+        {
+          "field": "finished_at",
+          "required": true,
+          "status": "pending",
+          "value": "2026-10-10T14:57:29Z",
+          "source": "source_declaration timestamps.finished_at (basis: Apify console Runs list provided by owner 2026-10-15)",
+          "obtain_via": "Apify Console Runs list or runs API (owner action); corroborate."
+        },
+        {
+          "field": "status",
+          "required": true,
+          "status": "pending",
+          "value": "success",
+          "source": "source_declaration execution.status",
+          "obtain_via": "Apify Console Runs list or runs API (owner action); corroborate against the cloud terminal status."
+        },
+        {
+          "field": "evidence_source",
+          "required": true,
+          "status": "missing",
+          "value": null,
+          "source": null,
+          "obtain_via": "Recorded by the owner at retrieval time (URL + accessed_at + method)."
+        }
+      ]
+    },
+    {
+      "run_id": "20261010T164915Z-youtube-youtube-consistency",
+      "query_keyword": "CRDH リキッド",
+      "export_filename": "dataset_youtube-scraper_2026-10-10_16-49-15-671.csv",
+      "returned_count": 352,
+      "fields": [
+        {
+          "field": "actor_run_id",
+          "required": true,
+          "status": "pending",
+          "value": "p7OnoebbWpOpcJOZT",
+          "source": "source_declaration environment.actor_run_id",
+          "obtain_via": "Apify Console Runs list or runs API (owner action); corroborate and capture evidence_source."
+        },
+        {
+          "field": "apify_dataset_id",
+          "required": true,
+          "status": "pending",
+          "value": "XvOYiyeyKBxBbYvwB",
+          "source": "source_declaration environment.apify_dataset_id",
+          "obtain_via": "Apify Console dataset view or datasets API (owner action); corroborate and capture evidence_source."
+        },
+        {
+          "field": "actor_input",
+          "required": true,
+          "status": "missing",
+          "value": null,
+          "source": null,
+          "obtain_via": "Apify Console run detail input tab or runs API input endpoint (owner action)."
+        },
+        {
+          "field": "started_at",
+          "required": true,
+          "status": "pending",
+          "value": "2026-10-10T16:40:25Z",
+          "source": "source_declaration timestamps.started_at (basis: Apify console Runs list provided by owner 2026-10-15)",
+          "obtain_via": "Apify Console Runs list or runs API (owner action); corroborate."
+        },
+        {
+          "field": "finished_at",
+          "required": true,
+          "status": "pending",
+          "value": "2026-10-10T16:49:17Z",
+          "source": "source_declaration timestamps.finished_at (basis: Apify console Runs list provided by owner 2026-10-15)",
+          "obtain_via": "Apify Console Runs list or runs API (owner action); corroborate."
+        },
+        {
+          "field": "status",
+          "required": true,
+          "status": "pending",
+          "value": "success",
+          "source": "source_declaration execution.status",
+          "obtain_via": "Apify Console Runs list or runs API (owner action); corroborate against the cloud terminal status."
+        },
+        {
+          "field": "evidence_source",
+          "required": true,
+          "status": "missing",
+          "value": null,
+          "source": null,
+          "obtain_via": "Recorded by the owner at retrieval time (URL + accessed_at + method)."
+        }
+      ]
+    },
+    {
+      "run_id": "20261011T191900Z-youtube-youtube-consistency",
+      "query_keyword": "CBD リキッド",
+      "export_filename": "dataset_youtube-scraper_2026-10-11_19-19-00-950.csv",
+      "returned_count": 393,
+      "fields": [
+        {
+          "field": "actor_run_id",
+          "required": true,
+          "status": "pending",
+          "value": "VwsJXaOmn3HMsiSxN",
+          "source": "source_declaration environment.actor_run_id",
+          "obtain_via": "Apify Console Runs list or runs API (owner action); corroborate and capture evidence_source."
+        },
+        {
+          "field": "apify_dataset_id",
+          "required": true,
+          "status": "pending",
+          "value": "aDwsmXz6MTfT4Dh47",
+          "source": "source_declaration environment.apify_dataset_id",
+          "obtain_via": "Apify Console dataset view or datasets API (owner action); corroborate and capture evidence_source."
+        },
+        {
+          "field": "actor_input",
+          "required": true,
+          "status": "missing",
+          "value": null,
+          "source": null,
+          "obtain_via": "Apify Console run detail input tab or runs API input endpoint (owner action)."
+        },
+        {
+          "field": "started_at",
+          "required": true,
+          "status": "pending",
+          "value": "2026-10-11T19:09:08Z",
+          "source": "source_declaration timestamps.started_at (basis: Apify console Runs list provided by owner 2026-10-15)",
+          "obtain_via": "Apify Console Runs list or runs API (owner action); corroborate."
+        },
+        {
+          "field": "finished_at",
+          "required": true,
+          "status": "pending",
+          "value": "2026-10-11T19:19:02Z",
+          "source": "source_declaration timestamps.finished_at (basis: Apify console Runs list provided by owner 2026-10-15)",
+          "obtain_via": "Apify Console Runs list or runs API (owner action); corroborate."
+        },
+        {
+          "field": "status",
+          "required": true,
+          "status": "pending",
+          "value": "success",
+          "source": "source_declaration execution.status",
+          "obtain_via": "Apify Console Runs list or runs API (owner action); corroborate against the cloud terminal status."
+        },
+        {
+          "field": "evidence_source",
+          "required": true,
+          "status": "missing",
+          "value": null,
+          "source": null,
+          "obtain_via": "Recorded by the owner at retrieval time (URL + accessed_at + method)."
+        }
+      ]
+    }
+  ]
+}

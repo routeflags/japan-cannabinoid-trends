@@ -53,7 +53,8 @@
       "unavailable": {
         "first_nonzero_date": "run が初出を記録していない",
         "nonzero_weeks": "run が非ゼロ週数を記録していない",
-        "data_period": "run がデータあり期間を記録していない"
+        "data_period": "run がデータあり期間を記録していない",
+        "raw_timeline": "raw タイムライン未収蔵（summary-only）: 週数・平均・ピーク・初出値・最新値は記録値であり raw 系列から検証できない"
       },
       "block": "  <h3>5年データサマリー（個別正規化値）</h3>\n  <table>\n    <thead>\n      <tr>\n        <th>指標</th>\n        <th>値</th>\n      </tr>\n    </thead>\n    <tbody>\n      <tr>\n        <td>収集期間</td>\n        <td>過去5年（週次）・261週</td>\n      </tr>\n      <tr>\n        <td>5年平均</td>\n        <td><strong>32.5</strong></td>\n      </tr>\n      <tr>\n        <td>ピーク</td>\n        <td>2025-08-31（値: 100）</td>\n      </tr>\n      <tr>\n        <td>最新値</td>\n        <td>14</td>\n      </tr>\n    </tbody>\n  </table>\n  <p><strong>出所:</strong> run <code>20261008T093228Z-google-trends-5y-baseline</code>（JP / today 5-y / 2026-10-06 収集）。</p>"
     },
@@ -74,7 +75,8 @@
       "unavailable": {
         "first_nonzero_date": "run が初出を記録していない",
         "nonzero_weeks": "run が非ゼロ週数を記録していない",
-        "data_period": "run がデータあり期間を記録していない"
+        "data_period": "run がデータあり期間を記録していない",
+        "raw_timeline": "raw タイムライン未収蔵（summary-only）: 週数・平均・ピーク・初出値・最新値は記録値であり raw 系列から検証できない"
       },
       "block": "  <h3>5年データサマリー（個別正規化値）</h3>\n  <table>\n    <thead>\n      <tr>\n        <th>指標</th>\n        <th>値</th>\n      </tr>\n    </thead>\n    <tbody>\n      <tr>\n        <td>収集期間</td>\n        <td>過去5年（週次）・261週</td>\n      </tr>\n      <tr>\n        <td>5年平均</td>\n        <td><strong>12.2</strong></td>\n      </tr>\n      <tr>\n        <td>ピーク</td>\n        <td>2025-08-31（値: 100）</td>\n      </tr>\n      <tr>\n        <td>最新値</td>\n        <td>7</td>\n      </tr>\n    </tbody>\n  </table>\n  <p><strong>出所:</strong> run <code>20261008T093228Z-google-trends-5y-baseline</code>（JP / today 5-y / 2026-10-06 収集）。</p>"
     },
@@ -95,7 +97,8 @@
       "unavailable": {
         "first_nonzero_date": "run が初出を記録していない",
         "nonzero_weeks": "run が非ゼロ週数を記録していない",
-        "data_period": "run がデータあり期間を記録していない"
+        "data_period": "run がデータあり期間を記録していない",
+        "raw_timeline": "raw タイムライン未収蔵（summary-only）: 週数・平均・ピーク・初出値・最新値は記録値であり raw 系列から検証できない"
       },
       "block": "  <h3>5年データサマリー（個別正規化値）</h3>\n  <table>\n    <thead>\n      <tr>\n        <th>指標</th>\n        <th>値</th>\n      </tr>\n    </thead>\n    <tbody>\n      <tr>\n        <td>収集期間</td>\n        <td>過去5年（週次）・261週</td>\n      </tr>\n      <tr>\n        <td>5年平均</td>\n        <td><strong>45.6</strong></td>\n      </tr>\n      <tr>\n        <td>ピーク</td>\n        <td>2023-11-19（値: 100）</td>\n      </tr>\n      <tr>\n        <td>最新値</td>\n        <td>44</td>\n      </tr>\n    </tbody>\n  </table>\n  <p><strong>出所:</strong> run <code>20261008T093228Z-google-trends-5y-baseline</code>（JP / today 5-y / 2026-10-06 収集）。</p>"
     },
@@ -137,7 +140,8 @@
       "unavailable": {
         "first_nonzero_date": "run が初出を記録していない",
         "nonzero_weeks": "run が非ゼロ週数を記録していない",
-        "data_period": "run がデータあり期間を記録していない"
+        "data_period": "run がデータあり期間を記録していない",
+        "raw_timeline": "raw タイムライン未収蔵（summary-only）: 週数・平均・ピーク・初出値・最新値は記録値であり raw 系列から検証できない"
       },
       "block": "  <h3>5年データサマリー（個別正規化値）</h3>\n  <table>\n    <thead>\n      <tr>\n        <th>指標</th>\n        <th>値</th>\n      </tr>\n    </thead>\n    <tbody>\n      <tr>\n        <td>収集期間</td>\n        <td>過去5年（週次）・261週</td>\n      </tr>\n      <tr>\n        <td>5年平均</td>\n        <td><strong>5.2</strong></td>\n      </tr>\n      <tr>\n        <td>ピーク</td>\n        <td>2023-09-03（値: 100）</td>\n      </tr>\n      <tr>\n        <td>最新値</td>\n        <td>0</td>\n      </tr>\n    </tbody>\n  </table>\n  <p><strong>出所:</strong> run <code>20261008T093228Z-google-trends-5y-baseline</code>（JP / today 5-y / 2026-10-06 収集）。</p>"
     },
@@ -179,7 +183,8 @@
       "unavailable": {
         "first_nonzero_date": "run が初出を記録していない",
         "nonzero_weeks": "run が非ゼロ週数を記録していない",
-        "data_period": "run がデータあり期間を記録していない"
+        "data_period": "run がデータあり期間を記録していない",
+        "raw_timeline": "raw タイムライン未収蔵（summary-only）: 週数・平均・ピーク・初出値・最新値は記録値であり raw 系列から検証できない"
       },
       "block": "  <h3>5年データサマリー（個別正規化値）</h3>\n  <table>\n    <thead>\n      <tr>\n        <th>指標</th>\n        <th>値</th>\n      </tr>\n    </thead>\n    <tbody>\n      <tr>\n        <td>収集期間</td>\n        <td>過去5年（週次）・261週</td>\n      </tr>\n      <tr>\n        <td>5年平均</td>\n        <td><strong>1.2</strong></td>\n      </tr>\n      <tr>\n        <td>ピーク</td>\n        <td>2022-03-06（値: 100）</td>\n      </tr>\n      <tr>\n        <td>最新値</td>\n        <td>0</td>\n      </tr>\n    </tbody>\n  </table>\n  <p><strong>出所:</strong> run <code>20261008T093228Z-google-trends-5y-baseline</code>（JP / today 5-y / 2026-10-06 収集）。</p>"
     },

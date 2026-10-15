@@ -87,6 +87,8 @@ SCHEMA_SCOPE: dict[str, tuple[str, str]] = {
     # G6 storage classification and the publication decision.
     "storage-policy-registry-v1": ("storage", "G6"),
     "publication-decision-v1": ("publication", "G6"),
+    # G6 release manifest (ISS-20261015-REL-014 validation-only slice).
+    "release-manifest-v1": ("validation", "G6"),
     # G7 research objects.
     "study-registry-v1": ("research", "G7"),
     "measurement-registry-v1": ("research", "G7"),
@@ -191,6 +193,15 @@ GATE_CONTRACTS: tuple[dict, ...] = (
         "declared_at": "src/validation/publication_eligibility.py",
         "enforced_by": "validation.cli gate-publication",
         "test": "tests/validation/test_publication_gate.py",
+    },
+    {
+        "contract_id": "gate-release-manifest",
+        "group": "G6",
+        "owner": "validation",
+        "version": None,
+        "declared_at": "src/validation/release_manifest.py",
+        "enforced_by": "validation.cli validate-release-manifest",
+        "test": "tests/validation/test_release_manifest.py",
     },
 )
 

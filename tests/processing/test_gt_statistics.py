@@ -120,6 +120,17 @@ def test_baseline_passes_recorded_values_through() -> None:
     assert "first_nonzero_date" in summary["unavailable"]
 
 
+def test_baseline_names_the_missing_raw_timeline() -> None:
+    """ISS-20261012-CBD-004: the 5y baseline is summary-only; the recorded
+    weeks/mean/peak values cannot be verified against a weekly series that
+    was never stored."""
+
+    unavailable = summarize_record(BASELINE)["unavailable"]
+
+    assert "raw_timeline" in unavailable
+    assert "summary-only" in unavailable["raw_timeline"]
+
+
 def test_average_is_unavailable_when_the_record_has_none() -> None:
     """The 2026-10-02 runs stored neither a series nor an average."""
 

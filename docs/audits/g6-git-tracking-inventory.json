@@ -5,11 +5,11 @@
   "target_root": "datasets",
   "include_private": false,
   "count": 205,
-  "extra_count": 46,
+  "extra_count": 44,
   "raw_modified": false,
   "state_summary": {
-    "absent": 12,
-    "ignored": 10,
+    "absent": 16,
+    "ignored": 4,
     "tracked": 229
   },
   "entries": [
@@ -2019,8 +2019,8 @@
       "state": "tracked",
       "tracked": true,
       "ignored": false,
-      "sha256": "eb17b4910a0f08aba304e6eabcde1d7e6d279162d79091764859e01d68db7c07",
-      "sha256_after": "eb17b4910a0f08aba304e6eabcde1d7e6d279162d79091764859e01d68db7c07",
+      "sha256": "cf7904fe07ff9d94c5d7bcffef11dc6837c4bc15a17b7914bcc8abf212a102bb",
+      "sha256_after": "cf7904fe07ff9d94c5d7bcffef11dc6837c4bc15a17b7914bcc8abf212a102bb",
       "unchanged": true
     },
     {
@@ -2266,14 +2266,6 @@
       "kind": "local_only"
     },
     {
-      "path": "docs/plans/20261013j-decisions-and-backlog.md",
-      "exists": true,
-      "state": "ignored",
-      "tracked": false,
-      "ignored": true,
-      "kind": "local_only"
-    },
-    {
       "path": "docs/plans/g1-vertical-slice-plan.md",
       "exists": true,
       "state": "ignored",
@@ -2291,14 +2283,6 @@
     },
     {
       "path": "docs/plans/g3-temporal-contract-plan.md",
-      "exists": true,
-      "state": "ignored",
-      "tracked": false,
-      "ignored": true,
-      "kind": "local_only"
-    },
-    {
-      "path": "docs/plans/g7-vertical-slice-plan.md",
       "exists": true,
       "state": "ignored",
       "tracked": false,
@@ -2331,18 +2315,18 @@
     },
     {
       "path": ".staging",
-      "exists": true,
-      "state": "ignored",
+      "exists": false,
+      "state": "absent",
       "tracked": false,
-      "ignored": true,
+      "ignored": false,
       "kind": "local_only"
     },
     {
       "path": ".quarantine",
-      "exists": true,
-      "state": "ignored",
+      "exists": false,
+      "state": "absent",
       "tracked": false,
-      "ignored": true,
+      "ignored": false,
       "kind": "local_only"
     },
     {
@@ -2355,18 +2339,18 @@
     },
     {
       "path": ".venv",
-      "exists": true,
-      "state": "ignored",
+      "exists": false,
+      "state": "absent",
       "tracked": false,
-      "ignored": true,
+      "ignored": false,
       "kind": "local_only"
     },
     {
       "path": "datasets/cbx-social-trends/data/private",
-      "exists": true,
-      "state": "ignored",
+      "exists": false,
+      "state": "absent",
       "tracked": false,
-      "ignored": true,
+      "ignored": false,
       "kind": "private_marker"
     },
     {

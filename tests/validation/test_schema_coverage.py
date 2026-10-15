@@ -29,6 +29,7 @@ EXPECTED_COVERAGE = {
     "evidence-registry-v1": "test_provenance.py",
     "storage-policy-registry-v1": "test_storage_policy_schemas.py",
     "publication-decision-v1": "test_storage_policy_schemas.py",
+    "release-manifest-v1": "test_release_manifest.py",
     "study-registry-v1": "test_study_registry.py",
     "measurement-registry-v1": "test_study_registry.py",
     "research-view-v1": "test_study_registry.py",

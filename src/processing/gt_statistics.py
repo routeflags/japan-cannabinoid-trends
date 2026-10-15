@@ -15,7 +15,10 @@ No, and the difference matters:
 
 - a run that stored the weekly series (``data``) is recomputed in full;
 - a run that stored a summary is passed through (the average is a recorded
-  fact, not a derived one);
+  fact, not a derived one).  The weekly series itself was never stored, so
+  the recorded weeks/mean/peak/first/last values cannot be verified against
+  raw observations; the missing input is named in ``unavailable`` under
+  ``raw_timeline`` (``ISS-20261012-CBD-004``);
 - the 2026-10-02 ``*-5y`` runs stored neither a series nor an average, so the
   5-year mean **cannot** be recomputed from the repository.  The missing input
   is named in ``unavailable`` - re-collecting that one 5-year series lets this
@@ -27,6 +30,8 @@ Record shapes (all four occur under ``datasets/*/data/raw/google_trends/``)
    (the 12-month runs and the 2026-10-12 ``○○ リキッド`` 5-year runs)
 2. ``baseline``  ``{"compound", "data_points", "first_value", "last_value",
    "peak_value", "peak_date", "avg_5y"}`` (``20261008T093228Z-...-5y-baseline``)
+   - summary-only: no weekly series is stored, so the recorded values are not
+   independently verifiable (``ISS-20261012-CBD-004``)
 3. ``partial``   ``{"peak": {...}, "first_mention", "data_summary":
    {"data_points_nonzero", "data_points_zero", "period_with_data"}}``
    (the 2026-10-02 ``*-5y`` runs, and ``cbn`` / ``crdp`` / ``hhch``)
@@ -157,6 +162,11 @@ def summarize_record(record: dict) -> dict:
         unavailable["first_nonzero_date"] = "run が初出を記録していない"
         unavailable["nonzero_weeks"] = "run が非ゼロ週数を記録していない"
         unavailable["data_period"] = "run がデータあり期間を記録していない"
+        unavailable["raw_timeline"] = (
+            "raw タイムライン未収蔵（summary-only）: "
+            "週数・平均・ピーク・初出値・最新値は記録値であり "
+            "raw 系列から検証できない"
+        )
     else:
         summary = record.get("data_summary") or {}
         peak = record.get("peak") or {}

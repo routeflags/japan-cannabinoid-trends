@@ -830,7 +830,7 @@ G6 仕様（`docs/plans/20261013f.md`）の垂直スライス。Git 運用全体
 - **public-methodology の publication**: 参考例の `approved` ではなく `requires_review` とした（Fail closed P5: policy 承認 ≠ per-artifact 承認。per-artifact decision が必須）。
 - **Storage Backend の範囲**: ローカル FS 宣言まで（`LocalFilesystemBackend`）。クラウド・object storage は将来。
 - **Private Catalog**: 存在記録まで。内容分類は行わない。
-- **Release Manifest / Zenodo（§12）**: 本スライスでは未実装（引き継ぎ §19.3）。
+- **Release Manifest / Zenodo（§12）**: 本スライスでは未実装（引き継ぎ §19.3）。2026-10-15 に ISS-20261015-REL-014 の validation-only スライスとして実装（§19.4）。
 
 ### 19.2 実装済み
 
@@ -848,10 +848,20 @@ G6 仕様（`docs/plans/20261013f.md`）の垂直スライス。Git 運用全体
 
 ### 19.3 未実装（引き継ぎ）
 
-- Release Manifest / GitHub Release・Zenodo 候補検証（G6-T12/T13/T19/T20）。schema（`release-manifest-v1` 等）・CLI・CI 配線は将来。`scripts/release/create-clean-archive.sh` と `release-zenodo.yml` の現行運用は変更なし。
 - 新規収集 run の追跡方針（判断待ち①）は**現状追認で確定**（2026-10-13）: `google_trends` の raw は追跡、それ以外の raw は `**/data/raw/*` により除外。変更する場合は policy の再定義と `.gitignore` 例外の見直しが必要。
 - 新規収集 run の追跡方針の確定（判断待ち①）、追跡↔除外の変更適用（判断待ち②: `*.db` 除外は追加済み・判断待ち⑤としてレビュー例外を記録、判断待ち③④は現状維持で確定）。
 - ライブ収集・CI ワークフロー変更・SQLite 実データ検証は未実装（CI は pytest + validate-registries のまま green）。
+
+### 19.4 Release Manifest 検証スライス（G6-T12/T13/T19/T20）— 2026-10-15
+
+§19.3 から引き継いだ Release Manifest / Zenodo 候補検証（ISS-20261015-REL-014）。**検証のみで、公開・リリース・DOI 登録・Zenodo 送信は一切行わない**。
+
+- **schema**: `release-manifest-v1`（`src/validation/schemas/release.py`、registry 登録＋契約テスト）。宣言するのは release identity（version / tag / concept DOI）、archive path、required paths、include roots、disallowed prefix/exact のみ。
+- **検証**: `src/validation/release_manifest.py`（`check_release_manifest`）。required 不足・禁止パス・scope 外パスを検査し、version / DOI 一致と canonical 禁止パスは既存 `validation.release_archive_check.check_archive`（REL-015）に委譲する。規則の二重実装なし：manifest が canonical 禁止リストを狭めると構造エラーになる。
+- **CLI**: `validate-release-manifest --file <manifest> [--archive <zip>] --format text|json [--output <path>]`。終了コードは既存規約（0 合格 / 1 内容不一致 / 2 manifest 構造エラー / 3 ファイル I/O）。zip と manifest は読むだけで、書くのは `--output` のみ。
+- **CI 配線**: `.github/workflows/release-zenodo.yml` は clean archive 作成後・Zenodo 公開前に `scripts/release/make-release-manifest.py` で manifest を生成して検証する。不一致は upload 前に失敗する。既存の `Verify archive release identity` ステップは残す（新コマンドが同規則を包含することは `test_manifest_check_delegates_to_the_archive_identity_check` が固定）。
+- **テスト**: `tests/validation/test_release_manifest.py`（合成 zip fixture のみ。`release-archives/`・実 Zenodo 不使用）。妥当 manifest 合格 / required 不足 / 禁止 prefix / scope 外 / stale DOI・version 不一致 / manifest 構造エラー / CLI 終了コード・JSON・`--output`・決定性・非破壊を coverage。
+- 実測（2026-10-15）: 新規テスト 20 件を含む対象テスト全 PASS。`validate-registries` 全 valid。`contract-ledger.json` を再生成（30 契約。gap 8 は `gate-release-manifest` の version 未宣言＋既存 7）。
 
 ## 20. Processed 成果物の再現性（Phase B 垂直スライス）— 2026-10-13
 

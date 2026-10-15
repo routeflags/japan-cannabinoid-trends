@@ -2,19 +2,19 @@
   "schema_version": "1.0.0",
   "generated_by": "validation.cli contract-ledger",
   "summary": {
-    "contract_count": 28,
+    "contract_count": 30,
     "document_count": 29,
     "by_kind": {
-      "gate_contract": 6,
+      "gate_contract": 7,
       "interface_contract": 3,
-      "schema_contract": 19
+      "schema_contract": 20
     },
     "by_owner": {
       "collection": 11,
       "publication": 1,
       "research": 6,
       "storage": 4,
-      "validation": 6
+      "validation": 8
     },
     "by_group": {
       "G1": 4,
@@ -22,11 +22,11 @@
       "G3": 3,
       "G4": 3,
       "G5": 4,
-      "G6": 3,
+      "G6": 5,
       "G7": 4,
       "P6": 4
     },
-    "gap_count": 7
+    "gap_count": 8
   },
   "contracts": [
     {
@@ -77,6 +77,16 @@
       "declared_at": "src/validation/publication_eligibility.py",
       "enforced_by": "validation.cli gate-publication",
       "test": "tests/validation/test_publication_gate.py",
+      "kind": "gate_contract"
+    },
+    {
+      "contract_id": "gate-release-manifest",
+      "group": "G6",
+      "owner": "validation",
+      "version": null,
+      "declared_at": "src/validation/release_manifest.py",
+      "enforced_by": "validation.cli validate-release-manifest",
+      "test": "tests/validation/test_release_manifest.py",
       "kind": "gate_contract"
     },
     {
@@ -244,6 +254,16 @@
       "kind": "schema_contract",
       "group": "G2",
       "owner": "collection",
+      "version": "1.0.0",
+      "declared_at": "src/validation/schemas/",
+      "enforced_by": "validation.cli validate-all",
+      "test": "tests/validation/test_schema_coverage.py"
+    },
+    {
+      "contract_id": "release-manifest-v1",
+      "kind": "schema_contract",
+      "group": "G6",
+      "owner": "validation",
       "version": "1.0.0",
       "declared_at": "src/validation/schemas/",
       "enforced_by": "validation.cli validate-all",
@@ -510,6 +530,11 @@
     {
       "kind": "version_undeclared",
       "contract_id": "gate-publication",
+      "detail": "contract version is not declared"
+    },
+    {
+      "kind": "version_undeclared",
+      "contract_id": "gate-release-manifest",
       "detail": "contract version is not declared"
     },
     {

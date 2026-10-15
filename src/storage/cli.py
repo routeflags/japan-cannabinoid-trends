@@ -19,6 +19,12 @@ Usage (repository root; ``python -m storage.cli``):
   A study with no manifests persists the stable empty catalog
   (``count: 0``); ``--persist`` requires ``--study-dir`` and cannot be
   combined with ``--output``.
+- ``verify-trends-db [--db P]`` checks a local ``trends.db`` copy read-only
+  (expected tables / views / row counts / lineage-table presence).  The
+  database is Git-ignored and never required: an absent database is a
+  graceful ``EXIT_IO`` with a pointer to the local procedure, not a
+  traceback.  ``record_lineage`` absence is reported as deferred (ART-007),
+  never a failure.
 
 Exit codes: 0 = ok / read served; 1 = refused (unsupported mode, unknown
 reader, dangling lineage); 2 = configuration error (registry unreadable);
@@ -51,6 +57,14 @@ EXIT_OK = 0
 EXIT_REFUSED = 1
 EXIT_CONFIG = 2
 EXIT_IO = 3
+
+#: Expected store shape for ``datasets/youtube-consistency`` (see
+#: ``schema/schema.sql``).  ``record_lineage`` is intentionally *not* listed:
+#: its introduction is deferred (ART-007), so its absence is reported, never
+#: a failure.
+TRENDS_DB_EXPECTED_TABLES = ("run_videos", "runs", "videos")
+TRENDS_DB_EXPECTED_VIEWS = ("v_run_summary", "v_video_appearance")
+TRENDS_DB_DEFAULT_PATH = "datasets/youtube-consistency/data/trends.db"
 
 
 def _err(message: str) -> None:
@@ -263,13 +277,101 @@ def cmd_catalog(args) -> int:
     return EXIT_OK
 
 
+def _sqlite_views_ro(path: Path) -> list[str]:
+    """Read-only view enumeration (same ``mode=ro`` discipline as the reader)."""
+    import sqlite3
+
+    connection = sqlite3.connect(f"{path.resolve().as_uri()}?mode=ro", uri=True)
+    try:
+        cursor = connection.execute(
+            "SELECT name FROM sqlite_master WHERE type = 'view' "
+            "AND name NOT LIKE 'sqlite_%' ORDER BY name"
+        )
+        return [row[0] for row in cursor.fetchall()]
+    finally:
+        connection.close()
+
+
+def cmd_verify_trends_db(args) -> int:
+    """Verify a local ``trends.db`` copy without changing it (ART-007)."""
+    from storage.contracts import ArtifactDescriptor
+
+    path = Path(args.db)
+    if not path.is_file():
+        _err(
+            f"database not found: {path} (local-only store; it is Git-ignored "
+            "and never committed - see datasets/youtube-consistency/README.md "
+            "for the local procedure)"
+        )
+        return EXIT_IO
+    reader = get_reader("sqlite-reader")
+    if reader is None:  # pragma: no cover - registry/reader wiring guard
+        _err("sqlite-reader is not implemented")
+        return EXIT_CONFIG
+    descriptor = ArtifactDescriptor(
+        artifact_id="cli-verify-trends-db",
+        artifact_type="database",
+        format="sqlite",
+        schema_id="sqlite-trends-db-v1",
+        path=str(path),
+    )
+    violations = reader.validate(descriptor)
+    if violations:
+        _err(f"database cannot be verified: {violations[0]}: {path}")
+        return EXIT_IO
+    try:
+        tables = reader.tables(descriptor)
+        views = _sqlite_views_ro(path)
+    except Exception as error:  # read-only probe failed; report, never raise
+        _err(f"database cannot be inspected ({error.__class__.__name__}): {path}")
+        return EXIT_IO
+    row_counts = {table: reader.table_row_count(descriptor, table) for table in tables}
+    lineage = reader.lineage_summary(descriptor)
+    missing_tables = [t for t in TRENDS_DB_EXPECTED_TABLES if t not in tables]
+    missing_views = [v for v in TRENDS_DB_EXPECTED_VIEWS if v not in views]
+    problems = [
+        *(f"table is not present in the database: {name}" for name in missing_tables),
+        *(f"view is not present in the database: {name}" for name in missing_views),
+    ]
+    document = {
+        "db": str(path),
+        "read_only": True,
+        "tables": {
+            "expected": list(TRENDS_DB_EXPECTED_TABLES),
+            "present": sorted(tables),
+            "missing": missing_tables,
+            "row_counts": row_counts,
+        },
+        "views": {
+            "expected": list(TRENDS_DB_EXPECTED_VIEWS),
+            "present": sorted(views),
+            "missing": missing_views,
+        },
+        "lineage": {
+            "table": lineage["lineage_table"],
+            "present": lineage["lineage_table_present"],
+            "row_count": lineage.get("lineage_row_count"),
+            # Deferred by decision (ART-007): absence is information, not a
+            # failure.  See datasets/youtube-consistency/README.md.
+            "status": "present" if lineage["lineage_table_present"] else "deferred_absent",
+        },
+        "ok": not problems,
+        "problems": problems,
+    }
+    print(json.dumps(document, ensure_ascii=False, indent=2))
+    if problems:
+        for problem in problems:
+            _err(problem)
+        return EXIT_REFUSED
+    return EXIT_OK
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         prog="python -m storage.cli",
         description="G4 storage contract CLI (readers / sniff / catalog)",
     )
     sub = parser.add_subparsers(dest="command", required=True)
-
     read = sub.add_parser("read", help="read one artifact through its reader")
     read.add_argument("--path", required=True)
     read.add_argument("--schema-id", help="force a registered schema id")
@@ -306,6 +408,12 @@ def build_parser() -> argparse.ArgumentParser:
     )
     catalog.add_argument("--metadata-dir", default="metadata")
     catalog.set_defaults(handler=cmd_catalog)
+
+    verify = sub.add_parser(
+        "verify-trends-db", help="read-only check of a local trends.db copy"
+    )
+    verify.add_argument("--db", default=TRENDS_DB_DEFAULT_PATH)
+    verify.set_defaults(handler=cmd_verify_trends_db)
 
     return parser
 

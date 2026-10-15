@@ -57,6 +57,22 @@ def test_related_queries_response_is_recognized():
     assert result.artifact_type == "raw_response"
 
 
+def test_no_data_response_is_recognized():
+    result = sniff_path(
+        R / "cannabinoid-multi-trends/data/raw/google_trends/20261002T064135Z-google-trends-nodata/records_nodata.json"
+    )
+    assert (result.format, result.state) == ("json", "recognized")
+    assert result.schema_id == "google-trends-no-data-v1"
+    assert result.artifact_type == "raw_response"
+    assert "fields:no_data_keywords" in result.evidence
+
+
+def test_empty_no_data_shape_is_still_the_no_data_shape():
+    result = sniff_document({"collected_at": "2026-10-02", "no_data_keywords": []})
+    assert result.state == "recognized"
+    assert result.schema_id == "google-trends-no-data-v1"
+
+
 def test_page_fixture_is_recognized():
     result = sniff_path(FIXTURES / "search_list_response.json")
     assert result.schema_id == "youtube-search-list-response-v1"
@@ -101,11 +117,6 @@ def test_ambiguous_documents_are_not_forced_into_a_schema():
 
 
 def test_partial_shapes_keep_their_evidence():
-    no_data = sniff_document({"collected_at": "2026-10-02", "no_data_keywords": []})
-    assert no_data.state == "partial"
-    assert no_data.artifact_type == "raw_response"
-    assert "fields:no_data_keywords" in no_data.evidence
-
     error = sniff_document({"error": {"message": "rate limited"}})
     assert error.state == "partial"
     assert "fields:error" in error.evidence

@@ -54,6 +54,19 @@ cannabinoid-multi-trends
 - 低ボリュームクエリはデータが返らない場合あり
 - 429 エラー時は 2-5 分待機
 
+### 2.1.1 5年ベースライン（summary-only / raw timeline missing）
+
+- run: `data/raw/google_trends/20261008T093228Z-google-trends-5y-baseline/`（2026-10-06 収集、geo JP / `today 5-y`、CBD・THC・CBG・HHC・THCV）
+- 本 run は summary JSON（`cbd_5y_summary.json` 等）のみで、週次 raw タイムラインを収蔵していない（summary-only / raw timeline missing）。
+  raw は immutable のため本 run には手を加えない。
+- 週数 261・5年平均・ピーク値・ピーク日・初出値・最新値は**記録値（observed summary）**であり、
+  raw 時系列観測からの独立検証はできない。欠測をゼロ観測に読み替えないこと。
+  機械可読の記録は `docs/audits/gt-summary.json` の各化合物項目 `unavailable.raw_timeline`（shape `baseline`）にある。
+- `20261012T064246Z-google-trends-ja-rikiddo-5y-main5` の 5年系列は「CBD リキッド」等の別クエリ・別正規化であり、
+  bare `CBD` の検証には使えない（`src/processing/gt_statistics.py` の `find_run` も除外する）。
+- 系列の再取得はライブ収集が必要なため本タスクでは未実施（`ISS-20261012-CBD-004` の残件、オーナー承認待ち）。
+  再取得時は既存 summary を上書きせず新規 run として保存する。
+
 ### 2.2 X (Twitter)
 
 **ツール:** Apify Actor `cPYLH3QT9GyzKhB4S` (patient_discovery/twitter-search)

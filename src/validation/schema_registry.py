@@ -40,6 +40,7 @@ from validation.schemas.registries import (
     COLLECTOR_REGISTRY_SCHEMA,
     SOURCE_REGISTRY_SCHEMA,
 )
+from validation.schemas.release import RELEASE_MANIFEST_SCHEMA
 from validation.schemas.storage_policy import (
     PUBLICATION_DECISION_SCHEMA,
     STORAGE_POLICY_REGISTRY_SCHEMA,
@@ -79,6 +80,8 @@ SCHEMA_REGISTRY: dict[str, dict] = {
     "study-registry-v1": STUDY_REGISTRY_SCHEMA,
     "measurement-registry-v1": MEASUREMENT_REGISTRY_SCHEMA,
     "research-view-v1": RESEARCH_VIEW_SCHEMA,
+    # G6 release manifest (ISS-20261015-REL-014 validation-only slice).
+    "release-manifest-v1": RELEASE_MANIFEST_SCHEMA,
     # Collection plan (P6-1 initial contract).
     "collection-plan-v1": COLLECTION_PLAN_SCHEMA,
 }

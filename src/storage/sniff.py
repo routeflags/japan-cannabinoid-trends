@@ -112,13 +112,14 @@ def _sniff_dict(document: dict) -> SniffResult:
             evidence=("fields:job_id,status",),
         )
     # A platform no-data response is evidence, not a zero series (P8); the
-    # shape is recorded as a raw_response candidate without a registered
-    # schema (the legacy variant is reported as partial).
+    # shape is a registered raw_response (google-trends-no-data-v1) read by
+    # the no-data reader, which refuses every series mode (d.md §12).
     if "no_data_keywords" in keys:
         return SniffResult(
             "json",
-            "partial",
+            "recognized",
             artifact_type="raw_response",
+            schema_id="google-trends-no-data-v1",
             evidence=("fields:no_data_keywords",),
         )
     if "error" in keys:

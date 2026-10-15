@@ -33,6 +33,31 @@ Apify クラウド側の証拠（actor run ID・dataset ID・実行時の input�
 
 ## 完了条件
 
-- [ ] 取得依頼リストの作成
+- [x] 取得依頼リストの作成
 - [ ] 取得した証拠の登録（証拠ハッシュの扱いを含む）
 - [ ] capability 昇格判断（昇格しない項目はその理由を記録）
+
+## 実装メモ（2026-10-15、OPEN のまま）
+
+オフラインの要求リスト・マイルストーンのみ実装し、クラウド証拠自体は未取得
+のため本 issue は OPEN のまま残す。外部 API は一切呼んでいない。
+
+- 要求リスト: `metadata/provenance/apify-cloud-evidence-requests.json`
+  （`20261015-youtube-csv-adoption.json` の 6 run を列挙。各 run に
+  actor run ID / dataset ID / actor input / started / finished / status /
+  evidence source の 7 項目を持ち、`pending`（宣言から転記・裏付け待ち）か
+  `missing`（欠損・null のまま）で記録。`actor_input` と `evidence_source`
+  は全 run で `missing`。値は宣言の転記のみで捏造なし）
+- 検証モジュール: `src/validation/apify_evidence.py`
+  （要求 run が宣言と完全一致すること、`missing` の値が null であること、
+  非 null 値が宣言と一字一句一致すること、evidence_source に URL を捏造
+  しないことを検査。read-only・offline）
+- 契約テスト: `tests/validation/test_apify_evidence.py`（8 件。
+  collector の capability が `unknown` / `unverified` のままであることも固定）
+- `config/collectors.json` は未変更（capability 昇格なし）。
+- 検証: `python3 -m pytest tests/validation/test_apify_evidence.py -q`（8 passed）
+
+残りのオーナー作業: Apify Console / API で各 run の actor input と
+開始・終了・status の裏付けを取り、取得時の URL・取得方法・取得時刻を
+evidence_source として記録した上で evidence registry へ登録すること。
+登録後に capability 昇格の要否を判断する。

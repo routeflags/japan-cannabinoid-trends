@@ -37,6 +37,11 @@ RELATED_QUERIES = (
     / "datasets/cbx-search-trends/data/raw/google_trends"
     / "20261001T115959Z-google-trends-cbx-rikiddo/related_queries.json"
 )
+NO_DATA = (
+    REPO_ROOT
+    / "datasets/cannabinoid-multi-trends/data/raw/google_trends"
+    / "20261002T064135Z-google-trends-nodata/records_nodata.json"
+)
 
 
 def _descriptor(path, **overrides) -> ArtifactDescriptor:
@@ -51,10 +56,16 @@ def _descriptor(path, **overrides) -> ArtifactDescriptor:
     return ArtifactDescriptor(**values)
 
 
+def _validate_no_data(path) -> list:
+    reader = get_reader("json-no-data-reader")
+    return reader.validate(_descriptor(path, artifact_type="raw_response"))
+
+
 def test_reader_ids_are_stable():
     assert reader_ids() == [
         "csv-record-reader",
         "json-comparison-reader",
+        "json-no-data-reader",
         "json-object-reader",
         "json-page-reader",
         "json-record-reader",
@@ -155,6 +166,47 @@ def test_object_reader_reads_checkpoint_state():
     assert records[0]["record"]["status"] == "completed"
     with pytest.raises(UnsupportedRead):
         list(reader.read(descriptor, mode="records"))
+
+
+def test_no_data_reader_reads_the_recorded_no_data_response():
+    reader = get_reader("json-no-data-reader")
+    descriptor = _descriptor(NO_DATA, artifact_type="raw_response")
+    assert reader.validate(descriptor) == []
+    rows = list(reader.read(descriptor, mode="keywords"))
+    assert [row["keyword"] for row in rows] == ["THCV", "THC-O"]
+    assert all(row["status"] == "no_data" for row in rows)
+    # Keyword entries record absence, not records: no record count exists
+    # (d.md §6.2; a no-data response is never an observed zero).
+    assert reader.count(descriptor) is None
+    with pytest.raises(UnsupportedRead):
+        list(reader.read(descriptor, mode="points"))
+
+
+def test_no_data_reader_rejects_a_series_document(tmp_path):
+    series = tmp_path / "series.json"
+    series.write_text(
+        '{"no_data_keywords": [{"keyword": "A", "status": "no_data"}], '
+        '"data": [{"date": "2026-01-04", "value": 1}]}',
+        encoding="utf-8",
+    )
+    violations = _validate_no_data(series)
+    assert violations and "per-bucket" in violations[0]
+
+
+def test_no_data_reader_rejects_malformed_entries(tmp_path):
+    bad = tmp_path / "bad.json"
+    bad.write_text(
+        '{"no_data_keywords": [{"keyword": "", "status": "no_data"}]}',
+        encoding="utf-8",
+    )
+    assert _validate_no_data(bad) == [
+        "no_data_keywords[0] has no keyword label"
+    ]
+    missing = tmp_path / "missing.json"
+    missing.write_text('{"collected_at": "2026-10-02"}', encoding="utf-8")
+    assert _validate_no_data(missing) == [
+        "expected a 'no_data_keywords' array"
+    ]
 
 
 def test_object_reader_reads_related_queries_response():

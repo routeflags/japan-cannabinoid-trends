@@ -50,6 +50,15 @@
       "implemented_by": "storage.readers.comparison.JsonComparisonReader"
     },
     {
+      "reader_id": "json-no-data-reader",
+      "reader_version": "1.0.0",
+      "status": "active",
+      "formats": ["json"],
+      "artifact_types": ["raw_response"],
+      "read_modes": ["keywords"],
+      "implemented_by": "storage.readers.nodata.JsonNoDataReader"
+    },
+    {
       "reader_id": "json-object-reader",
       "reader_version": "1.0.0",
       "status": "active",
@@ -115,6 +124,13 @@
       "format": "json",
       "artifact_types": ["raw_response"],
       "reader_id": "json-object-reader",
+      "record_count_mode": "none"
+    },
+    {
+      "schema_id": "google-trends-no-data-v1",
+      "format": "json",
+      "artifact_types": ["raw_response"],
+      "reader_id": "json-no-data-reader",
       "record_count_mode": "none"
     },
     {

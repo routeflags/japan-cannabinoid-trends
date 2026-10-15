@@ -111,6 +111,22 @@ jobs:
             --version "${{ steps.identity.outputs.version }}" \
             --concept-doi "${{ steps.identity.outputs.concept_doi }}"
 
+      - name: Validate release manifest
+        run: |
+          # Validation-only gate (ISS-20261015-REL-014): the manifest declares
+          # the intended release identity and archive scope; a drift between
+          # the built zip and the manifest fails here, before Zenodo upload.
+          # Never publishes or uploads; the generator only binds the canonical
+          # scope (validation.release_manifest) to this version / concept DOI.
+          python3 scripts/release/make-release-manifest.py \
+            --version "${{ steps.identity.outputs.version }}" \
+            --concept-doi "${{ steps.identity.outputs.concept_doi }}" \
+            --archive "${{ steps.archive.outputs.zip_name }}" \
+            --output release-manifest.json
+          PYTHONPATH=src python3 -m validation.cli validate-release-manifest \
+            --file release-manifest.json \
+            --format json
+
       - name: Publish archive to Zenodo
         id: zenodo
         env:
