@@ -1,0 +1,25 @@
+{
+  "schema_version": "1.0.0",
+  "dataset_id": "cannabinoid-platform-trends",
+  "generated_by": "processing.platform_trends.build_platform_trends",
+  "sources": [
+    "docs/audits/gt-summary.json",
+    "metadata/provenance/declarations/20261015-youtube-csv-adoption.json",
+    "metadata/queries/query-registry.json"
+  ],
+  "excluded_sources": {
+    "x": "Excluded from this dataset release by owner decision on 2026-10-15. X coarse aggregates remain separate and are not part of the cross-platform release scope."
+  },
+  "outputs": {
+    "trend_observations": "trend_observations.csv",
+    "platform_coverage": "platform_coverage.csv",
+    "metric_dictionary": "metric_dictionary.csv",
+    "source_run_index": "source_run_index.csv"
+  },
+  "row_counts": {
+    "trend_observations": 66,
+    "platform_coverage": 28,
+    "metric_dictionary": 6,
+    "source_run_index": 20
+  }
+}

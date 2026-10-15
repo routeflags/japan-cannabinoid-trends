@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://routeflags.github.io/japan-cannabinoid-trends/schema/cannabinoid-platform-trends/platform_coverage.schema.json",
+  "title": "cannabinoid-platform-trends platform coverage",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "compound",
+    "compound_id",
+    "platform",
+    "status",
+    "metric_available",
+    "unit",
+    "run_count",
+    "latest_run_id",
+    "period_start",
+    "period_end",
+    "publication_eligible",
+    "notes"
+  ],
+  "properties": {
+    "compound": {"type": "string"},
+    "compound_id": {"type": "string"},
+    "platform": {"enum": ["google_trends", "youtube"]},
+    "status": {"enum": ["observed", "not_collected"]},
+    "metric_available": {"type": "string"},
+    "unit": {"type": "string"},
+    "run_count": {"type": "string", "pattern": "^[0-9]+$"},
+    "latest_run_id": {"type": "string"},
+    "period_start": {"type": "string"},
+    "period_end": {"type": "string"},
+    "publication_eligible": {"type": "string"},
+    "notes": {"type": "string"}
+  }
+}

@@ -1,6 +1,6 @@
 {
   "audit_version": "1.0.0",
-  "study_count": 9,
+  "study_count": 10,
   "studies": [
     {
       "study_id": "cannabinoid-multi-trends",
@@ -82,6 +82,36 @@
         "2021-10-10_2026-10-12"
       ],
       "has_artifact_manifest": true,
+      "coverage": "unevidenced",
+      "publication_status": "private_by_default"
+    },
+    {
+      "study_id": "cannabinoid-platform-trends",
+      "registered": true,
+      "title": "Cannabinoid Platform Trends",
+      "has_readme": true,
+      "has_methodology": true,
+      "research_questions_quoted": [
+        "日本国内において、各カンナビノイド成分の国内トレンドと、Google Trends / YouTube で観測できる差異は何か？"
+      ],
+      "run_count": 0,
+      "catalog_entry_count": 0,
+      "layout": [
+        "README.md",
+        "data",
+        "metadata",
+        "methodology.md"
+      ],
+      "data_file_count": 5,
+      "has_data_raw": false,
+      "data_raw_file_count": 0,
+      "sources": [],
+      "compound_ids": [],
+      "query_ids": [],
+      "timeframes": [],
+      "measurement_ids": [],
+      "window_ids": [],
+      "has_artifact_manifest": false,
       "coverage": "unevidenced",
       "publication_status": "private_by_default"
     },

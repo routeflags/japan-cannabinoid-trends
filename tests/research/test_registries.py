@@ -31,8 +31,8 @@ def _codes(issues) -> list[str]:
 
 
 # ---------------------------------------------------------------------------
-# Checked-in registries (9-study inventory, P1/P7: the 2-study vertical slice
-# plus the 2026-10-13 G7 increment registering the remaining 7 studies)
+# Checked-in registries (10-study inventory, P1/P7: the 2-study vertical slice
+# plus the 2026-10-13 G7 increment and the 2026-10-15 platform-trends dataset)
 # ---------------------------------------------------------------------------
 
 def test_study_registry_file_is_structurally_valid():
@@ -42,11 +42,12 @@ def test_study_registry_file_is_structurally_valid():
     assert check_study_registry(document) == []
 
 
-def test_study_registry_covers_exactly_the_nine_studies():
+def test_study_registry_covers_exactly_the_ten_studies():
     document = _load(STUDY_REGISTRY)
     assert [s["study_id"] for s in document["studies"]] == [
         "cbx-search-trends",
         "cannabinoid-multi-trends",
+        "cannabinoid-platform-trends",
         "cannabinoid-social-trends",
         "cbx-liquid-online-trend",
         "cbx-product-coa",
@@ -110,6 +111,7 @@ def test_registered_slice_studies_pass_reference_check():
     for study_id in (
         "cbx-search-trends",
         "cannabinoid-multi-trends",
+        "cannabinoid-platform-trends",
         "cannabinoid-social-trends",
         "cbx-liquid-online-trend",
         "cbx-product-coa",

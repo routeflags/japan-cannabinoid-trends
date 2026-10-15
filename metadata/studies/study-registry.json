@@ -20,6 +20,15 @@
       "status": "active"
     },
     {
+      "study_id": "cannabinoid-platform-trends",
+      "title": "Cannabinoid Platform Trends",
+      "research_questions": [
+        "日本国内において、各カンナビノイド成分の国内トレンドと、Google Trends / YouTube で観測できる差異は何か？"
+      ],
+      "sources": ["google-trends", "youtube"],
+      "status": "active"
+    },
+    {
       "study_id": "cannabinoid-social-trends",
       "title": "cannabinoid-social-trends — カンナビノイド規制前後の X (Twitter) 言及データ",
       "research_questions": [

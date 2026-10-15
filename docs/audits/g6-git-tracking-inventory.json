@@ -4,13 +4,13 @@
   "spec": "docs/plans/20261013f.md §15 (local plan; not tracked)",
   "target_root": "datasets",
   "include_private": false,
-  "count": 210,
+  "count": 221,
   "extra_count": 46,
   "raw_modified": false,
   "state_summary": {
     "absent": 12,
     "ignored": 28,
-    "tracked": 216
+    "tracked": 227
   },
   "entries": [
     {
@@ -1281,6 +1281,116 @@
       "ignored": false,
       "sha256": "e42bfd49fc4cd08fdb16ccbb743b41d9c04c28a4991e1b95077f89f5f35cdbf1",
       "sha256_after": "e42bfd49fc4cd08fdb16ccbb743b41d9c04c28a4991e1b95077f89f5f35cdbf1",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-platform-trends/README.md",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "dfbe3fe46ce5fffcfc6a7ac3903f80b26e1c03d23891e81d71b49afce616aee2",
+      "sha256_after": "dfbe3fe46ce5fffcfc6a7ac3903f80b26e1c03d23891e81d71b49afce616aee2",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-platform-trends/data/processed/manifest.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "2d89d47b73b2888fcc3accb55cdb7106d172008bc1e769a3ad7d7c4f8d0a0f2e",
+      "sha256_after": "2d89d47b73b2888fcc3accb55cdb7106d172008bc1e769a3ad7d7c4f8d0a0f2e",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-platform-trends/data/processed/metric_dictionary.csv",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "53f53fbf2d798517cb529c03af54cab6adfb2eb5420e67d1cd8792bfb8276d71",
+      "sha256_after": "53f53fbf2d798517cb529c03af54cab6adfb2eb5420e67d1cd8792bfb8276d71",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-platform-trends/data/processed/platform_coverage.csv",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "2dfcee17723e13f18c2ef5a2affafe5896e98648dafac530c11c336eb1c88b3c",
+      "sha256_after": "2dfcee17723e13f18c2ef5a2affafe5896e98648dafac530c11c336eb1c88b3c",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-platform-trends/data/processed/source_run_index.csv",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "ff28d70c026ffe8f59aa07e0ede7d4b41114fb4976bada3860bcbb9fe38afc59",
+      "sha256_after": "ff28d70c026ffe8f59aa07e0ede7d4b41114fb4976bada3860bcbb9fe38afc59",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-platform-trends/data/processed/trend_observations.csv",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "0ed6066c5ad4ace1d610297e941648b663e69a38d02059610cdfe30765f58920",
+      "sha256_after": "0ed6066c5ad4ace1d610297e941648b663e69a38d02059610cdfe30765f58920",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-platform-trends/metadata/schema/metric_dictionary.schema.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "b4ad35bdaebf988b850edcc991091395f071401463a1f25839c2ab955388c228",
+      "sha256_after": "b4ad35bdaebf988b850edcc991091395f071401463a1f25839c2ab955388c228",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-platform-trends/metadata/schema/platform_coverage.schema.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "7b1e7ae47f71b2e2589cb370d6d051dfc92b80fa20688c359a4eb029c000572a",
+      "sha256_after": "7b1e7ae47f71b2e2589cb370d6d051dfc92b80fa20688c359a4eb029c000572a",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-platform-trends/metadata/schema/source_run_index.schema.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "15f2152d48f57ca02e24992df646cecf8d5d7906183e1fa408676d9314c5efd8",
+      "sha256_after": "15f2152d48f57ca02e24992df646cecf8d5d7906183e1fa408676d9314c5efd8",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-platform-trends/metadata/schema/trend_observations.schema.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "3de805b1d9694819714641b602db67ea079bc53bdfa704b380b83111e08227ef",
+      "sha256_after": "3de805b1d9694819714641b602db67ea079bc53bdfa704b380b83111e08227ef",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-platform-trends/methodology.md",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "f4a26d8b1772354940c15c6c7458c2e6d158c17045449a62e27e7d18fb8e8469",
+      "sha256_after": "f4a26d8b1772354940c15c6c7458c2e6d158c17045449a62e27e7d18fb8e8469",
       "unchanged": true
     },
     {

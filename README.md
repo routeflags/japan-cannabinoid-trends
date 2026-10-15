@@ -89,6 +89,7 @@ All production scripts run through the `Makefile` (`make help` lists targets):
 make test                  # full test suite
 make stage DECLARATION=<f> # stage externally obtained payloads for review
 make adopt-all             # adopt staged runs (L1 verdict each)
+make platform-trends       # rebuild Google Trends + YouTube processed release tables
 make audit-snapshots       # regenerate tracked docs/audits snapshots
 make gates                 # validation gate scripts
 ```
@@ -253,6 +254,23 @@ How were published values calculated?
 Derived datasets should retain sufficient provenance to trace published observations back to their collection methodology.
 
 ## Current Research
+
+### Cannabinoid Platform Trends Dataset
+
+The current dataset-release track is `datasets/cannabinoid-platform-trends/`.
+It asks:
+
+> 日本国内において、各カンナビノイド成分のトレンドと、Google Trends / YouTube で観測できる差異は何か？
+
+The first release slice uses Google Trends and adopted YouTube aggregate
+evidence only. X is excluded from this release scope by owner decision
+(2026-10-15), and per-post / per-video records are not redistributed.
+
+Regenerate the processed tables with:
+
+```text
+make platform-trends
+```
 
 ### CBX Liquid Trend Study
 

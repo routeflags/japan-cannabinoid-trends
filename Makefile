@@ -7,6 +7,7 @@
 #   make test                         full test suite
 #   make stage DECLARATION=<file>      stage external payloads (COL-017 driver)
 #   make adopt-all                    adopt every staged run (L1 verdict each)
+#   make platform-trends              rebuild processed Google Trends + YouTube release tables
 #   make audit-new-runs               new-run contract audit (read-only)
 #   make audit-snapshots              regenerate tracked docs/audits snapshots
 #   make gates                        validation gate scripts
@@ -19,10 +20,10 @@ METADATA ?= metadata
 GATE ?= registries
 GATE_ARGS ?=
 
-.PHONY: help test collect stage adopt-all audit-new-runs audit-publication audit-snapshots gates
+.PHONY: help test collect stage adopt-all platform-trends audit-new-runs audit-publication audit-snapshots gates
 
 help:
-	@echo "Targets: test | stage DECLARATION=<file> | adopt-all | audit-new-runs | audit-publication | audit-snapshots | gates"
+	@echo "Targets: test | stage DECLARATION=<file> | adopt-all | platform-trends | audit-new-runs | audit-publication | audit-snapshots | gates"
 
 test:
 	$(PYTHON) -m pytest -q
@@ -40,6 +41,9 @@ adopt-all:
 		$(PYTHON) -m collection.core.cli adopt --staged "$$d" --workspace $(WORKSPACE) --datasets-root $(DATASETS) --config-dir $(CONFIG) --metadata-dir $(METADATA) || exit 1; \
 	done
 	@test -n "$$(ls -A $(WORKSPACE)/.staging/ 2>/dev/null)" || echo "no staged runs remaining"
+
+platform-trends:
+	$(PYTHON) -m processing.cli build-platform-trends --output-dir datasets/cannabinoid-platform-trends/data/processed
 
 audit-new-runs:
 	$(PYTHON) -m validation.cli audit-new-runs

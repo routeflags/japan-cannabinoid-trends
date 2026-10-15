@@ -20,28 +20,28 @@
     "include_private": false
   },
   "run_count": 47,
-  "count": 105,
+  "count": 110,
   "raw_modified": false,
   "judgment_summary": {
-    "missing_metadata": 6,
+    "missing_metadata": 11,
     "partially_recognized": 34,
     "recognized": 65
   },
   "format_summary": {
-    "csv": 8,
-    "json": 96,
+    "csv": 12,
+    "json": 97,
     "text": 1
   },
   "artifact_type_summary": {
     "comparison": 4,
-    "none": 38,
+    "none": 43,
     "raw_records": 1,
     "raw_response": 3,
     "summary": 13,
     "timeseries": 46
   },
   "manifest_summary": {
-    "missing": 75,
+    "missing": 80,
     "present": 30
   },
   "sqlite_present": false,
@@ -2685,6 +2685,141 @@
       "notes": [
         "content:series:date+value",
         "content:points:262"
+      ]
+    },
+    {
+      "path": "datasets/cannabinoid-platform-trends/data/processed/manifest.json",
+      "bytes": 876,
+      "sha256": "2d89d47b73b2888fcc3accb55cdb7106d172008bc1e769a3ad7d7c4f8d0a0f2e",
+      "format": "json",
+      "sniff_state": "partial",
+      "artifact_type": null,
+      "schema_id": null,
+      "contains_full_timeseries": null,
+      "record_count": null,
+      "declared_data_points": null,
+      "reader_id": null,
+      "reader_registered": null,
+      "study_id": null,
+      "run_id": null,
+      "source_id": null,
+      "run_directory": null,
+      "metadata_state": "missing",
+      "manifest_state": "missing",
+      "verification": "unverifiable_no_manifest",
+      "judgment": "missing_metadata",
+      "notes": [
+        "content:json_object",
+        "legacy:no-manifest",
+        "lineage:unknown"
+      ]
+    },
+    {
+      "path": "datasets/cannabinoid-platform-trends/data/processed/metric_dictionary.csv",
+      "bytes": 1457,
+      "sha256": "53f53fbf2d798517cb529c03af54cab6adfb2eb5420e67d1cd8792bfb8276d71",
+      "format": "csv",
+      "sniff_state": "partial",
+      "artifact_type": null,
+      "schema_id": null,
+      "contains_full_timeseries": null,
+      "record_count": null,
+      "declared_data_points": null,
+      "reader_id": null,
+      "reader_registered": null,
+      "study_id": null,
+      "run_id": null,
+      "source_id": null,
+      "run_directory": null,
+      "metadata_state": "missing",
+      "manifest_state": "missing",
+      "verification": "unverifiable_no_manifest",
+      "judgment": "missing_metadata",
+      "notes": [
+        "content:extension:csv",
+        "legacy:no-manifest",
+        "lineage:unknown"
+      ]
+    },
+    {
+      "path": "datasets/cannabinoid-platform-trends/data/processed/platform_coverage.csv",
+      "bytes": 7069,
+      "sha256": "2dfcee17723e13f18c2ef5a2affafe5896e98648dafac530c11c336eb1c88b3c",
+      "format": "csv",
+      "sniff_state": "partial",
+      "artifact_type": null,
+      "schema_id": null,
+      "contains_full_timeseries": null,
+      "record_count": null,
+      "declared_data_points": null,
+      "reader_id": null,
+      "reader_registered": null,
+      "study_id": null,
+      "run_id": null,
+      "source_id": null,
+      "run_directory": null,
+      "metadata_state": "missing",
+      "manifest_state": "missing",
+      "verification": "unverifiable_no_manifest",
+      "judgment": "missing_metadata",
+      "notes": [
+        "content:extension:csv",
+        "legacy:no-manifest",
+        "lineage:unknown"
+      ]
+    },
+    {
+      "path": "datasets/cannabinoid-platform-trends/data/processed/source_run_index.csv",
+      "bytes": 7367,
+      "sha256": "ff28d70c026ffe8f59aa07e0ede7d4b41114fb4976bada3860bcbb9fe38afc59",
+      "format": "csv",
+      "sniff_state": "partial",
+      "artifact_type": null,
+      "schema_id": null,
+      "contains_full_timeseries": null,
+      "record_count": null,
+      "declared_data_points": null,
+      "reader_id": null,
+      "reader_registered": null,
+      "study_id": null,
+      "run_id": null,
+      "source_id": null,
+      "run_directory": null,
+      "metadata_state": "missing",
+      "manifest_state": "missing",
+      "verification": "unverifiable_no_manifest",
+      "judgment": "missing_metadata",
+      "notes": [
+        "content:extension:csv",
+        "legacy:no-manifest",
+        "lineage:unknown"
+      ]
+    },
+    {
+      "path": "datasets/cannabinoid-platform-trends/data/processed/trend_observations.csv",
+      "bytes": 30219,
+      "sha256": "0ed6066c5ad4ace1d610297e941648b663e69a38d02059610cdfe30765f58920",
+      "format": "csv",
+      "sniff_state": "partial",
+      "artifact_type": null,
+      "schema_id": null,
+      "contains_full_timeseries": null,
+      "record_count": null,
+      "declared_data_points": null,
+      "reader_id": null,
+      "reader_registered": null,
+      "study_id": null,
+      "run_id": null,
+      "source_id": null,
+      "run_directory": null,
+      "metadata_state": "missing",
+      "manifest_state": "missing",
+      "verification": "unverifiable_no_manifest",
+      "judgment": "missing_metadata",
+      "notes": [
+        "content:extension:csv",
+        "legacy:no-manifest",
+        "lineage:unknown"
       ]
     },
     {

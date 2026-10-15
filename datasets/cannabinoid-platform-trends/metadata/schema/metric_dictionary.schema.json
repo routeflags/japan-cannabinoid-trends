@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://routeflags.github.io/japan-cannabinoid-trends/schema/cannabinoid-platform-trends/metric_dictionary.schema.json",
+  "title": "cannabinoid-platform-trends metric dictionary",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "metric",
+    "unit",
+    "platform",
+    "meaning",
+    "comparable_across_platforms",
+    "evidence_level",
+    "limitations"
+  ],
+  "properties": {
+    "metric": {"type": "string"},
+    "unit": {"type": "string"},
+    "platform": {"enum": ["google_trends", "youtube"]},
+    "meaning": {"type": "string"},
+    "comparable_across_platforms": {"enum": ["no"]},
+    "evidence_level": {"enum": ["observed", "derived"]},
+    "limitations": {"type": "string"}
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://routeflags.github.io/japan-cannabinoid-trends/schema/cannabinoid-platform-trends/source_run_index.schema.json",
+  "title": "cannabinoid-platform-trends source run index",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "run_id",
+    "source",
+    "platform",
+    "study_id",
+    "collector",
+    "query_id",
+    "query_text",
+    "collection_timestamp",
+    "request_parameters",
+    "observed_period_start",
+    "observed_period_end",
+    "processed_artifact",
+    "provenance_ref",
+    "publication_status"
+  ],
+  "properties": {
+    "run_id": {"type": "string"},
+    "source": {"type": "string"},
+    "platform": {"enum": ["google_trends", "youtube"]},
+    "study_id": {"type": "string"},
+    "collector": {"type": "string"},
+    "query_id": {"type": "string"},
+    "query_text": {"type": "string"},
+    "collection_timestamp": {"type": "string"},
+    "request_parameters": {"type": "string"},
+    "observed_period_start": {"type": "string"},
+    "observed_period_end": {"type": "string"},
+    "processed_artifact": {"type": "string"},
+    "provenance_ref": {"type": "string"},
+    "publication_status": {"type": "string"}
+  }
+}

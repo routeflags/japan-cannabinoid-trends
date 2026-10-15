@@ -40,5 +40,5 @@ def test_audit_studies_command_is_non_destructive(tmp_path):
     output = tmp_path / "inventory.json"
     assert _run("audit-studies", "--output", str(output)) == 0
     inventory = json.loads(output.read_text(encoding="utf-8"))
-    assert inventory["study_count"] == 9
+    assert inventory["study_count"] == 10
     assert inventory["raw_modified"] is False

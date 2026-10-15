@@ -5,6 +5,8 @@
 - ``classify``         classify one text against the content taxonomy notations
 - ``aggregate-x``        weekly/monthly group counts from the private per-post
   X input (read-only; no per-post output)
+- ``build-platform-trends``  Google Trends + YouTube cross-platform release
+  tables (X excluded by owner decision)
 
 The Python API (:mod:`processing.reproduce`, :mod:`processing.classify`) is the
 primary interface; this CLI exposes it for operators and CI.
@@ -16,6 +18,7 @@ Exit codes follow the repository convention (``docs/specs/validation-framework.m
 from __future__ import annotations
 
 import argparse
+import json
 import sys
 from pathlib import Path
 
@@ -41,6 +44,7 @@ from processing.gt_statistics import (
     page_filename,
     replace_block,
 )
+from processing.platform_trends import build_platform_trends
 from processing.reproduce import audit_processed_artifacts, reproduce_artifact
 from processing.rulespec import RuleSpecError, load_content_rules
 from validation.reporting import dump_json
@@ -134,6 +138,25 @@ def cmd_classify(args) -> int:
     else:
         for key, value in result.items():
             print(f"{key}: {value}")
+    return EXIT_OK
+
+
+def cmd_build_platform_trends(args) -> int:
+    try:
+        manifest = build_platform_trends(args.repo_root, args.output_dir)
+    except OSError as error:
+        _err(f"build-platform-trends: cannot write dataset: {error}")
+        return EXIT_IO
+    except (json.JSONDecodeError, KeyError) as error:
+        _err(f"build-platform-trends: invalid source evidence: {error}")
+        return EXIT_CONFIG
+    if args.format == "json":
+        print(dump_json(manifest), end="")
+    else:
+        counts = ", ".join(
+            f"{name}={count}" for name, count in manifest["row_counts"].items()
+        )
+        print(f"platform trends dataset written: {args.output_dir} [{counts}]")
     return EXIT_OK
 
 
@@ -352,6 +375,17 @@ def build_parser() -> argparse.ArgumentParser:
     classify.add_argument("--text", required=True)
     classify.add_argument("--format", choices=("text", "json"), default="text")
     classify.set_defaults(func=cmd_classify)
+
+    platform = sub.add_parser(
+        "build-platform-trends",
+        help="build Google Trends + YouTube cross-platform release tables (X excluded)",
+    )
+    platform.add_argument(
+        "--output-dir",
+        default="datasets/cannabinoid-platform-trends/data/processed",
+    )
+    platform.add_argument("--format", choices=("text", "json"), default="text")
+    platform.set_defaults(func=cmd_build_platform_trends)
 
     aggregate = sub.add_parser(
         "aggregate-x",

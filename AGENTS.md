@@ -475,7 +475,8 @@ Run production through the repository Makefile so invocations stay reproducible:
 
 ```text
 make test | make stage DECLARATION=<file> | make adopt-all
-make audit-new-runs | make audit-publication | make audit-snapshots | make gates
+make platform-trends | make audit-new-runs | make audit-publication
+make audit-snapshots | make gates
 
 ```
 
@@ -488,6 +489,10 @@ recorded). The producer never decides adoption; the gate never depends on
 the code that produced its input.
 
 Do not add side channels that publish, push, or delete data.
+
+Dataset production targets such as `make platform-trends` must write only to
+documented downstream layers (for example `data/processed/`) and must preserve
+source-specific units. They are not release, upload, or publication actions.
 
 ---
 
