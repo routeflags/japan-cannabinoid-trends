@@ -353,6 +353,32 @@
 
   <p><strong>出所:</strong> <code>research/youtube/20261004-cbx-youtube-12months-report.md</code>（2026-10-04 収集、YouTube Data API v3）。なお、当該 API v3 は 2026-10-12 の方針判断により使用を取り止め、当時の raw は削除済みである（本節の数値は削除前の取得結果であり、再取得は行わない）。</p>
   <p><strong>制約:</strong> YouTube 検索結果のサンプルであり、全動画を網羅するものではない。CBX は Honda バイクと同名であり、除外判定は記録の分類に従う。</p>
+
+  <h3>採用済み Apify 置換証拠（ISS-20261015-COL-033、2026-10-15）</h3>
+  <p>置換証拠は Apify <code>streamers/youtube-scraper</code>（Actor <code>h7sDV53CddomktSi5</code>）の検索結果サンプルであり、API センサスではない。件数を v3 取得値と直接比較しない。CBX キーワードの採用 run は存在しない（欠測であり、需要ゼロを意味しない）。下表の 6 runs は <code>youtube-consistency</code> 研究の他化合物の採用分であり、CBX の数値証拠に流用しない。</p>
+  <table>
+    <thead>
+      <tr>
+        <th>run_id</th>
+        <th>キーワード</th>
+        <th>件数</th>
+        <th>dateFilter（API 要求）</th>
+        <th>観測範囲（payload の動画公開日）</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td><code>20261010T141947Z-youtube-youtube-consistency</code></td><td>HHBD リキッド</td><td>224</td><td>all</td><td>2020-09-30 〜 2026-10-06</td></tr>
+      <tr><td><code>20261010T143429Z-youtube-youtube-consistency</code></td><td>H4CBH リキッド</td><td>395</td><td>all</td><td>2020-10-01 〜 2026-10-02</td></tr>
+      <tr><td><code>20261010T144421Z-youtube-youtube-consistency</code></td><td>CBD リキッド</td><td>456</td><td>all</td><td>2014-11-17 〜 2026-10-10</td></tr>
+      <tr><td><code>20261010T145727Z-youtube-youtube-consistency</code></td><td>CBN リキッド</td><td>468</td><td>all</td><td>2008-08-01 〜 2026-09-24</td></tr>
+      <tr><td><code>20261010T164915Z-youtube-youtube-consistency</code></td><td>CRDH リキッド</td><td>352</td><td>all</td><td>2022-09-29 〜 2026-09-12</td></tr>
+      <tr><td><code>20261011T191900Z-youtube-youtube-consistency</code></td><td>CBD リキッド</td><td>393</td><td>year</td><td>2025-10-11 〜 2026-10-10</td></tr>
+      <tr><td>合計（6 runs）</td><td>—</td><td><strong>2288</strong></td><td>—</td><td>—</td></tr>
+    </tbody>
+  </table>
+  <p><strong>照合:</strong> 内訳 224＋395＋456＋468＋352＋393＝2288 は宣言 <code>metadata/provenance/declarations/20261015-youtube-csv-adoption.json</code> の各 <code>returned_count</code> と一致する。正式記録は <code>docs/issues/closed/resolved/20261015_p1_unadopted-youtube-exports.md</code>（RESOLVED 2026-10-15）。raw は <code>datasets/youtube-consistency/data/raw/youtube/&lt;run-id&gt;/</code> の無追跡 private 保管であり、追跡層に per-post データを置かない（集計のみ）。</p>
+  <p><strong>時間の区別:</strong> <code>dateFilter</code> は API 要求パラメータ（相対ローリング窓）であり、<code>window.start/end_exclusive</code> は payload の動画公開日の観測範囲である。観測範囲を API 検索条件として扱わない（オーナー指示 2026-10-15、宣言の limitations に明記）。<code>year</code> は直近約365日のローリング窓であり、観測範囲 2025-10-11〜2026-10-10 と整合する。</p>
+  <p><strong>制約（置換証拠）:</strong> Apify 検索結果は取得時点のサンプルであり、全動画のセンサスではない。同一クエリの再実行は非決定的に変動しうる。異なるプラットフォーム・異なる収集手段の件数は直接比較できない。動画単位の記録は公開しない（集計のみ）。</p>
 </div>
 
 
@@ -526,6 +552,7 @@
 
   <p><strong>出所:</strong> 月次分布は <code>research/youtube/20261004-cbx-rikiddo-youtube-12months-report.md</code>（2026-10-04 収集、YouTube Data API v3）。再生数等の深度統計は Apify 収集のフィルタ後 24 件（<code>datasets/cbx-social-trends/data/processed/youtube_filtered_202607/</code>、2026-10-01 フィルタ、クエリ「CBX リキッド」）。動画長・公開年（絶対日付）の記録は無い。当該 API v3 は 2026-10-12 の方針判断により使用を取り止め、当時の raw は削除済みである（本節の数値は削除前の取得結果であり、再取得は行わない）。</p>
   <p><strong>制約:</strong> YouTube 検索結果は取得日時点のものであり、動画の追加・削除により変動する可能性がある。24 件中、全件が CBX タイトルを含むが、全件がカンナビノイド CBX であることを保証するものではない。</p>
+  <p><strong>採用との関係（ISS-20261015-COL-033）:</strong> 上記 24 件フィルタは COL-033 の採用対象ではない。COL-033 の採用 6 runs（合計 2288、宣言 <code>metadata/provenance/declarations/20261015-youtube-csv-adoption.json</code>）に CBX リキッドは含まれない。CBD リキッドの採用 2 runs（<code>20261010T144421Z-youtube-youtube-consistency</code> 456 件・<code>dateFilter=all</code>・観測 2014-11-17〜2026-10-10、<code>20261011T191900Z-youtube-youtube-consistency</code> 393 件・<code>dateFilter=year</code>・観測 2025-10-11〜2026-10-10）も別キーワードの検索結果サンプルであり、CBX リキッドの証拠に流用しない。<code>dateFilter</code> は API 要求パラメータ（相対窓）であり、観測範囲を検索条件として扱わない。動画単位の記録は公開しない（集計のみ）。</p>
 </div>
 
 

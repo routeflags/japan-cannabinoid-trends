@@ -9,18 +9,18 @@
     "recursive_audit_required": true
   },
   "summary": {
-    "issue_count": 65,
-    "active_count": 37,
+    "issue_count": 66,
+    "active_count": 38,
     "closed_count": 28,
     "status_counts": {
       "DOCUMENTED": 1,
       "MITIGATED": 1,
-      "OPEN": 35,
+      "OPEN": 36,
       "PENDING": 2,
       "RESOLVED": 26
     },
     "open_p0": 0,
-    "open_p1": 10,
+    "open_p1": 11,
     "failure_count": 0
   },
   "layout": {
@@ -61,7 +61,7 @@
           "priority": "P1",
           "status": "OPEN",
           "path": "docs/issues/active/00-needs-user-confirmation/20261014.md"
-        },
+        }
       ]
     },
     {
@@ -105,15 +105,21 @@
         "datapackage / disclosure / relationship notes が最新状態に更新される",
         "公開前に publication artifact の review decision を approved または denied に確定する"
       ],
-      "issue_count": 2,
+      "issue_count": 3,
       "status_counts": {
-        "OPEN": 2
+        "OPEN": 3
       },
       "priority_counts": {
-        "P1": 1,
+        "P1": 2,
         "P2": 1
       },
       "issues": [
+        {
+          "id": "ISS-20261015-PUB-CBX-YT-033",
+          "priority": "P1",
+          "status": "OPEN",
+          "path": "docs/issues/active/10-publication-release-readiness/20261015_p1_cbx-youtube-adoption-reflection.md"
+        },
         {
           "id": "ISS-20261002-016",
           "priority": "P2",

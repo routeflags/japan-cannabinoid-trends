@@ -6,8 +6,8 @@
   "layer": "publication",
   "source_kind": "html",
   "storage_policy_id": "publication-html-candidate",
-  "sha256": "5ec58b8c0a07d0aecb175c3be820f0e91df41c40c509dea33112a8aab4e25e5f",
-  "byte_length": 18065,
+  "sha256": "5ba5c823e8aace4f03bee3cd8087c2792cfbd9ad0a5db3f76f1d3479032e494c",
+  "byte_length": 22315,
   "recorded_at": "2026-10-15",
   "notes": "未公開 publication HTML。PC-7 の審査 envelope として内容 hash を固定する。対象 publication はまだ公開していないため、decision は requires_review から開始する。"
 }
