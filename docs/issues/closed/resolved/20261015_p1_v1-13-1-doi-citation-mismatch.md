@@ -96,3 +96,19 @@ v1.13.1 の不整合を、**公開済みリリースは書き換えず v1.13.2 �
   `10.5281/zenodo.23390594` を使う。
 
 v1.13.1 は履歴として保持し、GitHub Release notes に訂正関係を記載する。
+
+### 残存（記録。恒久対策とは別）
+
+v1.13.2 の Zenodo record `23392789`（version DOI `10.5281/zenodo.23392789` /
+concept DOI `10.5281/zenodo.23390594`）は、newversion ドラフトが継承した
+`japan-cannabinoid-trends-v1.13.1-clean.zip` を自身の
+`japan-cannabinoid-trends-v1.13.2-clean.zip` と併せて保持している。
+
+- 公開済み record のファイル削除は Zenodo API では拒否される（測定: 2026-10-15、
+  `DELETE /api/deposit/depositions/23392789/files/<id>` → HTTP 403。
+  workflow run 38745740554）。メタデータのみ編集可。
+- 影響は限定的（同一 series のクリーンアーカイブが 1 件多く入るだけ。per-post
+  X データや非公開物は含まない）。record とアーカイブは不変のため遡及訂正しない。
+- 再発防止は恒久対策側で担保: `publish-zenodo.py` はアップロード前にドラフトの
+  継承ファイルを削除する（`tests/validation/test_publish_zenodo.py` が
+  「DELETE が upload より先」を固定）。次回 release で実地確認する。
