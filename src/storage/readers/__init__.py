@@ -20,6 +20,7 @@ from storage.readers.csv import CsvRecordReader
 from storage.readers.nodata import JsonNoDataReader
 from storage.readers.objects import JsonObjectReader
 from storage.readers.pages import JsonPageReader
+from storage.readers.query_batch import JsonQueryBatchReader
 from storage.readers.records import JsonRecordReader
 from storage.readers.sqlite import SqliteReader
 from storage.readers.summary import JsonSummaryReader
@@ -36,6 +37,7 @@ READER_CLASSES: tuple[type[StorageReader], ...] = (
     JsonComparisonReader,
     JsonAveragesReader,
     JsonNoDataReader,
+    JsonQueryBatchReader,
     JsonObjectReader,
     SqliteReader,
     CsvRecordReader,

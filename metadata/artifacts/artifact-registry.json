@@ -69,6 +69,16 @@
       "implemented_by": "storage.readers.averages.JsonAveragesReader"
     },
     {
+      "reader_id": "json-query-batch-reader",
+      "reader_version": "1.0.0",
+      "status": "active",
+      "formats": ["json"],
+      "artifact_types": ["raw_response"],
+      "read_modes": ["queries"],
+      "contains_full_timeseries": false,
+      "implemented_by": "storage.readers.query_batch.JsonQueryBatchReader"
+    },
+    {
       "reader_id": "json-object-reader",
       "reader_version": "1.0.0",
       "status": "active",
@@ -149,6 +159,14 @@
       "artifact_types": ["summary"],
       "reader_id": "json-averages-reader",
       "record_count_mode": "none",
+      "contains_full_timeseries": false
+    },
+    {
+      "schema_id": "google-trends-query-batch-v1",
+      "format": "json",
+      "artifact_types": ["raw_response"],
+      "reader_id": "json-query-batch-reader",
+      "record_count_mode": "array_length",
       "contains_full_timeseries": false
     },
     {

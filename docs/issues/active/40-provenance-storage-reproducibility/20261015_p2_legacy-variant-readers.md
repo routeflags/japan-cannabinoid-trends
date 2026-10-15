@@ -36,7 +36,7 @@ no-data 応答、分散解析 JSON など 16 件）は、schema / reader が未�
 ## 完了条件
 
 - [x] 対象変種の一覧化（16 件の識別と代表例）
-- [x] 実装・登録した変種の reader と契約テスト（no-data 1 件 + averages のみ 11 件。残りは未登録）
+- [x] 実装・登録した変種の reader と契約テスト（no-data 1 件 + averages のみ 11 件 + query batch 2 件。残りは未登録）
 - [x] 監査スナップショット再生成と鮮度テスト更新（当該差分のみ。`raw_modified: false` 維持）
 - [ ] 残り変種の登録（下表。実利用順・両形状照合必須。オフライン実施可能だが本スライス対象外のため OPEN）
 
@@ -110,11 +110,38 @@ averages のみ変種の両形状を 1 スキーマで登録した。外部 API 
   `metadata_state: missing` / `unverifiable_no_manifest` として残る）
 - 検証: `PYTHONPATH=src python3 -m pytest tests/storage/test_sniff.py tests/storage/test_readers.py tests/validation/test_storage_inventory_audit.py -q`
 
+## 追記（2026-10-15、query batch スライス。OPEN のまま）
+
+related queries バッチ / queries+object の 2 形状を 1 スキーマで登録した。
+外部 API は一切呼んでいない。どちらも query 単位の raw response であり、
+時系列として読ませない。
+
+- 実装スライス: `queries` 配列を持つ legacy Google Trends query batch。
+  `queries` が object 配列の形状（related-query probe）と、`queries` が string 配列で
+  `data` object に集計・非ゼロ週などの結果を持つ形状（disambiguated probe）を、
+  実ファイル 2 件で照合した。`data` が配列の形状は per-bucket 系列の可能性があるため
+  query batch としては認めず `partial` のままにする。
+- 追加: `src/storage/readers/query_batch.py`（`json-query-batch-reader`。
+  `queries` モードのみ提供し `points` 等は拒否。`count` は query 数のみを返す）
+- 登録: `src/storage/sniff.py`（2 形状を `google-trends-query-batch-v1` /
+  `raw_response` の `recognized` に昇格）、`metadata/artifacts/artifact-registry.json`
+  （reader＋schema 各 1 件。`record_count_mode: array_length`、
+  `contains_full_timeseries: false`）、`src/storage/readers/__init__.py`
+- 契約テスト: `tests/storage/test_sniff.py`（両実ファイルの recognized 断言、
+  mixed query / `data` 配列の partial 維持）、`tests/storage/test_readers.py`
+  （両形状の読解・`points` 拒否・不正形状拒否・reader 一覧更新）
+- スナップショット再生成手順:
+  `PYTHONPATH=src python3 -m validation.cli audit-artifacts --output docs/audits/g4-storage-inventory.json`
+  実行後、同 checkout の local-only YouTube raw run 6 件は本変更に無関係なため
+  既存方針どおり snapshot から除外している。差分は query batch 2 件 + 直近で採用済みの
+  CBD raw run の反映に限定し、`raw_modified: false` を維持する。
+- 検証: `PYTHONPATH=src python3 -m pytest tests/storage/test_sniff.py tests/storage/test_readers.py tests/validation/test_artifact_registry.py tests/validation/test_storage_contract.py -q`
+  （76 passed）
+
 残りのオフライン作業（優先度順。いずれも外部・所有者待ちではない）:
 
 | 残変種 | 件数 | 根拠 | 登録条件 |
 |---|---|---|---|
-| related queries バッチ / queries+object | 2 | `fields:queries`（`data:object` 有無の 2 形状） | 両形状の実ファイル照合を必須とする（averages スライスと同型） |
 | notation presurvey（`comparisons`） | 1 | `fields:comparisons` | 単一実例のみのため、実利用または第 2 実例の確認まで見送り |
 | 分散解析・差分（`repeat_diff` 等 analysis 形状） | 3 | `json_object` | 実利用時に形状を確定して登録 |
 | 新規 run の `content` ラッパー（`payload.json` 8 件＋`mcp-tool-result.json` 4 件） | 12 | `json_object`（`content` キー。登録済み `google-trends-mcp-tool-result-v1` とは別形状） | 新規 run 側の形式確定後に §7 手順で登録 |

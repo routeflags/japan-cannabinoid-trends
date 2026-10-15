@@ -10,14 +10,14 @@
   },
   "summary": {
     "issue_count": 69,
-    "active_count": 17,
-    "closed_count": 52,
+    "active_count": 16,
+    "closed_count": 53,
     "status_counts": {
       "DOCUMENTED": 1,
       "MITIGATED": 1,
-      "OPEN": 15,
+      "OPEN": 14,
       "PENDING": 2,
-      "RESOLVED": 50
+      "RESOLVED": 51
     },
     "open_p0": 0,
     "open_p1": 3,
@@ -175,12 +175,12 @@
         "legacy reader・SQLite live verification・coverage manifest の未接続を解消する",
         "private X data retention と request-only evidence が方針として記録される"
       ],
-      "issue_count": 6,
+      "issue_count": 5,
       "status_counts": {
-        "OPEN": 6
+        "OPEN": 5
       },
       "priority_counts": {
-        "P2": 6
+        "P2": 5
       },
       "issues": [
         {
@@ -188,12 +188,6 @@
           "priority": "P2",
           "status": "OPEN",
           "path": "docs/issues/active/40-provenance-storage-reproducibility/20261015_p2_apify-cloud-evidence.md"
-        },
-        {
-          "id": "ISS-20261015-PRV-011",
-          "priority": "P2",
-          "status": "OPEN",
-          "path": "docs/issues/active/40-provenance-storage-reproducibility/20261015_p2_evidence-reconciliation.md"
         },
         {
           "id": "ISS-20261015-ART-006",
@@ -288,11 +282,11 @@
     }
   ],
   "closed": {
-    "issue_count": 52,
+    "issue_count": 53,
     "status_counts": {
       "DOCUMENTED": 1,
       "MITIGATED": 1,
-      "RESOLVED": 50
+      "RESOLVED": 51
     },
     "issues": [
       {
@@ -422,6 +416,12 @@
         "path": "docs/issues/closed/resolved/20261012_p1_cbd-youtube-10year-incomplete.md"
       },
       {
+        "id": "ISS-20261012-CBD-004",
+        "priority": "P2",
+        "status": "RESOLVED",
+        "path": "docs/issues/closed/resolved/20261012_p2_cbd-google-trends-5y-raw-missing.md"
+      },
+      {
         "id": "ISS-20261014-PUB-029",
         "priority": "P1",
         "status": "RESOLVED",
@@ -548,10 +548,22 @@
         "path": "docs/issues/closed/resolved/20261015_p2_data-catalog-persistence.md"
       },
       {
+        "id": "ISS-20261015-PRV-011",
+        "priority": "P2",
+        "status": "RESOLVED",
+        "path": "docs/issues/closed/resolved/20261015_p2_evidence-reconciliation.md"
+      },
+      {
         "id": "ISS-20261015-GT-002",
         "priority": "P2",
         "status": "RESOLVED",
         "path": "docs/issues/closed/resolved/20261015_p2_gt-legacy-label-year-defect.md"
+      },
+      {
+        "id": "ISS-20261015-TAX-025",
+        "priority": "P2",
+        "status": "RESOLVED",
+        "path": "docs/issues/closed/resolved/20261015_p2_iptc-unmapped-concepts.md"
       },
       {
         "id": "ISS-20261015-COL-020",
@@ -594,18 +606,6 @@
         "priority": "P3",
         "status": "RESOLVED",
         "path": "docs/issues/closed/resolved/20261015_p3_guide-structure-requirements-unchecked.md"
-      },
-      {
-        "id": "ISS-20261015-TAX-025",
-        "priority": "P2",
-        "status": "RESOLVED",
-        "path": "docs/issues/closed/resolved/20261015_p2_iptc-unmapped-concepts.md"
-      },
-      {
-        "id": "ISS-20261012-CBD-004",
-        "priority": "P2",
-        "status": "RESOLVED",
-        "path": "docs/issues/closed/resolved/20261012_p2_cbd-google-trends-5y-raw-missing.md"
       }
     ]
   }

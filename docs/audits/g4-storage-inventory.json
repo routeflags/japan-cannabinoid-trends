@@ -19,30 +19,30 @@
     ],
     "include_private": false
   },
-  "run_count": 41,
-  "count": 105,
+  "run_count": 42,
+  "count": 107,
   "raw_modified": false,
   "judgment_summary": {
     "missing_metadata": 10,
-    "partially_recognized": 18,
-    "recognized": 77
+    "partially_recognized": 17,
+    "recognized": 80
   },
   "format_summary": {
     "csv": 6,
-    "json": 98,
+    "json": 100,
     "text": 1
   },
   "artifact_type_summary": {
     "comparison": 4,
     "none": 27,
     "raw_records": 1,
-    "raw_response": 3,
+    "raw_response": 4,
     "summary": 24,
-    "timeseries": 46
+    "timeseries": 47
   },
   "manifest_summary": {
     "missing": 81,
-    "present": 24
+    "present": 26
   },
   "sqlite_present": false,
   "sqlite_note": "SQLite stores are local-only in this repository (see docs/specs/validation-framework.md G4 section); absence in the audit scope is recorded as not-present, never as zero content",
@@ -442,6 +442,18 @@
       "verification": "manifest_present",
       "artifact_count": 2,
       "sha256": "f2e1da0c33e9f176d883dad5c947a5a406c2bf00bbf97e0d3cbcef0fe6e6520d",
+      "lineage_note": null
+    },
+    {
+      "run_id": "20261015T205048Z-google-trends-cannabinoid-multi-trends",
+      "path": "datasets/cannabinoid-multi-trends/data/raw/google_trends/20261015T205048Z-google-trends-cannabinoid-multi-trends",
+      "study_id": "cannabinoid-multi-trends",
+      "source_id": "google-trends",
+      "metadata_state": "present",
+      "manifest_state": "present",
+      "verification": "manifest_present",
+      "artifact_count": 2,
+      "sha256": "0a6a8f894bdfce8af1d82b43064c7fc441fbf0a5e5077aefec213ae6137aaf97",
       "lineage_note": null
     },
     {
@@ -2643,6 +2655,57 @@
       ]
     },
     {
+      "path": "datasets/cannabinoid-multi-trends/data/raw/google_trends/20261015T205048Z-google-trends-cannabinoid-multi-trends/payload.json",
+      "bytes": 7823,
+      "sha256": "55ccb8bce93fde7f829f7c60f7eb704aecbf395e27698281178eaa4c3b4407dc",
+      "format": "json",
+      "sniff_state": "partial",
+      "artifact_type": null,
+      "schema_id": null,
+      "contains_full_timeseries": null,
+      "record_count": null,
+      "declared_data_points": null,
+      "reader_id": null,
+      "reader_registered": null,
+      "study_id": "cannabinoid-multi-trends",
+      "run_id": "20261015T205048Z-google-trends-cannabinoid-multi-trends",
+      "source_id": "google-trends",
+      "run_directory": "datasets/cannabinoid-multi-trends/data/raw/google_trends/20261015T205048Z-google-trends-cannabinoid-multi-trends",
+      "metadata_state": "present",
+      "manifest_state": "present",
+      "verification": "manifest_present",
+      "judgment": "partially_recognized",
+      "notes": [
+        "content:json_object"
+      ]
+    },
+    {
+      "path": "datasets/cannabinoid-multi-trends/data/raw/google_trends/20261015T205048Z-google-trends-cannabinoid-multi-trends/records_cbd.json",
+      "bytes": 15590,
+      "sha256": "fc2c10dbe8750f07a8b85301238ae46aeb8474b90fc6b2fac7c50e1b9b785043",
+      "format": "json",
+      "sniff_state": "recognized",
+      "artifact_type": "timeseries",
+      "schema_id": "google-trends-interest-over-time-v1",
+      "contains_full_timeseries": true,
+      "record_count": 262,
+      "declared_data_points": null,
+      "reader_id": "json-timeseries-reader",
+      "reader_registered": true,
+      "study_id": "cannabinoid-multi-trends",
+      "run_id": "20261015T205048Z-google-trends-cannabinoid-multi-trends",
+      "source_id": "google-trends",
+      "run_directory": "datasets/cannabinoid-multi-trends/data/raw/google_trends/20261015T205048Z-google-trends-cannabinoid-multi-trends",
+      "metadata_state": "present",
+      "manifest_state": "present",
+      "verification": "manifest_present",
+      "judgment": "recognized",
+      "notes": [
+        "content:series:date+value",
+        "content:points:262"
+      ]
+    },
+    {
       "path": "datasets/cannabinoid-platform-trends/data/processed/manifest.json",
       "bytes": 876,
       "sha256": "2d89d47b73b2888fcc3accb55cdb7106d172008bc1e769a3ad7d7c4f8d0a0f2e",
@@ -2949,14 +3012,14 @@
       "bytes": 297,
       "sha256": "15ad2b2ff8c494d8c63e1cd618a12d3c5d2bf0de811d6b1f905a1f14913906ff",
       "format": "json",
-      "sniff_state": "partial",
+      "sniff_state": "recognized",
       "artifact_type": "raw_response",
-      "schema_id": null,
-      "contains_full_timeseries": null,
-      "record_count": null,
+      "schema_id": "google-trends-query-batch-v1",
+      "contains_full_timeseries": false,
+      "record_count": 2,
       "declared_data_points": null,
-      "reader_id": null,
-      "reader_registered": false,
+      "reader_id": "json-query-batch-reader",
+      "reader_registered": true,
       "study_id": "cbx-search-trends",
       "run_id": "20261001T121949Z-google-trends-h4cbh-hhbd",
       "source_id": "google-trends",
@@ -2964,7 +3027,7 @@
       "metadata_state": "present",
       "manifest_state": "missing",
       "verification": "unverifiable_no_manifest",
-      "judgment": "partially_recognized",
+      "judgment": "recognized",
       "notes": [
         "content:fields:queries",
         "legacy:no-manifest",
@@ -2976,14 +3039,14 @@
       "bytes": 1085,
       "sha256": "eea1a58a1424a944853ab45cd3ac15b7c0bb69e69ce042191bd8e828ee6090bb",
       "format": "json",
-      "sniff_state": "partial",
-      "artifact_type": null,
-      "schema_id": null,
-      "contains_full_timeseries": null,
-      "record_count": null,
+      "sniff_state": "recognized",
+      "artifact_type": "raw_response",
+      "schema_id": "google-trends-query-batch-v1",
+      "contains_full_timeseries": false,
+      "record_count": 2,
       "declared_data_points": null,
-      "reader_id": null,
-      "reader_registered": null,
+      "reader_id": "json-query-batch-reader",
+      "reader_registered": true,
       "study_id": "cbx-search-trends",
       "run_id": "disambiguated_queries",
       "source_id": "google-trends",
@@ -2991,7 +3054,7 @@
       "metadata_state": "present",
       "manifest_state": "missing",
       "verification": "unverifiable_no_manifest",
-      "judgment": "partially_recognized",
+      "judgment": "recognized",
       "notes": [
         "content:fields:queries",
         "content:data:object",

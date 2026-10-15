@@ -138,6 +138,10 @@ def _sniff_dict(document: dict) -> SniffResult:
 
     summary_marks = [mark for mark in _SUMMARY_MARKS if mark in keys]
     data = document.get("data")
+    if "queries" in keys and isinstance(data, list):
+        return SniffResult(
+            "json", "partial", evidence=("fields:queries", "data:array")
+        )
     if isinstance(data, list) and summary_marks:
         return SniffResult(
             "json",
@@ -258,11 +262,37 @@ def _sniff_dict(document: dict) -> SniffResult:
     # They are reported as partial (never forced into a schema), with the
     # fields that made them recognisable so the audit stays actionable
     # (a reader can be registered later - d.md §7).
-    if "queries" in keys and isinstance(data, dict):
+    queries = document.get("queries")
+    if (
+        isinstance(queries, list)
+        and queries
+        and all(isinstance(query, str) for query in queries)
+        and isinstance(data, dict)
+    ):
         return SniffResult(
-            "json", "partial", evidence=("fields:queries", "data:object")
+            "json",
+            "recognized",
+            artifact_type="raw_response",
+            schema_id="google-trends-query-batch-v1",
+            contains_full_timeseries=False,
+            record_count=len(queries),
+            evidence=("fields:queries", "data:object"),
         )
     if "queries" in keys:
+        if (
+            isinstance(queries, list)
+            and queries
+            and all(isinstance(query, dict) for query in queries)
+        ):
+            return SniffResult(
+                "json",
+                "recognized",
+                artifact_type="raw_response",
+                schema_id="google-trends-query-batch-v1",
+                contains_full_timeseries=False,
+                record_count=len(queries),
+                evidence=("fields:queries",),
+            )
         return SniffResult(
             "json", "partial", artifact_type="raw_response", evidence=("fields:queries",)
         )

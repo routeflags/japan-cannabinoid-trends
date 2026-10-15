@@ -8,8 +8,8 @@ promoted here either).
 The decisive tests are :func:`test_reconciliation_never_promotes` (the output
 vocabulary contains no ``observed`` / ``inferred`` / ``ambiguous`` and the
 inputs are unmutated) and :func:`test_real_registry_disposition_is_explicit`
-(the 7 info-level ``EVIDENCE_HASH_UNRECORDED`` entries are each classified
-with their owner action instead of being resolved by fabrication).
+(the real registry now has witnessed pins for pinnable files, while the one
+regenerated audit remains deliberately unpinned).
 """
 
 from __future__ import annotations
@@ -170,7 +170,7 @@ def test_unknowns_extracted_from_assessment_shape():
 
 
 # ---------------------------------------------------------------------------
-# the real registry: 7 unrecorded entries stay explicit, not fabricated
+# the real registry: witnessed pins, plus one deliberately unpinned regenerated output
 # ---------------------------------------------------------------------------
 
 
@@ -179,26 +179,27 @@ def _load_real_registry() -> dict:
 
 
 def test_real_registry_disposition_is_explicit():
-    """1 pinned, 1 regenerated, 6 awaiting witnessed observation."""
+    """7 pinned, 1 regenerated output, no awaiting witnessed observation."""
 
     registry = _load_real_registry()
     statuses = {
         entry["evidence_id"]: classify_hash_status(entry, repo_root=REPO_ROOT)
         for entry in registry["evidence"]
     }
-    assert statuses["ev-replay-fixture-12m"] == "pinned"
     assert statuses["ev-legacy-audit-20261013"] == "regenerated_output"
-    assert [key for key, value in statuses.items() if value == "needs_witnessed_observation"] == [
+    assert [key for key, value in statuses.items() if value == "pinned"] == [
         "ev-source-registry",
         "ev-collector-registry",
         "ev-query-registry",
         "ev-compound-taxonomy",
         "ev-window-2025-2026",
         "ev-artifact-registry",
+        "ev-replay-fixture-12m",
     ]
-    # The disposition agrees with the checker: info only, no error.
+    assert [key for key, value in statuses.items() if value == "needs_witnessed_observation"] == []
+    # The disposition agrees with the checker: the regenerated audit remains info only, no error.
     codes = [issue.code for issue in check_evidence_registry(registry, repo_root=REPO_ROOT)]
-    assert codes.count("EVIDENCE_HASH_UNRECORDED") == 7
+    assert codes.count("EVIDENCE_HASH_UNRECORDED") == 1
     assert all(
         issue.severity != "error"
         for issue in check_evidence_registry(registry, repo_root=REPO_ROOT)
@@ -228,7 +229,7 @@ def test_real_registry_reconciliation_names_owner_actions():
     assert by_path["query_provenance.query_id"]["evidence_id"] == "ev-query-registry"
     assert by_path["temporal_provenance.window_id"]["evidence_id"] == "ev-window-2025-2026"
     for item in report["candidates"]:
-        assert item["hash_status"] == "needs_witnessed_observation"
+        assert item["hash_status"] == "pinned"
         assert item["verdict"] == "candidate"
     assert [item["unknown_path"] for item in report["uncovered"]] == ["purpose"]
     # Read-only: the registry file is byte-identical afterwards.

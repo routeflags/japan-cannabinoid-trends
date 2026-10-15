@@ -21,6 +21,8 @@ RELATED = R / "cbx-search-trends/data/raw/google_trends/20261001T115959Z-google-
 AVERAGES = R / "cannabinoid-multi-trends/data/raw/google_trends/20261012T055259Z-google-trends-ja-rikiddo-phase-a-12m/comparison_ja1.json"
 AVERAGES_ALT_KEY = R / "cannabinoid-multi-trends/data/raw/google_trends/20261005T100000Z-google-trends-common-scale-expansion/comparison_setB.json"
 AVERAGES_WITH_PEAK = R / "cannabinoid-multi-trends/data/raw/google_trends/20261008T125719Z-google-trends-common-scale-crdh/comparison.json"
+QUERY_BATCH_OBJECTS = R / "cbx-search-trends/data/raw/google_trends/20261001T121949Z-google-trends-h4cbh-hhbd/related_queries.json"
+QUERY_BATCH_DATA_OBJECT = R / "cbx-search-trends/data/raw/google_trends/20261001T132500Z-google-trends-disambiguated/records_disambiguated.json"
 
 
 def test_recorded_full_timeseries_is_recognized():
@@ -101,6 +103,30 @@ def test_comparison_averages_variants_stay_partial():
     assert with_data.schema_id is None
 
 
+def test_query_batches_are_recognized_in_both_recorded_shapes():
+    for path, evidence in (
+        (QUERY_BATCH_OBJECTS, "fields:queries"),
+        (QUERY_BATCH_DATA_OBJECT, "data:object"),
+    ):
+        result = sniff_path(path)
+        assert (result.format, result.state) == ("json", "recognized")
+        assert result.schema_id == "google-trends-query-batch-v1"
+        assert result.artifact_type == "raw_response"
+        assert result.contains_full_timeseries is False
+        assert result.record_count == 2
+        assert evidence in result.evidence
+
+
+def test_query_batch_variants_stay_partial():
+    mixed = sniff_document({"queries": ["A", {"term": "B"}]})
+    assert mixed.state == "partial"
+    assert mixed.schema_id is None
+
+    series_like = sniff_document({"queries": ["A"], "data": [{"date": "2026-01-04", "interest": 1}]})
+    assert series_like.state == "partial"
+    assert series_like.schema_id is None
+
+
 def test_page_fixture_is_recognized():
     result = sniff_path(FIXTURES / "search_list_response.json")
     assert result.schema_id == "youtube-search-list-response-v1"
@@ -148,11 +174,6 @@ def test_partial_shapes_keep_their_evidence():
     error = sniff_document({"error": {"message": "rate limited"}})
     assert error.state == "partial"
     assert "fields:error" in error.evidence
-
-    queries_batch = sniff_document({"queries": [{"term": "A"}], "collected_at": "2026-10-01"})
-    assert queries_batch.state == "partial"
-    assert "fields:queries" in queries_batch.evidence
-
 
 def test_csv_and_text_and_binary(tmp_path):
     csv = tmp_path / "data.csv"

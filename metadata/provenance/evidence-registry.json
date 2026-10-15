@@ -13,49 +13,49 @@
       "evidence_id": "ev-source-registry",
       "evidence_type": "registry_definition",
       "reference": "config/sources.json",
-      "sha256": null,
-      "observed_at": "2026-10-13T05:01:38Z",
-      "note": "Source registry used for P03 reference checks."
+      "sha256": "0a31d6cef4af5f799534527f670d8cba40472eafa9d3ae92718064c0524f0160",
+      "observed_at": "2026-10-15T21:32:30Z",
+      "note": "Source registry used for P03 reference checks. Registrar: Delta agent under owner instruction from smapira; witnessed current repository bytes and pinned for ISS-20261015-PRV-011."
     },
     {
       "evidence_id": "ev-collector-registry",
       "evidence_type": "registry_definition",
       "reference": "config/collectors.json",
-      "sha256": null,
-      "observed_at": "2026-10-13T05:01:38Z",
-      "note": "Collector registry used for P04/P05 reference checks."
+      "sha256": "0cc160861945570c376c000a6b8e3c3929d574073a9758b27c3e77ab244c8523",
+      "observed_at": "2026-10-15T21:32:30Z",
+      "note": "Collector registry used for P04/P05 reference checks. Registrar: Delta agent under owner instruction from smapira; witnessed current repository bytes and pinned for ISS-20261015-PRV-011."
     },
     {
       "evidence_id": "ev-query-registry",
       "evidence_type": "registry_definition",
       "reference": "metadata/queries/query-registry.json",
-      "sha256": null,
-      "observed_at": "2026-10-13T05:01:38Z",
-      "note": "Query registry (schema_version 1.0.0) used for P06/P17 checks."
+      "sha256": "689f6fb5f842bf3e0b2af3dbe3c4f40ec8e67467abbeb2486403da171d6fbd00",
+      "observed_at": "2026-10-15T21:32:30Z",
+      "note": "Query registry (schema_version 1.0.0) used for P06/P17 checks. Registrar: Delta agent under owner instruction from smapira; witnessed current repository bytes and pinned for ISS-20261015-PRV-011."
     },
     {
       "evidence_id": "ev-compound-taxonomy",
       "evidence_type": "taxonomy",
       "reference": "metadata/taxonomy/compound-taxonomy.skos.jsonld",
-      "sha256": null,
-      "observed_at": "2026-10-13T05:01:38Z",
-      "note": "SKOS compound taxonomy backing query semantics."
+      "sha256": "18dae67e986a52fd03428e3bae42c3302b439fe2893323387a03b1fd7a90b681",
+      "observed_at": "2026-10-15T21:32:30Z",
+      "note": "SKOS compound taxonomy backing query semantics. Registrar: Delta agent under owner instruction from smapira; witnessed current repository bytes and pinned for ISS-20261015-PRV-011."
     },
     {
       "evidence_id": "ev-window-2025-2026",
       "evidence_type": "registry_definition",
       "reference": "metadata/windows/2025-10-12_2026-10-12.json",
-      "sha256": null,
-      "observed_at": "2026-10-13T05:01:38Z",
-      "note": "Absolute G3 window cited by replay collection plans."
+      "sha256": "0463056e6876bea0b2fb251b777e8f22c74288bae40f2b615c88f5520575d95f",
+      "observed_at": "2026-10-15T21:32:30Z",
+      "note": "Absolute G3 window cited by replay collection plans. Registrar: Delta agent under owner instruction from smapira; witnessed current repository bytes and pinned for ISS-20261015-PRV-011."
     },
     {
       "evidence_id": "ev-artifact-registry",
       "evidence_type": "registry_definition",
       "reference": "metadata/artifacts/artifact-registry.json",
-      "sha256": null,
-      "observed_at": "2026-10-13T05:01:38Z",
-      "note": "G4 reader registry used for storage-contract checks."
+      "sha256": "f459f1d4d6c68b2dfb2ca2ba262bc63d239b2564603077205d403b0ee8639b66",
+      "observed_at": "2026-10-15T21:32:30Z",
+      "note": "G4 reader registry used for storage-contract checks. Registrar: Delta agent under owner instruction from smapira; witnessed current repository bytes and pinned for ISS-20261015-PRV-011."
     },
     {
       "evidence_id": "ev-replay-fixture-12m",

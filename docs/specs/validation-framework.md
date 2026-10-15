@@ -808,10 +808,10 @@ G4 仕様（`docs/plans/20261013d.md`）の垂直スライス。対象は Google
   lineage 検査 + 監査配線は済み。processed/interim 生成が始まる G6 以降で
   `transformation-v1` 準拠の生成器を用意すること。~~ → **2026-10-15 に実装**
   （§18.4、ISS-20261015-PRV-010）。
-- Evidence Registry と run 監査の突合（監査の unknown 項目を証拠引用で
+- ~~Evidence Registry と run 監査の突合（監査の unknown 項目を証拠引用で
   inferred/observed へ昇格させる pass）。語彙と参照形式は用意済み。
-  2026-10-15 に候補提示 pass とハッシュ方針まで実装（§18.4、ISS-20261015-PRV-011
-  は OPEN のまま。7 件の hash 未記録は立会い観測待ち）。
+  2026-10-15 に候補提示 pass とハッシュ方針まで実装。~~ → **2026-10-15 に実装・
+  evidence hash の扱いも決着**（§18.4、ISS-20261015-PRV-011）。
 - ~~Provenance Graph（§12）は lineage 辺（run→artifact→transformation）の JSON
   参照まで。グラフ DB・PROV-O 変換は将来（仕様上も初期は JSON で十分）。~~ →
   **2026-10-15 に不要と判断して記録**（§18.4、ISS-20261015-PRV-012）。
@@ -835,15 +835,15 @@ vertical slice（ISS-20261015-PRV-010/011/012 + 関連の ISS-20261015-CMP-005�
   `check_transformation_lineage` のまま。platform-trends は 1 回の実行を 1 record
   （入力 = manifest の `sources` を再利用、出力 = 5 成果物）で表す。テストは
   `tests/processing/test_transformations.py`。遡及生成はしない（新規分から）。
-- **突合 pass（PRV-011、OPEN のまま）**: `src/validation/evidence_reconciliation.py`
+- **突合 pass（PRV-011、RESOLVED）**: `src/validation/evidence_reconciliation.py`
   （`reconcile_evidence`）。run 監査の `unknown` と evidence エントリを突き合わせ、
   引用つき `candidate` / `no_covering_evidence` を出す read-only pass。自動昇格は
   しない（出力語彙に `observed` / `inferred` なし）。被覆は既知対応表のある
   `registry_definition` のみ。ハッシュ方針は
   `docs/provenance/evidence-hash-policy.md`（立会い観測時のみ記録。再生成出力は
   pin 留めせず、外部参照は対象外）。現行 7 件の `EVIDENCE_HASH_UNRECORDED` は
-  1 件 pin 済み・1 件 `regenerated_output`（方針で決着）・6 件が立会い観測待ちで
-  明示記録し、issue は OPEN のまま。テストは
+  6 件を owner 指示による現在時刻の観測として pin 済み、1 件は
+  `regenerated_output` として pin 留めしない方針で決着。テストは
   `tests/validation/test_evidence_reconciliation.py`。
 - **グラフ判断（PRV-012）**: PROV-O / グラフ DB は今は不要と判断し記録して閉じた。
   lineage 辺は JSON 参照 + 既存検査で完結し（本スライスで transformation 生成記録が
@@ -1240,7 +1240,11 @@ staged → `adopt` を案内する。パスは字句的に正規化するため 
   構造不明の CRDP / CRDH に対する「ヒドロキシ酸類似体」は採用しない。IPTC Media Topics に
   化学構造クラスは無いため `iptc-mapping.yaml` では `not_applicable` として宣言し、推測で
   対応付けない。2 次元の分離は `tests/validation/test_chemical_class_dimension.py` が検査する。
-- `compound_rare` の会員（CBDP / THCP 等）は未登録。
+- `compound_rare` の会員（CBDP / THCP 等）は未登録のまま維持する（ISS-20261015-TAX-027 判断 2026-10-15、issue は OPEN のまま）。
+  リポジトリ内の証拠は scopeNote の例示名・COA パネルの THCP（ND）・汎用リストの言及のみで、
+  収集 run・query-registry・queryDesign・regulatory-status 記録が無いため、日中ラベル・外部 ID・IPTC 対応の
+  創作が必要になり見送る。追加の gate と証拠棚卸しは `docs/provenance/compound-taxonomy.md` の TAX-027 節に記録し、
+  空・説明付きの状態は `tests/validation/test_compound_rare_membership.py` が固定する。
 
 ## 24. 未解決 issue の棚卸しと施行（2026-10-13）
 

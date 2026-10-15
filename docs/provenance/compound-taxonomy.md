@@ -78,6 +78,38 @@
 - 2 次元の分離は `tests/validation/test_chemical_class_dimension.py` が検査し、`docs/data-dictionary.md` §6.5 が
   写しを持つ（`test_taxonomy_consistency.py` の §6.4 と同じ方式）。
 
+## 2026-10-15 — TAX-027判断: `compound_rare` は空のまま維持（ISS-20261015-TAX-027）
+
+- **判断:** `compound_cbdp` / `compound_thcp` を追加しない。`compound_rare` は
+  `skos:narrower` を持たない空カテゴリのまま、`skos:scopeNote` の
+  「INTENTIONALLY EMPTY」の宣言を維持する。issue は OPEN のまま残す
+  （希少化合物の言及が未分類に落ちる課題自体は解消していないため）。
+- **確認したリポジトリ内の証拠（2026-10-15、外部照会なし）:**
+  - CBDP: `compound-taxonomy.skos.jsonld` の scopeNote の例示名と TAX-027 issue 本文のみ。
+    raw run・`query-registry.json`・`project.json` queryDesign・`research/regulatory-status/`
+    記録・`metadata/keywords.yaml`・知識グラフのいずれにも存在しない。
+  - THCP: 上記に加え、COA パネルの分析対象として ND 記録あり
+    （`docs/data-dictionary.md` §4.1、`docs/provenance.md` §5.3、COA 掲載値）および
+    汎用スキル内の列挙（`.github/skills/academic-research/SKILL.md`）に言及あり。
+    ただし収集 run・query-registry・queryDesign・`regulatory-status/THCP.md` は無く、
+    COA の ND は当該検体の未検出（`observed_zero` 相当）であって route/由来配置の根拠ではない。
+- **見送りの理由:** 2026-10-13 の追加前例（名称の根拠＋カテゴリの根拠の両方が必要）に照らし、
+  名称・配置のいずれも文書化された根拠が無い。追加には日中ラベル・`exactMatch`
+  （ChEBI / Wikidata）・IPTC 対応・クエリの創作が必要になり、リポジトリ規則
+  （推測での対応付け禁止、外部 ID の捏造禁止）に反する。
+- **追加の gate（将来 CBDP / THCP 等を登録する場合の条件）:**
+  1. 収集 run（`data/raw/<source>/<run-id>/`）又は `staging-declaration-v1` 採用による観測、
+     もしくは `research/regulatory-status/` 等の文書化された名称の根拠。
+  2. route/由来配置（希少フィトカンナビノイド等）の文書化された根拠。
+     化学クラスは別次元（`chemical-class-taxonomy`）で扱い、`skos:broader` では結合しない。
+  3. 全層の同時更新: taxonomy concept（notation は既存規約 `compound_*` 小文字化）＋
+     `iptc-mapping.yaml` は `deliberately_unmapped`（理由付き。IPTC に化合物単位の主題の
+     証拠が無い限り推測で対応付けない）＋ `docs/data-dictionary.md` §6.4 の写し更新 ＋
+     収集需要がある場合のみ `query-registry.json` 登録（G2 検証付き）＋本台帳への追記。
+     `exactMatch` は検証済み ID がある場合のみ付与し、無い場合は省略する（CBX / H4CBH 前例）。
+- **検査:** `tests/validation/test_compound_rare_membership.py` が空・説明付きの状態を固定する。
+  将来メンバーを追加する際は本テストを更新し、上記 gate の同時更新を満たすこと。
+
 ## 未修正の既知事項（本変更では触っていない）
 
 1. `docs/data-dictionary.md` §6.4 の化合物カテゴリ表が不完全（`synthetic` 行が無く、

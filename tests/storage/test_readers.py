@@ -57,6 +57,16 @@ AVERAGES_WITH_PEAK = (
     / "datasets/cannabinoid-multi-trends/data/raw/google_trends"
     / "20261008T125719Z-google-trends-common-scale-crdh/comparison.json"
 )
+QUERY_BATCH_OBJECTS = (
+    REPO_ROOT
+    / "datasets/cbx-search-trends/data/raw/google_trends"
+    / "20261001T121949Z-google-trends-h4cbh-hhbd/related_queries.json"
+)
+QUERY_BATCH_DATA_OBJECT = (
+    REPO_ROOT
+    / "datasets/cbx-search-trends/data/raw/google_trends"
+    / "20261001T132500Z-google-trends-disambiguated/records_disambiguated.json"
+)
 
 
 def _descriptor(path, **overrides) -> ArtifactDescriptor:
@@ -89,6 +99,7 @@ def test_reader_ids_are_stable():
         "json-no-data-reader",
         "json-object-reader",
         "json-page-reader",
+        "json-query-batch-reader",
         "json-record-reader",
         "json-summary-reader",
         "json-timeseries-reader",
@@ -301,6 +312,44 @@ def test_object_reader_reads_related_queries_response():
     assert list(reader.read(descriptor))[0]["record"]["result"].startswith(
         "No related queries"
     )
+
+
+def test_query_batch_reader_reads_recorded_query_object_batch():
+    reader = get_reader("json-query-batch-reader")
+    descriptor = _descriptor(QUERY_BATCH_OBJECTS, artifact_type="raw_response")
+    assert reader.validate(descriptor) == []
+    rows = list(reader.read(descriptor, mode="queries"))
+    assert [row["record"]["term"] for row in rows] == ["H4CBH", "HHBD"]
+    assert rows[0]["record"]["result"] == "No related queries found"
+    assert reader.count(descriptor) == 2
+    with pytest.raises(UnsupportedRead):
+        list(reader.read(descriptor, mode="points"))
+
+
+def test_query_batch_reader_reads_recorded_data_object_batch():
+    reader = get_reader("json-query-batch-reader")
+    descriptor = _descriptor(QUERY_BATCH_DATA_OBJECT, artifact_type="raw_response")
+    assert reader.validate(descriptor) == []
+    rows = list(reader.read(descriptor, mode="queries"))
+    assert [row["record"]["query"] for row in rows] == ["CBX 大麻", "CBX カンナビノイド"]
+    assert rows[0]["record"]["result"]["average"] == 2
+    assert reader.count(descriptor) == 2
+
+
+def test_query_batch_reader_rejects_unattested_variants(tmp_path):
+    reader = get_reader("json-query-batch-reader")
+    series = tmp_path / "series.json"
+    series.write_text(
+        '{"queries": ["A"], "data": [{"date": "2026-01-04", "interest": 1}]}',
+        encoding="utf-8",
+    )
+    assert "per-bucket" in reader.validate(_descriptor(series, artifact_type="raw_response"))[0]
+
+    mixed = tmp_path / "mixed.json"
+    mixed.write_text('{"queries": ["A", {"term": "B"}]}', encoding="utf-8")
+    assert reader.validate(_descriptor(mixed, artifact_type="raw_response")) == [
+        "'queries' must contain either all objects or all strings"
+    ]
 
 
 def test_readers_never_modify_the_file():
