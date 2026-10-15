@@ -10,17 +10,17 @@
   },
   "summary": {
     "issue_count": 65,
-    "active_count": 38,
-    "closed_count": 27,
+    "active_count": 37,
+    "closed_count": 28,
     "status_counts": {
       "DOCUMENTED": 1,
       "MITIGATED": 1,
-      "OPEN": 36,
+      "OPEN": 35,
       "PENDING": 2,
-      "RESOLVED": 25
+      "RESOLVED": 26
     },
     "open_p0": 0,
-    "open_p1": 11,
+    "open_p1": 10,
     "failure_count": 0
   },
   "layout": {
@@ -48,12 +48,12 @@
         "YouTube exports 採用に必要な actor run ID / dataset ID / dateFilter / status / timezone / no-tracking 方針が確認される",
         "管理画面・公開方針依存の PENDING issue の実施または再分類が記録される"
       ],
-      "issue_count": 2,
+      "issue_count": 1,
       "status_counts": {
-        "OPEN": 2
+        "OPEN": 1
       },
       "priority_counts": {
-        "P1": 2
+        "P1": 1
       },
       "issues": [
         {
@@ -62,12 +62,6 @@
           "status": "OPEN",
           "path": "docs/issues/active/00-needs-user-confirmation/20261014.md"
         },
-        {
-          "id": "ISS-20261015-XID-035",
-          "priority": "P1",
-          "status": "OPEN",
-          "path": "docs/issues/active/00-needs-user-confirmation/20261015_p1_x-withdrawal-assumptions-confirm.md"
-        }
       ]
     },
     {

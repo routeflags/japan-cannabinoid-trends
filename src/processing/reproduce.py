@@ -214,7 +214,11 @@ WITHDRAWN: dict[str, Withdrawn] = {
             "v1.12.0, i.e. in those GitHub Releases and their Zenodo archives "
             "(DOI 10.5281/zenodo.23253840, open access).  Withdrawing it stops "
             "further distribution; it does not retract the published archives "
-            "(the same posture as the withdrawal below, spec section 21.6)."
+            "(the same posture as the withdrawal below, spec section 21.6).  "
+            "2026-10-15: the 8 Zenodo records holding this file (v1.6.2-v1.12.0) "
+            "were deleted by the owner (self-service, within 30 days of "
+            "publication); the Zenodo API returns 410 Gone for all of them.  "
+            "The GitHub Release zips of those tags are unchanged."
         ),
         notes=(
             "The derivation this artifact declared, kept here so the record is "
@@ -254,7 +258,10 @@ WITHDRAWN: dict[str, Withdrawn] = {
             "and GitHub Releases, including Zenodo DOI 10.5281/zenodo.23253840 "
             "(open access).  Withdrawing it stops further distribution; it does "
             "not retract the published archives.  Recorded here so the exposure "
-            "is not lost."
+            "is not lost.  2026-10-15: all 12 Zenodo records holding this file "
+            "(v1.5.2-v1.12.0) were deleted by the owner (self-service, within "
+            "30 days of publication); the Zenodo API returns 410 Gone for all "
+            "of them.  The GitHub Release zips of those tags are unchanged."
         ),
         notes=(
             "The non-published copy used to verify the anonymization rule lives "

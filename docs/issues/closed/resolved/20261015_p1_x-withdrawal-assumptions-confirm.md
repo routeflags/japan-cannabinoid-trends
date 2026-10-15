@@ -2,7 +2,7 @@
 
 **ID:** ISS-20261015-XID-035  
 **優先度:** P1 (High)  
-**ステータス:** OPEN (2026-10-15: C1/C2/C3 approved; remaining: the C1 Zenodo-side execution)  
+**ステータス:** RESOLVED (2026-10-15)  
 **対象:** `ISS-20261015-PUB-035`（RESOLVED）、`ISS-20261015-XID-034`（RESOLVED）、
 `metadata/publication/x-cbx-202608-summary-anonymized/decision.json`、
 `config/storage-policies.json`
@@ -59,7 +59,7 @@
 - [x] C1 / C2 / C3 のそれぞれについて承認または代替案の記録
       — **2026-10-15、オーナー承認**: C1 は取り下げ実施、C2・C3 は現状のまま承認
       （「そのほかよい」。以下「オーナー回答の記録」）
-- [ ] C1 の Zenodo 側の実行（メンテナの操作。手順は `docs/specs/zenodo-doi-guide.md` §12。API での実行は不可。§12.3 のとおりファイルの公開アクセス制限は所有者が UI で即時実行できるため、完全削除のサポート依頼と並行して先行実施する。2026-10-15 オーナー指摘による訂正）
+- [x] C1 の Zenodo 側の実行 — **完了（2026-10-15）**: 対象 12 record（v1.5.2〜v1.12.0）をオーナーが自力削除。Zenodo API で 12/12 の 410 Gone を確認。`WITHDRAWN` 2 件の exposure を「取り下げ済み」に更新（`src/processing/reproduce.py`）。CITATION.cff の DOI 更新は次回クリーン release の新 record 確定後に行う。
 - [ ] 実行後の `exposure` / 本 issue の RESOLVED 化（日付付き）
 
 ## 承認内容の整理（エージェント記録。上はオーナーの原文）
