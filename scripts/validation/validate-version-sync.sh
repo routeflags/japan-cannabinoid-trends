@@ -90,9 +90,15 @@ ZENODO_DOI=""
 ZENODO_VERSION=""
 ZENODO_CONCEPT_DOI=""
 
-# リポジトリ名で検索
-REPO_NAME="japan-cannabinoid-trends"
-ZENODO_RESULT=$(curl -s "https://zenodo.org/api/records?q=metadata.title:%22CBX+Online+Trend%22&sort=mostrecent&size=3" 2>/dev/null || echo "")
+# CITATION.cff の identifiers から concept DOI を取得し、その series を検索する
+# （旧クエリは削除済みレコードの旧タイトル "CBX Online Trend" に固定されており、
+#  v1.13 で title が変更されたため検索ヒットしなくなった。ISS-20261015-REL-015）
+CITATION_CONCEPT_DOI=$(grep -A6 'identifiers:' "${REPO_ROOT}/CITATION.cff" 2>/dev/null | grep 'value:' | head -1 | sed 's/.*value: "\(.*\)".*/\1/' || echo "")
+ZENODO_RESULT=""
+if [ -n "$CITATION_CONCEPT_DOI" ]; then
+  CONCEPT_RECORD_ID="${CITATION_CONCEPT_DOI##*.}"
+  ZENODO_RESULT=$(curl -s "https://zenodo.org/api/records?q=conceptrecid:${CONCEPT_RECORD_ID}&sort=mostrecent&size=3" 2>/dev/null || echo "")
+fi
 
 if [ -n "$ZENODO_RESULT" ]; then
   ZENODO_DOI=$(echo "$ZENODO_RESULT" | jq -r '.hits.hits[0].doi // empty' 2>/dev/null || echo "")
@@ -104,7 +110,9 @@ fi
 # 基準値を決定
 # 優先順位: Git タグ > Zenodo version
 BASELINE_VERSION="${LATEST_TAG_VERSION:-$ZENODO_VERSION}"
-BASELINE_DOI="${ZENODO_DOI:-$GITHUB_DOI}"
+# 引用の正は series の concept DOI（v1.13.2 以降の方針、ISS-20261015-REL-015）。
+# version DOI は GitHub Release notes にのみ記載し、CITATION 等には入れない。
+BASELINE_DOI="${ZENODO_CONCEPT_DOI:-${GITHUB_DOI:-$ZENODO_DOI}}"
 
 # v プレフィックスを正規化
 BASELINE_VERSION="${BASELINE_VERSION#v}"

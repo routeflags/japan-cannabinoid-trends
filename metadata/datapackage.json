@@ -1,7 +1,7 @@
 {
   "name": "japan-cannabinoid-trends",
   "title": "Japan Cannabinoid Platform Trends Dataset 2026: Google Trends and YouTube Evidence from Japan",
-  "version": "1.13.1",
+  "version": "1.13.2",
   "description": "日本国内における各カンナビノイド成分の国内トレンドと、Google Trends / YouTube で観測できる差異を記録するデータセット。v1.13.1 は cannabinoid-platform-trends study を追加し、Google Trends 5年サマリーと採用済み YouTube 検索結果集計を source-specific units のまま収録する。X はこのリリーススコープから除外する。",
   "homepage": "https://github.com/routeflags/japan-cannabinoid-trends",
   "license": "CC-BY-4.0",
@@ -359,6 +359,6 @@
       }
     }
   ],
-  "doi": "10.5281/zenodo.23253840",
-  "citation": "KATO, Kyoji. (2026). Japan Cannabinoid Platform Trends Dataset 2026: Google Trends and YouTube Evidence from Japan. Version 1.13.1. Routeflags Co., Ltd. [Dataset]. DOI: 10.5281/zenodo.23253840"
+  "doi": "10.5281/zenodo.23390594",
+  "citation": "KATO, Kyoji. (2026). Japan Cannabinoid Platform Trends Dataset 2026: Google Trends and YouTube Evidence from Japan. Version 1.13.2. Routeflags Co., Ltd. [Dataset]. DOI: 10.5281/zenodo.23390594"
 }

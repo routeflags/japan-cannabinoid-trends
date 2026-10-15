@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.13.2] - 2026-10-15
+
+### Fixed
+- Fixed the Zenodo workflow: releases are now new versions of the dataset's Zenodo series record (concept DOI `10.5281/zenodo.23390594`), and `related_identifiers` carries the expanded GitHub Release URL (verified after publish).
+- Added `check-release-archive.py`: a release fails before upload when the archive's embedded CITATION/datapackage/README disagree with the release version or concept DOI (ISS-20261015-REL-015).
+- Added `publish-zenodo.py`: replaces the inline shell Zenodo API calls; verifies the stored GitHub Release URL and the concept family after publishing (ISS-20261015-REL-016).
+- Repointed all citation metadata from the deleted Zenodo concept `10.5281/zenodo.23253840` (410 Gone) to the surviving series concept `10.5281/zenodo.23390594`.
+- Fixed `validate-version-sync.sh` to look up Zenodo by the CITATION concept DOI (`conceptrecid:`) instead of the removed record title.
+
+---
+
 ## [1.13.1] - 2026-10-15
 
 ### Fixed

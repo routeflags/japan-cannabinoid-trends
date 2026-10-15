@@ -6,7 +6,7 @@
   "layer": "publication",
   "source_kind": "html",
   "storage_policy_id": "publication-html-candidate",
-  "sha256": "c9135b21f61bd814f085df7c54823bd1a285afec10b7c2e8c65c47d0ecc35507",
+  "sha256": "6f942edb9fb69d162ff8257beeb22c513390d95b47600a5b8678812bef8b2e1f",
   "byte_length": 72692,
   "recorded_at": "2026-10-15",
   "notes": "未公開 publication HTML。PC-7 の審査 envelope として内容 hash を固定する。2026-10-15 のオーナー確認により公開候補として承認済み。v1.13.0 release metadata sync 後の hash。 v1.13.1 release metadata sync 後の hash。"

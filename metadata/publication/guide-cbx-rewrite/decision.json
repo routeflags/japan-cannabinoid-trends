@@ -3,7 +3,7 @@
   "record": "publication_decision",
   "decision_id": "publication-review-guide-cbx-rewrite",
   "artifact_id": "guide-cbx-rewrite",
-  "artifact_sha256": "c9135b21f61bd814f085df7c54823bd1a285afec10b7c2e8c65c47d0ecc35507",
+  "artifact_sha256": "6f942edb9fb69d162ff8257beeb22c513390d95b47600a5b8678812bef8b2e1f",
   "status": "approved",
   "reviewed_at": "2026-10-15",
   "reviewer": "owner (thread approval 2026-10-15: guide page publication candidate OK; COA requester handling OK)",

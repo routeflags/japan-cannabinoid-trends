@@ -3,7 +3,7 @@
   "record": "publication_decision",
   "decision_id": "publication-review-research-cbx",
   "artifact_id": "research-cbx",
-  "artifact_sha256": "3ecbc5448a9c4a654ca25382bd77d0cce52a92e4bbb6fb247ab49aa2541ff519",
+  "artifact_sha256": "7bec3b1ab3ba42d7e89a2e46b63eca28bc73ae0f5763468e58acca279b2c0dc6",
   "status": "approved",
   "reviewed_at": "2026-10-15",
   "reviewer": "owner (thread approval 2026-10-15: ok, go)",

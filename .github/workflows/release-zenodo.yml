@@ -11,23 +11,41 @@ jobs:
   create-and-upload:
     name: Create Clean Archive & Upload to Zenodo
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
+      - name: Read release identity from CITATION.cff
+        id: identity
+        run: |
+          # The archive's embedded metadata is the source of truth: the
+          # expected concept DOI and version are read from the release itself,
+          # then checked back against the archive after it is built
+          # (ISS-20261015-REL-015 permanent fix).
+          VERSION="${GITHUB_REF_NAME#v}"
+          CONCEPT_DOI=$(grep -A6 'identifiers:' CITATION.cff | grep 'value:' | head -1 | sed 's/.*value: "\(.*\)".*/\1/')
+          if [ -z "$CONCEPT_DOI" ]; then
+            echo "ERROR: no concept DOI in CITATION.cff identifiers"
+            exit 1
+          fi
+          # Zenodo record id == the numeric suffix of the concept DOI; the
+          # publish step versions that record so the series DOI stays stable.
+          CONCEPT_RECORD_ID="${CONCEPT_DOI##*.}"
+          echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
+          echo "concept_doi=${CONCEPT_DOI}" >> "$GITHUB_OUTPUT"
+          echo "concept_record_id=${CONCEPT_RECORD_ID}" >> "$GITHUB_OUTPUT"
+          echo "Release identity: version=${VERSION} concept_doi=${CONCEPT_DOI} record=${CONCEPT_RECORD_ID}"
+
       - name: Create clean archive
         id: archive
         run: |
-          # Create clean directory
           CLEAN_DIR="clean-archive"
           mkdir -p "${CLEAN_DIR}"
-          
-          # Define paths to include (research-relevant only; tests and
-          # pyproject.toml ship so the shipped dataset can reproduce the
-          # validation framework, P7-4).  v1.13.0 is a Study-scoped release for
+
+          # Research-relevant only.  v1.13+ is a Study-scoped release for
           # cannabinoid-platform-trends; X is outside this release scope.
           INCLUDE_PATHS=(
             "datasets/cannabinoid-platform-trends"
@@ -46,16 +64,16 @@ jobs:
             "README.md"
             "methodology.md"
           )
-          
-          # Copy files
+
+          # Copy files, preserving repository-relative paths.
           for path in "${INCLUDE_PATHS[@]}"; do
             if [ -e "${path}" ]; then
               mkdir -p "${CLEAN_DIR}/$(dirname "${path}")"
               cp -r "${path}" "${CLEAN_DIR}/${path}"
             fi
           done
-          
-          # Remove any unwanted files
+
+          # Remove unwanted files.
           rm -rf "${CLEAN_DIR}/.github" \
                  "${CLEAN_DIR}/.serena" \
                  "${CLEAN_DIR}/artifacts" \
@@ -66,169 +84,49 @@ jobs:
                  "${CLEAN_DIR}/opencode.json" \
                  "${CLEAN_DIR}/project.json" \
                  "${CLEAN_DIR}/project.yml" 2>/dev/null || true
-          
           find "${CLEAN_DIR}" -name ".DS_Store" -delete 2>/dev/null || true
-          find "${CLEAN_DIR}" -name "*.DS_Store" -delete 2>/dev/null || true
           find "${CLEAN_DIR}" -name "project.yml" -delete 2>/dev/null || true
-          # Python build caches must not ship in the release archive
           find "${CLEAN_DIR}" -type d \( -name "__pycache__" -o -name "*.egg-info" -o -name ".pytest_cache" \) -prune -exec rm -rf {} + 2>/dev/null || true
-          
-          # Create zip
-          VERSION="${GITHUB_REF_NAME}"
-          ZIP_NAME="japan-cannabinoid-trends-${VERSION}-clean.zip"
-          
+
+          # Create zip.
+          VERSION="${{ steps.identity.outputs.version }}"
+          ZIP_NAME="japan-cannabinoid-trends-v${VERSION}-clean.zip"
           cd "${CLEAN_DIR}"
           zip -r "../${ZIP_NAME}" . -x "*.DS_Store"
           cd ..
-          
-          # Verify clean
-          echo "=== Verification ==="
-          # Check path names only.  Do not match legitimate nested paths such as
-          # metadata/artifacts/ or tests/*artifact*.py.
-          if unzip -Z1 "${ZIP_NAME}" | grep -qE '^(\.github|\.serena|artifacts|\.opencode|\.env|\.env\.local|opencode\.json|project\.json|project\.yml)(/|$)|(^|/)agent\.md$'; then
-            echo "❌ ERROR: Unwanted files found!"
-            exit 1
-          fi
-          echo "✅ Archive is clean"
-          
-          # Output
+
           echo "zip_name=${ZIP_NAME}" >> "$GITHUB_OUTPUT"
-          echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
-          
-          # Show summary
           echo "=== Archive Summary ==="
           echo "Name: ${ZIP_NAME}"
           echo "Size: $(ls -lh "${ZIP_NAME}" | awk '{print $5}')"
           echo "Files: $(unzip -l "${ZIP_NAME}" | tail -1 | awk '{print $2}')"
 
-      - name: Upload to Zenodo via API
+      - name: Verify archive release identity
+        run: |
+          # Reject the archive when its embedded CITATION / datapackage /
+          # README disagree with the release identity, or when it carries a
+          # disallowed path (metadata/artifacts/ is legitimate; .github is not).
+          python3 scripts/validation/check-release-archive.py \
+            --archive "${{ steps.archive.outputs.zip_name }}" \
+            --version "${{ steps.identity.outputs.version }}" \
+            --concept-doi "${{ steps.identity.outputs.concept_doi }}"
+
+      - name: Publish archive to Zenodo
         id: zenodo
         env:
           ZENODO_API_KEY: ${{ secrets.ZENODO_API_KEY }}
         run: |
-          ZIP_NAME="${{ steps.archive.outputs.zip_name }}"
-          VERSION="${{ steps.archive.outputs.version }}"
-          
-          if [ -z "${ZENODO_API_KEY}" ]; then
-            echo "⚠️  ZENODO_API_KEY not set. Skipping Zenodo upload."
-            echo "zenodo_status=skipped" >> "$GITHUB_OUTPUT"
-            exit 0
-          fi
-          
-          echo "=== Creating Zenodo deposition ==="
-          
-          # Create new deposition
-          DEPOSITION_RESPONSE=$(curl -s -w "\n%{http_code}" -X POST "https://zenodo.org/api/deposit/depositions" \
-            -H "Authorization: Bearer ${ZENODO_API_KEY}" \
-            -H "Content-Type: application/json" \
-            -d '{
-              "metadata": {
-                "title": "Japan Cannabinoid Platform Trends Dataset 2026: Google Trends and YouTube Evidence from Japan",
-                "upload_type": "dataset",
-                "description": "A dataset release slice for comparing domestic cannabinoid trend observations across Google Trends and YouTube in Japan. This release adds the cannabinoid-platform-trends study, preserving source-specific units rather than converting platforms to one common scale. X (Twitter) is excluded from this release scope.\n\n日本国内における各カンナビノイド成分の国内トレンドと、Google Trends / YouTube で観測できる差異を記録するデータセット。本リリースは cannabinoid-platform-trends study を追加し、Google Trends 5年サマリーと採用済み YouTube 検索結果集計を source-specific units のまま収録する。X はこのリリーススコープから除外する。",
-                "creators": [
-                  {
-                    "name": "KATO, Kyoji",
-                    "orcid": "0009-0007-5131-0374",
-                    "affiliation": "Routeflags Co., Ltd."
-                  }
-                ],
-                "keywords": ["cannabinoid", "CBD", "CBG", "CBN", "CBX", "CRDH", "CRDP", "H4CBH", "HHBD", "Google Trends", "YouTube", "Japan", "platform trends", "search interest", "longitudinal data"],
-                "license": "cc-by-4.0",
-                "version": "'"${VERSION}"'",
-                "related_identifiers": [
-                  {
-                    "identifier": "https://www.thch-vape.shop/guide/substance/what-is-cbx",
-                    "relation": "isDescribedBy",
-                    "resource_type": "publication",
-                    "scheme": "url"
-                  },
-                  {
-                    "identifier": "https://github.com/routeflags/japan-cannabinoid-trends/releases/tag/${VERSION}",
-                    "relation": "isSupplementTo",
-                    "resource_type": "dataset",
-                    "scheme": "url"
-                  }
-                ]
-              }
-            }')
-          
-          HTTP_CODE=$(echo "$DEPOSITION_RESPONSE" | tail -1)
-          DEPOSITION_BODY=$(echo "$DEPOSITION_RESPONSE" | sed '$d')
-          
-          echo "HTTP Status: ${HTTP_CODE}"
-          echo "Response: ${DEPOSITION_BODY}" | jq . 2>/dev/null || echo "${DEPOSITION_BODY}"
-          
-          DEPOSITION_ID=$(echo "$DEPOSITION_BODY" | jq -r '.id // empty' 2>/dev/null)
-          
-          if [ -z "${DEPOSITION_ID}" ]; then
-            echo "❌ Failed to create deposition (HTTP ${HTTP_CODE})"
-            echo "zenodo_status=failed_create" >> "$GITHUB_OUTPUT"
-            exit 0  # Don't fail the workflow, just log
-          fi
-          
-          echo "✅ Created deposition: ${DEPOSITION_ID}"
-          
-          # Upload file
-          echo ""
-          echo "=== Uploading file ==="
-          
-          UPLOAD_RESPONSE=$(curl -s -w "\n%{http_code}" -X POST "https://zenodo.org/api/deposit/depositions/${DEPOSITION_ID}/files" \
-            -H "Authorization: Bearer ${ZENODO_API_KEY}" \
-            -F "file=@${ZIP_NAME}")
-          
-          UPLOAD_HTTP_CODE=$(echo "$UPLOAD_RESPONSE" | tail -1)
-          UPLOAD_BODY=$(echo "$UPLOAD_RESPONSE" | sed '$d')
-          
-          echo "HTTP Status: ${UPLOAD_HTTP_CODE}"
-          echo "Response: ${UPLOAD_BODY}" | jq . 2>/dev/null || echo "${UPLOAD_BODY}"
-          
-          FILE_ID=$(echo "$UPLOAD_BODY" | jq -r '.id // empty' 2>/dev/null)
-          
-          if [ -z "${FILE_ID}" ]; then
-            echo "❌ Failed to upload file (HTTP ${UPLOAD_HTTP_CODE})"
-            echo "zenodo_status=failed_upload" >> "$GITHUB_OUTPUT"
-            exit 0  # Don't fail the workflow
-          fi
-          
-          echo "✅ Uploaded file: ${FILE_ID}"
-          
-          # Publish deposition
-          echo ""
-          echo "=== Publishing deposition ==="
-          
-          PUBLISH_RESPONSE=$(curl -s -w "\n%{http_code}" -X POST "https://zenodo.org/api/deposit/depositions/${DEPOSITION_ID}/actions/publish" \
-            -H "Authorization: Bearer ${ZENODO_API_KEY}")
-          
-          PUBLISH_HTTP_CODE=$(echo "$PUBLISH_RESPONSE" | tail -1)
-          PUBLISH_BODY=$(echo "$PUBLISH_RESPONSE" | sed '$d')
-          
-          echo "HTTP Status: ${PUBLISH_HTTP_CODE}"
-          echo "Response: ${PUBLISH_BODY}" | jq . 2>/dev/null || echo "${PUBLISH_BODY}"
-          
-          DOI=$(echo "$PUBLISH_BODY" | jq -r '.doi // empty' 2>/dev/null)
-          CONCEPTDOI=$(echo "$PUBLISH_BODY" | jq -r '.conceptdoi // empty' 2>/dev/null)
-          
-          if [ -n "${DOI}" ]; then
-            echo ""
-            echo "🎉 Zenodo Upload Complete!"
-            echo "DOI: ${DOI}"
-            echo "Concept DOI: ${CONCEPTDOI}"
-            echo "URL: https://doi.org/${DOI}"
-            echo "zenodo_status=success" >> "$GITHUB_OUTPUT"
-            echo "doi=${DOI}" >> "$GITHUB_OUTPUT"
-            echo "concept_doi=${CONCEPTDOI}" >> "$GITHUB_OUTPUT"
-          else
-            echo ""
-            echo "⚠️  Deposition created but publish may need manual action"
-            echo "Check: https://zenodo.org/deposit/${DEPOSITION_ID}"
-            echo "zenodo_status=needs_manual_publish" >> "$GITHUB_OUTPUT"
-          fi
+          python3 scripts/release/publish-zenodo.py \
+            --archive "${{ steps.archive.outputs.zip_name }}" \
+            --version "${{ steps.identity.outputs.version }}" \
+            --concept-record-id "${{ steps.identity.outputs.concept_record_id }}" \
+            --expect-concept-doi "${{ steps.identity.outputs.concept_doi }}" \
+            --format json
 
       - name: Upload archive as artifact
         uses: actions/upload-artifact@v4
         with:
-          name: clean-archive-${{ steps.archive.outputs.version }}
+          name: clean-archive-v${{ steps.identity.outputs.version }}
           path: ${{ steps.archive.outputs.zip_name }}
           retention-days: 30
 
@@ -236,11 +134,11 @@ jobs:
         run: |
           echo "## Release Archive Summary" >> "$GITHUB_STEP_SUMMARY"
           echo "" >> "$GITHUB_STEP_SUMMARY"
-          echo "- **Version:** ${{ steps.archive.outputs.version }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "- **Version:** ${{ steps.identity.outputs.version }}" >> "$GITHUB_STEP_SUMMARY"
           echo "- **Archive:** ${{ steps.archive.outputs.zip_name }}" >> "$GITHUB_STEP_SUMMARY"
-          echo "- **Clean:** ✅ (.github, .serena, artifacts excluded)" >> "$GITHUB_STEP_SUMMARY"
+          echo "- **Concept DOI:** ${{ steps.identity.outputs.concept_doi }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "- **Clean:** verified (no .github/.env/private/legacy X paths)" >> "$GITHUB_STEP_SUMMARY"
           echo "" >> "$GITHUB_STEP_SUMMARY"
-          
           STATUS="${{ steps.zenodo.outputs.zenodo_status }}"
           if [ "$STATUS" = "success" ]; then
             echo "## Zenodo DOI" >> "$GITHUB_STEP_SUMMARY"
@@ -251,4 +149,5 @@ jobs:
             echo "⚠️ Zenodo upload skipped (API key not set)" >> "$GITHUB_STEP_SUMMARY"
           else
             echo "⚠️ Zenodo status: ${STATUS}" >> "$GITHUB_STEP_SUMMARY"
+            exit 1
           fi

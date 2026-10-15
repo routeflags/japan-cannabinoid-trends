@@ -99,11 +99,16 @@ When uploading manually, use:
 
 - [ ] Create git tag: `git tag -a vX.Y.Z -m "Release vX.Y.Z"`
 - [ ] Push tag: `git push origin vX.Y.Z`
-- [ ] Create GitHub Release
-- [ ] Upload clean archive to Zenodo (if not automated)
-- [ ] Update `CITATION.cff` with new DOI
-- [ ] Update `CHANGELOG.md` with DOI
-- [ ] Update `README.md` badge if DOI changed
+- [ ] Create GitHub Release（release notes に Zenodo concept DOI を記載する）
+- [ ] Release workflow が以下を自動実行する:
+  - clean archive の作成（`metadata/artifacts/` 等の正規パスを除外判定に含めない）
+  - `scripts/validation/check-release-archive.py`（アーカイブ内 CITATION /
+    datapackage / README の version・concept DOI と release の一致を検証。不一致なら失敗）
+  - `scripts/release/publish-zenodo.py`（`CITATION.cff` の concept DOI の
+    record に newversion で公開。`related_identifiers` の GitHub Release URL が
+    展開済み URL で保存されたことを公開後に照合し、不一致なら失敗）
+- [ ] ワークフロー結果から DOI を確認し、必要なら `CHANGELOG.md` / 引用情報を追記する
+  （concept DOI は series で固定のため、通常は変更不要）
 
 ### Post-release
 
@@ -130,7 +135,7 @@ Zenodo assigns two types of DOIs:
 
 | Version | DOI | Concept DOI |
 |---------|-----|-------------|
-| v1.5.0 | [10.5281/zenodo.23085397](https://doi.org/10.5281/zenodo.23085397) | [10.5281/zenodo.23085396](https://doi.org/10.5281/zenodo.23085396) |
+| v1.13.2 | [10.5281/zenodo.23390594](https://doi.org/10.5281/zenodo.23390594) | [10.5281/zenodo.23390594](https://doi.org/10.5281/zenodo.23390594) |
 
 ---
 

@@ -9,15 +9,15 @@
     "recursive_audit_required": true
   },
   "summary": {
-    "issue_count": 66,
-    "active_count": 37,
-    "closed_count": 29,
+    "issue_count": 68,
+    "active_count": 36,
+    "closed_count": 32,
     "status_counts": {
       "DOCUMENTED": 1,
       "MITIGATED": 1,
-      "OPEN": 35,
+      "OPEN": 34,
       "PENDING": 2,
-      "RESOLVED": 27
+      "RESOLVED": 30
     },
     "open_p0": 0,
     "open_p1": 10,

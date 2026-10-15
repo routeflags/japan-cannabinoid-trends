@@ -161,8 +161,8 @@ Google Trends は非決定的なため、同一日内で複数回収集してば
 Citation format is defined in `CITATION.cff`.
 
 Dataset: Japan Cannabinoid Trends Dataset 2026
-Version: 1.13.1
-DOI: 10.5281/zenodo.23253840
+Version: 1.13.2
+DOI: 10.5281/zenodo.23390594
 License: CC-BY-4.0
 
 ---

@@ -3,7 +3,7 @@
   "record": "publication_decision",
   "decision_id": "publication-review-research-thcv",
   "artifact_id": "research-thcv",
-  "artifact_sha256": "3de344cc5ec58462e9fdc5272939ad7d3ccfa4b85598789b31e62f0c79b21fec",
+  "artifact_sha256": "b15f10d84c0290bd718fe9ec94bb436b68a9cf0a2683b0bd6ec8d974b5069449",
   "status": "requires_review",
   "reviewed_at": null,
   "reviewer": null,

@@ -35,7 +35,7 @@ GitHub Release 公開 → GitHub Actions 自動実行 → クリーンアーカ�
 ## フロー概要
 
 ```text
-Step 1: バージョン更新
+Step 1: バージョン更新（CITATION.cff / datapackage / 公開ページ引用）
         ↓
 Step 2: CHANGELOG 更新
         ↓
@@ -45,18 +45,23 @@ Step 3: 検証実行
         ↓
 Step 4: コミット（pre-commit hook 自動実行）
         ↓
-Step 5: git タグ作成
+Step 5: git タグ作成 → push
         ↓
-Step 6: GitHub Release 公開
+Step 6: GitHub Release 公開（notes に concept DOI を記載）
         ↓
-Step 7: Actions 実行確認
+Step 7: Release workflow 自動実行
+   ✅ clean archive 作成
+   ✅ check-release-archive.py（アーカイブ内 DOI/version 一致検証）
+   ✅ publish-zenodo.py（concept series の newversion で公開）
+   ✅ related_identifiers の GitHub Release URL 展開検証
         ↓
-Step 8: DOI 確認
-        ↓
-Step 9: CITATION.cff 更新
-        ↓
-Step 10: コミット・プッシュ
+Step 8: Actions 実行結果から DOI 確認（concept DOI は series 固定）
 ```
+
+> **重要（v1.13.0/v1.13.1 の教訓、ISS-20261015-REL-015/REL-016）**:
+> Zenodo の DOI はリリース準備時に `CITATION.cff` の concept DOI に固定する。
+> workflow はその concept record に `newversion` で追加するため、series DOI は
+> 変わらない。タグ付け後に DOI を確定する旧フローは使わない。
 
 ---
 
@@ -343,7 +348,8 @@ japan-cannabinoid-trends-vX.Y.Z-clean.zip
 | DOI が発行されない | API キー無効 | `ZENODO_API_KEY` を再設定 |
 | クリーン zip に不要ファイル | 除外リスト漏れ | `release-zenodo.yml` の除外リストを確認 |
 | ORCID が表示されない | creators メタデータ | ワークフローの creators 設定を確認 |
-| 関連リンクが古い | ハードコード | `${VERSION}` 変数を使用 |
+| Zenodo の release URL に `${VERSION}` が残る | shell 単一引用符内で展開不能 | `scripts/release/publish-zenodo.py` で JSON 生成（手書き禁止） |
+| アーカイブ内 DOI と Zenodo DOI が不一致 | DOI 確定がタグ後 | concept DOI を `CITATION.cff` に固定し newversion 公開（`check-release-archive.py` が検証） |
 
 ---
 
@@ -396,11 +402,11 @@ japan-cannabinoid-trends-vX.Y.Z-clean.zip
 
 | バージョン | DOI | Concept DOI | リリース日 |
 |-----------|-----|-------------|-----------|
-| v1.6.2 | 10.5281/zenodo.23091163 | 10.5281/zenodo.23091162 | 2026-10-02 |
-| v1.6.1 | 10.5281/zenodo.23090163 | 10.5281/zenodo.23090162 | 2026-10-02 |
-| v1.6.0 | 10.5281/zenodo.23089140 | 10.5281/zenodo.23089139 | 2026-10-02 |
-| v1.5.3 | 10.5281/zenodo.23087213 | 10.5281/zenodo.23087212 | 2026-10-02 |
-| v1.5.2 | 10.5281/zenodo.23086803 | 10.5281/zenodo.23086802 | 2026-10-02 |
+| v1.13.2 | リリース時に確定 | 10.5281/zenodo.23390594 | 2026-10-15 |
+| v1.13.1 | 10.5281/zenodo.23390595 | 10.5281/zenodo.23390594 | 2026-10-15 |
+
+> v1.5.x〜v1.13.0 の各レコードは 2026-10-15 にオーナー判断で削除済み（410 Gone）。
+> 引用は v1.13.1 以降の series concept DOI `10.5281/zenodo.23390594` を使う。
 
 ---
 

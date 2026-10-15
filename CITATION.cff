@@ -4,7 +4,7 @@
 cff-version: 1.2.0
 message: "If you use this dataset, please cite it as below."
 title: "Japan Cannabinoid Platform Trends Dataset 2026: Google Trends and YouTube Evidence from Japan"
-version: "1.13.1"
+version: "1.13.2"
 date-released: "2026-10-15"
 type: dataset
 license: CC-BY-4.0
@@ -75,8 +75,8 @@ references:
 
 identifiers:
   - type: doi
-    value: "10.5281/zenodo.23253840"
-    description: "Zenodo concept DOI for the dataset series"
+    value: "10.5281/zenodo.23390594"
+    description: "Zenodo concept DOI for the dataset series (v1.13.x)"
   - type: url
     value: "https://github.com/routeflags/japan-cannabinoid-trends"
     description: "GitHub repository"
@@ -84,5 +84,5 @@ identifiers:
 preferred-citation:
   type: dataset
   title: "Japan Cannabinoid Platform Trends Dataset 2026: Google Trends and YouTube Evidence from Japan"
-  version: "1.13.1"
-  doi: "10.5281/zenodo.23253840"
+  version: "1.13.2"
+  doi: "10.5281/zenodo.23390594"

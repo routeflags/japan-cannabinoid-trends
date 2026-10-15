@@ -3,7 +3,7 @@
   "record": "publication_decision",
   "decision_id": "publication-review-research-cbg",
   "artifact_id": "research-cbg",
-  "artifact_sha256": "12ee7f88d2d56d49a834cddb6be8839e4c7b4c7b8420760df346ace9ecb73d9e",
+  "artifact_sha256": "e58c2014db937d2bec9ccdc6176359457d0df8853d9fe05d85bce7fbfb115db7",
   "status": "requires_review",
   "reviewed_at": null,
   "reviewer": null,

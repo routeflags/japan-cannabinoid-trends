@@ -3,7 +3,7 @@
   "record": "publication_decision",
   "decision_id": "publication-review-research-cbn",
   "artifact_id": "research-cbn",
-  "artifact_sha256": "78fd79bc8d2e31156afa4dfc18675da5895c98749684f8c426091ec2922b8785",
+  "artifact_sha256": "cf0a1f86a632e7b613d5f867e32c4a15e595d956651d80951782eac58bf049a6",
   "status": "requires_review",
   "reviewed_at": null,
   "reviewer": null,

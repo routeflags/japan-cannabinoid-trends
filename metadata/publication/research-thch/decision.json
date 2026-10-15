@@ -3,7 +3,7 @@
   "record": "publication_decision",
   "decision_id": "publication-review-research-thch",
   "artifact_id": "research-thch",
-  "artifact_sha256": "a71170b7bd2f6d5f9a26a3233bf6d085cccba09e4b9972b90c97f7c2cba12993",
+  "artifact_sha256": "732e30f8faec9f98fc1bbc769e25db66c6c62e690c84847bcf26ad30a227dd2d",
   "status": "requires_review",
   "reviewed_at": null,
   "reviewer": null,

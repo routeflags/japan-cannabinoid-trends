@@ -3,9 +3,9 @@
   "generated_by": "validation.cli audit-publication",
   "publication_root": "publication",
   "release": {
-    "version": "1.13.1",
+    "version": "1.13.2",
     "declared_dois": [
-      "10.5281/zenodo.23253840"
+      "10.5281/zenodo.23390594"
     ],
     "declared_in": [
       "CITATION.cff",
