@@ -1,0 +1,20 @@
+{
+  "schema_version": "1.0.0",
+  "record": "publication_review_evidence",
+  "artifact_id": "research-crdh",
+  "recorded_at": "2026-10-15",
+  "integrity": "verified",
+  "citations": {
+    "integrity": [
+      "sha256(publication/research_crdh.html, 2026-10-15 検算) = bc10b51a970d512ea27765e78f5e04d3ef5d42fa4965fd3ed048e51e55c5060e"
+    ],
+    "publication_contract": [
+      "validation.cli audit-publication（2026-10-15）: PC-1〜PC-8 の機械検査対象。PC-7 は本 envelope の存在と hash 固定を検査する。"
+    ]
+  },
+  "unrecorded": {
+    "publication_approval": "対象 publication はまだ公開していない。承認判断は未実施のため decision.status は requires_review。",
+    "human_content_review": "効能表現・法務・再配布条件などの人間による最終審査は未記録。"
+  },
+  "notes": "この evidence は機械的な存在・整合性の根拠だけを記録する。公開承認・人間の内容審査は推測で埋めない。"
+}

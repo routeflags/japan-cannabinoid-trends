@@ -1,0 +1,13 @@
+{
+  "schema_version": "1.0.0",
+  "record": "publication_artifact_descriptor",
+  "artifact_id": "research-crdh",
+  "path": "publication/research_crdh.html",
+  "layer": "publication",
+  "source_kind": "html",
+  "storage_policy_id": "publication-html-candidate",
+  "sha256": "bc10b51a970d512ea27765e78f5e04d3ef5d42fa4965fd3ed048e51e55c5060e",
+  "byte_length": 16308,
+  "recorded_at": "2026-10-15",
+  "notes": "未公開 publication HTML。PC-7 の審査 envelope として内容 hash を固定する。対象 publication はまだ公開していないため、decision は requires_review から開始する。"
+}

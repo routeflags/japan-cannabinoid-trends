@@ -1,0 +1,14 @@
+{
+  "schema_version": "1.0.0",
+  "record": "publication_decision",
+  "decision_id": "publication-review-guide-cbx-rewrite",
+  "artifact_id": "guide-cbx-rewrite",
+  "artifact_sha256": "5309390cc1a3513af5bedbc6642c1b05a867fbe7b84cf96923d9117f751f7fa2",
+  "status": "requires_review",
+  "reviewed_at": null,
+  "reviewer": null,
+  "criteria_version": "PC-7 / publication-contract-v1.0.0 (2026-10-15)",
+  "recorded_at": "2026-10-15",
+  "basis": "対象 publication はまだ公開していないため、承認済みとはせず requires_review として審査待ちを記録する。",
+  "notes": "PC-7 は判断記録が存在することを検査する。PUB-10 の公開承認は approved かつ同一 sha256 の decision が必要であり、この requires_review では公開不可。"
+}

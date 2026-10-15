@@ -44,18 +44,27 @@ Implemented (mechanical only, no judgement)
   tables).  The requirement comes from the research-page generator contract
   (``.github/skills/generate-research-data-page/SKILL.md``); the guide follows
   its own generator (``generate-compound-guide``) whose requirements are not
-  encoded as a check yet (PC-8 below).
+  encoded by PC-5.
 - PC-6 HTML validity: section ids must be unique.
+- PC-7 review envelopes: each publication HTML artifact must have a committed
+  ``metadata/publication/<artifact_id>/`` envelope whose descriptor hash matches
+  the file and whose decision records a concrete review state.  ``requires_review``
+  is valid for a not-yet-public artifact; PC-7 records that the review state
+  exists, while ``gate-publication`` decides whether it is publishable.
+- PC-8 guide structure: ``guide_*`` pages are checked against the mechanical
+  parts of ``generate-compound-guide`` (JSON-LD blocks, H1, guide sections,
+  required disclosure / limitation markers, FAQ length).  Tone, judgement and
+  scientific adequacy remain human review items.
 
-Deliberately not implemented (named, so the gap cannot be silent):
-
-- PC-7 (a review envelope per artifact) - needs the review records.
-- PC-8 (the guide's own structure requirements) - the guide is not a research
-  page, so PC-5 does not apply to it.
+Deliberately not implemented: none.  If a publication rule cannot be checked
+mechanically, it must appear as human review evidence in the PC-7 envelope, not
+as a green automated rule.
 """
 
 from __future__ import annotations
 
+import hashlib
+import json
 import re
 from pathlib import Path
 
@@ -122,21 +131,45 @@ RESEARCH_PAGE_GLOB = "research_*.html"
 MISSING_MARKER = "未取得"
 UNCOMPUTABLE_MARKER = "算出不能"
 
-#: Rules without an implementation, reported so the gap is visible.
-UNIMPLEMENTED = (
-    {
-        "rule": "PC-7",
-        "requirement": "a committed review envelope per publication artifact",
-        "reason": "needs the review records (metadata/publication/)",
-    },
-    {
-        "rule": "PC-8",
-        "requirement": "the guide's own structure requirements",
-        "reason": (
-            "the guide follows generate-compound-guide, not the research-page "
-            "contract, so PC-5 does not apply to it"
-        ),
-    },
+#: Rules without an implementation, reported so the gap is visible.  This is
+#: intentionally empty now that PC-7 and PC-8 are mechanical.  Keeping the
+#: constant preserves the report shape and tests that no rule silently falls out.
+UNIMPLEMENTED: tuple[dict, ...] = ()
+
+DECISION_STATES = {"approved", "denied", "requires_review", "unknown"}
+
+GUIDE_REQUIRED_JSON_LD_TYPES = ("BreadcrumbList", "Article", "FAQPage")
+GUIDE_REQUIRED_H2_IDS = (
+    "what-is-cbx",
+    "regulation",
+    "safety",
+    "compare",
+    "methodology",
+    "data-search",
+    "data-coa",
+    "data-x",
+    "data-youtube",
+    "about",
+    "citation",
+    "faq",
+)
+GUIDE_REQUIRED_CLASSES = (
+    "breadcrumb",
+    "summary-block",
+    "caution-block",
+    "data-section",
+    "ingredient-cta",
+    "trust-block",
+    "footer",
+)
+GUIDE_REQUIRED_MARKERS = (
+    "利益相反の開示",
+    "CC-BY-4.0",
+    "医療・治療の助言",
+    "Google Trends の値は相対指数",
+    "絶対検索数ではありません",
+    "サプライヤーCOA",
+    "独立分析ではありません",
 )
 
 
@@ -168,6 +201,37 @@ def _sections(html: str) -> list[tuple[str, str]]:
 
 def _reading(path: Path) -> str:
     return path.read_text(encoding="utf-8")
+
+
+def _sha256(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as handle:
+        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+def _publication_artifact_id(path: Path, repo_root: Path) -> str:
+    """Stable id used by PC-7 review envelope directories.
+
+    The id is derived from the publication path, not from the page title, so a
+    title edit does not move the envelope.  ``publication/search-emergence-
+    tracker/index.html`` becomes ``search-emergence-tracker-index``.
+    """
+
+    relative = path.relative_to(repo_root / "publication").as_posix()
+    if relative.endswith(".html"):
+        relative = relative[:-5]
+    return relative.replace("/", "-").replace("_", "-").lower()
+
+
+def _load_json_document(path: Path) -> tuple[dict | None, str | None]:
+    try:
+        return json.loads(_reading(path)), None
+    except FileNotFoundError:
+        return None, "missing"
+    except (json.JSONDecodeError, UnicodeDecodeError) as error:
+        return None, f"not valid JSON: {error}"
 
 
 def _release(repo_root: Path) -> dict:
@@ -206,6 +270,135 @@ def _as_tuple(version: str) -> tuple[int, ...]:
     return tuple(int(part) for part in version.split("."))
 
 
+def _review_envelope_findings(path: Path, repo_root: Path) -> list[dict]:
+    """PC-7: every publication artifact must have a concrete review state.
+
+    This does not approve the artifact.  A ``requires_review`` decision is a
+    valid state for an unpublished artifact; publication approval is still
+    enforced by ``gate-publication`` / PUB-10.
+    """
+
+    relative = path.relative_to(repo_root).as_posix()
+    artifact_id = _publication_artifact_id(path, repo_root)
+    envelope = repo_root / "metadata" / "publication" / artifact_id
+    current_hash = _sha256(path)
+    findings: list[dict] = []
+
+    def add(kind: str, detail: str) -> None:
+        findings.append({"rule": "PC-7", "kind": kind, "path": relative, "detail": detail})
+
+    if not envelope.is_dir():
+        add(
+            "publication_review_envelope_missing",
+            f"metadata/publication/{artifact_id}/ is missing",
+        )
+        return findings
+
+    artifact, artifact_error = _load_json_document(envelope / "artifact.json")
+    evidence, evidence_error = _load_json_document(envelope / "evidence.json")
+    decision, decision_error = _load_json_document(envelope / "decision.json")
+    for filename, error in (
+        ("artifact.json", artifact_error),
+        ("evidence.json", evidence_error),
+        ("decision.json", decision_error),
+    ):
+        if error:
+            add("publication_review_envelope_incomplete", f"{artifact_id}/{filename}: {error}")
+
+    if isinstance(artifact, dict):
+        if artifact.get("record") != "publication_artifact_descriptor":
+            add("publication_review_descriptor_invalid", "artifact.json has no publication_artifact_descriptor record")
+        if artifact.get("artifact_id") != artifact_id:
+            add(
+                "publication_review_descriptor_invalid",
+                f"artifact.json artifact_id {artifact.get('artifact_id')!r} != {artifact_id!r}",
+            )
+        if artifact.get("path") != relative:
+            add(
+                "publication_review_descriptor_invalid",
+                f"artifact.json path {artifact.get('path')!r} != {relative!r}",
+            )
+        if artifact.get("sha256") != current_hash:
+            add(
+                "publication_review_hash_mismatch",
+                "artifact.json sha256 does not match the current publication artifact",
+            )
+    if isinstance(evidence, dict):
+        if evidence.get("record") != "publication_review_evidence":
+            add("publication_review_evidence_invalid", "evidence.json has no publication_review_evidence record")
+        if evidence.get("artifact_id") != artifact_id:
+            add(
+                "publication_review_evidence_invalid",
+                f"evidence.json artifact_id {evidence.get('artifact_id')!r} != {artifact_id!r}",
+            )
+        citations = evidence.get("citations")
+        if not isinstance(citations, dict) or not citations.get("publication_contract"):
+            add(
+                "publication_review_evidence_invalid",
+                "evidence.json must cite the publication contract audit",
+            )
+    if isinstance(decision, dict):
+        if decision.get("record") != "publication_decision":
+            add("publication_review_decision_invalid", "decision.json has no publication_decision record")
+        if decision.get("artifact_id") != artifact_id:
+            add(
+                "publication_review_decision_invalid",
+                f"decision.json artifact_id {decision.get('artifact_id')!r} != {artifact_id!r}",
+            )
+        if decision.get("artifact_sha256") != current_hash:
+            add(
+                "publication_review_hash_mismatch",
+                "decision.json artifact_sha256 does not match the current publication artifact",
+            )
+        if decision.get("status") not in DECISION_STATES:
+            add(
+                "publication_review_decision_invalid",
+                f"decision.json status {decision.get('status')!r} is not a publication state",
+            )
+        if not decision.get("criteria_version"):
+            add("publication_review_decision_invalid", "decision.json criteria_version is empty")
+    return findings
+
+
+def _guide_structure_findings(path: Path, repo_root: Path, raw: str, html: str) -> list[dict]:
+    """PC-8: mechanical parts of ``generate-compound-guide`` for guide pages."""
+
+    if not path.name.startswith("guide_"):
+        return []
+    relative = path.relative_to(repo_root).as_posix()
+    findings: list[dict] = []
+
+    def add(kind: str, detail: str) -> None:
+        findings.append({"rule": "PC-8", "kind": kind, "path": relative, "detail": detail})
+
+    h1_count = len(re.findall(r"<h1\b", html, re.I))
+    if h1_count != 1:
+        add("guide_h1_count", f"guide page has {h1_count} h1 elements; exactly 1 required")
+
+    for json_ld_type in GUIDE_REQUIRED_JSON_LD_TYPES:
+        if f'"@type": "{json_ld_type}"' not in raw and f'"@type":"{json_ld_type}"' not in raw:
+            add("guide_structured_data_missing", f"JSON-LD {json_ld_type} block is missing")
+
+    section_ids = {section_id for section_id, _ in _sections(html)}
+    for section_id in GUIDE_REQUIRED_H2_IDS:
+        if section_id not in section_ids:
+            add("guide_section_missing", f'h2 id="{section_id}" is missing')
+
+    for class_name in GUIDE_REQUIRED_CLASSES:
+        if class_name not in html:
+            add("guide_class_missing", f'class "{class_name}" is missing')
+
+    for marker in GUIDE_REQUIRED_MARKERS:
+        if marker not in html:
+            add("guide_required_marker_missing", f"required marker is missing: {marker}")
+
+    faq_sections = [content for section_id, content in _sections(html) if section_id == "faq"]
+    faq_count = len(_H3_RE.findall(faq_sections[0])) if faq_sections else 0
+    if faq_count < 4:
+        add("guide_faq_too_short", f"FAQ has {faq_count} question heading(s); 4 required")
+    return findings
+
+
 def _artifact_findings(
     path: Path, repo_root: Path, release: dict, catalog_run_ids: set[str]
 ) -> list[dict]:
@@ -216,6 +409,9 @@ def _artifact_findings(
 
     def add(rule: str, kind: str, detail: str) -> None:
         findings.append({"rule": rule, "kind": kind, "path": relative, "detail": detail})
+
+    findings.extend(_review_envelope_findings(path, repo_root))
+    findings.extend(_guide_structure_findings(path, repo_root, raw, html))
 
     # PC-1 - the release this artifact presents.
     versions = _VERSION_RE.findall(html)
@@ -419,7 +615,7 @@ def build_publication_contract_report(repo_root: Path) -> dict:
             "by_rule": count("rule"),
             "by_kind": count("kind"),
         },
-        "implemented_rules": ["PC-1", "PC-2", "PC-3", "PC-4", "PC-5", "PC-6"],
+        "implemented_rules": ["PC-1", "PC-2", "PC-3", "PC-4", "PC-5", "PC-6", "PC-7", "PC-8"],
         "unimplemented_rules": list(UNIMPLEMENTED),
         "findings": findings,
         "declared_gaps": declared_gaps,

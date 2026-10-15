@@ -241,7 +241,7 @@ report = outcome.to_report().to_dict()
 
 - `bash scripts/validation/validate-data-schema.sh`（PASS 45 / WARN 2 / FAIL 0、約0.2秒）
 - `python -m validation.cli audit-publication --output docs/audits/publication-contract.json`
-  （公開契約 PC-1/3/4/5/6。read-only、record-only、常に exit 0。2026-10-15 に
+  （公開契約 PC-1〜PC-8。read-only、record-only、常に exit 0。2026-10-15 に
   `scripts/validation/validate-research-pages.py`（不活性）を削除して置換）
 - `bash scripts/validation/validate-search-emergence-tracker.sh`（PASS、約0.1秒。network 不要。§3 の日付比較は WARN のみで exit に影響しない）
 - `python -m validation.cli audit-git-tracking --output /tmp/g6-git-tracking-inventory.json`

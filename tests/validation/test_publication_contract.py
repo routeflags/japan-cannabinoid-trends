@@ -10,12 +10,13 @@ fixture must produce none.
 
 from __future__ import annotations
 
+import hashlib
+import json
 from pathlib import Path
 
 import pytest
 
 from validation.publication_contract import (
-    UNIMPLEMENTED,
     V3_POLICY_MARKER,
     build_publication_contract_report,
 )
@@ -43,6 +44,38 @@ CONFORMING = f"""<html><body>
 </body></html>
 """
 
+GUIDE_CONFORMING = f"""<!DOCTYPE html>
+<html lang="ja"><head>
+<script type="application/ld+json">{{"@type": "BreadcrumbList"}}</script>
+<script type="application/ld+json">{{"@type": "Article"}}</script>
+<script type="application/ld+json">{{"@type": "FAQPage"}}</script>
+</head><body>
+<nav class="breadcrumb">ホーム</nav>
+<main>
+<div class="summary-block"><h2>このページで分かること</h2></div>
+<div class="caution-block"><h3>利益相反の開示</h3><p>医療・治療の助言ではない。CC-BY-4.0。</p></div>
+<h1>CBX とは？</h1>
+<h2 id="what-is-cbx">CBX とは</h2>
+<h2 id="regulation">規制状況</h2>
+<h2 id="safety">安全性について</h2>
+<h2 id="compare">比較</h2>
+<h2 id="methodology">調査方法</h2>
+<p>Google Trends の値は相対指数であり、絶対検索数ではありません。サプライヤーCOAであり、独立分析ではありません。</p>
+<div class="data-section"><h2 id="data-search">Google Trends</h2></div>
+<div class="data-section"><h2 id="data-coa">COA</h2></div>
+<div class="data-section"><h2 id="data-x">X</h2></div>
+<div class="data-section"><h2 id="data-youtube">YouTube</h2></div>
+<h2 id="about">この記録について</h2>
+<h2 id="citation">この調査を引用する場合</h2>
+<div class="ingredient-cta"><h2>他の成分も探す</h2></div>
+<h2 id="faq">よくある質問</h2>
+<h3>合法ですか？</h3><h3>違いは？</h3><h3>副作用は？</h3><h3>注意点は？</h3>
+<div class="trust-block">確認者</div>
+</main><footer class="footer">footer</footer>
+<p>Version 9.9.9 DOI 10.5281/zenodo.99999999</p>
+</body></html>
+"""
+
 
 def _catalog(tmp_path: Path, *run_ids: str) -> None:
     for run_id in run_ids:
@@ -59,14 +92,90 @@ def _catalog(tmp_path: Path, *run_ids: str) -> None:
         (run_dir / "run_metadata.json").write_text("{}", encoding="utf-8")
 
 
-def _report(tmp_path: Path, html: str, *, cff: str = CFF, name: str = "research_page.html") -> dict:
+def _artifact_id(name: str) -> str:
+    relative = name[:-5] if name.endswith(".html") else name
+    return relative.replace("/", "-").replace("_", "-").lower()
+
+
+def _sha256(path: Path) -> str:
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def _write_envelope(
+    tmp_path: Path, path: Path, *, artifact_id: str | None = None, sha256: str | None = None
+) -> None:
+    relative = path.relative_to(tmp_path).as_posix()
+    artifact_id = artifact_id or _artifact_id(path.relative_to(tmp_path / "publication").as_posix())
+    sha256 = sha256 or _sha256(path)
+    envelope = tmp_path / "metadata" / "publication" / artifact_id
+    envelope.mkdir(parents=True, exist_ok=True)
+    (envelope / "artifact.json").write_text(
+        json.dumps(
+            {
+                "schema_version": "1.0.0",
+                "record": "publication_artifact_descriptor",
+                "artifact_id": artifact_id,
+                "path": relative,
+                "sha256": sha256,
+            },
+            ensure_ascii=False,
+        ),
+        encoding="utf-8",
+    )
+    (envelope / "evidence.json").write_text(
+        json.dumps(
+            {
+                "schema_version": "1.0.0",
+                "record": "publication_review_evidence",
+                "artifact_id": artifact_id,
+                "citations": {
+                    "publication_contract": [
+                        "validation.cli audit-publication（fixture）: PC-1..PC-8"
+                    ]
+                },
+            },
+            ensure_ascii=False,
+        ),
+        encoding="utf-8",
+    )
+    (envelope / "decision.json").write_text(
+        json.dumps(
+            {
+                "schema_version": "1.0.0",
+                "record": "publication_decision",
+                "decision_id": f"publication-review-{artifact_id}",
+                "artifact_id": artifact_id,
+                "artifact_sha256": sha256,
+                "status": "requires_review",
+                "reviewed_at": None,
+                "reviewer": None,
+                "criteria_version": "PC-7 fixture",
+            },
+            ensure_ascii=False,
+        ),
+        encoding="utf-8",
+    )
+
+
+def _report(
+    tmp_path: Path,
+    html: str,
+    *,
+    cff: str = CFF,
+    name: str = "research_page.html",
+    envelope: bool = True,
+) -> dict:
     (tmp_path / "CITATION.cff").write_text(cff, encoding="utf-8")
     _catalog(tmp_path, RUN_ID)
     publication = tmp_path / "publication"
     publication.mkdir(exist_ok=True)
     for existing in publication.glob("*.html"):
         existing.unlink()
-    (publication / name).write_text(html, encoding="utf-8")
+    path = publication / name
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(html, encoding="utf-8")
+    if envelope:
+        _write_envelope(tmp_path, path)
     return build_publication_contract_report(tmp_path)
 
 
@@ -218,15 +327,13 @@ def test_section_depth_rules_apply_to_research_pages_only(tmp_path: Path) -> Non
     assert _kinds(_report(tmp_path, shallow, name="guide.html")) == []
 
 
-def test_the_report_names_the_rules_it_does_not_implement(tmp_path: Path) -> None:
-    """An unimplemented rule must be named in the report, not silently absent."""
+def test_all_publication_contract_rules_are_implemented(tmp_path: Path) -> None:
+    """Implemented rules are explicit, and the unimplemented list is empty."""
 
     report = _report(tmp_path, CONFORMING)
 
-    assert {entry["rule"] for entry in report["unimplemented_rules"]} == {
-        entry["rule"] for entry in UNIMPLEMENTED
-    }
-    assert {entry["rule"] for entry in report["unimplemented_rules"]} >= {"PC-7", "PC-8"}
+    assert report["unimplemented_rules"] == []
+    assert set(report["implemented_rules"]) == {f"PC-{index}" for index in range(1, 9)}
 
 
 def test_google_trends_section_must_name_its_run(tmp_path: Path) -> None:
@@ -251,3 +358,50 @@ def test_the_run_catalog_is_reported(tmp_path: Path) -> None:
     """The resolution target is part of the report, so a reader can size it."""
 
     assert _report(tmp_path, CONFORMING)["catalog_run_count"] == 1
+
+
+def test_publication_artifacts_need_review_envelopes(tmp_path: Path) -> None:
+    """PC-7: an HTML artifact without a decision envelope is not reviewable."""
+
+    findings = _report(tmp_path, CONFORMING, envelope=False)["findings"]
+
+    assert [finding["kind"] for finding in findings] == ["publication_review_envelope_missing"]
+
+
+def test_review_envelope_must_pin_the_current_artifact_hash(tmp_path: Path) -> None:
+    """PC-7: a stale decision cannot silently satisfy the review-record rule."""
+
+    (tmp_path / "CITATION.cff").write_text(CFF, encoding="utf-8")
+    _catalog(tmp_path, RUN_ID)
+    publication = tmp_path / "publication"
+    publication.mkdir(exist_ok=True)
+    path = publication / "research_page.html"
+    path.write_text(CONFORMING, encoding="utf-8")
+    _write_envelope(tmp_path, path, sha256="0" * 64)
+
+    kinds = _kinds(build_publication_contract_report(tmp_path))
+
+    assert kinds.count("publication_review_hash_mismatch") == 2
+
+
+def test_guide_structure_requirements_are_mechanical_and_nonempty(tmp_path: Path) -> None:
+    """PC-8 applies the guide generator's checkable structure requirements."""
+
+    assert _kinds(_report(tmp_path, GUIDE_CONFORMING, name="guide_cbx_rewrite.html")) == []
+
+    shallow = GUIDE_CONFORMING.replace('<h2 id="data-coa">COA</h2>', "<h2>COA</h2>")
+    findings = _report(tmp_path, shallow, name="guide_cbx_rewrite.html")["findings"]
+
+    assert [finding["kind"] for finding in findings] == ["guide_section_missing"]
+    assert 'id="data-coa"' in findings[0]["detail"]
+
+
+def test_guide_faq_must_have_four_questions(tmp_path: Path) -> None:
+    """PC-8: the guide skill says FAQ has at least four questions."""
+
+    short = GUIDE_CONFORMING.replace(
+        "<h3>合法ですか？</h3><h3>違いは？</h3><h3>副作用は？</h3><h3>注意点は？</h3>",
+        "<h3>合法ですか？</h3><h3>違いは？</h3><h3>副作用は？</h3>",
+    )
+
+    assert "guide_faq_too_short" in _kinds(_report(tmp_path, short, name="guide_cbx_rewrite.html"))

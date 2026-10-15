@@ -10,5 +10,5 @@
   "criteria_version": "G6 §10.2 / §11 (minimal publication rule)",
   "recorded_at": "2026-10-15",
   "basis": "ISS-20261015-COL-030 §4.1（メンテナ決定 2026-10-15）: 「匿名化した場合でも、投稿単位の研究CSVは公開しない」。投稿単位の表現はリポジトリへの格納禁止と同じく禁止とする（ISS-20261015-XID-034 の決定記録）。したがって本成果物（147 行 = 147 投稿、投稿時刻・投稿ごとのエンゲージメント列を持つ）は、匿名化の有無に関わらず公開しない。",
-  "notes": "2026-10-13 の approved（同じ hash f27f979a…）をこの判断で置き換える。置き換えであって削除ではない: 当時の審査と承認は metadata/publication/README.md と ISS-20261015-PUB-015 に日付付きで残る。成果物自体は 2026-10-15 に追跡から取り下げた（src/processing/reproduce.py の WITHDRAWN、ISS-20261015-PUB-035。既公開アーカイブの取り下げはしない = §21.6 の先例）。sha256 は審査当時の対象を指す。"
+  "notes": "2026-10-13 の approved（同じ hash f27f979a…）をこの判断で置き換える。置き換えであって削除ではない: 当時の審査と承認は metadata/publication/README.md と ISS-20261015-PUB-015 に日付付きで残る。成果物自体は 2026-10-15 に追跡から取り下げた（src/processing/reproduce.py の WITHDRAWN、ISS-20261015-PUB-035）。既公開 Zenodo アーカイブはオーナー回答（ISS-20261015-XID-035、2026-10-15）に従い取り下げ対象。sha256 は審査当時の対象を指す。"
 }

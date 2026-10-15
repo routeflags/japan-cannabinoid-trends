@@ -17,6 +17,12 @@ ISS-20261015-PUB-015 の対応（メンテナ指示: ゲートを再実行して
 - `evidence.json` の各フラグは**日付のある根拠**を `citations` に持たねばならない。
   根拠が無い項目は記録しない（未確認 = WARNING。**推測で PASS にしない**）。
 - ゲートは記録のみ。公開・Release 作成・Zenodo アップロード・DOI 発行は行わない。
+- `publication/*.html` と `publication/**/index.html` は、公開前のページでも
+  `metadata/publication/<artifact_id>/` に同じ 3 ファイルを持つ。未公開・未承認なら
+  `decision.json` は `status: "requires_review"` とし、推測で `approved` にしない。
+- 公開契約 PC-7 は envelope の存在・対象 path・hash 固定・判断状態の有無だけを検査する。
+  `requires_review` は「審査状態が記録されている」ことを意味するだけで、公開可を意味しない。
+  実際の公開可否は `gate-publication` の PUB-10（`approved` + 同一 sha256）で判定する。
 
 ## 再実行
 

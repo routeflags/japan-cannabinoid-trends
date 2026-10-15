@@ -1,6 +1,6 @@
 # 契約（Contract）のドメインモデル
 
-**版:** 1.1.0（2026-10-15）
+**版:** 1.2.0（2026-10-15）
 **目的:** リポジトリ内で多義的に使われてきた「契約」を、境界づけられたコンテキストごとの
 **版を持つ検証可能な合意**として定義し、宣言場所・所有者・検査手段を 1 つの台帳に集約する。
 併せて、**パイプライン**をドメイン上 **生産 (Production)** として定義し、判定側（検証）
@@ -171,6 +171,28 @@ flowchart TD
 
 ---
 
+## 7.1 公開契約（PC-1〜PC-8）
+
+公開層の機械検査は `validation.cli audit-publication` が担当する。これは record-only であり、
+公開・Release・Zenodo 操作は行わない。
+
+| ID | 機械検査すること | 備考 |
+|---|---|---|
+| PC-1 | release version / DOI が `CITATION.cff` と `metadata/datapackage.json` の宣言に一致する | HTML 全体 |
+| PC-2 | 研究ページの Google Trends 5 年表が run を名乗り、名乗った run が catalog に存在する | 研究ページ限定 |
+| PC-3 | policy-out source（YouTube Data API v3）と X 投稿単位表現を検出する | 投稿単位 X 表現は禁止 |
+| PC-4 | JSON-LD の `dateModified` と本文の `最終更新` が一致する | 両方がある場合 |
+| PC-5 | 研究ページの section depth（GT 12ヶ月+5年、X 95% CI、YouTube depth） | `research_*.html` 限定 |
+| PC-6 | HTML の `id` が重複しない | HTML 全体 |
+| PC-7 | `metadata/publication/<artifact_id>/` の review envelope が存在し、path / sha256 / decision state を固定する | `requires_review` は公開可ではない |
+| PC-8 | guide 固有の構造（JSON-LD、H1、主要 section、開示 marker、FAQ 4 問以上） | `guide_*` 限定 |
+
+PC-7 は判断状態の**記録**を検査するだけで、承認を発明しない。対象 publication はまだ公開していないため、
+現時点の HTML artifact は `decision.status = "requires_review"` で記録する。実際の公開可否は
+`validation.cli gate-publication` の PUB-10（`approved` + 同一 sha256）で判定する。
+
+---
+
 ## 8. 台帳（唯一の一覧）
 
 ```bash
@@ -224,5 +246,6 @@ python -m validation.cli contract-ledger --output docs/audits/contract-ledger.js
 
 | 日付 | 版 | 内容 |
 |---|---|---|
+| 2026-10-15 | 1.2.0 | §7.1 に公開契約 PC-1〜PC-8 の機械検査範囲を追加。PC-7 の review envelope と PC-8 の guide 構造検査を実装済みとして記録 |
 | 2026-10-15 | 1.1.0 | §3 を「生産（パイプライン）とコンテキストマップ」に拡張。**パイプライン**をドメイン上 **生産 (Production)** と定義し、判定側との分離を規則化（§3.1）。ユビキタス言語と §2.1 に 生産 / 下位コンテキストを追加 |
 | 2026-10-15 | 1.0.0 | 初版。5 種の宣言をモデル化し、台帳 `validation.cli contract-ledger` と `docs/audits/contract-ledger.json` を導入 |

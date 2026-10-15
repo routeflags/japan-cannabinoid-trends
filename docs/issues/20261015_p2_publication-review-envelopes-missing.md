@@ -2,16 +2,16 @@
 
 **ID:** ISS-20261015-PUB-036  
 **優先度:** P2 (Medium)  
-**ステータス:** OPEN  
+**ステータス:** RESOLVED (2026-10-15)  
 **対象:** `src/validation/publication_contract.py`（`UNIMPLEMENTED`）、`metadata/publication/`、
-`validation.cli gate-publication`、`publication/`（15 artifact）
+`validation.cli gate-publication`、`publication/`（16 artifact）
 
 ## 概要
 
 公開契約の **PC-7「artifact ごとに公開判断の記録（審査 envelope）が存在する」は未実装**の
 ままで、`docs/audits/publication-contract.json` の `unimplemented_rules` に記録されている。
 審査 envelope があるのは `metadata/publication/x-cbx-202608-summary-anonymized/` の 1 件だけで、
-`publication/` の 15 artifact（研究ページ 13 + guide + search-emergence-tracker）には無い。
+`publication/` の 16 artifact（研究ページ 14 + guide + search-emergence-tracker）には無かった。
 
 ## 確認された観測
 
@@ -35,7 +35,7 @@
 **判断（承認/拒否）は人の行為なのでエージェントが埋めない。** 未審査は
 `requires_review` として記録する（推測で `approved` を書かない）。
 
-- (a) **artifact ごとに 15 件の envelope**（現行規則どおり。推奨）。既存 1 件と同じ形式で、
+- (a) **artifact ごとに 16 件の envelope**（現行規則どおり。推奨）。既存 1 件と同じ形式で、
   `artifact.json` は sha256、`decision.json` は `requires_review`、`evidence.json` は
   監査レポートの参照。
 - (b) **1 release = 1 判断記録**へ PC-7 を再定義する（`metadata/publication/<release_id>/` +
@@ -48,10 +48,18 @@
 
 ## 完了条件
 
-- [ ] 選択肢 (a) / (b) の決定と記録
-- [ ] 対象 artifact の判断記録（少なくとも `requires_review`）と `metadata/publication/README.md` の更新
-- [ ] PC-7 の実装（envelope の有無 + `criteria_version` / evidence 参照）と非空虚性テスト
-- [ ] `audit-publication` の `unimplemented_rules` から PC-7 を外し、`docs/audits/publication-contract.json` を再生成
+- [x] 選択肢 (a) / (b) の決定と記録
+- [x] 対象 artifact の判断記録（少なくとも `requires_review`）と `metadata/publication/README.md` の更新
+- [x] PC-7 の実装（envelope の有無 + `criteria_version` / evidence 参照）と非空虚性テスト
+- [x] `audit-publication` の `unimplemented_rules` から PC-7 を外し、`docs/audits/publication-contract.json` を再生成
+
+## 対応記録（2026-10-15）
+
+選択肢 (a) を採用した。`publication/` 配下の 16 HTML artifact それぞれに
+`metadata/publication/<artifact_id>/{artifact,evidence,decision}.json` を作成し、未公開・未承認の状態を
+`decision.status = "requires_review"` として記録した。`requires_review` は公開可を意味しない。
+PC-7 は envelope の存在、artifact path、現行 sha256、decision の `criteria_version` と状態を機械検査する。
+公開可否は引き続き `gate-publication` の PUB-10（`approved` + 同一 sha256）で判定する。
 
 ## 依存
 

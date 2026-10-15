@@ -26,20 +26,11 @@
     "PC-3",
     "PC-4",
     "PC-5",
-    "PC-6"
+    "PC-6",
+    "PC-7",
+    "PC-8"
   ],
-  "unimplemented_rules": [
-    {
-      "rule": "PC-7",
-      "requirement": "a committed review envelope per publication artifact",
-      "reason": "needs the review records (metadata/publication/)"
-    },
-    {
-      "rule": "PC-8",
-      "requirement": "the guide's own structure requirements",
-      "reason": "the guide follows generate-compound-guide, not the research-page contract, so PC-5 does not apply to it"
-    }
-  ],
+  "unimplemented_rules": [],
   "findings": [],
   "declared_gaps": []
 }

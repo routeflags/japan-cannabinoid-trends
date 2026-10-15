@@ -3,7 +3,7 @@
   "generated_by": "validation.cli contract-ledger",
   "summary": {
     "contract_count": 27,
-    "document_count": 12,
+    "document_count": 28,
     "by_kind": {
       "gate_contract": 6,
       "interface_contract": 3,
@@ -365,6 +365,102 @@
       "path": "metadata/windows/2025-10-12_2026-10-12.json",
       "kind": "registry_document",
       "schema_contract": "temporal-window-v1",
+      "exists": true
+    },
+    {
+      "path": "metadata/publication/guide-cbx-rewrite/",
+      "kind": "decision_record",
+      "schema_contract": "publication-decision-v1",
+      "exists": true
+    },
+    {
+      "path": "metadata/publication/research-cbd/",
+      "kind": "decision_record",
+      "schema_contract": "publication-decision-v1",
+      "exists": true
+    },
+    {
+      "path": "metadata/publication/research-cbg/",
+      "kind": "decision_record",
+      "schema_contract": "publication-decision-v1",
+      "exists": true
+    },
+    {
+      "path": "metadata/publication/research-cbn/",
+      "kind": "decision_record",
+      "schema_contract": "publication-decision-v1",
+      "exists": true
+    },
+    {
+      "path": "metadata/publication/research-cbx/",
+      "kind": "decision_record",
+      "schema_contract": "publication-decision-v1",
+      "exists": true
+    },
+    {
+      "path": "metadata/publication/research-crdh/",
+      "kind": "decision_record",
+      "schema_contract": "publication-decision-v1",
+      "exists": true
+    },
+    {
+      "path": "metadata/publication/research-crdp/",
+      "kind": "decision_record",
+      "schema_contract": "publication-decision-v1",
+      "exists": true
+    },
+    {
+      "path": "metadata/publication/research-h4cbh/",
+      "kind": "decision_record",
+      "schema_contract": "publication-decision-v1",
+      "exists": true
+    },
+    {
+      "path": "metadata/publication/research-hhbd/",
+      "kind": "decision_record",
+      "schema_contract": "publication-decision-v1",
+      "exists": true
+    },
+    {
+      "path": "metadata/publication/research-hhc/",
+      "kind": "decision_record",
+      "schema_contract": "publication-decision-v1",
+      "exists": true
+    },
+    {
+      "path": "metadata/publication/research-hhch/",
+      "kind": "decision_record",
+      "schema_contract": "publication-decision-v1",
+      "exists": true
+    },
+    {
+      "path": "metadata/publication/research-thc/",
+      "kind": "decision_record",
+      "schema_contract": "publication-decision-v1",
+      "exists": true
+    },
+    {
+      "path": "metadata/publication/research-thc-o/",
+      "kind": "decision_record",
+      "schema_contract": "publication-decision-v1",
+      "exists": true
+    },
+    {
+      "path": "metadata/publication/research-thch/",
+      "kind": "decision_record",
+      "schema_contract": "publication-decision-v1",
+      "exists": true
+    },
+    {
+      "path": "metadata/publication/research-thcv/",
+      "kind": "decision_record",
+      "schema_contract": "publication-decision-v1",
+      "exists": true
+    },
+    {
+      "path": "metadata/publication/search-emergence-tracker-index/",
+      "kind": "decision_record",
+      "schema_contract": "publication-decision-v1",
       "exists": true
     },
     {

@@ -1,0 +1,20 @@
+{
+  "schema_version": "1.0.0",
+  "record": "publication_review_evidence",
+  "artifact_id": "research-hhch",
+  "recorded_at": "2026-10-15",
+  "integrity": "verified",
+  "citations": {
+    "integrity": [
+      "sha256(publication/research_hhch.html, 2026-10-15 検算) = d0e3d70a1718ec2229803513692b399f75cbb8cc2944733ec3e03eeb54e1ecfc"
+    ],
+    "publication_contract": [
+      "validation.cli audit-publication（2026-10-15）: PC-1〜PC-8 の機械検査対象。PC-7 は本 envelope の存在と hash 固定を検査する。"
+    ]
+  },
+  "unrecorded": {
+    "publication_approval": "対象 publication はまだ公開していない。承認判断は未実施のため decision.status は requires_review。",
+    "human_content_review": "効能表現・法務・再配布条件などの人間による最終審査は未記録。"
+  },
+  "notes": "この evidence は機械的な存在・整合性の根拠だけを記録する。公開承認・人間の内容審査は推測で埋めない。"
+}

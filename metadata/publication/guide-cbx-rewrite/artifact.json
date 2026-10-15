@@ -1,0 +1,13 @@
+{
+  "schema_version": "1.0.0",
+  "record": "publication_artifact_descriptor",
+  "artifact_id": "guide-cbx-rewrite",
+  "path": "publication/guide_cbx_rewrite.html",
+  "layer": "publication",
+  "source_kind": "html",
+  "storage_policy_id": "publication-html-candidate",
+  "sha256": "5309390cc1a3513af5bedbc6642c1b05a867fbe7b84cf96923d9117f751f7fa2",
+  "byte_length": 72730,
+  "recorded_at": "2026-10-15",
+  "notes": "未公開 publication HTML。PC-7 の審査 envelope として内容 hash を固定する。対象 publication はまだ公開していないため、decision は requires_review から開始する。"
+}

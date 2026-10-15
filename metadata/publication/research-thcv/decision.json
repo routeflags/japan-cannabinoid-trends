@@ -1,0 +1,14 @@
+{
+  "schema_version": "1.0.0",
+  "record": "publication_decision",
+  "decision_id": "publication-review-research-thcv",
+  "artifact_id": "research-thcv",
+  "artifact_sha256": "3a06ccf409688b0526cd728e5376606c1caf9c4d317d1223bb0acb65886d0375",
+  "status": "requires_review",
+  "reviewed_at": null,
+  "reviewer": null,
+  "criteria_version": "PC-7 / publication-contract-v1.0.0 (2026-10-15)",
+  "recorded_at": "2026-10-15",
+  "basis": "対象 publication はまだ公開していないため、承認済みとはせず requires_review として審査待ちを記録する。",
+  "notes": "PC-7 は判断記録が存在することを検査する。PUB-10 の公開承認は approved かつ同一 sha256 の decision が必要であり、この requires_review では公開不可。"
+}

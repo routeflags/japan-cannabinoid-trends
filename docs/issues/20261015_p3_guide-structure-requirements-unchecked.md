@@ -2,7 +2,7 @@
 
 **ID:** ISS-20261015-PUB-037  
 **優先度:** P3 (Low)  
-**ステータス:** OPEN  
+**ステータス:** RESOLVED (2026-10-15)  
 **対象:** `publication/guide_cbx_rewrite.html`、`src/validation/publication_contract.py`、
 `.github/skills/generate-compound-guide/SKILL.md`
 
@@ -36,9 +36,9 @@
 
 ## 完了条件
 
-- [ ] guide の生成器契約から検査可能な要求を抽出し、対象 / 対象外を明記
-- [ ] PC-8 の実装と非空虚性テスト（違反フィクスチャで落ち、現行 guide で findings 0）
-- [ ] `unimplemented_rules` から PC-8 を外し、監査と `docs/specs/contracts.md` を再生成
+- [x] guide の生成器契約から検査可能な要求を抽出し、対象 / 対象外を明記
+- [x] PC-8 の実装と非空虚性テスト（違反フィクスチャで落ち、現行 guide で findings 0）
+- [x] `unimplemented_rules` から PC-8 を外し、監査と `docs/specs/contracts.md` を再生成
 
 ## 依存
 
@@ -58,3 +58,11 @@ research_cbx.html の欠損を先に対応
 YouTube は v3 レポート 2 本（CBX 600 件中 232 関連 / CBX リキッド 125 件）と Apify 24 件の深度統計。
 共通スケール比較と CBX 製品 COA は記録が無い旨を明記した（欠測 ≠ ゼロ）。
 `audit-publication` は 16 artifact / findings 0。
+
+## 対応記録（PC-8、2026-10-15）
+
+`generate-compound-guide` から機械検査できる要求だけを抽出して PC-8 とした。対象は
+JSON-LD 3 種（BreadcrumbList / Article / FAQPage）、H1 1 件、主要 H2、主要 CSS class、
+利益相反・ライセンス・医療助言でない旨・Google Trends の相対指数制約・COA の独立分析制約、
+FAQ 4 問以上。文体、科学的妥当性、薬機法リスク表現の精査など人間判断が必要な項目は
+PC-7 の review envelope に残す対象であり、PC-8 では「検査したふり」をしない。

@@ -406,6 +406,7 @@ PENDING 化（残りは再取得判断 U11）。監査の宣言済みギャッ�
 per-source の catalog 配置（`data/raw/google_trends/`）を追加。7 run 採用（new=7 / failures=0）、
 13 ページがライブ系列から生成され、5 年平均の算出不能は 0 に。GT-003 を RESOLVED | メンテナ指示（パイプライン経由のライブ） |
 | 2026-10-15 | 実施⑨: **欠損していた `research_cbx.html` を作成**（オーナー指示。PC-8 の前提）。CBX は 13 化合物のページに含まれておらず、guide だけが CBX のデータを持っていた。GT 5 年は生成ブロック（出所は唯一の CBX 単独系列＝境界計測 run）、12 ヶ月・X（147 件の記録済み分布＋Wilson CI）・規制・YouTube（v3 レポート 2 本＋Apify 24 件）は記録から手書き（数値の導出は commit 記録）。共通スケールと CBX 製品 COA は記録が無い旨を明記。14 ページ化に伴い `gt-summary` の化合物・テストの件数を 13→14 へ | メンテナ指示（欠損を先に対応） |
+| 2026-10-15 | 実施⑩: **PC-7 / PC-8 を実装**。`publication/` 配下 16 HTML artifact に review envelope を作成し、未公開 artifact は `requires_review` として記録（承認は発明しない）。PC-7 は envelope の path / sha256 / decision state を検査し、PC-8 は guide 固有の機械検査可能な構造（JSON-LD、H1、主要 section、開示 marker、FAQ 4 問以上）だけを検査する。`audit-publication` は PC-1〜PC-8 実装済み / findings 0 / unimplemented 0 | メンテナ指示（go all） |
 | 2026-10-15 | 実施⑧（残件の解決）: **パイプラインをドメイン上 生産 (Production) と定義**
 （`docs/specs/contracts.md` 1.1.0 §3.1）。**PC-2 を実装**（GT セクションが run を名乗る +
 引用 run の catalog 解決）。`gt-summary --write` でページ更新を再現可能にし、
