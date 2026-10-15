@@ -3,12 +3,12 @@
   "record": "publication_decision",
   "decision_id": "publication-review-research-cbx",
   "artifact_id": "research-cbx",
-  "artifact_sha256": "11a315e2c7426d39cb9e28fdde1edd6a335ddb5172d0bf0b13dd2ac2613f0484",
+  "artifact_sha256": "3ecbc5448a9c4a654ca25382bd77d0cce52a92e4bbb6fb247ab49aa2541ff519",
   "status": "approved",
   "reviewed_at": "2026-10-15",
   "reviewer": "owner (thread approval 2026-10-15: ok, go)",
   "criteria_version": "PC-7 / publication-contract-v1.0.0 (2026-10-15)",
   "recorded_at": "2026-10-15",
-  "basis": "オーナーが 2026-10-15 のスレッドで人間審査・承認した (ISS-20261015-PUB-CBX-YT-033)。対象は research_cbx.html の YouTube 節への COL-033 採用反映のみ。 v1.13.0 release metadata sync は release 表記・引用 metadata の整合更新であり、承認済み publication 方針を変更しない。",
+  "basis": "オーナーが 2026-10-15 のスレッドで人間審査・承認した (ISS-20261015-PUB-CBX-YT-033)。対象は research_cbx.html の YouTube 節への COL-033 採用反映のみ。 v1.13.0 release metadata sync は release 表記・引用 metadata の整合更新であり、承認済み publication 方針を変更しない。 v1.13.1 release metadata sync は release 表記・引用 metadata の整合更新であり、承認済み publication 方針を変更しない。",
   "notes": "PC-7 は判断記録が存在することを検査する。PUB-10 は approved かつ同一 sha256 の decision で PASS。"
 }

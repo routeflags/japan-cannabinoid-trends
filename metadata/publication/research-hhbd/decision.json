@@ -3,7 +3,7 @@
   "record": "publication_decision",
   "decision_id": "publication-review-research-hhbd",
   "artifact_id": "research-hhbd",
-  "artifact_sha256": "2004b3cdf8105e4b2d37f6023b121bf7fbce21b97ca6f630010ba797c0079b4e",
+  "artifact_sha256": "bf0f26274f7b7bd0dfa71ceb57b4c90f9e51624a914aa9d6c52ce67601c4e98d",
   "status": "requires_review",
   "reviewed_at": null,
   "reviewer": null,

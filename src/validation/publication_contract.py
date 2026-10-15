@@ -28,11 +28,12 @@ Implemented (mechanical only, no judgement)
   ``metadata/datapackage.json`` are the declaration).
 - PC-2 run references: a research page's Google Trends section must name the run
   its 5-year table was generated from (``processing.cli gt-summary`` writes the
-  source line), and every run id named anywhere on a page must be present in the
-  dataset catalog.  A page cannot cite a run that does not exist, and the
-  generated numbers cannot lose their source without a finding.  The other
-  sections (X / YouTube / COA) are backed by legacy study data that has no run
-  record to cite, so naming a run there is not required - resolving it is.
+  source line), and every run id named anywhere on a page must be resolvable
+  either to cataloged raw metadata or to a committed staging declaration.  A page
+  cannot cite a run that does not exist, and the generated numbers cannot lose
+  their source without a finding.  The other sections (X / YouTube / COA) are
+  backed by legacy study data that has no run record to cite, so naming a run
+  there is not required - resolving it is.
 - PC-3 policy-out sources: a page citing ``YouTube Data API`` must also record
   that the source was retired by the 2026-10-12 decision; a page must not
   express per-post X data (permalink, handle, or a list of post-record
@@ -567,20 +568,57 @@ def _declared_gaps(path: Path, html: str, relative: str) -> list[dict]:
     return gaps
 
 
-def _catalog_run_ids(repo_root: Path) -> set[str]:
-    """Run ids present in the dataset catalog (PC-2's resolution target).
+def _declaration_run_ids(repo_root: Path) -> set[str]:
+    """Run ids adopted through committed staging declarations.
 
-    A cataloged run is a directory under ``datasets/*/data/raw/**`` that carries
-    its ``run_metadata.json`` (L1 writes it); the run id is that directory's
-    name.  A page citing anything else is making a provenance claim the
-    repository cannot support - a withdrawn or mistyped run is exactly the case
-    this rule exists for.
+    External payloads are adopted by declaration before raw files are staged or
+    when raw payloads must remain outside a public release archive.  Treating the
+    declaration as a resolver keeps PC-2 aligned with the collection pipeline:
+    publication prose can cite an adopted run without requiring the raw payload
+    itself to be tracked.
+    """
+
+    declarations = repo_root / "metadata" / "provenance" / "declarations"
+    if not declarations.is_dir():
+        return set()
+
+    run_ids: set[str] = set()
+    for path in declarations.rglob("*.json"):
+        try:
+            document = json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError):
+            continue
+        if document.get("declaration_version") != "staging-declaration-v1":
+            continue
+        for run in document.get("runs", []):
+            if not isinstance(run, dict):
+                continue
+            run_id = run.get("run_id")
+            if isinstance(run_id, str) and _RUN_ID_RE.fullmatch(run_id):
+                run_ids.add(run_id)
+    return run_ids
+
+
+def _catalog_run_ids(repo_root: Path) -> set[str]:
+    """Run ids present in a committed provenance resolver (PC-2).
+
+    A run is resolvable when either:
+
+    - it is cataloged under ``datasets/*/data/raw/**`` with ``run_metadata.json``;
+      or
+    - it appears in a committed ``staging-declaration-v1`` document under
+      ``metadata/provenance/declarations/``.
+
+    A page citing anything else is making a provenance claim the repository
+    cannot support - a withdrawn or mistyped run is exactly the case this rule
+    exists for.
     """
 
     datasets = repo_root / "datasets"
-    if not datasets.is_dir():
-        return set()
-    return {path.parent.name for path in datasets.rglob("run_metadata.json")}
+    cataloged = set()
+    if datasets.is_dir():
+        cataloged = {path.parent.name for path in datasets.rglob("run_metadata.json")}
+    return cataloged | _declaration_run_ids(repo_root)
 
 
 def build_publication_contract_report(repo_root: Path) -> dict:

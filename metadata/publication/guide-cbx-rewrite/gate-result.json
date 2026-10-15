@@ -2,7 +2,7 @@
   "gate": "publication_eligibility",
   "criteria": "G6 §10.2 (PUB-01..PUB-10)",
   "artifact_id": "guide-cbx-rewrite",
-  "artifact_sha256": "80f0c0896c5b2f77507c042e01b9eb4a61c35c9a2571d63586b536a7104fa9c3",
+  "artifact_sha256": "c9135b21f61bd814f085df7c54823bd1a285afec10b7c2e8c65c47d0ecc35507",
   "decision_id": "publication-review-guide-cbx-rewrite",
   "verdict": "SUPPORTED",
   "checks": [

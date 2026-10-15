@@ -3,7 +3,7 @@
   "record": "publication_decision",
   "decision_id": "publication-review-research-thc-o",
   "artifact_id": "research-thc-o",
-  "artifact_sha256": "f2307647aafc4da556367c157f3d9b428834b497eae355145e4c617fd502a089",
+  "artifact_sha256": "80d5a5e1ad380a427c4733c25da758c41d3e87302ba7fa7aa1e7ae7d3737e6ab",
   "status": "requires_review",
   "reviewed_at": null,
   "reviewer": null,

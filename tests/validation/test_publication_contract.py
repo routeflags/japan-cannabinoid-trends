@@ -30,8 +30,10 @@ POST_PERMALINK = "https://" + "x.com/someone/status/1"
 
 #: The run the conforming page cites.  ``_report`` catalogs it (a directory with
 #: ``run_metadata.json`` under ``datasets/*/data/raw/**``), so PC-2 can resolve
-#: the reference; a page may only name runs the catalog has.
+#: the reference; a page may only name runs the repository can resolve through
+#: catalog metadata or a committed staging declaration.
 RUN_ID = "20261014T204841Z-google-trends-example-study"
+DECLARED_RUN_ID = "20261010T141947Z-youtube-youtube-consistency"
 
 CONFORMING = f"""<html><body>
 <h2 id="data-search">Google Trends</h2>
@@ -90,6 +92,22 @@ def _catalog(tmp_path: Path, *run_ids: str) -> None:
         )
         run_dir.mkdir(parents=True, exist_ok=True)
         (run_dir / "run_metadata.json").write_text("{}", encoding="utf-8")
+
+
+def _declarations(tmp_path: Path, *run_ids: str) -> None:
+    declarations = tmp_path / "metadata" / "provenance" / "declarations"
+    declarations.mkdir(parents=True, exist_ok=True)
+    (declarations / "fixture-adoption.json").write_text(
+        json.dumps(
+            {
+                "declaration_version": "staging-declaration-v1",
+                "description": "fixture adoption",
+                "runs": [{"run_id": run_id} for run_id in run_ids],
+            },
+            ensure_ascii=False,
+        ),
+        encoding="utf-8",
+    )
 
 
 def _artifact_id(name: str) -> str:
@@ -164,9 +182,12 @@ def _report(
     cff: str = CFF,
     name: str = "research_page.html",
     envelope: bool = True,
+    declared_run_ids: tuple[str, ...] = (),
 ) -> dict:
     (tmp_path / "CITATION.cff").write_text(cff, encoding="utf-8")
     _catalog(tmp_path, RUN_ID)
+    if declared_run_ids:
+        _declarations(tmp_path, *declared_run_ids)
     publication = tmp_path / "publication"
     publication.mkdir(exist_ok=True)
     for existing in publication.glob("*.html"):
@@ -352,6 +373,18 @@ def test_a_page_cannot_cite_a_run_the_catalog_does_not_have(tmp_path: Path) -> N
 
     assert [finding["kind"] for finding in findings] == ["run_reference_unresolved"]
     assert "20200101T000000Z-google-trends-gone" in findings[0]["detail"]
+
+
+def test_committed_staging_declaration_resolves_a_run_without_raw_catalog(
+    tmp_path: Path,
+) -> None:
+    """PC-2: declared external payload runs stay resolvable in clean releases."""
+
+    html = CONFORMING.replace(RUN_ID, DECLARED_RUN_ID)
+    report = _report(tmp_path, html, declared_run_ids=(DECLARED_RUN_ID,))
+
+    assert "run_reference_unresolved" not in _kinds(report)
+    assert report["catalog_run_count"] == 2
 
 
 def test_the_run_catalog_is_reported(tmp_path: Path) -> None:

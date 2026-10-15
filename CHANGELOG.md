@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.13.1] - 2026-10-15
+
+### Fixed
+- Fixed the scoped release archive verifier so legitimate `metadata/artifacts/` and `test_*artifact*.py` paths do not fail the GitHub release workflow.
+- Refreshed audit snapshots against a clean checkout where adopted YouTube raw payloads remain gitignored/private.
+
+---
+
 ## [1.13.0] - 2026-10-15
 
 ### Added
