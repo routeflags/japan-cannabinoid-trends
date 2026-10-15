@@ -365,6 +365,9 @@ L1-09 の規則:
 - G7 measurement registry（`metadata/measurements/measurement-registry.json`）の unit
   （`relative_index_0_100` / `posts` / `videos`）と整合。X 投稿数と YouTube 動画数は
   同一単位として扱わない（G7-T12）。
+- CS08-CS13 の証拠発生条件は `docs/provenance/comparability-evidence-cs08-cs13.md`
+  に定義。CS12 の担体には `transformation-v1` 生成記録
+  （`src/processing/transformations.py`、2026-10-15 スライス）が加わった。
 
 ---
 

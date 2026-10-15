@@ -31,6 +31,28 @@ L2 / 横断比較のうち sampling（標本の取り方）と normalization（�
 
 ## 完了条件
 
-- [ ] CS08-CS13 の証拠発生条件の定義
-- [ ] 収集・比較の両側の実装と testing（synthetic 完全証拠ペアで定義を固定）
-- [ ] 実データでの到達可能性の再評価と、到達不能な場合の理由記録
+- [x] CS08-CS13 の証拠発生条件の定義（比較側の受領条件 + 収集側の発生箇所。収集側の排出は未実装）
+- [x] 収集・比較の両側の実装と testing（synthetic 完全証拠ペアで定義を固定。比較側のみ。収集側は未実装）
+- [ ] 実データでの到達可能性の再評価と、到達不能な場合の理由記録（再評価は継続中: 現状到達不能。収集側の証拠排出が揃うまで OPEN のまま）
+
+## 実装メモ（2026-10-15、OPEN のまま）
+
+transformation / evidence スライスに自然に収まる範囲のみ実装し、実データの
+比較可能性の主張は変えていない。`comparable` を実データに付与する変更は一切ない。
+
+- 証拠発生条件: `docs/provenance/comparability-evidence-cs08-cs13.md`
+  （CS08-CS13 each の証拠担体・生成者・比較側/収集側の状態。CS12 の担体に
+  `transformation-v1` 生成記録（本スライス PRV-010）を追加。収集側は CS08 / CS09-CS10 /
+  CS11 / CS13 が pending、CS12 が partial）
+- 契約テスト: `tests/research/test_comparability_evidence.py`（12 件。完全証拠ペアは
+  `comparable`、各 1 項目欠落は `conditional`（CS09 missing のみ `not_comparable`、
+  run 欠落は `unknown`）。全て synthetic。実データの主張は
+  `test_comparability_gate.py::test_comparable_is_unreachable_on_repository_data`
+  が引き続き全ペアで保証）
+- 実データの再評価（2026-10-15）: 到達不能のまま。legacy run に sampling / coverage /
+  正規化スケール / 承認の証拠が無いため、最強判定は `conditional`。
+
+残りのオーナー/収集側作業: 新規収集で CS08（sampling 手法）・CS09/CS10（coverage manifest）・
+CS11（fetch グループ/比較集合）・CS13（公開承認 decision）を排出する（schema 項目と
+adapter 記録の追加が必要。ライブ収集を伴うため本スライス対象外）。排出が揃うまで
+実データの `comparable` 主張は行わない。

@@ -98,8 +98,8 @@ jobs:
         run: |
           bash scripts/export/export-taxonomy.sh --output-dir /tmp/taxonomy-exports
           fail=0
-          for base in content-taxonomy.ttl compound-taxonomy.ttl \
-              content-taxonomy.schema.jsonld compound-taxonomy.schema.jsonld; do
+          for base in content-taxonomy.ttl compound-taxonomy.ttl chemical-class-taxonomy.ttl \
+              content-taxonomy.schema.jsonld compound-taxonomy.schema.jsonld chemical-class-taxonomy.schema.jsonld; do
             # The `# Generated:` timestamp line in .ttl is non-deterministic
             # (datetime.utcnow(); see docs/specs/validation-framework.md §6.1).
             if ! diff <(grep -v '^# Generated:' "exports/taxonomy/${base}") \

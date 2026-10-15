@@ -1,0 +1,44 @@
+{
+  "@context": {
+    "schema": "https://schema.org/",
+    "skos": "http://www.w3.org/2004/02/skos/core#"
+  },
+  "@type": "schema:DefinedTermSet",
+  "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/chemical-class-taxonomy",
+  "schema:name": "Cannabinoid Chemical-Class Taxonomy",
+  "schema:description": "Cannabinoid research taxonomy for social media content classification",
+  "schema:dateCreated": "2026-10-02",
+  "schema:license": "https://creativecommons.org/licenses/by/4.0/",
+  "schema:hasDefinedTerm": [
+    {
+      "@type": "schema:DefinedTerm",
+      "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/chemclass_hydrogenated",
+      "schema:name": "Hydrogenated Cannabinoids",
+      "schema:inDefinedTermSet": {
+        "@type": "schema:DefinedTermSet",
+        "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/chemclass-hydrogenated-scheme"
+      },
+      "schema:alternateName": [
+        "水素化カンナビノイド",
+        "hydrogenated cannabinoid"
+      ],
+      "schema:description": "Hydrogenated cannabinoid derivatives: HHC, HHCH, H4CBH and HHBD. Evidence: the category column of research/google-trends/20261004-google-trends-compound-summary.md and the scopeNotes of jptr:compound-hhc and jptr:compound-h4cbh. Route placement differs per compound (semi-synthetic vs synthetic); that is the point of the second dimension.",
+      "schema:termCode": "chemclass_hydrogenated"
+    },
+    {
+      "@type": "schema:DefinedTerm",
+      "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/chemclass_acetate",
+      "schema:name": "Acetate-Ester Cannabinoids",
+      "schema:inDefinedTermSet": {
+        "@type": "schema:DefinedTermSet",
+        "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/chemclass-acetate-scheme"
+      },
+      "schema:alternateName": [
+        "アセテート体カンナビノイド",
+        "cannabinoid acetate"
+      ],
+      "schema:description": "Acetate-ester cannabinoids: THC-O only. Evidence: the scopeNote of jptr:compound-thc-o (a semi-synthetic cannabinoid acetate).",
+      "schema:termCode": "chemclass_acetate"
+    }
+  ]
+}

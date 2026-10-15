@@ -306,6 +306,22 @@
 > **注:** カテゴリは**製造経路**による分類である。化学構造による分類（水素化カンナビノイド等）とは
 > 別物であり、`research/google-trends/20261004-google-trends-compound-summary.md` の「カテゴリ」列
 > は化学クラスを指すため本表とは一致しない。両者を混同しないこと。
+> 化学クラスの正式な所属は §6.5（第 2 次元）を参照。
+
+### 6.5 化学クラス（第 2 次元）
+
+**正本:** `metadata/taxonomy/chemical-class-taxonomy.skos.jsonld`（オーナー判断 (a)、ISS-20261015-TAX-026、2026-10-15）。
+本表はその写しであり、一致は `tests/validation/test_chemical_class_dimension.py` が検査する。
+製造経路の次元（§6.4）とは `skos:related` のみで結合し、`skos:broader` / `skos:narrower` は次元を跨がない。
+
+| 化学クラス（notation） | 化学クラス名（ja） | 成分 |
+|-------------|------|--------------|
+| `chemclass_hydrogenated` | 水素化カンナビノイド | `compound_hhc`, `compound_hhch`, `compound_h4cbh`, `compound_hhbd` |
+| `chemclass_acetate` | アセテート体カンナビノイド | `compound_thc_o` |
+
+> **注:** 収載は意図的に部分的である。リンクを持たない化合物は化学クラスが未形式化であることを意味する。
+> `compound_crdp` / `compound_crdh` は化学構造不明と記録されているため、研究文書側の「ヒドロキシ酸類似体」は
+> クラスとして採用しない。研究文書は独自語彙を保ち、根拠のあるクラスのみを形式化する。
 
 ---
 

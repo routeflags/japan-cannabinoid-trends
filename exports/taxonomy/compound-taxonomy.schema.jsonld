@@ -55,7 +55,7 @@
         "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-semisynthetic-scheme"
       },
       "schema:alternateName": "半合成カンナビノイド",
-      "schema:description": "Cannabinoids obtained by chemically modifying a natural cannabinoid: HHC, THC-O, H4CBH and HHBD. Classified by production route, which is why HHC sits here although it is also a hydrogenated cannabinoid.",
+      "schema:description": "Cannabinoids obtained by chemically modifying a natural cannabinoid: HHC, THC-O, H4CBH and HHBD. Classified by production route, which is why HHC sits here although it is also a hydrogenated cannabinoid. Chemical class is a separate dimension (jptr:chemical-class-taxonomy): HHC, H4CBH and HHBD are chemclass_hydrogenated, THC-O is chemclass_acetate.",
       "schema:termCode": "compound_semisynthetic"
     },
     {
@@ -301,7 +301,7 @@
         "THCO",
         "THC-O-Acetate"
       ],
-      "schema:description": "A semi-synthetic cannabinoid acetate marketed in Japan.",
+      "schema:description": "A semi-synthetic cannabinoid acetate marketed in Japan. Chemical class (second dimension): chemclass_acetate.",
       "schema:termCode": "compound_thc_o"
     },
     {

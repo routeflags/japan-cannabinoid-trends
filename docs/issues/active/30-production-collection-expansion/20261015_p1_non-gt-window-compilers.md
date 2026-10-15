@@ -56,3 +56,30 @@ owner 指示「X は後回し。YouTube / GT 品質を先に高める」によ�
 - テスト: `tests/collection/test_youtube_window_compiler.py` を追加し、dispatch・CLI・拒否コード・capability conflict を固定。
 - 本 issue は **OPEN 維持**。残件は YouTube の未測定 `dateFilter`、X / TikTok / Instagram / LinkedIn compiler、
   およびソース固有語彙の registry 表現。
+
+## 対応記録（2026-10-15: X absolute-window compiler、未登録）
+
+X API v2 は絶対期間（`start_time` / `end_time`）を取ることが COL-030 §3.2 の
+repo 内仕様として文書化されているため、live 実測なしで compile できる
+安全側 slice として `src/collection/adapters/x/compiler.py` を追加した
+（`tests/collection/test_x_dry_run.py` R3 に契約・拒否・分離テスト）。
+
+- `XApiWindowCompiler`（`collector_id: x-api-v2`）: 明示の絶対 UTC 窓を
+  request parameters（`start_time` / `end_time`）に passthrough するのみ。
+  `reference_time` は不要（与えられれば tz-aware を検証して記録するだけで
+  bounds をずらさない）。`exact=false` / `boundary_semantics=
+  request_bounds_only_no_observed_range`。request bounds と observed range の
+  分離を `limitations` に残す（owner 指示 2026-10-15）。
+- fail closed: `window_invalid`（非 mapping・不正 ISO・naive・前後逆転）、
+  `timezone_unknown`、`reference_time_invalid`（naive）、
+  `absolute_window_unsupported`（registry が absolute 不可の場合）。
+  YouTube の未測定 `dateFilter`（month/week/today/hour/all）には触れず、
+  推測で意味を確定させていない。
+- `_WINDOW_COMPILERS` に未登録（意図的。`x-api-v2` collector が
+  `config/collectors.json` に存在せず、dispatch 登録は COL-031 の
+  `validate-registries` green と同時に行う）。`compile-window` CLI 経由の
+  dispatch は閉じたまま。テストで未登録（`get_window_compiler("x-api-v2")
+  is None`）を固定しているため、登録はテスト更新を伴う明示作業になる。
+- 本 issue は **OPEN 維持**。残件は YouTube の未測定 `dateFilter`、X collector
+  登録後の compiler 登録（COL-031）、TikTok / Instagram / LinkedIn compiler、
+  およびソース固有語彙の registry 表現。

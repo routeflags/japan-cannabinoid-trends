@@ -39,6 +39,10 @@
 > **注（カテゴリ列について）:** 本列は**化学クラス**であり、`metadata/taxonomy/compound-taxonomy.skos.jsonld`
 > の分類（**製造経路**）とは異なる語彙である。両者を同じ「カテゴリ」として扱わないこと。
 > taxonomy 分類は `docs/data-dictionary.md` §6.4 を参照。
+> 化学クラスは 2026-10-15 に taxonomy の第 2 次元として形式化された
+> （`metadata/taxonomy/chemical-class-taxonomy.skos.jsonld`、`docs/data-dictionary.md` §6.5、
+> ISS-20261015-TAX-026 判断 (a)）。本列は研究文書側の表記であり、第 2 次元の正式所属
+> （水素化: HHC・HHCH・H4CBH・HHBD、アセテート体: THC-O のみ）とは 1:1 に対応しない。
 >
 > THCH は以前「ヘキサカンナビノール類」と記載していたが、これは taxonomy にも化学クラスとしても
 > 存在しない名称だった。THCH（テトラヒドロカンナビヘキソール）は天然のマイナー・フィトカンナビノイド

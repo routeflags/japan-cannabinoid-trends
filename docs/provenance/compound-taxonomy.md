@@ -52,6 +52,32 @@
 
 親子対称性は機械的に確認済み（broader と narrower の非対称 0 件）。
 
+---
+
+## 2026-10-15 — 化学クラスを taxonomy の第 2 次元として形式化（ISS-20261015-TAX-026 判断 (a)）
+
+- 製造経路・由来の次元は `compound-taxonomy.skos.jsonld` に残し、化学クラスは新設の
+  `metadata/taxonomy/chemical-class-taxonomy.skos.jsonld`（`jptr:chemical-class-taxonomy`）に置いた。
+  結合は対称 `skos:related` のみ。`skos:broader` / `skos:narrower` は次元を跨がない。
+- 形式化したのは根拠のある 2 クラスのみ（notation は `chemclass_*` で route 次元と名前空間を分離）:
+  - `chemclass_hydrogenated`（水素化カンナビノイド）: `compound_hhc` / `compound_hhch` /
+    `compound_h4cbh` / `compound_hhbd`。根拠は `research/google-trends/20261004-google-trends-compound-summary.md`
+    のカテゴリ列と `compound-hhc` / `compound-h4cbh` の scopeNote。HHCH は route=合成だが化学クラスは水素化であり、
+    この不一致の保持こそ第 2 次元の目的である。
+  - `chemclass_acetate`（アセテート体カンナビノイド）: `compound_thc_o` のみ。根拠は同概念の scopeNote
+   （semi-synthetic cannabinoid acetate）。
+- `compound-taxonomy.skos.jsonld` 側の変更は `skos:related` 5 件の追加と、半合成カテゴリ・THC-O の scopeNote への
+  第 2 次元への言及のみ。route の `broader` 配置は不変（既存の分類済みデータへの影響なし）。
+- 意図的に形式化しなかったもの:
+  - CRDP / CRDH の「ヒドロキシ酸類似体」: 両概念の scopeNote が化学構造不明と記録しており、研究文書側の
+    ラベルは記録と矛盾するため不採用。
+  - その他の化合物（CBD 等）の化学クラス: リポジトリ内に文書化された語彙が無いため未形式化。リンク無しは
+    「化学的実体が無い」ではなく「未形式化」を意味する（scheme の description に明記）。
+- `iptc-mapping.yaml` は化学クラス 2 概念を `not_applicable` として宣言（IPTC Media Topics はニュース主題語彙で
+  あり化学構造クラスを持たない。推測で対応付けない）。`version` 1.0.0 → 1.1.0。
+- 2 次元の分離は `tests/validation/test_chemical_class_dimension.py` が検査し、`docs/data-dictionary.md` §6.5 が
+  写しを持つ（`test_taxonomy_consistency.py` の §6.4 と同じ方式）。
+
 ## 未修正の既知事項（本変更では触っていない）
 
 1. `docs/data-dictionary.md` §6.4 の化合物カテゴリ表が不完全（`synthetic` 行が無く、

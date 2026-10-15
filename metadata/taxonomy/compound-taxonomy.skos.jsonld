@@ -23,12 +23,12 @@
         }
       ],
       "dct:description": {
-        "@value": "Taxonomy of cannabinoid compounds tracked in this research project.",
+        "@value": "Taxonomy of cannabinoid compounds tracked in this research project. Route/origin dimension; chemical class lives in a second dimension (jptr:chemical-class-taxonomy, owner decision (a) ISS-20261015-TAX-026).",
         "@language": "en"
       },
       "dct:creator": "Routeflags Co., Ltd.",
       "dct:created": "2026-10-02",
-      "dct:modified": "2026-10-13",
+      "dct:modified": "2026-10-15",
       "dct:license": "https://creativecommons.org/licenses/by/4.0/",
       "skos:hasTopConcept": [
         "jptr:compound-major",
@@ -131,7 +131,7 @@
       ],
       "skos:notation": "compound_semisynthetic",
       "skos:scopeNote": {
-        "@value": "Cannabinoids obtained by chemically modifying a natural cannabinoid: HHC, THC-O, H4CBH and HHBD. Classified by production route, which is why HHC sits here although it is also a hydrogenated cannabinoid.",
+        "@value": "Cannabinoids obtained by chemically modifying a natural cannabinoid: HHC, THC-O, H4CBH and HHBD. Classified by production route, which is why HHC sits here although it is also a hydrogenated cannabinoid. Chemical class is a separate dimension (jptr:chemical-class-taxonomy): HHC, H4CBH and HHBD are chemclass_hydrogenated, THC-O is chemclass_acetate.",
         "@language": "en"
       },
       "skos:narrower": [        "jptr:compound-hhc",
@@ -483,7 +483,8 @@
       },
       "skos:related": [
         "jptr:compound-cbx",
-        "jptr:compound-hhbd"
+        "jptr:compound-hhbd",
+        "jptr:chemclass-hydrogenated"
       ]
     },
     {
@@ -518,7 +519,8 @@
       },
       "skos:related": [
         "jptr:compound-cbx",
-        "jptr:compound-h4cbh"
+        "jptr:compound-h4cbh",
+        "jptr:chemclass-hydrogenated"
       ]
     },
     {
@@ -590,7 +592,8 @@
         "@language": "en"
       },
       "skos:related": [
-        "jptr:compound-hhch"
+        "jptr:compound-hhch",
+        "jptr:chemclass-hydrogenated"
       ]
     },
     {
@@ -628,7 +631,8 @@
         "@language": "en"
       },
       "skos:related": [
-        "jptr:compound-hhc"
+        "jptr:compound-hhc",
+        "jptr:chemclass-hydrogenated"
       ]
     },
     {
@@ -709,9 +713,12 @@
       ],
       "skos:notation": "compound_thc_o",
       "skos:scopeNote": {
-        "@value": "A semi-synthetic cannabinoid acetate marketed in Japan.",
+        "@value": "A semi-synthetic cannabinoid acetate marketed in Japan. Chemical class (second dimension): chemclass_acetate.",
         "@language": "en"
-      }
+      },
+      "skos:related": [
+        "jptr:chemclass-acetate"
+      ]
     },
     {
       "@id": "jptr:compound-crdp",

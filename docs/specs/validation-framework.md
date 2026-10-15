@@ -802,15 +802,19 @@ G4 仕様（`docs/plans/20261013d.md`）の垂直スライス。対象は Google
 - §15 対応表は `tests/validation/test_provenance.py::test_g5_t_mapping_table`
   に機械化（未達は G5-T19 のみ。新規 source がスライスに存在しないため延期）。
 
-### 18.3 未実装（引き継ぎ）
+### 18.3 未実装（引き継ぎ。2026-10-15 時点）
 
-- Transformation record の builder（処理パイプライン側の生成器）。schema +
+- ~~Transformation record の builder（処理パイプライン側の生成器）。schema +
   lineage 検査 + 監査配線は済み。processed/interim 生成が始まる G6 以降で
-  `transformation-v1` 準拠の生成器を用意すること。
+  `transformation-v1` 準拠の生成器を用意すること。~~ → **2026-10-15 に実装**
+  （§18.4、ISS-20261015-PRV-010）。
 - Evidence Registry と run 監査の突合（監査の unknown 項目を証拠引用で
   inferred/observed へ昇格させる pass）。語彙と参照形式は用意済み。
-- Provenance Graph（§12）は lineage 辺（run→artifact→transformation）の JSON
-  参照まで。グラフ DB・PROV-O 変換は将来（仕様上も初期は JSON で十分）。
+  2026-10-15 に候補提示 pass とハッシュ方針まで実装（§18.4、ISS-20261015-PRV-011
+  は OPEN のまま。7 件の hash 未記録は立会い観測待ち）。
+- ~~Provenance Graph（§12）は lineage 辺（run→artifact→transformation）の JSON
+  参照まで。グラフ DB・PROV-O 変換は将来（仕様上も初期は JSON で十分）。~~ →
+  **2026-10-15 に不要と判断して記録**（§18.4、ISS-20261015-PRV-012）。
 - Apify クラウド側の証拠（actor 実行記録・datasets）は未取得。必要になった
   場合は取得依頼リストを上げ、推測で埋めない（P2/P5）。現 29 run は全件
   google-trends のため本スライスでは該当なし。X/YouTube 旧 run の実行条件は
@@ -818,7 +822,41 @@ G4 仕様（`docs/plans/20261013d.md`）の垂直スライス。対象は Google
 - ライブ収集・CI ワークフロー変更は未実施（CI は pytest + validate-registries
   のまま green）。
 
-## 19. G6 垂直スライス（Git Tracking Policy / Storage Classification / Publication Gate）— 2026-10-13
+### 18.4 Provenance transformation / evidence スライス — 2026-10-15
+
+§18.3 から引き継いだ来歴 backlog のうち、外部 API・raw 変更なしで閉じられる
+vertical slice（ISS-20261015-PRV-010/011/012 + 関連の ISS-20261015-CMP-005）。
+
+- **正本規則（PRV-010）**: 導出の正本は `processing.reproduce.DERIVATIONS` /
+  `NON_REPRODUCIBLE`。生成器 `src/processing/transformations.py` は宣言を
+  `transformation-v1` 形状に描画する派生 view であり、第二のレジストリではない
+  （未登録は `KeyError`、構造不正は `ValueError`、`executed_at` は必須で遡及
+  捏造不可）。構造の正本は既存 `TRANSFORMATION_SCHEMA`、lineage 規則は既存
+  `check_transformation_lineage` のまま。platform-trends は 1 回の実行を 1 record
+  （入力 = manifest の `sources` を再利用、出力 = 5 成果物）で表す。テストは
+  `tests/processing/test_transformations.py`。遡及生成はしない（新規分から）。
+- **突合 pass（PRV-011、OPEN のまま）**: `src/validation/evidence_reconciliation.py`
+  （`reconcile_evidence`）。run 監査の `unknown` と evidence エントリを突き合わせ、
+  引用つき `candidate` / `no_covering_evidence` を出す read-only pass。自動昇格は
+  しない（出力語彙に `observed` / `inferred` なし）。被覆は既知対応表のある
+  `registry_definition` のみ。ハッシュ方針は
+  `docs/provenance/evidence-hash-policy.md`（立会い観測時のみ記録。再生成出力は
+  pin 留めせず、外部参照は対象外）。現行 7 件の `EVIDENCE_HASH_UNRECORDED` は
+  1 件 pin 済み・1 件 `regenerated_output`（方針で決着）・6 件が立会い観測待ちで
+  明示記録し、issue は OPEN のまま。テストは
+  `tests/validation/test_evidence_reconciliation.py`。
+- **グラフ判断（PRV-012）**: PROV-O / グラフ DB は今は不要と判断し記録して閉じた。
+  lineage 辺は JSON 参照 + 既存検査で完結し（本スライスで transformation 生成記録が
+  加わった）、横断問い合わせは `storage.lineage.trace_ancestors` で答えられる
+  （`tests/storage/test_catalog.py` が固定）。将来は具体的要求を trigger に
+  JSON → PROV-O export のみ実装し、graph DB は持ち込まない。
+- **比較証拠（CMP-005、OPEN のまま）**: CS08-CS13 の証拠発生条件を
+  `docs/provenance/comparability-evidence-cs08-cs13.md` に定義（担体・生成者・
+  比較側/収集側の状態。CS12 の担体に本スライスの生成記録を追加）。比較側の
+  条件 pins は `tests/research/test_comparability_evidence.py`（全て synthetic）。
+  実データの `comparable` 主張はなし（到達不能のまま）。収集側の排出は将来作業。
+
+## 19. G6 垂直スライス
 
 G6 仕様（`docs/plans/20261013f.md`）の垂直スライス。Git 運用全体を作り替えず、政策を「宣言」し、実ツリーに対する判定が回ることを示す。**実際の公開・リリース・DOI 登録は行わない**（判定は記録のみ）。
 

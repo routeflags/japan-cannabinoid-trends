@@ -64,3 +64,27 @@ offline の declaration-driven adapter/driver として `src/collection/adapters
 - [x] 対象ソースと着手順の決定（2026-10-15 owner `go 1,2`: YouTube Apify CSV pattern を先行）
 - [ ] adapter 実装 + 契約テスト
 - [ ] capability の実測と registry 更新（未確認は `unknown` のまま）
+
+## 実装記録（2026-10-15: X dry-run / request-planning slice）
+
+owner 着手順 item 2 の安全側 slice。live request・認証情報・response body・
+per-post レコードは一切扱わない（COL-030 §4.1/§4.2 遵守）。
+`src/collection/adapters/x/`（+ `tests/collection/test_x_dry_run.py` 30 tests）:
+
+- `request.py`: X API v2 search の request planner（純粋関数）。宣言済み
+  query text＋絶対 UTC bounds を request parameters（endpoint/method/params）
+  にするだけで、送信しない。endpoint/method は COL-030 §3.2 の repo 内仕様。
+  naive・非 UTC・前後逆転は拒否（変換しない）。`max_results` は正整数の
+  pass-through のみ（page-size bounds は未検証。sampling 方針は COL-032）。
+  `tweet.fields` は意図的に無し（response field を request-only evidence に
+  入れないため。field 選定は COL-031 の product 決定）。
+- `dry_run.py`: 共通 Contract 形状の dry-run adapter。`collect` は live 未実装で
+  fail closed（`LIVE_TRANSPORT_UNIMPLEMENTED`、YouTube と同一コード＝同一規則）、
+  `extract_observations` は行抽出しない。identity は placeholder
+ （`x-api-v2@1` / `unregistered`）であり registry 証拠ではない。
+  COL-031 の登録時に registry 値と一致させること。
+- `x` は `_FACTORIES` に未登録（収集可能に見せないため意図的。YouTube と同じ
+  方針）。capability は全 `unknown` のまま。`config/collectors.json` の変更は無い。
+- 残件（本 issue は OPEN のまま）: live transport（COL-031。COL-032 の費用 guard と
+  PRV-033 の request-only evidence＋別途明示承認が先行条件）、TikTok / Instagram 用
+  adapter、capability の実測と registry 更新。

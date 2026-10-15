@@ -17,10 +17,13 @@
 #
 # 更新履歴:
 #   2026-10-02: 初版作成
+#   2026-10-15: TAX-026 対応 (a)。化学クラス 2 概念 (chemclass-hydrogenated / chemclass-acetate)
+#               を not_applicable として宣言。IPTC Media Topics はニュース主題語彙であり
+#               化学構造クラスに対応する概念を持たないため、推測で対応付けない。
 # =============================================================================
 
-version: "1.0.0"
-last_updated: "2026-10-02"
+version: "1.1.0"
+last_updated: "2026-10-15"
 
 # IPTC Media Topics の URI スキーム
 iptc_uri_scheme: "http://cv.iptc.org/newscodes/mediatopic/"
@@ -200,6 +203,9 @@ coverage:
   scope_note: |
     対応対象は末端概念（化合物 18 + content 14 = 32）。
     カテゴリノードは階層構造上の上位概念であり主題分類ではないため、対応対象外とする。
+    化学クラス 2 概念（chemclass-hydrogenated / chemclass-acetate）は TAX-026 (a) で
+    追加された第 2 次元の側面値であり、IPTC Media Topics に対応する主題が無いため
+    not_applicable として宣言する（下記）。概念総数は 40（compound 24 + content 14 + chemclass 2）。
 
   deliberately_unmapped:
     - concepts:
@@ -234,11 +240,16 @@ coverage:
         - "jptr:compound-semisynthetic"
         - "jptr:compound-synthetic"
       reason: "taxonomy の上位概念（カテゴリ）。主題分類ではないため IPTC との対応は定義しない。"
+    - concepts:
+        - "jptr:chemclass-hydrogenated"
+        - "jptr:chemclass-acetate"
+      reason: "化学クラス（水素化・アセテート体）は化学構造による側面値であり、ニュース記事の主題を表す IPTC Media Topics に対応する概念を持たない。推測で対応付けない（TAX-026 記録 2026-10-15）。"
 
 limitations:
   - "IPTC Media Topics はニュース記事向けの語彙であり、SNS コンテンツ分類には完全に適用できない場合がある"
   - "closeMatch マッピングは概念的に近いが完全に同一ではない"
   - "一部のカンナビノイド化合物（CBX, H4CBH, HHBD）は ChEBI / Wikidata に対応エントリがない"
+  - "化学クラス（水素化・アセテート体）に IPTC Media Topics の対応概念は無い。IPTC はニュース主題語彙であり化学構造クラスを持たないため、推測で対応付けない（TAX-026 記録 2026-10-15）"
   - "IPTC Topic ID は変更される可能性があるため、定期的な検証が必要"
 
 # =============================================================================

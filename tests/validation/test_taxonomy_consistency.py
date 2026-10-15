@@ -11,8 +11,10 @@ Each check below closes a defect that was live in the repository:
   (``major_phytocannabinoid`` vs ``compound_major``);
 - ``compound_rare`` was an empty category with no explanation, so it read as a gap
   rather than a reserved dimension;
-- ``metadata/taxonomy/iptc-mapping.yaml`` covered 15 of 38 concepts and said nothing
-  about the other 23.
+- ``metadata/taxonomy/iptc-mapping.yaml`` covered 15 of 40 concepts and said nothing
+  about the other 25 before the coverage declaration; the chemical-class dimension
+  (TAX-026) adds its 2 concepts to the declared universe rather than leaving them
+  silent.
 
 The IPTC declaration is read textually because this repository deliberately has no
 YAML dependency (see ``processing/rulespec.py`` for the same reasoning).  The reader
@@ -29,6 +31,7 @@ REPO_ROOT = Path(__file__).resolve().parents[2]
 TAXONOMY_DIR = REPO_ROOT / "metadata/taxonomy"
 COMPOUND_TAXONOMY = TAXONOMY_DIR / "compound-taxonomy.skos.jsonld"
 CONTENT_TAXONOMY = TAXONOMY_DIR / "content-taxonomy.skos.jsonld"
+CHEMCLASS_TAXONOMY = TAXONOMY_DIR / "chemical-class-taxonomy.skos.jsonld"
 IPTC_MAPPING = TAXONOMY_DIR / "iptc-mapping.yaml"
 DATA_DICTIONARY = REPO_ROOT / "docs/data-dictionary.md"
 EXPORTS = REPO_ROOT / "exports/taxonomy"
@@ -90,7 +93,7 @@ def _data_dictionary_categories() -> dict[str, list[str]]:
 def _all_concept_ids() -> set[str]:
     return {
         node["@id"]
-        for path in (COMPOUND_TAXONOMY, CONTENT_TAXONOMY)
+        for path in (COMPOUND_TAXONOMY, CONTENT_TAXONOMY, CHEMCLASS_TAXONOMY)
         for node in _concepts(path)
     }
 
@@ -173,7 +176,7 @@ def test_unmapped_concepts_each_carry_a_reason() -> None:
 def test_exports_carry_both_languages() -> None:
     """The regression that mattered: English labels reached no published export."""
 
-    for stem, expected in (("compound-taxonomy", 24), ("content-taxonomy", 14)):
+    for stem, expected in (("compound-taxonomy", 24), ("content-taxonomy", 14), ("chemical-class-taxonomy", 2)):
         turtle = (EXPORTS / f"{stem}.ttl").read_text(encoding="utf-8")
         english = len(re.findall(r'prefLabel> "[^"]*"@en', turtle))
         japanese = len(re.findall(r'prefLabel> "[^"]*"@ja', turtle))

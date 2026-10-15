@@ -68,6 +68,20 @@ summary 値と raw observation の区別も読み手に不明確になる。
 - 本 issue は CBD を例とするが、同一 run の THC/CBG/HHC/THCV も同じ summary-only 状態であり、
   同じ規則（baseline shape → `raw_timeline` 明示）で扱う。個別の side channel は作っていない。
 
+## 外部利用での誤用例（2026-10-16 追記）
+
+- 外部サイト原稿（THCV 物質辞典 v1.9）が本 run を出典として E1・E2 型の誤りを起こした。
+  E1: `timeframe: today 5-y` を系列の範囲と読み替え、CBN の `data_period`
+  `2021-10-10 〜 2026-10-11` を THCV の期間として記載。
+  E2: summary-only の run に週次系列が含まれると記載。
+  いずれも `docs/audits/gt-summary.json` の `unavailable.data_period` /
+  `unavailable.raw_timeline`（shape `baseline`）を読めば回避できた型である。
+- 本リポジトリ側の対応: `render_block` の出力は不変とし（publication HTML・envelope hash への影響を避ける）、
+  代わりに `datasets/cannabinoid-multi-trends/methodology.md` §2.1.1 に原稿利用者向け注意を追記し、
+  `tests/processing/test_gt_statistics.py` に baseline ガード群
+  （端点なし・系列言及なし・他化合物の期間の流用なし）を追加した。
+- 本 issue の完了条件（ライブ再取得）は変更しない。再取得が完了するまで baseline 5件は summary-only のままである。
+
 ## 残作業（オーナー / 外部収集の承認が必要）
 
 - CBD（および同一 run の THC/CBG/HHC/THCV）の `today 5-y` / geo JP 系列のライブ再取得。

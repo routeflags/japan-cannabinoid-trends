@@ -1,0 +1,120 @@
+{
+  "@context": {
+    "skos": "http://www.w3.org/2004/02/skos/core#",
+    "dct": "http://purl.org/dc/terms/",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "jptr": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/"
+  },
+  "@graph": [
+    {
+      "@id": "jptr:chemical-class-taxonomy",
+      "@type": "skos:ConceptScheme",
+      "dct:title": [
+        {
+          "@value": "Cannabinoid Chemical-Class Taxonomy",
+          "@language": "en"
+        },
+        {
+          "@value": "カンナビノイド化学クラス分類",
+          "@language": "ja"
+        }
+      ],
+      "dct:description": [
+        {
+          "@value": "Second taxonomy dimension for cannabinoid compounds (owner decision (a), ISS-20261015-TAX-026, 2026-10-15). The route/origin dimension stays in jptr:compound-taxonomy; chemical class lives here. Compounds link to a chemical class with skos:related (symmetric), never with skos:broader/skos:narrower, so the two dimensions cannot be conflated. Coverage is intentionally partial: a compound without a link has a chemical class that is not formalized in this taxonomy. CRDP and CRDH chemical structures are recorded as unknown in their scopeNotes, so the research-prose label hydroxy-acid analogue is not adopted as a class because it contradicts those records. Research prose keeps its own vocabulary; only evidenced classes are formalized here.",
+          "@language": "en"
+        },
+        {
+          "@value": "カンナビノイド化合物の第 2 次元分類（オーナー判断 (a)、ISS-20261015-TAX-026、2026-10-15）。製造経路・由来の次元は jptr:compound-taxonomy に残し、化学クラスはここに置く。化合物と化学クラスの結合は skos:related（対称）のみで行い、skos:broader/skos:narrower は使わないため、2 次元を混同できない。収載は意図的に部分的である。リンクを持たない化合物は、化学クラスが本 taxonomy で未形式化であることを意味する。CRDP・CRDH は scopeNote に化学構造不明と記録されているため、研究文書側の「ヒドロキシ酸類似体」は記録と矛盾するのでクラスとして採用しない。研究文書は独自語彙を保ち、根拠のあるクラスのみを形式化する。",
+          "@language": "ja"
+        }
+      ],
+      "dct:creator": "Routeflags Co., Ltd.",
+      "dct:created": "2026-10-15",
+      "dct:modified": "2026-10-15",
+      "dct:license": "https://creativecommons.org/licenses/by/4.0/",
+      "skos:hasTopConcept": [
+        "jptr:chemclass-hydrogenated",
+        "jptr:chemclass-acetate"
+      ]
+    },
+    {
+      "@id": "jptr:chemclass-hydrogenated",
+      "@type": "skos:Concept",
+      "skos:inScheme": "jptr:chemical-class-taxonomy",
+      "skos:topConceptOf": "jptr:chemical-class-taxonomy",
+      "skos:prefLabel": [
+        {
+          "@value": "Hydrogenated Cannabinoids",
+          "@language": "en"
+        },
+        {
+          "@value": "水素化カンナビノイド",
+          "@language": "ja"
+        }
+      ],
+      "skos:altLabel": {
+        "@value": "hydrogenated cannabinoid",
+        "@language": "en"
+      },
+      "skos:notation": "chemclass_hydrogenated",
+      "skos:scopeNote": [
+        {
+          "@value": "Hydrogenated cannabinoid derivatives: HHC, HHCH, H4CBH and HHBD. Evidence: the category column of research/google-trends/20261004-google-trends-compound-summary.md and the scopeNotes of jptr:compound-hhc and jptr:compound-h4cbh. Route placement differs per compound (semi-synthetic vs synthetic); that is the point of the second dimension.",
+          "@language": "en"
+        },
+        {
+          "@value": "水素化カンナビノイド誘導体: HHC・HHCH・H4CBH・HHBD。根拠は research/google-trends/20261004-google-trends-compound-summary.md のカテゴリ列と jptr:compound-hhc / jptr:compound-h4cbh の scopeNote。各化合物の製造経路上の配置は異なる（半合成・合成）が、その違いを保持すること自体が第 2 次元の目的である。",
+          "@language": "ja"
+        }
+      ],
+      "skos:related": [
+        "jptr:compound-hhc",
+        "jptr:compound-hhch",
+        "jptr:compound-h4cbh",
+        "jptr:compound-hhbd"
+      ]
+    },
+    {
+      "@id": "jptr:chemclass-acetate",
+      "@type": "skos:Concept",
+      "skos:inScheme": "jptr:chemical-class-taxonomy",
+      "skos:topConceptOf": "jptr:chemical-class-taxonomy",
+      "skos:prefLabel": [
+        {
+          "@value": "Acetate-Ester Cannabinoids",
+          "@language": "en"
+        },
+        {
+          "@value": "アセテート体カンナビノイド",
+          "@language": "ja"
+        }
+      ],
+      "skos:altLabel": [
+        {
+          "@value": "cannabinoid acetate",
+          "@language": "en"
+        },
+        {
+          "@value": "アセテート",
+          "@language": "ja"
+        }
+      ],
+      "skos:notation": "chemclass_acetate",
+      "skos:scopeNote": [
+        {
+          "@value": "Acetate-ester cannabinoids: THC-O only. Evidence: the scopeNote of jptr:compound-thc-o (a semi-synthetic cannabinoid acetate).",
+          "@language": "en"
+        },
+        {
+          "@value": "酢酸エステル体カンナビノイド: THC-O のみ。根拠は jptr:compound-thc-o の scopeNote（semi-synthetic cannabinoid acetate）。",
+          "@language": "ja"
+        }
+      ],
+      "skos:related": [
+        "jptr:compound-thc-o"
+      ]
+    }
+  ]
+}

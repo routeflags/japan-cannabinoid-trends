@@ -1,5 +1,5 @@
 # RDF/Turtle export
-# Generated: 2026-10-13T11:57:36.126729Z
+# Generated: 2026-10-15T17:24:40.305099Z
 # Source: SKOS JSON-LD
 
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
@@ -17,10 +17,10 @@
     rdf:type <http://www.w3.org/2004/02/skos/core#ConceptScheme> ;
     <http://purl.org/dc/terms/title> "Cannabinoid Compound Taxonomy"@en ;
     <http://purl.org/dc/terms/title> "カンナビノイド化合物タクソノミー"@ja ;
-    <http://purl.org/dc/terms/description> "Taxonomy of cannabinoid compounds tracked in this research project."@en ;
+    <http://purl.org/dc/terms/description> "Taxonomy of cannabinoid compounds tracked in this research project. Route/origin dimension; chemical class lives in a second dimension (jptr:chemical-class-taxonomy, owner decision (a) ISS-20261015-TAX-026)."@en ;
     <http://purl.org/dc/terms/creator> "Routeflags Co., Ltd." ;
     <http://purl.org/dc/terms/created> "2026-10-02" ;
-    <http://purl.org/dc/terms/modified> "2026-10-13" ;
+    <http://purl.org/dc/terms/modified> "2026-10-15" ;
     <http://purl.org/dc/terms/license> <https://creativecommons.org/licenses/by/4.0/> ;
     <http://www.w3.org/2004/02/skos/core#hasTopConcept> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-major> ;
     <http://www.w3.org/2004/02/skos/core#hasTopConcept> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-minor> ;
@@ -72,7 +72,7 @@
     <http://www.w3.org/2004/02/skos/core#prefLabel> "Semi-Synthetic Cannabinoids"@en ;
     <http://www.w3.org/2004/02/skos/core#prefLabel> "半合成カンナビノイド"@ja ;
     <http://www.w3.org/2004/02/skos/core#notation> "compound_semisynthetic" ;
-    <http://www.w3.org/2004/02/skos/core#scopeNote> "Cannabinoids obtained by chemically modifying a natural cannabinoid: HHC, THC-O, H4CBH and HHBD. Classified by production route, which is why HHC sits here although it is also a hydrogenated cannabinoid."@en ;
+    <http://www.w3.org/2004/02/skos/core#scopeNote> "Cannabinoids obtained by chemically modifying a natural cannabinoid: HHC, THC-O, H4CBH and HHBD. Classified by production route, which is why HHC sits here although it is also a hydrogenated cannabinoid. Chemical class is a separate dimension (jptr:chemical-class-taxonomy): HHC, H4CBH and HHBD are chemclass_hydrogenated, THC-O is chemclass_acetate."@en ;
     <http://www.w3.org/2004/02/skos/core#narrower> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-hhc> ;
     <http://www.w3.org/2004/02/skos/core#narrower> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-thc-o> ;
     <http://www.w3.org/2004/02/skos/core#narrower> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-h4cbh> ;
@@ -210,7 +210,8 @@
     <http://www.w3.org/2004/02/skos/core#notation> "compound_h4cbh" ;
     <http://www.w3.org/2004/02/skos/core#scopeNote> "A hydrogenated cannabinoid derivative marketed in Japan."@en ;
     <http://www.w3.org/2004/02/skos/core#related> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-cbx> ;
-    <http://www.w3.org/2004/02/skos/core#related> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-hhbd> .
+    <http://www.w3.org/2004/02/skos/core#related> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-hhbd> ;
+    <http://www.w3.org/2004/02/skos/core#related> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/chemclass-hydrogenated> .
 
 <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-hhbd>
     rdf:type <http://www.w3.org/2004/02/skos/core#Concept> ;
@@ -223,7 +224,8 @@
     <http://www.w3.org/2004/02/skos/core#notation> "compound_hhbd" ;
     <http://www.w3.org/2004/02/skos/core#scopeNote> "A cannabinoid derivative marketed in Japan."@en ;
     <http://www.w3.org/2004/02/skos/core#related> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-cbx> ;
-    <http://www.w3.org/2004/02/skos/core#related> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-h4cbh> .
+    <http://www.w3.org/2004/02/skos/core#related> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-h4cbh> ;
+    <http://www.w3.org/2004/02/skos/core#related> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/chemclass-hydrogenated> .
 
 <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-crdh>
     rdf:type <http://www.w3.org/2004/02/skos/core#Concept> ;
@@ -248,7 +250,8 @@
     <http://www.w3.org/2004/02/skos/core#altLabel> "HHC リキッド"@ja ;
     <http://www.w3.org/2004/02/skos/core#notation> "compound_hhc" ;
     <http://www.w3.org/2004/02/skos/core#scopeNote> "A semi-synthetic hydrogenated cannabinoid marketed in Japan."@en ;
-    <http://www.w3.org/2004/02/skos/core#related> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-hhch> .
+    <http://www.w3.org/2004/02/skos/core#related> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-hhch> ;
+    <http://www.w3.org/2004/02/skos/core#related> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/chemclass-hydrogenated> .
 
 <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-hhch>
     rdf:type <http://www.w3.org/2004/02/skos/core#Concept> ;
@@ -261,7 +264,8 @@
     <http://www.w3.org/2004/02/skos/core#altLabel> "HHCH リキッド"@ja ;
     <http://www.w3.org/2004/02/skos/core#notation> "compound_hhch" ;
     <http://www.w3.org/2004/02/skos/core#scopeNote> "A synthetic cannabinoid marketed in Japan."@en ;
-    <http://www.w3.org/2004/02/skos/core#related> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-hhc> .
+    <http://www.w3.org/2004/02/skos/core#related> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-hhc> ;
+    <http://www.w3.org/2004/02/skos/core#related> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/chemclass-hydrogenated> .
 
 <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-thch>
     rdf:type <http://www.w3.org/2004/02/skos/core#Concept> ;
@@ -288,7 +292,8 @@
     <http://www.w3.org/2004/02/skos/core#altLabel> "THC-アセテート"@ja ;
     <http://www.w3.org/2004/02/skos/core#altLabel> "THC-O リキッド"@ja ;
     <http://www.w3.org/2004/02/skos/core#notation> "compound_thc_o" ;
-    <http://www.w3.org/2004/02/skos/core#scopeNote> "A semi-synthetic cannabinoid acetate marketed in Japan."@en .
+    <http://www.w3.org/2004/02/skos/core#scopeNote> "A semi-synthetic cannabinoid acetate marketed in Japan. Chemical class (second dimension): chemclass_acetate."@en ;
+    <http://www.w3.org/2004/02/skos/core#related> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/chemclass-acetate> .
 
 <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-crdp>
     rdf:type <http://www.w3.org/2004/02/skos/core#Concept> ;

@@ -66,6 +66,19 @@ cannabinoid-multi-trends
   bare `CBD` の検証には使えない（`src/processing/gt_statistics.py` の `find_run` も除外する）。
 - 系列の再取得はライブ収集が必要なため本タスクでは未実施（`ISS-20261012-CBD-004` の残件、オーナー承認待ち）。
   再取得時は既存 summary を上書きせず新規 run として保存する。
+- 原稿利用者向けの注意（2026-10-16 追記。外部 THCV 原稿 v1.9 での誤用 E1・E2 を受けた恒久ガード）:
+  - baseline 5件（CBD・THC・CBG・HHC・THCV）にデータあり期間の端点を書ける記録は存在しない。
+    `timeframe: today 5-y` は相対表記であり、系列の範囲を示さない。
+    他化合物（例: CBN の `2021-10-10 〜 2026-10-11`）の `data_period` を流用しないこと。
+  - baseline run は週次系列の生データを収蔵していない（summary-only）。
+    「原稿の週次系列は run に含まれる」と書かないこと。週数・平均・ピーク・初出値・最新値は記録値であり、
+    raw 系列から検証できない。
+  - 週数 261（baseline）と 262（series）の差は run 形状の差に由来し、窓の長さからは決まらない。
+    期間の日数から週数を数え直さないこと。
+  - 機械可読の正本は `docs/audits/gt-summary.json`（各化合物の `shape` / `stats` / `unavailable` / `block`）。
+    生成 `block` 自体には端点・系列への言及を含めない方針のため（publication HTML・envelope hash への影響を避ける）、
+    利用時は必ず `unavailable`（`data_period` / `raw_timeline`）を併読すること。
+    検査は `tests/processing/test_gt_statistics.py` の baseline ガード群が行う。
 
 ### 2.2 X (Twitter)
 

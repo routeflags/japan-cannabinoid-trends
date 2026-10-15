@@ -131,6 +131,37 @@ def test_baseline_names_the_missing_raw_timeline() -> None:
     assert "summary-only" in unavailable["raw_timeline"]
 
 
+def test_baseline_exposes_data_period_and_raw_timeline_as_unavailable() -> None:
+    """E1/E2 guard (2026-10-16 外部 THCV 原稿での誤用例): the baseline shape
+    carries neither endpoints nor a series.  ``stats`` must not hold a
+    ``data_period``; the reason stays in ``unavailable`` instead of being
+    invented or borrowed from another compound."""
+
+    summary = summarize_record(BASELINE)
+
+    assert "data_period" not in summary["stats"]
+    assert "data_period" in summary["unavailable"]
+    assert "記録していない" in summary["unavailable"]["data_period"]
+    assert "raw_timeline" in summary["unavailable"]
+    assert "summary-only" in summary["unavailable"]["raw_timeline"]
+
+
+def test_baseline_block_carries_no_endpoints_or_series_claim() -> None:
+    """E1/E2 guard: the generated block for a baseline summary must not
+    imply a weekly raw series exists in the run.  No endpoint range, no
+    ``データあり期間``/``初出`` extras, no ``系列`` language - only the
+    relative window and the recorded week count."""
+
+    block = render_block(summarize_record(BASELINE), run_id="run-2")
+
+    assert "〜" not in block
+    assert "データあり期間" not in block
+    assert "初出" not in block
+    assert "系列" not in block
+    assert "261週" in block
+    assert "<code>run-2</code>" in block
+
+
 def test_average_is_unavailable_when_the_record_has_none() -> None:
     """The 2026-10-02 runs stored neither a series nor an average."""
 
@@ -230,3 +261,45 @@ def test_every_page_carries_the_generated_block(report: dict) -> None:
     for entry in report["compounds"]:
         page = REPO_ROOT / "publication" / page_filename(entry["compound"])
         assert entry["block"] in page.read_text(encoding="utf-8"), entry["compound"]
+
+
+BASELINE_COMPOUNDS = ("CBD", "THC", "CBG", "THCV", "HHC")
+
+
+def test_report_keeps_baseline_periods_unrecorded(report: dict) -> None:
+    """E1/E2 guard on the committed surface external authors read
+    (``docs/audits/gt-summary.json``): every ``shape=baseline`` compound keeps
+    weeks=261 as a recorded value, holds no ``data_period`` in ``stats``, and
+    names both ``data_period`` and ``raw_timeline`` as unavailable.  Its block
+    carries no endpoint range that a manuscript could quote as the run's range."""
+
+    by_compound = {entry["compound"]: entry for entry in report["compounds"]}
+
+    for compound in BASELINE_COMPOUNDS:
+        entry = by_compound[compound]
+        assert entry["shape"] == "baseline", compound
+        assert entry["stats"]["weeks"] == 261, compound
+        assert "data_period" not in entry["stats"], compound
+        assert "data_period" in entry["unavailable"], compound
+        assert "raw_timeline" in entry["unavailable"], compound
+        assert "〜" not in entry["block"], compound
+
+
+def test_report_derives_each_period_from_its_own_run(report: dict) -> None:
+    """E1 guard: no compound may borrow another compound's ``data_period``.
+    A series compound's period is computed from its own run's first/last dates,
+    and that range never appears in a baseline compound's block (THCV must not
+    quote CBN's ``2021-10-10 〜 2026-10-11``)."""
+
+    by_compound = {entry["compound"]: entry for entry in report["compounds"]}
+
+    cbn = by_compound["CBN"]
+    assert cbn["shape"] == "series"
+    record = load_record(REPO_ROOT / cbn["path"])
+    dates = [point["date"] for point in record["data"]]
+    assert cbn["stats"]["data_period"] == f"{dates[0]} 〜 {dates[-1]}"
+
+    for compound in BASELINE_COMPOUNDS:
+        block = by_compound[compound]["block"]
+        assert cbn["stats"]["data_period"] not in block, compound
+    assert "2021-10-10" not in by_compound["THCV"]["block"]

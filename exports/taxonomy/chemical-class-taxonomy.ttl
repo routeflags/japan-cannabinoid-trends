@@ -1,0 +1,53 @@
+# RDF/Turtle export
+# Generated: 2026-10-15T17:24:40.157192Z
+# Source: SKOS JSON-LD
+
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+@prefix jptr: <https://japan-cannabinoid-trends.routeflags.com/taxonomy/> .
+
+
+<https://japan-cannabinoid-trends.routeflags.com/taxonomy/chemical-class-taxonomy>
+    rdf:type <http://www.w3.org/2004/02/skos/core#ConceptScheme> ;
+    <http://purl.org/dc/terms/title> "Cannabinoid Chemical-Class Taxonomy"@en ;
+    <http://purl.org/dc/terms/title> "カンナビノイド化学クラス分類"@ja ;
+    <http://purl.org/dc/terms/description> "Second taxonomy dimension for cannabinoid compounds (owner decision (a), ISS-20261015-TAX-026, 2026-10-15). The route/origin dimension stays in jptr:compound-taxonomy; chemical class lives here. Compounds link to a chemical class with skos:related (symmetric), never with skos:broader/skos:narrower, so the two dimensions cannot be conflated. Coverage is intentionally partial: a compound without a link has a chemical class that is not formalized in this taxonomy. CRDP and CRDH chemical structures are recorded as unknown in their scopeNotes, so the research-prose label hydroxy-acid analogue is not adopted as a class because it contradicts those records. Research prose keeps its own vocabulary; only evidenced classes are formalized here."@en ;
+    <http://purl.org/dc/terms/description> "カンナビノイド化合物の第 2 次元分類（オーナー判断 (a)、ISS-20261015-TAX-026、2026-10-15）。製造経路・由来の次元は jptr:compound-taxonomy に残し、化学クラスはここに置く。化合物と化学クラスの結合は skos:related（対称）のみで行い、skos:broader/skos:narrower は使わないため、2 次元を混同できない。収載は意図的に部分的である。リンクを持たない化合物は、化学クラスが本 taxonomy で未形式化であることを意味する。CRDP・CRDH は scopeNote に化学構造不明と記録されているため、研究文書側の「ヒドロキシ酸類似体」は記録と矛盾するのでクラスとして採用しない。研究文書は独自語彙を保ち、根拠のあるクラスのみを形式化する。"@ja ;
+    <http://purl.org/dc/terms/creator> "Routeflags Co., Ltd." ;
+    <http://purl.org/dc/terms/created> "2026-10-15" ;
+    <http://purl.org/dc/terms/modified> "2026-10-15" ;
+    <http://purl.org/dc/terms/license> <https://creativecommons.org/licenses/by/4.0/> ;
+    <http://www.w3.org/2004/02/skos/core#hasTopConcept> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/chemclass-hydrogenated> ;
+    <http://www.w3.org/2004/02/skos/core#hasTopConcept> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/chemclass-acetate> .
+
+<https://japan-cannabinoid-trends.routeflags.com/taxonomy/chemclass-hydrogenated>
+    rdf:type <http://www.w3.org/2004/02/skos/core#Concept> ;
+    <http://www.w3.org/2004/02/skos/core#inScheme> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/chemical-class-taxonomy> ;
+    <http://www.w3.org/2004/02/skos/core#topConceptOf> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/chemical-class-taxonomy> ;
+    <http://www.w3.org/2004/02/skos/core#prefLabel> "Hydrogenated Cannabinoids"@en ;
+    <http://www.w3.org/2004/02/skos/core#prefLabel> "水素化カンナビノイド"@ja ;
+    <http://www.w3.org/2004/02/skos/core#altLabel> "hydrogenated cannabinoid"@en ;
+    <http://www.w3.org/2004/02/skos/core#notation> "chemclass_hydrogenated" ;
+    <http://www.w3.org/2004/02/skos/core#scopeNote> "Hydrogenated cannabinoid derivatives: HHC, HHCH, H4CBH and HHBD. Evidence: the category column of research/google-trends/20261004-google-trends-compound-summary.md and the scopeNotes of jptr:compound-hhc and jptr:compound-h4cbh. Route placement differs per compound (semi-synthetic vs synthetic); that is the point of the second dimension."@en ;
+    <http://www.w3.org/2004/02/skos/core#scopeNote> "水素化カンナビノイド誘導体: HHC・HHCH・H4CBH・HHBD。根拠は research/google-trends/20261004-google-trends-compound-summary.md のカテゴリ列と jptr:compound-hhc / jptr:compound-h4cbh の scopeNote。各化合物の製造経路上の配置は異なる（半合成・合成）が、その違いを保持すること自体が第 2 次元の目的である。"@ja ;
+    <http://www.w3.org/2004/02/skos/core#related> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-hhc> ;
+    <http://www.w3.org/2004/02/skos/core#related> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-hhch> ;
+    <http://www.w3.org/2004/02/skos/core#related> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-h4cbh> ;
+    <http://www.w3.org/2004/02/skos/core#related> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-hhbd> .
+
+<https://japan-cannabinoid-trends.routeflags.com/taxonomy/chemclass-acetate>
+    rdf:type <http://www.w3.org/2004/02/skos/core#Concept> ;
+    <http://www.w3.org/2004/02/skos/core#inScheme> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/chemical-class-taxonomy> ;
+    <http://www.w3.org/2004/02/skos/core#topConceptOf> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/chemical-class-taxonomy> ;
+    <http://www.w3.org/2004/02/skos/core#prefLabel> "Acetate-Ester Cannabinoids"@en ;
+    <http://www.w3.org/2004/02/skos/core#prefLabel> "アセテート体カンナビノイド"@ja ;
+    <http://www.w3.org/2004/02/skos/core#altLabel> "cannabinoid acetate"@en ;
+    <http://www.w3.org/2004/02/skos/core#altLabel> "アセテート"@ja ;
+    <http://www.w3.org/2004/02/skos/core#notation> "chemclass_acetate" ;
+    <http://www.w3.org/2004/02/skos/core#scopeNote> "Acetate-ester cannabinoids: THC-O only. Evidence: the scopeNote of jptr:compound-thc-o (a semi-synthetic cannabinoid acetate)."@en ;
+    <http://www.w3.org/2004/02/skos/core#scopeNote> "酢酸エステル体カンナビノイド: THC-O のみ。根拠は jptr:compound-thc-o の scopeNote（semi-synthetic cannabinoid acetate）。"@ja ;
+    <http://www.w3.org/2004/02/skos/core#related> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-thc-o> .
