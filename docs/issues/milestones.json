@@ -10,17 +10,17 @@
   },
   "summary": {
     "issue_count": 68,
-    "active_count": 36,
-    "closed_count": 32,
+    "active_count": 33,
+    "closed_count": 35,
     "status_counts": {
       "DOCUMENTED": 1,
       "MITIGATED": 1,
-      "OPEN": 34,
+      "OPEN": 31,
       "PENDING": 2,
-      "RESOLVED": 30
+      "RESOLVED": 33
     },
     "open_p0": 0,
-    "open_p1": 10,
+    "open_p1": 7,
     "failure_count": 0
   },
   "layout": {
@@ -127,33 +127,15 @@
         "coverage matrix と page counts が上流記録と一致する",
         "修正後の publication contract と issue audit が failures=0 になる"
       ],
-      "issue_count": 5,
+      "issue_count": 2,
       "status_counts": {
-        "OPEN": 5
+        "OPEN": 2
       },
       "priority_counts": {
-        "P1": 4,
+        "P1": 1,
         "P2": 1
       },
       "issues": [
-        {
-          "id": "ISS-20261012-CBD-001",
-          "priority": "P1",
-          "status": "OPEN",
-          "path": "docs/issues/active/20-cbd-publication-corrections/20261012_p1_cbd-coverage-matrix-overstates-completeness.md"
-        },
-        {
-          "id": "ISS-20261012-CBD-006",
-          "priority": "P1",
-          "status": "OPEN",
-          "path": "docs/issues/active/20-cbd-publication-corrections/20261012_p1_cbd-research-page-count-period-mismatch.md"
-        },
-        {
-          "id": "ISS-20261012-CBD-002",
-          "priority": "P1",
-          "status": "OPEN",
-          "path": "docs/issues/active/20-cbd-publication-corrections/20261012_p1_cbd-x-period-provenance.md"
-        },
         {
           "id": "ISS-20261012-CBD-003",
           "priority": "P1",
@@ -414,11 +396,11 @@
     }
   ],
   "closed": {
-    "issue_count": 25,
+    "issue_count": 35,
     "status_counts": {
       "DOCUMENTED": 1,
       "MITIGATED": 1,
-      "RESOLVED": 23
+      "RESOLVED": 33
     },
     "issues": [
       {
@@ -570,6 +552,66 @@
         "priority": "P3",
         "status": "RESOLVED",
         "path": "docs/issues/closed/resolved/20261015_p3_guide-structure-requirements-unchecked.md"
+      },
+      {
+        "id": "ISS-20261012-CBD-001",
+        "priority": "P1",
+        "status": "RESOLVED",
+        "path": "docs/issues/closed/resolved/20261012_p1_cbd-coverage-matrix-overstates-completeness.md"
+      },
+      {
+        "id": "ISS-20261012-CBD-002",
+        "priority": "P1",
+        "status": "RESOLVED",
+        "path": "docs/issues/closed/resolved/20261012_p1_cbd-x-period-provenance.md"
+      },
+      {
+        "id": "ISS-20261012-CBD-006",
+        "priority": "P1",
+        "status": "RESOLVED",
+        "path": "docs/issues/closed/resolved/20261012_p1_cbd-research-page-count-period-mismatch.md"
+      },
+      {
+        "id": "ISS-20261014-PUB-029",
+        "priority": "P1",
+        "status": "RESOLVED",
+        "path": "docs/issues/closed/resolved/20261014_p1_pub-029-coarse-x-aggregates.md"
+      },
+      {
+        "id": "ISS-20261015-COL-018",
+        "priority": "P1",
+        "status": "RESOLVED",
+        "path": "docs/issues/closed/resolved/20261015_p1_new-run-tracking-policy-mismatch.md"
+      },
+      {
+        "id": "ISS-20261015-COL-033",
+        "priority": "P1",
+        "status": "RESOLVED",
+        "path": "docs/issues/closed/resolved/20261015_p1_unadopted-youtube-exports.md"
+      },
+      {
+        "id": "ISS-20261015-PUB-CBX-YT-033",
+        "priority": "P1",
+        "status": "RESOLVED",
+        "path": "docs/issues/closed/resolved/20261015_p1_cbx-youtube-adoption-reflection.md"
+      },
+      {
+        "id": "ISS-20261015-REL-015",
+        "priority": "P1",
+        "status": "RESOLVED",
+        "path": "docs/issues/closed/resolved/20261015_p1_v1-13-1-doi-citation-mismatch.md"
+      },
+      {
+        "id": "ISS-20261015-REL-016",
+        "priority": "P2",
+        "status": "RESOLVED",
+        "path": "docs/issues/closed/resolved/20261015_p2_zenodo-related-release-url-template.md"
+      },
+      {
+        "id": "ISS-20261015-XID-035",
+        "priority": "P1",
+        "status": "RESOLVED",
+        "path": "docs/issues/closed/resolved/20261015_p1_x-withdrawal-assumptions-confirm.md"
       }
     ]
   }

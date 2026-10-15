@@ -3,12 +3,12 @@
   "record": "publication_decision",
   "decision_id": "publication-review-research-cbd",
   "artifact_id": "research-cbd",
-  "artifact_sha256": "c22e57811ce35a60494855361debecbb29479d8d1ddd1f5b4fdb566a2bfaafe6",
+  "artifact_sha256": "c425c10d7a117f9fd567af4ea95014bb84f478b6d8e6dbdc68c08aa3654026f6",
   "status": "requires_review",
   "reviewed_at": null,
   "reviewer": null,
   "criteria_version": "PC-7 / publication-contract-v1.0.0 (2026-10-15)",
   "recorded_at": "2026-10-15",
   "basis": "対象 publication はまだ公開していないため、承認済みとはせず requires_review として審査待ちを記録する。",
-  "notes": "PC-7 は判断記録が存在することを検査する。PUB-10 の公開承認は approved かつ同一 sha256 の decision が必要であり、この requires_review では公開不可。"
+  "notes": "PC-7 は判断記録が存在することを検査する。PUB-10 の公開承認は approved かつ同一 sha256 の decision が必要であり、この requires_review では公開不可。2026-10-15 の CBD-002 / CBD-006 数値訂正で hash を再固定したが、内容審査の状態は変わらない。"
 }

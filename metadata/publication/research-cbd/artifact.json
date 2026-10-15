@@ -6,8 +6,8 @@
   "layer": "publication",
   "source_kind": "html",
   "storage_policy_id": "publication-html-candidate",
-  "sha256": "c22e57811ce35a60494855361debecbb29479d8d1ddd1f5b4fdb566a2bfaafe6",
-  "byte_length": 17196,
+  "sha256": "c425c10d7a117f9fd567af4ea95014bb84f478b6d8e6dbdc68c08aa3654026f6",
+  "byte_length": 19702,
   "recorded_at": "2026-10-15",
-  "notes": "未公開 publication HTML。PC-7 の審査 envelope として内容 hash を固定する。対象 publication はまだ公開していないため、decision は requires_review から開始する。 v1.13.0 release metadata sync 後の hash。 v1.13.1 release metadata sync 後の hash。"
+  "notes": "未公開 publication HTML。PC-7 の審査 envelope として内容 hash を固定する。対象 publication はまだ公開していないため、decision は requires_review から開始する。 v1.13.0 release metadata sync 後の hash。 v1.13.1 release metadata sync 後の hash。 ISS-20261012-CBD-002 / CBD-006 による X 節・YouTube 節の数値訂正（2026-10-15、docs/reports/20261015d-cbd-page-provenance-reconciliation.md）後の hash。"
 }

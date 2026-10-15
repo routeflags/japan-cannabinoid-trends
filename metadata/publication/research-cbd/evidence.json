@@ -6,7 +6,7 @@
   "integrity": "verified",
   "citations": {
     "integrity": [
-      "sha256(publication/research_cbd.html, 2026-10-15 検算) = c22e57811ce35a60494855361debecbb29479d8d1ddd1f5b4fdb566a2bfaafe6"
+      "sha256(publication/research_cbd.html, 2026-10-15 検算) = c425c10d7a117f9fd567af4ea95014bb84f478b6d8e6dbdc68c08aa3654026f6"
     ],
     "publication_contract": [
       "validation.cli audit-publication（2026-10-15）: PC-1〜PC-8 の機械検査対象。PC-7 は本 envelope の存在と hash 固定を検査する。"
@@ -16,5 +16,5 @@
     "publication_approval": "対象 publication はまだ公開していない。承認判断は未実施のため decision.status は requires_review。",
     "human_content_review": "効能表現・法務・再配布条件などの人間による最終審査は未記録。"
   },
-  "notes": "この evidence は機械的な存在・整合性の根拠だけを記録する。公開承認・人間の内容審査は推測で埋めない。"
+  "notes": "この evidence は機械的な存在・整合性の根拠だけを記録する。公開承認・人間の内容審査は推測で埋めない。2026-10-15 に ISS-20261012-CBD-002 / CBD-006 の数値訂正で hash を再固定した（照合は docs/reports/20261015d-cbd-page-provenance-reconciliation.md）。"
 }

@@ -13,7 +13,8 @@
 
 <h3>研究質問</h3>
 <p>「日本国内におけるCBDのオンライン上の検索需要・規制状況は何か？」</p>
-<p><strong>最終更新:</strong> 2026-10-08。</p>
+<p><strong>最終更新:</strong> 2026-10-15。</p>
+<p><strong>改訂:</strong> 2026-10-15 に X 節・YouTube 節の数値を run と照合し、収集期間・出所・母集団を訂正した（<code>ISS-20261012-CBD-002</code> / <code>ISS-20261012-CBD-006</code>）。照合の記録は <code>docs/reports/20261015d-cbd-page-provenance-reconciliation.md</code>。</p>
 
 <h3>データソース</h3>
 <ul>
@@ -133,8 +134,8 @@
         <td>日本語 (lang:ja)</td>
       </tr>
       <tr>
-        <td>収集期間</td>
-        <td>2026-07-01 ~ 2026-10-01</td>
+        <td>収集期間（観測値）</td>
+        <td>2026-10-01（08:52〜20:14 UTC、1日間）</td>
       </tr>
     </tbody>
   </table>
@@ -179,6 +180,8 @@
 
   <p><strong>方法:</strong> キーワードベースのルール分類。信頼区間は Wilson スコア法による95%信頼区間。</p>
   <p><strong>制約:</strong> ルールベース分類のため、文脈による誤分類の可能性がある。X 検索結果のサンプルであり、全投稿を網羅するものではない。</p>
+  <p><strong>出所:</strong> <code>datasets/cannabinoid-social-trends/data/raw/x/</code> の主要 4 化合物収集 run（<code>cbd.json</code>、100 件、2026-10-06 収集）。分類結果は <code>research/x/20261008-x-classification-batch1.json</code>（n=99、除外 1 件）。run 単位の検索語・期間・Actor・取得上限と、確認できない項目は <code>docs/reports/20261015d-cbd-page-provenance-reconciliation.md</code> に記録する。</p>
+  <p><strong>照合:</strong> raw の投稿日時は全 100 件が 2026-10-01（08:52〜20:14 UTC）である。収集時に指定した検索窓（2026-07-01〜2026-10-01）を記録した run metadata は残っておらず、3 ヶ月窓の時系列は確認できない。本節は <strong>2026-10-01 の単日スナップショット</strong>として扱い、長期系列としては使用しない（<code>ISS-20261012-CBD-002</code>）。</p>
 </div>
 
 
@@ -339,7 +342,7 @@
       </tr>
       <tr>
         <td>中央値</td>
-        <td>14,298</td>
+        <td>14,228</td>
       </tr>
       <tr>
         <td>最大</td>
@@ -465,6 +468,8 @@
   </table>
 
   <p><strong>制約:</strong> YouTube 検索結果のサンプルであり、全動画を網羅するものではない。再生数は取得日時点の値であり、変動する可能性がある。</p>
+  <p><strong>出所:</strong> <code>datasets/cannabinoid-multi-trends/data/raw/youtube/</code> の「CBD オイル」日本語収集 run（<code>youtube-japanese-apify</code>、2026-10-05 収集）の <code>cbd-oil_raw.json</code>。run_id は <code>docs/reports/20261015d-cbd-page-provenance-reconciliation.md</code> を参照。</p>
+  <p><strong>照合:</strong> 本節の件数と統計は、同ファイルの 60 件を重複排除したユニーク 28 件を母集団とする（再生数中央値は中央 2 値の平均 14,227.5）。2026-10-02 収集の同一クエリ別 run（23 件）は本節の出所ではない（<code>ISS-20261012-CBD-006</code>）。</p>
 </div>
 
 
@@ -516,7 +521,7 @@
       </tr>
       <tr>
         <td>中央値再生数</td>
-        <td>22,303</td>
+        <td>21,826</td>
       </tr>
       <tr>
         <td>最大再生数</td>
@@ -606,6 +611,8 @@
   </table>
 
   <p><strong>制約:</strong> YouTube 検索結果は取得日時点のものであり、動画の追加・削除により変動する可能性がある。投稿日は YouTube Data API から取得した絶対日付。なお、投稿日の取得に用いた YouTube Data API v3 は 2026-10-12 の方針判断により使用を取り止め、当時の raw は削除済みである（本節の数値は削除前の取得結果であり、再取得は行わない）。</p>
+  <p><strong>出所:</strong> <code>datasets/cannabinoid-multi-trends/data/raw/youtube/</code> の「CBD リキッド」dated 収集 run（2026-10-09 収集）の <code>records.json</code> 24 件。同日 16:07 の同一クエリ再取得（30 件）とは別 run であり、本節は 24 件側を出所とする。run_id は <code>docs/reports/20261015d-cbd-page-provenance-reconciliation.md</code> を参照。</p>
+  <p><strong>照合:</strong> 再生数統計は同 run の 24 件を母集団とする（中央値は中央 2 値の平均 21,826）。</p>
 </div>
 
 
