@@ -4,11 +4,11 @@
   "decision_id": "publication-review-research-cbx",
   "artifact_id": "research-cbx",
   "artifact_sha256": "5ba5c823e8aace4f03bee3cd8087c2792cfbd9ad0a5db3f76f1d3479032e494c",
-  "status": "requires_review",
-  "reviewed_at": null,
-  "reviewer": null,
+  "status": "approved",
+  "reviewed_at": "2026-10-15",
+  "reviewer": "owner (thread approval 2026-10-15: ok, go)",
   "criteria_version": "PC-7 / publication-contract-v1.0.0 (2026-10-15)",
   "recorded_at": "2026-10-15",
-  "basis": "対象 publication はまだ公開していないため、承認済みとはせず requires_review として審査待ちを記録する。",
-  "notes": "PC-7 は判断記録が存在することを検査する。PUB-10 の公開承認は approved かつ同一 sha256 の decision が必要であり、この requires_review では公開不可。"
+  "basis": "オーナーが 2026-10-15 のスレッドで人間審査・承認した (ISS-20261015-PUB-CBX-YT-033)。対象は research_cbx.html の YouTube 節への COL-033 採用反映のみ。",
+  "notes": "PC-7 は判断記録が存在することを検査する。PUB-10 は approved かつ同一 sha256 の decision で PASS。"
 }

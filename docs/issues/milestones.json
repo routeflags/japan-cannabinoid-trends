@@ -10,17 +10,17 @@
   },
   "summary": {
     "issue_count": 66,
-    "active_count": 38,
-    "closed_count": 28,
+    "active_count": 37,
+    "closed_count": 29,
     "status_counts": {
       "DOCUMENTED": 1,
       "MITIGATED": 1,
-      "OPEN": 36,
+      "OPEN": 35,
       "PENDING": 2,
-      "RESOLVED": 26
+      "RESOLVED": 27
     },
     "open_p0": 0,
-    "open_p1": 11,
+    "open_p1": 10,
     "failure_count": 0
   },
   "layout": {
@@ -105,21 +105,15 @@
         "datapackage / disclosure / relationship notes が最新状態に更新される",
         "公開前に publication artifact の review decision を approved または denied に確定する"
       ],
-      "issue_count": 3,
+      "issue_count": 2,
       "status_counts": {
-        "OPEN": 3
+        "OPEN": 2
       },
       "priority_counts": {
-        "P1": 2,
+        "P1": 1,
         "P2": 1
       },
       "issues": [
-        {
-          "id": "ISS-20261015-PUB-CBX-YT-033",
-          "priority": "P1",
-          "status": "OPEN",
-          "path": "docs/issues/active/10-publication-release-readiness/20261015_p1_cbx-youtube-adoption-reflection.md"
-        },
         {
           "id": "ISS-20261002-016",
           "priority": "P2",

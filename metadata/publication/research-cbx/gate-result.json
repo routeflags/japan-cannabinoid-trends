@@ -1,0 +1,79 @@
+{
+  "gate": "publication_eligibility",
+  "criteria": "G6 §10.2 (PUB-01..PUB-10)",
+  "artifact_id": "research-cbx",
+  "artifact_sha256": "5ba5c823e8aace4f03bee3cd8087c2792cfbd9ad0a5db3f76f1d3479032e494c",
+  "decision_id": "publication-review-research-cbx",
+  "verdict": "CONDITIONAL",
+  "checks": [
+    {
+      "id": "PUB-01",
+      "title": "provenance exists",
+      "status": "WARNING",
+      "detail": "provenance presence unknown; reviewer must confirm"
+    },
+    {
+      "id": "PUB-02",
+      "title": "artifact integrity passes",
+      "status": "PASS",
+      "detail": "artifact hash verified"
+    },
+    {
+      "id": "PUB-03",
+      "title": "publication schema valid",
+      "status": "WARNING",
+      "detail": "schema review not recorded; reviewer must confirm"
+    },
+    {
+      "id": "PUB-04",
+      "title": "personal-data review",
+      "status": "PASS",
+      "detail": "personal-data review recorded"
+    },
+    {
+      "id": "PUB-05",
+      "title": "secret scan",
+      "status": "PASS",
+      "detail": "no credential-like fields or values in the review envelope"
+    },
+    {
+      "id": "PUB-06",
+      "title": "source terms confirmed",
+      "status": "WARNING",
+      "detail": "confirmation not recorded; reviewer must confirm"
+    },
+    {
+      "id": "PUB-07",
+      "title": "redistribution conditions confirmed",
+      "status": "WARNING",
+      "detail": "confirmation not recorded; reviewer must confirm"
+    },
+    {
+      "id": "PUB-08",
+      "title": "copyright / contract constraints confirmed",
+      "status": "WARNING",
+      "detail": "confirmation not recorded; reviewer must confirm"
+    },
+    {
+      "id": "PUB-09",
+      "title": "anonymization / aggregation applied",
+      "status": "WARNING",
+      "detail": "anonymization state unknown; reviewer must confirm"
+    },
+    {
+      "id": "PUB-10",
+      "title": "publication approval recorded",
+      "status": "PASS",
+      "detail": "approved decision pins this artifact hash"
+    }
+  ],
+  "failed": [],
+  "warnings": [
+    "PUB-01",
+    "PUB-03",
+    "PUB-06",
+    "PUB-07",
+    "PUB-08",
+    "PUB-09"
+  ]
+}

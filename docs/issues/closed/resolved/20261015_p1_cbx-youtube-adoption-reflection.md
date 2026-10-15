@@ -2,7 +2,7 @@
 
 **ID:** ISS-20261015-PUB-CBX-YT-033
 **優先度:** P1 (High)
-**ステータス:** OPEN (実装済み・審査待ち)
+**ステータス:** RESOLVED (2026-10-15)
 **対象:** `publication/research_cbx.html` (`data-youtube`, `data-youtube-analysis`), `metadata/publication/research-cbx/`, `metadata/provenance/declarations/20261015-youtube-csv-adoption.json`, `docs/issues/closed/resolved/20261015_p1_unadopted-youtube-exports.md`
 **計画:** `docs/plans/dev/20261015-cbx-youtube-adoption-reflection.md`
 
@@ -29,6 +29,11 @@
 
 ## 残作業
 
-- [ ] 所有者環境 (採用 raw あり) で `audit-publication` が findings 0 / catalog 47 であることの確認。
-- [ ] 人間による内容審査 (効能・法務・再配布) と公開承認 (対象外のため未実施)。
+- [x] 所有者環境 (採用 raw あり) で `audit-publication` が findings 0 / catalog 47 であることの確認。
+- [x] 人間による審査・承認 — オーナー承認 2026-10-15 (スレッド: ok, go)。
+  `decision.json` を approved に更新し、PUB-04 (personal-data review) の根拠を evidence に記録。
+  `gate-publication` verdict=CONDITIONAL (failed 0。PUB-04/PUB-10 PASS。
+  警告 PUB-01/03/06/07/08/09 は reviewer 確認待ちとして残る)。
+  verdict は `metadata/publication/research-cbx/gate-result.json` に記録し、
+  `docs/audits/g6-publication-eligibility.json` (別 artifact の invocation record) は上書きしていない。
 - [ ] GT 境界作業 (2026-10-22+、別件) との整合確認。

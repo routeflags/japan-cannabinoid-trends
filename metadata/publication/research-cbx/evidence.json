@@ -4,6 +4,8 @@
   "artifact_id": "research-cbx",
   "recorded_at": "2026-10-15",
   "integrity": "verified",
+  "personal_data_reviewed": true,
+  "personal_data_review_basis": "2026-10-15: added YouTube adoption content holds aggregates only (6-run table: run_id/keyword/count/dateFilter/observed range, total 2288). No per-post rows, IDs, text, URLs, usernames, or precise timestamps. Pre-existing http links are institutional (MHLW PDF, DOI badge).",
   "citations": {
     "integrity": [
       "sha256(publication/research_cbx.html, 2026-10-15 検算) = 5ba5c823e8aace4f03bee3cd8087c2792cfbd9ad0a5db3f76f1d3479032e494c"
@@ -18,8 +20,7 @@
     ]
   },
   "unrecorded": {
-    "publication_approval": "対象 publication はまだ公開していない。承認判断は未実施のため decision.status は requires_review。",
-    "human_content_review": "効能表現・法務・再配布条件などの人間による最終審査は未記録。"
+    "human_content_review": "効能表現・法務などの人間による内容審査は本 evidence の範囲外。公開可否の最終判定は decision.status に従う。"
   },
-  "notes": "この evidence は機械的な存在・整合性の根拠だけを記録する。公開承認・人間の内容審査は推測で埋めない。gate-publication (research-cbx, 2026-10-15): verdict=BLOCKED (PUB-04/PUB-10 FAIL, requires_review のため。未公開の想定どおり。PUB-05 PASS)。承認は対象外。"
+  "notes": "この evidence は機械的な存在・整合性の根拠だけを記録する。公開承認は decision.json (approved, owner 2026-10-15) を正とする。"
 }
