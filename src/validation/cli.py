@@ -22,6 +22,9 @@ Commands
 - ``audit-artifacts``     non-destructive G4 §16 artifact inventory
 - ``audit-git-tracking``  non-destructive G6 §15 git tracking inventory
 - ``audit-private-catalog`` non-destructive G6 §13 private data boundary catalog
+- ``audit-apify-evidence`` read-only PRV-013 checklist: the Apify cloud evidence
+                        request list against its source declaration (never calls
+                        Apify; exit 0 means honest, not complete)
 - ``contract-ledger``     the derived inventory of every declared contract
 - ``audit-publication``   the publication contract (record-only; see the module)
 - ``gate-publication``    record-only G6 §10 publication eligibility gate
@@ -59,6 +62,7 @@ import json
 import sys
 from pathlib import Path
 
+from validation.apify_evidence import audit_apify_evidence
 from validation.boundary import build_boundary_report
 from validation.comparability import compare_runs
 from validation.coverage import (
@@ -897,6 +901,54 @@ def cmd_audit_x_identity(args) -> int:
         f"stale_acknowledgements={len(report['stale_acknowledgements'])}"
     )
     return EXIT_DATA if report["failures"] else EXIT_OK
+
+
+def cmd_audit_apify_evidence(args) -> int:
+    """Offline PRV-013 checklist: the cloud evidence request list is an honest
+    transcription of its source declaration, and per adopted run which cloud
+    fields still need owner retrieval.
+
+    Read-only and offline: the two committed JSON documents are compared and
+    nothing else is touched -- no Apify, Zenodo, GitHub or other external API
+    is called, and no token is read.  Exit 0 means the list is honest (no
+    invented values), not that cloud evidence exists: ``blocked`` counts stay
+    non-zero until the owner retrieves and registers the missing fields.
+    """
+    try:
+        requests_document = _load_json(Path(args.requests))
+        declaration = _load_json(Path(args.declaration))
+    except OSError as error:
+        _err(f"apify evidence audit failed: {error.__class__.__name__}: {error}")
+        return EXIT_IO
+    except ValueError as error:
+        _err(f"apify evidence audit failed: {error.__class__.__name__}: {error}")
+        return EXIT_CONFIG
+    report = audit_apify_evidence(requests_document, declaration)
+    if args.output:
+        try:
+            _write_output(args.output, report)
+        except OSError as error:
+            _err(f"cannot write audit output: {args.output} ({error.__class__.__name__})")
+            return EXIT_IO
+        _err(f"apify evidence audit written: {args.output}")
+    elif args.format == "json":
+        print(dump_json(report), end="")
+    else:
+        for entry in report["blocked"]:
+            print(
+                f"{entry['run_id']} "
+                f"pending={','.join(entry['pending']) or '-'} "
+                f"missing={','.join(entry['missing']) or '-'}"
+            )
+    _err(
+        f"apify evidence audit: {report['run_count']} run(s) "
+        f"pending={report['pending_count']} "
+        f"missing={report['missing_count']} "
+        f"observed={report['observed_count']} "
+        f"cloud_evidence_obtained={report['cloud_evidence_obtained']} "
+        f"violations={len(report['violations'])}"
+    )
+    return EXIT_DATA if report["violations"] else EXIT_OK
 
 
 def cmd_audit_new_runs(args) -> int:
@@ -2004,6 +2056,25 @@ def build_parser() -> argparse.ArgumentParser:
     audit_x.add_argument("--output", default=None)
     audit_x.add_argument("--format", choices=("text", "json"), default="text")
     audit_x.set_defaults(handler=cmd_audit_x_identity)
+
+    audit_apify = sub.add_parser(
+        "audit-apify-evidence",
+        help="offline PRV-013 checklist: the Apify cloud evidence request list "
+        "against its source declaration (never calls Apify)",
+    )
+    audit_apify.add_argument(
+        "--requests",
+        default="metadata/provenance/apify-cloud-evidence-requests.json",
+        help="committed cloud evidence request list",
+    )
+    audit_apify.add_argument(
+        "--declaration",
+        default="metadata/provenance/declarations/20261015-youtube-csv-adoption.json",
+        help="source staging declaration the request list transcribes",
+    )
+    audit_apify.add_argument("--output", default=None)
+    audit_apify.add_argument("--format", choices=("text", "json"), default="text")
+    audit_apify.set_defaults(handler=cmd_audit_apify_evidence)
 
     audit_new = sub.add_parser(
         "audit-new-runs",

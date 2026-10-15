@@ -6,10 +6,16 @@ collector capabilities untouched (still ``unknown`` / ``unverified``).
 """
 
 import json
+from argparse import Namespace
 from copy import deepcopy
 from pathlib import Path
 
-from validation.apify_evidence import REQUIRED_FIELDS, validate_request_list
+from validation.apify_evidence import (
+    REQUIRED_FIELDS,
+    audit_apify_evidence,
+    validate_request_list,
+)
+from validation.cli import cmd_audit_apify_evidence
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 REQUESTS_PATH = REPO_ROOT / "metadata" / "provenance" / "apify-cloud-evidence-requests.json"
@@ -113,3 +119,74 @@ def test_transcription_mismatch_is_refused():
     altered["requests"][0]["fields"][0]["value"] = "INVENTEDRUNID00000"
     violations = validate_request_list(altered, declaration)
     assert any("does not match the declaration" in v for v in violations)
+
+
+def test_audit_report_reproduces_the_blocked_checklist():
+    requests_document = _load(REQUESTS_PATH)
+    declaration = _load(DECLARATION_PATH)
+    report = audit_apify_evidence(requests_document, declaration)
+    assert report["violations"] == []
+    assert report["issue"] == "ISS-20261015-PRV-013"
+    assert report["collector_id"] == "youtube-apify-scraper"
+    assert report["run_count"] == 6
+    # 6 runs x 5 transcribed fields still awaiting cloud corroboration.
+    assert report["pending_count"] == 30
+    # 6 runs x (actor_input + evidence_source): no value anywhere yet.
+    assert report["missing_count"] == 12
+    assert report["observed_count"] == 0
+    assert report["cloud_evidence_obtained"] is False
+    assert report["collector_promotion_allowed"] is False
+    assert len(report["blocked"]) == 6
+    for entry in report["blocked"]:
+        assert entry["pending"] == [
+            "actor_run_id",
+            "apify_dataset_id",
+            "finished_at",
+            "started_at",
+            "status",
+        ], entry["run_id"]
+        assert entry["missing"] == ["actor_input", "evidence_source"], entry[
+            "run_id"
+        ]
+        assert entry["observed"] == [], entry["run_id"]
+
+
+def test_audit_flags_a_dishonest_list_without_allowing_promotion():
+    requests_document = _load(REQUESTS_PATH)
+    declaration = _load(DECLARATION_PATH)
+    forged = deepcopy(requests_document)
+    forged["requests"][0]["fields"][0]["value"] = "INVENTEDRUNID00000"
+    report = audit_apify_evidence(forged, declaration)
+    assert report["violations"] != []
+    assert report["cloud_evidence_obtained"] is False
+    assert report["collector_promotion_allowed"] is False
+
+
+def test_observed_actor_input_is_refused_without_a_declaration_source():
+    # actor_input has no declaration counterpart, so the request list can
+    # never self-declare it as corroborated: real cloud evidence must be
+    # registered through the evidence registry by the owner instead.
+    requests_document = _load(REQUESTS_PATH)
+    declaration = _load(DECLARATION_PATH)
+    claimed = deepcopy(requests_document)
+    first = claimed["requests"][0]
+    for item in first["fields"]:
+        if item["field"] == "actor_input":
+            item["status"] = "observed"
+            item["value"] = {"search": "guessed"}
+    report = audit_apify_evidence(claimed, declaration)
+    assert report["violations"] != []
+    assert report["collector_promotion_allowed"] is False
+
+
+def test_cli_reports_the_committed_blocked_state_as_honest(capsys):
+    args = Namespace(
+        requests=str(REQUESTS_PATH),
+        declaration=str(DECLARATION_PATH),
+        output=None,
+        format="text",
+    )
+    assert cmd_audit_apify_evidence(args) == 0
+    lines = capsys.readouterr().out.strip().splitlines()
+    assert len(lines) == 6
+    assert all("missing=actor_input,evidence_source" in line for line in lines)

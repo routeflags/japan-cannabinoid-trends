@@ -88,3 +88,58 @@ per-post レコードは一切扱わない（COL-030 §4.1/§4.2 遵守）。
 - 残件（本 issue は OPEN のまま）: live transport（COL-031。COL-032 の費用 guard と
   PRV-033 の request-only evidence＋別途明示承認が先行条件）、TikTok / Instagram 用
   adapter、capability の実測と registry 更新。
+
+## 実装記録（2026-10-15: YouTube Apify request-planning slice）
+
+owner 指示により X / TikTok / Instagram adapter 作業は on hold。本 slice は
+YouTube のみ。live 呼び出し・token 保管・response body・per-video 行は一切扱わ
+ない（COL-030 §4.1 遵守）。PRV-013 の別 subagent とは重複しない: cloud 証拠の
+取得・捏造は行わず、`actor_input` / `evidence_source` が `missing` のままである
+ことを前提に fail-closed 設計とした。
+
+`src/collection/adapters/youtube/request.py`
+（+ `tests/collection/test_youtube_apify_request.py` 40 tests）:
+
+- `build_actor_input` / `plan_actor_input`: 宣言済み query text＋`date_filter` を
+  `youtube-apify-scraper`（`h7sDV53CddomktSi5`）の actor input
+ （`searchQueries` / `dateFilter` / `maxResults` / `maxResultsShorts` /
+  `maxResultStreams` / `sortingOrder`）にするだけの純粋関数。送信しない、環境変数
+  を読まない、response／per-video field を含まない。actor ID・input 語彙は repo 内
+  証拠のみ（`config/collectors.json` の `external_id`、skill の input schema、
+  `apify_csv.DATE_FILTERS` を単一 source of truth として再利用・重複定義なし）。
+- `date_filter="all"` は `dateFilter` を省略する（unbounded 形状。skill の filter-less
+  例に準拠。actor に `all` 値は存在しないため `dateFilter="all"` の送信は捏造になる）。
+- plan の絶対 window は観測範囲であり input に使わない（`plan_actor_input` は window
+  なしでも計画できるし、window の違いは input を変えないことを test で固定）。
+  keyword＋絶対範囲は当該 actor では実現不可（skill: `startUrls` は `searchQueries`
+  を上書き、`oldestPostDate` は channel-URL 専用）のため、channel-URL mode の
+  `startUrls` / `oldestPostDate` / `sortVideosBy` は never emit。
+- `max_results` 系は正整数（Shorts/streams は非負）の pass-through のみ。費用上限の
+  強制・示唆はしない（cost guard は別途 blocked）。`sortingOrder` は skill 語彙のみ
+  受け付け、意味論は unverified のまま。
+- live transport は未実装のまま: `YouTubeApifyCsvAdapter.collect` は
+  `LIVE_TRANSPORT_UNIMPLEMENTED` で fail closed（X と同一コード＝同一規則）。`youtube`
+  は `_FACTORIES` / `_LIVE_SESSIONS` に未登録（収集可能に見せないため意図的）。
+  registry は不変: `youtube-apify-scraper` は `status: unverified` / capability 全
+  `unknown` / `version: unknown` のまま。`config/collectors.json` の変更は無い。
+
+## 残件整理（2026-10-15: YouTube / on-hold 分離。本 issue は OPEN のまま）
+
+- implemented offline（本 issue で完了）: YouTube Apify CSV handover adapter／driver
+  wrapper＋契約テスト、`dateFilter=year` window compiler、YouTube Apify actor-input
+  request planner＋契約テスト（request-only evidence、per-video 行なし、送信なし）。
+- blocked by Apify evidence（PRV-013）: actor run ID／dataset ID／actor input／開始終了
+  の cloud 照合と evidence registry 登録。`actor_input` と `evidence_source` が全 run
+  で `missing` の間は capability 昇格なし（`unknown` 維持）。PRV-013 完了後に昇格要否を
+  判断する。
+- blocked by owner token/access: owner 支給 token、費用 guard（上限・承認フロー）、live
+  送信の別途明示承認。3 点が揃うまで `collect` は fail-closed のまま。live transport
+  の pagination／retry／cost 設計は未着手。
+- on hold（owner 決定 2026-10-15）: X／TikTok／Instagram 用 adapter 作業は着手しない。
+  既存の X dry-run slice（`src/collection/adapters/x/`）は変更なし。未実装を実装済み
+  として扱わない。
+
+完了条件のうち満たしたのは YouTube の offline slice（handover adapter＋契約テスト、
+request planner＋契約テスト）のみであり、「capability の実測と registry 更新」は未了
+（PRV-013 待ち）。X／TikTok／Instagram は on hold のため対象外。本 issue は OPEN
+のまま残す。

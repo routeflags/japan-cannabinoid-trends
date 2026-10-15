@@ -21,14 +21,20 @@ must not promote them, and the contract test pins them as ``unknown`` /
 from __future__ import annotations
 
 __all__ = [
+    "AUDIT_VERSION",
     "REQUEST_SCHEMA_VERSION",
     "REQUIRED_FIELDS",
     "STATUSES",
+    "audit_apify_evidence",
     "declaration_values",
     "validate_request_list",
 ]
 
 REQUEST_SCHEMA_VERSION = "1.0.0"
+
+#: Version of the read-only blocked-state report built by
+#: :func:`audit_apify_evidence`.
+AUDIT_VERSION = "1.0.0"
 
 #: Cloud fields every adopted run must eventually evidence (task order).
 REQUIRED_FIELDS = (
@@ -185,3 +191,103 @@ def validate_request_list(requests_document: dict, declaration: dict) -> list[st
                     "null until the owner records a retrieval (no URLs invented)"
                 )
     return violations
+
+
+def audit_apify_evidence(requests_document: dict, declaration: dict) -> dict:
+    """Build the read-only blocked-state report for the request list.
+
+    The report is the machine-readable form of the PRV-013 owner checklist:
+    per adopted run, which cloud fields are ``pending`` (transcribed from the
+    declaration, still awaiting cloud corroboration) and which are ``missing``
+    (no value anywhere in the repository, owner retrieval required).  It is
+    derived entirely from the two committed documents, so the checklist the
+    owner works from cannot drift from the validated request list.
+
+    Honesty, not completeness, decides the verdict: ``violations`` is empty
+    exactly when the list transcribes the declaration without invention.
+    ``cloud_evidence_obtained`` stays false until every required field of
+    every run reaches ``observed`` (corroborated against cloud evidence and
+    registered), and ``collector_promotion_allowed`` follows it, so neither
+    this milestone nor any caller can promote collector capabilities early.
+    """
+    violations = validate_request_list(requests_document, declaration)
+    blocked: list[dict] = []
+    pending_count = 0
+    missing_count = 0
+    observed_count = 0
+    run_count = 0
+    requests = (
+        requests_document.get("requests")
+        if isinstance(requests_document, dict)
+        else None
+    )
+    if isinstance(requests, list):
+        for request in requests:
+            if not isinstance(request, dict):
+                continue
+            run_count += 1
+            fields = request.get("fields")
+            items = (
+                [item for item in fields if isinstance(item, dict)]
+                if isinstance(fields, list)
+                else []
+            )
+            pending = sorted(
+                item["field"]
+                for item in items
+                if item.get("status") == "pending"
+                and isinstance(item.get("field"), str)
+            )
+            missing = sorted(
+                item["field"]
+                for item in items
+                if item.get("status") == "missing"
+                and isinstance(item.get("field"), str)
+            )
+            observed = sorted(
+                item["field"]
+                for item in items
+                if item.get("status") == "observed"
+                and isinstance(item.get("field"), str)
+            )
+            pending_count += len(pending)
+            missing_count += len(missing)
+            observed_count += len(observed)
+            blocked.append(
+                {
+                    "run_id": request.get("run_id"),
+                    "pending": pending,
+                    "missing": missing,
+                    "observed": observed,
+                }
+            )
+    cloud_evidence_obtained = (
+        not violations
+        and run_count > 0
+        and missing_count == 0
+        and pending_count == 0
+        and observed_count == run_count * len(REQUIRED_FIELDS)
+    )
+    return {
+        "audit_version": AUDIT_VERSION,
+        "issue": (
+            requests_document.get("issue")
+            if isinstance(requests_document, dict)
+            else None
+        ),
+        "collector_id": (
+            requests_document.get("collector_id")
+            if isinstance(requests_document, dict)
+            else None
+        ),
+        "run_count": run_count,
+        "violations": violations,
+        "blocked": blocked,
+        "pending_count": pending_count,
+        "missing_count": missing_count,
+        "observed_count": observed_count,
+        "cloud_evidence_obtained": cloud_evidence_obtained,
+        # Capability promotion is gated on corroborated, registered cloud
+        # evidence; while any field is pending/missing this is False.
+        "collector_promotion_allowed": cloud_evidence_obtained,
+    }
