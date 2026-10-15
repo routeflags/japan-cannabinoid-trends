@@ -3,7 +3,7 @@
   "record": "publication_decision",
   "decision_id": "publication-review-research-cbx",
   "artifact_id": "research-cbx",
-  "artifact_sha256": "5ec58b8c0a07d0aecb175c3be820f0e91df41c40c509dea33112a8aab4e25e5f",
+  "artifact_sha256": "5ba5c823e8aace4f03bee3cd8087c2792cfbd9ad0a5db3f76f1d3479032e494c",
   "status": "requires_review",
   "reviewed_at": null,
   "reviewer": null,

@@ -6,15 +6,20 @@
   "integrity": "verified",
   "citations": {
     "integrity": [
-      "sha256(publication/research_cbx.html, 2026-10-15 検算) = 5ec58b8c0a07d0aecb175c3be820f0e91df41c40c509dea33112a8aab4e25e5f"
+      "sha256(publication/research_cbx.html, 2026-10-15 検算) = 5ba5c823e8aace4f03bee3cd8087c2792cfbd9ad0a5db3f76f1d3479032e494c"
     ],
     "publication_contract": [
       "validation.cli audit-publication（2026-10-15）: PC-1〜PC-8 の機械検査対象。PC-7 は本 envelope の存在と hash 固定を検査する。"
+    ],
+    "youtube_adoption": [
+      "metadata/provenance/declarations/20261015-youtube-csv-adoption.json (sha256 423e8c15f18ce4ae685ab5b405edb0262375576f1785cad9df3f64b65c11e3c1): 6 runs, 合計 2288 (224/395/456/468/352/393)",
+      "docs/issues/closed/resolved/20261015_p1_unadopted-youtube-exports.md (ISS-20261015-COL-033, RESOLVED 2026-10-15): dateFilter 割当て・観測窓・検証/監査証拠の正本",
+      "publication/research_cbx.html data-youtube の採用表は上記宣言の returned_count と一致 (224+395+456+468+352+393=2288)。CBX キーワードの採用 run は無い旨を明示し、他化合物の run を CBX 証拠に流用しない。dateFilter と観測範囲の区別を derived text に保持。"
     ]
   },
   "unrecorded": {
     "publication_approval": "対象 publication はまだ公開していない。承認判断は未実施のため decision.status は requires_review。",
     "human_content_review": "効能表現・法務・再配布条件などの人間による最終審査は未記録。"
   },
-  "notes": "この evidence は機械的な存在・整合性の根拠だけを記録する。公開承認・人間の内容審査は推測で埋めない。"
+  "notes": "この evidence は機械的な存在・整合性の根拠だけを記録する。公開承認・人間の内容審査は推測で埋めない。gate-publication (research-cbx, 2026-10-15): verdict=BLOCKED (PUB-04/PUB-10 FAIL, requires_review のため。未公開の想定どおり。PUB-05 PASS)。承認は対象外。"
 }
