@@ -16,6 +16,8 @@ WORKSPACE ?= .
 DATASETS ?= datasets
 CONFIG ?= config
 METADATA ?= metadata
+GATE ?= registries
+GATE_ARGS ?=
 
 .PHONY: help test collect stage adopt-all audit-new-runs audit-publication audit-snapshots gates
 
@@ -59,4 +61,4 @@ audit-snapshots:
 	$(PYTHON) -m research.cli --repo-root . --datasets-root datasets audit-studies --output docs/audits/g7-study-inventory.json
 
 gates:
-	bash scripts/validation/run-gates.sh
+	bash scripts/validation/run-gates.sh $(GATE) $(GATE_ARGS)
