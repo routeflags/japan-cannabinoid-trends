@@ -21,8 +21,8 @@ Flow (fail closed at every step):
 6. ``collect`` into ``<workspace>/.staging/<run-id>/`` with the payload,
    the artifact manifest and ``run_metadata.json``;
 7. L1 evaluation (``collection.core.integrity``);
-8. L1 pass -> move to ``<datasets-root>/<study>/data/raw/<run-id>/``
-   (catalog); L1 fail -> move to ``<workspace>/.quarantine/<run-id>/``
+8. L1 pass -> move to ``<datasets-root>/<study>/data/raw/<source>/<run-id>/``
+   (catalog, COL-018(a) source hierarchy); L1 fail -> move to ``<workspace>/.quarantine/<run-id>/``
    with a ``quarantine-reason.json`` (raw preserved, never deleted).
 
 No overwrite: an existing run-id in staging, catalog or quarantine refuses
@@ -127,7 +127,7 @@ def _git_commit(workspace_root) -> str | None:
 
 
 #: A run id / study id becomes a directory name (``.staging/<run-id>/``,
-#: ``<datasets-root>/<study-id>/data/raw/<run-id>/``) and arrives from outside
+#: ``<datasets-root>/<study-id>/data/raw/<source>/<run-id>/``) and arrives from outside
 #: the repository (a handover directory, a staged ``run_metadata.json``), so it
 #: is validated as one path-safe component wherever the pipeline accepts it.
 _IDENTIFIER_COMPONENT = re.compile(r"[A-Za-z0-9][A-Za-z0-9._-]*\Z")
