@@ -1,7 +1,7 @@
 # Issue: X 公式 API v2 の collector / adapter が無い（Apify 依存の解消含む）
 
 **ID:** ISS-20261015-COL-031  
-**優先度:** P1 (High)  
+**優先度:** P2 (Medium)
 **ステータス:** OPEN  
 **対象:** `config/collectors.json`, `config/sources.json`, `src/collection/adapters/`（X 用 adapter は未作成 = COL-016）, `metadata/queries/query-registry.json`, `metadata/windows/`, `src/collection/x/*.md`, `.github/skills/apify-*x*/SKILL.md`, `datasets/cbx-social-trends/methodology.md`
 
@@ -60,3 +60,9 @@ Apify 経由の運用知識（skill / notes）だけがあり、パイプライ�
 - `ISS-20261015-PRV-033`（request-only evidence なしの実取得は完了条件を満たさない）
 - owner 決定済み: `ISS-20261015-COL-030` U2 の当面値は **0 円 / live request 禁止**。
 - 未確定: `ISS-20261015-COL-030` U3（サンプリング条件）。live 実行は別途 owner 承認まで行わない。
+
+## 対応記録（2026-10-15）
+
+- owner 指示: 「Xはまだいい。youtube, gtの品質をたかめてから対応する」。
+  これにより優先度を P1 から P2 へ下げる。X live request 禁止と X 元投稿データの
+  リポジトリ保存禁止は維持する。

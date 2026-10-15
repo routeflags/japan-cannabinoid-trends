@@ -4,13 +4,13 @@
   "spec": "docs/plans/20261013f.md §15 (local plan; not tracked)",
   "target_root": "datasets",
   "include_private": false,
-  "count": 204,
+  "count": 205,
   "extra_count": 46,
   "raw_modified": false,
   "state_summary": {
     "absent": 12,
     "ignored": 10,
-    "tracked": 228
+    "tracked": 229
   },
   "entries": [
     {
@@ -21,6 +21,16 @@
       "ignored": false,
       "sha256": "9b0d92367b470eb7c03c6b7b1e91e7e84a55298df7059189e83905de9918281b",
       "sha256_after": "9b0d92367b470eb7c03c6b7b1e91e7e84a55298df7059189e83905de9918281b",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-multi-trends/data/interim/google_trends/20261015_gt_legacy_label_corrections.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "95b1b62f27d15418d09ffe0480e4c732bbf5772aba12e6778d22a71e11ec2aef",
+      "sha256_after": "95b1b62f27d15418d09ffe0480e4c732bbf5772aba12e6778d22a71e11ec2aef",
       "unchanged": true
     },
     {
@@ -1939,8 +1949,8 @@
       "state": "tracked",
       "tracked": true,
       "ignored": false,
-      "sha256": "b94679bf3d71b762688edcf5842ad276993f6678a3ae508b4ea33187ff2f2dfb",
-      "sha256_after": "b94679bf3d71b762688edcf5842ad276993f6678a3ae508b4ea33187ff2f2dfb",
+      "sha256": "a7b39f165b78424bc8b11528413d13653ff9131615555b1041c2b02f0ffda9ec",
+      "sha256_after": "a7b39f165b78424bc8b11528413d13653ff9131615555b1041c2b02f0ffda9ec",
       "unchanged": true
     },
     {

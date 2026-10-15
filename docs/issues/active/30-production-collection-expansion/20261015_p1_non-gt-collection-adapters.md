@@ -34,6 +34,31 @@ X / YouTube / TikTok / Instagram は adapter 未実装で、収集は既存 shel
   （架空ソーステストと同じ型で検証する）。
 - capability は実測後に registry を更新する（推測で `supported` にしない）。
 
+## 実装記録（2026-10-15: YouTube Apify CSV MVP）
+
+owner 承認 item 2。COL-033 の採用済み YouTube Apify CSV パターンを
+offline の declaration-driven adapter/driver として `src/collection/adapters/youtube/apify_csv.py`
+（+ `tests/collection/test_youtube_apify_csv_adapter.py` 21 tests）に実装した。
+
+- 範囲: staged CSV handover のみ。live Apify API 呼び出し・token 保管・既存 raw 変更・
+  publication・per-post 行公開は対象外。既存 `stage_declaration` / `adopt_staged` を再利用し、
+  catalog/adoption/count/quarantine ルールの重複実装は無い。
+- `build_csv_run` / `stage_csv`: query/filter は宣言必須で payload 推測しない、
+  CSV は byte-for-byte、count は `csv-record-reader`（quoted newline 対応）に一任、
+  宣言 count は L1（`ARTIFACT_RECORD_COUNT_MISMATCH`）に pass-through、
+  `dateFilter` と観測窓は分離記録、既存 run_id は `RUN_ID_ALREADY_EXISTS` で上書き禁止、
+  欠損/失敗は `returned_count=0` に変換しない。
+- `YouTubeApifyCsvAdapter` は共通 Contract 形状を満たすが handover 専用:
+  `collect` は live 未実装で fail closed（`LIVE_TRANSPORT_UNIMPLEMENTED`）、
+  `extract_observations` は行抽出しない。`youtube` は `_FACTORIES` /
+  `_WINDOW_COMPILERS` に未登録（収集可能に見せないため意図的）。
+- registry は不変: `youtube-apify-scraper` は `status: unverified` /
+  capability 全 `unknown` のまま。`config/collectors.json` の変更は無い。
+- 残件（本 issue は OPEN のまま）: live Apify transport（token/pagination/cost 設計が別途必要）、
+  `dateFilter` window compiler（WIN-002 は未着手）、X / TikTok / Instagram 用 adapter は未実装。
+  上の完了条件のうち満たしたのは YouTube CSV handover の adapter 実装 + 契約テストのみであり、
+  「対象ソースと着手順の決定」「capability の実測と registry 更新」は未了。
+
 ## 完了条件
 
 - [x] 対象ソースと着手順の決定（2026-10-15 owner `go 1,2`: YouTube Apify CSV pattern を先行）

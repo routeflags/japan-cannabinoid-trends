@@ -10,17 +10,17 @@
   },
   "summary": {
     "issue_count": 69,
-    "active_count": 26,
-    "closed_count": 43,
+    "active_count": 25,
+    "closed_count": 44,
     "status_counts": {
       "DOCUMENTED": 1,
       "MITIGATED": 1,
-      "OPEN": 24,
+      "OPEN": 23,
       "PENDING": 2,
-      "RESOLVED": 41
+      "RESOLVED": 42
     },
     "open_p0": 0,
-    "open_p1": 6,
+    "open_p1": 4,
     "failure_count": 0
   },
   "layout": {
@@ -153,13 +153,13 @@
         "X official API は request-only evidence と cost control を持つまでは実収集しない",
         "new-run tracking policy と legacy label year defect が検証ルールに反映される"
       ],
-      "issue_count": 7,
+      "issue_count": 6,
       "status_counts": {
-        "OPEN": 7
+        "OPEN": 6
       },
       "priority_counts": {
-        "P1": 4,
-        "P2": 3
+        "P1": 2,
+        "P2": 4
       },
       "issues": [
         {
@@ -182,27 +182,21 @@
         },
         {
           "id": "ISS-20261015-COL-032",
-          "priority": "P1",
+          "priority": "P2",
           "status": "OPEN",
-          "path": "docs/issues/active/30-production-collection-expansion/20261015_p1_x-api-cost-control.md"
+          "path": "docs/issues/active/30-production-collection-expansion/20261015_p2_x-api-cost-control.md"
         },
         {
           "id": "ISS-20261015-COL-031",
-          "priority": "P1",
+          "priority": "P2",
           "status": "OPEN",
-          "path": "docs/issues/active/30-production-collection-expansion/20261015_p1_x-official-api-collector.md"
+          "path": "docs/issues/active/30-production-collection-expansion/20261015_p2_x-official-api-collector.md"
         },
         {
           "id": "ISS-20261015-COL-019",
           "priority": "P2",
           "status": "OPEN",
           "path": "docs/issues/active/30-production-collection-expansion/20261015_p2_cron-gate-projects-path.md"
-        },
-        {
-          "id": "ISS-20261015-GT-002",
-          "priority": "P2",
-          "status": "OPEN",
-          "path": "docs/issues/active/30-production-collection-expansion/20261015_p2_gt-legacy-label-year-defect.md"
         }
       ]
     },
@@ -353,11 +347,11 @@
     }
   ],
   "closed": {
-    "issue_count": 43,
+    "issue_count": 44,
     "status_counts": {
       "DOCUMENTED": 1,
       "MITIGATED": 1,
-      "RESOLVED": 41
+      "RESOLVED": 42
     },
     "issues": [
       {
@@ -605,6 +599,12 @@
         "priority": "P2",
         "status": "RESOLVED",
         "path": "docs/issues/closed/resolved/20261015_p2_daily-weekly-buckets.md"
+      },
+      {
+        "id": "ISS-20261015-GT-002",
+        "priority": "P2",
+        "status": "RESOLVED",
+        "path": "docs/issues/closed/resolved/20261015_p2_gt-legacy-label-year-defect.md"
       },
       {
         "id": "ISS-20261015-PRV-036",

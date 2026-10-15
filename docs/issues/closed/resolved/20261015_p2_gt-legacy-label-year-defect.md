@@ -1,8 +1,8 @@
 # Issue: 旧 GT run（phase-a 系）の系列ラベルに年誤りの疑い（`2026-12-28`）
 
-**ID:** ISS-20261015-GT-002  
-**優先度:** P2 (Medium)  
-**ステータス:** OPEN  
+**ID:** ISS-20261015-GT-002
+**優先度:** P2 (Medium)
+**ステータス:** RESOLVED (2026-10-15)
 **対象:** `datasets/cannabinoid-multi-trends/data/raw/google_trends/20261012T055259Z-google-trends-ja-rikiddo-phase-a-12m/`, `datasets/cannabinoid-multi-trends/data/raw/google_trends/20261012T060517Z-google-trends-ja-rikiddo-phase-a-repeat-12m/`（凍結 legacy。本 issue では変更しない）
 
 ## 概要
@@ -39,6 +39,26 @@ phase-a 系 2 run を `inconsistent` として報告した。原因は記録系�
 
 ## 完了条件
 
-- [ ] 該当 8 ファイルのラベル扱いの決定（補正 / 記録のみ）
-- [ ] 補正する場合、非破壊の下流変換と根拠の記録、監査スナップショットの再生成
-- [ ] 原因の切り分け（原本 `raw_text` との照合）
+- [x] 該当 8 ファイルのラベル扱いの決定（補正 / 記録のみ）
+- [x] 補正する場合、非破壊の下流変換と根拠の記録、監査スナップショットの再生成
+- [x] 原因の切り分け（原本 `raw_text` との照合）
+
+## 対応記録（2026-10-15）
+
+- 扱いは **downstream 補正** とした。raw JSON は凍結 legacy として編集しない。
+- `src/processing/gt_legacy_label_corrections.py` を追加し、該当 8 ファイルについて
+  `2026-12-28` を downstream では `2025-12-28` と読む補正 manifest を決定論的に生成する。
+- 生成物は `datasets/cannabinoid-multi-trends/data/interim/google_trends/20261015_gt_legacy_label_corrections.json`。
+  layer は `interim`、`raw_files_modified=false`、対象 raw ファイルの sha256 と `raw_text` 根拠を記録する。
+- 原本照合:
+  - `phase-a-repeat` の 4 records は各 `records_*.json` 内の `raw_text` が
+    `Dec 28, 2025 – Jan 3, 2026` を示す。
+  - `phase-a` の 4 records は per-term `raw_text` が無いため、同 run の
+    `comparison_ja1.json` 内 `raw_text` の同ラベルを日付根拠として使う。comparison の値は
+    比較表スケールなので単独系列値とは比較しない。
+- `correct_record()` はコピーを返し、対象点の日付だけを `2025-12-28` に変える。値・raw 入力は変更しない。
+- 検証:
+  - `.venv/bin/python -m pytest tests/processing/test_gt_legacy_label_corrections.py` → 4 passed
+  - `.venv/bin/python -m processing.cli gt-legacy-label-corrections --output /tmp/gt-corrections-check.json --format json` → exit 0
+
+**ステータス: RESOLVED（2026-10-15）**。

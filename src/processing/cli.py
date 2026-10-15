@@ -44,6 +44,7 @@ from processing.gt_statistics import (
     page_filename,
     replace_block,
 )
+from processing.gt_legacy_label_corrections import write_manifest as write_gt_legacy_label_corrections
 from processing.platform_trends import build_platform_trends
 from processing.reproduce import audit_processed_artifacts, reproduce_artifact
 from processing.rulespec import RuleSpecError, load_content_rules
@@ -353,6 +354,27 @@ def cmd_gt_summary(args) -> int:
     return EXIT_OK
 
 
+def cmd_gt_legacy_label_corrections(args) -> int:
+    try:
+        manifest = write_gt_legacy_label_corrections(
+            args.repo_root,
+            args.output,
+        )
+    except (OSError, ValueError) as error:
+        _err(f"gt legacy label corrections failed: {error.__class__.__name__}: {error}")
+        return EXIT_CONFIG if isinstance(error, ValueError) else EXIT_IO
+    if args.format == "json":
+        print(dump_json(manifest), end="")
+    else:
+        summary = manifest["summary"]
+        print(
+            "gt legacy label correction manifest written: "
+            f"{args.output} affected_file_count={summary['affected_file_count']} "
+            f"raw_files_modified={summary['raw_files_modified']}"
+        )
+    return EXIT_OK
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="python -m processing.cli")
     parser.add_argument("--repo-root", default=".")
@@ -418,6 +440,20 @@ def build_parser() -> argparse.ArgumentParser:
     gt_summary.add_argument("--output", default=None)
     gt_summary.add_argument("--format", choices=("text", "json"), default="text")
     gt_summary.set_defaults(func=cmd_gt_summary)
+
+    gt_corrections = sub.add_parser(
+        "gt-legacy-label-corrections",
+        help="write the interim manifest for frozen GT legacy label corrections",
+    )
+    gt_corrections.add_argument(
+        "--output",
+        default=(
+            "datasets/cannabinoid-multi-trends/data/interim/google_trends/"
+            "20261015_gt_legacy_label_corrections.json"
+        ),
+    )
+    gt_corrections.add_argument("--format", choices=("text", "json"), default="text")
+    gt_corrections.set_defaults(func=cmd_gt_legacy_label_corrections)
 
     return parser
 
