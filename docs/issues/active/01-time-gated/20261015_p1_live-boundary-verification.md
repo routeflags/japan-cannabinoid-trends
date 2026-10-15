@@ -1,8 +1,8 @@
-# Issue: ライブ収集による Google Trends の境界挙動検証が未実施（`exact=true` 昇格条件）
+# Issue: ライブ収集による Google Trends の境界挙動検証がパス 2 待ち（`exact=true` 昇格条件）
 
 **ID:** ISS-20261015-GT-001  
 **優先度:** P1 (High)  
-**ステータス:** PENDING (2026-10-15: ライブ計測はメンテナ承認待ち。オフライン計測基盤・手順・昇格規則は実装・文書化済み — `docs/specs/gt-boundary-verification.md`, `docs/reports/20261015b-gt-boundary-verification.md`)  
+**ステータス:** PENDING (2026-10-15: owner `go` によりライブ計測は承認済み。パス 1 は実行・採用済みで、パス 2 は 2026-10-22T04:28Z 以降の time gate 待ち。オフライン計測基盤・手順・昇格規則は実装・文書化済み — `docs/specs/gt-boundary-verification.md`, `docs/reports/20261015b-gt-boundary-verification.md`)  
 **対象:** `src/collection/adapters/google_trends/compiler.py`, `config/collectors.json`（`google-trends-mcp`）, `metadata/windows/`
 
 ## 概要
@@ -46,9 +46,9 @@ Google Trends の window compiler は、現時点で**すべての compile で `
 
 ### 未実施
 
-- 本 issue の行列（pass 1 = 4 call / pass 2 は参照時刻を **7 日以上**離す必要がある）はまだ実行していない。
-  pass 1 だけでは `eligible=true` にできない（spec §3 の昇格規則は 2 pass の一致を要求）。
-  実行するか、または pipeline 側の run で代用するかをメンテナに確認する。
+- 本 issue の行列は pass 1（4 call）まで実行済み。残りは、参照時刻を **7 日以上**離す必要がある
+  pass 2（4 call）のみ。pass 1 だけでは `eligible=true` にできない（spec §3 の昇格規則は
+  2 pass の一致を要求）。
 - **追記（2026-10-15、実施⑧）**: 同じ日に**研究データ用のライブ収集は 8 run 実施した**
   （`collect --live`、CBN / THC-O / H4CBH / HHBD / HHCH / CRDP / THCH / CRDH）。
   これでライブ経路（MCP stdio セッション）は end-to-end で実証されたが、
@@ -56,8 +56,7 @@ Google Trends の window compiler は、現時点で**すべての compile で `
   `environment.measurement.protocol` を持ち `evidence class = measurement` である必要があり
   （spec §2）、pipeline の run は `recorded_legacy` と同様に昇格には使えない。
   したがって本 issue は **PENDING のまま**で、残る作業は**行列（4 timeframe × 2 pass、
-  参照時刻を 7 日以上離す）**だけである。pass 1 を今実行するかどうかはメンテナ判断
-  （pass 2 は 7 日以上経ってからでないと実行できない）。
+  参照時刻を 7 日以上離す）のうち pass 2**だけである。
 
 ## 対応方針
 
@@ -95,8 +94,9 @@ Google Trends の window compiler は、現時点で**すべての compile で `
 
 ## 経過（2026-10-15）
 
-オフラインで可能な部分を実装・検証し、ライブ実行は未実施のため `PENDING` とした。
-完了条件の checkbox は意図的に未チェックのまま（実測 run はまだ存在しない）。
+オフラインで可能な部分を実装・検証した後、owner `go` によりライブ境界計測の pass 1 を実行・採用した。
+完了条件のうち pass 1 と昇格規則の文書化は充足済みだが、pass 2 が time-gated のため
+`PENDING` のままとする。
 
 - 実装: キャプチャ検証 / staging（`collection.adapters.google_trends.boundary`）、
   対応表と昇格規則の評価器（`validation.cli boundary-report`）、テスト 37 件。
@@ -108,5 +108,5 @@ Google Trends の window compiler は、現時点で**すべての compile で `
 - 副産物: `boundary-report` が旧 run のラベル年誤りを検出
   （ISS-20261015-GT-002）。
 
-完了条件の充足には、承認後のライブ計測（4 timeframe × 2 UTC 日 = 8 run）と
-`boundary-report` の `eligible=true`、および証拠を伴う昇格変更が必要。
+完了条件の充足には、パス 2（2026-10-22T04:28Z 以降の 4 run）と `boundary-report` の
+`eligible=true`、および証拠を伴う昇格変更が必要。

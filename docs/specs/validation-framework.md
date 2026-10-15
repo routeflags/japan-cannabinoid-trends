@@ -581,7 +581,8 @@ granularity / week_start の完全一致を要求（不一致・未登録は exi
 - `validation/windows.py`: 半開区間の UTC 変換（c.md §7 の期待値一致）、相対時間
   語彙（`today 1-m/3-m/12-m/5-y`）の名目解決（基準時刻必須）、月末/闰年クランプ、
   DST 対応のカレンダー演算、許容差 7 日（週次バケット 1 個）の一致判定、
-  月次バケット生成、`CompiledWindow` 契約と compiler shape check。
+  日次・週次（`week_start: sunday/monday`）・月次バケット生成、`CompiledWindow`
+  契約と compiler shape check。
 - `collection/adapters/google_trends/compiler.py`: 絶対 window → timeframe 変換の
   実行前検証。拒否理由コード（`no_registered_timeframe_matches` 等）は安定 API。
   platform 名は adapters のみ（P1）。
@@ -593,7 +594,10 @@ granularity / week_start の完全一致を要求（不一致・未登録は exi
   に記録（requested / observed の分離 = P5）。
 - `validation/coverage.py` + `coverage-run`: §9.3 形式の manifest。requested /
   collector（名目解決）/ observed（ラベル）/ verified（空のまま）を区別し、
-  欠測・観測ゼロ・取得失敗を区別する（P7）。実例: `common-scale-missing` →
+  欠測・観測ゼロ・取得失敗を区別する（P7）。宣言 granularity（day/week/month）
+  の期待バケット `expected_intervals` と欠測 `missing_expected_intervals` を
+  加算記録する（欠測は missing/unknown 証拠であり `observed_zero` 化しない）。
+  実例: `common-scale-missing` →
   `partial`（terms は observed_nonzero、0 点は below_threshold 候補）、
   `nodata` → `missing`（terms は `below_threshold`。`observed_zero` は**使わない**）。
 - temporal comparability（§12）: T1-T5/T8 は既存。coverage manifest を渡した場合の
@@ -612,7 +616,6 @@ granularity / week_start の完全一致を要求（不一致・未登録は exi
   （ISS-20261015-GT-001 PENDING）。
 - 他ソース（X / YouTube / TikTok / Instagram / LinkedIn）の Window Compiler と
   `dateFilter=month` 等のローリング語彙の検証。
-- §10 の日次/週次のバケット集計（月次バケット生成のみ実装。分析側の集計は未接続）。
 - coverage manifest の run ディレクトリへの永続化（現状は `coverage-run` のオンデマンド評価）。
 - T6 の sampling / normalization 条件（comparison set 等）の完全モデル化（G7）。
 
@@ -1196,7 +1199,7 @@ staged → `adopt` を案内する。パスは字句的に正規化するため 
 | `20261012_p1_cbd-coverage-matrix-overstates-completeness` | `research/strategy/20261008-compound-research-matrix.md` L54「CBD 9/9 100% 🟢A 全ソース完備」 | X の期間指定 run は実測 2026-10 に集中（`cbd-1year` 0 件）、YouTube 2025 欠落、COA raw 不在、GT 5年は summary のみ |
 | `20261012_p1_cbd-research-page-count-period-mismatch` | `publication/research_cbd.html` が X 期間を「2026-10-01（1日間）」と「2026-07-01〜2026-10-01」の両方で記載 | 投稿 timestamp は短期間に集中 |
 | `20261012_p1_cbd-x-period-provenance` | run 名が 1年 / 1ヶ月 / 期間指定を示す | metadata に query・観測期間が無い run があり、長期系列として検証できない |
-| `20261012_p1_cbd-youtube-10year-incomplete` | 年別 83 ファイル・総件数 3,831 件 | 2025 が無く、run metadata と統合 `records.json` も未確認、quota error 記録あり |
+| `20261012_p1_cbd-youtube-10year-incomplete` | 旧10年系列は証拠・公開対象外 | 採用済み Apify CBD 2 runs を別系列として扱う（宣言ファイルを正とする） |
 | `20261012_p1_cbd-coa-source-mismatch` | 公開ページが参照する COA | raw ディレクトリに該当なし |
 
 **選択肢（研究判断を含むため本作業では決めない）:**
@@ -1206,8 +1209,10 @@ staged → `adopt` を案内する。パスは字句的に正規化するため 
 - **(ii) 制約を併記して評価は残す**（推奨）: 評価が「プラットフォームの有無」を指すことを
   明示し、期間系列・来歴・再現性の制約を併記する。結論は変えず、AGENTS.md の
   「観測・派生・解釈を分ける」に沿う最小の修復。
-- **(iii) 再収集して埋める**: X の期間指定・YouTube 2025・COA を再収集し、実際に充足させる。
+- **(iii) 再収集して埋める**: X の期間指定・COA を再収集し、実際に充足させる。
   ライブ収集の承認が必要（§22.4 の adapter も前提）。
+
+> **2026-10-16 追記:** `20261012_p1_cbd-youtube-10year-incomplete`（CBD-003）は除外方針で RESOLVED。旧10年系列は上記 (ii) の併記対象・(iii) の再収集対象としない。採用済み YouTube 証拠は宣言ファイルの別系列 runs を正とする。
 
 ---
 

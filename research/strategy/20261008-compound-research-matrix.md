@@ -19,7 +19,7 @@
 
 | 成分 | 分類 | GT 12ヶ月 | GT 5年 | GT 共通Scale | X | YouTube | COA | 規制レポート | 調査ページ | SKOS分類 |
 |------|:----:|:---------:|:------:|:------------:|:-:|:-------:|:---:|:------------:|:----------:|:--------:|
-| **CBD** | 主要 | ✅ | ✅ | ✅ setC | ⚠️ 100件（単日） | ⚠️ 10年系列（2025欠） | ✅ | ✅ | ✅ | ✅ |
+| **CBD** | 主要 | ✅ | ✅ | ✅ setC | ⚠️ 100件（単日） | ⚠️ 別系列（採用済み Apify CBD 2 runs）／旧10年系列は対象外 | ✅ | ✅ | ✅ | ✅ |
 | **THC** | 主要 | ✅ | ✅ | ✅ setA | ✅ 100件 | ✅ 10年11件 | ❌ | ✅ | ✅ | ✅ |
 | **CBG** | 微量 | ✅ | ✅ | ✅ setC | ✅ 100件 | ✅ 10年11件 | ✅ | ✅ | ✅ | ✅ |
 | **CBN** | 微量 | ✅ | ✅ | ✅ setB/C | ✅ 89+200件 | ✅ 10年10件 | ✅ | ✅ | ✅ | ✅ |
@@ -44,7 +44,7 @@
 
 | 成分 | X: 種別 | X: 観測期間 | X: 欠測 | YouTube: 種別 | YouTube: 期間系列 | YouTube: 欠測 |
 |------|---------|------------|---------|--------------|------------------|--------------|
-| **CBD** | 単日スナップショット（100件） | 2026-10-01 のみ（08:52–20:14 UTC） | 2026-10-01 以外の期間系列なし。期間指定 run（1年/1ヶ月）は名前に反し 10-01 に集中、1年 run は 0 件（`unknown`、`observed_zero` ではない） | snapshot（28件）＋ dated（24・30件）＋ 10年系列 | 2016–2024 の年別結果（計 3,831 検索結果件数） | **2025 欠落**（quota エラー）。run metadata なし、統合 `records.json` なし |
+| **CBD** | 単日スナップショット（100件） | 2026-10-01 のみ（08:52–20:14 UTC） | 2026-10-01 以外の期間系列なし。期間指定 run（1年/1ヶ月）は名前に反し 10-01 に集中、1年 run は 0 件（`unknown`、`observed_zero` ではない） | snapshot（28件）＋ dated（24・30件）＋別系列（採用済み Apify CBD 2 runs） | 旧10年系列は証拠・公開対象外のため期間系列に含めない | 旧10年系列は対象外。採用済み別系列の観測期間は宣言ファイルを正とする |
 | 他13成分 | 未検証 | — | — | 未検証 | — | — |
 
 実測の出所: `docs/reports/20261015d-cbd-page-provenance-reconciliation.md`
@@ -72,7 +72,7 @@
 
 | 成分 | データ有無 (9) | **カバレッジ** | レベル | 備考 |
 |------|:-----------------:|:-------------:|:------:|------|
-| **CBD** | 9/9 | **100%** | 🟢 A | データ有無は全ソース。X は単日スナップショット、YouTube 10年系列は 2025 欠落（表1a、`ISS-20261012-CBD-001`） |
+| **CBD** | 9/9 | **100%** | 🟢 A | データ有無は全ソース。X は単日スナップショット、YouTube 旧10年系列は対象外（表1a、`ISS-20261012-CBD-001`） |
 | **CBG** | 9/9 | **100%** | 🟢 A | データ有無は全ソース |
 | **CBN** | 9/9 | **100%** | 🟢 A | データ有無は全ソース |
 | **CBX** | 9/9 | **100%** | 🟢 A | データ有無は全ソース（GT除外） |
@@ -132,13 +132,12 @@
 | **GT 5年** | CBD, THC, CBG, CBN, THCV, THCH, HHC, THC-O, H4CBH, HHBD, HHCH, CRDP | — | CRDH, CBX |
 | **GT 共通Scale** | CBD(setC), THC(setA), CBG(setC), CBN(setB/C), THCV(setA/B), HHC(setA), THC-O(setB), H4CBH(setD), HHBD(setD), HHCH(setB), CRDP(setB/D) | — | THCH, CRDH, CBX |
 | **X** | CBD(100・単日), THC(100), CBG(100), THCV(40), THCH(36), HHC(40), THC-O(40), H4CBH(200), HHBD(200), CRDH(6), CBX(2827) | CBN(89/100) | HHCH, CRDP |
-| **YouTube** | CBD(snapshot 28, dated 24/30, 10年系列 3,831件/2025欠), THC(11+60), CBG(11+60), CBN(10+60), HHC, THCV, CBX(60+12ヶ月) | — | THCH, THC-O, H4CBH, HHBD, HHCH, CRDP, CRDH |
+| **YouTube** | CBD(snapshot 28, dated 24/30, 別系列 Apify CBD 2 runs／旧10年系列は対象外), THC(11+60), CBG(11+60), CBN(10+60), HHC, THCV, CBX(60+12ヶ月) | — | THCH, THC-O, H4CBH, HHBD, HHCH, CRDP, CRDH |
 | **COA** | CBD, CBG, CBN, H4CBH, HHBD, HHCH, THC-O, CRDP, CBX(2件) | — | THC, THCV, THCH, HHC, CRDH |
 | **規制レポート** | CBD, CBG, CBN, THCV, THCH, HHC, THC-O, H4CBH, HHBD, HHCH, CRDP, CRDH | — | THC, CBX |
 | **調査ページ** | CBD, THC, CBG, CBN, THCV, THCH, HHC, THC-O, H4CBH, HHBD, HHCH, CRDP | — | CRDH, CBX |
 
-> **2026-10-15 改訂**: 表1・表6 の「83件」は年別 **ファイル数**（`records_*.json` 83 件）であり、件数ではない。
-> 10年 run の検索結果件数は 3,831（`collection_log.txt` の合計）、そのうち 2025 は quota エラーで 0 件。
+> **2026-10-16 改訂**: CBD の YouTube 旧10年系列は証拠・公開対象外とした（`ISS-20261012-CBD-003` RESOLVED）。採用済み YouTube 証拠は `metadata/provenance/declarations/20261015-youtube-csv-adoption.json` の別系列 runs を正とする。旧系列の件数・ログ・error payload は根拠に使わない。
 > CBD 以外の YouTube 件数は本改訂では再検証していない（表1a の未検証欄）。
 
 ---

@@ -33,7 +33,7 @@ Read-only: nothing in this module writes any file.
 from __future__ import annotations
 
 import json
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 from validation.integrity import sha256_file
@@ -42,6 +42,7 @@ from validation.windows import (
     WINDOW_MATCH_TOLERANCE,
     parse_datetime,
     resolve_relative_timeframe,
+    time_buckets,
 )
 
 __all__ = [
@@ -159,6 +160,10 @@ def _touch_term(terms: dict, name: str, source: str) -> None:
             "max_label": None,
             "sources": [],
             "gaps": [],
+            # Raw bucket labels with an observed value, kept for expected-
+            # bucket matching (ISS-20261015-WIN-003).  Internal only:
+            # ``_public_states`` strips them like ``gaps``.
+            "labels": [],
         },
     )
     if source not in term["sources"]:
@@ -178,6 +183,7 @@ def _accumulate_term(terms: dict, name: str, data: list, key: str, source: str) 
             continue
         term["points"] += 1
         labels.append(label)
+        term["labels"].append(label)
         if isinstance(value, (int, float)) and value == 0:
             term["zeros"] += 1
         elif value != 0:
@@ -255,7 +261,7 @@ def _max_label_gap(states: dict) -> int:
 def _public_states(states: dict) -> dict:
     public = {}
     for name, entry in states.items():
-        item = {key: value for key, value in entry.items() if key != "gaps"}
+        item = {key: value for key, value in entry.items() if key not in ("gaps", "labels")}
         public[name] = item
     return public
 
@@ -303,6 +309,75 @@ def _collector_coverage(provenance: dict) -> dict | None:
     }
 
 
+#: Granularities with a deterministic calendar bucket rule
+#: (ISS-20261015-WIN-003).  ``hour`` is registered but has no bucket rule;
+#: runs at that granularity report no expected intervals rather than a guess.
+_BUCKET_GRANULARITIES = ("day", "week", "month")
+
+
+def _expected_bucket_intervals(provenance: dict) -> tuple[str | None, list[dict]]:
+    """Expected bucket intervals for the run's declared granularity.
+
+    Returns ``(granularity, buckets)``; ``(None, [])`` when the run carries
+    no exact window evidence or a granularity without a bucket rule.  Raises
+    :class:`ValueError` when an exact window *is* declared but cannot be
+    bucketed (unparseable bounds, reversed window, unknown timezone,
+    unsupported ``week_start``) — the caller records that as undetermined
+    evidence, never as zero observations.
+    """
+    granularity = provenance.get("granularity")
+    if granularity not in _BUCKET_GRANULARITIES:
+        return None, []
+    start_raw = provenance.get("requested_start")
+    end_raw = provenance.get("requested_end_exclusive")
+    if not isinstance(start_raw, str) or not isinstance(end_raw, str):
+        return None, []
+    timezone_name = provenance.get("timezone") or "UTC"
+    week_start = provenance.get("week_start") or "sunday"
+    start = parse_datetime(start_raw)
+    end = parse_datetime(end_raw)
+    return granularity, list(time_buckets(start, end, granularity, timezone_name, week_start))
+
+
+def _label_instant(label: str) -> datetime | None:
+    """One observed bucket label as an aware datetime, or ``None``.
+
+    Date-only labels (the recorded Google Trends shape, e.g.
+    ``"2026-10-04"``) are calendar dates read as UTC midnight; aware
+    datetimes are used as-is.  Unparseable labels are skipped, never
+    guessed at.
+    """
+    if not isinstance(label, str) or not label:
+        return None
+    try:
+        moment = datetime.fromisoformat(label)
+    except ValueError:
+        return None
+    if moment.tzinfo is None:
+        return moment.replace(tzinfo=timezone.utc)
+    return moment
+
+
+def _missing_expected_intervals(expected: list[dict], labels: list[str]) -> list[dict]:
+    """Expected buckets no observed label falls into (half-open match).
+
+    A missing bucket is missing/unknown evidence only.  It is never
+    converted into an ``observed_zero``: only source data explicitly
+    observing zero could do that, and bucket labels never do.
+    """
+    instants = [moment for moment in (_label_instant(label) for label in labels) if moment is not None]
+    missing = []
+    for bucket in expected:
+        try:
+            bucket_start = parse_datetime(bucket["start"])
+            bucket_end = parse_datetime(bucket["end_exclusive"])
+        except (KeyError, ValueError, TypeError, AttributeError):
+            continue
+        if not any(bucket_start <= moment < bucket_end for moment in instants):
+            missing.append(bucket)
+    return missing
+
+
 def _covers(requested: dict, observed: dict) -> bool:
     if not observed.get("end_exclusive"):
         return False
@@ -348,6 +423,13 @@ def evaluate_coverage(target) -> dict:
             "verified_intervals": [],
             "missing_intervals": [],
             "unknown_intervals": [],
+            # Deterministic expected buckets for the declared granularity
+            # (ISS-20261015-WIN-003).  Additive: the status state machine and
+            # the requested/verified/missing/unknown interval fields above
+            # are unchanged.
+            "expected_granularity": None,
+            "expected_intervals": [],
+            "missing_expected_intervals": [],
             "states": {},
             "reasons": [],
             "evidence": [],
@@ -435,6 +517,22 @@ def evaluate_coverage(target) -> dict:
     coverage["observed"] = observed
     coverage["collector"] = _collector_coverage(provenance)
     coverage["states"] = _public_states(states)
+
+    if requested is not None:
+        try:
+            granularity_used, expected = _expected_bucket_intervals(provenance)
+        except ValueError:
+            granularity_used, expected = None, []
+            reasons.append("expected_buckets_undetermined")
+        coverage["expected_granularity"] = granularity_used
+        coverage["expected_intervals"] = expected
+        if expected:
+            labels: list[str] = []
+            for term in scan["terms"].values():
+                labels.extend(term.get("labels") or ())
+            coverage["missing_expected_intervals"] = _missing_expected_intervals(
+                expected, labels
+            )
 
     reasons = list(coverage["reasons"])
     if any(entry["zero_count"] > 0 for entry in states.values()):

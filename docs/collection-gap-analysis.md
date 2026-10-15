@@ -83,7 +83,7 @@ G1〜G5 は取得設計の問題、G6〜G7 は保存・公開設計の問題で�
 
 | 成分 | snapshot系 | dated系 | 10年系列 | DB統合 |
 |---|---|---|---|---|
-| CBD | ● 22件 | ● 24・30件 | ● 3,831件（2025欠落） | ● 21run・1,319件 |
+| CBD | ● 22件 | ● 24・30件 | 対象外（旧10年系列は証拠・公開対象から除外） | ● 21run・1,319件 |
 | THC | ● 25件 | ● 21件 | △ 2023年のみ50件 | × |
 | CBG | ● 34件 | ● 21件 | △ 2017年のみ50件 | × |
 | CBN | ● 24件＋50件 | ● 22件 | × 0件 | ● 468件1run |
@@ -105,7 +105,7 @@ G1〜G5 は取得設計の問題、G6〜G7 は保存・公開設計の問題で�
 | X snapshot | `records.json` | — | — | `posts`（一部） | △ 形式2種 |
 | X pre/post | `{compound}_{pre,post}.json`＋対照 | — | — | — | △ 専用形式 |
 | YT snapshot | `records.json`＋`records_raw.json` | — | — | `videos` | △ 2層＋DB |
-| YT 10年 | — | — | 年別ページ83件 | — | ⚠️ 未統合・metadataなし |
+| YT 10年 | — | — | 対象外（旧10年系列は除外） | — | 証拠・公開対象外 |
 
 ### 表2-3. 来歴記録マトリックス（run_metadata充実度）
 
@@ -116,7 +116,7 @@ G1〜G5 は取得設計の問題、G6〜G7 は保存・公開設計の問題で�
 | X旧run | actor/query/section/max_pages | なし | △ 最低限 |
 | X新Actor run | 同上＋lang/search_type/cookies有無 | —（DB行のみ） | △ ファイル記録なし |
 | YT旧run | actor/search_term/max_videos | なし | △ 最低限 |
-| YT 10年run | **metadata自体なし** | なし | ❌ 要補完 |
+| YT 10年run | 対象外 | — | 証拠・公開対象外（補完しない） |
 
 必須9項目＝run_id・study_id・source・収集手段・collection_timestamp・queries・件数・purpose相当・エラー記録。
 
@@ -141,7 +141,7 @@ G1〜G5 は取得設計の問題、G6〜G7 は保存・公開設計の問題で�
 | records_raw.json | フィルタ前の生レスポンス（YT snapshot系のみ） | `records.json` はここからの抽出・整形版 |
 | summary（要約） | 集計値のみのファイル。時系列rawを含まない | GT英語5yの `{compound}_5y_summary.json`。再検証不可 |
 | comparison_*.json | 複数語の同一スケール比較結果 | 値はセット内相対（最大語=100）。セット間比較不可 |
-| collection_log.txt | 年別・ページ別の取得ログ（YT 10年系） | metadataの代替にはならない |
+| 旧10年系列の取得ログ | 対象外の系列の記録（証拠・公開対象外のため来歴記録に使わない） | metadataの代替にしない |
 
 ### 3.3 期間窓
 
@@ -205,13 +205,13 @@ G1〜G5 は取得設計の問題、G6〜G7 は保存・公開設計の問題で�
 | GT英語名 | ⚠️ 条件付き可 | 同一12m窓・同一形式。ただしセット間比較はアンカー換算が必要で、旧セットにアンカーなし |
 | GT日本語 | ✅ 可（新規13語） | 同一12m窓・同一形式・アンカー付きJA-1〜JA-4。no-data 4語は比較対象外として明示 |
 | X | ⚠️ 条件付き可 | snapshot系は同一形式だが期間が単日中心。規制前後系は設計が異なるため別枠比較 |
-| YouTube | ⚠️ 条件付き可 | snapshot＋datedは同一形式。10年系列はCBDのみ部分的。他成分の年次比較は不可 |
+| YouTube | ⚠️ 条件付き可 | snapshot＋datedは同一形式。旧10年系列は証拠・公開対象外。他成分の年次比較は不可 |
 
 ### 4.2 メディア間比較（同一成分のメディア差）
 
 | 成分群 | 判定 | 根拠 |
 |---|---|---|
-| CBD | ✅ 可 | GT日英両系・X snapshot・YT snapshot＋dated＋10年（一部）・DB統合あり |
+| CBD | ✅ 可 | GT日英両系・X snapshot・YT snapshot＋dated・DB統合あり（旧10年系列は対象外） |
 | 主要4成分（THC/CBG/CBN/HHC） | ⚠️ 条件付き可 | GT日英・X snapshot・YT snapshot＋datedあり。X時系列・YT年次系列なし |
 | 新興5成分 | ⚠️ 条件付き可 | GT（英語summary＋日本語12m）・X snapshot・YT snapshot＋dated＋DB一部あり。時系列は2022年以降のみ |
 | THCV/THC-O | ❌ 不可に近い | GT閾値以下・X snapshotのみ・YT snapshotのみ。量的に比較不能 |
@@ -235,7 +235,7 @@ G1〜G5 は取得設計の問題、G6〜G7 は保存・公開設計の問題で�
 | 1 | 日本語13語＋JA-1〜JA-4＋5y主要5語の取得 | G2（クエリー不統一） | ✅ 完了（2026-10-12） |
 | 2 | run_metadata 9項目＋anchor/zero_statusの標準化 | G5（来歴濃淡） | ✅ 新規runで適用済み。旧runは未遡及 |
 | 3 | 用語定義の固定（本資料§3） | 混乱防止 | ✅ 本資料で実施 |
-| 4 | YT 10年runのmetadata補完・統合records作成 | G4・G5 | 未着手 |
+| 4 | 旧10年系列の証拠・公開対象からの除外を維持 | G4・G5 | 対象外（補完・統合は行わない） |
 | 5 | 英語5yのrawタイムライン再取得 | G4 | 未着手（CBD日本語5yで代替済み1件） |
 | 6 | no-data 4語の再取得（below_threshold確定） | 表2-1の× | 未着手 |
 | 7 | 旧runの来歴遡及（不明値はunknown明示） | G5 | 未着手 |

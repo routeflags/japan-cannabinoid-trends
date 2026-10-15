@@ -2,7 +2,7 @@
 
 **ID:** ISS-20261015-GT-004  
 **優先度:** P1 (High)  
-**ステータス:** PENDING (2026-10-15: パス 1 を実行済み。パス 2 は参照時刻の隔たりが必要で、最速 2026-10-22 以降)  
+**ステータス:** PENDING (2026-10-15: owner `go` によりライブ計測は承認済み。パス 1 を実行済み。パス 2 は参照時刻の隔たりが必要で、最速 2026-10-22T04:28Z 以降)  
 **対象:** `docs/specs/gt-boundary-verification.md` §3/§4、`collection.adapters.google_trends.boundary`、
 `ISS-20261015-GT-001`（PENDING）、`docs/reports/20261015b-gt-boundary-verification.md` §15
 
@@ -58,5 +58,5 @@ manifest は実行中の入力で、証拠の正本は採用済み run）:
 ## 依存
 
 - `ISS-20261015-GT-001`（親 issue。本件はパス 2 の実行記録）。
-- 実行は承認後に限る（spec §4.1）。本件はパス 1 と同じ承認の継続とみなすかどうかを
-  メンテナが確認する。
+- owner `go` によりライブ計測は承認済み。パス 2 は承認待ちではなく、
+  2026-10-22T04:28Z 以降でなければ昇格証拠にならない time gate 待ち。

@@ -21,6 +21,7 @@ from validation.windows import (
     WINDOW_MATCH_TOLERANCE,
     check_plan_window_registry,
     check_window_registry_files,
+    day_buckets,
     find_window,
     load_window_documents,
     local_window_to_utc,
@@ -28,6 +29,8 @@ from validation.windows import (
     parse_datetime,
     resolve_relative_timeframe,
     subtract_calendar_months,
+    time_buckets,
+    week_buckets,
     within_window_tolerance,
 )
 
@@ -164,6 +167,172 @@ def test_month_buckets_never_pad_or_zero_fill():
         list(month_buckets(datetime(2026, 3, 1, tzinfo=UTC), datetime(2026, 1, 1, tzinfo=UTC)))
     with pytest.raises(ValueError):
         list(month_buckets(datetime(2026, 1, 1), datetime(2026, 3, 1)))
+
+
+# ---------------------------------------------------------------------------
+# ISS-20261015-WIN-003: day buckets (deterministic, half-open, partial kept)
+# ---------------------------------------------------------------------------
+
+
+def test_day_buckets_keep_partial_first_and_last_buckets():
+    """PM plan AC1: 2026-10-01T12:00Z -> 2026-10-04T03:00Z (UTC)."""
+    buckets = list(
+        day_buckets(
+            datetime(2026, 10, 1, 12, 0, tzinfo=UTC),
+            datetime(2026, 10, 4, 3, 0, tzinfo=UTC),
+            "UTC",
+        )
+    )
+    assert buckets == [
+        {"start": "2026-10-01T12:00:00Z", "end_exclusive": "2026-10-02T00:00:00Z"},
+        {"start": "2026-10-02T00:00:00Z", "end_exclusive": "2026-10-03T00:00:00Z"},
+        {"start": "2026-10-03T00:00:00Z", "end_exclusive": "2026-10-04T00:00:00Z"},
+        {"start": "2026-10-04T00:00:00Z", "end_exclusive": "2026-10-04T03:00:00Z"},
+    ]
+
+
+def test_day_buckets_break_on_local_midnight_in_asia_tokyo():
+    """Same window as above evaluated on Asia/Tokyo: local midnights are
+    15:00Z of the previous day."""
+    buckets = list(
+        day_buckets(
+            datetime(2026, 10, 1, 12, 0, tzinfo=UTC),
+            datetime(2026, 10, 4, 3, 0, tzinfo=UTC),
+            "Asia/Tokyo",
+        )
+    )
+    assert buckets == [
+        {"start": "2026-10-01T12:00:00Z", "end_exclusive": "2026-10-01T15:00:00Z"},
+        {"start": "2026-10-01T15:00:00Z", "end_exclusive": "2026-10-02T15:00:00Z"},
+        {"start": "2026-10-02T15:00:00Z", "end_exclusive": "2026-10-03T15:00:00Z"},
+        {"start": "2026-10-03T15:00:00Z", "end_exclusive": "2026-10-04T03:00:00Z"},
+    ]
+
+
+def test_day_buckets_span_a_dst_transition_on_wall_clock():
+    """America/New_York ends DST on 2026-11-01: the Nov 1 bucket is 25 hours
+    long on the wall clock, never shifted."""
+    buckets = list(
+        day_buckets(
+            datetime(2026, 10, 31, 4, 0, tzinfo=UTC),  # Oct 31 00:00 EDT
+            datetime(2026, 11, 2, 5, 0, tzinfo=UTC),  # Nov 2 00:00 EST
+            "America/New_York",
+        )
+    )
+    assert buckets == [
+        {"start": "2026-10-31T04:00:00Z", "end_exclusive": "2026-11-01T04:00:00Z"},
+        {"start": "2026-11-01T04:00:00Z", "end_exclusive": "2026-11-02T05:00:00Z"},
+    ]
+
+
+def test_day_buckets_fail_closed():
+    with pytest.raises(ValueError):
+        list(day_buckets(datetime(2026, 10, 2), datetime(2026, 10, 3)))
+    with pytest.raises(ValueError):
+        list(day_buckets(datetime(2026, 10, 3, tzinfo=UTC), datetime(2026, 10, 2, tzinfo=UTC)))
+    with pytest.raises(ValueError):
+        list(
+            day_buckets(
+                datetime(2026, 10, 1, tzinfo=UTC),
+                datetime(2026, 10, 2, tzinfo=UTC),
+                "Not/AZone",
+            )
+        )
+
+
+# ---------------------------------------------------------------------------
+# ISS-20261015-WIN-003: week buckets honor week_start on the named calendar
+# ---------------------------------------------------------------------------
+
+
+def test_week_buckets_sunday_start_in_asia_tokyo():
+    """2026-10-01 (Thu) -> 2026-10-15 (Thu) 00:00Z; Sundays Oct 4 / Oct 11
+    JST are the boundaries (Oct 4 00:00 JST = Oct 3 15:00Z)."""
+    buckets = list(
+        week_buckets(
+            datetime(2026, 10, 1, tzinfo=UTC),
+            datetime(2026, 10, 15, tzinfo=UTC),
+            "Asia/Tokyo",
+            "sunday",
+        )
+    )
+    assert buckets == [
+        {"start": "2026-10-01T00:00:00Z", "end_exclusive": "2026-10-03T15:00:00Z"},
+        {"start": "2026-10-03T15:00:00Z", "end_exclusive": "2026-10-10T15:00:00Z"},
+        {"start": "2026-10-10T15:00:00Z", "end_exclusive": "2026-10-15T00:00:00Z"},
+    ]
+
+
+def test_week_buckets_monday_start_in_asia_tokyo():
+    """Same window with Monday start: boundaries are Oct 5 / Oct 12 JST."""
+    buckets = list(
+        week_buckets(
+            datetime(2026, 10, 1, tzinfo=UTC),
+            datetime(2026, 10, 15, tzinfo=UTC),
+            "Asia/Tokyo",
+            "monday",
+        )
+    )
+    assert buckets == [
+        {"start": "2026-10-01T00:00:00Z", "end_exclusive": "2026-10-04T15:00:00Z"},
+        {"start": "2026-10-04T15:00:00Z", "end_exclusive": "2026-10-11T15:00:00Z"},
+        {"start": "2026-10-11T15:00:00Z", "end_exclusive": "2026-10-15T00:00:00Z"},
+    ]
+
+
+def test_week_buckets_starting_exactly_on_a_boundary():
+    """A window starting at a Sunday midnight (UTC) yields whole weeks."""
+    buckets = list(
+        week_buckets(
+            datetime(2026, 10, 4, tzinfo=UTC),  # a Sunday
+            datetime(2026, 10, 18, tzinfo=UTC),
+            "UTC",
+            "sunday",
+        )
+    )
+    assert buckets == [
+        {"start": "2026-10-04T00:00:00Z", "end_exclusive": "2026-10-11T00:00:00Z"},
+        {"start": "2026-10-11T00:00:00Z", "end_exclusive": "2026-10-18T00:00:00Z"},
+    ]
+
+
+def test_week_buckets_fail_closed():
+    start = datetime(2026, 10, 1, tzinfo=UTC)
+    end = datetime(2026, 10, 8, tzinfo=UTC)
+    with pytest.raises(ValueError):
+        list(week_buckets(datetime(2026, 10, 1), end, "UTC", "sunday"))
+    with pytest.raises(ValueError):
+        list(week_buckets(end, start, "UTC", "sunday"))
+    with pytest.raises(ValueError):
+        list(week_buckets(start, end, "Not/AZone", "sunday"))
+    for bad in ("friday", "", None, 0):
+        with pytest.raises(ValueError):
+            list(week_buckets(start, end, "UTC", bad))
+
+
+# ---------------------------------------------------------------------------
+# ISS-20261015-WIN-003: shared dispatcher
+# ---------------------------------------------------------------------------
+
+
+def test_time_buckets_dispatches_day_week_month():
+    start = datetime(2026, 10, 1, 12, 0, tzinfo=UTC)
+    end = datetime(2026, 10, 4, 3, 0, tzinfo=UTC)
+    assert list(time_buckets(start, end, "day", "UTC")) == list(
+        day_buckets(start, end, "UTC")
+    )
+    assert list(time_buckets(start, end, "month", "UTC")) == list(
+        month_buckets(start, end, "UTC")
+    )
+    week_start = datetime(2026, 10, 1, tzinfo=UTC)
+    week_end = datetime(2026, 10, 15, tzinfo=UTC)
+    assert list(time_buckets(week_start, week_end, "week", "UTC", "monday")) == list(
+        week_buckets(week_start, week_end, "UTC", "monday")
+    )
+    with pytest.raises(ValueError):
+        list(time_buckets(start, end, "hour", "UTC"))
+    with pytest.raises(ValueError):
+        list(time_buckets(start, end, "year", "UTC"))
 
 
 # ---------------------------------------------------------------------------

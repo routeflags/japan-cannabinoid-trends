@@ -21,7 +21,9 @@ compilers (which live under ``src/collection/adapters/<source>/``):
   (``today 1-m`` / ``3-m`` / ``12-m`` / ``5-y``) at a required reference time
   (P1/P6, c.md §6.3);
 - bounded window matching (one weekly-bucket tolerance, documented below);
-- month bucket generation (c.md §10, minimal adaptation);
+- calendar bucket generation (c.md §10, minimal adaptation): month buckets
+  plus day / week buckets sharing the same half-open, timezone-aware
+  contract (ISS-20261015-WIN-003);
 - the :class:`CompiledWindow` output type + compiler shape check (c.md §6.1);
 - plan window vs window-registry consistency (fail closed when the registry
   is present and the plan claims a registered ``window_id``).
@@ -58,8 +60,11 @@ __all__ = [
     "find_window",
     "format_datetime",
     "load_window_documents",
+    "day_buckets",
     "local_window_to_utc",
     "month_buckets",
+    "time_buckets",
+    "week_buckets",
     "parse_datetime",
     "resolve_relative_timeframe",
     "subtract_calendar_months",
@@ -209,6 +214,120 @@ def within_window_tolerance(
 # ---------------------------------------------------------------------------
 # bucket generation (c.md §10, minimal adaptation)
 # ---------------------------------------------------------------------------
+
+
+def day_buckets(start: datetime, end: datetime, timezone_name: str = "UTC"):
+    """Yield half-open calendar-day buckets on the named calendar.
+
+    Same contract as :func:`month_buckets`: the first bucket starts at
+    ``start`` itself (partial days are kept, never padded or zero-filled),
+    buckets break at local midnight, and the last bucket is clamped to
+    ``end``.  Both inputs must be timezone-aware; the result uses UTC
+    instants.  Local midnights are wall-clock midnights on ``timezone_name``
+    (so a DST transition yields a 23/25-hour bucket, never a shifted wall
+    clock), converted back to UTC with the same ``ZoneInfo`` behavior as
+    :func:`month_buckets`.
+    """
+    if start.tzinfo is None or end.tzinfo is None:
+        raise ValueError("day_buckets requires timezone-aware datetimes")
+    if start >= end:
+        raise ValueError("invalid temporal window: start must be earlier than end")
+    tz = _known_timezone(timezone_name)
+    current = start.astimezone(tz)
+    end_local = end.astimezone(tz)
+    while current < end_local:
+        following = current.date() + timedelta(days=1)
+        boundary = datetime(following.year, following.month, following.day, tzinfo=tz)
+        bucket_end = min(boundary, end_local)
+        if bucket_end <= current:  # pragma: no cover - guarded by loop condition
+            break
+        yield {
+            "start": format_datetime(current),
+            "end_exclusive": format_datetime(bucket_end),
+        }
+        current = bucket_end
+
+
+#: ``week_start`` values accepted by :func:`week_buckets` mapped to
+#: :meth:`datetime.date.weekday` numbers (Monday=0 .. Sunday=6).
+_WEEK_START_WEEKDAYS = {"sunday": 6, "monday": 0}
+
+
+def week_buckets(
+    start: datetime,
+    end: datetime,
+    timezone_name: str = "UTC",
+    week_start: str = "sunday",
+):
+    """Yield half-open calendar-week buckets on the named calendar.
+
+    Same contract as :func:`month_buckets`: the first bucket starts at
+    ``start`` itself (a partial leading week is kept, never padded or
+    zero-filled), buckets break at local ``week_start`` midnight on the
+    ``timezone_name`` calendar, and the last bucket is clamped to ``end``.
+    Both inputs must be timezone-aware; the result uses UTC instants.
+
+    Only ``"sunday"`` and ``"monday"`` are supported (the values carried by
+    ``metadata/windows/*.json`` and the collectors); anything else raises
+    :class:`ValueError` instead of guessing a boundary.
+    """
+    if start.tzinfo is None or end.tzinfo is None:
+        raise ValueError("week_buckets requires timezone-aware datetimes")
+    if start >= end:
+        raise ValueError("invalid temporal window: start must be earlier than end")
+    if not isinstance(week_start, str) or week_start.lower() not in _WEEK_START_WEEKDAYS:
+        raise ValueError(
+            f"unsupported week_start: {week_start!r} (expected 'sunday' or 'monday')"
+        )
+    boundary_weekday = _WEEK_START_WEEKDAYS[week_start.lower()]
+    tz = _known_timezone(timezone_name)
+    current = start.astimezone(tz)
+    end_local = end.astimezone(tz)
+    while current < end_local:
+        days_ahead = (boundary_weekday - current.weekday()) % 7
+        day = current.date() + timedelta(days=days_ahead)
+        boundary = datetime(day.year, day.month, day.day, tzinfo=tz)
+        if boundary <= current:
+            # On (or exactly at the midnight of) a boundary day the next
+            # boundary is one calendar week ahead.
+            day = day + timedelta(days=7)
+            boundary = datetime(day.year, day.month, day.day, tzinfo=tz)
+        bucket_end = min(boundary, end_local)
+        if bucket_end <= current:  # pragma: no cover - guarded by loop condition
+            break
+        yield {
+            "start": format_datetime(current),
+            "end_exclusive": format_datetime(bucket_end),
+        }
+        current = bucket_end
+
+
+def time_buckets(
+    start: datetime,
+    end: datetime,
+    granularity: str,
+    timezone_name: str = "UTC",
+    week_start: str = "sunday",
+):
+    """Yield half-open buckets for ``granularity`` (``day``/``week``/``month``).
+
+    Shared dispatcher so coverage and audits generate expected intervals
+    through one rule.  ``week_start`` applies to ``week`` only; it is
+    accepted (and ignored) for ``day``/``month``.  Any other granularity
+    (e.g. ``hour``) raises :class:`ValueError` — bucketing it would be a
+    guess, not a rule.
+    """
+    if granularity == "day":
+        yield from day_buckets(start, end, timezone_name)
+    elif granularity == "week":
+        yield from week_buckets(start, end, timezone_name, week_start)
+    elif granularity == "month":
+        yield from month_buckets(start, end, timezone_name)
+    else:
+        raise ValueError(
+            f"unsupported granularity for bucket generation: {granularity!r} "
+            "(expected 'day', 'week' or 'month')"
+        )
 
 
 def month_buckets(start: datetime, end: datetime, timezone_name: str = "UTC"):

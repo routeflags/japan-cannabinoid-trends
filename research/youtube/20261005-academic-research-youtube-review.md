@@ -1,5 +1,7 @@
 # Academic Research Review: YouTube Data Collections
 
+> **Current policy (2026-10-16):** The old CBD YouTube 10-year series discussed in this review comes from a prohibited former means and is excluded from current evidence, gap-filling, and publication scope. Do not use figures in this review as grounds for later reports, aggregations, or publication. The adopted YouTube evidence is the separate-series runs in `metadata/provenance/declarations/20261015-youtube-csv-adoption.json` (`ISS-20261012-CBD-003` RESOLVED). The body below remains as a historical record.
+
 | 項目 | 内容 |
 |------|------|
 | **Review Date** | 2026-10-05 |

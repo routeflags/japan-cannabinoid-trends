@@ -9,18 +9,18 @@
     "recursive_audit_required": true
   },
   "summary": {
-    "issue_count": 68,
-    "active_count": 32,
-    "closed_count": 36,
+    "issue_count": 69,
+    "active_count": 30,
+    "closed_count": 39,
     "status_counts": {
       "DOCUMENTED": 1,
       "MITIGATED": 1,
-      "OPEN": 30,
+      "OPEN": 28,
       "PENDING": 2,
-      "RESOLVED": 34
+      "RESOLVED": 37
     },
     "open_p0": 0,
-    "open_p1": 7,
+    "open_p1": 6,
     "failure_count": 0
   },
   "layout": {
@@ -127,21 +127,14 @@
         "coverage matrix と page counts が上流記録と一致する",
         "修正後の publication contract と issue audit が failures=0 になる"
       ],
-      "issue_count": 2,
+      "issue_count": 1,
       "status_counts": {
-        "OPEN": 2
+        "OPEN": 1
       },
       "priority_counts": {
-        "P1": 1,
         "P2": 1
       },
       "issues": [
-        {
-          "id": "ISS-20261012-CBD-003",
-          "priority": "P1",
-          "status": "OPEN",
-          "path": "docs/issues/active/20-cbd-publication-corrections/20261012_p1_cbd-youtube-10year-incomplete.md"
-        },
         {
           "id": "ISS-20261012-CBD-004",
           "priority": "P2",
@@ -160,13 +153,13 @@
         "X official API は request-only evidence と cost control を持つまでは実収集しない",
         "new-run tracking policy と legacy label year defect が検証ルールに反映される"
       ],
-      "issue_count": 9,
+      "issue_count": 8,
       "status_counts": {
-        "OPEN": 9
+        "OPEN": 8
       },
       "priority_counts": {
         "P1": 4,
-        "P2": 5
+        "P2": 4
       },
       "issues": [
         {
@@ -204,12 +197,6 @@
           "priority": "P2",
           "status": "OPEN",
           "path": "docs/issues/active/30-production-collection-expansion/20261015_p2_cron-gate-projects-path.md"
-        },
-        {
-          "id": "ISS-20261015-WIN-003",
-          "priority": "P2",
-          "status": "OPEN",
-          "path": "docs/issues/active/30-production-collection-expansion/20261015_p2_daily-weekly-buckets.md"
         },
         {
           "id": "ISS-20261015-GT-002",
@@ -390,11 +377,11 @@
     }
   ],
   "closed": {
-    "issue_count": 36,
+    "issue_count": 39,
     "status_counts": {
       "DOCUMENTED": 1,
       "MITIGATED": 1,
-      "RESOLVED": 34
+      "RESOLVED": 37
     },
     "issues": [
       {
@@ -566,6 +553,18 @@
         "path": "docs/issues/closed/resolved/20261012_p1_cbd-research-page-count-period-mismatch.md"
       },
       {
+        "id": "ISS-20261012-CBD-003",
+        "priority": "P1",
+        "status": "RESOLVED",
+        "path": "docs/issues/closed/resolved/20261012_p1_cbd-youtube-10year-incomplete.md"
+      },
+      {
+        "id": "ISS-20261015-CBD-007",
+        "priority": "P1",
+        "status": "RESOLVED",
+        "path": "docs/issues/closed/resolved/20261015_p1_cbd-youtube-10year-scope-decision.md"
+      },
+      {
         "id": "ISS-20261014-PUB-029",
         "priority": "P1",
         "status": "RESOLVED",
@@ -612,6 +611,12 @@
         "priority": "P2",
         "status": "RESOLVED",
         "path": "docs/issues/closed/resolved/20261015_p2_data-catalog-persistence.md"
+      },
+      {
+        "id": "ISS-20261015-WIN-003",
+        "priority": "P2",
+        "status": "RESOLVED",
+        "path": "docs/issues/closed/resolved/20261015_p2_daily-weekly-buckets.md"
       }
     ]
   }

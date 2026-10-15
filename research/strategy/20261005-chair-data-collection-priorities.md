@@ -12,6 +12,8 @@
 
 ## 0. 現状評価（Chair Assessment）
 
+> **現行方針（2026-10-16）:** 本レビュー内の旧10年系列の数値は、禁止済み旧手段由来のため現行の証拠・補完対象・公開説明の対象外である。採用済み YouTube 証拠は `metadata/provenance/declarations/20261015-youtube-csv-adoption.json` の別系列 runs を正とする（`ISS-20261012-CBD-003` RESOLVED）。
+
 ### 稼働中の研究資産
 
 | 資産 | 状態 | 引用可能性 |
@@ -19,7 +21,7 @@
 | Google Trends 12化合物 (common-scale set A: CBD/THC/CBG/HHC/THCH) | 完了 | HIGH |
 | Regulatory Status 12化合物 (primary sources) | 完了 | HIGH |
 | Early Warning Index v1 (12 compounds, first-mention + persistence + emergence_score) | 完了 | **HIGHEST** |
-| YouTube English CBD (3,831 records, 11% JP) | 部分的 (2023異常, 2025欠落) | LOW |
+| YouTube English CBD | 対象外（旧10年系列は証拠・公開対象から除外） | — |
 | YouTube CBX リキッド 12ヶ月 (125 records, 68% JP) | **最も分析可能** | MEDIUM |
 | X: H4CBH n=40, HHBD n=40 | 検証不足 | MEDIUM |
 | X: CBX Social (2,376+451) + Multi 316件 | 収集済み・分析未完了 | MEDIUM |

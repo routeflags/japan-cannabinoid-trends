@@ -33,3 +33,7 @@ GitHub Release / Zenodo へ何を含めるかの機械検証が無い。公開�
 
 - [ ] 実装可否の判断記録
 - [ ] （可なら）Release Manifest の schema / CLI / CI 配線とテスト
+
+## 対応記録（2026-10-15）
+
+- Implementer が一度着手したが failed。Release Manifest / Zenodo 候補検証は未実装のため、ステータスは `OPEN` のまま維持する。

@@ -204,6 +204,117 @@ def test_label_gap_is_reported_and_not_padded(tmp_path):
 
 
 # ---------------------------------------------------------------------------
+# ISS-20261015-WIN-003: expected day/week/month buckets in coverage
+# ---------------------------------------------------------------------------
+
+
+def test_day_granularity_reports_expected_buckets_and_a_missing_day(tmp_path):
+    """One absent day is missing evidence, never an observed zero; the
+    status state machine is unchanged (partial: boundaries unverified)."""
+    run_dir = _write_run(
+        tmp_path,
+        run_id="run-day-buckets",
+        provenance=_provenance(),  # day, 2026-10-01..08 UTC
+        execution={"status": "success", "returned_count": 6, "pagination_exhausted": True},
+        payloads={
+            "payload.json": _series(
+                [
+                    "2026-10-01",
+                    "2026-10-02",
+                    "2026-10-03",
+                    # 2026-10-04 is absent: a gap, not a zero.
+                    "2026-10-05",
+                    "2026-10-06",
+                    "2026-10-07",
+                ]
+            )
+        },
+    )
+    manifest = evaluate_coverage(run_dir)
+    coverage = manifest["coverage"]
+    assert coverage["expected_granularity"] == "day"
+    assert [bucket["start"] for bucket in coverage["expected_intervals"]] == [
+        f"2026-10-0{day}T00:00:00Z" for day in range(1, 8)
+    ]
+    assert coverage["missing_expected_intervals"] == [
+        {"start": "2026-10-04T00:00:00Z", "end_exclusive": "2026-10-05T00:00:00Z"}
+    ]
+    # Missing stays missing: no zero is synthesized anywhere.
+    assert "observed_zero" not in json.dumps(manifest)
+    assert coverage["status"] == "partial"
+    assert coverage["unknown_intervals"] == [coverage["requested"]]
+
+
+def test_week_granularity_sunday_start_in_asia_tokyo(tmp_path):
+    """Week buckets follow the provenance week_start/timezone; a fully
+    covered window reports no missing buckets."""
+    run_dir = _write_run(
+        tmp_path,
+        run_id="run-week-buckets",
+        provenance=_provenance(
+            requested_start="2026-10-01T00:00:00Z",
+            requested_end_exclusive="2026-10-15T00:00:00Z",
+            granularity="week",
+            timezone="Asia/Tokyo",
+            week_start="sunday",
+        ),
+        execution={"status": "success", "returned_count": 3, "pagination_exhausted": True},
+        payloads={
+            # One label inside each expected Sunday-start bucket.
+            "payload.json": _series(["2026-10-02", "2026-10-05", "2026-10-12"])
+        },
+    )
+    manifest = evaluate_coverage(run_dir)
+    coverage = manifest["coverage"]
+    assert coverage["expected_granularity"] == "week"
+    assert coverage["expected_intervals"] == [
+        {"start": "2026-10-01T00:00:00Z", "end_exclusive": "2026-10-03T15:00:00Z"},
+        {"start": "2026-10-03T15:00:00Z", "end_exclusive": "2026-10-10T15:00:00Z"},
+        {"start": "2026-10-10T15:00:00Z", "end_exclusive": "2026-10-15T00:00:00Z"},
+    ]
+    assert coverage["missing_expected_intervals"] == []
+    assert "observed_zero" not in json.dumps(manifest)
+
+
+def test_month_granularity_reports_expected_buckets(tmp_path):
+    run_dir = _write_run(
+        tmp_path,
+        run_id="run-month-buckets",
+        provenance=_provenance(
+            requested_start="2025-11-15T00:00:00Z",
+            requested_end_exclusive="2026-02-01T00:00:00Z",
+            granularity="month",
+            timezone="UTC",
+        ),
+        execution={"status": "success", "returned_count": 2, "pagination_exhausted": True},
+        payloads={"payload.json": _series(["2025-11-20", "2026-01-10"])},
+    )
+    manifest = evaluate_coverage(run_dir)
+    coverage = manifest["coverage"]
+    assert coverage["expected_granularity"] == "month"
+    assert coverage["expected_intervals"] == [
+        {"start": "2025-11-15T00:00:00Z", "end_exclusive": "2025-12-01T00:00:00Z"},
+        {"start": "2025-12-01T00:00:00Z", "end_exclusive": "2026-01-01T00:00:00Z"},
+        {"start": "2026-01-01T00:00:00Z", "end_exclusive": "2026-02-01T00:00:00Z"},
+    ]
+    assert coverage["missing_expected_intervals"] == [
+        {"start": "2025-12-01T00:00:00Z", "end_exclusive": "2026-01-01T00:00:00Z"}
+    ]
+    assert "observed_zero" not in json.dumps(manifest)
+
+
+def test_legacy_run_without_exact_window_reports_no_expected_buckets():
+    """Runs without requested_start/end keep the legacy shape: no expected
+    intervals are invented."""
+    manifest = evaluate_coverage(NODATA)
+    coverage = manifest["coverage"]
+    assert coverage["expected_granularity"] is None
+    assert coverage["expected_intervals"] == []
+    assert coverage["missing_expected_intervals"] == []
+    assert coverage["status"] == "missing"
+
+
+# ---------------------------------------------------------------------------
 # real legacy examples (c.md §9 / §11 / P7)
 # ---------------------------------------------------------------------------
 
