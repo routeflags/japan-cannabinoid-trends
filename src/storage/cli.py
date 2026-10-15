@@ -11,6 +11,14 @@ Usage (repository root; ``python -m storage.cli``):
 - ``catalog --datasets-root datasets [--output F] [--check-lineage]`` builds
   the manifest-derived catalog (d.md §14) and optionally verifies lineage
   references across manifests (d.md §15).
+- ``catalog --study-dir datasets/<study-id> --persist [--check-lineage]``
+  persists one study's catalog to its canonical derived location
+  ``datasets/<study-id>/metadata/data-catalog.json`` (d.md §17.1).  With
+  ``--check-lineage``, dangling references refuse (exit 1) *before* any
+  write, so a failed persist never creates or modifies the canonical file.
+  A study with no manifests persists the stable empty catalog
+  (``count: 0``); ``--persist`` requires ``--study-dir`` and cannot be
+  combined with ``--output``.
 
 Exit codes: 0 = ok / read served; 1 = refused (unsupported mode, unknown
 reader, dangling lineage); 2 = configuration error (registry unreadable);
@@ -24,7 +32,13 @@ import json
 import sys
 from pathlib import Path
 
-from storage.catalog import build_catalog
+from storage.catalog import (
+    build_catalog,
+    build_study_catalog,
+    catalog_path_for_study,
+    dump_catalog,
+    write_catalog,
+)
 from storage.contracts import ArtifactDescriptor, ReaderError, UnsupportedRead
 from storage.lineage import check_catalog_lineage
 from storage.registry import ArtifactRegistry
@@ -180,32 +194,69 @@ def cmd_inspect(args) -> int:
     return EXIT_OK
 
 
+def _report_lineage_problems(problems: list[dict]) -> None:
+    for problem in problems:
+        _err(f"[{problem['code']}] {problem['path']}: {problem['message']}")
+    _err(f"lineage: {len(problems)} dangling reference(s)")
+
+
 def cmd_catalog(args) -> int:
     try:
         _load_registry(args.metadata_dir)
     except ConfigError as error:
         _err(str(error))
         return EXIT_CONFIG
-    catalog = build_catalog(Path(args.datasets_root))
+    persist = bool(getattr(args, "persist", False))
+    study_dir = getattr(args, "study_dir", None)
+    if persist and not study_dir:
+        _err("catalog --persist requires --study-dir <study-dir>")
+        return EXIT_CONFIG
+    if persist and args.output:
+        _err(
+            "catalog --persist writes only to "
+            "<study-dir>/metadata/data-catalog.json; "
+            "--output cannot be combined with --persist"
+        )
+        return EXIT_CONFIG
+    if persist:
+        study = Path(study_dir)
+        if not study.is_dir():
+            _err(f"study directory not found: {study_dir}")
+            return EXIT_CONFIG
+        catalog = build_study_catalog(study)
+        problems = check_catalog_lineage(catalog) if args.check_lineage else []
+        if problems:
+            # Fail before any write: a refused persist neither creates nor
+            # modifies the canonical file (a previous good version, if any,
+            # keeps its bytes; no temp file remains).
+            _report_lineage_problems(problems)
+            return EXIT_REFUSED
+        target = catalog_path_for_study(study)
+        try:
+            write_catalog(catalog, target)
+        except OSError as error:
+            _err(f"cannot write catalog: {target} ({error.__class__.__name__})")
+            return EXIT_IO
+        _err(f"catalog persisted: {target} ({catalog['count']} entries)")
+        if args.check_lineage:
+            _err("lineage: all derived_from references resolve")
+        return EXIT_OK
+    root = Path(study_dir) / "data" if study_dir else Path(args.datasets_root)
+    catalog = build_catalog(root)
     problems = check_catalog_lineage(catalog) if args.check_lineage else []
     if args.output:
         try:
             output = Path(args.output)
             output.parent.mkdir(parents=True, exist_ok=True)
-            output.write_text(
-                json.dumps(catalog, ensure_ascii=False, indent=2) + "\n",
-                encoding="utf-8",
-            )
+            output.write_text(dump_catalog(catalog), encoding="utf-8")
         except OSError as error:
             _err(f"cannot write catalog: {args.output} ({error.__class__.__name__})")
             return EXIT_IO
         _err(f"catalog written: {args.output} ({catalog['count']} entries)")
     else:
-        print(json.dumps(catalog, ensure_ascii=False, indent=2))
-    for problem in problems:
-        _err(f"[{problem['code']}] {problem['path']}: {problem['message']}")
+        print(dump_catalog(catalog), end="")
     if problems:
-        _err(f"lineage: {len(problems)} dangling reference(s)")
+        _report_lineage_problems(problems)
         return EXIT_REFUSED
     if args.check_lineage:
         _err("lineage: all derived_from references resolve")
@@ -235,7 +286,19 @@ def build_parser() -> argparse.ArgumentParser:
 
     catalog = sub.add_parser("catalog", help="build the manifest-derived catalog")
     catalog.add_argument("--datasets-root", default="datasets")
+    catalog.add_argument(
+        "--study-dir",
+        default=None,
+        help="scope the catalog to one study (<study-dir>/data); "
+        "required with --persist",
+    )
     catalog.add_argument("--output", help="write the catalog JSON to this path")
+    catalog.add_argument(
+        "--persist",
+        action="store_true",
+        help="persist to <study-dir>/metadata/data-catalog.json "
+        "(requires --study-dir; incompatible with --output)",
+    )
     catalog.add_argument(
         "--check-lineage",
         action="store_true",

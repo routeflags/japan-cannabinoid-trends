@@ -643,6 +643,16 @@ G4 仕様（`docs/plans/20261013d.md`）の垂直スライス。対象は Google
   `derived_from` を推測で埋めない（各成果物/run に
   `verification: unverifiable_no_manifest` を記録）。catalog は manifest
   からのみ生成する。（監査: `docs/audits/g4-storage-inventory.json` / `.md`）。
+- **Data Catalog の永続化先（決定、ISS-20261015-ART-008、2026-10-15）**:
+  canonical persisted catalog は `datasets/<study-id>/metadata/data-catalog.json`
+  （1 study 1 ファイル）。本ファイルは派生メタデータであり raw ではない:
+  `storage.catalog.build_catalog(<study>/data)` の再利用で生成し、timestamp や
+  絶対パスを含まず、同一入力からは byte-identical に再生成できる。
+  `docs/audits/*.json` は鮮度テスト登録の監査スナップショットであり代替しない。
+  manifest が無い study は拒否せず `count: 0` / `manifest_count: 0` の空 catalog
+  を永続化する（空 datasets root と同じ規則）。`--check-lineage` 付き永続化は
+  書込み前に検証し、dangling 参照がある場合は正規ファイルを生成・更新せず
+  exit 1 とする。
 
 ### 17.2 実装済み
 
@@ -663,8 +673,17 @@ G4 仕様（`docs/plans/20261013d.md`）の垂直スライス。対象は Google
   - `inventory.py`: §16 非破壊棚卸し（sha256 前後比較、run マーカー除外、
     `private/` 既定除外、ページ系列の missing / observed_zero 区別）。
   - `catalog.py` / `lineage.py`: manifest からの決定論的 catalog 生成（§14）と
-    catalog 横断の lineage 検証・祖先遡及（§15）。
+    catalog 横断の lineage 検証・祖先遡及（§15）。`catalog.py` は永続化
+    helper（`catalog_path_for_study` / `build_study_catalog` /
+    `dump_catalog` / `write_catalog`）を持ち、`build_study_catalog` は
+    `build_catalog(<study>/data)` を再利用する（規則の複製なし）。
+    `write_catalog` は同 dir tmp → `os.replace` の atomic 置換で、失敗時に
+    部分ファイルを残さない。
   - `cli.py`: `read` / `inspect` / `catalog`（read-only。exit 0/1/2/3）。
+    `catalog --study-dir datasets/<study-id> --persist [--check-lineage]`
+    が正規 catalog を永続化する。`--persist` は `--study-dir` 必須・
+    `--output` と排他。lineage 失敗時は書込み前に exit 1 し、正規ファイル
+    を生成・更新しない。
 - `src/validation/storage_contract.py`: §10 のうち S1 / S6-S12
   （重複 ID・format 実体照合・reader 登録（S9）・schema 適合（S7）・
   record_count（S8）・パス安全性（S11）・ページング整合（§11）・summary 矛盾（§12）・
@@ -700,8 +719,9 @@ G4 仕様（`docs/plans/20261013d.md`）の垂直スライス。対象は Google
 - SQLite 実データ（ローカル専用 `trends.db`）の検証はローカル環境で実施可能
   （CI は非公開 raw を扱わない）。`record_lineage` テーブルは既存 DB には未導入
   （schema.sql への追加は実運用判断）。
-- Data Catalog の永続化先（`datasets/<study>/metadata/data-catalog.json` 等）は
-  未確定。現状は `storage.cli catalog --output` のオンデマンド生成。
+- Data Catalog の永続化先は確定済み（§17.1。ISS-20261015-ART-008、2026-10-15
+  実装）。現状は `storage.cli catalog --study-dir datasets/<study-id> --persist`
+  の正規永続化と、従来の `catalog --output` によるオンデマンド生成の併存。
 
 ## 18. G5 垂直スライス（Provenance Contract / Evidence Registry / Audit Trail）— 2026-10-13
 

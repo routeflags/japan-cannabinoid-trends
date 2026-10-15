@@ -13,11 +13,25 @@ covered by ``storage.inventory`` instead.
 from __future__ import annotations
 
 import json
+import os
 from pathlib import Path
 
-__all__ = ["CATALOG_VERSION", "build_catalog"]
+__all__ = [
+    "CATALOG_VERSION",
+    "CATALOG_FILENAME",
+    "build_catalog",
+    "build_study_catalog",
+    "catalog_path_for_study",
+    "dump_catalog",
+    "write_catalog",
+]
 
 CATALOG_VERSION = "1.0.0"
+
+#: Canonical persisted catalog filename inside a study directory.
+#: The persisted document lives at ``<study-dir>/metadata/data-catalog.json``
+#: (validation-framework.md §17.1): derived metadata, never raw data.
+CATALOG_FILENAME = "data-catalog.json"
 
 
 def _load_json(path: Path):
@@ -111,3 +125,60 @@ def build_catalog(datasets_root) -> dict:
         "errors": errors,
         "entries": entries,
     }
+
+
+def catalog_path_for_study(study_dir) -> Path:
+    """Canonical persisted catalog path for one study.
+
+    ``<study-dir>/metadata/data-catalog.json`` (validation-framework.md
+    §17.1).  The only sanctioned write target of the per-study persistence
+    workflow; lineage-gated persists must never write anywhere else.
+    """
+    return Path(study_dir) / "metadata" / CATALOG_FILENAME
+
+
+def build_study_catalog(study_dir) -> dict:
+    """Build the catalog for one study, reusing :func:`build_catalog`.
+
+    The scope is ``<study-dir>/data``; no catalog rule is duplicated here, so
+    the persisted document always carries the same ``entries`` / ``errors`` /
+    ``manifest_count`` as the on-demand catalog over the same data.  A study
+    with no manifests (or no ``data/`` directory at all) yields the stable
+    empty catalog (``count: 0``, ``manifest_count: 0``) instead of an error -
+    the same rule as an empty datasets root.
+    """
+    return build_catalog(Path(study_dir) / "data")
+
+
+def dump_catalog(document: dict) -> str:
+    """Serialize a catalog deterministically (UTF-8, indent=2, trailing newline).
+
+    The document carries no timestamp and only study-relative display paths,
+    so identical manifests always produce byte-identical text (G4-T16).
+    This is the single serializer for both the legacy ``--output`` dump and
+    the per-study persisted catalog, keeping the two byte-compatible.
+    """
+    return json.dumps(document, ensure_ascii=False, indent=2) + "\n"
+
+
+def write_catalog(document: dict, output) -> Path:
+    """Write a catalog atomically: temp file in the same directory + replace.
+
+    The parent directory is created; the write lands via ``os.replace`` so a
+    crash or validation failure never leaves a partial file at the target.
+    On failure any temp file is removed and the target is left untouched
+    (an existing catalog keeps its previous bytes).  Returns the target path.
+    """
+    target = Path(output)
+    target.parent.mkdir(parents=True, exist_ok=True)
+    tmp = target.with_name(target.name + ".tmp")
+    try:
+        tmp.write_text(dump_catalog(document), encoding="utf-8")
+        os.replace(tmp, target)
+    except BaseException:
+        try:
+            tmp.unlink()
+        except OSError:
+            pass
+        raise
+    return target
