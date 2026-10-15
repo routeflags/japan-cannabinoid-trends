@@ -5,7 +5,7 @@
 | 作成日 | 2026-10-15（JST） |
 | 対象 | `publication/`（実測 19 ファイル = 15 HTML + 4 Markdown。research 13 ページ、guide、`search-emergence-tracker/`、README）と、それを支える契約・検証 |
 | 種別 | 実装前の計画書（作業指示書）。本ドキュメントではコード・データを変更しない |
-| 関連 | `docs/specs/validation-framework.md`（契約フレームワーク正本）、`docs/specs/collection-pipeline.md`、`docs/reports/20261015b-*`、`docs/issues/20261015_p1_*.md` |
+| 関連 | `docs/specs/validation-framework.md`（契約フレームワーク正本）、`docs/specs/collection-pipeline.md`、`docs/reports/20261015b-*`、`docs/issues/active/` |
 
 ---
 

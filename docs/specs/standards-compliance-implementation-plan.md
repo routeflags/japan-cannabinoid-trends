@@ -229,6 +229,6 @@ Concept ID 出力
 ## 関連ドキュメント
 
 - `docs/specs/standards-compliance-analysis.md`: 差分分析
-- `docs/issues/20261002_p1_unvalidated-classification.md`: ISS-004
+- `docs/issues/active/50-taxonomy-standards/20261002_p1_unvalidated-classification.md`: ISS-004
 - `metadata/keywords.yaml`: 現在のキーワード辞書
 - `metadata/datapackage.json`: 現在のデータパッケージ

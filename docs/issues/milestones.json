@@ -1,0 +1,608 @@
+{
+  "schema_version": "1.0.0",
+  "generated_at": "2026-10-15",
+  "generated_by": "manual issue triage using validation.issues.audit_issues",
+  "purpose": "未対応 issue を milestone 別に整理し、対応済み issue を closed/ 配下に分離するためのローカル台帳。issue 本体ではないため Markdown ではなく JSON とする。",
+  "source": {
+    "issues_dir": "docs/issues",
+    "audit_version": "1.0.0",
+    "recursive_audit_required": true
+  },
+  "summary": {
+    "issue_count": 65,
+    "active_count": 43,
+    "closed_count": 22,
+    "status_counts": {
+      "DOCUMENTED": 1,
+      "MITIGATED": 1,
+      "OPEN": 39,
+      "PENDING": 4,
+      "RESOLVED": 20
+    },
+    "open_p0": 0,
+    "open_p1": 16,
+    "failure_count": 0
+  },
+  "layout": {
+    "active/00-needs-user-confirmation": "ユーザー確認・オーナー操作・外部サービス操作・採用可否の判断が必要な issue。",
+    "active/01-time-gated": "実行可能日まで待機する issue。",
+    "active/10-publication-release-readiness": "公開前 release / metadata readiness。",
+    "active/20-cbd-publication-corrections": "CBD 固有の公開物修正。",
+    "active/30-production-collection-expansion": "生産 pipeline / collection / window 拡張。",
+    "active/40-provenance-storage-reproducibility": "来歴・保管・再現性。",
+    "active/50-taxonomy-standards": "taxonomy / standards。",
+    "active/60-privacy-identity-governance": "privacy / identity governance。",
+    "closed/resolved": "対応済み。RESOLVED の日付を issue 本文に保持する。",
+    "closed/documented": "追加対応せず記録として閉じた issue。",
+    "closed/mitigated": "完全解消ではないがリスク低減済みの issue。",
+    "closed/archived": "履歴保持のみ。現在は該当なし。"
+  },
+  "milestones": [
+    {
+      "id": "M0",
+      "directory": "docs/issues/active/00-needs-user-confirmation/",
+      "title": "Needs user confirmation / owner action",
+      "objective": "ユーザー確認、オーナー操作、外部サービス操作、採用可否の判断が必要な issue を他の実装 backlog から分離する。",
+      "exit_criteria": [
+        "Zenodo 側の X 投稿単位 CSV アーカイブ取り下げが実行・記録される",
+        "YouTube exports 採用に必要な actor run ID / dataset ID / dateFilter / status / timezone / no-tracking 方針が確認される",
+        "管理画面・公開方針依存の PENDING issue の実施または再分類が記録される"
+      ],
+      "issue_count": 4,
+      "status_counts": {
+        "OPEN": 2,
+        "PENDING": 2
+      },
+      "priority_counts": {
+        "P0": 1,
+        "P1": 3
+      },
+      "issues": [
+        {
+          "id": "ISS-20261002-003",
+          "priority": "P0",
+          "status": "PENDING",
+          "path": "docs/issues/active/00-needs-user-confirmation/20261002_p0_commercial-cta-separation.md"
+        },
+        {
+          "id": "ISS-20261014-PUB-029",
+          "priority": "P1",
+          "status": "PENDING",
+          "path": "docs/issues/active/00-needs-user-confirmation/20261014.md"
+        },
+        {
+          "id": "ISS-20261015-COL-033",
+          "priority": "P1",
+          "status": "OPEN",
+          "path": "docs/issues/active/00-needs-user-confirmation/20261015_p1_unadopted-youtube-exports.md"
+        },
+        {
+          "id": "ISS-20261015-XID-035",
+          "priority": "P1",
+          "status": "OPEN",
+          "path": "docs/issues/active/00-needs-user-confirmation/20261015_p1_x-withdrawal-assumptions-confirm.md"
+        }
+      ]
+    },
+    {
+      "id": "M0b",
+      "directory": "docs/issues/active/01-time-gated/",
+      "title": "Time-gated measurements",
+      "objective": "仕様上一定期間を空ける必要がある計測・検証を、実行可能日まで待機させる。",
+      "exit_criteria": [
+        "GT boundary pass 2 を 2026-10-22T04:28Z 以降に実行する",
+        "pass 2 の結果で GT-001 / GT-004 の eligible 条件を再評価する"
+      ],
+      "issue_count": 2,
+      "status_counts": {
+        "PENDING": 2
+      },
+      "priority_counts": {
+        "P1": 2
+      },
+      "issues": [
+        {
+          "id": "ISS-20261015-GT-004",
+          "priority": "P1",
+          "status": "PENDING",
+          "path": "docs/issues/active/01-time-gated/20261015_p1_gt-boundary-pass-2.md"
+        },
+        {
+          "id": "ISS-20261015-GT-001",
+          "priority": "P1",
+          "status": "PENDING",
+          "path": "docs/issues/active/01-time-gated/20261015_p1_live-boundary-verification.md"
+        }
+      ]
+    },
+    {
+      "id": "M1",
+      "directory": "docs/issues/active/10-publication-release-readiness/",
+      "title": "Publication / release readiness",
+      "objective": "未公開 publication を release / DOI / metadata の公開前ゲートに通せる状態へ揃える。",
+      "exit_criteria": [
+        "release manifest validation が実装される",
+        "datapackage / disclosure / relationship notes が最新状態に更新される",
+        "公開前に publication artifact の review decision を approved または denied に確定する"
+      ],
+      "issue_count": 3,
+      "status_counts": {
+        "OPEN": 3
+      },
+      "priority_counts": {
+        "P1": 1,
+        "P2": 2
+      },
+      "issues": [
+        {
+          "id": "ISS-20261002-016",
+          "priority": "P2",
+          "status": "OPEN",
+          "path": "docs/issues/active/10-publication-release-readiness/20261002_p2_datapackage-stale-date.md"
+        },
+        {
+          "id": "ISS-20261002-011",
+          "priority": "P2",
+          "status": "OPEN",
+          "path": "docs/issues/active/10-publication-release-readiness/20261002_p2_hempbin-relationship.md"
+        },
+        {
+          "id": "ISS-20261015-REL-014",
+          "priority": "P1",
+          "status": "OPEN",
+          "path": "docs/issues/active/10-publication-release-readiness/20261015_p1_release-manifest-validation.md"
+        }
+      ]
+    },
+    {
+      "id": "M2",
+      "directory": "docs/issues/active/20-cbd-publication-corrections/",
+      "title": "CBD publication corrections",
+      "objective": "CBD research page と関連データの未検証・過大表現・期間不一致を、公開前に修正または明示的に制限する。",
+      "exit_criteria": [
+        "CBD の COA / X / YouTube / Google Trends 各根拠の欠損と期間を整合させる",
+        "coverage matrix と page counts が上流記録と一致する",
+        "修正後の publication contract と issue audit が failures=0 になる"
+      ],
+      "issue_count": 6,
+      "status_counts": {
+        "OPEN": 6
+      },
+      "priority_counts": {
+        "P1": 5,
+        "P2": 1
+      },
+      "issues": [
+        {
+          "id": "ISS-20261012-CBD-005",
+          "priority": "P1",
+          "status": "OPEN",
+          "path": "docs/issues/active/20-cbd-publication-corrections/20261012_p1_cbd-coa-source-mismatch.md"
+        },
+        {
+          "id": "ISS-20261012-CBD-001",
+          "priority": "P1",
+          "status": "OPEN",
+          "path": "docs/issues/active/20-cbd-publication-corrections/20261012_p1_cbd-coverage-matrix-overstates-completeness.md"
+        },
+        {
+          "id": "ISS-20261012-CBD-006",
+          "priority": "P1",
+          "status": "OPEN",
+          "path": "docs/issues/active/20-cbd-publication-corrections/20261012_p1_cbd-research-page-count-period-mismatch.md"
+        },
+        {
+          "id": "ISS-20261012-CBD-002",
+          "priority": "P1",
+          "status": "OPEN",
+          "path": "docs/issues/active/20-cbd-publication-corrections/20261012_p1_cbd-x-period-provenance.md"
+        },
+        {
+          "id": "ISS-20261012-CBD-003",
+          "priority": "P1",
+          "status": "OPEN",
+          "path": "docs/issues/active/20-cbd-publication-corrections/20261012_p1_cbd-youtube-10year-incomplete.md"
+        },
+        {
+          "id": "ISS-20261012-CBD-004",
+          "priority": "P2",
+          "status": "OPEN",
+          "path": "docs/issues/active/20-cbd-publication-corrections/20261012_p2_cbd-google-trends-5y-raw-missing.md"
+        }
+      ]
+    },
+    {
+      "id": "M3",
+      "directory": "docs/issues/active/30-production-collection-expansion/",
+      "title": "Production / collection expansion",
+      "objective": "ドメイン上の「生産」パイプラインを Google Trends 以外の collection / window / staging へ拡張する。",
+      "exit_criteria": [
+        "非 GT collector / window compiler の契約と失敗モードが文書化・実装される",
+        "X official API は request-only evidence と cost control を持つまでは実収集しない",
+        "new-run tracking policy と legacy label year defect が検証ルールに反映される"
+      ],
+      "issue_count": 10,
+      "status_counts": {
+        "OPEN": 10
+      },
+      "priority_counts": {
+        "P1": 6,
+        "P2": 4
+      },
+      "issues": [
+        {
+          "id": "ISS-20261015-COL-030",
+          "priority": "P1",
+          "status": "OPEN",
+          "path": "docs/issues/active/30-production-collection-expansion/20261015.md"
+        },
+        {
+          "id": "ISS-20261015-COL-018",
+          "priority": "P1",
+          "status": "OPEN",
+          "path": "docs/issues/active/30-production-collection-expansion/20261015_p1_new-run-tracking-policy-mismatch.md"
+        },
+        {
+          "id": "ISS-20261015-COL-016",
+          "priority": "P1",
+          "status": "OPEN",
+          "path": "docs/issues/active/30-production-collection-expansion/20261015_p1_non-gt-collection-adapters.md"
+        },
+        {
+          "id": "ISS-20261015-WIN-002",
+          "priority": "P1",
+          "status": "OPEN",
+          "path": "docs/issues/active/30-production-collection-expansion/20261015_p1_non-gt-window-compilers.md"
+        },
+        {
+          "id": "ISS-20261015-COL-032",
+          "priority": "P1",
+          "status": "OPEN",
+          "path": "docs/issues/active/30-production-collection-expansion/20261015_p1_x-api-cost-control.md"
+        },
+        {
+          "id": "ISS-20261015-COL-031",
+          "priority": "P1",
+          "status": "OPEN",
+          "path": "docs/issues/active/30-production-collection-expansion/20261015_p1_x-official-api-collector.md"
+        },
+        {
+          "id": "ISS-20261015-COL-019",
+          "priority": "P2",
+          "status": "OPEN",
+          "path": "docs/issues/active/30-production-collection-expansion/20261015_p2_cron-gate-projects-path.md"
+        },
+        {
+          "id": "ISS-20261015-WIN-003",
+          "priority": "P2",
+          "status": "OPEN",
+          "path": "docs/issues/active/30-production-collection-expansion/20261015_p2_daily-weekly-buckets.md"
+        },
+        {
+          "id": "ISS-20261015-GT-002",
+          "priority": "P2",
+          "status": "OPEN",
+          "path": "docs/issues/active/30-production-collection-expansion/20261015_p2_gt-legacy-label-year-defect.md"
+        },
+        {
+          "id": "ISS-20261015-COL-020",
+          "priority": "P2",
+          "status": "OPEN",
+          "path": "docs/issues/active/30-production-collection-expansion/20261015_p2_precommit-cerberus-scope.md"
+        }
+      ]
+    },
+    {
+      "id": "M4",
+      "directory": "docs/issues/active/40-provenance-storage-reproducibility/",
+      "title": "Provenance / storage / reproducibility",
+      "objective": "artifact catalog、provenance graph、reader、transformation builder を整え、再現性の未接続部分を縮小する。",
+      "exit_criteria": [
+        "artifact / evidence / provenance の graph が実ファイルと照合可能になる",
+        "legacy reader・SQLite live verification・coverage manifest の未接続を解消する",
+        "private X data retention と request-only evidence が方針として記録される"
+      ],
+      "issue_count": 11,
+      "status_counts": {
+        "OPEN": 11
+      },
+      "priority_counts": {
+        "P1": 1,
+        "P2": 10
+      },
+      "issues": [
+        {
+          "id": "ISS-20261015-PRV-033",
+          "priority": "P1",
+          "status": "OPEN",
+          "path": "docs/issues/active/40-provenance-storage-reproducibility/20261015_p1_x-request-only-evidence.md"
+        },
+        {
+          "id": "ISS-20261015-PRV-013",
+          "priority": "P2",
+          "status": "OPEN",
+          "path": "docs/issues/active/40-provenance-storage-reproducibility/20261015_p2_apify-cloud-evidence.md"
+        },
+        {
+          "id": "ISS-20261015-COV-004",
+          "priority": "P2",
+          "status": "OPEN",
+          "path": "docs/issues/active/40-provenance-storage-reproducibility/20261015_p2_coverage-manifest-persistence.md"
+        },
+        {
+          "id": "ISS-20261015-ART-008",
+          "priority": "P2",
+          "status": "OPEN",
+          "path": "docs/issues/active/40-provenance-storage-reproducibility/20261015_p2_data-catalog-persistence.md"
+        },
+        {
+          "id": "ISS-20261015-PRV-011",
+          "priority": "P2",
+          "status": "OPEN",
+          "path": "docs/issues/active/40-provenance-storage-reproducibility/20261015_p2_evidence-reconciliation.md"
+        },
+        {
+          "id": "ISS-20261015-ART-006",
+          "priority": "P2",
+          "status": "OPEN",
+          "path": "docs/issues/active/40-provenance-storage-reproducibility/20261015_p2_legacy-variant-readers.md"
+        },
+        {
+          "id": "ISS-20261015-PRV-036",
+          "priority": "P2",
+          "status": "OPEN",
+          "path": "docs/issues/active/40-provenance-storage-reproducibility/20261015_p2_private-x-data-retention.md"
+        },
+        {
+          "id": "ISS-20261015-PRV-012",
+          "priority": "P2",
+          "status": "OPEN",
+          "path": "docs/issues/active/40-provenance-storage-reproducibility/20261015_p2_provenance-graph.md"
+        },
+        {
+          "id": "ISS-20261015-CMP-005",
+          "priority": "P2",
+          "status": "OPEN",
+          "path": "docs/issues/active/40-provenance-storage-reproducibility/20261015_p2_sampling-normalization-model.md"
+        },
+        {
+          "id": "ISS-20261015-ART-007",
+          "priority": "P2",
+          "status": "OPEN",
+          "path": "docs/issues/active/40-provenance-storage-reproducibility/20261015_p2_sqlite-live-verification.md"
+        },
+        {
+          "id": "ISS-20261015-PRV-010",
+          "priority": "P2",
+          "status": "OPEN",
+          "path": "docs/issues/active/40-provenance-storage-reproducibility/20261015_p2_transformation-builder.md"
+        }
+      ]
+    },
+    {
+      "id": "M5",
+      "directory": "docs/issues/active/50-taxonomy-standards/",
+      "title": "Taxonomy / standards alignment",
+      "objective": "分類・化合物語彙・IPTC mapping を標準準拠のまま拡張し、未検証分類を減らす。",
+      "exit_criteria": [
+        "unvalidated classification の検証手順が定義される",
+        "IPTC unmapped concepts と compound rare membership が解消または制限記録される",
+        "chemical vs route vocabulary の境界が taxonomy に反映される"
+      ],
+      "issue_count": 4,
+      "status_counts": {
+        "OPEN": 4
+      },
+      "priority_counts": {
+        "P1": 1,
+        "P2": 3
+      },
+      "issues": [
+        {
+          "id": "ISS-20261002-004",
+          "priority": "P1",
+          "status": "OPEN",
+          "path": "docs/issues/active/50-taxonomy-standards/20261002_p1_unvalidated-classification.md"
+        },
+        {
+          "id": "ISS-20261015-TAX-026",
+          "priority": "P2",
+          "status": "OPEN",
+          "path": "docs/issues/active/50-taxonomy-standards/20261015_p2_chemical-vs-route-vocabulary.md"
+        },
+        {
+          "id": "ISS-20261015-TAX-027",
+          "priority": "P2",
+          "status": "OPEN",
+          "path": "docs/issues/active/50-taxonomy-standards/20261015_p2_compound-rare-membership.md"
+        },
+        {
+          "id": "ISS-20261015-TAX-025",
+          "priority": "P2",
+          "status": "OPEN",
+          "path": "docs/issues/active/50-taxonomy-standards/20261015_p2_iptc-unmapped-concepts.md"
+        }
+      ]
+    },
+    {
+      "id": "M6",
+      "directory": "docs/issues/active/60-privacy-identity-governance/",
+      "title": "Privacy / identity governance",
+      "objective": "X identity exposure 後の履歴側検査、残存識別子方針、通知要否を整理する。",
+      "exit_criteria": [
+        "history-side X identity check の方針が決まる",
+        "residual identifiers policy が公開・保管の両面で定義される",
+        "affected account notification の要否と実行責任が記録される"
+      ],
+      "issue_count": 3,
+      "status_counts": {
+        "OPEN": 3
+      },
+      "priority_counts": {
+        "P2": 3
+      },
+      "issues": [
+        {
+          "id": "ISS-20261015-XID-023",
+          "priority": "P2",
+          "status": "OPEN",
+          "path": "docs/issues/active/60-privacy-identity-governance/20261015_p2_affected-account-notification.md"
+        },
+        {
+          "id": "ISS-20261015-XID-021",
+          "priority": "P2",
+          "status": "OPEN",
+          "path": "docs/issues/active/60-privacy-identity-governance/20261015_p2_history-side-x-identity-check.md"
+        },
+        {
+          "id": "ISS-20261015-XID-022",
+          "priority": "P2",
+          "status": "OPEN",
+          "path": "docs/issues/active/60-privacy-identity-governance/20261015_p2_residual-identifiers-policy.md"
+        }
+      ]
+    }
+  ],
+  "closed": {
+    "issue_count": 22,
+    "status_counts": {
+      "DOCUMENTED": 1,
+      "MITIGATED": 1,
+      "RESOLVED": 20
+    },
+    "issues": [
+      {
+        "id": "ISS-20261002-010",
+        "priority": "P2",
+        "status": "DOCUMENTED",
+        "path": "docs/issues/closed/documented/20261002_p2_variance-single-day.md"
+      },
+      {
+        "id": "ISS-20261013-CBX-001",
+        "priority": "P0",
+        "status": "MITIGATED",
+        "path": "docs/issues/closed/mitigated/20261013_p0_x-identity-published-in-all-releases.md"
+      },
+      {
+        "id": "ISS-20261002-002",
+        "priority": "P0",
+        "status": "RESOLVED",
+        "path": "docs/issues/closed/resolved/20261002_p0_unapplied-self-corrections.md"
+      },
+      {
+        "id": "ISS-20261002-001",
+        "priority": "P0",
+        "status": "RESOLVED",
+        "path": "docs/issues/closed/resolved/20261002_p0_version-doi-mismatch.md"
+      },
+      {
+        "id": "ISS-20261002-005",
+        "priority": "P1",
+        "status": "RESOLVED",
+        "path": "docs/issues/closed/resolved/20261002_p1_tiktok-primary-label.md"
+      },
+      {
+        "id": "ISS-20261002-015",
+        "priority": "P2",
+        "status": "RESOLVED",
+        "path": "docs/issues/closed/resolved/20261002_p2_citation-tracker-missing.md"
+      },
+      {
+        "id": "ISS-20261002-008",
+        "priority": "P2",
+        "status": "RESOLVED",
+        "path": "docs/issues/closed/resolved/20261002_p2_data-count-inconsistency.md"
+      },
+      {
+        "id": "ISS-20261002-012",
+        "priority": "P2",
+        "status": "RESOLVED",
+        "path": "docs/issues/closed/resolved/20261002_p2_gitignore-policy-conflict.md"
+      },
+      {
+        "id": "ISS-20261002-013",
+        "priority": "P2",
+        "status": "RESOLVED",
+        "path": "docs/issues/closed/resolved/20261002_p2_keywords-yaml-missing.md"
+      },
+      {
+        "id": "ISS-20261002-009",
+        "priority": "P2",
+        "status": "RESOLVED",
+        "path": "docs/issues/closed/resolved/20261002_p2_missing-completeness-rates.md"
+      },
+      {
+        "id": "ISS-20261002-006",
+        "priority": "P2",
+        "status": "RESOLVED",
+        "path": "docs/issues/closed/resolved/20261002_p2_small-base-effect.md"
+      },
+      {
+        "id": "ISS-20261002-014",
+        "priority": "P2",
+        "status": "RESOLVED",
+        "path": "docs/issues/closed/resolved/20261002_p2_stale-readme-note.md"
+      },
+      {
+        "id": "ISS-20261002-007",
+        "priority": "P2",
+        "status": "RESOLVED",
+        "path": "docs/issues/closed/resolved/20261002_p2_unique-author-timeseries.md"
+      },
+      {
+        "id": "ISS-20261015-AUD-028",
+        "priority": "P1",
+        "status": "RESOLVED",
+        "path": "docs/issues/closed/resolved/20261015_p1_audit-snapshots-assume-untracked-data.md"
+      },
+      {
+        "id": "ISS-20261015-XID-034",
+        "priority": "P1",
+        "status": "RESOLVED",
+        "path": "docs/issues/closed/resolved/20261015_p1_per-post-x-data-publication-ban.md"
+      },
+      {
+        "id": "ISS-20261015-COL-017",
+        "priority": "P1",
+        "status": "RESOLVED",
+        "path": "docs/issues/closed/resolved/20261015_p1_per-source-staging-drivers.md"
+      },
+      {
+        "id": "ISS-20261015-PUB-015",
+        "priority": "P1",
+        "status": "RESOLVED",
+        "path": "docs/issues/closed/resolved/20261015_p1_publication-gate-blocked-unrecorded.md"
+      },
+      {
+        "id": "ISS-20261015-GT-003",
+        "priority": "P1",
+        "status": "RESOLVED",
+        "path": "docs/issues/closed/resolved/20261015_p1_unreproducible-gt-5y-averages.md"
+      },
+      {
+        "id": "ISS-20261015-PUB-035",
+        "priority": "P1",
+        "status": "RESOLVED",
+        "path": "docs/issues/closed/resolved/20261015_p1_withdraw-published-x-per-post-data.md"
+      },
+      {
+        "id": "ISS-20261015-ART-009",
+        "priority": "P2",
+        "status": "RESOLVED",
+        "path": "docs/issues/closed/resolved/20261015_p2_csv-storage-format.md"
+      },
+      {
+        "id": "ISS-20261015-PUB-036",
+        "priority": "P2",
+        "status": "RESOLVED",
+        "path": "docs/issues/closed/resolved/20261015_p2_publication-review-envelopes-missing.md"
+      },
+      {
+        "id": "ISS-20261015-PUB-037",
+        "priority": "P3",
+        "status": "RESOLVED",
+        "path": "docs/issues/closed/resolved/20261015_p3_guide-structure-requirements-unchecked.md"
+      }
+    ]
+  }
+}

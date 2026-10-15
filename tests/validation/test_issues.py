@@ -110,6 +110,25 @@ def test_open_high_is_reported_but_not_fatal(tmp_path: Path) -> None:
     assert report["failure_count"] == 0
 
 
+def test_issue_records_are_scanned_recursively(tmp_path: Path) -> None:
+    _write(
+        tmp_path / "docs/issues/active/publication",
+        "a.md",
+        _issue(ID="ISS-1", 優先度="P1 (High)", ステータス="OPEN"),
+    )
+    _write(
+        tmp_path / "docs/issues/closed/resolved",
+        "b.md",
+        _issue(ID="ISS-2", 優先度="P2 (Medium)", ステータス="RESOLVED (2026-10-15)"),
+    )
+
+    report = audit_issues(tmp_path)
+
+    assert report["issue_count"] == 2
+    assert report["open_high"] == ["docs/issues/active/publication/a.md"]
+    assert report["failure_count"] == 0
+
+
 @pytest.mark.parametrize("status", sorted(TERMINAL_STATUSES))
 def test_terminal_status_without_a_date_is_rejected(tmp_path: Path, status: str) -> None:
     """A status flip with no evidence is what this repository keeps having to undo."""

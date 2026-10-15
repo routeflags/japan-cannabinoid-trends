@@ -454,8 +454,8 @@ sources_reviewed:
   - datasets/cannabinoid-multi-trends/data/processed/early-warning-index-v1.csv
   - datasets/cannabinoid-multi-trends/data/processed/collection-summary.md
   - docs/plans/2026-09-18_x-data-improvement-plan.md
-  - docs/issues/20261002_p1_unvalidated-classification.md
-  - docs/issues/20261002_p1_tiktok-primary-label.md
+  - docs/issues/active/50-taxonomy-standards/20261002_p1_unvalidated-classification.md
+  - docs/issues/closed/resolved/20261002_p1_tiktok-primary-label.md
   - research/citation/opportunities.md
 
 methodological_frameworks_applied:

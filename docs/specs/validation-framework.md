@@ -905,7 +905,7 @@ G6 仕様（`docs/plans/20261013f.md`）の垂直スライス。Git 運用全体
 無かったため、該当 CSV は 2026-10-01 の追加以降 **全 14 タグ・全 14 Release** の
 クリーンアーカイブに含まれ、Zenodo `10.5281/zenodo.23253840`（open access）にも
 入ったまま公開された。露出範囲・経緯は
-`docs/issues/20261013_p0_x-identity-published-in-all-releases.md`。
+`docs/issues/closed/mitigated/20261013_p0_x-identity-published-in-all-releases.md`。
 
 これは本フレームワークが何度も見てきた失敗形（規則はあるが検査が無い）の再発である。
 
@@ -961,7 +961,7 @@ processed CSV の変更ではスキーマ検証だけが走り、再現性検証
 - **履歴書き換え（B）は 2026-10-13 に実施**（`git filter-repo`。54 handle の全履歴置換
   ＋ 投稿 CSV の全パス変種と旧 logbook の全履歴除去）。作業ツリーのゲートでは検出
   できない対象（改名前パス、HEAD に無い logbook）があったため、履歴側にも検査が要る。
-  経緯・副作用は `docs/issues/20261013_p0_x-identity-published-in-all-releases.md`。
+  経緯・副作用は `docs/issues/closed/mitigated/20261013_p0_x-identity-published-in-all-releases.md`。
 - CHANGELOG エントリは新リリースと同時に付ける（`validate-version-sync.sh` は
   CHANGELOG の先頭見出しを最新タグと比較するため、`[Unreleased]` を先頭に置けない）。
 - 影響アカウントへの通知の要否は未判断。

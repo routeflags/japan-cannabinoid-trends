@@ -66,7 +66,7 @@ AGENTS.md は「公開ゲートの失敗は解決または明示的に文書化�
 ## 追記（2026-10-15）: 残る PUB-06/07/08 と新しい公開候補
 
 - 残る WARNING（PUB-06 取得元の利用条件 / **PUB-07 再配布条件** / PUB-08 著作権）は、
-  メンテナの新しい指示 [`docs/issues/20261014.md`](./20261014.md)
+  メンテナの新しい指示 [`docs/issues/active/00-needs-user-confirmation/20261014.md`](../../active/00-needs-user-confirmation/20261014.md)
   （`ISS-20261014-PUB-029`、研究用CSVの非識別化・正規化エクスポート）が扱う。
   同指示の表題の "PUB-07" はゲート検査 PUB-07 を指す。
 - **ゲートは成果物単位**: 現在の `CONDITIONAL` は

@@ -3,7 +3,7 @@
 **ID:** ISS-20261015-XID-023  
 **優先度:** P2 (Medium)  
 **ステータス:** OPEN  
-**対象:** `docs/issues/20261013_p0_x-identity-published-in-all-releases.md`, `metadata/privacy/x-identity-denylist.json`, `docs/specs/validation-framework.md` §21.6
+**対象:** `docs/issues/closed/mitigated/20261013_p0_x-identity-published-in-all-releases.md`, `metadata/privacy/x-identity-denylist.json`, `docs/specs/validation-framework.md` §21.6
 
 ## 概要
 

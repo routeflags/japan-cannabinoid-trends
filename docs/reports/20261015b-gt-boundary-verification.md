@@ -1,6 +1,6 @@
 # Google Trends 境界挙動のライブ検証 — 計画・実装・実行手順（ISS-20261015-GT-001）
 
-対象 issue: `docs/issues/20261015_p1_live-boundary-verification.md`（ISS-20261015-GT-001、P1）。
+対象 issue: `docs/issues/active/01-time-gated/20261015_p1_live-boundary-verification.md`（ISS-20261015-GT-001、P1）。
 本書は Product Manager が作成した計画（BDD 分解・設計判断・レビュー記録）と、
 実装・検証の結果、および**メンテナへの単一の承認質問**を記録する。
 
@@ -146,8 +146,8 @@ capture は「承認された MCP セッションが得た **verbatim の tool r
 | `metadata/artifacts/artifact-registry.json` | 変更 | `google-trends-mcp-tool-result-v1` を登録（reader は既存 `json-object-reader`、新実装なし） |
 | `docs/specs/gt-boundary-verification.md` | 新規 | 計測プロトコル・昇格規則・実行コマンド（正本） |
 | `docs/specs/collection-pipeline.md` / `docs/specs/validation-framework.md` | 微修正 | 現状（オフライン基盤あり・ライブ未実行）の正確な反映 |
-| `docs/issues/20261015_p1_live-boundary-verification.md` | 変更 | `PENDING`（理由 + 日付）。完了条件は未チェックのまま |
-| `docs/issues/20261015_p2_gt-legacy-label-year-defect.md` | 新規 | 副産物: 旧 run のラベル年誤り（ISS-20261015-GT-002、P2 OPEN） |
+| `docs/issues/active/01-time-gated/20261015_p1_live-boundary-verification.md` | 変更 | `PENDING`（理由 + 日付）。完了条件は未チェックのまま |
+| `docs/issues/active/30-production-collection-expansion/20261015_p2_gt-legacy-label-year-defect.md` | 新規 | 副産物: 旧 run のラベル年誤り（ISS-20261015-GT-002、P2 OPEN） |
 | `tests/collection/test_gt_boundary_capture.py` | 新規 | 21 件（parser / manifest / staging / adopt / CLI） |
 | `tests/validation/test_boundary_report.py` | 新規 | 16 件（対応表 / 昇格規則 / CLI / 決定性・非破壊） |
 

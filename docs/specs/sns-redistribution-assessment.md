@@ -65,7 +65,7 @@ X の開発者ポリシーでは、API 経由で取得したデータの再配�
 アーカイブに含まれたまま公開された。Release は Zenodo へ送信されるため、DOI
 `10.5281/zenodo.23253840`（open access）のアーカイブにも含まれている（実物確認済み）。
 
-経緯・露出範囲・対応は `docs/issues/20261013_p0_x-identity-published-in-all-releases.md`
+経緯・露出範囲・対応は `docs/issues/closed/mitigated/20261013_p0_x-identity-published-in-all-releases.md`
 を参照。前向き修正として:
 
 - 該当ファイルは追跡を外して非公開領域へ退避し、`src/processing/reproduce.py` の

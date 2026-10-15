@@ -4,9 +4,11 @@ Why this exists: eight issues were OPEN in ``docs/issues/``, two of them P0, and
 had been open for eleven days with nothing noticing.  Three files in the same
 directory were not issue records at all (a validation report, an instruction
 document and an Actor verification report), so the directory did not mean one thing.
-No check read any of it.
+No check read any of it.  The directory now has status / milestone subdirectories,
+so the audit scans recursively and still enforces the same rule on every issue
+record.
 
-The rule, one rule for every file in ``docs/issues/``:
+The rule, one rule for every issue record under ``docs/issues/``:
 
 1. it is an issue record: ``ID``, ``優先度`` and ``ステータス`` are present;
 2. ``優先度`` is ``P0``/``P1``/``P2``/``P3``, and P0 is Critical while P1 is High;
@@ -119,7 +121,7 @@ def audit_issues(root: str | Path, issues_dir: str | Path = "docs/issues") -> di
 
     issues: list[Issue] = []
     if directory.is_dir():
-        for path in sorted(directory.glob("*.md")):
+        for path in sorted(directory.rglob("*.md")):
             relative = path.relative_to(root).as_posix()
             issues.append(_parse(relative, path.read_text(encoding="utf-8")))
 

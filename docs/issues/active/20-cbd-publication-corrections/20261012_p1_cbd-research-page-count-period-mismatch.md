@@ -35,8 +35,8 @@ CBD ページの収集期間・件数・取得日が、確認できた raw フ�
 
 - raw を書き換えず、件数差は upstream / processing / deduplication の各層で調べる。
 - 根拠のない値を「正しい方」として選ばず、再現できない数値は訂正または撤回する。
-- 既存の `docs/issues/20261006_html-validation_research_cbd.md` は HTML 構文検証 issue であり、
-  本 issue は内容・データ整合性を対象とする。
+- 既存の 2026-10-06 HTML validation issue は HTML 構文検証 issue であり、本 issue は
+  内容・データ整合性を対象とする。
 
 ## 完了条件
 

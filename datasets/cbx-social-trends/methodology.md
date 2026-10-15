@@ -45,7 +45,7 @@ X データには複数の集計値があるため、整理する:
 > `data/processed/x_cbx_202608_summary.csv` は **2026-10-13 に公開を取り下げた**。
 > X の投稿本文・handle・表示名・URL を含んでいたためで、追跡を外して非公開の
 > `data/private/` へ退避し、`src/processing/reproduce.py` の `WITHDRAWN` に記録して
-> いる（露出範囲は `docs/issues/20261013_p0_x-identity-published-in-all-releases.md`）。
+> いる（露出範囲は `docs/issues/closed/mitigated/20261013_p0_x-identity-published-in-all-releases.md`）。
 > したがって raw からの processed 再生成は不可能であり、**公開される X 成果物は存在しない**
 > （2026-10-13 に非匿名化版、2026-10-15 に匿名化版をそれぞれ取り下げ。投稿単位の X データは
 > 匿名化後も公開しない: `ISS-20261015-COL-030` §4.1 / `ISS-20261015-PUB-035`）。

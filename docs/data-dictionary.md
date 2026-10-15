@@ -12,7 +12,7 @@
 
 > **本ファイルは公開されていない。** 2026-10-13 に追跡を外し、非公開の
 > `datasets/cbx-social-trends/data/private/` へ退避した（露出範囲と経緯は
-> `docs/issues/20261013_p0_x-identity-published-in-all-releases.md`）。
+> `docs/issues/closed/mitigated/20261013_p0_x-identity-published-in-all-releases.md`）。
 > 2026-10-15 以降、**投稿単位の X データは匿名化後も公開しない**（§1.2）ため、
 > X の処理済み成果物として公開されているものは**無い**。以下のスキーマは
 > **取り下げ前の記録**として保持する（来歴を消さないため）。

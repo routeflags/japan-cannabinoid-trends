@@ -64,7 +64,7 @@ payload へ追記 → `ARTIFACT_HASH_MISMATCH` + `ARTIFACT_SIZE_MISMATCH`、raw 
   コミット済みスナップショットが未追跡データに依存している。
 
 対応: 追跡外データへの依存を **ISS-20261015-AUD-028** として記録した
-（`docs/issues/20261015_p1_audit-snapshots-assume-untracked-data.md`）。
+（`docs/issues/closed/resolved/20261015_p1_audit-snapshots-assume-untracked-data.md`）。
 規則は「コミットされる監査スナップショットは追跡ファイルだけで再生成できる」。
 **未修正**（issue で追跡）。
 
