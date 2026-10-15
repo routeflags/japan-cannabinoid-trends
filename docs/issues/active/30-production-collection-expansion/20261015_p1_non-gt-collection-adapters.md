@@ -27,13 +27,15 @@ X / YouTube / TikTok / Instagram は adapter 未実装で、収集は既存 shel
 
 ## 対応方針
 
-- 対象ソースと着手順を決める（研究上の優先度と、Apify 生レスポンスの確保可能性で決まる）。
+- **owner 決定（2026-10-15）:** 着手順は (1) 採用済み YouTube Apify CSV pattern の
+  declaration-driven adapter / driver wrapper、(2) X の mock / dry-run + request-only evidence、
+  (3) X live request は費用 guard と証跡が通った後の別途明示承認、とする。
 - adapter は共通 Contract（`collection.core.contracts`）を実装し、契約テストを追加する
   （架空ソーステストと同じ型で検証する）。
 - capability は実測後に registry を更新する（推測で `supported` にしない）。
 
 ## 完了条件
 
-- [ ] 対象ソースと着手順の決定
+- [x] 対象ソースと着手順の決定（2026-10-15 owner `go 1,2`: YouTube Apify CSV pattern を先行）
 - [ ] adapter 実装 + 契約テスト
 - [ ] capability の実測と registry 更新（未確認は `unknown` のまま）

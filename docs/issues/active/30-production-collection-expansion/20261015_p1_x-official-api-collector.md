@@ -31,6 +31,9 @@ Apify 経由の運用知識（skill / notes）だけがあり、パイプライ�
 
 ## 対応方針
 
+- **owner 決定（2026-10-15）:** X は live request へ進まない。当面は mock / dry-run と
+  request-only evidence の実装に限定し、実課金や X 元投稿データのリポジトリ保存を伴う経路は
+  禁止する。
 - `collection.core.contracts` の adapter 契約に従う X 用 adapter（transport = 公式 API）を実装し、
   `config/collectors.json` に新しい collector（例 `x-api-v2`）を **`unverified` で追加**する
   （registry が正本。実測後に status を上げる）。
@@ -55,4 +58,5 @@ Apify 経由の運用知識（skill / notes）だけがあり、パイプライ�
 
 - `ISS-20261015-COL-032`（費用管理なしでは実取得に進まない）
 - `ISS-20261015-PRV-033`（request-only evidence なしの実取得は完了条件を満たさない）
-- 未確定: `ISS-20261015-COL-030` U2（予算上限）/ U3（サンプリング条件）
+- owner 決定済み: `ISS-20261015-COL-030` U2 の当面値は **0 円 / live request 禁止**。
+- 未確定: `ISS-20261015-COL-030` U3（サンプリング条件）。live 実行は別途 owner 承認まで行わない。

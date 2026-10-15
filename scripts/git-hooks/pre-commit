@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # =============================================================================
-# Pre-commit hook: Data Schema + Version Sync + Research Pages + Emergence Tracker + Processed Artifact + X Identity Validation
+# Pre-commit hook: Data Schema + Version Sync + Research Pages + Emergence Tracker + Processed Artifact + X Identity + Staged Run Metadata Validation
 #
 # コミット前に以下を検証:
 # 1. Data Dictionary と実際のデータスキーマの一致
@@ -9,6 +9,7 @@
 # 4. Search Emergence Tracker の最新性（publication/search-emergence-tracker）
 # 5. processed 成果物の再現性（再導出可能、または欠落入力を明示した再現不能宣言）
 # 6. X 識別情報の混入防止（投稿本文・handle・表示名・投稿 URL を追跡しない）
+# 7. staged 新規 run メタデータの軽量検査（stdlib のみ。完全検証は CI の audit-new-runs）
 #
 # 検証をスキップする場合:
 #   git commit --no-verify
@@ -42,6 +43,9 @@ PROCESSED_AUDIT_NEEDED=false
 
 # X 識別情報の混入防止検証が必要なファイル
 X_IDENTITY_AUDIT_NEEDED=false
+
+# staged 新規 run メタデータの軽量検査が必要なファイル
+STAGED_RUN_AUDIT_NEEDED=false
 
 # 検証は独立している（例: processed CSV の変更はスキーマと再現性の両方に効く）
 # ため、case は 1 本にまとめず検証ごとに独立させる。1 本の case では最初に一致した
@@ -108,10 +112,19 @@ for file in $CHANGED_FILES; do
       X_IDENTITY_AUDIT_NEEDED=true
       ;;
   esac
+
+  # 7. staged 新規 run メタデータの軽量検査対象（source 非依存: raw 配下の
+  # staged ファイルがあれば発火し、検査本体が run_metadata.json だけを選別する）
+  case $file in
+    datasets/*/data/raw/*|\
+    src/validation/staged_runs.py)
+      STAGED_RUN_AUDIT_NEEDED=true
+      ;;
+  esac
 done
 
 # いずれの検証も不要な場合はスキップ
-if [ "$SCHEMA_VALIDATION_NEEDED" = false ] && [ "$VERSION_VALIDATION_NEEDED" = false ] && [ "$RESEARCH_VALIDATION_NEEDED" = false ] && [ "$EMERGENCE_VALIDATION_NEEDED" = false ] && [ "$PROCESSED_AUDIT_NEEDED" = false ] && [ "$X_IDENTITY_AUDIT_NEEDED" = false ]; then
+if [ "$SCHEMA_VALIDATION_NEEDED" = false ] && [ "$VERSION_VALIDATION_NEEDED" = false ] && [ "$RESEARCH_VALIDATION_NEEDED" = false ] && [ "$EMERGENCE_VALIDATION_NEEDED" = false ] && [ "$PROCESSED_AUDIT_NEEDED" = false ] && [ "$X_IDENTITY_AUDIT_NEEDED" = false ] && [ "$STAGED_RUN_AUDIT_NEEDED" = false ]; then
   exit 0
 fi
 
@@ -228,6 +241,29 @@ if [ "$X_IDENTITY_AUDIT_NEEDED" = true ]; then
   else
     echo ""
     echo "  ✅ X 識別情報の混入防止検証に合格しました"
+  fi
+  echo ""
+fi
+
+# 7. staged 新規 run メタデータの軽量検査
+if [ "$STAGED_RUN_AUDIT_NEEDED" = true ]; then
+  echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+  echo "  7. Staged Run Metadata (lightweight local check)"
+  echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+  echo ""
+  echo "  軽量なローカル検査です。完全な厳密検証は CI の audit-new-runs が担います。"
+  echo ""
+
+  # 検証は標準ライブラリのみで動く（cerberus 不要の専用入口）ため、venv が無い環境でも実行できる。
+  # staged の run_metadata.json を Git index から読み、JSON 可読・run_id・
+  # 最小 provenance キーの存在だけを確認する。凍結 legacy は免除される。
+  if ! PYTHONPATH=src python3 -m validation.staged_runs; then
+    echo ""
+    echo "  ❌ staged run メタデータの軽量検査に失敗しました"
+    VALIDATION_FAILED=true
+  else
+    echo ""
+    echo "  ✅ staged run メタデータの軽量検査に合格しました"
   fi
   echo ""
 fi

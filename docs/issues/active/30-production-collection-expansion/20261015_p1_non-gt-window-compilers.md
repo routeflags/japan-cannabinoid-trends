@@ -26,6 +26,9 @@ compiler 未登録で、期間パラメータは adapter 自身の検証に委�
 
 ## 対応方針
 
+- **owner 決定（2026-10-15）:** 非 GT adapter の着手順に合わせ、まず YouTube Apify CSV
+  pattern で request filter（例 `dateFilter`）と observed range を分けて扱う。X の絶対期間
+  compiler は mock / dry-run + request-only evidence が整うまで live 実測に進まない。
 - 各ソースの adapter（ISS-20261015-COL-016）と同じ設計単位で compiler を追加する。
 - ソース固有語彙は**実測で意味を確定してから** registry へ登録する（推測で登録しない）。
 - 表現不能な窓は fail closed（既存の拒否コード体系を再利用）。

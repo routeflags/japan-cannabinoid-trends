@@ -10,14 +10,14 @@
   },
   "summary": {
     "issue_count": 69,
-    "active_count": 27,
-    "closed_count": 42,
+    "active_count": 26,
+    "closed_count": 43,
     "status_counts": {
       "DOCUMENTED": 1,
       "MITIGATED": 1,
-      "OPEN": 25,
+      "OPEN": 24,
       "PENDING": 2,
-      "RESOLVED": 40
+      "RESOLVED": 41
     },
     "open_p0": 0,
     "open_p1": 6,
@@ -153,13 +153,13 @@
         "X official API は request-only evidence と cost control を持つまでは実収集しない",
         "new-run tracking policy と legacy label year defect が検証ルールに反映される"
       ],
-      "issue_count": 8,
+      "issue_count": 7,
       "status_counts": {
-        "OPEN": 8
+        "OPEN": 7
       },
       "priority_counts": {
         "P1": 4,
-        "P2": 4
+        "P2": 3
       },
       "issues": [
         {
@@ -203,12 +203,6 @@
           "priority": "P2",
           "status": "OPEN",
           "path": "docs/issues/active/30-production-collection-expansion/20261015_p2_gt-legacy-label-year-defect.md"
-        },
-        {
-          "id": "ISS-20261015-COL-020",
-          "priority": "P2",
-          "status": "OPEN",
-          "path": "docs/issues/active/30-production-collection-expansion/20261015_p2_precommit-cerberus-scope.md"
         }
       ]
     },
@@ -359,11 +353,11 @@
     }
   ],
   "closed": {
-    "issue_count": 42,
+    "issue_count": 43,
     "status_counts": {
       "DOCUMENTED": 1,
       "MITIGATED": 1,
-      "RESOLVED": 40
+      "RESOLVED": 41
     },
     "issues": [
       {
@@ -593,6 +587,12 @@
         "priority": "P2",
         "status": "RESOLVED",
         "path": "docs/issues/closed/resolved/20261015_p2_data-catalog-persistence.md"
+      },
+      {
+        "id": "ISS-20261015-COL-020",
+        "priority": "P2",
+        "status": "RESOLVED",
+        "path": "docs/issues/closed/resolved/20261015_p2_precommit-cerberus-scope.md"
       },
       {
         "id": "ISS-20261015-COV-004",
