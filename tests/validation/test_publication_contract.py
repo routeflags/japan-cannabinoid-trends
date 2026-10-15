@@ -405,3 +405,15 @@ def test_guide_faq_must_have_four_questions(tmp_path: Path) -> None:
     )
 
     assert "guide_faq_too_short" in _kinds(_report(tmp_path, short, name="guide_cbx_rewrite.html"))
+
+
+def test_guide_coa_section_must_not_name_the_requester(tmp_path: Path) -> None:
+    """PC-8: the COA requester stays in provenance records, not publication."""
+
+    named = GUIDE_CONFORMING.replace(
+        '<div class="data-section"><h2 id="data-coa">COA</h2></div>',
+        '<div class="data-section"><h2 id="data-coa">COA</h2><p class="meta">依頼者: Hempbin</p></div>',
+    )
+    findings = _report(tmp_path, named, name="guide_cbx_rewrite.html")["findings"]
+
+    assert [finding["kind"] for finding in findings] == ["guide_coa_requester_mention"]

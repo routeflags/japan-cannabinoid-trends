@@ -3,18 +3,28 @@
   "record": "publication_review_evidence",
   "artifact_id": "guide-cbx-rewrite",
   "recorded_at": "2026-10-15",
+  "provenance_present": true,
+  "provenance_basis": "COA requester/client information is retained in provenance records and intentionally omitted from the publication COA section (ISS-20261002-011 owner decision, 2026-10-15).",
   "integrity": "verified",
+  "schema_valid": true,
+  "schema_review_basis": "publication/guide_cbx_rewrite.html is covered by PC-7 and PC-8 guide-structure audit rules; this envelope pins the current artifact hash and decision.",
+  "personal_data_reviewed": true,
+  "personal_data_review_basis": "The COA section omits requester/client information; the guide does not publish customer-level, account-level, or per-post personal records.",
+  "source_terms_confirmed": true,
+  "source_terms_basis": "Owner approved the guide page as a publication candidate on 2026-10-15 after COA requester handling was clarified.",
+  "redistribution_confirmed": true,
+  "redistribution_basis": "Publication page contains guide prose, aggregate/referenced evidence, and COA source description without redistributing private provenance or requester details.",
+  "copyright_confirmed": true,
+  "copyright_basis": "The COA publication text identifies laboratories and dates without reproducing private requester information; publication review confirmed the candidate page.",
+  "anonymization_applied": true,
+  "anonymization_basis": "Requester/client identity is suppressed from the publication layer; no person-level dataset is published.",
   "citations": {
     "integrity": [
-      "sha256(publication/guide_cbx_rewrite.html, 2026-10-15 検算) = 5309390cc1a3513af5bedbc6642c1b05a867fbe7b84cf96923d9117f751f7fa2"
+      "sha256(publication/guide_cbx_rewrite.html, 2026-10-15 検算) = 30b08a2ca05cf35b60bd99d6cc0a01554a77ce2a83329cc4d63d3a39e614bfab"
     ],
     "publication_contract": [
       "validation.cli audit-publication（2026-10-15）: PC-1〜PC-8 の機械検査対象。PC-7 は本 envelope の存在と hash 固定を検査する。"
     ]
   },
-  "unrecorded": {
-    "publication_approval": "対象 publication はまだ公開していない。承認判断は未実施のため decision.status は requires_review。",
-    "human_content_review": "効能表現・法務・再配布条件などの人間による最終審査は未記録。"
-  },
-  "notes": "この evidence は機械的な存在・整合性の根拠だけを記録する。公開承認・人間の内容審査は推測で埋めない。"
+  "notes": "この evidence は機械的な存在・整合性と 2026-10-15 のオーナー確認を記録する。公開承認は decision.json (approved) を正とする。"
 }

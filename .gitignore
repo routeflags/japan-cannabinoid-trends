@@ -57,3 +57,5 @@ datasets/*/data/private/
 # redistributed before review.
 .staging/
 .quarantine/
+
+/.agents

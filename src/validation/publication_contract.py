@@ -396,6 +396,13 @@ def _guide_structure_findings(path: Path, repo_root: Path, raw: str, html: str) 
     faq_count = len(_H3_RE.findall(faq_sections[0])) if faq_sections else 0
     if faq_count < 4:
         add("guide_faq_too_short", f"FAQ has {faq_count} question heading(s); 4 required")
+
+    for section_id, content in _sections(html):
+        if section_id == "data-coa" and "依頼者" in content:
+            add(
+                "guide_coa_requester_mention",
+                'COA section must not name the requester (client); requester info stays in provenance records, not in publication (ISS-20261002-011)',
+            )
     return findings
 
 
