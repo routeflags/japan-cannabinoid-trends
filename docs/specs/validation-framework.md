@@ -323,7 +323,7 @@ Cerberus は**構造検証のみ**を担当する。
 6. 契約バージョンは `schema_registry.SCHEMA_VERSIONS` と文書の
    `schema_version` の両方を更新する（CV-20: 不一致は検出される）。
 
-## 10. スキーマ一覧（18件、契約バージョンはいずれも 1.0.0）
+## 10. スキーマ一覧（19件、契約バージョンはいずれも 1.0.0）
 
 「契約」は総称である。用語の定義・所有コンテキスト・宣言場所・検査手段は
 `docs/specs/contracts.md`（契約のドメインモデル）を正本とする。下表の**グループ**列は
@@ -339,6 +339,7 @@ Cerberus の作業グループ（`G1`〜`G7` / `P6`）を指す。
 | `query-variants-v1` | G2 | 表記ゆれブロック |
 | `query-variants-registry-v1` | G2 | `metadata/queries/query-variants.json`（variant 束。ブロック形状は `query-variants-v1` を再利用） |
 | `temporal-window-v1` | G3 | 単独 window 文書 |
+| `coverage-manifest-v1` | G3 | run の coverage 判断（§9.3 manifest。`schema_id` / `schema_version` 付き。永続化は `<run-dir>/coverage-manifest.json` への明示 opt-in のみ — §16） |
 | `artifact-manifest-v1` | G4 | Artifact manifest（sha256 は 64桁小文字 hex。G4 垂直スライスで `contains_full_timeseries` / `page_index` / `artifact_group_id` / `database` / `artifact_groups` を任意追加 — §17） |
 | `artifact-registry-v1` | G4 | `metadata/artifacts/artifact-registry.json`（readers / artifact_schemas の対応表 — §17） |
 | `transformation-v1` | G5 | 変換来歴（input/output 参照は非空） |
@@ -605,6 +606,18 @@ granularity / week_start の完全一致を要求（不一致・未登録は exi
   missingness 未明示として unknown）。CLI `--coverage-a/--coverage-b` で有効化。
 - 旧 run 監査（§15/Phase 1）: `docs/audits/g3-temporal-inventory.json`（29 run、
   sha256 前後比較で `raw_modified: false`。テストが再計算一致を強制）。
+- coverage manifest の永続化（ISS-20261015-COV-004、2026-10-15）: schema
+  `coverage-manifest-v1`（`schema_id` / `schema_version` 付き。`SCHEMA_VERSIONS`
+  は 1.0.0）を登録し、正規の派生ファイル `<run-dir>/coverage-manifest.json`
+  を `coverage-run --persist` の明示 opt-in でのみ生成する。`--persist` は
+  `--output` と排他（併用は exit 2）、対象不在は exit 3。生成器は既存の
+  `evaluate_coverage` を再利用し（規則の複製なし）、決定論的シリアライザ +
+  同 dir tmp → `os.replace` の atomic 置換で同一入力から byte-identical に
+  再生成できる。既存 run への遡及生成はしない。`--persist` 無しは従来どおり
+  読取専用のオンデマンド報告。raw payload と `run_metadata.json` は不変。
+  併せて `expected_buckets_undetermined` 分岐の潜在例外（未定義 `reasons` への
+  追加）を修正し、bucket 化不能な exact window を欠測証拠として記録する
+  （`observed_zero` 化しない）。
 
 ### 16.3 未実装（引き継ぎ）
 
@@ -616,7 +629,6 @@ granularity / week_start の完全一致を要求（不一致・未登録は exi
   （ISS-20261015-GT-001 PENDING）。
 - 他ソース（X / YouTube / TikTok / Instagram / LinkedIn）の Window Compiler と
   `dateFilter=month` 等のローリング語彙の検証。
-- coverage manifest の run ディレクトリへの永続化（現状は `coverage-run` のオンデマンド評価）。
 - T6 の sampling / normalization 条件（comparison set 等）の完全モデル化（G7）。
 
 ## 17. G4 垂直スライス（Artifact Registry / Storage Contract / Data Catalog）— 2026-10-13

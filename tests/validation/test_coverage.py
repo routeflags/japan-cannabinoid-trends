@@ -15,9 +15,21 @@ Read-only: the real datasets are only read.
 import json
 from pathlib import Path
 
-from validation.cli import EXIT_IO, EXIT_OK
+from validation.cli import EXIT_CONFIG, EXIT_IO, EXIT_OK
 from validation.cli import main as validation_main
-from validation.coverage import evaluate_coverage
+from validation.core import validate_document
+from validation.coverage import (
+    COVERAGE_MANIFEST_FILENAME,
+    coverage_manifest_path_for_run,
+    dump_coverage_manifest,
+    evaluate_coverage,
+    write_coverage_manifest,
+)
+from validation.schema_registry import get_schema
+from validation.schemas.coverage import (
+    COVERAGE_MANIFEST_SCHEMA_ID,
+    COVERAGE_MANIFEST_SCHEMA_VERSION,
+)
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 LEGACY_GT = (
@@ -395,3 +407,222 @@ def test_coverage_run_cli_missing_target_exit_3(capsys, tmp_path):
         ["coverage-run", "--file", str(tmp_path / "nowhere")]
     )
     assert code == EXIT_IO
+
+
+# ---------------------------------------------------------------------------
+# ISS-20261015-COV-004: coverage manifest persistence
+# ---------------------------------------------------------------------------
+
+
+def _assert_valid_manifest(manifest: dict) -> None:
+    """The emitted manifest carries its schema identity and validates."""
+    assert manifest["schema_id"] == "coverage-manifest-v1"
+    assert manifest["schema_id"] == COVERAGE_MANIFEST_SCHEMA_ID
+    assert manifest["schema_version"] == COVERAGE_MANIFEST_SCHEMA_VERSION
+    assert manifest["schema_version"] == "1.0.0"
+    schema = get_schema("coverage-manifest-v1")
+    result = validate_document(manifest, schema)
+    assert result.valid is True, result.errors
+
+
+def test_manifest_carries_schema_identity_and_validates(tmp_path):
+    run_dir = _write_run(
+        tmp_path,
+        run_id="run-schema",
+        provenance=_provenance(),
+        execution={"status": "success", "returned_count": 3, "pagination_exhausted": True},
+        payloads={"payload.json": _series(["2026-09-20", "2026-09-27", "2026-10-04"])},
+    )
+    manifest = evaluate_coverage(run_dir)
+    _assert_valid_manifest(manifest)
+    # Existing fields stay backward-compatible for current consumers.
+    assert manifest["coverage_version"] == "1.0.0"
+    assert manifest["profile"] == "g3_coverage"
+    assert manifest["run_id"] == "run-schema"
+    assert manifest["window_id"] == "2026-10-01_2026-10-08"
+    assert manifest["coverage"]["status"] == "partial"
+
+
+def test_legacy_and_missing_metadata_manifests_validate():
+    for target in (COMMON_SCALE_MISSING, NODATA):
+        _assert_valid_manifest(evaluate_coverage(target))
+
+
+def test_missing_run_metadata_manifest_validates(tmp_path):
+    empty = tmp_path / "empty"
+    empty.mkdir()
+    manifest = evaluate_coverage(empty)
+    assert manifest["run_id"] is None
+    assert manifest["window_id"] is None
+    _assert_valid_manifest(manifest)
+
+
+def test_dump_is_byte_identical_on_repeated_evaluation(tmp_path):
+    run_dir = _write_run(
+        tmp_path,
+        run_id="run-deterministic",
+        provenance=_provenance(),
+        execution={"status": "success", "returned_count": 3, "pagination_exhausted": True},
+        payloads={"payload.json": _series(["2026-09-20", "2026-09-27", "2026-10-04"])},
+    )
+    first = dump_coverage_manifest(evaluate_coverage(run_dir))
+    second = dump_coverage_manifest(evaluate_coverage(run_dir))
+    assert first == second
+    assert first.endswith("\n")
+    assert first.encode("utf-8").decode("utf-8") == first
+
+
+def test_undetermined_expected_buckets_do_not_crash_and_stay_missing(tmp_path):
+    """An exact window that cannot be bucketed records undetermined evidence
+    instead of crashing, and no missing interval becomes an observed zero."""
+    run_dir = _write_run(
+        tmp_path,
+        run_id="run-undetermined",
+        provenance=_provenance(requested_start="not-a-date"),
+        execution={"status": "success", "returned_count": 3, "pagination_exhausted": True},
+        payloads={"payload.json": _series(["2026-09-20", "2026-09-27", "2026-10-04"])},
+    )
+    manifest = evaluate_coverage(run_dir)
+    coverage = manifest["coverage"]
+    assert "expected_buckets_undetermined" in coverage["reasons"]
+    assert coverage["expected_granularity"] is None
+    assert coverage["expected_intervals"] == []
+    assert "observed_zero" not in json.dumps(manifest)
+    _assert_valid_manifest(manifest)
+
+
+def test_coverage_run_without_persist_is_read_only(tmp_path):
+    run_dir = _write_run(
+        tmp_path,
+        run_id="run-readonly",
+        provenance=_provenance(),
+        execution={"status": "success", "returned_count": 3, "pagination_exhausted": True},
+        payloads={"payload.json": _series(["2026-09-20", "2026-09-27", "2026-10-04"])},
+    )
+    before = sorted(path.name for path in run_dir.iterdir())
+    code = validation_main(
+        ["coverage-run", "--file", str(run_dir), "--format", "json"]
+    )
+    assert code == EXIT_OK
+    assert sorted(path.name for path in run_dir.iterdir()) == before
+    assert not (run_dir / COVERAGE_MANIFEST_FILENAME).exists()
+
+
+def _sha256(path: Path) -> str:
+    import hashlib
+
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def test_coverage_run_persist_writes_canonical_manifest(tmp_path, capsys):
+    run_dir = _write_run(
+        tmp_path,
+        run_id="run-persist",
+        provenance=_provenance(),
+        execution={"status": "success", "returned_count": 3, "pagination_exhausted": True},
+        payloads={"payload.json": _series(["2026-09-20", "2026-09-27", "2026-10-04"])},
+    )
+    metadata_hash = _sha256(run_dir / "run_metadata.json")
+    payload_hash = _sha256(run_dir / "payload.json")
+    expected = coverage_manifest_path_for_run(run_dir)
+    assert expected == run_dir / "coverage-manifest.json"
+
+    code = validation_main(
+        ["coverage-run", "--file", str(run_dir), "--persist", "--format", "json"]
+    )
+    captured = capsys.readouterr()
+    assert code == EXIT_OK
+    assert expected.is_file()
+    persisted = json.loads(expected.read_text(encoding="utf-8"))
+    _assert_valid_manifest(persisted)
+    # The persisted file is the evaluated manifest, serialized deterministically.
+    assert expected.read_text(encoding="utf-8") == dump_coverage_manifest(
+        evaluate_coverage(run_dir)
+    )
+    assert f"coverage manifest persisted: {expected}" in captured.err
+    # Raw observations are immutable: payload and run metadata are untouched.
+    assert _sha256(run_dir / "run_metadata.json") == metadata_hash
+    assert _sha256(run_dir / "payload.json") == payload_hash
+    # Re-running persist is byte-identical: the persisted manifest itself is
+    # not payload evidence, so re-evaluation sees the same run.
+    code = validation_main(
+        ["coverage-run", "--file", str(run_dir), "--persist", "--format", "json"]
+    )
+    assert code == EXIT_OK
+    assert expected.read_text(encoding="utf-8") == dump_coverage_manifest(
+        evaluate_coverage(run_dir)
+    )
+
+
+def test_coverage_run_persist_accepts_metadata_file_target(tmp_path):
+    run_dir = _write_run(
+        tmp_path,
+        run_id="run-persist-file-target",
+        provenance=_provenance(),
+        execution={"status": "success", "returned_count": 3, "pagination_exhausted": True},
+        payloads={"payload.json": _series(["2026-09-20", "2026-09-27", "2026-10-04"])},
+    )
+    code = validation_main(
+        [
+            "coverage-run",
+            "--file", str(run_dir / "run_metadata.json"),
+            "--persist",
+        ]
+    )
+    assert code == EXIT_OK
+    assert (run_dir / COVERAGE_MANIFEST_FILENAME).is_file()
+
+
+def test_coverage_run_persist_with_output_exits_2_and_writes_nothing(
+    tmp_path, capsys
+):
+    run_dir = _write_run(
+        tmp_path,
+        run_id="run-conflict",
+        provenance=_provenance(),
+        execution={"status": "success", "returned_count": 3, "pagination_exhausted": True},
+        payloads={"payload.json": _series(["2026-09-20", "2026-09-27", "2026-10-04"])},
+    )
+    elsewhere = tmp_path / "elsewhere.json"
+    code = validation_main(
+        [
+            "coverage-run",
+            "--file", str(run_dir),
+            "--persist",
+            "--output", str(elsewhere),
+        ]
+    )
+    assert code == EXIT_CONFIG
+    assert not (run_dir / COVERAGE_MANIFEST_FILENAME).exists()
+    assert not elsewhere.exists()
+
+
+def test_coverage_run_persist_missing_target_exits_3(tmp_path):
+    missing = tmp_path / "nowhere"
+    code = validation_main(["coverage-run", "--file", str(missing), "--persist"])
+    assert code == EXIT_IO
+    assert not (tmp_path / COVERAGE_MANIFEST_FILENAME).exists()
+
+
+def test_write_coverage_manifest_cleans_temp_file_on_failure(tmp_path):
+    manifest = evaluate_coverage(
+        _write_run(
+            tmp_path / "src",
+            run_id="run-tmp-cleanup",
+            provenance=_provenance(),
+            execution={"status": "success"},
+            payloads={"payload.json": _series(["2026-10-04"])},
+        )
+    )
+    # Pointing the write at an existing directory fails the replace; the temp
+    # file must not remain and no partial manifest may appear.
+    blocked = tmp_path / "blocked"
+    blocked.mkdir()
+    try:
+        write_coverage_manifest(manifest, blocked)
+    except (OSError, IsADirectoryError):
+        pass
+    else:
+        raise AssertionError("expected the directory-target write to fail")
+    assert not (tmp_path / "blocked.tmp").exists()
+    assert blocked.is_dir() and not any(blocked.iterdir())

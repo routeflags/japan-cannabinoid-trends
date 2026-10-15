@@ -29,6 +29,7 @@ from validation.schemas.collection_run import (
     COLLECTION_RUN_RUNNING_SCHEMA,
     COLLECTION_RUN_SCHEMA,
 )
+from validation.schemas.coverage import COVERAGE_MANIFEST_SCHEMA
 from validation.schemas.provenance import EVIDENCE_REGISTRY_SCHEMA, TRANSFORMATION_SCHEMA
 from validation.schemas.query import (
     QUERY_REGISTRY_SCHEMA,
@@ -62,8 +63,9 @@ SCHEMA_REGISTRY: dict[str, dict] = {
     "query-registry-v1": QUERY_REGISTRY_SCHEMA,
     "query-variants-v1": QUERY_VARIANTS_SCHEMA,
     "query-variants-registry-v1": QUERY_VARIANTS_REGISTRY_SCHEMA,
-    # G3 temporal window (P3-5).
+    # G3 temporal window (P3-5) and coverage manifest (ISS-20261015-COV-004).
     "temporal-window-v1": TEMPORAL_WINDOW_SCHEMA,
+    "coverage-manifest-v1": COVERAGE_MANIFEST_SCHEMA,
     # G4 artifact manifest (P3-6) and artifact registry (G4 vertical slice).
     "artifact-manifest-v1": ARTIFACT_MANIFEST_SCHEMA,
     "artifact-registry-v1": ARTIFACT_REGISTRY_SCHEMA,

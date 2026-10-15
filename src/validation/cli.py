@@ -10,7 +10,9 @@ Commands
 - ``gate-run``            post-collection L1 gate: catalog vs quarantine (P6-2)
 - ``compare-runs``        L2 run-level comparability (G1 §12, C1-C3; G3 T6/T7
                           with ``--coverage-a`` / ``--coverage-b``)
-- ``coverage-run``        G3 §9 coverage manifest for one run (report only)
+- ``coverage-run``        G3 §9 coverage manifest for one run (on-demand
+                          report; explicit ``--persist`` writes the canonical
+                          ``<run-dir>/coverage-manifest.json``)
 - ``audit-temporal``      non-destructive G3 §15 temporal inventory
 - ``classify-query``      Stage-1 query-string classification (G2 §8)
 - ``compare-queries``     definition-level query comparability (G2 §9)
@@ -37,7 +39,9 @@ Exit codes (h.md §13)
 ==========  =============================================
 
 Precedence when several classes occur in one invocation: 2 > 3 > 1 > 0.
-The CLI itself never modifies files except the ``--output`` report path.
+The CLI itself never modifies files except the ``--output`` report path and
+the explicit opt-in persist targets (``coverage-run --persist`` writes only
+the canonical ``<run-dir>/coverage-manifest.json``).
 
 Streams: machine-readable JSON goes to stdout (or ``--output``); human-
 readable lines go to stderr (h.md §13 "エラー内容は標準エラー出力またはJSON
@@ -53,7 +57,12 @@ from pathlib import Path
 
 from validation.boundary import build_boundary_report
 from validation.comparability import compare_runs
-from validation.coverage import build_temporal_inventory, evaluate_coverage
+from validation.coverage import (
+    build_temporal_inventory,
+    coverage_manifest_path_for_run,
+    evaluate_coverage,
+    write_coverage_manifest,
+)
 from validation.contract_ledger import build_contract_ledger
 from validation.gates import post_collection_gate, pre_collection_gate
 from validation.g6_inventory import build_git_tracking_inventory
@@ -1330,18 +1339,50 @@ def cmd_compare_runs(args) -> int:
 
 
 def cmd_coverage_run(args) -> int:
-    """G3 §9 coverage manifest for one run (read-only).
+    """G3 §9 coverage manifest for one run (read-only by default).
+
+    Without ``--persist`` the command reports the on-demand manifest and
+    writes nothing except the ``--output`` path (existing behavior).  With
+    ``--persist`` it writes exactly one canonical file,
+    ``<run-dir>/coverage-manifest.json`` (derived metadata, never raw data),
+    and reports the persisted target on stderr.  ``--persist`` cannot be
+    combined with ``--output`` (configuration error, exit 2) so the two
+    cannot create competing artifacts.
 
     The command reports; it never invalidates data, so the exit code is 0
     for any produced manifest (like ``compare-runs``).  Unreadable targets
-    are I/O errors (exit 3).
+    and persistence write failures are I/O errors (exit 3).
     """
+    persist = bool(getattr(args, "persist", False))
+    if persist and args.output:
+        _err(
+            "coverage-run: --persist writes only to "
+            "<run-dir>/coverage-manifest.json; "
+            "--output cannot be combined with --persist"
+        )
+        return EXIT_CONFIG
     target = Path(args.file)
     if not target.exists():
         _err(f"cannot read target: {target}")
         return EXIT_IO
     manifest = evaluate_coverage(target)
     coverage = manifest["coverage"]
+    if persist:
+        run_dir = target if target.is_dir() else target.parent
+        canonical = coverage_manifest_path_for_run(run_dir)
+        try:
+            write_coverage_manifest(manifest, canonical)
+        except OSError as error:
+            _err(
+                f"cannot write coverage manifest: {canonical} "
+                f"({error.__class__.__name__})"
+            )
+            return EXIT_IO
+        _err(
+            f"coverage manifest persisted: {canonical} "
+            f"(status={coverage['status']} run_id={manifest['run_id']})"
+        )
+        return EXIT_OK
     lines = [
         f"COVERAGE {coverage['status']} run_id={manifest['run_id']} "
         f"window_id={manifest['window_id']}",
@@ -1743,13 +1784,22 @@ def build_parser() -> argparse.ArgumentParser:
 
     coverage_run = sub.add_parser(
         "coverage-run",
-        help="G3 §9 coverage manifest for one run (read-only report)",
+        help="G3 §9 coverage manifest for one run "
+        "(on-demand report; --persist writes "
+        "<run-dir>/coverage-manifest.json)",
     )
     coverage_run.add_argument(
         "--file", required=True, help="run directory or run_metadata.json"
     )
     coverage_run.add_argument("--format", choices=("text", "json"), default="text")
     coverage_run.add_argument("--output", help="write the JSON manifest to this path")
+    coverage_run.add_argument(
+        "--persist",
+        action="store_true",
+        help="write the manifest to <run-dir>/coverage-manifest.json "
+        "(derived metadata; incompatible with --output; "
+        "existing raw files are never modified)",
+    )
     coverage_run.set_defaults(handler=cmd_coverage_run)
 
     boundary_report = sub.add_parser(

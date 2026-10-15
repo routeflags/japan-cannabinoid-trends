@@ -71,8 +71,10 @@ SCHEMA_SCOPE: dict[str, tuple[str, str]] = {
     "query-registry-v1": ("collection", "G2"),
     "query-variants-v1": ("collection", "G2"),
     "query-variants-registry-v1": ("collection", "G2"),
-    # G3 temporal window.
+    # G3 temporal window and coverage manifest (both evaluated by validation;
+    # the manifest is the persisted coverage judgment, not a collection record).
     "temporal-window-v1": ("collection", "G3"),
+    "coverage-manifest-v1": ("validation", "G3"),
     # G4 artifacts and storage.
     "artifact-manifest-v1": ("storage", "G4"),
     "artifact-registry-v1": ("storage", "G4"),

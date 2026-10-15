@@ -2,24 +2,24 @@
   "schema_version": "1.0.0",
   "generated_by": "validation.cli contract-ledger",
   "summary": {
-    "contract_count": 27,
+    "contract_count": 28,
     "document_count": 29,
     "by_kind": {
       "gate_contract": 6,
       "interface_contract": 3,
-      "schema_contract": 18
+      "schema_contract": 19
     },
     "by_owner": {
       "collection": 11,
       "publication": 1,
       "research": 6,
       "storage": 4,
-      "validation": 5
+      "validation": 6
     },
     "by_group": {
       "G1": 4,
       "G2": 3,
-      "G3": 2,
+      "G3": 3,
       "G4": 3,
       "G5": 4,
       "G6": 3,
@@ -174,6 +174,16 @@
       "kind": "schema_contract",
       "group": "G1",
       "owner": "collection",
+      "version": "1.0.0",
+      "declared_at": "src/validation/schemas/",
+      "enforced_by": "validation.cli validate-all",
+      "test": "tests/validation/test_schema_coverage.py"
+    },
+    {
+      "contract_id": "coverage-manifest-v1",
+      "kind": "schema_contract",
+      "group": "G3",
+      "owner": "validation",
       "version": "1.0.0",
       "declared_at": "src/validation/schemas/",
       "enforced_by": "validation.cli validate-all",

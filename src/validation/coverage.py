@@ -27,16 +27,27 @@ Design notes
   (``resolved_absolute_window: null``) — that would be a retroactive guess
   (P1, AGENTS.md).
 
-Read-only: nothing in this module writes any file.
+Read-only evaluation, explicit persistence: ``evaluate_coverage`` and
+``scan_run_directory`` never write any file.  The ``dump_coverage_manifest``
+/ ``write_coverage_manifest`` helpers below persist the evaluated manifest to
+its canonical derived location (``<run-dir>/coverage-manifest.json``) only
+when the caller opts in (``validation.cli coverage-run --persist``).  The
+persisted file is derived metadata, never a raw observation, and existing
+runs are never backfilled.
 """
 
 from __future__ import annotations
 
 import json
+import os
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 from validation.integrity import sha256_file
+from validation.schemas.coverage import (
+    COVERAGE_MANIFEST_SCHEMA_ID,
+    COVERAGE_MANIFEST_SCHEMA_VERSION,
+)
 from validation.windows import (
     RELATIVE_TIMEFRAME_MODELS,
     WINDOW_MATCH_TOLERANCE,
@@ -46,17 +57,35 @@ from validation.windows import (
 )
 
 __all__ = [
+    "COVERAGE_MANIFEST_FILENAME",
     "COVERAGE_VERSION",
     "build_temporal_inventory",
+    "coverage_manifest_path_for_run",
+    "dump_coverage_manifest",
     "evaluate_coverage",
     "scan_run_directory",
+    "write_coverage_manifest",
 ]
 
 COVERAGE_VERSION = "1.0.0"
 
+#: Canonical persisted coverage manifest filename inside a run directory.
+#: The persisted document lives at ``<run-dir>/coverage-manifest.json``
+#: (validation-framework.md §16): derived metadata, never raw data.
+COVERAGE_MANIFEST_FILENAME = "coverage-manifest.json"
+
 #: Metadata files inside a run directory that are not payload evidence.
+#: ``coverage-manifest.json`` is the persisted evaluation of this very module:
+#: excluding it keeps re-evaluation byte-identical after persistence
+#: (the manifest carries no ``data`` / ``no_data_keywords`` payload shape,
+#: but its filename would still enter the ``evidence`` list).
 _NON_PAYLOAD_FILES = frozenset(
-    {"run_metadata.json", "artifact-manifest.json", "quarantine-reason.json"}
+    {
+        "run_metadata.json",
+        "artifact-manifest.json",
+        "quarantine-reason.json",
+        COVERAGE_MANIFEST_FILENAME,
+    }
 )
 
 #: Consecutive label gaps longer than this are reported (c.md §14 G3-T13:
@@ -406,6 +435,8 @@ def evaluate_coverage(target) -> dict:
     metadata_path = run_dir / "run_metadata.json"
 
     manifest = {
+        "schema_id": COVERAGE_MANIFEST_SCHEMA_ID,
+        "schema_version": COVERAGE_MANIFEST_SCHEMA_VERSION,
         "coverage_version": COVERAGE_VERSION,
         "profile": "g3_coverage",
         "run_id": None,
@@ -523,7 +554,7 @@ def evaluate_coverage(target) -> dict:
             granularity_used, expected = _expected_bucket_intervals(provenance)
         except ValueError:
             granularity_used, expected = None, []
-            reasons.append("expected_buckets_undetermined")
+            coverage["reasons"].append("expected_buckets_undetermined")
         coverage["expected_granularity"] = granularity_used
         coverage["expected_intervals"] = expected
         if expected:
@@ -587,6 +618,56 @@ def evaluate_coverage(target) -> dict:
             coverage["unknown_intervals"] = [requested]
     coverage["reasons"] = sorted(set(reasons))
     return manifest
+
+
+# ---------------------------------------------------------------------------
+# Coverage manifest persistence (ISS-20261015-COV-004)
+# ---------------------------------------------------------------------------
+
+
+def coverage_manifest_path_for_run(run_dir) -> Path:
+    """Canonical persisted manifest path for one run directory.
+
+    ``<run-dir>/coverage-manifest.json`` (validation-framework.md §16).  The
+    only sanctioned write target of the coverage persistence workflow; the
+    opt-in CLI persist must never write anywhere else.
+    """
+    return Path(run_dir) / COVERAGE_MANIFEST_FILENAME
+
+
+def dump_coverage_manifest(document: dict) -> str:
+    """Serialize a coverage manifest deterministically (UTF-8, trailing newline).
+
+    The document carries no timestamp, so the same evaluation invoked with the
+    same target path always produces byte-identical text.  This is the single
+    serializer for both the ``--output`` on-demand dump and the persisted
+    manifest, keeping the two byte-compatible.
+    """
+    return json.dumps(document, ensure_ascii=False, indent=2) + "\n"
+
+
+def write_coverage_manifest(document: dict, output) -> Path:
+    """Write a coverage manifest atomically: temp file in the same directory + replace.
+
+    The parent directory is created; the write lands via ``os.replace`` so a
+    crash or write failure never leaves a partial file at the target.  On
+    failure any temp file is removed and the target is left untouched (an
+    existing manifest keeps its previous bytes).  Payload files and
+    ``run_metadata.json`` are never touched.  Returns the target path.
+    """
+    target = Path(output)
+    target.parent.mkdir(parents=True, exist_ok=True)
+    tmp = target.with_name(target.name + ".tmp")
+    try:
+        tmp.write_text(dump_coverage_manifest(document), encoding="utf-8")
+        os.replace(tmp, target)
+    except BaseException:
+        try:
+            tmp.unlink()
+        except OSError:
+            pass
+        raise
+    return target
 
 
 # ---------------------------------------------------------------------------
