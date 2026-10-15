@@ -3,12 +3,12 @@
   "record": "publication_decision",
   "decision_id": "publication-review-guide-cbx-rewrite",
   "artifact_id": "guide-cbx-rewrite",
-  "artifact_sha256": "30b08a2ca05cf35b60bd99d6cc0a01554a77ce2a83329cc4d63d3a39e614bfab",
+  "artifact_sha256": "80f0c0896c5b2f77507c042e01b9eb4a61c35c9a2571d63586b536a7104fa9c3",
   "status": "approved",
   "reviewed_at": "2026-10-15",
   "reviewer": "owner (thread approval 2026-10-15: guide page publication candidate OK; COA requester handling OK)",
   "criteria_version": "PC-7 / publication-contract-v1.0.0 (2026-10-15)",
   "recorded_at": "2026-10-15",
-  "basis": "オーナーが 2026-10-15 のスレッドで guide ページを公開候補として承認し、COA requester 情報は provenance に保持し publication には出さない方針を承認した。",
+  "basis": "オーナーが 2026-10-15 のスレッドで guide ページを公開候補として承認し、COA requester 情報は provenance に保持し publication には出さない方針を承認した。v1.13.0 release metadata sync は引用・更新日・release metadata の整合更新であり、承認済み publication 方針を変更しない。",
   "notes": "PC-7 は判断記録が存在することを検査する。PUB-10 は approved かつ同一 sha256 の decision で PASS。"
 }

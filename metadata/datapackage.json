@@ -1,8 +1,8 @@
 {
   "name": "japan-cannabinoid-trends",
-  "title": "Japan Cannabinoid Trends Dataset 2026: Google Trends, Social Media, Regulatory Status, and Early Warning Index",
-  "version": "1.12.0",
-  "description": "日本国内におけるカンナビノイド関連トレンドを追跡するロングジューデータセット。Google Trends（CBD / CBG / CBN / THC / HHC / HHCH / THCH / THC-O / THCV / H4CBH / HHBD / CRDP）、X (Twitter)、YouTube、規制状況（12化合物）、早期警戒指数（Early Warning Index）を収録。",
+  "title": "Japan Cannabinoid Platform Trends Dataset 2026: Google Trends and YouTube Evidence from Japan",
+  "version": "1.13.0",
+  "description": "日本国内における各カンナビノイド成分の国内トレンドと、Google Trends / YouTube で観測できる差異を記録するデータセット。v1.13.0 は cannabinoid-platform-trends study を追加し、Google Trends 5年サマリーと採用済み YouTube 検索結果集計を source-specific units のまま収録する。X はこのリリーススコープから除外する。",
   "homepage": "https://github.com/routeflags/japan-cannabinoid-trends",
   "license": "CC-BY-4.0",
   "created": "2026-09-16",
@@ -31,14 +31,14 @@
     "CRDP",
     "CBX",
     "Google Trends",
-    "X (Twitter)",
     "YouTube",
     "Japan",
-    "regulatory status",
-    "early warning index",
     "online trends",
     "search interest",
-    "longitudinal data"
+    "longitudinal data",
+    "platform trends",
+    "YouTube search sample",
+    "source-specific units"
   ],
   "geo": {
     "country": "JP",
@@ -61,26 +61,67 @@
       }
     },
     {
-      "name": "X (Twitter)",
-      "access": "https://x.com",
-      "method": "Apify Actor cPYLH3QT9GyzKhB4S",
-      "parameters": {
-        "query": "CBX リキッド",
-        "section": "latest",
-        "maxPages": 2
-      }
-    },
-    {
       "name": "YouTube",
       "access": "https://youtube.com",
-      "method": "Apify Actor gJvjeCYNraSfhIaNd",
+      "method": "Apify streamers/youtube-scraper (adopted COL-033 aggregate runs)",
       "parameters": {
-        "search_term": "CBX リキッド",
-        "max_videos": 100
+        "dateFilter": "all/year depending on adopted run",
+        "maxResults": 999999,
+        "scope": "aggregate_only_no_video_rows"
       }
     }
   ],
   "resources": [
+    {
+      "name": "cannabinoid-platform-trends",
+      "path": "datasets/cannabinoid-platform-trends/data/processed/",
+      "format": "csv,json",
+      "description": "Google Trends + YouTube processed platform trend observations; X excluded from this release scope.",
+      "schema": {
+        "fields": [
+          {
+            "name": "observation_id",
+            "type": "string",
+            "description": "Deterministic observation identifier"
+          },
+          {
+            "name": "compound",
+            "type": "string",
+            "description": "Cannabinoid compound label"
+          },
+          {
+            "name": "platform",
+            "type": "string",
+            "description": "google_trends or youtube"
+          },
+          {
+            "name": "metric",
+            "type": "string",
+            "description": "Source-specific metric name"
+          },
+          {
+            "name": "unit",
+            "type": "string",
+            "description": "Source-specific unit; not a common cross-platform scale"
+          },
+          {
+            "name": "value",
+            "type": "number",
+            "description": "Observed or derived metric value"
+          },
+          {
+            "name": "status",
+            "type": "string",
+            "description": "observed_zero / observed_nonzero / missing state"
+          },
+          {
+            "name": "provenance_ref",
+            "type": "string",
+            "description": "Source evidence reference"
+          }
+        ]
+      }
+    },
     {
       "name": "cbx-search-trends",
       "path": "datasets/cbx-search-trends/",
@@ -319,5 +360,5 @@
     }
   ],
   "doi": "10.5281/zenodo.23253840",
-  "citation": "KATO, Kyoji. (2026). Japan Cannabinoid Trends Dataset 2026: Google Trends, Social Media, Regulatory Status, and Early Warning Index. Version 1.12.0. Routeflags Co., Ltd. [Dataset]. DOI: 10.5281/zenodo.23253840"
+  "citation": "KATO, Kyoji. (2026). Japan Cannabinoid Platform Trends Dataset 2026: Google Trends and YouTube Evidence from Japan. Version 1.13.0. Routeflags Co., Ltd. [Dataset]. DOI: 10.5281/zenodo.23253840"
 }

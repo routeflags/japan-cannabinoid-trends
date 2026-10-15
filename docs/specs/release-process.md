@@ -72,11 +72,11 @@ When uploading manually, use:
 
 | Field | Value |
 |-------|-------|
-| Title | CBX Online Trend Dataset 2026: Google Trends, Social Media, and COA Data from Japan |
+| Title | Japan Cannabinoid Platform Trends Dataset 2026: Google Trends and YouTube Evidence from Japan |
 | Creators | Routeflags Co., Ltd. |
 | Affiliation | Routeflags Co., Ltd. |
-| Description | 日本国内におけるカンナビノイド関連トレンドを追跡するロングジューデータセット |
-| Keywords | cannabinoid, CBX, H4CBH, HHBD, Google Trends, X (Twitter), YouTube, Japan |
+| Description | 日本国内における各カンナビノイド成分の国内トレンドと、Google Trends / YouTube で観測できる差異を記録するデータセット。v1.13.0 は cannabinoid-platform-trends study を追加し、Google Trends 5年サマリーと採用済み YouTube 検索結果集計を source-specific units のまま収録する。X はこのリリーススコープから除外する。 |
+| Keywords | cannabinoid, CBD, CBG, CBN, CBX, CRDH, CRDP, H4CBH, HHBD, Google Trends, YouTube, Japan, platform trends |
 | License | CC BY 4.0 |
 | Version | (match git tag) |
 | Resource Type | Dataset |

@@ -6,7 +6,7 @@
   "integrity": "verified",
   "citations": {
     "integrity": [
-      "sha256(publication/research_hhc.html, 2026-10-15 検算) = 81086dd79b93f8622aa266d209416ef65aa936ee16b2f60355d8d6a234c6c2de"
+      "sha256(publication/research_hhc.html, 2026-10-15 検算) = c5508c8f3788c49c78411a8445964e8cce7a58c2b080fd7fa26fa19e9a8001e3"
     ],
     "publication_contract": [
       "validation.cli audit-publication（2026-10-15）: PC-1〜PC-8 の機械検査対象。PC-7 は本 envelope の存在と hash 固定を検査する。"

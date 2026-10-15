@@ -3,9 +3,9 @@
 
 cff-version: 1.2.0
 message: "If you use this dataset, please cite it as below."
-title: "Japan Cannabinoid Trends Dataset 2026: Google Trends, Social Media, Regulatory Status, and Early Warning Index"
-version: "1.12.0"
-date-released: "2026-10-09"
+title: "Japan Cannabinoid Platform Trends Dataset 2026: Google Trends and YouTube Evidence from Japan"
+version: "1.13.0"
+date-released: "2026-10-15"
 type: dataset
 license: CC-BY-4.0
 language: ja
@@ -32,11 +32,8 @@ keywords:
   - CRDP
   - CBX
   - Google Trends
-  - X (Twitter)
   - YouTube
   - Japan
-  - regulatory status
-  - early warning index
   - online trends
   - search interest
   - longitudinal data
@@ -47,15 +44,13 @@ geo-locations:
     longitude: 139.6503
 
 abstract: >
-  日本国内におけるカンナビノイド関連トレンドを追跡するロングジューデータセット。
-  Google Trends（12化合物: CBD / THC / CBG / CBN / HHC / HHCH / THCH / THC-O /
-  THCV / H4CBH / HHBD / CRDP、12ヶ月週次＋5年期間）、
-  X (Twitter) SNS言及分析（H4CBH / HHBD、日本語投稿）、
-  YouTube 動画データ、
-  規制状況レポート（12化合物、MHLW等の一次資料）、
-  早期警戒指数（Early Warning Index）を収録。
-  カンナビノイド製品の市場動向・規制動向を研究する第三者により
-  再利用可能な形で公開。COI開示: 発行者はカンナビノイドEC事業を運営。
+  日本国内における各カンナビノイド成分の国内トレンドと、Google Trends /
+  YouTube で観測できる差異を記録するデータセット。v1.13.0 は
+  cannabinoid-platform-trends study を追加し、Google Trends 5年サマリーと
+  採用済み YouTube 検索結果集計を source-specific units のまま収録する。
+  X はこのリリーススコープから除外する。カンナビノイド製品の市場動向・
+  規制動向を研究する第三者により再利用可能な形で公開。COI開示: 発行者は
+  カンナビノイドEC事業を運営。
 
 references:
   - type: dataset
@@ -81,13 +76,13 @@ references:
 identifiers:
   - type: doi
     value: "10.5281/zenodo.23253840"
-    description: "Zenodo DOI for v1.8.0"
+    description: "Zenodo concept DOI for the dataset series"
   - type: url
     value: "https://github.com/routeflags/japan-cannabinoid-trends"
     description: "GitHub repository"
 
 preferred-citation:
   type: dataset
-  title: "Japan Cannabinoid Trends Dataset 2026"
-  version: "1.12.0"
+  title: "Japan Cannabinoid Platform Trends Dataset 2026: Google Trends and YouTube Evidence from Japan"
+  version: "1.13.0"
   doi: "10.5281/zenodo.23253840"

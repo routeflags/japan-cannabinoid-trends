@@ -3,7 +3,7 @@
   "record": "publication_decision",
   "decision_id": "publication-review-research-cbd",
   "artifact_id": "research-cbd",
-  "artifact_sha256": "dcf0e5389e30c0287d5c6d9f2008a6841e5f0b81766aca10dc63bf201d5db346",
+  "artifact_sha256": "0302df1a6a4affc2736f63b92cebe82e9db2804ba2c71cfe82c88b493f1090b1",
   "status": "requires_review",
   "reviewed_at": null,
   "reviewer": null,

@@ -3,7 +3,7 @@
   "record": "publication_decision",
   "decision_id": "publication-review-research-crdh",
   "artifact_id": "research-crdh",
-  "artifact_sha256": "bc10b51a970d512ea27765e78f5e04d3ef5d42fa4965fd3ed048e51e55c5060e",
+  "artifact_sha256": "bc86ce794145ea8f82b5aabc78357bc71cbd4ab1971467ac2e565d29120a1796",
   "status": "requires_review",
   "reviewed_at": null,
   "reviewer": null,

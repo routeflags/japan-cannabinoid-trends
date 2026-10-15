@@ -7,6 +7,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.13.0] - 2026-10-15
+
+### Added
+- Added `cannabinoid-platform-trends`, a Study-defined dataset release slice for Japan cannabinoid platform trends.
+- Added processed Google Trends + YouTube release tables: `trend_observations.csv`, `platform_coverage.csv`, `metric_dictionary.csv`, `source_run_index.csv`, and `manifest.json`.
+- Added `make platform-trends` and reproducibility coverage in `processing.reproduce`.
+- Added the `study-release-prep` skill for contract-driven Study creation up to release readiness.
+
+### Changed
+- Defined Study as the DDD research aggregate in `docs/specs/contracts.md`.
+- Updated release metadata to describe the Google Trends + YouTube dataset scope, with X excluded from this release scope.
+
+### Validation
+- `make platform-trends`
+- `processing.cli audit-processed`
+- `make audit-snapshots`
+- `make gates`
+- `pytest -q`
+
+---
+
 ## [1.12.0] - 2026-10-09
 
 ### Fixed

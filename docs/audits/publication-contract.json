@@ -3,7 +3,7 @@
   "generated_by": "validation.cli audit-publication",
   "publication_root": "publication",
   "release": {
-    "version": "1.12.0",
+    "version": "1.13.0",
     "declared_dois": [
       "10.5281/zenodo.23253840"
     ],

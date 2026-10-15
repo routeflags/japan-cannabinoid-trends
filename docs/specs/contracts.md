@@ -35,6 +35,7 @@
 | **生産 (Production)** | **パイプライン**。上流の入力から契約準拠の**記録**（run / artifact / 加工成果物 / 生成値）を産出する側（収集・加工）。判定はしない（§3.1） | 生産 | `src/collection/`、`src/processing/` | モジュール定数（`ADAPTER_CONTRACT_VERSION` 等） | 検証側が判定する（`gate-run` / `audit-new-runs` / `audit-processed`） |
 | **スキーマ契約** | 文書形状の宣言（必須項目・型・列挙・余分なフィールド） | 検証 | `src/validation/schemas/*.py`、`schema_registry.SCHEMA_REGISTRY` | `SCHEMA_VERSIONS` | Cerberus（`validate-*`）、`test_schema_coverage.py` |
 | **レジストリ文書** | スキーマ契約が検証する実体一覧（source / query / window / study 等） | 産出したコンテキスト | `config/`、`metadata/` | 文書の `schema_version` | `validation.cli validate-registries` |
+| **研究 (Study)** | 研究質問・対象範囲・入力証拠・処理方法・成果物・制約を 1 つに束ねる研究単位。実装上の ID は `study_id`、配置は `datasets/<study-id>/`。HTML ページや release ではなく、dataset release の根拠になる研究集約 | 研究 | `datasets/<study-id>/README.md`、`methodology.md`、`metadata/studies/study-registry.json` | 文書の `schema_version` / release version | `research.cli audit-studies`、`validate-registries`、`audit-processed` |
 | **インターフェース契約** | 実装が満たすべき型・振る舞いの宣言 | 収集・保管 | `collection/core/contracts.py`、`collection/core/staging.py`、`storage/contracts.py` | モジュール定数 | 各 contract test |
 | **ゲート契約** | 段階遷移の可否判定 | 検証・研究 | `src/validation/`、`src/research/` | （未宣言。§10） | CLI + 監査レポート |
 | **判断記録** | 人間の判断と根拠（公開承認・証拠フラグ） | 公開 | `metadata/publication/<artifact_id>/` | — | `validation.cli gate-publication` |
@@ -51,7 +52,7 @@
 | 加工 Processing（生産の下位） | 派生成果物の導出宣言と生成値 |
 | 保管 Storage | artifact manifest、artifact registry、storage policy、reader インターフェース |
 | 検証 Validation | スキーマ契約全体、ゲート契約、監査 |
-| 研究 Research | transformation 来歴、evidence、study / measurement / research view |
+| 研究 Research | **研究 (Study)**、transformation 来歴、evidence、measurement / research view |
 | 公開 Publication | publication decision（判断記録） |
 
 ---
@@ -129,7 +130,7 @@ flowchart TD
 
 | DDD の語 | 本リポジトリでの実体 |
 |---|---|
-| 集約 (aggregate) | レジストリ文書（`metadata/queries/query-registry.json` など）。集約ルートはレジストリ自身、要素（query / source / study）がエンティティ |
+| 集約 (aggregate) | レジストリ文書（`metadata/queries/query-registry.json` など）と **研究 (Study)**。研究の集約ルートは `datasets/<study-id>/README.md` / `methodology.md` / `metadata/studies/study-registry.json` の組で、配下の processed artifact・schema・validation record を束ねる |
 | 値オブジェクト | `run_id`、`window_id`、`artifact_id`、`sha256`、capability の三値、契約の版 |
 | ドメインイベント | 収集実行の確定（`run_metadata.json`）、成果物の登録（artifact manifest）、証拠の記録（evidence registry）、公開判断（publication decision） |
 | 不変条件 | 付録 A の規則（raw 不変、欠測 ≠ ゼロ、記録の再生成一致） |

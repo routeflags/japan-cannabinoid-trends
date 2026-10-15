@@ -19,9 +19,14 @@ echo ""
 
 # Paths to include (research-relevant only; tests + pyproject.toml are
 # included so the released dataset can reproduce the validation framework
-# described in docs/specs/validation-framework.md, see P7-4)
+# described in docs/specs/validation-framework.md, see P7-4).
+#
+# v1.13.0 is a Study-scoped release for cannabinoid-platform-trends.  Include
+# that release study and its committed source summary; do not ship legacy X
+# study outputs in the Zenodo archive when X is outside the release scope.
 INCLUDE_PATHS=(
-  "datasets"
+  "datasets/cannabinoid-platform-trends"
+  "docs/audits/gt-summary.json"
   "docs/specs"
   "docs/acceptance-criteria.md"
   "docs/migration-plan.md"
@@ -49,7 +54,7 @@ echo "Cleaning..."
 for path in "${INCLUDE_PATHS[@]}"; do
   if [ -e "${path}" ]; then
     mkdir -p "${CLEAN_DIR}/$(dirname "${path}")"
-    cp -r "${path}" "${CLEAN_DIR}/"
+    cp -r "${path}" "${CLEAN_DIR}/${path}"
     echo "  ✓ ${path}"
   else
     echo "  - ${path} (not found, skipping)"
