@@ -97,7 +97,9 @@ echo "Creating zip: ${ZIP_PATH}"
 # Verify
 echo ""
 echo "=== Verification ==="
-if unzip -l "${ZIP_PATH}" | grep -qE "\.github|\.serena|artifacts|\.opencode|agent\.md"; then
+# Check path names only.  Do not match legitimate nested paths such as
+# metadata/artifacts/ or tests/*artifact*.py.
+if unzip -Z1 "${ZIP_PATH}" | grep -qE '^(\.github|\.serena|artifacts|\.opencode|\.env|\.env\.local|opencode\.json|project\.json|project\.yml)(/|$)|(^|/)agent\.md$'; then
   echo "❌ ERROR: Unwanted files found in archive!"
   exit 1
 fi
