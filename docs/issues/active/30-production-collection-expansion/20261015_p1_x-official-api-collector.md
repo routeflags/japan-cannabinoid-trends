@@ -40,7 +40,7 @@ Apify 経由の運用知識（skill / notes）だけがあり、パイプライ�
   を再利用し、変更しない（指示書 §2 / §6）。
 - 既存 Apify 資産の扱いを記録する: registry の旧 collector は履歴参照として残す（`legacy` /
   `deprecated` 相当）、skill / notes には「公式 API へ移行済み」の日付付き注記を入れる。
-- 収集実行は既存の core（`stage_run` / `adopt` または `run_collection`）を通し、raw を手書きしない。
+- 実取得で得た X 元投稿データはリポジトリ artifact にしない。既存 core に接続する場合も、採用対象は機密除去済み request-only evidence と派生集計に限り、raw を手書きしない。
 - 費用・予算は `ISS-20261015-COL-032`、証跡は `ISS-20261015-PRV-033` が受け持つ。
 
 ## 完了条件
@@ -49,10 +49,10 @@ Apify 経由の運用知識（skill / notes）だけがあり、パイプライ�
 - [ ] ページネーション・レート制限・エラー処理のモックテスト（実課金を発生させない。指示書 §8）
 - [ ] 絶対期間（`start_time` / `end_time`）の可否を実測で registry に反映
 - [ ] 既存 Apify X 資産の扱い（履歴参照 / 注記）の記録
-- [ ] 1 run 以上の実取得を現行契約（provenance / L1）で採用（非公開保存領域）
+- [ ] 1 run 以上の dry-run / mock / request-only evidence 経路を現行契約で検証（X 元投稿データはリポジトリに保存しない）
 
 ## 依存
 
 - `ISS-20261015-COL-032`（費用管理なしでは実取得に進まない）
-- `ISS-20261015-PRV-033`（証跡なしの実取得は完了条件を満たさない）
+- `ISS-20261015-PRV-033`（request-only evidence なしの実取得は完了条件を満たさない）
 - 未確定: `ISS-20261015-COL-030` U2（予算上限）/ U3（サンプリング条件）

@@ -954,10 +954,7 @@ G6 仕様（`docs/plans/20261013f.md`）の垂直スライス。Git 運用全体
 
 ### 21.3 実施内容
 
-- `x_cbx_202608_summary.csv` を追跡から外し、非公開の `data/private/` へ退避。削除は
-  `processing.reproduce.WITHDRAWN` に理由・代替成果物・露出として記録（黙って消さない）。
-  非公開入力を前提とする導出は新状態
-  `reproducible_requires_non_published_input` として報告され、failure にはならない。
+- `x_cbx_202608_summary.csv` を追跡から外し、`processing.reproduce.WITHDRAWN` に理由・代替成果物・露出として記録（黙って消さない）。2026-10-15 の owner 決定により、X 元投稿データは `data/private/` を含むリポジトリ配下に保存しない。外部/一時入力を前提とする導出は新状態 `reproducible_requires_non_published_input` として報告され、failure にはならない。
 - 公開ページ 1 件と分析レポート 2 件のアカウント名を**文書内の通し記号**で疑似名化
   （文書間で対応が取れないようにし、リンクによる再識別を防ぐ）。
 - 再発防止ゲート `src/validation/x_identity.py`:
@@ -999,7 +996,7 @@ processed CSV の変更ではスキーマ検証だけが走り、再現性検証
   経緯・副作用は `docs/issues/closed/mitigated/20261013_p0_x-identity-published-in-all-releases.md`。
 - CHANGELOG エントリは新リリースと同時に付ける（`validate-version-sync.sh` は
   CHANGELOG の先頭見出しを最新タグと比較するため、`[Unreleased]` を先頭に置けない）。
-- 影響アカウントへの通知の要否は未判断。
+- 影響アカウントへの通知は不要と判断（2026-10-15、`ISS-20261015-XID-023`）。平文 handle を保持せず、連絡先特定のために X 元投稿データを再処理しない。
 - `publication/guide_cbx_rewrite.html` の種別列から店舗地区（「麻布十番」）を除去した。
   ハンドル以外の残余識別情報（店舗地区等）の扱いは方針未定。
 
@@ -1246,9 +1243,9 @@ staged → `adopt` を案内する。パスは字句的に正規化するため 
   が持つ。新しいレポートは登録しないと落ちる。
 - ローカルの disk 事実を検証したい場合は、そのレポートを normalizer で除外するか、
   事実を追跡対象に限定する。**「このマシンでしか green にならない」検査を増やさない。**
-- 個人入力（`datasets/*/data/private/`）からしか再導出できない検証は、既存の
+- 個人入力や外部/一時入力からしか再導出できない検証は、既存の
   `requires_source` マーカー（`tests/processing/test_processed_artifacts.py`）と同じく
-  **スキップ**にする（private 入力がある環境では実行される）。
+  **スキップ**にする。X 元投稿データは `data/private/` を含むリポジトリ配下に保存しない。
 
 ### 25.2 実測（2026-10-15）
 

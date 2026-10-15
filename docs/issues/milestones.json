@@ -10,14 +10,14 @@
   },
   "summary": {
     "issue_count": 69,
-    "active_count": 29,
-    "closed_count": 40,
+    "active_count": 27,
+    "closed_count": 42,
     "status_counts": {
       "DOCUMENTED": 1,
       "MITIGATED": 1,
-      "OPEN": 27,
+      "OPEN": 25,
       "PENDING": 2,
-      "RESOLVED": 38
+      "RESOLVED": 40
     },
     "open_p0": 0,
     "open_p1": 6,
@@ -222,12 +222,12 @@
         "legacy reader・SQLite live verification・coverage manifest の未接続を解消する",
         "private X data retention と request-only evidence が方針として記録される"
       ],
-      "issue_count": 9,
+      "issue_count": 8,
       "status_counts": {
-        "OPEN": 9
+        "OPEN": 8
       },
       "priority_counts": {
-        "P2": 9
+        "P2": 8
       },
       "issues": [
         {
@@ -253,12 +253,6 @@
           "priority": "P2",
           "status": "OPEN",
           "path": "docs/issues/active/40-provenance-storage-reproducibility/20261015_p2_legacy-variant-readers.md"
-        },
-        {
-          "id": "ISS-20261015-PRV-036",
-          "priority": "P2",
-          "status": "OPEN",
-          "path": "docs/issues/active/40-provenance-storage-reproducibility/20261015_p2_private-x-data-retention.md"
         },
         {
           "id": "ISS-20261015-PRV-012",
@@ -341,20 +335,14 @@
         "residual identifiers policy が公開・保管の両面で定義される",
         "affected account notification の要否と実行責任が記録される"
       ],
-      "issue_count": 3,
+      "issue_count": 2,
       "status_counts": {
-        "OPEN": 3
+        "OPEN": 2
       },
       "priority_counts": {
-        "P2": 3
+        "P2": 2
       },
       "issues": [
-        {
-          "id": "ISS-20261015-XID-023",
-          "priority": "P2",
-          "status": "OPEN",
-          "path": "docs/issues/active/60-privacy-identity-governance/20261015_p2_affected-account-notification.md"
-        },
         {
           "id": "ISS-20261015-XID-021",
           "priority": "P2",
@@ -371,11 +359,11 @@
     }
   ],
   "closed": {
-    "issue_count": 40,
+    "issue_count": 42,
     "status_counts": {
       "DOCUMENTED": 1,
       "MITIGATED": 1,
-      "RESOLVED": 38
+      "RESOLVED": 40
     },
     "issues": [
       {
@@ -617,6 +605,18 @@
         "priority": "P2",
         "status": "RESOLVED",
         "path": "docs/issues/closed/resolved/20261015_p2_daily-weekly-buckets.md"
+      },
+      {
+        "id": "ISS-20261015-PRV-036",
+        "priority": "P2",
+        "status": "RESOLVED",
+        "path": "docs/issues/closed/resolved/20261015_p2_x-source-record-repository-storage-ban.md"
+      },
+      {
+        "id": "ISS-20261015-XID-023",
+        "priority": "P2",
+        "status": "RESOLVED",
+        "path": "docs/issues/closed/resolved/20261015_p2_affected-account-notification.md"
       }
     ]
   }

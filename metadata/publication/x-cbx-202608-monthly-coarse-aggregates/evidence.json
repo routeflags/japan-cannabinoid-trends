@@ -31,7 +31,7 @@
       "Owner approved publication-candidate aggregate handling on 2026-10-15. The artifact is aggregate-only and does not redistribute X post records."
     ],
     "redistribution_confirmed": [
-      "The private X input is not committed. This artifact publishes only monthly aggregate counts and merged topic/engagement categories."
+      "X source-record input is not committed or retained as repository data. This artifact publishes only monthly aggregate counts and merged topic/engagement categories."
     ],
     "copyright_confirmed": [
       "No post text, media, URL, author metadata, or platform content is redistributed."
