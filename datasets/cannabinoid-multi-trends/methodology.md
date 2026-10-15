@@ -64,10 +64,16 @@ cannabinoid-multi-trends
   機械可読の記録は `docs/audits/gt-summary.json` の各化合物項目 `unavailable.raw_timeline`（shape `baseline`）にある。
 - `20261012T064246Z-google-trends-ja-rikiddo-5y-main5` の 5年系列は「CBD リキッド」等の別クエリ・別正規化であり、
   bare `CBD` の検証には使えない（`src/processing/gt_statistics.py` の `find_run` も除外する）。
-- 系列の再取得はライブ収集が必要なため本タスクでは未実施（`ISS-20261012-CBD-004` の残件、オーナー承認待ち）。
-  再取得時は既存 summary を上書きせず新規 run として保存する。
-- 原稿利用者向けの注意（2026-10-16 追記。外部 THCV 原稿 v1.9 での誤用 E1・E2 を受けた恒久ガード）:
-  - baseline 5件（CBD・THC・CBG・HHC・THCV）にデータあり期間の端点を書ける記録は存在しない。
+- CBD の再取得は完了（2026-10-15、`ISS-20261012-CBD-004`）。既存 summary の上書きはせず新規 run として保存した:
+  `data/raw/google_trends/20261015T205048Z-google-trends-cannabinoid-multi-trends/`
+  （bare `CBD`、geo JP / `today 5-y`、plan `metadata/plans/gt-5y-recollect-cbd.json`、`collect --live`、L1 通過後に catalog 採用）。
+  成果物は verbatim payload（`payload.json`）+ 解析済み系列（`records_cbd.json`）の2点。
+  観測 262 週（`2021-10-10 〜 2026-10-11`）、平均 34.0229・ピーク 2025-08-31（値 100）・初出値 44・最新値 13 は
+  **raw 系列からの算出値（derived）**であり、旧 baseline の記録値（261 週・平均 32.5・初出値 42・最新値 14）とは
+  収集窓・正規化が異なる別観測として区別する。旧 run は検証用に残すが、CBD の下流検証（`gt-summary` / publication）は新 run を用いる。
+  THC・CBG・HHC・THCV の4件は引き続き summary-only（shape `baseline`）のままである。
+- 原稿利用者向けの注意（2026-10-16 追記。外部 THCV 原稿 v1.9 での誤用 E1・E2 を受けた恒久ガード。2026-10-15 に CBD が series 化されたため baseline は残り4件）:
+  - baseline 4件（THC・CBG・HHC・THCV）にデータあり期間の端点を書ける記録は存在しない。
     `timeframe: today 5-y` は相対表記であり、系列の範囲を示さない。
     他化合物（例: CBN の `2021-10-10 〜 2026-10-11`）の `data_period` を流用しないこと。
   - baseline run は週次系列の生データを収蔵していない（summary-only）。

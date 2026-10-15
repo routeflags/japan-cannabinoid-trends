@@ -2,8 +2,8 @@
 
 **ID:** ISS-20261012-CBD-004  
 **優先度:** P2 (Medium)  
-**ステータス:** OPEN  
-**対象:** `datasets/cannabinoid-multi-trends/data/raw/google_trends/20261008T093228Z-google-trends-5y-baseline/`
+**ステータス:** RESOLVED (2026-10-15) — bare `CBD` の `today 5-y` raw 系列を新規 run として再取得し、下流検証を series 経路に切替。旧 summary-only run は未改変のまま残す
+**対象:** `datasets/cannabinoid-multi-trends/data/raw/google_trends/20261008T093228Z-google-trends-5y-baseline/`（旧、未改変）+ `datasets/cannabinoid-multi-trends/data/raw/google_trends/20261015T205048Z-google-trends-cannabinoid-multi-trends/`（新）
 
 ## 概要
 
@@ -45,8 +45,8 @@ summary 値と raw observation の区別も読み手に不明確になる。
   `docs/audits/gt-summary.json` の baseline 5件 `unavailable.raw_timeline`。raw 自体には手を加えていない）
 - [x] summary の 261 点・平均・ピーク値を raw で検証できるか明示する。
   （できない。記録値であり raw 系列からの独立検証は不可。下記「調査結果」）
-- [ ] 新規取得する場合、既存 summary を上書きせず新しい run として保存する。
-  （残件: ライブ収集が必要なため本タスクでは未実施。オーナー承認待ち。下記「残作業」）
+- [x] 新規取得する場合、既存 summary を上書きせず新しい run として保存する。
+  （2026-10-15 完了: オーナー承認のもとライブ再取得を実施。下記「再取得結果」）
 
 ## 調査結果（2026-10-15、オフライン調査）
 
@@ -82,10 +82,41 @@ summary 値と raw observation の区別も読み手に不明確になる。
   （端点なし・系列言及なし・他化合物の期間の流用なし）を追加した。
 - 本 issue の完了条件（ライブ再取得）は変更しない。再取得が完了するまで baseline 5件は summary-only のままである。
 
-## 残作業（オーナー / 外部収集の承認が必要）
+## 再取得結果（2026-10-15、ライブ収集）
 
-- CBD（および同一 run の THC/CBG/HHC/THCV）の `today 5-y` / geo JP 系列のライブ再取得。
-  `ISS-20261015-GT-003` が 8化合物に行った再取得（`collect --live` → payload + `records_*.json` の
-  2成果物、L1 通過後に catalog 採用）と同じ経路で行い、取得後は `gt-summary` 再生成で平均・ピークが
-  系列から算出されることを確認する。既存 summary の上書きは禁止（新規 run とする）。
-- 再取得が完了し、系列から 261点・平均・ピークが再計算できたら本 issue を閉じる。
+- オーナー承認のもと `collect --live` を単一クエリ（bare `CBD`、geo JP、`today 5-y`）で実行し、
+  新規 run `20261015T205048Z-google-trends-cannabinoid-multi-trends/` を catalog に採用（L1 通過、既存 run は未改変）。
+  plan: `datasets/cannabinoid-multi-trends/metadata/plans/gt-5y-recollect-cbd.json`。
+  成果物は verbatim payload（`payload.json`）+ 解析済み系列（`records_cbd.json`）。
+  要求パラメータ（`submitted_parameters`: tool `interest_over_time` / terms `["CBD"]` / geo JP / timeframe `today 5-y`）は
+  `run_metadata.json` の `temporal_provenance.submitted_parameters` に、観測範囲（`2021-10-10 〜 2026-10-11`）は
+  `observed_min/max_timestamp` に分離記録している。
+- 新系列 262 点の算出値: 平均 34.0229・ピーク 2025-08-31（値 100）・初出 2021-10-10（値 44）・最新値 13、
+  非ゼロ 262 週 / ゼロ 0 週。旧 baseline の記録値（261 点・平均 32.5・初出値 42・最新値 14、ピーク日 `2025-08-31 to 2025-09-06`）とは
+  収集窓・正規化が異なる別観測であり、一致しないことをもって旧値を訂正しない。旧値は記録値として旧 run に残す。
+  ピーク初日（2025-08-31）は一致したが、これは再取得系列からの独立確認であり、旧記録の検証ではない。
+- 下流切替: `processing.cli gt-summary --output docs/audits/gt-summary.json` を再生成し、CBD は shape `series`（by_shape `baseline` 4 / `series` 10）に移行。
+  `publication/research_cbd.html` の5年ブロックを生成値に置換（`--compound CBD --write`）。`find_run` が最新収集を優先するため、コード変更なしに新 run が選択される。
+  `methodology.md` §2.1.1 と本 issue に新旧の関係を記録し、`tests/processing/test_gt_statistics.py` の CBD 期待値と `BASELINE_COMPOUNDS` を更新した（CBD 除外、残り THC/CBG/THCV/HHC）。
+- THC/CBG/HHC/THCV の4件は同一旧 run の summary-only のまま残る。本 issue は CBD を例とするが、他4件の再取得は本タスクの範囲外とする。
+
+## 残作業
+
+- なし（CBD の再取得は完了。本 issue を閉じる）。
+
+## ライブ再取得の恒久ガード（2026-10-15 追記）
+
+- Google Trends の tooling discovery / live recollection は、手作業の
+  `npx google-trends-mcp --help` や `head` / `tail` 付きパイプでは実行しない。
+- 事前検査は `PYTHONPATH=src python3 scripts/collection/google-trends-live-guard.py probe --timeout <秒>`
+  を使う。probe は MCP `initialize` + `tools/list` のみで、`interest_over_time` を呼ばず、
+  raw 観測値を書かない。
+- オーナー承認後の本取得は同スクリプトの `fetch` サブコマンドで、明示 `--timeout`・新規 `--run-id`・
+  pipeline `collect --live` 経由に限定する。成功時も既存
+  `20261008T093228Z-google-trends-5y-baseline/` は上書きせず、新しい run として catalog / quarantine
+  の判定に従う。
+- ガードの診断ログは `.staging/tooling_logs/google_trends/<guard-run-id>/` に保存され、`success` /
+  `timeout` / `dependency_missing` / `collector_error` / `network_or_rate_limited` /
+  `invalid_config` の分類を `report.json` に残す。`.staging/` は Git 管理外であり、issue へ転記する前に
+  secrets・raw payload 混入がないことをレビューする。
+- 本追記はハング恒久対応であり、CBD 5年 raw タイムラインの再取得完了を意味しない。issue は OPEN のまま維持する。

@@ -36,8 +36,9 @@ no-data 応答、分散解析 JSON など 16 件）は、schema / reader が未�
 ## 完了条件
 
 - [x] 対象変種の一覧化（16 件の識別と代表例）
-- [x] 実装・登録した変種の reader と契約テスト
-- [x] 監査スナップショット再生成と鮮度テスト更新
+- [x] 実装・登録した変種の reader と契約テスト（no-data 1 件 + averages のみ 11 件。残りは未登録）
+- [x] 監査スナップショット再生成と鮮度テスト更新（当該差分のみ。`raw_modified: false` 維持）
+- [ ] 残り変種の登録（下表。実利用順・両形状照合必須。オフライン実施可能だが本スライス対象外のため OPEN）
 
 ## 実装メモ（2026-10-15、OPEN のまま）
 
@@ -76,3 +77,46 @@ no-data 応答、分散解析 JSON など 16 件）は、schema / reader が未�
 残り 15 件（averages のみ 9 件ほか）は実利用順に §7 手順で登録する。
 特に averages のみ変種は `averages` / `average_interest` の 2 形状がある
 ため、登録時は両形状の実ファイル照合を必須とする。
+
+## 追記（2026-10-15、averages スライス。OPEN のまま）
+
+averages のみ変種の両形状を 1 スキーマで登録した。外部 API は一切呼んでいない。
+残りは実利用順のオフライン作業（外部待ちではない）のため本 issue は OPEN のまま残す。
+
+- 実装スライス: comparison averages のみ（系列なし集計が時系列に混同される
+  機械防止。`terms` + `averages` / `average_interest` のいずれか一方のみ・
+  `data` 無しで判定。両形状とも実ファイル照合済み。`peak` 注釈キー等の
+  付随キーは許容し、数値でない平均値・両キー併存・`data` 併存は拒否）
+- 追加: `src/storage/readers/averages.py`（`json-averages-reader`。`averages`
+  モードのみ提供し `points` 等は拒否。`count` は None
+  ＝平均値は件数として扱わない）
+- 登録: `src/storage/sniff.py`（`comparison:averages_only` を
+  `google-trends-comparison-averages-v1` / `summary` の `recognized` に昇格。
+  両キー併存・`data` 併存は `partial` のまま）、
+  `metadata/artifacts/artifact-registry.json`（reader＋schema 各 1 件。
+  `record_count_mode: none`、`contains_full_timeseries: false`）、
+  `src/storage/readers/__init__.py`
+- 契約テスト: `tests/storage/test_sniff.py`（両形状＋`peak` 注釈付き実ファイルの
+  recognized 断言、両キー併存・`data` 併存の partial 維持、queries バッチの
+  partial 維持）、`tests/storage/test_readers.py`（両形状の実ファイル読解・
+  注釈キー許容・`points` 拒否・変種拒否・不正値拒否・reader 一覧更新）
+- スナップショット再生成手順:
+  `PYTHONPATH=src python3 -m validation.cli audit-artifacts --output docs/audits/g4-storage-inventory.json`
+  （差分は当該 11 件のみ: `partially_recognized` 27→18、
+  `recognized` 66→77、`missing_metadata` 12→10、`raw_modified: false` 維持。
+  `missing_metadata` の 2 件減は `comparison.json` 2 件（`average_interest` +
+  `peak` 注釈。run metadata 不在の orphan だが内容は averages 形状のため
+  既存 precedence 規則どおり `recognized`。run 不在の記録は
+  `metadata_state: missing` / `unverifiable_no_manifest` として残る）
+- 検証: `PYTHONPATH=src python3 -m pytest tests/storage/test_sniff.py tests/storage/test_readers.py tests/validation/test_storage_inventory_audit.py -q`
+
+残りのオフライン作業（優先度順。いずれも外部・所有者待ちではない）:
+
+| 残変種 | 件数 | 根拠 | 登録条件 |
+|---|---|---|---|
+| related queries バッチ / queries+object | 2 | `fields:queries`（`data:object` 有無の 2 形状） | 両形状の実ファイル照合を必須とする（averages スライスと同型） |
+| notation presurvey（`comparisons`） | 1 | `fields:comparisons` | 単一実例のみのため、実利用または第 2 実例の確認まで見送り |
+| 分散解析・差分（`repeat_diff` 等 analysis 形状） | 3 | `json_object` | 実利用時に形状を確定して登録 |
+| 新規 run の `content` ラッパー（`payload.json` 8 件＋`mcp-tool-result.json` 4 件） | 12 | `json_object`（`content` キー。登録済み `google-trends-mcp-tool-result-v1` とは別形状） | 新規 run 側の形式確定後に §7 手順で登録 |
+
+上記はいずれもライブ収集・クラウド証拠・所有者立会いを要しない。

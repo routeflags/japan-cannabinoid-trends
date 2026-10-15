@@ -20,9 +20,14 @@
 #   2026-10-15: TAX-026 対応 (a)。化学クラス 2 概念 (chemclass-hydrogenated / chemclass-acetate)
 #               を not_applicable として宣言。IPTC Media Topics はニュース主題語彙であり
 #               化学構造クラスに対応する概念を持たないため、推測で対応付けない。
+#   2026-10-15: TAX-025 対応。intent 4 / format 4 を not_applicable へ移動（主題以外の
+#               次元であり IPTC に対応概念が無い。TAX-026 の次元分離規則を適用）。
+#               化合物 9 は deliberately_unmapped のまま 2 群に分け、群ごとに理由を記録。
+#               化合物単位の IPTC 主題はリポジトリ内の証拠になく、外部語彙の確認は
+#               未実施のため推測で対応付けない。version 1.1.0 → 1.2.0。
 # =============================================================================
 
-version: "1.1.0"
+version: "1.2.0"
 last_updated: "2026-10-15"
 
 # IPTC Media Topics の URI スキーム
@@ -206,31 +211,26 @@ coverage:
     化学クラス 2 概念（chemclass-hydrogenated / chemclass-acetate）は TAX-026 (a) で
     追加された第 2 次元の側面値であり、IPTC Media Topics に対応する主題が無いため
     not_applicable として宣言する（下記）。概念総数は 40（compound 24 + content 14 + chemclass 2）。
+    TAX-025（2026-10-15）で 17 末端概念の区分を確定した: intent 4 と format 4 は
+    主題以外の次元（投稿意図・表現形式）であり IPTC の主題語彙に対応する概念を持たないため
+    not_applicable（TAX-026 の次元分離規則を適用）。化合物 9 は deliberately_unmapped のまま
+    2 群に分けて群ごとに理由を記録した。化合物単位の IPTC 主題はリポジトリ内の証拠になく、
+    外部語彙の確認は未実施のため推測で対応付けない。確認方法は verification を参照。
 
   deliberately_unmapped:
     - concepts:
         - "jptr:compound-cbc"
         - "jptr:compound-cbdv"
-        - "jptr:compound-crdh"
-        - "jptr:compound-crdp"
+        - "jptr:compound-thcv"
+      reason: "マイナー・フィトカンナビノイド。taxonomy が Wikidata exactMatch を持つ（化合物識別子としての根拠あり）が、IPTC Media Topics 側の対応主題はリポジトリ内の証拠に無い。対応済みの 6 主題はいずれも化合物単位ではない広いニュース主題である。化合物単位の IPTC 対応付けには IPTC 語彙の外部確認が必要であり、未実施のため推測で対応付けない。"
+    - concepts:
+        - "jptr:compound-thch"
         - "jptr:compound-hhc"
         - "jptr:compound-hhch"
         - "jptr:compound-thc-o"
-        - "jptr:compound-thch"
-        - "jptr:compound-thcv"
-      reason: "初版で未対応。IPTC Media Topics に対応する主題があるか未調査であり、推測で対応付けるよりは未対応として残す。"
-    - concepts:
-        - "jptr:intent-commercial"
-        - "jptr:intent-experiential"
-        - "jptr:intent-harm-report"
-        - "jptr:intent-informational"
-      reason: "IPTC Media Topics はニュース記事の主題を表す語彙であり、投稿の意図（情報提供 / 商業 / 体験談 / 被害報告）に対応する概念を持たない。"
-    - concepts:
-        - "jptr:format-image"
-        - "jptr:format-link"
-        - "jptr:format-text"
-        - "jptr:format-video"
-      reason: "投稿の形式（text / image / video / link）は IPTC Media Topics の対象外（主題ではなく表現形式）。"
+        - "jptr:compound-crdp"
+        - "jptr:compound-crdh"
+      reason: "taxonomy に外部識別子（ChEBI / Wikidata exactMatch）が無く、化合物識別子自体が外部未検証。HHC/HHCH/THCH/THC-O は立体異性体・Δ体の総称であり単一 exactMatch は混同を招くこと、CRDP/CRDH は化学構造不明であることが docs/provenance/compound-taxonomy.md に記録されている。識別子が未検証の概念に IPTC 主題を割り当てることは推測になるため、IPTC 語彙の外部確認と識別子の検証が済むまで未対応として残す。"
   not_applicable:
     - concepts:
         - "jptr:compound-endocannabinoid"
@@ -241,6 +241,18 @@ coverage:
         - "jptr:compound-synthetic"
       reason: "taxonomy の上位概念（カテゴリ）。主題分類ではないため IPTC との対応は定義しない。"
     - concepts:
+        - "jptr:intent-commercial"
+        - "jptr:intent-experiential"
+        - "jptr:intent-harm-report"
+        - "jptr:intent-informational"
+      reason: "投稿の意図（情報提供 / 商業 / 体験談 / 被害報告）は主題ではなく分類の別次元であり、IPTC Media Topics（ニュース記事の主題語彙）に対応する概念を持たない。例えば商業意図を Marketing に対応付けると intent 次元と topic 次元を混同することになり、TAX-026 の次元分離規則に反する。content-taxonomy の 3 scheme 分離と standards-compliance-analysis §4.3（topic のみ schema:about、intent/format はカスタム）が根拠。推測で対応付けない（TAX-025 記録 2026-10-15）。"
+    - concepts:
+        - "jptr:format-image"
+        - "jptr:format-link"
+        - "jptr:format-text"
+        - "jptr:format-video"
+      reason: "投稿の形式（text / image / video / link）は主題ではなく表現形式であり、IPTC Media Topics の対象外。intent と同じく次元分離規則により対応付けない（TAX-025 記録 2026-10-15）。"
+    - concepts:
         - "jptr:chemclass-hydrogenated"
         - "jptr:chemclass-acetate"
       reason: "化学クラス（水素化・アセテート体）は化学構造による側面値であり、ニュース記事の主題を表す IPTC Media Topics に対応する概念を持たない。推測で対応付けない（TAX-026 記録 2026-10-15）。"
@@ -249,6 +261,8 @@ limitations:
   - "IPTC Media Topics はニュース記事向けの語彙であり、SNS コンテンツ分類には完全に適用できない場合がある"
   - "closeMatch マッピングは概念的に近いが完全に同一ではない"
   - "一部のカンナビノイド化合物（CBX, H4CBH, HHBD）は ChEBI / Wikidata に対応エントリがない"
+  - "投稿意図（intent 4）・表現形式（format 4）に IPTC Media Topics の対応概念は無い。IPTC はニュース主題語彙であり、意図・形式は別次元のため対応付けない（TAX-025 記録 2026-10-15）"
+  - "化合物 9 概念の IPTC 対応付けには IPTC 語彙の外部確認が必要であり未実施。リポジトリ内の証拠だけでは化合物単位の主題を特定できないため推測で対応付けない。化合物識別子の正本は ChEBI / Wikidata（taxonomy の exactMatch）である"
   - "化学クラス（水素化・アセテート体）に IPTC Media Topics の対応概念は無い。IPTC はニュース主題語彙であり化学構造クラスを持たないため、推測で対応付けない（TAX-026 記録 2026-10-15）"
   - "IPTC Topic ID は変更される可能性があるため、定期的な検証が必要"
 
@@ -257,8 +271,18 @@ limitations:
 # =============================================================================
 
 verification:
-  last_verified: "2026-10-02"
+  last_verified: "2026-10-15"
   verified_by: "Routeflags Co., Ltd."
+  method: |
+    TAX-025（2026-10-15）の確認はリポジトリ内の証拠のみで行い、IPTC への live 照会は
+    行っていない（リポジトリ規則が外部呼び出しを禁じ、推測での対応付けを禁じるため）。
+    参照した証拠: 本ファイルの対応済み 6 主題（いずれも化合物単位ではない広いニュース主題）、
+    docs/specs/standards-compliance-analysis.md §3.2/§4.3（IPTC はニュース主題語彙。topic のみ
+    schema:about に対応し intent/format はカスタム）、content-taxonomy.skos.jsonld
+    （topic/intent/format は別 scheme＝別次元）、docs/provenance/compound-taxonomy.md
+    （HHC/HHCH/THCH/THC-O/CRDP/CRDH の外部検証は未実施、CRDP/CRDH は化学構造不明）。
+    残件: IPTC 語彙へのアクセスを持つ人間が化合物単位の主題の有無を再確認できる。それまでは
+    deliberately_unmapped の判定を維持する。
   iptc_source: "https://cv.iptc.org/newscodes/mediatopic/"
   chebi_source: "https://www.ebi.ac.uk/chebi/"
   wikidata_source: "https://www.wikidata.org/"

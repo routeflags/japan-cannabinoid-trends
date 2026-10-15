@@ -1133,6 +1133,13 @@ staged → `adopt` を案内する。パスは字句的に正規化するため 
   側であり、迂回せずに収集できるようにする側ではない。
 - `cron_gate.sh` が書く `projects/` はリポジトリに存在しない。この定点観測経路が現役か
   どうかの確認が必要。
+  → **2026-10-15 に不要（retired）と判定し RESOLVED**（`ISS-20261015-COL-019`）。
+  根拠: `projects/` の tracked 0 件、呼び出し chain の二重破損
+  （`$DIR/fetch_*.sh` も `$DIR/apify_run.sh` も存在しない）、crontab・CI 参照 0 件、
+  Instagram 定点の 2026-10-01 廃止。`cron_gate.sh` は retired stub（exit 2・無書込）化し、
+  `fetch_tiktok.sh` / `fetch_instagram.sh` は既定拒否＋`TEITEN_OUTDIR` 明示のみ許可
+  （明示指定でも `datasets/` / `projects/` 配下は拒否）。ガードは
+  `tests/collection/test_cron_gate_guard.py` が固定する。
 - pre-commit フックの軽量検査は実装済み（ISS-20261015-COL-020、2026-10-15）。方針は
   「縮小検査を入れる」: `src/validation/staged_runs.py` が staged の
   `datasets/*/data/raw/*/*/run_metadata.json` を Git index から読み、stdlib だけで
@@ -1224,9 +1231,15 @@ staged → `adopt` を案内する。パスは字句的に正規化するため 
 
 - IPTC の 17 末端概念（化合物 9 / intent 4 / format 4）は未対応のまま。対応可否は IPTC 語彙の
   確認後に判断する（推測で対応付けない）。
-- **化学クラス（水素化カンナビノイド等）と製造経路クラス（taxonomy）という 2 つの語彙が
-  併存している。** taxonomy は製造経路を採る。化学クラスを taxonomy の第 2 次元として持つか、
-  研究文書側の語彙として残すかは未判断。
+- **化学クラスと製造経路クラスの 2 語彙は、2026-10-15 に判断済み（ISS-20261015-TAX-026、オーナー選択肢 (a)）。**
+  化学クラスを taxonomy の第 2 次元として持つ: 製造経路・由来の次元は `jptr:compound-taxonomy`
+  に残し、化学クラスは `metadata/taxonomy/chemical-class-taxonomy.skos.jsonld`
+ （`jptr:chemical-class-taxonomy`）に置く。結合は対称 `skos:related` のみで行い、
+  `skos:broader` / `skos:narrower` は次元を跨がない。形式化したのは根拠のある 2 クラスのみ
+ （水素化: HHC・HHCH・H4CBH・HHBD、アセテート体: THC-O）。研究文書側の語彙は独自語彙として残し、
+  構造不明の CRDP / CRDH に対する「ヒドロキシ酸類似体」は採用しない。IPTC Media Topics に
+  化学構造クラスは無いため `iptc-mapping.yaml` では `not_applicable` として宣言し、推測で
+  対応付けない。2 次元の分離は `tests/validation/test_chemical_class_dimension.py` が検査する。
 - `compound_rare` の会員（CBDP / THCP 等）は未登録。
 
 ## 24. 未解決 issue の棚卸しと施行（2026-10-13）

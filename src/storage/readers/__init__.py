@@ -14,6 +14,7 @@ G4-T17).
 from __future__ import annotations
 
 from storage.contracts import StorageReader
+from storage.readers.averages import JsonAveragesReader
 from storage.readers.comparison import JsonComparisonReader
 from storage.readers.csv import CsvRecordReader
 from storage.readers.nodata import JsonNoDataReader
@@ -33,6 +34,7 @@ READER_CLASSES: tuple[type[StorageReader], ...] = (
     JsonTimeseriesReader,
     JsonSummaryReader,
     JsonComparisonReader,
+    JsonAveragesReader,
     JsonNoDataReader,
     JsonObjectReader,
     SqliteReader,

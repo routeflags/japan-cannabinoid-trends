@@ -51,6 +51,12 @@ transformation / evidence スライスに自然に収まる範囲のみ実装し
   が引き続き全ペアで保証）
 - 実データの再評価（2026-10-15）: 到達不能のまま。legacy run に sampling / coverage /
   正規化スケール / 承認の証拠が無いため、最強判定は `conditional`。
+- 比較側/収集側の分離ピン（2026-10-15）:
+  `tests/research/test_comparability_evidence.py::test_built_catalog_entries_carry_no_synthetic_evidence_keys`
+  が、catalog builder（収集側）が `sampling` / `coverage` / `missingness` /
+  `normalization_scale` の各キーを実エントリに一切排出しないことを固定。
+  合成完全証拠ペア（比較側）のみが当該キーを持ち、実エントリが `comparable` に
+  到達する経路は収集側の排出変更（本 issue の残作業）のみ。read-only・offline。
 
 残りのオーナー/収集側作業: 新規収集で CS08（sampling 手法）・CS09/CS10（coverage manifest）・
 CS11（fetch グループ/比較集合）・CS13（公開承認 decision）を排出する（schema 項目と

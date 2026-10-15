@@ -42,6 +42,21 @@ NO_DATA = (
     / "datasets/cannabinoid-multi-trends/data/raw/google_trends"
     / "20261002T064135Z-google-trends-nodata/records_nodata.json"
 )
+AVERAGES = (
+    REPO_ROOT
+    / "datasets/cannabinoid-multi-trends/data/raw/google_trends"
+    / "20261012T055259Z-google-trends-ja-rikiddo-phase-a-12m/comparison_ja1.json"
+)
+AVERAGES_ALT_KEY = (
+    REPO_ROOT
+    / "datasets/cannabinoid-multi-trends/data/raw/google_trends"
+    / "20261005T100000Z-google-trends-common-scale-expansion/comparison_setB.json"
+)
+AVERAGES_WITH_PEAK = (
+    REPO_ROOT
+    / "datasets/cannabinoid-multi-trends/data/raw/google_trends"
+    / "20261008T125719Z-google-trends-common-scale-crdh/comparison.json"
+)
 
 
 def _descriptor(path, **overrides) -> ArtifactDescriptor:
@@ -56,6 +71,11 @@ def _descriptor(path, **overrides) -> ArtifactDescriptor:
     return ArtifactDescriptor(**values)
 
 
+def _validate_averages(path) -> list:
+    reader = get_reader("json-averages-reader")
+    return reader.validate(_descriptor(path, artifact_type="summary"))
+
+
 def _validate_no_data(path) -> list:
     reader = get_reader("json-no-data-reader")
     return reader.validate(_descriptor(path, artifact_type="raw_response"))
@@ -64,6 +84,7 @@ def _validate_no_data(path) -> list:
 def test_reader_ids_are_stable():
     assert reader_ids() == [
         "csv-record-reader",
+        "json-averages-reader",
         "json-comparison-reader",
         "json-no-data-reader",
         "json-object-reader",
@@ -166,6 +187,70 @@ def test_object_reader_reads_checkpoint_state():
     assert records[0]["record"]["status"] == "completed"
     with pytest.raises(UnsupportedRead):
         list(reader.read(descriptor, mode="records"))
+
+
+def test_averages_reader_reads_both_recorded_spellings():
+    reader = get_reader("json-averages-reader")
+    assert reader.contains_full_timeseries is False
+    first = _descriptor(AVERAGES, artifact_type="summary")
+    assert reader.validate(first) == []
+    rows = list(reader.read(first, mode="averages"))
+    assert [row["term"] for row in rows][:3] == ["CBX リキッド", "CBD リキッド", "THC リキッド"]
+    assert rows[1]["average"] == 64
+    assert reader.count(first) is None
+    with pytest.raises(UnsupportedRead):
+        list(reader.read(first, mode="points"))
+
+    second = _descriptor(AVERAGES_ALT_KEY, artifact_type="summary")
+    assert reader.validate(second) == []
+    alt_rows = list(reader.read(second, mode="averages"))
+    assert [(row["term"], row["average"]) for row in alt_rows] == [
+        ("CBN", 55),
+        ("CRDP", 2),
+        ("HHCH", 0),
+        ("THC-O", 0),
+        ("THCV", 0),
+    ]
+    assert reader.count(second) is None
+
+
+def test_averages_reader_tolerates_annotation_keys():
+    reader = get_reader("json-averages-reader")
+    descriptor = _descriptor(AVERAGES_WITH_PEAK, artifact_type="summary")
+    assert reader.validate(descriptor) == []
+    assert [(row["term"], row["average"]) for row in reader.read(descriptor)] == [
+        ("CRDH", 0),
+        ("CBD", 47),
+        ("THC", 12),
+    ]
+
+
+def test_averages_reader_refuses_unattested_variants(tmp_path):
+    both = tmp_path / "both.json"
+    both.write_text(
+        '{"terms": ["A"], "averages": {"A": 1}, "average_interest": {"A": 2}}',
+        encoding="utf-8",
+    )
+    violations = _validate_averages(both)
+    assert violations == ["expected exactly one of 'averages' / 'average_interest' objects"]
+
+    series = tmp_path / "series.json"
+    series.write_text(
+        '{"terms": ["A"], "averages": {"A": 1}, '
+        '"data": [{"date": "2026-01-04", "value": 1}]}',
+        encoding="utf-8",
+    )
+    violations = _validate_averages(series)
+    assert violations and "per-bucket" in violations[0]
+
+    bad = tmp_path / "bad.json"
+    bad.write_text('{"terms": ["A"], "averages": {"A": "high"}}', encoding="utf-8")
+    violations = _validate_averages(bad)
+    assert violations == ["average for term 'A' is not a number"]
+
+    missing = tmp_path / "missing.json"
+    missing.write_text('{"collected_at": "2026-10-05"}', encoding="utf-8")
+    assert _validate_averages(missing) == ["expected a non-empty 'terms' string array"]
 
 
 def test_no_data_reader_reads_the_recorded_no_data_response():

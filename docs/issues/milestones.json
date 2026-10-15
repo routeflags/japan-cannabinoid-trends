@@ -10,14 +10,14 @@
   },
   "summary": {
     "issue_count": 69,
-    "active_count": 19,
-    "closed_count": 50,
+    "active_count": 17,
+    "closed_count": 52,
     "status_counts": {
       "DOCUMENTED": 1,
       "MITIGATED": 1,
-      "OPEN": 17,
+      "OPEN": 15,
       "PENDING": 2,
-      "RESOLVED": 48
+      "RESOLVED": 50
     },
     "open_p0": 0,
     "open_p1": 3,
@@ -109,21 +109,10 @@
         "coverage matrix と page counts が上流記録と一致する",
         "修正後の publication contract と issue audit が failures=0 になる"
       ],
-      "issue_count": 1,
-      "status_counts": {
-        "OPEN": 1
-      },
-      "priority_counts": {
-        "P2": 1
-      },
-      "issues": [
-        {
-          "id": "ISS-20261012-CBD-004",
-          "priority": "P2",
-          "status": "OPEN",
-          "path": "docs/issues/active/20-cbd-publication-corrections/20261012_p2_cbd-google-trends-5y-raw-missing.md"
-        }
-      ]
+      "issue_count": 0,
+      "status_counts": {},
+      "priority_counts": {},
+      "issues": []
     },
     {
       "id": "M3",
@@ -242,13 +231,13 @@
         "IPTC unmapped concepts と compound rare membership が解消または制限記録される",
         "chemical vs route vocabulary の境界が taxonomy に反映される"
       ],
-      "issue_count": 3,
+      "issue_count": 2,
       "status_counts": {
-        "OPEN": 3
+        "OPEN": 2
       },
       "priority_counts": {
         "P1": 1,
-        "P2": 2
+        "P2": 1
       },
       "issues": [
         {
@@ -262,12 +251,6 @@
           "priority": "P2",
           "status": "OPEN",
           "path": "docs/issues/active/50-taxonomy-standards/20261015_p2_compound-rare-membership.md"
-        },
-        {
-          "id": "ISS-20261015-TAX-025",
-          "priority": "P2",
-          "status": "OPEN",
-          "path": "docs/issues/active/50-taxonomy-standards/20261015_p2_iptc-unmapped-concepts.md"
         }
       ]
     },
@@ -305,11 +288,11 @@
     }
   ],
   "closed": {
-    "issue_count": 50,
+    "issue_count": 52,
     "status_counts": {
       "DOCUMENTED": 1,
       "MITIGATED": 1,
-      "RESOLVED": 48
+      "RESOLVED": 50
     },
     "issues": [
       {
@@ -611,6 +594,18 @@
         "priority": "P3",
         "status": "RESOLVED",
         "path": "docs/issues/closed/resolved/20261015_p3_guide-structure-requirements-unchecked.md"
+      },
+      {
+        "id": "ISS-20261015-TAX-025",
+        "priority": "P2",
+        "status": "RESOLVED",
+        "path": "docs/issues/closed/resolved/20261015_p2_iptc-unmapped-concepts.md"
+      },
+      {
+        "id": "ISS-20261012-CBD-004",
+        "priority": "P2",
+        "status": "RESOLVED",
+        "path": "docs/issues/closed/resolved/20261012_p2_cbd-google-trends-5y-raw-missing.md"
       }
     ]
   }

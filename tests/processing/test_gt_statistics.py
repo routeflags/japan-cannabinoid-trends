@@ -235,15 +235,20 @@ def report() -> dict:
 
 def test_report_recomputes_every_compound(report: dict) -> None:
     """14 of 14: CBX joined in 2026-10-15 (research_cbx.html), citing the only
-    standalone CBX series - the boundary-measurement run."""
+    standalone CBX series - the boundary-measurement run.
+
+    CBD joined the series shape in 2026-10-15 (ISS-20261012-CBD-004): the bare
+    ``CBD`` today 5-y raw timeline was recollected live as a new run, so its
+    mean is computed from the weekly series rather than passed through."""
 
     by_compound = {entry["compound"]: entry for entry in report["compounds"]}
 
     assert report["summary"]["by_status"] == {"computed": 14}
-    assert by_compound["CBD"]["stats"]["mean"] == 32.5
+    assert by_compound["CBD"]["shape"] == "series"
+    assert by_compound["CBD"]["stats"]["mean"] == 34.0229
     # The re-collected compounds carry a weekly series, so their mean is
     # computed rather than passed through.
-    for compound in ("CBN", "THC-O", "H4CBH", "HHBD", "HHCH", "CRDP", "THCH", "CBX"):
+    for compound in ("CBD", "CBN", "THC-O", "H4CBH", "HHBD", "HHCH", "CRDP", "THCH", "CBX"):
         assert by_compound[compound]["shape"] == "series", compound
         assert by_compound[compound]["stats"]["mean"] is not None, compound
     assert by_compound["CBX"]["run_id"] == "20261015T042857Z-google-trends-boundary-5y"
@@ -263,7 +268,7 @@ def test_every_page_carries_the_generated_block(report: dict) -> None:
         assert entry["block"] in page.read_text(encoding="utf-8"), entry["compound"]
 
 
-BASELINE_COMPOUNDS = ("CBD", "THC", "CBG", "THCV", "HHC")
+BASELINE_COMPOUNDS = ("THC", "CBG", "THCV", "HHC")
 
 
 def test_report_keeps_baseline_periods_unrecorded(report: dict) -> None:

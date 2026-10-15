@@ -10,11 +10,28 @@ repository pair is claimed ``comparable`` (that direction is owned by
 ``test_comparability_gate.py::test_comparable_is_unreachable_on_repository_data``
 and ``test_comparable_definition_with_complete_evidence``; neither is
 duplicated here).
+
+The final test pins the comparison/collection separation from the other
+side: the catalog builder (collection side) never emits the CS08-CS11
+synthetic evidence keys, so a built entry can only reach ``comparable``
+through a future collection-side emission change -- never through a
+mislabeled real entry today.
 """
+
+from pathlib import Path
 
 import pytest
 
+from research.catalog import build_catalog
 from research.comparability import check_cross_study_comparability
+
+REPO_ROOT = Path(__file__).resolve().parents[2]
+
+#: Evidence keys that exist only on synthetic complete entries (comparison
+#: side) or on future collection-side emission.  The catalog builder must
+#: never invent them for built entries (ISS-20261015-CMP-005 stays OPEN
+#: until the collection side emits them for real runs).
+SYNTHETIC_EVIDENCE_KEYS = ("sampling", "coverage", "missingness", "normalization_scale")
 
 
 def _complete_entry(**overrides):
@@ -122,3 +139,12 @@ def test_untraceable_scale_downgrades_to_conditional():
     assert verdict["status"] == "conditional"
     assert "cs11_normalization_review_required" in verdict["reasons"]
     assert verdict["checks"]["CS11"]["result"] == "review"
+
+
+def test_built_catalog_entries_carry_no_synthetic_evidence_keys():
+    """Collection side emits no CS08-CS11 evidence today (pending, not absent)."""
+    catalog = build_catalog(REPO_ROOT / "datasets", repo_root=REPO_ROOT)
+    assert catalog["entries"], "no catalog entries: the separation is not exercised"
+    for entry in catalog["entries"]:
+        for key in SYNTHETIC_EVIDENCE_KEYS:
+            assert key not in entry, (entry.get("run_id"), key)

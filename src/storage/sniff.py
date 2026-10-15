@@ -268,7 +268,22 @@ def _sniff_dict(document: dict) -> SniffResult:
         )
     if "comparisons" in keys:
         return SniffResult("json", "partial", evidence=("fields:comparisons",))
-    if "terms" in keys and ({"averages", "average_interest"} & keys):
+    averages_keys = {"averages", "average_interest"} & keys
+    if "terms" in keys and averages_keys:
+        # Comparison averages without any per-bucket series (ART-006): the
+        # two recorded spellings (``averages`` / ``average_interest``) share
+        # one aggregate-only schema.  Both spellings together, or per-bucket
+        # ``data`` alongside the averages, is an unattested variant and stays
+        # partial (never forced into the schema).
+        if len(averages_keys) == 1 and "data" not in document:
+            return SniffResult(
+                "json",
+                "recognized",
+                artifact_type="summary",
+                schema_id="google-trends-comparison-averages-v1",
+                contains_full_timeseries=False,
+                evidence=("comparison:averages_only",),
+            )
         return SniffResult(
             "json", "partial", evidence=("comparison:averages_only",)
         )
