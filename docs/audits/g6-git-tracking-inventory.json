@@ -4,13 +4,13 @@
   "spec": "docs/plans/20261013f.md §15 (local plan; not tracked)",
   "target_root": "datasets",
   "include_private": false,
-  "count": 211,
+  "count": 210,
   "extra_count": 46,
   "raw_modified": false,
   "state_summary": {
     "absent": 12,
     "ignored": 28,
-    "tracked": 217
+    "tracked": 216
   },
   "entries": [
     {
@@ -1739,8 +1739,8 @@
       "state": "tracked",
       "tracked": true,
       "ignored": false,
-      "sha256": "5631a393094aba3efe0e6dc575221c7f9c10b0b03d82b5f640a454dab793212d",
-      "sha256_after": "5631a393094aba3efe0e6dc575221c7f9c10b0b03d82b5f640a454dab793212d",
+      "sha256": "06683064b16ca07517d9df8e8a0ed6822ff6f23c04f908c4a7dc6ddbf90f1a77",
+      "sha256_after": "06683064b16ca07517d9df8e8a0ed6822ff6f23c04f908c4a7dc6ddbf90f1a77",
       "unchanged": true
     },
     {
@@ -1749,8 +1749,8 @@
       "state": "tracked",
       "tracked": true,
       "ignored": false,
-      "sha256": "50ad678163b6f26cf762f9baeb3e9b8224e76bcd04527e9a12332ae0fde1e8b5",
-      "sha256_after": "50ad678163b6f26cf762f9baeb3e9b8224e76bcd04527e9a12332ae0fde1e8b5",
+      "sha256": "899ab1c793c81a420135b9934e3376af59ce45e3e918573f9b42620af155e745",
+      "sha256_after": "899ab1c793c81a420135b9934e3376af59ce45e3e918573f9b42620af155e745",
       "unchanged": true
     },
     {
@@ -1759,8 +1759,8 @@
       "state": "tracked",
       "tracked": true,
       "ignored": false,
-      "sha256": "31c2afc3ab7137637d592aeb2269eb76edfdf853149026af6e05f05c82540cc3",
-      "sha256_after": "31c2afc3ab7137637d592aeb2269eb76edfdf853149026af6e05f05c82540cc3",
+      "sha256": "c8afe86b86574f37525f3b2a29999f76965a459334f9e36408962bc355bfb333",
+      "sha256_after": "c8afe86b86574f37525f3b2a29999f76965a459334f9e36408962bc355bfb333",
       "unchanged": true
     },
     {
@@ -1769,28 +1769,18 @@
       "state": "tracked",
       "tracked": true,
       "ignored": false,
-      "sha256": "244425c1d37f62c367dbc7155e1d793bfecd5a4d936f1b0d2b1b68bd07249bed",
-      "sha256_after": "244425c1d37f62c367dbc7155e1d793bfecd5a4d936f1b0d2b1b68bd07249bed",
+      "sha256": "7b401175827a8af4d77c8160e3f7d6edf1d4ed3e81448a4d5bc9e95d8a8efc4e",
+      "sha256_after": "7b401175827a8af4d77c8160e3f7d6edf1d4ed3e81448a4d5bc9e95d8a8efc4e",
       "unchanged": true
     },
     {
-      "path": "datasets/cbx-social-trends/data/processed/x_cbx_202608_monthly_aggregates.csv",
+      "path": "datasets/cbx-social-trends/data/processed/x_cbx_202608_monthly_coarse_aggregates.csv",
       "exists": true,
       "state": "tracked",
       "tracked": true,
       "ignored": false,
-      "sha256": "8131ce0336b15fc92d8b12b164404a522b21c875cf728bdf66ddb0e9af5260b9",
-      "sha256_after": "8131ce0336b15fc92d8b12b164404a522b21c875cf728bdf66ddb0e9af5260b9",
-      "unchanged": true
-    },
-    {
-      "path": "datasets/cbx-social-trends/data/processed/x_cbx_202608_weekly_aggregates.csv",
-      "exists": true,
-      "state": "tracked",
-      "tracked": true,
-      "ignored": false,
-      "sha256": "49b4e2eb4cdcf8da2b0b908f1609a3783e8de8e81c1aec9300e17635ff6ea362",
-      "sha256_after": "49b4e2eb4cdcf8da2b0b908f1609a3783e8de8e81c1aec9300e17635ff6ea362",
+      "sha256": "d4832bd21dda6069ff0aed2105ec95458370dc9b503d46a94d63704bfe475cc0",
+      "sha256_after": "d4832bd21dda6069ff0aed2105ec95458370dc9b503d46a94d63704bfe475cc0",
       "unchanged": true
     },
     {

@@ -29,6 +29,7 @@ __all__ = [
     "INPUT_COLUMNS",
     "WEEKLY_COLUMNS",
     "MONTHLY_COLUMNS",
+    "COARSE_MONTHLY_COLUMNS",
     "ENGAGEMENT_BIN_LABELS",
     "TEXT_LENGTH_BIN_LABELS",
     "COMPOUND_DEFAULT",
@@ -41,6 +42,7 @@ __all__ = [
     "parse_created_at",
     "read_private_input",
     "aggregate_rows",
+    "aggregate_coarse_monthly_rows",
     "write_aggregate_csv",
     "scan_output_for_identifiers",
     "sha256_file",
@@ -82,6 +84,13 @@ _GROUP_COLUMNS: tuple[str, ...] = (
 
 WEEKLY_COLUMNS: tuple[str, ...] = ("week_start",) + _GROUP_COLUMNS + ("post_count",)
 MONTHLY_COLUMNS: tuple[str, ...] = ("month",) + _GROUP_COLUMNS + ("post_count",)
+COARSE_MONTHLY_COLUMNS: tuple[str, ...] = (
+    "month",
+    "compound",
+    "breakdown",
+    "category",
+    "post_count",
+)
 
 _ENGAGEMENT_EDGES: tuple[tuple[int, str], ...] = (
     (0, "0"),
@@ -283,6 +292,137 @@ def aggregate_rows(
         "missing": dict(sorted(missing.items())),
     }
     return _table(weekly, "week_start"), _table(monthly, "month"), diagnostics
+
+
+def _coarse_engagement_category(metric: str, raw: str) -> str:
+    label = bin_engagement(raw, column=metric)
+    if label == "":
+        return f"{metric}_missing"
+    value = int(label)
+    if metric == "views":
+        # Coarsen the previous 8 exposure bins into two public buckets:
+        # 0-499 and 500+.  This removes the rare 10,000+ cell while retaining
+        # the low / non-low split reviewers asked for.
+        return "views_0_499" if value <= 4 else "views_500_plus"
+    if metric == "likes":
+        if value <= 1:
+            return "likes_0_4"
+        if value == 2:
+            return "likes_5_19"
+        return "likes_20_plus"
+    if metric in ("reposts", "replies"):
+        return f"{metric}_0" if value == 0 else f"{metric}_1_plus"
+    raise AggregateError(f"unsupported engagement metric for coarse aggregation: {metric}")
+
+
+def aggregate_coarse_monthly_rows(
+    rows: list[dict[str, str]], *, compound: str = COMPOUND_DEFAULT, threshold: int = 5
+) -> tuple[list[dict[str, str]], dict]:
+    """Build the publication-oriented coarse monthly aggregate.
+
+    The fine weekly/monthly group products remain useful for review, but the
+    owner selected "coarsen the aggregation" for publication.  This output uses
+    monthly marginal breakdowns instead of crossing period x classification x
+    several engagement bins.  Topic categories below ``threshold`` within a
+    month are merged into ``other_topic_lt5``; engagement bins are also collapsed
+    to broad tiers.  The result is still deterministic and derived directly from
+    the private input, but avoids publishing fine cells that approximate
+    individual posts.
+    """
+
+    if threshold < 1:
+        raise AggregateError("coarse aggregation threshold must be >= 1")
+
+    monthly_total: Counter[tuple[str, str]] = Counter()
+    monthly_topic: Counter[tuple[str, str, str]] = Counter()
+    monthly_engagement: dict[str, Counter[tuple[str, str, str]]] = {
+        "views_tier": Counter(),
+        "likes_tier": Counter(),
+        "reposts_tier": Counter(),
+        "replies_tier": Counter(),
+    }
+    unknown_periods = 0
+
+    for index, row in enumerate(rows):
+        absent = [c for c in INPUT_COLUMNS if c not in row]
+        if absent:
+            raise AggregateError("row %d: missing input columns %s" % (index, absent))
+        stamp = parse_created_at(row["createdAt"])
+        if stamp is None:
+            month = ""
+            unknown_periods += 1
+        else:
+            month = month_of(stamp)
+
+        monthly_total[(month, compound)] += 1
+        monthly_topic[(month, compound, row["topic_id"] or "")] += 1
+        for metric, breakdown in (
+            ("views", "views_tier"),
+            ("likes", "likes_tier"),
+            ("reposts", "reposts_tier"),
+            ("replies", "replies_tier"),
+        ):
+            monthly_engagement[breakdown][
+                (month, compound, _coarse_engagement_category(metric, row[metric]))
+            ] += 1
+
+    output: list[dict[str, str]] = []
+
+    def add(month: str, compound_value: str, breakdown: str, category: str, count: int) -> None:
+        output.append(
+            {
+                "month": month,
+                "compound": compound_value,
+                "breakdown": breakdown,
+                "category": category,
+                "post_count": str(count),
+            }
+        )
+
+    for month, compound_value in sorted(monthly_total):
+        add(month, compound_value, "total", "all", monthly_total[(month, compound_value)])
+
+        other_topic_count = 0
+        topic_rows: list[tuple[str, int]] = []
+        for topic_key, count in sorted(
+            (topic, count)
+            for (topic_month, topic_compound, topic), count in monthly_topic.items()
+            if topic_month == month and topic_compound == compound_value
+        ):
+            if count < threshold:
+                other_topic_count += count
+            else:
+                topic_rows.append((topic_key or "topic_missing", count))
+        for category, count in topic_rows:
+            add(month, compound_value, "topic", category, count)
+        if other_topic_count:
+            add(month, compound_value, "topic", f"other_topic_lt{threshold}", other_topic_count)
+
+        for breakdown in ("views_tier", "likes_tier", "reposts_tier", "replies_tier"):
+            for category, count in sorted(
+                (category, count)
+                for (metric_month, metric_compound, category), count in monthly_engagement[
+                    breakdown
+                ].items()
+                if metric_month == month and metric_compound == compound_value
+            ):
+                add(month, compound_value, breakdown, category, count)
+
+    small_cells = [
+        row
+        for row in output
+        if row["breakdown"] != "total" and int(row["post_count"]) < threshold
+    ]
+    diagnostics = {
+        "threshold": threshold,
+        "input_rows": len(rows),
+        "unknown_period_rows": unknown_periods,
+        "groups": len(output),
+        "small_cells_lt_threshold": len(small_cells),
+        "minimum_group_size": min((int(row["post_count"]) for row in output), default=0),
+        "breakdowns": sorted({row["breakdown"] for row in output}),
+    }
+    return output, diagnostics
 
 
 def write_aggregate_csv(

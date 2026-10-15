@@ -1,0 +1,15 @@
+{
+  "schema_version": "1.0.0",
+  "record": "publication_artifact_descriptor",
+  "artifact_id": "x-cbx-202608-monthly-coarse-aggregates",
+  "path": "datasets/cbx-social-trends/data/processed/x_cbx_202608_monthly_coarse_aggregates.csv",
+  "layer": "processed",
+  "source_kind": "social",
+  "storage_policy_id": "processed-public-candidate",
+  "sha256": "d4832bd21dda6069ff0aed2105ec95458370dc9b503d46a94d63704bfe475cc0",
+  "byte_length": 1169,
+  "data_rows": 28,
+  "columns": 5,
+  "recorded_at": "2026-10-15",
+  "notes": "Coarse monthly marginal counts (month x CBX x breakdown/category). One row = one public aggregate group; total rows sum to 147. Fine weekly/monthly crossed aggregates were removed from tracked output after the owner selected coarser aggregation for publication."
+}

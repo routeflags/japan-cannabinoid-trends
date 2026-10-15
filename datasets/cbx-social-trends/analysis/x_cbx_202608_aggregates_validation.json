@@ -4,67 +4,49 @@
   "compound_provenance": "datasets/cbx-social-trends/methodology.md section 3.1 (query CBX liquid) + metadata/queries/query-registry.json (cbx-liquid-ja -> compound_cbx)",
   "input": {
     "path": "datasets/cbx-social-trends/data/private/x_cbx_202608_summary_anonymized.csv",
-    "sha256_before": "f27f979a19e7e4925ae0b5d442beeec027e667ce5b10247934066a5b1ed463a6",
-    "sha256_after": "f27f979a19e7e4925ae0b5d442beeec027e667ce5b10247934066a5b1ed463a6",
-    "unchanged": true,
-    "rows": 147
-  },
-  "diagnostics": {
-    "input_rows": 147,
-    "legacy_week_unknown_with_valid_timestamp": 3,
-    "unknown_period_rows": 0,
-    "missing": {}
+    "sha256": "f27f979a19e7e4925ae0b5d442beeec027e667ce5b10247934066a5b1ed463a6",
+    "rows": 147,
+    "access": "private, read-only, not committed"
   },
   "reconciliation": {
     "input_rows": 147,
-    "weekly_sum": 147,
-    "monthly_sum": 147,
+    "monthly_total_rows_sum": 147,
     "match": true
   },
-  "small_cell": {
-    "weekly_groups": 122,
-    "weekly_n1": 106,
-    "weekly_n_le2": 117,
-    "monthly_groups": 105,
-    "monthly_n1": 83,
-    "monthly_n_le2": 97
-  },
-  "identifier_scan": "pass",
   "output": {
-    "weekly": {
-      "path": "datasets/cbx-social-trends/data/processed/x_cbx_202608_weekly_aggregates.csv",
-      "sha256": "49b4e2eb4cdcf8da2b0b908f1609a3783e8de8e81c1aec9300e17635ff6ea362",
-      "byte_length": 9704,
-      "data_rows": 122,
-      "columns": 12
-    },
-    "monthly": {
-      "path": "datasets/cbx-social-trends/data/processed/x_cbx_202608_monthly_aggregates.csv",
-      "sha256": "8131ce0336b15fc92d8b12b164404a522b21c875cf728bdf66ddb0e9af5260b9",
-      "byte_length": 8333,
-      "data_rows": 105,
-      "columns": 12
+    "monthly_coarse": {
+      "path": "datasets/cbx-social-trends/data/processed/x_cbx_202608_monthly_coarse_aggregates.csv",
+      "sha256": "d4832bd21dda6069ff0aed2105ec95458370dc9b503d46a94d63704bfe475cc0",
+      "byte_length": 1169,
+      "data_rows": 28,
+      "columns": 5
     }
   },
-  "re_identifiability": {
-    "verdict": "REVIEW",
-    "basis": "small cells present (weekly 106 n=1 / 117 n<=2 of 122; monthly 83 n=1 / 97 n<=2 of 105); k-anonymity bar undecided per issue section 8, so no suppression applied",
-    "single_record_groups": {
-      "weekly": 106,
-      "monthly": 83
-    },
-    "small_groups_le2": {
-      "weekly": 117,
-      "monthly": 97
-    },
-    "temporal_check": "weekly week_start + classification + bins is the finest grain and carries the n=1 groups above",
-    "rare_values": {
-      "views_bin_7_groups_weekly": 3,
-      "format_link_groups_weekly": 3,
-      "intent_harm_report_groups_weekly": 1
-    },
-    "direct_identifiers": "absent (header/value scan pass: no tweet_id_hash, author_id, text, URL, exact datetime, or exact count)"
+  "coarsening": {
+    "owner_decision": "2026-10-15: use coarser aggregation for publication",
+    "period": "monthly only; weekly output removed from tracked publication candidates",
+    "shape": "marginal breakdowns only, not topic x intent x format x multiple engagement-bin crosses",
+    "topic_rule": "within each month, topic categories with post_count < 5 are merged into other_topic_lt5",
+    "engagement_rules": {
+      "views_tier": "views_0_499 / views_500_plus",
+      "likes_tier": "likes_0_4 / likes_5_19 / likes_20_plus",
+      "reposts_tier": "reposts_0 / reposts_1_plus",
+      "replies_tier": "replies_0 / replies_1_plus"
+    }
   },
-  "evidence_levels": "post_count and bins are derived; period/compound/classification are observed group keys; causal interpretation is out of scope and not recorded here",
+  "small_cell": {
+    "threshold": 5,
+    "groups": 28,
+    "non_total_groups": 26,
+    "non_total_groups_lt5": 0,
+    "minimum_non_total_post_count": 5
+  },
+  "identifier_scan": "pass",
+  "re_identifiability": {
+    "verdict": "PASS",
+    "basis": "coarse monthly marginal groups; no non-total public cell below 5; no post IDs, author IDs, text, URLs, exact timestamps, or exact engagement counts",
+    "direct_identifiers": "absent"
+  },
+  "evidence_levels": "post_count and coarse tiers are derived; month/compound/topic labels are observed group keys; interpretation is out of scope",
   "recorded_at": "2026-10-15"
 }

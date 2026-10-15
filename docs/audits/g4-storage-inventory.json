@@ -20,28 +20,28 @@
     "include_private": false
   },
   "run_count": 47,
-  "count": 106,
+  "count": 105,
   "raw_modified": false,
   "judgment_summary": {
-    "missing_metadata": 7,
+    "missing_metadata": 6,
     "partially_recognized": 34,
     "recognized": 65
   },
   "format_summary": {
-    "csv": 9,
+    "csv": 8,
     "json": 96,
     "text": 1
   },
   "artifact_type_summary": {
     "comparison": 4,
-    "none": 39,
+    "none": 38,
     "raw_records": 1,
     "raw_response": 3,
     "summary": 13,
     "timeseries": 46
   },
   "manifest_summary": {
-    "missing": 76,
+    "missing": 75,
     "present": 30
   },
   "sqlite_present": false,
@@ -3195,36 +3195,9 @@
       ]
     },
     {
-      "path": "datasets/cbx-social-trends/data/processed/x_cbx_202608_monthly_aggregates.csv",
-      "bytes": 8333,
-      "sha256": "8131ce0336b15fc92d8b12b164404a522b21c875cf728bdf66ddb0e9af5260b9",
-      "format": "csv",
-      "sniff_state": "partial",
-      "artifact_type": null,
-      "schema_id": null,
-      "contains_full_timeseries": null,
-      "record_count": null,
-      "declared_data_points": null,
-      "reader_id": null,
-      "reader_registered": null,
-      "study_id": null,
-      "run_id": null,
-      "source_id": null,
-      "run_directory": null,
-      "metadata_state": "missing",
-      "manifest_state": "missing",
-      "verification": "unverifiable_no_manifest",
-      "judgment": "missing_metadata",
-      "notes": [
-        "content:extension:csv",
-        "legacy:no-manifest",
-        "lineage:unknown"
-      ]
-    },
-    {
-      "path": "datasets/cbx-social-trends/data/processed/x_cbx_202608_weekly_aggregates.csv",
-      "bytes": 9704,
-      "sha256": "49b4e2eb4cdcf8da2b0b908f1609a3783e8de8e81c1aec9300e17635ff6ea362",
+      "path": "datasets/cbx-social-trends/data/processed/x_cbx_202608_monthly_coarse_aggregates.csv",
+      "bytes": 1169,
+      "sha256": "d4832bd21dda6069ff0aed2105ec95458370dc9b503d46a94d63704bfe475cc0",
       "format": "csv",
       "sniff_state": "partial",
       "artifact_type": null,

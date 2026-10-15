@@ -14,10 +14,12 @@ import pytest
 
 from processing.aggregate_x import (
     AGGREGATOR_VERSION,
+    COARSE_MONTHLY_COLUMNS,
     INPUT_COLUMNS,
     MONTHLY_COLUMNS,
     WEEKLY_COLUMNS,
     AggregateError,
+    aggregate_coarse_monthly_rows,
     aggregate_rows,
     bin_engagement,
     bin_text_length,
@@ -200,6 +202,33 @@ def test_small_cells_are_reported_not_removed() -> None:
     assert len(weekly) == 2
 
 
+def test_coarse_monthly_aggregation_merges_rare_topics() -> None:
+    rows = [
+        _row(topic_id="topic_ingredient"),
+        _row(topic_id="topic_ingredient", likes="8"),
+        _row(topic_id="topic_ingredient", replies="2"),
+        _row(topic_id="topic_ingredient", views="800"),
+        _row(topic_id="topic_ingredient", reposts="6"),
+        _row(topic_id="topic_promotion", views="12000"),
+    ]
+
+    coarse, diagnostics = aggregate_coarse_monthly_rows(rows)
+
+    assert tuple(coarse[0]) == COARSE_MONTHLY_COLUMNS
+    assert diagnostics["input_rows"] == 6
+    assert diagnostics["small_cells_lt_threshold"] == 5
+    assert {"topic", "views_tier", "likes_tier", "reposts_tier", "replies_tier", "total"} == set(
+        diagnostics["breakdowns"]
+    )
+    topics = {
+        row["category"]: row["post_count"]
+        for row in coarse
+        if row["breakdown"] == "topic"
+    }
+    assert topics == {"topic_ingredient": "5", "other_topic_lt5": "1"}
+    assert scan_output_for_identifiers(COARSE_MONTHLY_COLUMNS, coarse) == []
+
+
 def test_wrong_header_is_rejected(tmp_path: Path) -> None:
     bad = tmp_path / "bad.csv"
     bad.write_text("a,b\n1,2\n", encoding="utf-8")
@@ -214,11 +243,17 @@ def test_private_input_totals_reconcile() -> None:
     assert len(rows) == 147
     assert tuple(rows[0]) == INPUT_COLUMNS
     weekly, monthly, diagnostics = aggregate_rows(rows)
+    coarse, coarse_diagnostics = aggregate_coarse_monthly_rows(rows)
     assert sum(int(r["post_count"]) for r in weekly) == 147
     assert sum(int(r["post_count"]) for r in monthly) == 147
+    totals = [int(r["post_count"]) for r in coarse if r["breakdown"] == "total"]
+    assert sum(totals) == 147
+    assert coarse_diagnostics["groups"] == 28
+    assert coarse_diagnostics["small_cells_lt_threshold"] == 0
     assert diagnostics["legacy_week_unknown_with_valid_timestamp"] == 3
     assert scan_output_for_identifiers(WEEKLY_COLUMNS, weekly) == []
     assert scan_output_for_identifiers(MONTHLY_COLUMNS, monthly) == []
+    assert scan_output_for_identifiers(COARSE_MONTHLY_COLUMNS, coarse) == []
 
 
 @requires_private

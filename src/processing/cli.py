@@ -23,9 +23,11 @@ from processing.classify import classify_text
 from processing.aggregate_x import (
     AGGREGATOR_VERSION,
     COMPOUND_DEFAULT,
+    COARSE_MONTHLY_COLUMNS,
     MONTHLY_COLUMNS,
     WEEKLY_COLUMNS,
     AggregateError,
+    aggregate_coarse_monthly_rows,
     aggregate_rows,
     read_private_input,
     scan_output_for_identifiers,
@@ -149,10 +151,23 @@ def cmd_aggregate_x(args) -> int:
         return EXIT_IO
     try:
         weekly, monthly, diagnostics = aggregate_rows(rows, compound=args.compound)
+        coarse_monthly, coarse_diagnostics = aggregate_coarse_monthly_rows(
+            rows, compound=args.compound
+        )
     except AggregateError as error:
         _err(f"aggregate-x: validation error: {error}")
         return EXIT_DATA
-    for columns, table in ((WEEKLY_COLUMNS, weekly), (MONTHLY_COLUMNS, monthly)):
+    if not (args.weekly_out or args.monthly_out or args.monthly_coarse_out):
+        _err("aggregate-x: specify at least one output path")
+        return EXIT_CONFIG
+    output_tables = []
+    if args.weekly_out:
+        output_tables.append((WEEKLY_COLUMNS, weekly))
+    if args.monthly_out:
+        output_tables.append((MONTHLY_COLUMNS, monthly))
+    if args.monthly_coarse_out:
+        output_tables.append((COARSE_MONTHLY_COLUMNS, coarse_monthly))
+    for columns, table in output_tables:
         findings = scan_output_for_identifiers(columns, table)
         if findings:
             for finding in findings:
@@ -167,8 +182,24 @@ def cmd_aggregate_x(args) -> int:
         )
         return EXIT_DATA
     try:
-        weekly_sha = write_aggregate_csv(args.weekly_out, WEEKLY_COLUMNS, weekly)
-        monthly_sha = write_aggregate_csv(args.monthly_out, MONTHLY_COLUMNS, monthly)
+        output = {}
+        if args.weekly_out:
+            output["weekly"] = {
+                "path": args.weekly_out,
+                "sha256": write_aggregate_csv(args.weekly_out, WEEKLY_COLUMNS, weekly),
+            }
+        if args.monthly_out:
+            output["monthly"] = {
+                "path": args.monthly_out,
+                "sha256": write_aggregate_csv(args.monthly_out, MONTHLY_COLUMNS, monthly),
+            }
+        if args.monthly_coarse_out:
+            output["monthly_coarse"] = {
+                "path": args.monthly_coarse_out,
+                "sha256": write_aggregate_csv(
+                    args.monthly_coarse_out, COARSE_MONTHLY_COLUMNS, coarse_monthly
+                ),
+            }
     except OSError as error:
         _err(f"aggregate-x: cannot write output: {error}")
         return EXIT_IO
@@ -207,18 +238,17 @@ def cmd_aggregate_x(args) -> int:
                 "monthly_n1": sum(1 for n in small_monthly if n == 1),
                 "monthly_n_le2": sum(1 for n in small_monthly if n <= 2),
             },
+            "coarse_monthly": coarse_diagnostics,
             "identifier_scan": "pass",
-            "output": {
-                "weekly": {"path": args.weekly_out, "sha256": weekly_sha},
-                "monthly": {"path": args.monthly_out, "sha256": monthly_sha},
-            },
+            "output": output,
         }
         target = Path(args.report)
         target.parent.mkdir(parents=True, exist_ok=True)
         target.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(
         f"aggregate-x: input={len(rows)} weekly_groups={len(weekly)} "
-        f"monthly_groups={len(monthly)} version={AGGREGATOR_VERSION}"
+        f"monthly_groups={len(monthly)} coarse_monthly_groups={len(coarse_monthly)} "
+        f"version={AGGREGATOR_VERSION}"
     )
     return EXIT_OK
 
@@ -328,8 +358,9 @@ def build_parser() -> argparse.ArgumentParser:
         help=("weekly/monthly group counts from the private per-post X input"),
     )
     aggregate.add_argument("--input", required=True)
-    aggregate.add_argument("--weekly-out", required=True)
-    aggregate.add_argument("--monthly-out", required=True)
+    aggregate.add_argument("--weekly-out", default=None)
+    aggregate.add_argument("--monthly-out", default=None)
+    aggregate.add_argument("--monthly-coarse-out", default=None)
     aggregate.add_argument("--compound", default=COMPOUND_DEFAULT)
     aggregate.add_argument("--report", default=None)
     aggregate.set_defaults(func=cmd_aggregate_x)

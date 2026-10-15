@@ -3,7 +3,7 @@
   "generated_by": "validation.cli contract-ledger",
   "summary": {
     "contract_count": 27,
-    "document_count": 30,
+    "document_count": 29,
     "by_kind": {
       "gate_contract": 6,
       "interface_contract": 3,
@@ -464,19 +464,13 @@
       "exists": true
     },
     {
-      "path": "metadata/publication/x-cbx-202608-monthly-aggregates/",
+      "path": "metadata/publication/x-cbx-202608-monthly-coarse-aggregates/",
       "kind": "decision_record",
       "schema_contract": "publication-decision-v1",
       "exists": true
     },
     {
       "path": "metadata/publication/x-cbx-202608-summary-anonymized/",
-      "kind": "decision_record",
-      "schema_contract": "publication-decision-v1",
-      "exists": true
-    },
-    {
-      "path": "metadata/publication/x-cbx-202608-weekly-aggregates/",
       "kind": "decision_record",
       "schema_contract": "publication-decision-v1",
       "exists": true

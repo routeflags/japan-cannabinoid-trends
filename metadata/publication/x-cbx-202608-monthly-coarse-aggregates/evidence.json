@@ -1,0 +1,45 @@
+{
+  "schema_version": "1.0.0",
+  "record": "publication_review_evidence",
+  "artifact_id": "x-cbx-202608-monthly-coarse-aggregates",
+  "recorded_at": "2026-10-15",
+  "provenance_present": true,
+  "integrity": "verified",
+  "schema_valid": true,
+  "personal_data_reviewed": true,
+  "source_terms_confirmed": true,
+  "redistribution_confirmed": true,
+  "copyright_confirmed": true,
+  "anonymization_applied": true,
+  "citations": {
+    "provenance_present": [
+      "datasets/cbx-social-trends/methodology.md section 3.1 (query CBX liquid, Apify daily collection, tweet_id dedup 2376 -> 147)",
+      "metadata/queries/query-registry.json (cbx-liquid-ja -> compound_cbx)",
+      "src/processing/aggregate_x.py + src/processing/reproduce.py DERIVATIONS[x_cbx_202608_monthly_coarse_aggregates.csv] (executable derivation, source_published false)"
+    ],
+    "integrity": [
+      "sha256(file, 2026-10-15 recomputed) = d4832bd21dda6069ff0aed2105ec95458370dc9b503d46a94d63704bfe475cc0 = artifact.json"
+    ],
+    "schema_valid": [
+      "5 columns: month, compound, breakdown, category, post_count. One row is a monthly marginal aggregate group, never a post."
+    ],
+    "personal_data_reviewed": [
+      "No tweet_id_hash, author_id, text, URL, exact datetime, exact engagement count, username, or per-post row appears in the artifact.",
+      "The fine weekly/monthly crossed aggregates were removed from tracked publication candidates after the owner selected coarser aggregation."
+    ],
+    "source_terms_confirmed": [
+      "Owner approved publication-candidate aggregate handling on 2026-10-15. The artifact is aggregate-only and does not redistribute X post records."
+    ],
+    "redistribution_confirmed": [
+      "The private X input is not committed. This artifact publishes only monthly aggregate counts and merged topic/engagement categories."
+    ],
+    "copyright_confirmed": [
+      "No post text, media, URL, author metadata, or platform content is redistributed."
+    ],
+    "anonymization_applied": [
+      "Coarsening selected by owner: monthly only; marginal breakdowns; topic categories with count < 5 within a month merged into other_topic_lt5; views/likes/reposts/replies collapsed to broad tiers.",
+      "All published cells have post_count >= 5; total rows reconcile to private input count 147."
+    ]
+  },
+  "notes": "This evidence records the coarser publication candidate only. Fine weekly/monthly crossed aggregate artifacts remain reproducible as a method if needed but are not tracked as publication candidates."
+}

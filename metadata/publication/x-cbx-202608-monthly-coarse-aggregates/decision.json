@@ -1,0 +1,14 @@
+{
+  "schema_version": "1.0.0",
+  "record": "publication_decision",
+  "decision_id": "publication-review-x-cbx-202608-monthly-coarse-aggregates",
+  "artifact_id": "x-cbx-202608-monthly-coarse-aggregates",
+  "artifact_sha256": "d4832bd21dda6069ff0aed2105ec95458370dc9b503d46a94d63704bfe475cc0",
+  "status": "approved",
+  "reviewed_at": "2026-10-15",
+  "reviewer": "owner (thread approval 2026-10-15: aggregate outputs may become publication candidates; use coarser aggregation)",
+  "criteria_version": "G6 §10.2 / §11 (minimal publication rule)",
+  "recorded_at": "2026-10-15",
+  "basis": "Owner selected coarse aggregation for PUB-029 after the small-cell explanation. This artifact replaces the fine weekly/monthly crossed aggregate candidates with monthly marginal breakdowns and merges topic cells below 5 into other_topic_lt5.",
+  "notes": "PUB-10 passes only for this exact sha256. Recompute the gate after any artifact edit."
+}

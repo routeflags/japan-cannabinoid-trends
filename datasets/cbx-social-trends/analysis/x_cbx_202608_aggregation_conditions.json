@@ -2,10 +2,10 @@
   "schema_version": "1.0.0",
   "record": "x_aggregation_conditions",
   "issue": "ISS-20261014-PUB-029",
-  "decision": "option ii (owner-decided 2026-10-15): aggregator only; per-post CSV sections 2-2/10/11 WITHDRAWN history",
+  "decision": "option ii (owner-decided 2026-10-15): aggregator only; per-post CSV sections 2-2/10/11 WITHDRAWN history; publication candidate coarsened by owner decision 2026-10-15",
   "aggregator_version": "1.0.0",
   "implementation": "src/processing/aggregate_x.py",
-  "cli": "python -m processing.cli aggregate-x --input <private> --weekly-out <weekly> --monthly-out <monthly> --compound CBX --report <report>",
+  "cli": "python -m processing.cli aggregate-x --input <private> --monthly-coarse-out <monthly-coarse> --compound CBX --report <report>",
   "input": {
     "path": "datasets/cbx-social-trends/data/private/x_cbx_202608_summary_anonymized.csv",
     "columns": 16,
@@ -15,11 +15,11 @@
     "management": "ISS-20261015-PRV-036 (non-public retention)"
   },
   "dimensions": {
-    "period": ["weekly week_start (ISO Monday YYYY-MM-DD)", "monthly month (YYYY-MM-01)"],
+    "period": ["monthly month (YYYY-MM-01)"],
     "compound": ["CBX (fixed; see compound_provenance)"],
-    "classification": ["topic_id", "intent_id", "format_id (reused as-is; no reclassification)"],
-    "engagement_bin": ["views_bin", "likes_bin", "reposts_bin", "replies_bin"],
-    "text": ["text_length_bin", "has_text"]
+    "classification": ["topic marginal breakdown; topic cells below 5 per month merged into other_topic_lt5"],
+    "engagement_bin": ["marginal coarse tiers for views, likes, reposts, replies"],
+    "text": ["not published as a breakdown in the coarse candidate"]
   },
   "compound_provenance": "datasets/cbx-social-trends/methodology.md section 3.1 (query CBX liquid) + metadata/queries/query-registry.json (cbx-liquid-ja -> compound_cbx)",
   "engagement_bins": {
@@ -61,6 +61,6 @@
     "taxonomy": "metadata/taxonomy/content-taxonomy.skos.jsonld",
     "note": "aggregation reuses input topic_id/intent_id/format_id as-is; unclassified (fallback) and missing (empty) stay distinct"
   },
-  "small_cell_policy": "reported, never suppressed or merged (k-anonymity threshold undecided per issue section 8)",
+  "small_cell_policy": "owner selected coarser aggregation on 2026-10-15; public candidate is monthly marginal output with topic cells below 5 merged and no non-total cell below 5",
   "platform_language_note": "input platform=x_twitter mapped to x and language/ja uniform across all 147 rows; constants carry no grouping information and are not output columns"
 }
