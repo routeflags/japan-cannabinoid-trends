@@ -170,7 +170,7 @@ def publish(archive_path: str, version: str, github_release_url: str,
             f"{ZENODO_API}/deposit/depositions/{latest_id}/actions/newversion",
             api_key=api_key,
         )
-        if status not in (200, 201):
+        if status not in (200, 201, 202):
             raise PublishError(
                 f"newversion of concept record {concept_record_id} failed "
                 f"(HTTP {status}): {body[:400]}"
@@ -185,10 +185,35 @@ def publish(archive_path: str, version: str, github_release_url: str,
             data=json.dumps({"metadata": metadata}).encode("utf-8"),
             content_type="application/json",
         )
-        if status not in (200, 201):
+        if status not in (200, 201, 202):
             raise PublishError(f"create deposition failed (HTTP {status}): {body[:400]}")
         deposition = _json(body, "create deposition")
         deposition_id = str(deposition["id"])
+
+    # A newversion draft inherits the previous version's files.  A release
+    # version must contain its own archive only, so remove everything the
+    # draft inherited before uploading (REL-015 follow-up: v1.13.2 initially
+    # shipped with the v1.13.1 archive alongside its own).
+    status, body = _request(
+        "GET",
+        f"{ZENODO_API}/deposit/depositions/{deposition_id}/files",
+        api_key=api_key,
+    )
+    if status == 200:
+        for existing in _json(body, "GET draft files"):
+            file_id = str(existing.get("id") or "")
+            if not file_id:
+                continue
+            dstatus, _dbody = _request(
+                "DELETE",
+                f"{ZENODO_API}/deposit/depositions/{deposition_id}/files/{file_id}",
+                api_key=api_key,
+            )
+            if dstatus not in (200, 202, 204):
+                raise PublishError(
+                    f"cannot remove inherited file {existing.get('key')!r} "
+                    f"from draft {deposition_id} (HTTP {dstatus})"
+                )
 
     # Upload the archive (multipart/form-data).
     with open(archive_path, "rb") as handle:
@@ -207,7 +232,7 @@ def publish(archive_path: str, version: str, github_release_url: str,
         data=body_bytes,
         content_type=f"multipart/form-data; boundary={boundary}",
     )
-    if status not in (200, 201):
+    if status not in (200, 201, 202):
         raise PublishError(f"file upload failed (HTTP {status}): {body[:400]}")
 
     # Update the metadata on the draft (the newversion draft inherits it, but
@@ -219,7 +244,7 @@ def publish(archive_path: str, version: str, github_release_url: str,
         data=json.dumps({"metadata": metadata}).encode("utf-8"),
         content_type="application/json",
     )
-    if status not in (200, 201):
+    if status not in (200, 201, 202):
         raise PublishError(f"metadata update failed (HTTP {status}): {body[:400]}")
 
     # Publish.
@@ -228,7 +253,9 @@ def publish(archive_path: str, version: str, github_release_url: str,
         f"{ZENODO_API}/deposit/depositions/{deposition_id}/actions/publish",
         api_key=api_key,
     )
-    if status not in (200, 201):
+    # Zenodo answers 202 Accepted when the publish action is processed
+    # asynchronously; the response body already carries the published record.
+    if status not in (200, 201, 202):
         raise PublishError(f"publish failed (HTTP {status}): {body[:400]}")
     published = _json(body, "publish")
 
@@ -260,6 +287,46 @@ def publish(archive_path: str, version: str, github_release_url: str,
     return published
 
 
+def repair_record(record_id: str, keep_pattern: str, api_key: str) -> dict:
+    """Delete every file of a published/editable record that does not match.
+
+    Zenodo allows file edits on a record within 30 days of publication, which
+    is exactly the window in which an inherited file from a newversion draft
+    must be removed (v1.13.2 shipped alongside the inherited v1.13.1 archive).
+    """
+    status, body = _request(
+        "GET",
+        f"{ZENODO_API}/deposit/depositions/{record_id}/files",
+        api_key=api_key,
+    )
+    if status != 200:
+        raise PublishError(
+            f"cannot list files of record {record_id} (HTTP {status}); "
+            "the record may be older than 30 days or not editable"
+        )
+    files = _json(body, "GET files")
+    kept, removed = [], []
+    for entry in files:
+        file_id = str(entry.get("id") or "")
+        key = str(entry.get("key") or entry.get("filename") or "")
+        if not file_id:
+            continue
+        if keep_pattern in key:
+            kept.append(key)
+            continue
+        dstatus, _dbody = _request(
+            "DELETE",
+            f"{ZENODO_API}/deposit/depositions/{record_id}/files/{file_id}",
+            api_key=api_key,
+        )
+        if dstatus not in (200, 202, 204):
+            raise PublishError(
+                f"cannot delete {key!r} from record {record_id} (HTTP {dstatus})"
+            )
+        removed.append(key)
+    return {"record_id": record_id, "kept": kept, "removed": removed}
+
+
 def main(argv=None) -> int:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--archive", required=True)
@@ -279,6 +346,15 @@ def main(argv=None) -> int:
         help="fail unless the published record sits in this concept family "
         "(derived from CITATION.cff concept DOI by the workflow)",
     )
+    parser.add_argument(
+        "--repair-record",
+        help="repair mode: delete files not matching --keep-pattern from this record",
+    )
+    parser.add_argument(
+        "--keep-pattern",
+        default="",
+        help="substring; files whose key does not contain it are deleted in repair mode",
+    )
     parser.add_argument("--skip-upload", action="store_true", help="do not contact Zenodo")
     parser.add_argument("--format", choices=("text", "json"), default="text")
     args = parser.parse_args(argv)
@@ -292,6 +368,23 @@ def main(argv=None) -> int:
     concept_record_id = args.concept_record_id or os.environ.get(
         "ZENODO_CONCEPT_RECORD_ID"
     ) or None
+
+    if args.repair_record:
+        if not api_key:
+            print("ZENODO_API_KEY is not set; cannot repair", file=sys.stderr)
+            return 2
+        if not args.keep_pattern:
+            print("--repair-record requires --keep-pattern", file=sys.stderr)
+            return 2
+        try:
+            result = repair_record(args.repair_record, args.keep_pattern, api_key)
+        except PublishError as error:
+            print(f"zenodo repair failed: {error}", file=sys.stderr)
+            print(json.dumps({"status": "failed", "record_id": args.repair_record, "error": str(error)}))
+            return 1
+        result["status"] = "success"
+        print(json.dumps(result, ensure_ascii=False))
+        return 0
 
     if args.skip_upload:
         # Dry run: report what would be published.

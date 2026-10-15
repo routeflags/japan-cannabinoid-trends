@@ -1,0 +1,39 @@
+name: Repair Zenodo Record Files
+
+# Manual repair path for a published record whose file set is wrong (for
+# example an inherited archive left by a newversion draft).  Zenodo allows
+# file edits on a record within 30 days of publication; this workflow deletes
+# every file that does not match the keep pattern.
+#
+# Usage:
+#   gh workflow run repair-zenodo-record.yml \
+#     -f record_id=23392789 -f keep_pattern=v1.13.2-clean.zip
+
+on:
+  workflow_dispatch:
+    inputs:
+      record_id:
+        description: Zenodo record id to repair
+        required: true
+      keep_pattern:
+        description: substring; files whose name does not contain it are deleted
+        required: true
+
+permissions:
+  contents: read
+
+jobs:
+  repair:
+    name: Repair Zenodo record files
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Repair record files
+        env:
+          ZENODO_API_KEY: ${{ secrets.ZENODO_API_KEY }}
+        run: |
+          python3 scripts/release/publish-zenodo.py \
+            --repair-record "${{ inputs.record_id }}" \
+            --keep-pattern "${{ inputs.keep_pattern }}"
