@@ -176,7 +176,7 @@ flowchart TD
 | PC-4 | 宣言メタデータの単一正本（`dateModified` と `最終更新` の一致） | P8 |
 | PC-5 | セクション構造の必須要件（GT は 12ヶ月と 5年、X は分類＋CI、YouTube は深度要件） | P3（7 ページで 5年欠落）、P5（検査不能） |
 | PC-6 | HTML として妥当（重複 id なし） | P4 |
-| PC-7 | 公開判断が `metadata/publication/` の判断記録として存在（証拠の引用つき） | 13 ページ分は未登録 |
+| PC-7 | 公開判断が `metadata/publication/` の判断記録として存在（証拠の引用つき） | 14 ページ分は未登録（`research_cbx.html` を含む。2026-10-15 に 13→14 ページへ） |
 
 ### 6.2 実装方針（推奨）
 
@@ -405,6 +405,7 @@ PENDING 化（残りは再取得判断 U11）。監査の宣言済みギャッ�
 `collect --live`（MCP stdio セッション）、verbatim payload + 解析済み系列の 2 成果物、
 per-source の catalog 配置（`data/raw/google_trends/`）を追加。7 run 採用（new=7 / failures=0）、
 13 ページがライブ系列から生成され、5 年平均の算出不能は 0 に。GT-003 を RESOLVED | メンテナ指示（パイプライン経由のライブ） |
+| 2026-10-15 | 実施⑨: **欠損していた `research_cbx.html` を作成**（オーナー指示。PC-8 の前提）。CBX は 13 化合物のページに含まれておらず、guide だけが CBX のデータを持っていた。GT 5 年は生成ブロック（出所は唯一の CBX 単独系列＝境界計測 run）、12 ヶ月・X（147 件の記録済み分布＋Wilson CI）・規制・YouTube（v3 レポート 2 本＋Apify 24 件）は記録から手書き（数値の導出は commit 記録）。共通スケールと CBX 製品 COA は記録が無い旨を明記。14 ページ化に伴い `gt-summary` の化合物・テストの件数を 13→14 へ | メンテナ指示（欠損を先に対応） |
 | 2026-10-15 | 実施⑧（残件の解決）: **パイプラインをドメイン上 生産 (Production) と定義**
 （`docs/specs/contracts.md` 1.1.0 §3.1）。**PC-2 を実装**（GT セクションが run を名乗る +
 引用 run の catalog 解決）。`gt-summary --write` でページ更新を再現可能にし、

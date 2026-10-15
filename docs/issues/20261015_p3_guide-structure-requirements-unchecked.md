@@ -43,3 +43,18 @@
 ## 依存
 
 - PC-7（`ISS-20261015-PUB-036`）と同じ変更にまとめられる。
+
+## オーナー回答
+
+research_cbx.html の欠損を先に対応
+
+## 対応記録（2026-10-15）
+
+`publication/research_cbx.html` を作成し、オーナーの前提条件を満たした（本 issue は PC-8 が残るため OPEN のまま）。
+内容は既存 13 ページと同一形式で、数値はすべて記録から導出: GT 5 年は `processing.cli gt-summary` の生成ブロック
+（出所は唯一の CBX 単独系列である境界計測 run `20261015T042857Z-google-trends-boundary-5y`）、
+12 ヶ月は境界計測 12 ヶ月 run（平均 69.77 / ピーク 2026-09-13 / 最新 78）、X は 147 件の記録済み分布
+（トピック・意図・形式＋Wilson 95% CI）、規制は MHLW（合法・ブラックリスト方式・THC 残留限度値）、
+YouTube は v3 レポート 2 本（CBX 600 件中 232 関連 / CBX リキッド 125 件）と Apify 24 件の深度統計。
+共通スケール比較と CBX 製品 COA は記録が無い旨を明記した（欠測 ≠ ゼロ）。
+`audit-publication` は 16 artifact / findings 0。

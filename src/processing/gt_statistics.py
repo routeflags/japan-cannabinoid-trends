@@ -370,7 +370,11 @@ def build_gt_summary(datasets_root: Path, compounds, timeframe: str) -> dict:
 
 
 #: The compounds the publication pages cover (``publication/research_*.html``).
+#: CBX joined in 2026-10-15 (``research_cbx.html``): the only standalone CBX
+#: series are the boundary-measurement runs, so the 5-year block cites the
+#: measurement run that observed it (ISS-20261015-GT-001).
 PUBLICATION_COMPOUNDS = (
+    "CBX",
     "CBD",
     "THC",
     "CBG",

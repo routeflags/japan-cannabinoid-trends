@@ -192,17 +192,19 @@ def report() -> dict:
 
 
 def test_report_recomputes_every_compound(report: dict) -> None:
-    """13 of 13: the 2026-10-15 live re-collection closed the last gap."""
+    """14 of 14: CBX joined in 2026-10-15 (research_cbx.html), citing the only
+    standalone CBX series - the boundary-measurement run."""
 
     by_compound = {entry["compound"]: entry for entry in report["compounds"]}
 
-    assert report["summary"]["by_status"] == {"computed": 13}
+    assert report["summary"]["by_status"] == {"computed": 14}
     assert by_compound["CBD"]["stats"]["mean"] == 32.5
     # The re-collected compounds carry a weekly series, so their mean is
     # computed rather than passed through.
-    for compound in ("CBN", "THC-O", "H4CBH", "HHBD", "HHCH", "CRDP", "THCH"):
+    for compound in ("CBN", "THC-O", "H4CBH", "HHBD", "HHCH", "CRDP", "THCH", "CBX"):
         assert by_compound[compound]["shape"] == "series", compound
         assert by_compound[compound]["stats"]["mean"] is not None, compound
+    assert by_compound["CBX"]["run_id"] == "20261015T042857Z-google-trends-boundary-5y"
 
 
 def test_means_are_no_longer_unavailable(report: dict) -> None:

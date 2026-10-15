@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CBX 調査データ</title>
+</head>
+<body>
+
+<!-- ===== 調査方法 ===== -->
+<h2 id="methodology">調査方法</h2>
+<p>このセクションでは、本ページの情報がどのように収集・分析されたかを公開しています。</p>
+
+<h3>研究質問</h3>
+<p>「日本国内におけるCBXのオンライン上の検索需要・規制状況は何か？」</p>
+<p><strong>最終更新:</strong> 2026-10-15。</p>
+
+<h3>データソース</h3>
+<ul>
+  <li><strong>検索データ:</strong> Google Trends（日本、過去12ヶ月・5年）</li>
+  <li><strong>SNSデータ:</strong> X (Twitter)（日本語、147件）</li>
+  <li><strong>動画データ:</strong> YouTube（CBX 12ヶ月収集・CBX リキッド 12ヶ月収集）</li>
+  <li><strong>規制資料:</strong> 厚生労働省</li>
+</ul>
+
+<!-- ===== 独自データ：Google Trends 検索需要 ===== -->
+<div>
+  <h2 id="data-search">独自データ: CBX の Google Trends 検索需要 <span>一次データ</span></h2>
+  <p>データソース: Google Trends / 地域: 日本 (JP) / 期間: 過去12ヶ月・5年（週次）/ 取得日: 2026-10-15</p>
+  <p>Google Trends から、CBX の日本国内検索興味度（相対指数 0-100）を取得しました。</p>
+
+  <div>
+    <p><strong>用語の定義:</strong></p>
+    <ul>
+      <li><strong>単独平均（個別正規化値）</strong>: 各キーワードを個別に取得した際の12ヶ月平均値。各キーワードのピークを100とする正規化であり、<strong>キーワード間の比較には使用できない</strong>。</li>
+      <li><strong>比較平均（共通スケール値）</strong>: 複数キーワードを同時取得した際の12ヶ月平均値。比較セット内の最大値を100とする正規化であり、<strong>キーワード間の相対的な検索需要を示す</strong>。</li>
+      <li><strong>興味度スコア</strong>: Google Trends が返す相対指数（0-100）。絶対検索数ではなく、期間内の最大検索量を100とした相対値。</li>
+    </ul>
+  </div>
+
+  <h3>5年データサマリー（個別正規化値）</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>指標</th>
+        <th>値</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>収集期間</td>
+        <td>2021-10-10 〜 2026-10-11（262週）</td>
+      </tr>
+      <tr>
+        <td>5年平均</td>
+        <td><strong>48.32</strong></td>
+      </tr>
+      <tr>
+        <td>ピーク</td>
+        <td>2022-05-08（値: 100）</td>
+      </tr>
+      <tr>
+        <td>最新値</td>
+        <td>49</td>
+      </tr>
+    </tbody>
+  </table>
+  <p><strong>出所:</strong> run <code>20261015T042857Z-google-trends-boundary-5y</code>（JP / today 5-y / 2026-10-15T04:28:57Z 収集）。記録にある項目: 初出 2021-10-10（値 57）、非ゼロ 262 週 / ゼロ 0 週、データあり期間 2021-10-10 〜 2026-10-11。</p>
+
+  <h3>12ヶ月データサマリー（個別正規化値）</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>キーワード</th>
+        <th>12ヶ月平均</th>
+        <th>12ヶ月最高</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>CBX</strong></td>
+        <td>69.77</td>
+        <td>100</td>
+      </tr>
+    </tbody>
+  </table>
+<!-- 12ヶ月表の値の導出: run 20261015T042853Z-google-trends-boundary-12m の records_cbx.json（53 週）から算出。平均 69.77、ピーク 2026-09-13（値 100）、最新値 78、期間 2025-10-12 〜 2026-10-11、全週非ゼロ。 -->
+
+  <h3>共通スケール比較</h3>
+  <p>CBX を含む共通スケール比較の記録は存在しない（comparison set A〜D と common-scale 拡張を確認、2026-10-15 時点）。これは<strong>欠測であり、需要が無いことを意味しない</strong>。</p>
+
+  <p><strong>制約:</strong> Google Trends は相対指数であり、絶対検索数ではない。本節の 5 年・12 ヶ月系列は境界計測のために取得した run（`ISS-20261015-GT-001`）の観測値であり、研究用に別途再取得したものではない。出所の run_id を参照。</p>
+</div>
+
+
+
+<!-- ===== 独自データ：X (Twitter) 言及分析 ===== -->
+<div>
+  <h2 id="data-x">独自データ: CBX の X (Twitter) 言及分析 <span>一次データ</span></h2>
+  <p>データソース: X (Twitter) via Apify / 言語: 日本語 (lang:ja) / 有効件数: 147件 / 取得日: 2026-08-05〜09-08</p>
+
+  <h3>収集結果サマリー</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>指標</th>
+        <th>値</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>元データ件数</td>
+        <td>147件</td>
+      </tr>
+      <tr>
+        <td>有効分類数</td>
+        <td><strong>147件</strong></td>
+      </tr>
+      <tr>
+        <td>言語フィルタ</td>
+        <td>日本語 (lang:ja)</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>コンテンツ分類結果（信頼区間付き）</h3>
+  <p>分類はキーワードベースのルール分類による。件数と比率は仕様に記録された分布（全 147 件の分類結果）から取る。信頼区間は Wilson スコア法による 95% 信頼区間。</p>
+  <h3>トピック分類</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>カテゴリ</th>
+        <th>件数</th>
+        <th>比率</th>
+        <th>95% CI</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>配合/成分</td>
+        <td>99</td>
+        <td>67.3%</td>
+        <td>[59.4%, 74.4%]</td>
+      </tr>
+      <tr>
+        <td>未分類</td>
+        <td>18</td>
+        <td>12.2%</td>
+        <td>[7.9%, 18.5%]</td>
+      </tr>
+      <tr>
+        <td>新商品/入荷</td>
+        <td>11</td>
+        <td>7.5%</td>
+        <td>[4.2%, 12.9%]</td>
+      </tr>
+      <tr>
+        <td>体感/効果</td>
+        <td>10</td>
+        <td>6.8%</td>
+        <td>[3.7%, 12.1%]</td>
+      </tr>
+      <tr>
+        <td>セール/キャンペーン</td>
+        <td>5</td>
+        <td>3.4%</td>
+        <td>[1.5%, 7.7%]</td>
+      </tr>
+      <tr>
+        <td>レビュー</td>
+        <td>4</td>
+        <td>2.7%</td>
+        <td>[1.1%, 6.8%]</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>意図分類</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>カテゴリ</th>
+        <th>件数</th>
+        <th>比率</th>
+        <th>95% CI</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>情報提供</td>
+        <td>95</td>
+        <td>64.6%</td>
+        <td>[56.6%, 71.9%]</td>
+      </tr>
+      <tr>
+        <td>体験報告</td>
+        <td>26</td>
+        <td>17.7%</td>
+        <td>[12.4%, 24.7%]</td>
+      </tr>
+      <tr>
+        <td>商業目的</td>
+        <td>14</td>
+        <td>9.5%</td>
+        <td>[5.8%, 15.4%]</td>
+      </tr>
+      <tr>
+        <td>未分類</td>
+        <td>11</td>
+        <td>7.5%</td>
+        <td>[4.2%, 12.9%]</td>
+      </tr>
+      <tr>
+        <td>有害報告</td>
+        <td>1</td>
+        <td>0.7%</td>
+        <td>[0.1%, 3.8%]</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>形式分類</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>カテゴリ</th>
+        <th>件数</th>
+        <th>比率</th>
+        <th>95% CI</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>テキスト</td>
+        <td>144</td>
+        <td>98.0%</td>
+        <td>[94.2%, 99.3%]</td>
+      </tr>
+      <tr>
+        <td>リンク</td>
+        <td>3</td>
+        <td>2.0%</td>
+        <td>[0.7%, 5.8%]</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p><strong>方法:</strong> キーワードベースのルール分類。信頼区間は Wilson スコア法による95%信頼区間。</p>
+  <p><strong>制約:</strong> ルールベース分類のため、文脈による誤分類の可能性がある。X 検索結果のサンプルであり、全投稿を網羅するものではない。投稿単位のデータは公開しない（集計のみ）。</p>
+</div>
+
+
+<!-- ===== 規制状況 ===== -->
+<div>
+  <h2 id="data-regulation">規制状況: CBX の日本法での法的扱い <span>一次資料の整理</span></h2>
+  <p>データソース: 厚生労働省 / 調査日: 2026-10-15</p>
+  <h3>法的扱い</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>項目</th>
+        <th>内容</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>法的扱い</td>
+        <td><strong>合法（ブラックリスト方式・指定なし）</strong></td>
+      </tr>
+      <tr>
+        <td>根拠制度</td>
+        <td>指定された物質のみが規制対象。CBX は指定されていない</td>
+      </tr>
+      <tr>
+        <td>THC 残留限度値（参考）</td>
+        <td>CBX 製品に Δ9-THC が含まれる場合に適用。油脂・粉末 10ppm、水溶液 0.1ppm、その他（電子タバコ等）1ppm。2024-12-12 施行の改正大麻取締法・麻薬及び向精神薬取締法による成分規制</td>
+      </tr>
+      <tr>
+        <td>出典</td>
+        <td><a href="https://www.mhlw.go.jp/content/11120000/001313368.pdf">一次資料（PDF）</a></td>
+      </tr>
+    </tbody>
+  </table>
+  <p><strong>注意:</strong> 法的状況は調査時点の結果。法改正の可能性あり。CBX そのものが合成カンナビノイドである場合、将来的に指定薬物に指定される可能性もゼロではない。</p>
+</div>
+
+
+<!-- ===== 独自データ：COA 分析結果 ===== -->
+<div>
+  <h2 id="data-coa">独自データ: CBX 製品の COA 分析結果 <span>一次データ</span></h2>
+  <p>データソース: cbx-product-coa（PLANNED）/ 調査日: 2026-10-15</p>
+  <p>CBX 製品の分析証明書（COA）はリポジトリに記録が無い（2026-10-15 時点）。これは<strong>欠測であり、製品の安全性を示すものではない</strong>。製品を選ぶときは、サプライヤーが提供する COA（分析証明書）を確認し、含まれる成分とその濃度、THC 検出結果を把握することが重要である。</p>
+</div>
+
+
+
+<!-- ===== 独自データ：YouTube トレンド ===== -->
+<div>
+  <h2 id="data-youtube">独自データ: CBX の YouTube トレンド <span>一次データ</span></h2>
+  <p>データソース: YouTube Data API v3 / 検索クエリ: 「CBX」 / 取得日: 2026-10-04</p>
+
+  <h3>収集結果サマリー</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>指標</th>
+        <th>値</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>総レコード数</td>
+        <td><strong>600件</strong>（月 50 件 × 12 ヶ月）</td>
+      </tr>
+      <tr>
+        <td>CBX 関連</td>
+        <td><strong>232件</strong>（約39%）</td>
+      </tr>
+      <tr>
+        <td>除外（CBX400F 等）</td>
+        <td>339件（約57%が Honda バイク）</td>
+      </tr>
+      <tr>
+        <td>対象期間</td>
+        <td>2025-10 〜 2026-09</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>月次分布（CBX 関連）</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>月</th>
+        <th>CBX 関連件数</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>2025-10</td><td>19</td></tr>
+      <tr><td>2025-11</td><td>13</td></tr>
+      <tr><td>2025-12</td><td>14</td></tr>
+      <tr><td>2026-01</td><td>18</td></tr>
+      <tr><td>2026-02</td><td>24</td></tr>
+      <tr><td>2026-03</td><td>15</td></tr>
+      <tr><td>2026-04</td><td>22</td></tr>
+      <tr><td>2026-05</td><td>20</td></tr>
+      <tr><td>2026-06</td><td>18</td></tr>
+      <tr><td>2026-07</td><td>20</td></tr>
+      <tr><td>2026-08</td><td>25</td></tr>
+      <tr><td>2026-09</td><td>24</td></tr>
+    </tbody>
+  </table>
+
+  <p><strong>出所:</strong> <code>research/youtube/20261004-cbx-youtube-12months-report.md</code>（2026-10-04 収集、YouTube Data API v3）。なお、当該 API v3 は 2026-10-12 の方針判断により使用を取り止め、当時の raw は削除済みである（本節の数値は削除前の取得結果であり、再取得は行わない）。</p>
+  <p><strong>制約:</strong> YouTube 検索結果のサンプルであり、全動画を網羅するものではない。CBX は Honda バイクと同名であり、除外判定は記録の分類に従う。</p>
+</div>
+
+
+
+<!-- ===== 独自データ: YouTube 動画分析（CBX リキッド） ===== -->
+<div>
+  <h2 id="data-youtube-analysis">独自データ: CBX リキッドの YouTube 動画分析 <span>一次データ</span></h2>
+  <p>データソース: YouTube Data API v3 / クエリ: "CBX リキッド" / 件数: 125件 / 取得日: 2026-10-04。再生数等の深度統計は Apify 収集（24件、2026-10-01 フィルタ）を併記する。</p>
+
+  <h3>動画データサマリー</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>指標</th>
+        <th>値</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>総レコード数</td>
+        <td>125</td>
+      </tr>
+      <tr>
+        <td>対象期間</td>
+        <td>2025-10 〜 2026-09</td>
+      </tr>
+      <tr>
+        <td>多義語問題</td>
+        <td>なし（「CBX リキッド」は具体的なクエリで Honda CBX と混同しない）</td>
+      </tr>
+      <tr>
+        <td>急増期</td>
+        <td>2026-07 以降（19→26→31件）</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>月次分布</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>月</th>
+        <th>件数</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>2025-10</td><td>13</td></tr>
+      <tr><td>2025-11</td><td>3</td></tr>
+      <tr><td>2025-12</td><td>8</td></tr>
+      <tr><td>2026-01</td><td>1</td></tr>
+      <tr><td>2026-02</td><td>4</td></tr>
+      <tr><td>2026-03</td><td>6</td></tr>
+      <tr><td>2026-04</td><td>7</td></tr>
+      <tr><td>2026-05</td><td>2</td></tr>
+      <tr><td>2026-06</td><td>5</td></tr>
+      <tr><td>2026-07</td><td>19</td></tr>
+      <tr><td>2026-08</td><td>26</td></tr>
+      <tr><td>2026-09</td><td>31</td></tr>
+    </tbody>
+  </table>
+
+  <h3>再生数統計（Apify 24件）</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>統計量</th>
+        <th>再生数</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>平均</td>
+        <td><strong>6,806</strong></td>
+      </tr>
+      <tr>
+        <td>中央値</td>
+        <td>2,336</td>
+      </tr>
+      <tr>
+        <td>最大</td>
+        <td>61,241</td>
+      </tr>
+      <tr>
+        <td>最小</td>
+        <td>181</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>チャンネル分布（上位5）</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>チャンネル</th>
+        <th>件数</th>
+        <th>比率</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>たいん隊長CBD研究所</td>
+        <td>5</td>
+        <td>20.8%</td>
+      </tr>
+      <tr>
+        <td>いのうえ倶楽部</td>
+        <td>5</td>
+        <td>20.8%</td>
+      </tr>
+      <tr>
+        <td>合法草図鑑</td>
+        <td>5</td>
+        <td>20.8%</td>
+      </tr>
+      <tr>
+        <td>にま CBD</td>
+        <td>3</td>
+        <td>12.5%</td>
+      </tr>
+      <tr>
+        <td>CBDチャンネルWEEDMAN</td>
+        <td>2</td>
+        <td>8.3%</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>上位動画（再生数順）</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>タイトル</th>
+        <th>チャンネル</th>
+        <th>再生数</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1</td>
+        <td>[CBX] "Melting like ice" - First Review (Part 1)</td>
+        <td>CBDチャンネルWEEDMAN</td>
+        <td><strong>61,241</strong></td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>Part 2: [CBX] 8-Hour Test – How long does it last? I couldn't fight the sleepiness</td>
+        <td>CBDチャンネルWEEDMAN</td>
+        <td>22,413</td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td>【CBX】話題の新成分を正直にレビューしてみた【新成分】</td>
+        <td>宅録ラッパー BST</td>
+        <td>21,346</td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td>CBXリキッドでキマるっ♪【VTuber】</td>
+        <td>いのうえ倶楽部</td>
+        <td>10,314</td>
+      </tr>
+      <tr>
+        <td>5</td>
+        <td>[緊急] CBXとH4CBHについてガチで調べたが結構やばいかもしれないって話[ほぼ無編集]</td>
+        <td>クソアホバカ太郎</td>
+        <td>6,326</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p><strong>出所:</strong> 月次分布は <code>research/youtube/20261004-cbx-rikiddo-youtube-12months-report.md</code>（2026-10-04 収集、YouTube Data API v3）。再生数等の深度統計は Apify 収集のフィルタ後 24 件（<code>datasets/cbx-social-trends/data/processed/youtube_filtered_202607/</code>、2026-10-01 フィルタ、クエリ「CBX リキッド」）。動画長・公開年（絶対日付）の記録は無い。当該 API v3 は 2026-10-12 の方針判断により使用を取り止め、当時の raw は削除済みである（本節の数値は削除前の取得結果であり、再取得は行わない）。</p>
+  <p><strong>制約:</strong> YouTube 検索結果は取得日時点のものであり、動画の追加・削除により変動する可能性がある。24 件中、全件が CBX タイトルを含むが、全件がカンナビノイド CBX であることを保証するものではない。</p>
+</div>
+
+
+<!-- ===== 引用情報 ===== -->
+<div>
+  <h2 id="citation">引用 (How to Cite)</h2>
+  <p>
+    KATO, Kyoji（2026）.<br>
+    「Japan Cannabinoid Trends Dataset 2026: Google Trends, Social Media, Regulatory Status, and Early Warning Index」.<br>
+    Version 1.12.0<br>
+    Routeflags Co., Ltd.<br>
+    [Dataset].<br>
+    DOI: <a href="https://doi.org/10.5281/zenodo.23253840">10.5281/zenodo.23253840</a>
+  </p>
+  <p>
+    <a href="https://doi.org/10.5281/zenodo.23253840">
+      <img src="https://zenodo.org/badge/1375618430.svg" alt="DOI">
+    </a>
+  </p>
+</div>
+
+</body>
+</html>

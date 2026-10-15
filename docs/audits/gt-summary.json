@@ -4,17 +4,38 @@
   "datasets_root": "datasets",
   "timeframe": "today 5-y",
   "summary": {
-    "compound_count": 13,
+    "compound_count": 14,
     "by_status": {
-      "computed": 13
+      "computed": 14
     },
     "by_shape": {
       "baseline": 5,
-      "series": 8
+      "series": 9
     },
     "unavailable_mean": []
   },
   "compounds": [
+    {
+      "compound": "CBX",
+      "status": "computed",
+      "run_id": "20261015T042857Z-google-trends-boundary-5y",
+      "path": "datasets/cbx-search-trends/data/raw/google_trends/20261015T042857Z-google-trends-boundary-5y/records_cbx.json",
+      "shape": "series",
+      "stats": {
+        "weeks": 262,
+        "mean": 48.3244,
+        "peak_date": "2022-05-08",
+        "peak_value": 100,
+        "last_value": 49,
+        "first_nonzero_date": "2021-10-10",
+        "first_value": 57,
+        "nonzero_weeks": 262,
+        "zero_weeks": 0,
+        "data_period": "2021-10-10 〜 2026-10-11"
+      },
+      "unavailable": {},
+      "block": "  <h3>5年データサマリー（個別正規化値）</h3>\n  <table>\n    <thead>\n      <tr>\n        <th>指標</th>\n        <th>値</th>\n      </tr>\n    </thead>\n    <tbody>\n      <tr>\n        <td>収集期間</td>\n        <td>2021-10-10 〜 2026-10-11（262週）</td>\n      </tr>\n      <tr>\n        <td>5年平均</td>\n        <td><strong>48.32</strong></td>\n      </tr>\n      <tr>\n        <td>ピーク</td>\n        <td>2022-05-08（値: 100）</td>\n      </tr>\n      <tr>\n        <td>最新値</td>\n        <td>49</td>\n      </tr>\n    </tbody>\n  </table>\n  <p><strong>出所:</strong> run <code>20261015T042857Z-google-trends-boundary-5y</code>（JP / today 5-y / 2026-10-15T04:28:57Z 収集）。記録にある項目: 初出 2021-10-10（値 57）、非ゼロ 262 週 / ゼロ 0 週、データあり期間 2021-10-10 〜 2026-10-11。</p>"
+    },
     {
       "compound": "CBD",
       "status": "computed",

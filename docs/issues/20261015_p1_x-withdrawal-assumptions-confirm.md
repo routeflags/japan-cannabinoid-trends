@@ -2,7 +2,7 @@
 
 **ID:** ISS-20261015-XID-035  
 **優先度:** P1 (High)  
-**ステータス:** OPEN  
+**ステータス:** OPEN (2026-10-15: C1/C2/C3 approved; remaining: the C1 Zenodo-side execution)  
 **対象:** `ISS-20261015-PUB-035`（RESOLVED）、`ISS-20261015-XID-034`（RESOLVED）、
 `metadata/publication/x-cbx-202608-summary-anonymized/decision.json`、
 `config/storage-policies.json`
@@ -56,10 +56,23 @@
 
 ## 完了条件
 
-- [ ] C1 / C2 / C3 のそれぞれについて承認または代替案の記録
-- [ ] 代替案がある項目の変更と監査の再生成
-- [ ] 本 issue の RESOLVED 化（日付付き）
+- [x] C1 / C2 / C3 のそれぞれについて承認または代替案の記録
+      — **2026-10-15、オーナー承認**: C1 は取り下げ実施、C2・C3 は現状のまま承認
+      （「そのほかよい」。以下「オーナー回答の記録」）
+- [ ] C1 の Zenodo 側の実行（メンテナの操作。手順は `docs/specs/zenodo-doi-guide.md` §12）
+- [ ] 実行後の `exposure` / 本 issue の RESOLVED 化（日付付き）
+
+## 承認内容の整理（エージェント記録。上はオーナーの原文）
+
+- C1: 取り下げ実施。実施は Zenodo 側の操作（§12 の手順）。
+  リポジトリ側の露出記録（`WITHDRAWN` の `exposure`）は、取り下げ実行後に
+  「取り下げ済み」に更新する。
+- C2・C3: 現状のまま承認（`denied` のまま、policy 追加なし）。変更不要。
 
 ## 依存
 
 - `ISS-20261015-PUB-035`、`ISS-20261015-XID-034`（仮決めの記録本体）。
+
+## オーナー回答
+
+過去のZenodoアーカイブは取り下げる。そのほかよい

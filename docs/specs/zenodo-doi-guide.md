@@ -243,6 +243,67 @@ DOI: 10.5281/zenodo.XXXXXXX
 ## 11. References
 
 - Zenodo Documentation: https://help.zenodo.org
-- Zenodo-GitHub Integration: https://help.zenodo.org/docs/github/enable-integration
+- Zenodo-GitHub Integration: https://help.zenodo.org/docs/github/enabl
+e-integration
 - DataCite Metadata Schema: https://schema.datacite.org
 - CC BY 4.0: https://creativecommons.org/licenses/by/4.0/
+
+---
+
+## 12. 投稿単位 X データの取り下げ（2026-10-15、オーナー決定）
+
+### 12.1 背景
+
+このリポジトリの Zenodo アーカイブは GitHub Release からの自動アーカイブで作られる。
+以下の 2 ファイルは公開済みバージョンに含まれており、2026-10-15 の決定
+（`ISS-20261015-COL-030` §4.1: 匿名化後も投稿単位の X データは公開しない）により
+取り下げ対象になった（リポジトリ側の取り下げは `ISS-20261015-PUB-035` で完了）。
+
+| ファイル | 含まれる範囲 |
+|---|---|
+| `datasets/cbx-social-trends/data/processed/x_cbx_202608_summary.csv` | 約 14 リリースのバージョン |
+| `datasets/cbx-social-trends/data/processed/x_cbx_202608_summary_anonymized.csv` | v1.6.2 〜 v1.12.0 の 8 リリースのバージョン |
+
+GitHub 側は対応済み（Release のアセット 0 件、タグ書き換えで自動生成アーカイブは
+クリーン。`validation-framework.md` §21.6）。残る露出は **Zenodo 側の独立コピー**のみ。
+
+### 12.2 制約（事前に理解すること）
+
+- **公開済みバージョンのファイルは Web UI から削除できない**（イミュータブル）。
+  削除・制限には Zenodo サポートへの依頼が必要で、可否はサポートの判断になる。
+- タグの書き換え・GitHub Release の削除は、**既に公開された Zenodo バージョンには波及しない**
+  （Zenodo は公開時点で独立コピーを保持する）。
+- 新規リリースは既にクリーン（取り下げ済みファイルは追跡下に無い）なので、
+  将来の配布は止まっている。以下は**過去バージョン**の扱いである。
+
+### 12.3 手順（メンテナの操作。Zenodo アカウントが必要）
+
+1. Zenodo のレコード（concept DOI）を開き、Versions の一覧で上記 2 ファイル名を含む
+   バージョンを特定する（各バージョンのファイル一覧で検索する。タグ範囲は §12.1 の表）。
+2. 該当バージョンについて、サポートへ取り下げ・制限を依頼する
+   （個人情報を含む研究データの扱いとして。依頼文の雛形は §12.4）。
+3. 並行して、新規バージョンを上記 2 ファイルなしで公開する手も取れる
+   （将来の参照先をクリーンにする。古いバージョンのファイルは残る）。
+4. 実行後、以下を更新する:
+   - `src/processing/reproduce.py` の `WITHDRAWN` 2 件の `exposure`
+     （「取り下げ済み」へ。日付付き）
+   - `ISS-20261015-XID-035` の C1 → RESOLVED（日付付き）
+
+### 12.4 依頼文の雛形
+
+```text
+件名: Removal/restriction request for files in published versions (personal data)
+
+本文:
+Record: [concept DOI]
+Affected versions: [version DOIs]
+Files:
+- datasets/cbx-social-trends/data/processed/x_cbx_202608_summary.csv
+- datasets/cbx-social-trends/data/processed/x_cbx_202608_summary_anonymized.csv
+Reason: row-level social media data (post timestamps and per-post engagement for
+147 posts). Our policy changed on 2026-10-15 to not publish post-level data even
+anonymized (ISS-20261015-COL-030 4.1). We have withdrawn the files from the
+repository and stopped distributing them in new releases; we ask that the files
+in the published versions above be removed or restricted.
+```
+
