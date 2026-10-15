@@ -2,7 +2,7 @@
 
 **ID:** ISS-20261014-PUB-029  
 **優先度:** P1 (High)  
-**ステータス:** OPEN (2026-10-15: (ii) 集計器のみで再定義。下記「(ii) 改訂」を参照)  
+**ステータス:** RESOLVED (2026-10-15: (ii) 集計器のみで再定義し、粗い月次集計を公開候補として承認・実装・gate SUPPORTED。下記「(ii) 改訂」「公開候補の粗粒度化」を参照)  
 **対象:** 入力 `datasets/cbx-social-trends/data/processed/x_cbx_202608_summary_anonymized.csv`、
 変換実装（`src/processing/`、CLI）、出力先（§2-4）、公開審査 envelope（`metadata/publication/`）
 

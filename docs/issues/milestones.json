@@ -48,21 +48,10 @@
         "YouTube exports 採用に必要な actor run ID / dataset ID / dateFilter / status / timezone / no-tracking 方針が確認される",
         "管理画面・公開方針依存の PENDING issue の実施または再分類が記録される"
       ],
-      "issue_count": 1,
-      "status_counts": {
-        "OPEN": 1
-      },
-      "priority_counts": {
-        "P1": 1
-      },
-      "issues": [
-        {
-          "id": "ISS-20261014-PUB-029",
-          "priority": "P1",
-          "status": "OPEN",
-          "path": "docs/issues/active/00-needs-user-confirmation/20261014.md"
-        }
-      ]
+      "issue_count": 0,
+      "status_counts": {},
+      "priority_counts": {},
+      "issues": []
     },
     {
       "id": "M0b",
