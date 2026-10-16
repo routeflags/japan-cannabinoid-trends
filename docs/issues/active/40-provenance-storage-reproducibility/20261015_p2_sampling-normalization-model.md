@@ -62,3 +62,32 @@ transformation / evidence スライスに自然に収まる範囲のみ実装し
 CS11（fetch グループ/比較集合）・CS13（公開承認 decision）を排出する（schema 項目と
 adapter 記録の追加が必要。ライブ収集を伴うため本スライス対象外）。排出が揃うまで
 実データの `comparable` 主張は行わない。
+
+## 実装メモ（2026-10-16、OPEN のまま）
+
+オフラインの契約予約のみ。ライブ収集なし、adapter 変更なし、raw 変更なし、
+比較側の挙動変更なし。`comparable` を実データに付与する変更は一切ない。
+
+- 契約予約: `collection-run-v1` に任意の strict な `comparability_evidence`
+  ブロックを追加（`src/validation/schemas/collection_run.py`）。`sampling_method`
+  （CS08）・`normalization_scale`（CS11）の非空文字列。欠落は「証拠なし」であり
+  推定値ではない。CS09/CS10・CS13 は既存担体（`coverage-manifest-v1`・
+  `publication-decision-v1`）を参照し、run metadata には重複させない。
+  schema バージョンは据え置き（additive optional のため。`SCHEMA_VERSIONS` 変更なし）。
+- 契約テスト（全て synthetic）: `tests/validation/test_collection_run.py`
+  の evidence 節（欠落可・各キー単独可・空文字拒否・未知サブフィールド拒否・
+  非 mapping 拒否）+ `tests/validation/test_running_profile.py::
+  test_running_profile_inherits_evidence_block`（running profile への継承）。
+  既存の `test_comparability_gate.py::
+  test_comparable_is_unreachable_on_repository_data` と
+  `test_comparability_evidence.py::
+  test_built_catalog_entries_carry_no_synthetic_evidence_keys` は変更なしで
+  継続（実データ到達不能と収集側/比較側分離を保証）。
+- 証拠文書: `docs/provenance/comparability-evidence-cs08-cs13.md` の CS08 / CS11
+  行を「contract defined, pending emission」に更新し、「Collection-side contract
+  （2026-10-16 slice）」節を追加。実データ位置（最強 `conditional`）は不変。
+- adapter は排出しない、catalog builder と comparability gate は当該ブロックを
+  読まない。よって本予約のみで実 run が `comparable` に到達する経路は存在しない。
+
+残作業（変更なし）: adapter の収集時排出 → catalog builder / gate の読取経路 →
+実データ再評価。到達不能が解消するまで本 issue は OPEN のまま。

@@ -24,8 +24,8 @@
   "raw_modified": false,
   "judgment_summary": {
     "missing_metadata": 10,
-    "partially_recognized": 17,
-    "recognized": 80
+    "partially_recognized": 4,
+    "recognized": 93
   },
   "format_summary": {
     "csv": 6,
@@ -34,9 +34,9 @@
   },
   "artifact_type_summary": {
     "comparison": 4,
-    "none": 27,
+    "none": 14,
     "raw_records": 1,
-    "raw_response": 4,
+    "raw_response": 17,
     "summary": 24,
     "timeseries": 47
   },
@@ -2251,14 +2251,14 @@
       "bytes": 7817,
       "sha256": "eebd50d9be52765e30b6570b3ba98960cc4d8f6535737e048d6ba801b2ec54d7",
       "format": "json",
-      "sniff_state": "partial",
-      "artifact_type": null,
-      "schema_id": null,
-      "contains_full_timeseries": null,
+      "sniff_state": "recognized",
+      "artifact_type": "raw_response",
+      "schema_id": "google-trends-mcp-tool-result-v1",
+      "contains_full_timeseries": false,
       "record_count": null,
       "declared_data_points": null,
-      "reader_id": null,
-      "reader_registered": null,
+      "reader_id": "json-object-reader",
+      "reader_registered": true,
       "study_id": "cannabinoid-multi-trends",
       "run_id": "20261014T204841Z-google-trends-cannabinoid-multi-trends",
       "source_id": "google-trends",
@@ -2266,9 +2266,9 @@
       "metadata_state": "present",
       "manifest_state": "present",
       "verification": "manifest_present",
-      "judgment": "partially_recognized",
+      "judgment": "recognized",
       "notes": [
-        "content:json_object"
+        "content:fields:content"
       ]
     },
     {
@@ -2302,14 +2302,14 @@
       "bytes": 7601,
       "sha256": "07c507b3f83bb2b3952bd681190860add6e7d0f2e85621ea154fdfcd4a4366ca",
       "format": "json",
-      "sniff_state": "partial",
-      "artifact_type": null,
-      "schema_id": null,
-      "contains_full_timeseries": null,
+      "sniff_state": "recognized",
+      "artifact_type": "raw_response",
+      "schema_id": "google-trends-mcp-tool-result-v1",
+      "contains_full_timeseries": false,
       "record_count": null,
       "declared_data_points": null,
-      "reader_id": null,
-      "reader_registered": null,
+      "reader_id": "json-object-reader",
+      "reader_registered": true,
       "study_id": "cannabinoid-multi-trends",
       "run_id": "20261014T204852Z-google-trends-cannabinoid-multi-trends",
       "source_id": "google-trends",
@@ -2317,9 +2317,9 @@
       "metadata_state": "present",
       "manifest_state": "present",
       "verification": "manifest_present",
-      "judgment": "partially_recognized",
+      "judgment": "recognized",
       "notes": [
-        "content:json_object"
+        "content:fields:content"
       ]
     },
     {
@@ -2353,14 +2353,14 @@
       "bytes": 7622,
       "sha256": "30bbe387d0716b9505bd39c2d3363cfb8569f06aa2d9aba0cd28cd2e66afc66e",
       "format": "json",
-      "sniff_state": "partial",
-      "artifact_type": null,
-      "schema_id": null,
-      "contains_full_timeseries": null,
+      "sniff_state": "recognized",
+      "artifact_type": "raw_response",
+      "schema_id": "google-trends-mcp-tool-result-v1",
+      "contains_full_timeseries": false,
       "record_count": null,
       "declared_data_points": null,
-      "reader_id": null,
-      "reader_registered": null,
+      "reader_id": "json-object-reader",
+      "reader_registered": true,
       "study_id": "cannabinoid-multi-trends",
       "run_id": "20261014T204855Z-google-trends-cannabinoid-multi-trends",
       "source_id": "google-trends",
@@ -2368,9 +2368,9 @@
       "metadata_state": "present",
       "manifest_state": "present",
       "verification": "manifest_present",
-      "judgment": "partially_recognized",
+      "judgment": "recognized",
       "notes": [
-        "content:json_object"
+        "content:fields:content"
       ]
     },
     {
@@ -2404,14 +2404,14 @@
       "bytes": 7601,
       "sha256": "95a89ef75454d1350ebeb16c1c718ce9f496d8f96f11931d5c279277acf3ee1d",
       "format": "json",
-      "sniff_state": "partial",
-      "artifact_type": null,
-      "schema_id": null,
-      "contains_full_timeseries": null,
+      "sniff_state": "recognized",
+      "artifact_type": "raw_response",
+      "schema_id": "google-trends-mcp-tool-result-v1",
+      "contains_full_timeseries": false,
       "record_count": null,
       "declared_data_points": null,
-      "reader_id": null,
-      "reader_registered": null,
+      "reader_id": "json-object-reader",
+      "reader_registered": true,
       "study_id": "cannabinoid-multi-trends",
       "run_id": "20261014T204857Z-google-trends-cannabinoid-multi-trends",
       "source_id": "google-trends",
@@ -2419,9 +2419,9 @@
       "metadata_state": "present",
       "manifest_state": "present",
       "verification": "manifest_present",
-      "judgment": "partially_recognized",
+      "judgment": "recognized",
       "notes": [
-        "content:json_object"
+        "content:fields:content"
       ]
     },
     {
@@ -2455,14 +2455,14 @@
       "bytes": 7567,
       "sha256": "f9a2799275d17e446ea38a3de123262e935e18ae75dfa9ba3c9caa6cd643c1eb",
       "format": "json",
-      "sniff_state": "partial",
-      "artifact_type": null,
-      "schema_id": null,
-      "contains_full_timeseries": null,
+      "sniff_state": "recognized",
+      "artifact_type": "raw_response",
+      "schema_id": "google-trends-mcp-tool-result-v1",
+      "contains_full_timeseries": false,
       "record_count": null,
       "declared_data_points": null,
-      "reader_id": null,
-      "reader_registered": null,
+      "reader_id": "json-object-reader",
+      "reader_registered": true,
       "study_id": "cannabinoid-multi-trends",
       "run_id": "20261014T204859Z-google-trends-cannabinoid-multi-trends",
       "source_id": "google-trends",
@@ -2470,9 +2470,9 @@
       "metadata_state": "present",
       "manifest_state": "present",
       "verification": "manifest_present",
-      "judgment": "partially_recognized",
+      "judgment": "recognized",
       "notes": [
-        "content:json_object"
+        "content:fields:content"
       ]
     },
     {
@@ -2506,14 +2506,14 @@
       "bytes": 7588,
       "sha256": "52522e1e9416d722e63b21ad13008493ae9681c354a285cf1fc9c5c813444bd8",
       "format": "json",
-      "sniff_state": "partial",
-      "artifact_type": null,
-      "schema_id": null,
-      "contains_full_timeseries": null,
+      "sniff_state": "recognized",
+      "artifact_type": "raw_response",
+      "schema_id": "google-trends-mcp-tool-result-v1",
+      "contains_full_timeseries": false,
       "record_count": null,
       "declared_data_points": null,
-      "reader_id": null,
-      "reader_registered": null,
+      "reader_id": "json-object-reader",
+      "reader_registered": true,
       "study_id": "cannabinoid-multi-trends",
       "run_id": "20261014T204901Z-google-trends-cannabinoid-multi-trends",
       "source_id": "google-trends",
@@ -2521,9 +2521,9 @@
       "metadata_state": "present",
       "manifest_state": "present",
       "verification": "manifest_present",
-      "judgment": "partially_recognized",
+      "judgment": "recognized",
       "notes": [
-        "content:json_object"
+        "content:fields:content"
       ]
     },
     {
@@ -2557,14 +2557,14 @@
       "bytes": 7585,
       "sha256": "d8dc377b2c53cf2b67ab11487c41745440e830a8bc8f83d8876a0952ed067fd2",
       "format": "json",
-      "sniff_state": "partial",
-      "artifact_type": null,
-      "schema_id": null,
-      "contains_full_timeseries": null,
+      "sniff_state": "recognized",
+      "artifact_type": "raw_response",
+      "schema_id": "google-trends-mcp-tool-result-v1",
+      "contains_full_timeseries": false,
       "record_count": null,
       "declared_data_points": null,
-      "reader_id": null,
-      "reader_registered": null,
+      "reader_id": "json-object-reader",
+      "reader_registered": true,
       "study_id": "cannabinoid-multi-trends",
       "run_id": "20261014T204904Z-google-trends-cannabinoid-multi-trends",
       "source_id": "google-trends",
@@ -2572,9 +2572,9 @@
       "metadata_state": "present",
       "manifest_state": "present",
       "verification": "manifest_present",
-      "judgment": "partially_recognized",
+      "judgment": "recognized",
       "notes": [
-        "content:json_object"
+        "content:fields:content"
       ]
     },
     {
@@ -2608,14 +2608,14 @@
       "bytes": 7602,
       "sha256": "965e7ab305b3b970d35afcbc56a9c9002369601e917527a07b607d47cc329e5f",
       "format": "json",
-      "sniff_state": "partial",
-      "artifact_type": null,
-      "schema_id": null,
-      "contains_full_timeseries": null,
+      "sniff_state": "recognized",
+      "artifact_type": "raw_response",
+      "schema_id": "google-trends-mcp-tool-result-v1",
+      "contains_full_timeseries": false,
       "record_count": null,
       "declared_data_points": null,
-      "reader_id": null,
-      "reader_registered": null,
+      "reader_id": "json-object-reader",
+      "reader_registered": true,
       "study_id": "cannabinoid-multi-trends",
       "run_id": "20261014T215738Z-google-trends-cannabinoid-multi-trends",
       "source_id": "google-trends",
@@ -2623,9 +2623,9 @@
       "metadata_state": "present",
       "manifest_state": "present",
       "verification": "manifest_present",
-      "judgment": "partially_recognized",
+      "judgment": "recognized",
       "notes": [
-        "content:json_object"
+        "content:fields:content"
       ]
     },
     {
@@ -2659,14 +2659,14 @@
       "bytes": 7823,
       "sha256": "55ccb8bce93fde7f829f7c60f7eb704aecbf395e27698281178eaa4c3b4407dc",
       "format": "json",
-      "sniff_state": "partial",
-      "artifact_type": null,
-      "schema_id": null,
-      "contains_full_timeseries": null,
+      "sniff_state": "recognized",
+      "artifact_type": "raw_response",
+      "schema_id": "google-trends-mcp-tool-result-v1",
+      "contains_full_timeseries": false,
       "record_count": null,
       "declared_data_points": null,
-      "reader_id": null,
-      "reader_registered": null,
+      "reader_id": "json-object-reader",
+      "reader_registered": true,
       "study_id": "cannabinoid-multi-trends",
       "run_id": "20261015T205048Z-google-trends-cannabinoid-multi-trends",
       "source_id": "google-trends",
@@ -2674,9 +2674,9 @@
       "metadata_state": "present",
       "manifest_state": "present",
       "verification": "manifest_present",
-      "judgment": "partially_recognized",
+      "judgment": "recognized",
       "notes": [
-        "content:json_object"
+        "content:fields:content"
       ]
     },
     {
@@ -3148,14 +3148,14 @@
       "bytes": 692,
       "sha256": "50fd6ce9999ce403f28a0994c3fbe0e1f76919ec5aa45ae964399a130abee779",
       "format": "json",
-      "sniff_state": "partial",
-      "artifact_type": null,
-      "schema_id": null,
-      "contains_full_timeseries": null,
+      "sniff_state": "recognized",
+      "artifact_type": "raw_response",
+      "schema_id": "google-trends-mcp-tool-result-v1",
+      "contains_full_timeseries": false,
       "record_count": null,
       "declared_data_points": null,
-      "reader_id": null,
-      "reader_registered": null,
+      "reader_id": "json-object-reader",
+      "reader_registered": true,
       "study_id": "cbx-search-trends",
       "run_id": "20261015T042845Z-google-trends-boundary-1m",
       "source_id": "google-trends",
@@ -3163,9 +3163,9 @@
       "metadata_state": "present",
       "manifest_state": "present",
       "verification": "manifest_present",
-      "judgment": "partially_recognized",
+      "judgment": "recognized",
       "notes": [
-        "content:json_object"
+        "content:fields:content"
       ]
     },
     {
@@ -3199,14 +3199,14 @@
       "bytes": 1772,
       "sha256": "948021bd094bb61041062cf4b9fe8f51cbb2fd663a1466dc2d24100c625d27c9",
       "format": "json",
-      "sniff_state": "partial",
-      "artifact_type": null,
-      "schema_id": null,
-      "contains_full_timeseries": null,
+      "sniff_state": "recognized",
+      "artifact_type": "raw_response",
+      "schema_id": "google-trends-mcp-tool-result-v1",
+      "contains_full_timeseries": false,
       "record_count": null,
       "declared_data_points": null,
-      "reader_id": null,
-      "reader_registered": null,
+      "reader_id": "json-object-reader",
+      "reader_registered": true,
       "study_id": "cbx-search-trends",
       "run_id": "20261015T042849Z-google-trends-boundary-3m",
       "source_id": "google-trends",
@@ -3214,9 +3214,9 @@
       "metadata_state": "present",
       "manifest_state": "present",
       "verification": "manifest_present",
-      "judgment": "partially_recognized",
+      "judgment": "recognized",
       "notes": [
-        "content:json_object"
+        "content:fields:content"
       ]
     },
     {
@@ -3250,14 +3250,14 @@
       "bytes": 1700,
       "sha256": "fcca21617d64868ebac073321bdb444cbea301edbdde8cc8af48466685150c48",
       "format": "json",
-      "sniff_state": "partial",
-      "artifact_type": null,
-      "schema_id": null,
-      "contains_full_timeseries": null,
+      "sniff_state": "recognized",
+      "artifact_type": "raw_response",
+      "schema_id": "google-trends-mcp-tool-result-v1",
+      "contains_full_timeseries": false,
       "record_count": null,
       "declared_data_points": null,
-      "reader_id": null,
-      "reader_registered": null,
+      "reader_id": "json-object-reader",
+      "reader_registered": true,
       "study_id": "cbx-search-trends",
       "run_id": "20261015T042853Z-google-trends-boundary-12m",
       "source_id": "google-trends",
@@ -3265,9 +3265,9 @@
       "metadata_state": "present",
       "manifest_state": "present",
       "verification": "manifest_present",
-      "judgment": "partially_recognized",
+      "judgment": "recognized",
       "notes": [
-        "content:json_object"
+        "content:fields:content"
       ]
     },
     {
@@ -3301,14 +3301,14 @@
       "bytes": 7823,
       "sha256": "6e4573f717e0db7bdb94ade6f31190222bb8f8b51e057c7db9cabc29ca77d740",
       "format": "json",
-      "sniff_state": "partial",
-      "artifact_type": null,
-      "schema_id": null,
-      "contains_full_timeseries": null,
+      "sniff_state": "recognized",
+      "artifact_type": "raw_response",
+      "schema_id": "google-trends-mcp-tool-result-v1",
+      "contains_full_timeseries": false,
       "record_count": null,
       "declared_data_points": null,
-      "reader_id": null,
-      "reader_registered": null,
+      "reader_id": "json-object-reader",
+      "reader_registered": true,
       "study_id": "cbx-search-trends",
       "run_id": "20261015T042857Z-google-trends-boundary-5y",
       "source_id": "google-trends",
@@ -3316,9 +3316,9 @@
       "metadata_state": "present",
       "manifest_state": "present",
       "verification": "manifest_present",
-      "judgment": "partially_recognized",
+      "judgment": "recognized",
       "notes": [
-        "content:json_object"
+        "content:fields:content"
       ]
     },
     {

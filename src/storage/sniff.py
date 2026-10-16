@@ -262,6 +262,37 @@ def _sniff_dict(document: dict) -> SniffResult:
     # They are reported as partial (never forced into a schema), with the
     # fields that made them recognisable so the audit stays actionable
     # (a reader can be registered later - d.md §7).
+    #
+    # ART-006 envelope slice: the verbatim MCP tool-result envelope is the
+    # shape the pipeline itself declares as google-trends-mcp-tool-result-v1
+    # (stage_capture writes capture.result verbatim under that schema; the
+    # committed payload.json / mcp-tool-result.json files carry manifests
+    # declaring exactly it).  The envelope is opaque text, never a series,
+    # so only the sole-key text-block shape is promoted; any other content
+    # shape (empty list, non-text blocks, extra keys) is an unattested
+    # variant and stays partial (never forced into the schema).
+    if "content" in keys:
+        content = document.get("content")
+        if (
+            set(document) == {"content"}
+            and isinstance(content, list)
+            and bool(content)
+            and all(
+                isinstance(block, dict)
+                and block.get("type") == "text"
+                and isinstance(block.get("text"), str)
+                for block in content
+            )
+        ):
+            return SniffResult(
+                "json",
+                "recognized",
+                artifact_type="raw_response",
+                schema_id="google-trends-mcp-tool-result-v1",
+                contains_full_timeseries=False,
+                evidence=("fields:content",),
+            )
+        return SniffResult("json", "partial", evidence=("fields:content",))
     queries = document.get("queries")
     if (
         isinstance(queries, list)

@@ -36,6 +36,30 @@ Extensible areas
 ``environment`` and ``temporal_provenance.submitted_parameters`` carry
 runtime/collector-specific detail and intentionally allow unknown keys. All
 other objects are strict.
+
+Comparability evidence (ISS-20261015-CMP-005)
+--------------------------------------------
+The optional ``comparability_evidence`` block reserves the collection-side
+carriers for the CS08 (sampling) and CS11 (normalization scale) evidence
+defined in ``docs/provenance/comparability-evidence-cs08-cs13.md``:
+
+- ``sampling_method``: free-form method label recorded by the adapter at
+  collection time (comparison-side contract: any declared non-empty string,
+  e.g. ``"top_n:100"``; see ``research.comparability`` CS08);
+- ``normalization_scale``: declared scale identifier for relative indices
+  (comparison-side contract: exact string equality, e.g. Google Trends
+  ``"comparison:[CBX]"``; see ``research.comparability`` CS11).
+
+Both keys are optional and the block itself is optional: absent means "no
+evidence recorded", never an inferred value (AGENTS.md).  Coverage /
+missingness (CS09/CS10) and publication approval (CS13) already have their
+own carriers (``coverage-manifest-v1`` at ``<run-dir>/coverage-manifest.json``
+and ``publication-decision-v1``) and are referenced, not duplicated, here.
+
+Contract only: no adapter emits this block yet, and neither the research
+catalog builder nor the comparability gate reads it.  Real repository runs
+carry no such evidence, so the strongest verdict on repository data stays
+``conditional`` (``comparable`` remains unreachable by construction).
 """
 
 from __future__ import annotations
@@ -254,6 +278,26 @@ COLLECTION_RUN_SCHEMA = {
     "artifact_manifest": {
         "type": "string",
         "empty": False,
+    },
+    # Collection-side comparability evidence (ISS-20261015-CMP-005, CS08/CS11
+    # carriers).  Optional and strict: absent means "no evidence recorded"
+    # (never inferred); unknown sub-fields fail.  No adapter emits this block
+    # yet and no reader consumes it -- the catalog builder and the
+    # comparability gate keep ignoring it until the collection-side emission
+    # work lands, so this reservation alone cannot make any real run
+    # ``comparable``.
+    "comparability_evidence": {
+        "type": "dict",
+        "schema": {
+            "sampling_method": {
+                "type": "string",
+                "empty": False,
+            },
+            "normalization_scale": {
+                "type": "string",
+                "empty": False,
+            },
+        },
     },
     # Runtime fingerprint. This is a documented extension area so that future
     # evidence references and environment fields can be recorded without a

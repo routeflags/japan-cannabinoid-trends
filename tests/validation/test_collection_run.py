@@ -407,3 +407,80 @@ def test_rollout_instruction_section_8_example_divergence():
     }
     extended = validate_document(section_8_document, COLLECTION_RUN_SCHEMA)
     assert extended.valid is True, extended.errors
+
+
+# ---------------------------------------------------------------------------
+# Comparability evidence block (ISS-20261015-CMP-005, collection-side contract)
+# ---------------------------------------------------------------------------
+# Contract-only slice (2026-10-16, offline): the ``comparability_evidence``
+# block reserves the CS08/CS11 carriers in ``collection-run-v1``.  No adapter
+# emits it and no reader consumes it, so these tests use synthetic documents
+# only and change no real-data claim (``comparable`` stays unreachable via
+# ``tests/research/test_comparability_gate.py``).
+
+
+def _document_with_evidence(**evidence) -> dict:
+    document = load_valid_document()
+    document["comparability_evidence"] = dict(evidence)
+    return document
+
+
+def test_evidence_block_absent_still_passes():
+    """The block is optional: existing runs without it stay valid."""
+    document = load_valid_document()
+    assert "comparability_evidence" not in document
+    assert validate_document(document, COLLECTION_RUN_SCHEMA).valid
+
+
+def test_full_evidence_block_passes():
+    document = _document_with_evidence(
+        sampling_method="top_n:100",
+        normalization_scale="comparison:[CBX]",
+    )
+    result = validate_document(document, COLLECTION_RUN_SCHEMA)
+    assert result.valid is True, result.errors
+
+
+@pytest.mark.parametrize(
+    "evidence",
+    [
+        {"sampling_method": "top_n:100"},
+        {"normalization_scale": "comparison:[CBX]"},
+    ],
+)
+def test_partial_evidence_block_passes(evidence):
+    """Each key is independent evidence: one declared item is not a failure."""
+    result = validate_document(
+        _document_with_evidence(**evidence), COLLECTION_RUN_SCHEMA
+    )
+    assert result.valid is True, result.errors
+
+
+@pytest.mark.parametrize("key", ["sampling_method", "normalization_scale"])
+def test_empty_evidence_value_fails(key):
+    """An empty label declares nothing, so it is rejected (never inferred)."""
+    result = validate_document(
+        _document_with_evidence(**{key: ""}), COLLECTION_RUN_SCHEMA
+    )
+    assert result.valid is False
+    nested = result.errors["comparability_evidence"]
+    assert any(key in entry for entry in nested), nested
+
+
+def test_unknown_evidence_sub_field_fails():
+    """The block is strict: future evidence needs a schema change, not a guess."""
+    document = _document_with_evidence(sampling_method="top_n:100")
+    document["comparability_evidence"]["coverage"] = "complete"
+
+    result = validate_document(document, COLLECTION_RUN_SCHEMA)
+
+    assert result.valid is False
+    nested = result.errors["comparability_evidence"]
+    assert any("coverage" in entry for entry in nested), nested
+
+
+def test_evidence_block_must_be_a_mapping():
+    document = load_valid_document()
+    document["comparability_evidence"] = "top_n:100"
+
+    assert not validate_document(document, COLLECTION_RUN_SCHEMA).valid

@@ -23,6 +23,10 @@ AVERAGES_ALT_KEY = R / "cannabinoid-multi-trends/data/raw/google_trends/20261005
 AVERAGES_WITH_PEAK = R / "cannabinoid-multi-trends/data/raw/google_trends/20261008T125719Z-google-trends-common-scale-crdh/comparison.json"
 QUERY_BATCH_OBJECTS = R / "cbx-search-trends/data/raw/google_trends/20261001T121949Z-google-trends-h4cbh-hhbd/related_queries.json"
 QUERY_BATCH_DATA_OBJECT = R / "cbx-search-trends/data/raw/google_trends/20261001T132500Z-google-trends-disambiguated/records_disambiguated.json"
+ENVELOPE_PAYLOAD = R / "cannabinoid-multi-trends/data/raw/google_trends/20261014T204841Z-google-trends-cannabinoid-multi-trends/payload.json"
+ENVELOPE_TOOL_RESULT = R / "cbx-search-trends/data/raw/google_trends/20261015T042845Z-google-trends-boundary-1m/mcp-tool-result.json"
+NOTATION_PRESURVEY = R / "cannabinoid-multi-trends/data/raw/google_trends/20261012T054920Z-google-trends-notation-presurvey/comparison_notation.json"
+REPEAT_DIFF = R / "cannabinoid-multi-trends/data/raw/google_trends/20261012T060517Z-google-trends-ja-rikiddo-phase-a-repeat-12m/repeat_diff.json"
 
 
 def test_recorded_full_timeseries_is_recognized():
@@ -125,6 +129,45 @@ def test_query_batch_variants_stay_partial():
     series_like = sniff_document({"queries": ["A"], "data": [{"date": "2026-01-04", "interest": 1}]})
     assert series_like.state == "partial"
     assert series_like.schema_id is None
+
+
+def test_mcp_text_envelopes_are_recognized_under_the_declared_schema():
+    # ART-006 envelope slice: both filenames share the verbatim MCP
+    # tool-result envelope the pipeline manifests already declare as
+    # google-trends-mcp-tool-result-v1.  The envelope is opaque text, never
+    # a series (d.md P12 / P8).
+    for path in (ENVELOPE_PAYLOAD, ENVELOPE_TOOL_RESULT):
+        result = sniff_path(path)
+        assert (result.format, result.state) == ("json", "recognized")
+        assert result.schema_id == "google-trends-mcp-tool-result-v1"
+        assert result.artifact_type == "raw_response"
+        assert result.contains_full_timeseries is False
+        assert result.record_count is None  # opaque text, not a count
+        assert "fields:content" in result.evidence
+
+
+def test_mcp_envelope_variants_stay_partial():
+    assert sniff_document({"content": []}).state == "partial"
+    assert sniff_document({"content": "text"}).state == "partial"
+    assert sniff_document({"content": [{"type": "text"}]}).state == "partial"
+    assert sniff_document({"content": [{"type": "text", "text": 5}]}).state == "partial"
+    assert sniff_document({"content": [{"type": "image", "text": "x"}]}).state == "partial"
+
+    extra_keys = sniff_document({"content": [{"type": "text", "text": "ok"}], "isError": False})
+    assert extra_keys.state == "partial"
+    assert extra_keys.schema_id is None
+
+
+def test_deferred_variants_stay_partial():
+    # ART-006 remainder (single-instance notation presurvey, unattested
+    # analysis shapes): still unregistered, still partial.
+    notation = sniff_path(NOTATION_PRESURVEY)
+    assert notation.state == "partial"
+    assert "fields:comparisons" in notation.evidence
+
+    diff = sniff_path(REPEAT_DIFF)
+    assert diff.state == "partial"
+    assert diff.schema_id is None
 
 
 def test_page_fixture_is_recognized():

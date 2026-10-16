@@ -67,6 +67,16 @@ QUERY_BATCH_DATA_OBJECT = (
     / "datasets/cbx-search-trends/data/raw/google_trends"
     / "20261001T132500Z-google-trends-disambiguated/records_disambiguated.json"
 )
+ENVELOPE_PAYLOAD = (
+    REPO_ROOT
+    / "datasets/cannabinoid-multi-trends/data/raw/google_trends"
+    / "20261014T204841Z-google-trends-cannabinoid-multi-trends/payload.json"
+)
+ENVELOPE_TOOL_RESULT = (
+    REPO_ROOT
+    / "datasets/cbx-search-trends/data/raw/google_trends"
+    / "20261015T042845Z-google-trends-boundary-1m/mcp-tool-result.json"
+)
 
 
 def _descriptor(path, **overrides) -> ArtifactDescriptor:
@@ -312,6 +322,29 @@ def test_object_reader_reads_related_queries_response():
     assert list(reader.read(descriptor))[0]["record"]["result"].startswith(
         "No related queries"
     )
+
+
+def test_object_reader_reads_the_recorded_mcp_text_envelope():
+    # ART-006 envelope slice: the verbatim MCP tool-result envelope is an
+    # opaque raw_response under its declared schema.  The object reader
+    # exposes it as one record and refuses every series mode (d.md P12).
+    reader = get_reader("json-object-reader")
+    for path in (ENVELOPE_PAYLOAD, ENVELOPE_TOOL_RESULT):
+        descriptor = _descriptor(
+            path, artifact_type="raw_response", schema_id="google-trends-mcp-tool-result-v1"
+        )
+        assert reader.validate(descriptor) == []
+        records = list(reader.read(descriptor, mode="object"))
+        assert len(records) == 1
+        blocks = records[0]["record"]["content"]
+        assert blocks[0]["type"] == "text"
+        assert blocks[0]["text"].startswith("Interest over time for:")
+        # Opaque text is not a series and not a count (d.md P6.2 / P8).
+        assert reader.count(descriptor) is None
+        with pytest.raises(UnsupportedRead):
+            list(reader.read(descriptor, mode="points"))
+        with pytest.raises(UnsupportedRead):
+            list(reader.read(descriptor, mode="records"))
 
 
 def test_query_batch_reader_reads_recorded_query_object_batch():

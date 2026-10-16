@@ -104,3 +104,17 @@ def test_running_document_is_not_mutated_by_validation():
     before = deepcopy(document)
     validate_document(document, COLLECTION_RUN_RUNNING_SCHEMA)
     assert document == before
+
+
+def test_running_profile_inherits_evidence_block():
+    """The running profile derives from the finalized schema, so the
+    collection-side evidence reservation (ISS-20261015-CMP-005) applies to
+    running runs too.  Emission is still future work: no adapter writes it."""
+    document = _running_document()
+    document["comparability_evidence"] = {
+        "sampling_method": "top_n:100",
+        "normalization_scale": "comparison:[CBX]",
+    }
+
+    result = validate_document(document, COLLECTION_RUN_RUNNING_SCHEMA)
+    assert result.valid is True, result.errors

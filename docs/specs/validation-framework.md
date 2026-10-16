@@ -855,6 +855,9 @@ vertical slice（ISS-20261015-PRV-010/011/012 + 関連の ISS-20261015-CMP-005�
   比較側/収集側の状態。CS12 の担体に本スライスの生成記録を追加）。比較側の
   条件 pins は `tests/research/test_comparability_evidence.py`（全て synthetic）。
   実データの `comparable` 主張はなし（到達不能のまま）。収集側の排出は将来作業。
+  （2026-10-16: 収集側契約のみ予約。`collection-run-v1` の任意 `comparability_evidence`
+  ブロックに `sampling_method` / `normalization_scale` を追加。adapter 排出・
+  catalog/gate 読取は未実装のため実データ到達不能は不変）
 
 ## 19. G6 垂直スライス
 

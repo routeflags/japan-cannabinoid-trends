@@ -36,7 +36,7 @@ no-data 応答、分散解析 JSON など 16 件）は、schema / reader が未�
 ## 完了条件
 
 - [x] 対象変種の一覧化（16 件の識別と代表例）
-- [x] 実装・登録した変種の reader と契約テスト（no-data 1 件 + averages のみ 11 件 + query batch 2 件。残りは未登録）
+- [x] 実装・登録した変種の reader と契約テスト（no-data 1 件 + averages のみ 11 件 + query batch 2 件 + MCP text envelope 13 件。残りは未登録）
 - [x] 監査スナップショット再生成と鮮度テスト更新（当該差分のみ。`raw_modified: false` 維持）
 - [ ] 残り変種の登録（下表。実利用順・両形状照合必須。オフライン実施可能だが本スライス対象外のため OPEN）
 
@@ -144,6 +144,65 @@ related queries バッチ / queries+object の 2 形状を 1 スキーマで登�
 |---|---|---|---|
 | notation presurvey（`comparisons`） | 1 | `fields:comparisons` | 単一実例のみのため、実利用または第 2 実例の確認まで見送り |
 | 分散解析・差分（`repeat_diff` 等 analysis 形状） | 3 | `json_object` | 実利用時に形状を確定して登録 |
-| 新規 run の `content` ラッパー（`payload.json` 8 件＋`mcp-tool-result.json` 4 件） | 12 | `json_object`（`content` キー。登録済み `google-trends-mcp-tool-result-v1` とは別形状） | 新規 run 側の形式確定後に §7 手順で登録 |
+| 新規 run の `content` ラッパー（`payload.json` 9 件＋`mcp-tool-result.json` 4 件） | 0（13 件を本スライスで登録済み） | `fields:content` → `google-trends-mcp-tool-result-v1`（下記追記参照。旧記述の「別形状」は誤りだった） | 登録済み。`content` sole-key 以外の形状が出たら §7 手順で追加登録 |
 
 上記はいずれもライブ収集・クラウド証拠・所有者立会いを要しない。
+
+## 追記（2026-10-16、MCP text envelope スライス。OPEN のまま）
+
+`payload.json` / `mcp-tool-result.json` の `content` ラッパー 13 件を登録済みスキーマに昇格した。
+新規 reader・registry 変更は不要だった。外部 API は一切呼んでいない。
+
+- 実装スライス: verbatim MCP tool-result envelope（`{"content": [{"type": "text", "text": ...}]}`）。
+  追跡下の `content` キー持ち JSON は 13 件すべてこの sole-key text-block 形状であり、
+  他形状は存在しない（`git ls-files *.json` 全 285 件を走査）。空リスト・非リスト・
+  非 text ブロック・非文字列 text・extra キー併存は unattested 変種として `partial` のままにする。
+- 訂正: 旧表の「登録済み `google-trends-mcp-tool-result-v1` とは別形状」は誤りだった。
+  13 件の run manifest はいずれも当該ファイルを `schema_id: google-trends-mcp-tool-result-v1` /
+  `artifact_type: raw_response` で宣言しており（例: `20261014T204841Z-.../artifact-manifest.json`）、
+  `stage_capture` も `capture.result` を verbatim で同 schema に書く。sniffer が未対応だっただけであり、
+  推測による schema 当ては行っていない。
+- 登録: `src/storage/sniff.py`（sole-key text-block のみ `google-trends-mcp-tool-result-v1` /
+  `raw_response` の `recognized` に昇格。`contains_full_timeseries: false`。envelope は不透明テキストであり
+  系列としては読ませない）。reader は既存 `json-object-reader`（`object` モードのみ。`count` は None）
+  を再利用し、registry に変更なし（reader＋schema とも登録済み）。
+- 契約テスト: `tests/storage/test_sniff.py`（両ファイル名の実ファイル recognized 断言＋
+  6 種の unattested 変種の partial 維持＋残変種 `comparison_notation.json` / `repeat_diff.json` の
+  partial 維持）、`tests/storage/test_readers.py`（`json-object-reader` による両実ファイルの読解・
+  `points` / `records` 拒否・`count` None）。
+- スナップショット再生成手順:
+  `PYTHONPATH=src python3 -m validation.cli audit-artifacts --output docs/audits/g4-storage-inventory.json`
+  （事前に tmp 出力で committed 版との完全一致を確認し、local drift なし。
+  差分は当該 13 件のみ: `partially_recognized` 17→4、`recognized` 80→93、
+  `missing_metadata` 10 維持、`raw_modified: false` 維持。`release-archives/` と raw データは不変）
+- 検証: `tests/storage/test_sniff.py` + `tests/storage/test_readers.py`（44 passed）、
+  `validate-registries` / `audit-issues`（下記報告参照）
+
+残りのオフライン作業（いずれも外部・所有者待ちではないが、本スライス対象外のため OPEN のまま）:
+
+| 残変種 | 件数 | 根拠 | 登録条件 |
+|---|---|---|---|
+| notation presurvey（`comparisons`） | 1 | `fields:comparisons` | 単一実例のみのため、実利用または第 2 実例の確認まで見送り（変更なし） |
+| 分散解析・差分（`repeat_diff` 等 analysis 形状 3 件。`records_cbx_rikiddo_run2.json` / `variance_analysis.json` / `repeat_diff.json` は互いに異形状） | 3 | `json_object` | 実利用時に形状を確定して登録（変更なし） |
+
+### OPEN 維持の理由（2026-10-16 追記）
+
+本 issue は「storage contract の対象外に残る legacy 変種を減らす」ことが目的であり、
+reader を追加した件数だけでは完了しない。2026-10-16 時点で
+`docs/audits/g4-storage-inventory.json` の `partially_recognized` は 4 件残っているため
+OPEN を維持する。
+
+- notation presurvey の `comparisons` 形状は 1 実例しかなく、同じ名前で別形状が
+  追加される余地がある。単一例だけで汎用 schema / reader を作ると、将来の別形状を
+  誤って recognized にする可能性がある。
+- analysis 3 件はすべて `json_object` だが、`records_cbx_rikiddo_run2.json` /
+  `variance_analysis.json` / `repeat_diff.json` が互いに同型ではない。ここで 1 つの
+  「analysis reader」を作ると、異なる意味の成果物を同一 contract に押し込むことになる。
+- `missing_metadata` 10 件は interim / processed 側の metadata 欠落であり、
+  raw artifact reader 登録だけでは解消しない。ART-006 の reader scope と混ぜて
+  closed 判定しない。
+
+したがって、残り 4 件は「外部待ち」ではなく「実利用時に形状を確定して登録する
+オフライン残件」として残す。閉じる条件は、(a) 上記 4 件の reader/schema を実ファイルで
+検証して登録する、または (b) reader 対象外として別 issue に分離し、ART-006 の
+完了条件から外す、のどちらかである。
