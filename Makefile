@@ -20,38 +20,45 @@ METADATA ?= metadata
 GATE ?= registries
 GATE_ARGS ?=
 
-.PHONY: help test collect stage adopt-all platform-trends audit-new-runs audit-publication audit-snapshots gates
+.PHONY: help test collect stage adopt-all platform-trends audit-new-runs audit-publication audit-snapshots gates check-venv
 
 help:
 	@echo "Targets: test | stage DECLARATION=<file> | adopt-all | platform-trends | audit-new-runs | audit-publication | audit-snapshots | gates"
 
-test:
+# Local development runs through .venv (see docs/specs/validation-framework.md
+# §2).  Fail fast with setup guidance when the interpreter is absent instead of
+# surfacing `No such file or directory` from make or `ModuleNotFoundError` from
+# a system-Python fallback.  No fallback is attempted here on purpose.
+check-venv:
+	@test -x "$(PYTHON)" || command -v "$(PYTHON)" >/dev/null 2>&1 || (echo "missing $(PYTHON)" >&2; echo "Run:" >&2; echo "  python3 -m venv .venv" >&2; echo "  .venv/bin/python -m pip install -e \".[dev]\"" >&2; echo "Then retry the make target." >&2; exit 2)
+
+test: check-venv
 	$(PYTHON) -m pytest -q
 
-collect:
+collect: check-venv
 	$(PYTHON) -m collection.core.cli collect --workspace $(WORKSPACE) --datasets-root $(DATASETS) --config-dir $(CONFIG) --metadata-dir $(METADATA) $(ARGS)
 
-stage:
+stage: check-venv
 	@test -n "$(DECLARATION)" || (echo "usage: make stage DECLARATION=<staging-declaration-v1 json>" && exit 2)
 	$(PYTHON) -m collection.core.cli stage --declaration $(DECLARATION) --workspace $(WORKSPACE) --datasets-root $(DATASETS) --config-dir $(CONFIG) --metadata-dir $(METADATA) $(ARGS)
 
-adopt-all:
+adopt-all: check-venv
 	@for d in $(WORKSPACE)/.staging/*/; do \
 		[ -d "$$d" ] || continue; \
 		$(PYTHON) -m collection.core.cli adopt --staged "$$d" --workspace $(WORKSPACE) --datasets-root $(DATASETS) --config-dir $(CONFIG) --metadata-dir $(METADATA) || exit 1; \
 	done
 	@test -n "$$(ls -A $(WORKSPACE)/.staging/ 2>/dev/null)" || echo "no staged runs remaining"
 
-platform-trends:
+platform-trends: check-venv
 	$(PYTHON) -m processing.cli build-platform-trends --output-dir datasets/cannabinoid-platform-trends/data/processed
 
-audit-new-runs:
+audit-new-runs: check-venv
 	$(PYTHON) -m validation.cli audit-new-runs
 
-audit-publication:
+audit-publication: check-venv
 	$(PYTHON) -m validation.cli audit-publication
 
-audit-snapshots:
+audit-snapshots: check-venv
 	$(PYTHON) -m validation.cli contract-ledger --output docs/audits/contract-ledger.json
 	$(PYTHON) -m validation.cli audit-queries --output docs/audits/g2-query-inventory.json
 	$(PYTHON) -m processing.cli gt-summary --output docs/audits/gt-summary.json
@@ -64,5 +71,5 @@ audit-snapshots:
 	$(PYTHON) -m validation.cli audit-private-catalog --output docs/audits/g6-private-catalog.json
 	$(PYTHON) -m research.cli --repo-root . --datasets-root datasets audit-studies --output docs/audits/g7-study-inventory.json
 
-gates:
+gates: check-venv
 	bash scripts/validation/run-gates.sh $(GATE) $(GATE_ARGS)

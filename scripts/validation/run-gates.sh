@@ -25,10 +25,17 @@ set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 
-if [ -x "${ROOT}/.venv/bin/python" ]; then
-  PYTHON="${ROOT}/.venv/bin/python"
-else
-  PYTHON="python3"
+# Local development runs through .venv (see docs/specs/validation-framework.md
+# §2).  Fail fast with setup guidance when the interpreter is absent instead of
+# falling back to system Python, which surfaces a misleading ModuleNotFoundError.
+PYTHON="${ROOT}/.venv/bin/python"
+if [ ! -x "${PYTHON}" ]; then
+  echo "missing ${PYTHON}" >&2
+  echo "Run:" >&2
+  echo "  python3 -m venv .venv" >&2
+  echo "  .venv/bin/python -m pip install -e \".[dev]\"" >&2
+  echo "Then retry scripts/validation/run-gates.sh." >&2
+  exit 2
 fi
 
 command="${1:-}"
