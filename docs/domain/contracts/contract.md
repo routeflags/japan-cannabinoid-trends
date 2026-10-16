@@ -42,7 +42,7 @@
 ## Cross-context change protocol
 
 - スキーマ追加は §9 の 6 手順（登録＋`SCHEMA_SCOPE`＋Contract Test＋台帳再生成＋テスト＋版上げ時は framework §9 準拠）。
-- ゲート契約に版を付与する日は、定数＋台帳列＋一致検査の 1 組を新設し、`context-map.md` §5 を同時更新する。
+- ゲート契約に版を付与する日は、定数＋台帳列＋一致検査の 1 組を新設し、`context-map.md` §5 を同時更新する。付与の再判断トリガー（T1 意味変更／T2 並存／T3 引用）は Escalation の U4 決定を参照する。
 - U2 の正本同期は 2026-10-16 に完了（`contracts.md` §2・§2.1・§3.2・§4規則4、台帳 `GATE_CONTRACTS` の owner を `contract` に更新し `contract-ledger.json` を再生成）。
 
 ## Required tests and CI checks
@@ -54,5 +54,5 @@
 ## Escalation and human approval triggers
 
 - 新規スキーマ登録の owner / group 決定（テストが落ち続ける設計。決定なき登録は通さない）。
-- G1/G2 の版付与判断（「必要になった時点」の認定は人間が行う）。U3/U4 の判断材料は `docs/domain/decision-briefs/` に置く（owner決定待ち。決定済みとして扱わない）。
+- G1 の版付与判断（owner決定 2026-10-16:案C「未宣言維持 + トリガー条件を正式化」を採用。版は未宣言のまま維持し、G1 は意図的に open の既知ギャップとして残す。正式トリガー T1 意味変更／T2 並存／T3 引用のいずれかが成立した場合に owner が版付与を再判断する。全文は `docs/domain/decision-briefs/U4-gate-contract-version.md` §3）。G2 の版付与判断は人間の認定事項として残る。U3 の判断材料は `docs/domain/decision-briefs/` に置く（owner決定待ち。決定済みとして扱わない。U4 は決定済み）。
 - 判断記録の作成・承認（公開承認・証拠フラグ。`gate-publication` の人間 reviewer）。
