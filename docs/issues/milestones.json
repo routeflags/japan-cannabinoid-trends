@@ -10,14 +10,14 @@
   },
   "summary": {
     "issue_count": 72,
-    "active_count": 19,
-    "closed_count": 53,
+    "active_count": 18,
+    "closed_count": 54,
     "status_counts": {
       "DOCUMENTED": 1,
       "MITIGATED": 1,
-      "OPEN": 17,
+      "OPEN": 16,
       "PENDING": 2,
-      "RESOLVED": 51
+      "RESOLVED": 52
     },
     "open_p0": 0,
     "open_p1": 3,
@@ -109,21 +109,10 @@
         "coverage matrix と page counts が上流記録と一致する",
         "修正後の publication contract と issue audit が failures=0 になる"
       ],
-      "issue_count": 1,
-      "status_counts": {
-        "OPEN": 1
-      },
-      "priority_counts": {
-        "P2": 1
-      },
-      "issues": [
-        {
-          "id": "ISS-20261016-MNT-001",
-          "priority": "P2",
-          "status": "OPEN",
-          "path": "docs/issues/active/20-cbd-publication-corrections/20261016_p2_cbd-research-envelope-hash-drift.md"
-        }
-      ]
+      "issue_count": 0,
+      "status_counts": {},
+      "priority_counts": {},
+      "issues": []
     },
     {
       "id": "M3",
@@ -307,11 +296,11 @@
     }
   ],
   "closed": {
-    "issue_count": 53,
+    "issue_count": 54,
     "status_counts": {
       "DOCUMENTED": 1,
       "MITIGATED": 1,
-      "RESOLVED": 51
+      "RESOLVED": 52
     },
     "issues": [
       {
@@ -631,6 +620,12 @@
         "priority": "P3",
         "status": "RESOLVED",
         "path": "docs/issues/closed/resolved/20261015_p3_guide-structure-requirements-unchecked.md"
+      },
+      {
+        "id": "ISS-20261016-MNT-001",
+        "priority": "P2",
+        "status": "RESOLVED",
+        "path": "docs/issues/closed/resolved/20261016_p2_cbd-research-envelope-hash-drift.md"
       }
     ]
   }

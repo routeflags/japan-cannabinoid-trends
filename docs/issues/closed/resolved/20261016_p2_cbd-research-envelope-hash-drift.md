@@ -2,7 +2,7 @@
 
 **ID:** ISS-20261016-MNT-001  
 **優先度:** P2 (Medium)  
-**ステータス:** OPEN  
+**ステータス:** RESOLVED (2026-10-16)  
 **対象:** `publication/research_cbd.html`, `metadata/publication/research-cbd/artifact.json`, `metadata/publication/research-cbd/decision.json`, `docs/audits/publication-contract.json`
 
 ## 概要
@@ -35,8 +35,20 @@ PC-7（審査対象 hash の一致）が 2 件の finding として記録され�
   - (b) HTML 側を差し戻す: `1cf786b` の当該 hunk が意図しない変更だった場合。
 - いずれも `make audit-publication` の再生成で finding が消えることを確認する。
 
+## 解決記録（2026-10-16）
+
+Owner が案A（現行 HTML を審査対象として再ピン）を選択した。
+
+- `metadata/publication/research-cbd/artifact.json` の `sha256` / `byte_length` を
+  現行 `publication/research_cbd.html`（`sha256: 8c3718e8...`, 19879 bytes）へ更新。
+- `metadata/publication/research-cbd/decision.json` の `artifact_sha256` を同一 hash へ更新。
+- `status` は `requires_review` のまま維持し、`reviewed_at` / `reviewer` は null のまま。
+  内容承認ではなく、審査対象の再固定である。
+- `docs/audits/publication-contract.json` を再生成し、`finding_count: 0` を確認。
+- `make test`: 1446 passed / 4 skipped。
+
 ## 完了条件
 
-- [ ] owner が (a) / (b) を選択し、envelope または HTML を更新した
-- [ ] `docs/audits/publication-contract.json` 再生成で `finding_count: 0` になる
-- [ ] `make test` が green のままである
+- [x] owner が (a) / (b) を選択し、envelope または HTML を更新した
+- [x] `docs/audits/publication-contract.json` 再生成で `finding_count: 0` になる
+- [x] `make test` が green のままである
