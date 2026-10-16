@@ -85,7 +85,7 @@
 
 ### 選択肢 2: 依存方向を明示的に許可する protocol として固定する
 
-- **状態:** **採用（doc-only 部分。方向・範囲・禁止の文書固定。本書 §4）。テストによる機械固定は今回は見送り（§7 Q2）。**
+- **状態:** **採用（doc-only 部分。方向・範囲・禁止の文書固定。本書 §4）。テストによる機械固定は 2026-10-16 T-J承認により `tests/domain/test_storage_validation_adjacency.py` として実装済み（§7 Q2）。**
 
 - **内容:** 許可する方向と範囲を文書＋テストで固定する。例: validation → storage の read 系参照を許可、storage → validation はハッシュ primitive（`validation.integrity`）のみ許可、判定モジュール（`validation.gates` / `storage_contract` の判定部分）への逆依存は禁止。
 - **メリット:** 例外ではなく規則になる。ドリフトを機械的に検出できる。
@@ -108,7 +108,7 @@
 ## 7. owner 確認事項（解決済み／将来再判断に整理）
 
 - Q1: U3 を隣接 protocol として正式化してよいか（選択肢 1＋2 の doc-only 部分）。→ **解決済み。本書 §4・§6 のとおり採用。**
-- Q2: pin テスト（allowlist AST）を追加するか、文書のみに留めるか。→ **将来再判断事項として残す。今回は文書のみに留め、テストは追加しない。** 理由：今回の主目的は文書正式化であること、両端が本マップの範囲外であること、allowlist の保守コストと脆いテスト化の懸念。追加する場合は `tests/domain/` の AST スタイルに合わせ、許可する辺は §4 の allowlist に限定する。再判断の目安は true cycle の兆候（循環 import 障害の発生、循環回避のための遅延 import の出現、共有 primitive の増加）。
+- Q2: pin テスト（allowlist AST）を追加するか、文書のみに留めるか。→ **解決済み（2026-10-16 T-J承認「U3隣接 protocol の allowlist test 追加」により実装：`tests/domain/test_storage_validation_adjacency.py`）。** 当初は文書正式化を主目的として見送ったが、許可辺のドリフト防止のため追加を承認。対象は実測済み2ファイル（`src/validation/storage_contract.py`・`src/storage/inventory.py`）に限定し、許可する辺は §4 の allowlist に限定する（広域スキャンは既存例の洗い出し後の別タスクに残す）。共有 primitive が増えるたびに規則改定が要る点は変わらない。
 - Q3: 選択肢 2・3 に進む将来条件を今決めておくか。→ **解決済み（条件だけ確定）。** true cycle の兆候（import 障害・遅延 import の出現）が出た時点で再検討する。選択肢 3（中間 abstraction への寄せ）はその際の案とする。
 
 ## 8. 検証観点
@@ -116,3 +116,4 @@
 - 本書の実測引用（ファイル・行）が現物と一致すること（`git diff --check`＋目視。行番号は 2026-10-16 に現物再確認済み）。
 - doc-only であること：`src/validation/contract_ledger.py`・`docs/audits/contract-ledger.json`・研究データ・監査出力に触らない（台帳 owner・gate version 不変）。U4 に触らない。
 - Q2 で将来 pin テストを選んだ場合：T1 と同形の AST 走査で green、新規テストが既存 suite を壊さないこと。許可する辺は §4 の allowlist に限定し、過剰な固定はしない。
+- allowlist test（`tests/domain/test_storage_validation_adjacency.py` A1・A2）が green であること。対象は §4 の allowlist に限定した2ファイルのみとし、広域スキャンは別タスクとする。
