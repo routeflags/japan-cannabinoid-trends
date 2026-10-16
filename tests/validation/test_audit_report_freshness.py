@@ -84,32 +84,9 @@ def _tracked_only(document: dict) -> dict:
     }
 
 
-def _boundary_only(document: dict) -> dict:
-    """Keep only the repository-derived part of the private-boundary catalog.
-
-    ``exists`` (and the ``present`` / ``absent`` totals that count it) describe
-    this checkout's disk state: ``datasets/*/data/private`` is gitignored, so a
-    clean clone has none of it.  Which boundaries are *declared* private and
-    how they are excluded is a repository fact, and that is what is verified
-    (``ISS-20261015-AUD-028``; the catalog's own rule is "existence and
-    exclusion state only, contents never inspected").
-    """
-
-    return {
-        "catalog_version": document.get("catalog_version"),
-        "spec": document.get("spec"),
-        "count": document.get("count"),
-        "entries": [
-            {key: value for key, value in entry.items() if key != "exists"}
-            for entry in document.get("entries", [])
-        ],
-    }
-
-
 NORMALIZERS = {
     "identity": _identity,
     "tracked_only": _tracked_only,
-    "boundary_only": _boundary_only,
 }
 
 REPORTS: tuple[Report, ...] = (
@@ -132,7 +109,6 @@ REPORTS: tuple[Report, ...] = (
     Report(
         "docs/audits/g6-private-catalog.json",
         ("validation.cli", "audit-private-catalog"),
-        normalizer="boundary_only",
     ),
     Report(
         "docs/audits/g7-study-inventory.json",

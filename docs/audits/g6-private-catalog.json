@@ -1,13 +1,14 @@
 {
   "catalog_version": "1.0.0",
   "spec": "docs/plans/20261013f.md §13 (local plan; not tracked)",
+  "include_local_state": false,
   "count": 9,
-  "present": 1,
-  "absent": 8,
+  "present": null,
+  "absent": null,
   "entries": [
     {
       "path": "datasets/cbx-social-trends/data/private",
-      "exists": true,
+      "exists": null,
       "tracked": false,
       "ignored": true,
       "classification": "restricted",
@@ -17,7 +18,7 @@
     },
     {
       "path": "datasets/cbx-search-trends/data/private",
-      "exists": false,
+      "exists": null,
       "tracked": false,
       "ignored": true,
       "classification": "restricted",
@@ -27,7 +28,7 @@
     },
     {
       "path": "datasets/cannabinoid-multi-trends/data/private",
-      "exists": false,
+      "exists": null,
       "tracked": false,
       "ignored": true,
       "classification": "restricted",
@@ -37,7 +38,7 @@
     },
     {
       "path": "datasets/cannabinoid-social-trends/data/private",
-      "exists": false,
+      "exists": null,
       "tracked": false,
       "ignored": true,
       "classification": "restricted",
@@ -47,7 +48,7 @@
     },
     {
       "path": "datasets/cbx-liquid-online-trend/data/private",
-      "exists": false,
+      "exists": null,
       "tracked": false,
       "ignored": true,
       "classification": "restricted",
@@ -57,7 +58,7 @@
     },
     {
       "path": "datasets/cbx-product-coa/data/private",
-      "exists": false,
+      "exists": null,
       "tracked": false,
       "ignored": true,
       "classification": "restricted",
@@ -67,7 +68,7 @@
     },
     {
       "path": "datasets/x-26week-trends/data/private",
-      "exists": false,
+      "exists": null,
       "tracked": false,
       "ignored": true,
       "classification": "restricted",
@@ -77,7 +78,7 @@
     },
     {
       "path": "datasets/x-consistency/data/private",
-      "exists": false,
+      "exists": null,
       "tracked": false,
       "ignored": true,
       "classification": "restricted",
@@ -87,7 +88,7 @@
     },
     {
       "path": "datasets/youtube-consistency/data/private",
-      "exists": false,
+      "exists": null,
       "tracked": false,
       "ignored": true,
       "classification": "restricted",

@@ -883,6 +883,7 @@ G6 仕様（`docs/plans/20261013f.md`）の垂直スライス。Git 運用全体
   - 実在 1 件（`x_cbx_202608_summary_anonymized.csv`、`processed-public-candidate`）に実行 → **`BLOCKED`**（`failed: PUB-01/04/10`、`warnings: PUB-06/07/08`。PUB-02/03/05/09 PASS）。BLOCKED は成果物の問題の記録でありゲートの失敗ではない。（監査: `docs/audits/g6-publication-eligibility.json` / `.md`）
 - `src/validation/private_catalog.py` + CLI `audit-private-catalog`（§13。値は出さない）:
   - 実測: マーカー 9 件、`present 0 / absent 9`（worktree に `private/` なし）。全件 `restricted / private / not_approved`。（監査: `docs/audits/g6-private-catalog.json` / `.md`）
+  - 2026-10-16 に既定出力を committed-safe 化（ISS-20261016-MNT-002）: `exists` / `present` / `absent` は `null`＋`include_local_state: false` で checkout 非依存にし、鮮度検査は完全一致に戻した。checkout の実在検査は `--include-local-state` の opt-in（コミット不可）。
 - `src/storage/backend.py`（§14 local FS。`put_immutable` は上書き拒否 G6-T18。missing は False であってゼロではない P8）。
 - 実測（2026-10-13、`.venv` + Python 3.14）: `pytest` **743 passed**（G5 直後 721 → +22）。`validate-registries` **9 ターゲット全 valid**（storage-policies 追加）。
 - §16/§17 対応表は `tests/validation/test_g6_vertical_slice.py` に機械化（T12/T13/T19/T20 = 未達を明示、T16 = wildcard 被覆のみ）。
@@ -1322,13 +1323,14 @@ staged → `adopt` を案内する。パスは字句的に正規化するため 
 | 扱い | 適用先 | 実装 |
 |---|---|---|
 | (a) **追跡対象の事実に置き換える** | g7 study inventory の `data_file_count` | `private` を**名前で除外**（`src/research/audit.py`）。gitignored な `data/private/` の中身はチェックアウトごとに違い、公開レポートに現れる理由も無い。境界の存在は `audit-private-catalog` が扱う（**内容は数えない**） |
-| (b) **事実としては残し、検査対象から外す** | g6 private catalog の `exists` / `present` / `absent` | `tests/validation/test_audit_report_freshness.py` の normalizer `boundary_only`。ディレクトリの実在はローカルの事実で、2 台のマシンでは一致しない |
+| (b) **生成側で committed-safe にする** | g6 private catalog の `exists` / `present` / `absent` | `src/validation/private_catalog.py`: 既定出力は `exists: null` / `present: null` / `absent: null`＋`include_local_state: false`（checkout 非依存。`make audit-snapshots` はこの mode）。checkout の実在を見たい場合は `audit-private-catalog --include-local-state`（ローカル専用、コミット不可）。鮮度検査は normalizer なし（`identity`）の完全一致に戻し、`boundary_only` normalizer は廃止（ISS-20261016-MNT-002） |
 | 既存の先例 | g6 git tracking の `state_summary` / `count` | normalizer `tracked_only`（`ignored` / `absent` も排除）。**追跡されているかどうか**はリポジトリの事実 |
 
 - 検査は `tests/validation/test_audit_report_freshness.py` の **1 つの登録表**（`REPORTS`）
   が持つ。新しいレポートは登録しないと落ちる。
-- ローカルの disk 事実を検証したい場合は、そのレポートを normalizer で除外するか、
-  事実を追跡対象に限定する。**「このマシンでしか green にならない」検査を増やさない。**
+- ローカルの disk 事実を検証したい場合は、既定の committed-safe 出力とは別の明示的な
+  opt-in 経路（`--include-local-state` 等）にし、スナップショット側には混ぜない。
+  **「このマシンでしか green にならない」検査を増やさない。**
 - 個人入力（`datasets/*/data/private/`）からしか再導出できない検証は、既存の
   `requires_source` マーカー（`tests/processing/test_processed_artifacts.py`）と同じく
   **スキップ**にする（private 入力がある環境では実行される）。

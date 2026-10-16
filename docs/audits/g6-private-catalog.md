@@ -2,7 +2,7 @@
 
 **日付:** 2026-10-13
 **仕様:** `docs/plans/20261013f.md` §13
-**機械可読版:** [`g6-private-catalog.json`](./g6-private-catalog.json)（再生成: `python -m validation.cli audit-private-catalog`）
+**機械可読版:** [`g6-private-catalog.json`](./g6-private-catalog.json)（再生成: `python -m validation.cli audit-private-catalog`。既定出力は committed-safe で checkout 非依存: `exists` / `present` / `absent` は `null`。checkout の実在を見る場合は `audit-private-catalog --include-local-state`（ローカル専用、コミット不可）。ISS-20261016-MNT-002）
 **厳守:** 存在と除外状態のみ。内容を開かない・列挙しない・数えない・ハッシュしない。値は一切出力しない。
 
 ---

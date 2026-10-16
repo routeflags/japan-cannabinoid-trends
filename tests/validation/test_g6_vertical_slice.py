@@ -255,15 +255,47 @@ def test_eligibility_is_non_destructive():
 # ---------------------------------------------------------------------------
 
 
-def test_private_catalog_records_boundary_without_values_g6_t17():
-    catalog = build_private_catalog(REPO_ROOT)
-    assert catalog["count"] == 9
-    assert catalog["present"] + catalog["absent"] == 9
-    for entry in catalog["entries"]:
+def test_private_catalog_default_is_committed_safe_g6_t17(tmp_path):
+    """Default output must not leak this checkout's disk state (ISS-20261016-MNT-002).
+
+    ``datasets/*/data/private`` is gitignored, so one checkout has it and a
+    clean clone does not.  The committed snapshot must be identical either
+    way: ``exists`` / ``present`` / ``absent`` stay ``None`` and only
+    repository facts are recorded.
+    """
+    empty = build_private_catalog(tmp_path)
+    marker = tmp_path / "datasets" / "cbx-social-trends" / "data" / "private"
+    marker.mkdir(parents=True)
+    with_marker = build_private_catalog(tmp_path)
+    assert empty == with_marker
+    assert empty["count"] == 9
+    assert empty["include_local_state"] is False
+    assert empty["present"] is None
+    assert empty["absent"] is None
+    for entry in empty["entries"]:
+        assert entry["exists"] is None
         assert entry["classification"] == "restricted"
         assert entry["availability"] == "private"
         assert entry["publication_status"] == "not_approved"
         assert set(entry) <= {"path", "exists", "tracked", "ignored", "classification", "availability", "publication_status", "note"}
+
+
+def test_private_catalog_local_mode_inspects_this_checkout_only_g6_t17(tmp_path):
+    """Opt-in local mode reports real disk facts (never commit this output)."""
+    marker = tmp_path / "datasets" / "cbx-social-trends" / "data" / "private"
+    marker.mkdir(parents=True)
+    catalog = build_private_catalog(tmp_path, include_local_state=True)
+    assert catalog["include_local_state"] is True
+    assert catalog["count"] == 9
+    assert catalog["present"] == 1
+    assert catalog["absent"] == 8
+    by_path = {entry["path"]: entry for entry in catalog["entries"]}
+    assert by_path["datasets/cbx-social-trends/data/private"]["exists"] is True
+    assert all(
+        entry["exists"] is False
+        for path, entry in by_path.items()
+        if path != "datasets/cbx-social-trends/data/private"
+    )
 
 
 # ---------------------------------------------------------------------------

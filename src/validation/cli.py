@@ -1149,8 +1149,14 @@ def cmd_audit_git_tracking(args) -> int:
 
 
 def cmd_audit_private_catalog(args) -> int:
-    """Non-destructive G6 §13 private boundary catalog (existence only)."""
-    catalog = build_private_catalog(Path.cwd())
+    """Non-destructive G6 §13 private boundary catalog (existence only).
+
+    Default output is committed-safe (repository facts only, no local-disk
+    state); ``--include-local-state`` inspects this checkout's disk instead.
+    """
+    catalog = build_private_catalog(
+        Path.cwd(), include_local_state=args.include_local_state
+    )
     if args.output:
         try:
             _write_output(args.output, catalog)
@@ -2128,6 +2134,13 @@ def build_parser() -> argparse.ArgumentParser:
     )
     audit_private.add_argument(
         "--output", default="docs/audits/g6-private-catalog.json"
+    )
+    audit_private.add_argument(
+        "--include-local-state",
+        action="store_true",
+        help="also record this checkout's disk state (exists/present/absent); "
+        "excluded by default so the committed snapshot stays checkout-independent "
+        "(ISS-20261016-MNT-002; local-mode output must not be committed)",
     )
     audit_private.set_defaults(handler=cmd_audit_private_catalog)
 

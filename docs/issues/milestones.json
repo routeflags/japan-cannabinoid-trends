@@ -10,14 +10,14 @@
   },
   "summary": {
     "issue_count": 72,
-    "active_count": 18,
-    "closed_count": 54,
+    "active_count": 17,
+    "closed_count": 55,
     "status_counts": {
       "DOCUMENTED": 1,
       "MITIGATED": 1,
-      "OPEN": 16,
+      "OPEN": 15,
       "PENDING": 2,
-      "RESOLVED": 52
+      "RESOLVED": 53
     },
     "open_p0": 0,
     "open_p1": 3,
@@ -182,13 +182,12 @@
         "legacy reader・SQLite live verification・coverage manifest の未接続を解消する",
         "private X data retention と request-only evidence が方針として記録される"
       ],
-      "issue_count": 6,
+      "issue_count": 5,
       "status_counts": {
-        "OPEN": 6
+        "OPEN": 5
       },
       "priority_counts": {
-        "P2": 5,
-        "P3": 1
+        "P2": 5
       },
       "issues": [
         {
@@ -220,12 +219,6 @@
           "priority": "P2",
           "status": "OPEN",
           "path": "docs/issues/active/40-provenance-storage-reproducibility/20261015_p2_x-request-only-evidence.md"
-        },
-        {
-          "id": "ISS-20261016-MNT-002",
-          "priority": "P3",
-          "status": "OPEN",
-          "path": "docs/issues/active/40-provenance-storage-reproducibility/20261016_p3_private-catalog-local-state-churn.md"
         }
       ]
     },
@@ -296,11 +289,11 @@
     }
   ],
   "closed": {
-    "issue_count": 54,
+    "issue_count": 55,
     "status_counts": {
       "DOCUMENTED": 1,
       "MITIGATED": 1,
-      "RESOLVED": 52
+      "RESOLVED": 53
     },
     "issues": [
       {
@@ -626,6 +619,12 @@
         "priority": "P2",
         "status": "RESOLVED",
         "path": "docs/issues/closed/resolved/20261016_p2_cbd-research-envelope-hash-drift.md"
+      },
+      {
+        "id": "ISS-20261016-MNT-002",
+        "priority": "P3",
+        "status": "RESOLVED",
+        "path": "docs/issues/closed/resolved/20261016_p3_private-catalog-local-state-churn.md"
       }
     ]
   }
