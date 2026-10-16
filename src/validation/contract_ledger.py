@@ -23,11 +23,14 @@ Declared here (no machine-readable source exists)
 - gate contracts (plan / post-collection / coverage / comparability /
   publication / cross-study)
 
-Ownership rules (``docs/specs/contracts.md``): the *owner* is the bounded
+Ownership rules (``docs/specs/contracts.md`` §4): the *owner* is the bounded
 context that produces the contract; *validation* is the enforcer of every
-schema contract.  ``tests/validation/test_contract_ledger.py`` fails when a
-schema is registered without a scope entry below, so the ownership decision
-cannot be skipped when a contract is added.
+schema contract.  Gate contracts are owned by the *contract* context and
+only executed / inspected by validation and research, so a gate declared
+under ``src/validation/`` or ``src/research/`` still records
+``owner == "contract"``.  ``tests/validation/test_contract_ledger.py``
+fails when a schema is registered without a scope entry below, so the
+ownership decision cannot be skipped when a contract is added.
 """
 
 from __future__ import annotations
@@ -42,8 +45,10 @@ LEDGER_SCHEMA_VERSION = "1.0.0"
 #: ``collection`` and ``processing`` are the producing side the model names
 #: 生産 (Production) - the pipeline; ``owner`` records the sub-context that
 #: produces a contract, because that is what the declaration paths line up with
-#: (contracts.md 3.1/3.2).
-CONTEXTS = ("collection", "storage", "validation", "research", "publication")
+#: (contracts.md 3.1/3.2).  ``contract`` is the owner of gate contracts only:
+#: the governance context that bundles the verdicts validation and research
+#: execute and inspect (contracts.md §2/§4, AGENTS.md Domain Language).
+CONTEXTS = ("collection", "storage", "validation", "research", "publication", "contract")
 
 KIND_SCHEMA = "schema_contract"
 KIND_INTERFACE = "interface_contract"
@@ -143,7 +148,7 @@ GATE_CONTRACTS: tuple[dict, ...] = (
     {
         "contract_id": "gate-plan",
         "group": "P6",
-        "owner": "validation",
+        "owner": "contract",
         "version": None,
         "declared_at": "src/validation/gates.py",
         "enforced_by": "validation.cli gate-plan",
@@ -152,7 +157,7 @@ GATE_CONTRACTS: tuple[dict, ...] = (
     {
         "contract_id": "gate-run",
         "group": "P6",
-        "owner": "validation",
+        "owner": "contract",
         "version": None,
         "declared_at": "src/validation/gates.py",
         "enforced_by": "validation.cli gate-run",
@@ -161,7 +166,7 @@ GATE_CONTRACTS: tuple[dict, ...] = (
     {
         "contract_id": "gate-coverage",
         "group": "G3",
-        "owner": "validation",
+        "owner": "contract",
         "version": None,
         "declared_at": "src/validation/coverage.py",
         "enforced_by": "validation.cli coverage-run",
@@ -170,7 +175,7 @@ GATE_CONTRACTS: tuple[dict, ...] = (
     {
         "contract_id": "gate-comparability-run",
         "group": "G1",
-        "owner": "validation",
+        "owner": "contract",
         "version": None,
         "declared_at": "src/validation/comparability.py",
         "enforced_by": "validation.cli compare-runs",
@@ -179,7 +184,7 @@ GATE_CONTRACTS: tuple[dict, ...] = (
     {
         "contract_id": "gate-comparability-study",
         "group": "G7",
-        "owner": "research",
+        "owner": "contract",
         "version": None,
         "declared_at": "src/research/comparability.py",
         "enforced_by": "research.cli compare",
@@ -188,7 +193,7 @@ GATE_CONTRACTS: tuple[dict, ...] = (
     {
         "contract_id": "gate-publication",
         "group": "G6",
-        "owner": "validation",
+        "owner": "contract",
         "version": None,
         "declared_at": "src/validation/publication_eligibility.py",
         "enforced_by": "validation.cli gate-publication",
@@ -197,7 +202,7 @@ GATE_CONTRACTS: tuple[dict, ...] = (
     {
         "contract_id": "gate-release-manifest",
         "group": "G6",
-        "owner": "validation",
+        "owner": "contract",
         "version": None,
         "declared_at": "src/validation/release_manifest.py",
         "enforced_by": "validation.cli validate-release-manifest",

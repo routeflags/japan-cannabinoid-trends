@@ -11,10 +11,11 @@
     },
     "by_owner": {
       "collection": 11,
+      "contract": 7,
       "publication": 1,
-      "research": 6,
+      "research": 5,
       "storage": 4,
-      "validation": 8
+      "validation": 2
     },
     "by_group": {
       "G1": 4,
@@ -32,7 +33,7 @@
     {
       "contract_id": "gate-comparability-run",
       "group": "G1",
-      "owner": "validation",
+      "owner": "contract",
       "version": null,
       "declared_at": "src/validation/comparability.py",
       "enforced_by": "validation.cli compare-runs",
@@ -42,7 +43,7 @@
     {
       "contract_id": "gate-comparability-study",
       "group": "G7",
-      "owner": "research",
+      "owner": "contract",
       "version": null,
       "declared_at": "src/research/comparability.py",
       "enforced_by": "research.cli compare",
@@ -52,7 +53,7 @@
     {
       "contract_id": "gate-coverage",
       "group": "G3",
-      "owner": "validation",
+      "owner": "contract",
       "version": null,
       "declared_at": "src/validation/coverage.py",
       "enforced_by": "validation.cli coverage-run",
@@ -62,7 +63,7 @@
     {
       "contract_id": "gate-plan",
       "group": "P6",
-      "owner": "validation",
+      "owner": "contract",
       "version": null,
       "declared_at": "src/validation/gates.py",
       "enforced_by": "validation.cli gate-plan",
@@ -72,7 +73,7 @@
     {
       "contract_id": "gate-publication",
       "group": "G6",
-      "owner": "validation",
+      "owner": "contract",
       "version": null,
       "declared_at": "src/validation/publication_eligibility.py",
       "enforced_by": "validation.cli gate-publication",
@@ -82,7 +83,7 @@
     {
       "contract_id": "gate-release-manifest",
       "group": "G6",
-      "owner": "validation",
+      "owner": "contract",
       "version": null,
       "declared_at": "src/validation/release_manifest.py",
       "enforced_by": "validation.cli validate-release-manifest",
@@ -92,7 +93,7 @@
     {
       "contract_id": "gate-run",
       "group": "P6",
-      "owner": "validation",
+      "owner": "contract",
       "version": null,
       "declared_at": "src/validation/gates.py",
       "enforced_by": "validation.cli gate-run",

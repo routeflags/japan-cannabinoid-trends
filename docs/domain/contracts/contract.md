@@ -43,7 +43,7 @@
 
 - スキーマ追加は §9 の 6 手順（登録＋`SCHEMA_SCOPE`＋Contract Test＋台帳再生成＋テスト＋版上げ時は framework §9 準拠）。
 - ゲート契約に版を付与する日は、定数＋台帳列＋一致検査の 1 組を新設し、`context-map.md` §5 を同時更新する。
-- `contracts.md` §2 表の所有列同期（U2 残件）は正本側の変更として別途行う。domain 写しが先行してよい。
+- U2 の正本同期は 2026-10-16 に完了（`contracts.md` §2・§2.1・§3.2・§4規則4、台帳 `GATE_CONTRACTS` の owner を `contract` に更新し `contract-ledger.json` を再生成）。
 
 ## Required tests and CI checks
 

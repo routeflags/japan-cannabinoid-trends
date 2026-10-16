@@ -1,6 +1,6 @@
 # 契約（Contract）のドメインモデル
 
-**版:** 1.2.0（2026-10-15）
+**版:** 1.2.1（2026-10-16）
 **目的:** リポジトリ内で多義的に使われてきた「契約」を、境界づけられたコンテキストごとの
 **版を持つ検証可能な合意**として定義し、宣言場所・所有者・検査手段を 1 つの台帳に集約する。
 併せて、**パイプライン**をドメイン上 **生産 (Production)** として定義し、判定側（検証）
@@ -37,7 +37,7 @@
 | **レジストリ文書** | スキーマ契約が検証する実体一覧（source / query / window / study 等） | 産出したコンテキスト | `config/`、`metadata/` | 文書の `schema_version` | `validation.cli validate-registries` |
 | **研究 (Study)** | 研究質問・対象範囲・入力証拠・処理方法・成果物・制約を 1 つに束ねる研究単位。実装上の ID は `study_id`、配置は `datasets/<study-id>/`。HTML ページや release ではなく、dataset release の根拠になる研究集約 | 研究 | `datasets/<study-id>/README.md`、`methodology.md`、`metadata/studies/study-registry.json` | 文書の `schema_version` / release version | `research.cli audit-studies`、`validate-registries`、`audit-processed` |
 | **インターフェース契約** | 実装が満たすべき型・振る舞いの宣言 | 収集・保管 | `collection/core/contracts.py`、`collection/core/staging.py`、`storage/contracts.py` | モジュール定数 | 各 contract test |
-| **ゲート契約** | 段階遷移の可否判定 | 検証・研究 | `src/validation/`、`src/research/` | （未宣言。§10） | CLI + 監査レポート |
+| **ゲート契約** | 段階遷移の可否判定 | 契約 | `src/validation/`、`src/research/`（宣言場所。所有とは分離する） | （未宣言。§10） | 検証・研究の CLI + 監査レポート |
 | **判断記録** | 人間の判断と根拠（公開承認・証拠フラグ） | 公開 | `metadata/publication/<artifact_id>/` | — | `validation.cli gate-publication` |
 
 「契約」は**総称としてのみ**使う。個別の文書名には使わない（`collection-run-v1` であって
@@ -51,9 +51,10 @@
 | 収集 Collection（生産の下位） | source / collector / 収集 run の記録 |
 | 加工 Processing（生産の下位） | 派生成果物の導出宣言と生成値 |
 | 保管 Storage | artifact manifest、artifact registry、storage policy、reader インターフェース |
-| 検証 Validation | スキーマ契約全体、ゲート契約、監査 |
+| 検証 Validation | スキーマ契約全体（検査・行使）、監査。ゲート契約は検査・行使のみ（所有は契約） |
 | 研究 Research | **研究 (Study)**、transformation 来歴、evidence、measurement / research view |
 | 公開 Publication | publication decision（判断記録） |
+| 契約 Contract（統治基盤） | ゲート契約（所有。検査・行使は検証・研究が分担）。唯一の台帳の提供 |
 
 ---
 
@@ -108,9 +109,12 @@ flowchart TD
 - 上流の契約は下流にしか流れない（公開が収集の契約を書き換えない）。
 - 公開は現在ソースコードを持たない（HTML と Markdown）。それでも契約の適用対象として
   他のコンテキストと同じように扱う（判断記録は `metadata/publication/`）。
-- 台帳（§8）の `owner` は**産出した下位コンテキスト**を記録する（現在は
-  `collection` / `storage` / `research` / `publication` / `validation`）。生産は
+- 台帳（§8）の `owner` は**所有コンテキスト**を記録する（現在は
+  `collection` / `storage` / `research` / `publication` / `validation` に加え、
+  ゲート契約の所有を示す `contract`）。生産は
   `collection` と `processing` をまとめた上位名なので、`owner` の値は改名しない。
+  ゲート契約の `owner` は `contract` とする。宣言場所（`src/validation/` /
+  `src/research/`）と検査・行使（検証・研究の CLI）は所有と分離する（§4）。
 
 ---
 
@@ -121,6 +125,9 @@ flowchart TD
 2. **検証はすべてのスキーマ契約の enforcer**。所有者と検査者が別であることを許す。
 3. owner / グループの決定は省略できない。新しいスキーマを登録すると、
    `tests/validation/test_contract_ledger.py` が「該当エントリが無い」で落ちる。
+4. **ゲート契約の owner は契約**。検証・研究は検査・行使を分担する
+   （AGENTS.md Domain Language）。宣言場所が `src/validation/` /
+   `src/research/` にあっても所有は変わらない。
 
 ---
 
@@ -247,6 +254,7 @@ python -m validation.cli contract-ledger --output docs/audits/contract-ledger.js
 
 | 日付 | 版 | 内容 |
 |---|---|---|
+| 2026-10-16 | 1.2.1 | ゲート契約の所有を契約に同期（§2・§2.1・§3.2・§4規則4）。U2 の正本同期を完了し、台帳 `GATE_CONTRACTS` の owner を `contract` に更新 |
 | 2026-10-15 | 1.2.0 | §7.1 に公開契約 PC-1〜PC-8 の機械検査範囲を追加。PC-7 の review envelope と PC-8 の guide 構造検査を実装済みとして記録 |
 | 2026-10-15 | 1.1.0 | §3 を「生産（パイプライン）とコンテキストマップ」に拡張。**パイプライン**をドメイン上 **生産 (Production)** と定義し、判定側との分離を規則化（§3.1）。ユビキタス言語と §2.1 に 生産 / 下位コンテキストを追加 |
 | 2026-10-15 | 1.0.0 | 初版。5 種の宣言をモデル化し、台帳 `validation.cli contract-ledger` と `docs/audits/contract-ledger.json` を導入 |
