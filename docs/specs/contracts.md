@@ -1,10 +1,10 @@
 # 契約（Contract）のドメインモデル
 
-**版:** 1.2.2（2026-10-16）
+**版:** 1.2.3（2026-10-16）
 **目的:** リポジトリ内で多義的に使われてきた「契約」を、境界づけられたコンテキストごとの
 **版を持つ検証可能な合意**として定義し、宣言場所・所有者・検査手段を 1 つの台帳に集約する。
-併せて、**パイプライン**をドメイン上 **生産 (Production)** として定義し、判定側（検証）
-との分離を規則にする（§3.1）。
+併せて、**パイプライン**をドメイン上 **生産 (Production)** として定義し、契約に沿う
+検収・出荷と検証側の責務分離を規則にする（§3.1）。
 **関連:** `docs/specs/validation-framework.md`（Cerberus の正本）、
 `docs/specs/collection-pipeline.md`（パイプラインの運用契約）、
 `docs/reports/20261015c-publication-refresh-plan.md`（導入の経緯）、
@@ -31,8 +31,9 @@
 
 | 用語 | 定義 | 所有コンテキスト | 宣言場所 | 版 | 検査 |
 |---|---|---|---|---|---|
-| **契約 (Contract)** | 境界を越えて渡されるデータ／振る舞いについて、版を持ち機械検証可能な形で宣言した合意 | 検証 | — | — | — |
-| **生産 (Production)** | **パイプライン**。上流の入力から契約準拠の**記録**（run / artifact / 加工成果物 / 生成値）を産出する側（収集・加工）。判定はしない（§3.1） | 生産 | `src/collection/`、`src/processing/` | モジュール定数（`ADAPTER_CONTRACT_VERSION` 等） | 検証側が判定する（`gate-run` / `audit-new-runs` / `audit-processed`） |
+| **契約 (Contract)** | 境界を越えて渡されるデータ／振る舞いについて、版を持ち機械検証可能な形で宣言した合意。検収条件・検証項目・保管条件を含む | 検証 | — | — | — |
+| **生産 (Production)** | **パイプライン**。上流の入力から契約準拠の**記録**（run / artifact / 加工成果物 / 生成値）を産出し、契約に含まれる検収条件・検証項目に沿って各項目を評価する側（収集・加工）。判定ルール・判定理由・可否の意味は契約／ゲート側に従い、生産側で独自に所有しない（§3.1） | 生産 | `src/collection/`、`src/processing/` | モジュール定数（`ADAPTER_CONTRACT_VERSION` 等） | 検証側の契約・ゲートと照合する（`gate-run` / `audit-new-runs` / `audit-processed`） |
+| **出荷 (Shipping)** | 契約の検収条件・検証項目・保管条件を満たした成果物を、指定された保管先（local / repository / remote）へ引き渡し、保管・公開・リリースへ進められる状態にする工程 | 生産 | `src/collection/`、`src/processing/`、保管先設定 | — | 検証側が保管条件・公開条件と照合する |
 | **スキーマ契約** | 文書形状の宣言（必須項目・型・列挙・余分なフィールド） | 検証 | `src/validation/schemas/*.py`、`schema_registry.SCHEMA_REGISTRY` | `SCHEMA_VERSIONS` | Cerberus（`validate-*`）、`test_schema_coverage.py` |
 | **レジストリ文書** | スキーマ契約が検証する実体一覧（source / query / window / study 等） | 産出したコンテキスト | `config/`、`metadata/` | 文書の `schema_version` | `validation.cli validate-registries` |
 | **研究 (Study)** | 研究質問・対象範囲・入力証拠・処理方法・成果物・制約を 1 つに束ねる研究単位。実装上の ID は `study_id`、配置は `datasets/<study-id>/`。HTML ページや release ではなく、dataset release の根拠になる研究集約 | 研究 | `datasets/<study-id>/README.md`、`methodology.md`、`metadata/studies/study-registry.json` | 文書の `schema_version` / release version | `research.cli audit-studies`、`validate-registries`、`audit-processed` |
@@ -47,7 +48,7 @@
 
 | コンテキスト | 「契約」と呼んでいるもの |
 |---|---|
-| 生産 Production（パイプライン） | plan（スキーマ・レジストリ）、query、temporal window、adapter インターフェース、staging 宣言。産出はするが判定しない |
+| 生産 Production（パイプライン） | plan（スキーマ・レジストリ）、query、temporal window、adapter インターフェース、staging 宣言。契約に含まれる検収条件・検証項目に沿って評価し、出荷可能な記録・成果物を作る |
 | 収集 Collection（生産の下位） | source / collector / 収集 run の記録 |
 | 加工 Processing（生産の下位） | 派生成果物の導出宣言と生成値 |
 | 保管 Storage | artifact manifest、artifact registry、storage policy、reader インターフェース |
@@ -61,8 +62,9 @@
 ## 3. バウンズコンテキストとコンテキストマップ
 
 AGENTS.md のパイプライン段階と `src/` パッケージを対応させる。段階のうち
-**記録を作る側**を 1 つのコンテキスト **生産 (Production)** にまとめ、**判定する側**
-（検証）と対置する。
+**記録を作る側**を 1 つのコンテキスト **生産 (Production)** にまとめる。生産は契約に沿う
+検収（各検証項目の評価）と出荷を行うが、判定ルール・判定理由・可否の意味を独自所有しない。
+検証は契約・ゲートに基づく検査・監査を担う。
 
 ### 3.1 生産（パイプライン）
 
@@ -73,13 +75,14 @@ AGENTS.md のパイプライン段階と `src/` パッケージを対応させ�
 | 産出物 | 収集 run（`collection-run-v1`）、staged run、catalog 配置、加工成果物（`data/processed/`）、公開ページに載る生成値（`processing.cli gt-summary`） |
 | 実装 | `src/collection/`（pipeline / staging / adapters）、`src/processing/` |
 | 宣言場所 | 実装モジュール（plan・宣言ファイル・adapter 契約） |
-| 検査 | 検証コンテキスト（L1 = `validation.cli gate-run`、`audit-new-runs`、`audit-processed`） |
+| 検収・検査 | 生産は契約の検収条件・検証項目を評価し、検証コンテキスト（L1 = `validation.cli gate-run`、`audit-new-runs`、`audit-processed`）と照合する |
 
 規則:
 
-1. **生産は判定しない。** 産出側は staging（`.staging/<run-id>/`）までを行い、
-   採用・隔離（catalog / quarantine）は L1 判定が決める。gate が自分の入力を
-   生成するコードに依存しない（`docs/specs/collection-pipeline.md` §3.3、P5）。
+1. **生産は契約に沿って検収する。** 産出側は契約に含まれる検収条件・検証項目を評価し、
+   staging（`.staging/<run-id>/`）から採用・隔離（catalog / quarantine）や出荷へ進める。
+   ただし判定ルール・判定理由・可否の意味は契約／ゲート側に従い、生産側で独自に所有しない。
+   gate が自分の入力を生成するコードに依存しない（`docs/specs/collection-pipeline.md` §3.3、P5）。
 2. **検証は産出しない。** 検証コンテキストはレポートを書くが、収集記録・加工成果物は
    作らない。
 3. 生産の出力は**記録**（run / artifact / 派生表）であって解釈ではない。解釈は
@@ -254,6 +257,7 @@ python -m validation.cli contract-ledger --output docs/audits/contract-ledger.js
 
 | 日付 | 版 | 内容 |
 |---|---|---|
+| 2026-10-16 | 1.2.3 | 生産を「判定しない」から「契約に沿って検収するが、判定ルール・理由・可否意味を独自所有しない」に更新し、出荷（Shipping）を追加 |
 | 2026-10-16 | 1.2.2 | U4 案C（未宣言維持＋トリガー正式化）の owner 決定を §10 に同期。G1 は意図的に open のまま残し、再判断トリガー T1–T3 を記録 |
 | 2026-10-16 | 1.2.1 | ゲート契約の所有を契約に同期（§2・§2.1・§3.2・§4規則4）。U2 の正本同期を完了し、台帳 `GATE_CONTRACTS` の owner を `contract` に更新 |
 | 2026-10-15 | 1.2.0 | §7.1 に公開契約 PC-1〜PC-8 の機械検査範囲を追加。PC-7 の review envelope と PC-8 の guide 構造検査を実装済みとして記録 |

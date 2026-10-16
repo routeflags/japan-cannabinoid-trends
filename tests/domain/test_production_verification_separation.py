@@ -1,9 +1,11 @@
 """Architecture tests: the production / verification boundary (U5).
 
 U5 (``docs/domain/context-map.md``, owner decision 2026-10-16): production
-runs under the contracts and calls validation gates to enforce them, but it
-owns neither the verdict rules, the reasons, nor the meaning of pass/fail.
-Calling ``pre/post_collection_gate`` is workflow enforcement, not judging.
+runs under the contracts, evaluates the contract acceptance criteria /
+validation items, and calls validation gates to enforce them. It owns
+neither the verdict rules, the reasons, nor the meaning of pass/fail.
+Calling ``pre/post_collection_gate`` is acceptance/shipping workflow
+enforcement, not independent verdict ownership.
 
 What these tests pin (T1-T4):
 

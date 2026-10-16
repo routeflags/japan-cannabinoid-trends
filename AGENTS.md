@@ -705,7 +705,7 @@ For updating these files, see:
 `docs/domain/` carries the bounded-context map, glossary, per-context agent contracts, and architecture decisions (ADRs). Canonical definitions stay in `docs/specs/contracts.md`; domain docs quote them and never redefine.
 
 - Work in the context that owns the artifact. Ownership, allowed and forbidden dependencies, and cross-context protocols live in `docs/domain/contracts/<context>.md`.
-- Production produces records and judges nothing; verification judges and produces nothing.
+- Production produces records, evaluates contract acceptance criteria / validation items, and ships artifacts to the contracted storage targets; it does not independently own verdict rules, reasons, or pass/fail meaning. Verification inspects and audits but does not produce collection or processing artifacts.
 - Contract versions: 版 ≡ バージョン. リリース is the distribution unit (git tag / Zenodo), a separate concept. Multiple versions may coexist; retiring one needs an explicit declaration.
 - Gate contracts are owned by Contract; verification and research execute and inspect them. Assigning versions to gates (G1) needs an explicit decision.
 - Open boundary questions are recorded in `docs/domain/context-map.md` §4 (U3–U5). Do not resolve them silently; escalate per the owning contract.
