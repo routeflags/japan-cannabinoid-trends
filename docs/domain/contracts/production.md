@@ -5,7 +5,7 @@
 
 ## Purpose and domain vocabulary
 
-契約準拠の記録（run / artifact / 加工成果物 / 生成値）を産出する側。収集・加工を内包する。判定はしない（`contracts.md` §3.1）。
+契約準拠の記録（run / artifact / 加工成果物 / 生成値）を産出する側。収集・加工を内包する。判定ルール・判定理由・可否の意味は所有しないが、契約遵守のために検証ゲートを呼び、結果をワークフロー制御として執行する（`contracts.md` §3.1、`context-map.md` U5）。
 
 ## Owned paths (advisory ownership)
 
@@ -16,7 +16,8 @@
 
 ## Invariants and acceptance criteria
 
-- 生産は判定しない。産出側は staging までを行い、採用・隔離（catalog / quarantine）は L1 判定が決める（§3.1規則1）。
+- 生産は判定ルール・判定理由・可否の意味を所有しない。産出側は staging までを行い、採用・隔離（catalog / quarantine）の可否は L1 判定が決める（§3.1規則1）。
+- 生産は契約に従って実行されなければならない。契約遵守のために検証ゲートを呼び、失敗時は開始・採用・公開相当の遷移を停止または隔離する。
 - 生産の出力は記録であって解釈ではない（§3.1規則3）。
 - raw は不変。修正・正規化は下流層で行う（AGENTS.md Raw Data Rule）。
 - producer は採用を決めない（staging 宣言駆動。AGENTS.md 生産入口点）。
@@ -31,11 +32,13 @@
 ## Allowed dependencies
 
 - 検証への形状適合（run 記録がスキーマ契約を満たすこと。判定される側として）。
+- 検証ゲートの呼び出しと執行（`pre_collection_gate` / `post_collection_gate` 等）。これは契約違反の生産を防ぐワークフロー制御であり、判定ルールの所有ではない（U5）。
 - 保管への受け渡し（artifact descriptor。読むのは検証側）。
 
 ## Forbidden dependencies
 
 - 採用・隔離の判定ロジックを生産側に持つこと（gate が自分の入力を生成するコードに依存しない。P5）。
+- 検証ゲートの迂回、または失敗したゲート結果の無視。
 - 既存 raw の上書き・現場正規化。
 - 判定ゲートの迂回（framework 外 shell からの `datasets/` 直書き）。
 

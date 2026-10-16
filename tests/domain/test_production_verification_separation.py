@@ -6,9 +6,10 @@ direction with an AST scan (stdlib only, nothing imported):
 ``src/validation/gates.py`` and ``src/validation/pipeline.py`` must not import the
 production packages (``collection`` / ``processing``) at module level.
 
-Deliberately out of scope (recorded as ``context-map.md`` U5): the reverse direction
--- production calling ``pre/post_collection_gate`` -- is verdict *execution*, whose
-classification (judgment vs enforcement) is not yet ruled.  It is not tested here.
+Allowed by ``context-map.md`` U5: the reverse direction -- production calling
+``pre/post_collection_gate`` -- is workflow enforcement.  Production must follow the
+contracts, call validation gates, and stop/quarantine when they fail.  That does not
+make production the owner of the gate rules, reasons, or verdict meanings.
 Function-level imports (e.g. ``contract_ledger._interface_contracts``) are outside this scan by construction and remain documented at their call sites.
 """
 

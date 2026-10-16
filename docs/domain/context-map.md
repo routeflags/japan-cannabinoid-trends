@@ -10,16 +10,17 @@
 
 | 能力 | 候補サブドメイン | 分類 | 根拠 |
 |---|---|---|---|
-| 契約準拠の記録を産出する | 生産 | supporting（Proposed） | 研究の根拠となる記録の供給が役割。Repository Mission（AGENTS.md）は再現可能なデータセットの維持であり、中心的問いは研究側にある |
-| 研究単位として束ね根拠づける | 研究 | core（Proposed） | Study が dataset release の根拠になる研究集約（`contracts.md` §2）。対案：生産を core とする見方（記録なくして研究なし）。要owner判断 |
-| 派生値を導出・再現可能にする | 加工 | supporting（Proposed） | 生産の下位（`contracts.md` §2.1、§4 U1で解決：生産の下位に確定） |
-| 版を持つ合意を宣言・検査可能にする | 契約 | generic（Proposed） | 仕組み自体は汎用（スキーマ・台帳・ゲート）。対案：本リポジトリ特化の運用（G1-G7、PC-1〜8）を理由に supporting とする見方。要owner判断 |
+| 研究対象データの形成、評価、公開までのライフサイクルを管理する | 研究管理基盤 | core（owner決定 2026-10-16） | 取得・採用・加工・生成・採録などを「形成」として抽象化し、来歴・契約・検証・制約とともに再現可能な研究リリースを成立させる中核能力 |
+| 契約準拠の記録を産出する | 生産 | core の構成要素 | 研究管理基盤の「形成」を担う。独立した core / supporting ではなく core 能力の内側の文脈 |
+| 研究単位として束ね根拠づける | 研究 | core の構成要素 | 研究管理基盤の「評価・公開根拠」を担う。Study が dataset release の根拠になる研究集約（`contracts.md` §2） |
+| 派生値を導出・再現可能にする | 加工 | 生産の下位 | 生産の下位（`contracts.md` §2.1、§4 U1で解決：生産の下位に確定） |
+| 版を持つ合意を宣言・検査可能にする | 契約 | core を支える governance 基盤 | 研究管理基盤を成立させる横断的な合意・検査の仕組み。汎用性はあるが本リポジトリでは core 能力を支える必須基盤 |
 
 ## 2. 境界コンテキスト
 
 | コンテキスト | ドメインモデル（要点） | 主要な不変条件 | 検査 |
 |---|---|---|---|
-| 生産 | 収集 run（`collection-run-v1`）、staged run、catalog 配置、加工成果物、生成値。収集・加工を内包（Observed、§3.1） | 生産は判定しない。出力は記録であって解釈ではない（Observed、§3.1規則1・3） | 検証コンテキスト（`gate-run` / `audit-new-runs` / `audit-processed`） |
+| 生産 | 収集 run（`collection-run-v1`）、staged run、catalog 配置、加工成果物、生成値。収集・加工を内包（Observed、§3.1） | 生産は判定ルール・判定理由・可否の意味を所有しない。契約遵守のために検証ゲートを呼び、結果をワークフロー制御として執行する（Observed、§3.1規則1・U5） | 検証コンテキスト（`gate-run` / `audit-new-runs` / `audit-processed`） |
 | 加工 | 派生成果物の導出宣言（`DERIVATIONS`）と生成値。`reproduce_artifact` による再導出検査が中核。生産の下位（owner決定 2026-10-16、§4 U1）（Observed） | コミット済み派生表は再導出と一致する（Observed、付録A4・`test_audit_report_freshness.py`） | `audit-processed`、`test_every_committed_artifact_is_accounted_for` |
 | 研究 | Study 集約（集約ルート：`datasets/<study-id>/README.md` / `methodology.md` / `study-registry.json`）。transformation 来歴・evidence・measurement / view を束ねる（Observed、§2・§5） | 凍結 legacy 以外は現行契約を満たす（Observed、付録A3） | `research.cli audit-studies`、`validate-registries` |
 | 契約 | 総称。実体はスキーマ契約・レジストリ文書・インターフェース契約・ゲート契約・判断記録と唯一の台帳。下位種別のゲート契約の所有も契約とする（owner決定 2026-10-16、§4 U2）（Observed、§8） | 新規スキーマ登録時は owner / group を省略できない（Observed、§4）。ゲート契約の版は未宣言（既知ギャップG1、§10→§4 U4） | `contract-ledger`、`test_contract_ledger.py` |
@@ -47,7 +48,7 @@ flowchart TD
 | U2 | ゲート契約の所有が「検証・研究」である理由 | 解決：所有は**契約**とする。ゲート契約は段階遷移の可否判定という振る舞いであり、判定の実施主体（検証CLI・研究CLI）が複数にまたがるため、実施主体を所有にすると境界が割れる。所有は種別を束ねる契約総称に置き、検証・研究は検査・行使の役割として分離する。これは `contracts.md` §4規則2（所有者と検査者が別であることを許す）と同型の分離である。なお `contracts.md` §2表のゲート契約行の所有列は「検証・研究」のままなので、正本側の同期が残件 | 解決済み（2026-10-16 owner決定）。残件：`contracts.md` §2表の所有列同期 |
 | U3 | validation ↔ storage の双方向依存 | `storage_contract ↔ contracts`、`inventory → integrity`（Step 1 実測）。保管は範囲外 | 未解決（隣接事実として記録。本マップでは解消しない） |
 | U4 | ゲート契約の版未宣言（G1） | 下記「## 5. バージョン（版）の定義」を参照。方針は「版が必要になった時点で付与し、推測で付けない」（`contracts.md` §10）。版が必要になる条件の例：ゲート判定の意味が変わる変更（判定条件の追加・削除）、複数版のゲートの並存が必要になった時。現状6件は単一版のみが存在し並存がないため、未宣言のまま記録するのが正しい状態である。版付与時は `contracts.md` §9手順に従い、台帳＋本マップを同時更新する | 未解決（説明補充済み。ギャップ自体は版付与まで残る） |
-| U5 | 生産が pre/post-collection gate を呼ぶ構造は「生産は判定しない」に反するか | collection pipeline が `pre_collection_gate`（開始可否）と `post_collection_gate`（L1意味検査）を呼び、結果に従って停止・隔離する（`pipeline.py:396`、`integrity.py:65`）。判定の計算は validation 側にあり生産側は執行のみ、という読み分けが可能だが規則文は明示していない | 未解決（執行と判定の区分を規則化するまでは現状維持。境界テストT1は逆方向P5のみを検査する） |
+| U5 | 生産が pre/post-collection gate を呼ぶ構造は「生産は判定しない」に反するか | 解決：反しない。生産（パイプライン）は契約に従って実行される責務を持つ。生産は判定ルール・判定理由・可否の意味を所有しないが、契約遵守のために検証ゲートを呼び、その結果をワークフロー制御として執行しなければならない。禁止された手法・迂回経路・raw改変・未宣言採用による生産は不可。したがって `pre_collection_gate` / `post_collection_gate` 呼び出しは「生産が判定する」ことではなく、契約違反の生産を防ぐ執行である | 解決済み（2026-10-16 owner決定）。境界テストT1は、検証ゲートが生産コードに依存しないP5方向を検査する。逆方向の gate 呼び出しは許可される |
 
 ## 5. バージョン（版）の定義（U4の補足）
 
