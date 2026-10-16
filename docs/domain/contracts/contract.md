@@ -54,5 +54,5 @@
 ## Escalation and human approval triggers
 
 - 新規スキーマ登録の owner / group 決定（テストが落ち続ける設計。決定なき登録は通さない）。
-- G1/G2 の版付与判断（「必要になった時点」の認定は人間が行う）。
+- G1/G2 の版付与判断（「必要になった時点」の認定は人間が行う）。U3/U4 の判断材料は `docs/domain/decision-briefs/` に置く（owner決定待ち。決定済みとして扱わない）。
 - 判断記録の作成・承認（公開承認・証拠フラグ。`gate-publication` の人間 reviewer）。

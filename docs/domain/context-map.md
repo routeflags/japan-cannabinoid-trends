@@ -46,8 +46,8 @@ flowchart TD
 |---|---|---|---|
 | U1 | 加工を生産から独立させるか | 語彙（導出宣言・再導出）は加工固有。独立不変条件（再生成一致）あり。一方で変更ケイデンスは収集連動、調整コストは単一所有のため低い | 解決済み（2026-10-16 owner決定：独立させない。加工は生産の下） |
 | U2 | ゲート契約の所有が「検証・研究」である理由 | 解決：所有は**契約**とする。ゲート契約は段階遷移の可否判定という振る舞いであり、判定の実施主体（検証CLI・研究CLI）が複数にまたがるため、実施主体を所有にすると境界が割れる。所有は種別を束ねる契約総称に置き、検証・研究は検査・行使の役割として分離する。これは `contracts.md` §4規則2（所有者と検査者が別であることを許す）と同型の分離である。正本側の同期は 2026-10-16 に完了（`contracts.md` §2・§2.1・§3.2・§4規則4、台帳 `GATE_CONTRACTS` の owner を `contract` に更新） | 解決済み（2026-10-16 owner決定＋正本同期完了） |
-| U3 | validation ↔ storage の双方向依存 | `storage_contract ↔ contracts`、`inventory → integrity`（Step 1 実測）。保管は範囲外 | 未解決（隣接事実として記録。本マップでは解消しない） |
-| U4 | ゲート契約の版未宣言（G1） | 下記「## 5. バージョン（版）の定義」を参照。方針は「版が必要になった時点で付与し、推測で付けない」（`contracts.md` §10）。版が必要になる条件の例：ゲート判定の意味が変わる変更（判定条件の追加・削除）、複数版のゲートの並存が必要になった時。現状6件は単一版のみが存在し並存がないため、未宣言のまま記録するのが正しい状態である。版付与時は `contracts.md` §9手順に従い、台帳＋本マップを同時更新する | 未解決（説明補充済み。ギャップ自体は版付与まで残る） |
+| U3 | validation ↔ storage の双方向依存 | `storage_contract ↔ contracts`、`inventory → integrity`（Step 1 実測）。実測の内訳はパッケージレベルの双方向・モジュール間の閉路なし（`storage_contract.py`→`storage.*`、`storage/inventory.py`→`validation.integrity.sha256_file` のみ）。保管・検証とも範囲外の隣接事実。判断材料は `docs/domain/decision-briefs/U3-validation-storage-dependency.md`（owner決定待ち） | 未解決（隣接事実として記録。本マップでは解消しない） |
+| U4 | ゲート契約の版未宣言（G1） | 下記「## 5. バージョン（版）の定義」を参照。方針は「版が必要になった時点で付与し、推測で付けない」（`contracts.md` §10）。版が必要になる条件の例：ゲート判定の意味が変わる変更（判定条件の追加・削除）、複数版のゲートの並存が必要になった時。現状7件は単一版のみが存在し並存がないため、未宣言のまま記録するのが正しい状態である。版付与時は `contracts.md` §9手順に従い、台帳＋本マップを同時更新する。判断材料（選択肢A–C・トリガー案T1–T3）は `docs/domain/decision-briefs/U4-gate-contract-version.md`（owner決定待ち） | 未解決（説明補充済み。ギャップ自体は版付与まで残る） |
 | U5 | 生産が pre/post-collection gate を呼ぶ構造は「生産は判定しない」に反するか | 解決：反しない。生産（パイプライン）は契約に従って実行される責務を持つ。生産は判定ルール・判定理由・可否の意味を所有しないが、契約遵守のために検証ゲートを呼び、その結果をワークフロー制御として執行しなければならない。禁止された手法・迂回経路・raw改変・未宣言採用による生産は不可。したがって `pre_collection_gate` / `post_collection_gate` 呼び出しは「生産が判定する」ことではなく、契約違反の生産を防ぐ執行である | 解決済み（2026-10-16 owner決定）。境界テストT1は、検証ゲートが生産コードに依存しないP5方向を検査する。逆方向の gate 呼び出しは許可される |
 
 ## 5. バージョン（版）の定義（U4の補足）
@@ -65,7 +65,7 @@ flowchart TD
 | スキーマ契約 | `SCHEMA_VERSIONS[schema_id]` と文書の `schema_version` フィールド | `src/validation/schema_registry.py:92`、各文書 | A1（CV-20、`check_schema_version`） |
 | レジストリ文書 | 文書内の `schema_version` | `config/`、`metadata/` 各文書 | `validate-registries` |
 | インターフェース契約 | モジュール定数（`ADAPTER_CONTRACT_VERSION`、`STAGING_DECLARATION_VERSION` 等） | `src/collection/core/contracts.py`、`staging.py` | 各 contract test。reader 契約自体は定数なし（`version: None`、既知ギャップG2、`contract_ledger.py`） |
-| ゲート契約 | なし（6件とも `version: None`、`contract_ledger.py:142`） | `src/validation/gates.py` 等（`declared_at` のみ） | CLI 自体が判定。バージョン一致の検査は存在しない |
+| ゲート契約 | なし（7件とも `version: None`、`contract_ledger.py:147`） | `src/validation/gates.py` 等（`declared_at` のみ） | CLI 自体が判定。バージョン一致の検査は存在しない |
 | 収集記録のバージョン参照 | `adapter_contract_version`、`collection_core_version`、`query_registry_version` | `run_metadata.json` の environment / provenance 欄 | `audit-new-runs`（現行契約適合） |
 
 バージョンは single source ではない。種別ごとに「値の置き場所・台帳の列・検査」が1組になって初めてバージョンとして機能する。ゲート契約にバージョンを付与するとは、この1組（定数＋台帳列＋一致検査）を新設することであり、定数だけ置くことではない。
