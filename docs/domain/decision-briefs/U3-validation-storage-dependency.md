@@ -1,7 +1,7 @@
 # U3 判断材料: validation ↔ storage の双方向依存
 
 **状態:** 未解決（owner 決定待ち）。本書は決定ではない。最終判断は owner が行う。
-**親文書:** `docs/domain/context-map.md` §4 U3。定義の正本は `docs/specs/contracts.md`。
+**親文書:** `docs/domain/context-map.md` §4 U3。定義の正本は `docs/specs/contracts.md`。DDD 用語としての「保管 Storage」「目録 Inventory（インベントリー）」は `docs/domain/glossary.md` に登録済み。
 **実測日:** 2026-10-16（コード現物の引用。推測で補わない）。
 
 ## 1. 実測（Observed）
@@ -11,7 +11,7 @@
 | 方向 | 辺 | 目的 |
 |---|---|---|
 | validation → storage | `src/validation/storage_contract.py:44-47` が `storage.contracts` / `storage.readers` / `storage.registry` / `storage.sniff` を import | G4 保管契約の検査（S1 / S6–S9 / §11–§13 の content・contract レベル検査） |
-| storage → validation | `src/storage/inventory.py:31-33` が `validation.integrity.sha256_file` を import（他は `storage.registry` / `storage.sniff`） | G4 §16 inventory の走査前後ハッシュ取得（`raw_modified` 証拠） |
+| storage → validation | `src/storage/inventory.py:31-33` が `validation.integrity.sha256_file` を import（他は `storage.registry` / `storage.sniff`） | G4 §16 目録（inventory）の走査前後ハッシュ取得（`raw_modified` 証拠） |
 | 閉路なし | `src/validation/integrity.py:32-35` は validation 内のみ import（storage に触れない）。`storage/inventory.py` は `validation.storage_contract` を import しない | Python の循環 import 障害は発生しない |
 
 補足（隣接の参考実測。U3 の辺そのものではない）:
@@ -24,7 +24,7 @@
 両方に分けて記録する。どちらか一方だけでは説明にならない。
 
 - **実装上の観点では、今日のところ障害ではない。** モジュール間の閉路がなく、import 障害は起きない。残るのは将来の結合度リスク（うっかり閉路を作りやすい形）だけである。
-- **契約・台帳・監査上の観点では、自然な関係である。** 台帳は `storage-reader-contract-v1` の `enforced_by` を `validation.storage_contract` と記録している（owner = storage、検査 = validation）。所有と検査の分離は `contracts.md` §4 規則2 が許す形と同型である。逆方向の `sha256_file` 共有はハッシュ primitive の再利用であり、判定意味の共有ではない。
+- **契約・台帳・監査上の観点では、自然な関係である。** 台帳は `storage-reader-contract-v1` の `enforced_by` を `validation.storage_contract` と記録している（owner = storage、検査 = validation）。所有と検査の分離は `contracts.md` §4 規則2 が許す形と同型である。逆方向の `sha256_file` 共有は、目録（保管対象の非破壊棚卸し）で使うハッシュ primitive の再利用であり、判定意味の共有ではない。
 - **境界上の位置では、本マップの範囲外同士の隣接事実である。** 保管も検証も本マップでは範囲外・辺の相手方としての記載に留まる（context-map §3）。生産・研究・契約の境界はこの辺に触れない。よって「本マップでは解消しない」扱いは一貫している。
 
 ## 3. 選択肢
