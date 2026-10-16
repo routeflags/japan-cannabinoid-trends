@@ -12,13 +12,17 @@
       "metadata/datapackage.json"
     ]
   },
-  "catalog_run_count": 47,
+  "catalog_run_count": 48,
   "summary": {
     "artifact_count": 16,
-    "finding_count": 0,
+    "finding_count": 2,
     "declared_gap_count": 0,
-    "by_rule": {},
-    "by_kind": {}
+    "by_rule": {
+      "PC-7": 2
+    },
+    "by_kind": {
+      "publication_review_hash_mismatch": 2
+    }
   },
   "implemented_rules": [
     "PC-1",
@@ -31,6 +35,19 @@
     "PC-8"
   ],
   "unimplemented_rules": [],
-  "findings": [],
+  "findings": [
+    {
+      "rule": "PC-7",
+      "kind": "publication_review_hash_mismatch",
+      "path": "publication/research_cbd.html",
+      "detail": "artifact.json sha256 does not match the current publication artifact"
+    },
+    {
+      "rule": "PC-7",
+      "kind": "publication_review_hash_mismatch",
+      "path": "publication/research_cbd.html",
+      "detail": "decision.json artifact_sha256 does not match the current publication artifact"
+    }
+  ],
   "declared_gaps": []
 }

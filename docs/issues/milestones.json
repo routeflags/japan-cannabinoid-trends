@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0.0",
-  "generated_at": "2026-10-15",
+  "generated_at": "2026-10-16",
   "generated_by": "manual issue triage using validation.issues.audit_issues",
   "purpose": "未対応 issue を milestone 別に整理し、対応済み issue を closed/ 配下に分離するためのローカル台帳。issue 本体ではないため Markdown ではなく JSON とする。",
   "source": {
@@ -9,13 +9,13 @@
     "recursive_audit_required": true
   },
   "summary": {
-    "issue_count": 69,
-    "active_count": 16,
+    "issue_count": 72,
+    "active_count": 19,
     "closed_count": 53,
     "status_counts": {
       "DOCUMENTED": 1,
       "MITIGATED": 1,
-      "OPEN": 14,
+      "OPEN": 17,
       "PENDING": 2,
       "RESOLVED": 51
     },
@@ -109,10 +109,21 @@
         "coverage matrix と page counts が上流記録と一致する",
         "修正後の publication contract と issue audit が failures=0 になる"
       ],
-      "issue_count": 0,
-      "status_counts": {},
-      "priority_counts": {},
-      "issues": []
+      "issue_count": 1,
+      "status_counts": {
+        "OPEN": 1
+      },
+      "priority_counts": {
+        "P2": 1
+      },
+      "issues": [
+        {
+          "id": "ISS-20261016-MNT-001",
+          "priority": "P2",
+          "status": "OPEN",
+          "path": "docs/issues/active/20-cbd-publication-corrections/20261016_p2_cbd-research-envelope-hash-drift.md"
+        }
+      ]
     },
     {
       "id": "M3",
@@ -124,13 +135,14 @@
         "X official API は request-only evidence と cost control を持つまでは実収集しない",
         "new-run tracking policy と legacy label year defect が検証ルールに反映される"
       ],
-      "issue_count": 5,
+      "issue_count": 6,
       "status_counts": {
-        "OPEN": 5
+        "OPEN": 6
       },
       "priority_counts": {
         "P2": 3,
-        "P1": 2
+        "P1": 2,
+        "P3": 1
       },
       "issues": [
         {
@@ -162,6 +174,12 @@
           "priority": "P2",
           "status": "OPEN",
           "path": "docs/issues/active/30-production-collection-expansion/20261015_p2_x-official-api-collector.md"
+        },
+        {
+          "id": "ISS-20261016-MNT-003",
+          "priority": "P3",
+          "status": "OPEN",
+          "path": "docs/issues/active/30-production-collection-expansion/20261016_p3_make-requires-venv-bootstrap.md"
         }
       ]
     },
@@ -175,12 +193,13 @@
         "legacy reader・SQLite live verification・coverage manifest の未接続を解消する",
         "private X data retention と request-only evidence が方針として記録される"
       ],
-      "issue_count": 5,
+      "issue_count": 6,
       "status_counts": {
-        "OPEN": 5
+        "OPEN": 6
       },
       "priority_counts": {
-        "P2": 5
+        "P2": 5,
+        "P3": 1
       },
       "issues": [
         {
@@ -212,6 +231,12 @@
           "priority": "P2",
           "status": "OPEN",
           "path": "docs/issues/active/40-provenance-storage-reproducibility/20261015_p2_x-request-only-evidence.md"
+        },
+        {
+          "id": "ISS-20261016-MNT-002",
+          "priority": "P3",
+          "status": "OPEN",
+          "path": "docs/issues/active/40-provenance-storage-reproducibility/20261016_p3_private-catalog-local-state-churn.md"
         }
       ]
     },

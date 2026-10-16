@@ -4,13 +4,13 @@
   "spec": "docs/plans/20261013f.md §15 (local plan; not tracked)",
   "target_root": "datasets",
   "include_private": false,
-  "count": 205,
-  "extra_count": 44,
+  "count": 210,
+  "extra_count": 42,
   "raw_modified": false,
   "state_summary": {
-    "absent": 16,
-    "ignored": 4,
-    "tracked": 229
+    "absent": 15,
+    "ignored": 1,
+    "tracked": 236
   },
   "entries": [
     {
@@ -1204,6 +1204,46 @@
       "unchanged": true
     },
     {
+      "path": "datasets/cannabinoid-multi-trends/data/raw/google_trends/20261015T205048Z-google-trends-cannabinoid-multi-trends/artifact-manifest.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "9e6352de999ddbf8161d8c24892919f62726d8a7cb383bc34a41b75a07e9d8c7",
+      "sha256_after": "9e6352de999ddbf8161d8c24892919f62726d8a7cb383bc34a41b75a07e9d8c7",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-multi-trends/data/raw/google_trends/20261015T205048Z-google-trends-cannabinoid-multi-trends/payload.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "55ccb8bce93fde7f829f7c60f7eb704aecbf395e27698281178eaa4c3b4407dc",
+      "sha256_after": "55ccb8bce93fde7f829f7c60f7eb704aecbf395e27698281178eaa4c3b4407dc",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-multi-trends/data/raw/google_trends/20261015T205048Z-google-trends-cannabinoid-multi-trends/records_cbd.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "fc2c10dbe8750f07a8b85301238ae46aeb8474b90fc6b2fac7c50e1b9b785043",
+      "sha256_after": "fc2c10dbe8750f07a8b85301238ae46aeb8474b90fc6b2fac7c50e1b9b785043",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-multi-trends/data/raw/google_trends/20261015T205048Z-google-trends-cannabinoid-multi-trends/run_metadata.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "0a6a8f894bdfce8af1d82b43064c7fc441fbf0a5e5077aefec213ae6137aaf97",
+      "sha256_after": "0a6a8f894bdfce8af1d82b43064c7fc441fbf0a5e5077aefec213ae6137aaf97",
+      "unchanged": true
+    },
+    {
       "path": "datasets/cannabinoid-multi-trends/metadata/data-catalog.json",
       "exists": true,
       "state": "tracked",
@@ -1211,6 +1251,16 @@
       "ignored": false,
       "sha256": "aa1479e04e140a42a866688f2aef0c98475114fd07f5da21ee72373296d0f235",
       "sha256_after": "aa1479e04e140a42a866688f2aef0c98475114fd07f5da21ee72373296d0f235",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-multi-trends/metadata/plans/gt-5y-recollect-cbd.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "0790fd783b4d82ffe69993723d1e2f98030fdc5cd9e51dff52cb378d2e388136",
+      "sha256_after": "0790fd783b4d82ffe69993723d1e2f98030fdc5cd9e51dff52cb378d2e388136",
       "unchanged": true
     },
     {
@@ -1299,8 +1349,8 @@
       "state": "tracked",
       "tracked": true,
       "ignored": false,
-      "sha256": "e42bfd49fc4cd08fdb16ccbb743b41d9c04c28a4991e1b95077f89f5f35cdbf1",
-      "sha256_after": "e42bfd49fc4cd08fdb16ccbb743b41d9c04c28a4991e1b95077f89f5f35cdbf1",
+      "sha256": "ddf7280a6a5fa17b1fcb22795174ddee8f5bc6ec5a36784631aab75a771caffe",
+      "sha256_after": "ddf7280a6a5fa17b1fcb22795174ddee8f5bc6ec5a36784631aab75a771caffe",
       "unchanged": true
     },
     {
@@ -1319,8 +1369,8 @@
       "state": "tracked",
       "tracked": true,
       "ignored": false,
-      "sha256": "2d89d47b73b2888fcc3accb55cdb7106d172008bc1e769a3ad7d7c4f8d0a0f2e",
-      "sha256_after": "2d89d47b73b2888fcc3accb55cdb7106d172008bc1e769a3ad7d7c4f8d0a0f2e",
+      "sha256": "6aa16e53f5bd307097fbf76baa944e343c3ba1536ea901908cb4d4b175e98051",
+      "sha256_after": "6aa16e53f5bd307097fbf76baa944e343c3ba1536ea901908cb4d4b175e98051",
       "unchanged": true
     },
     {
@@ -1339,8 +1389,8 @@
       "state": "tracked",
       "tracked": true,
       "ignored": false,
-      "sha256": "2dfcee17723e13f18c2ef5a2affafe5896e98648dafac530c11c336eb1c88b3c",
-      "sha256_after": "2dfcee17723e13f18c2ef5a2affafe5896e98648dafac530c11c336eb1c88b3c",
+      "sha256": "32be5dd03fedeb49f024b0abd41773f87dde1680fac83c7a8cf7d6af4aa2d5ce",
+      "sha256_after": "32be5dd03fedeb49f024b0abd41773f87dde1680fac83c7a8cf7d6af4aa2d5ce",
       "unchanged": true
     },
     {
@@ -1349,8 +1399,8 @@
       "state": "tracked",
       "tracked": true,
       "ignored": false,
-      "sha256": "ff28d70c026ffe8f59aa07e0ede7d4b41114fb4976bada3860bcbb9fe38afc59",
-      "sha256_after": "ff28d70c026ffe8f59aa07e0ede7d4b41114fb4976bada3860bcbb9fe38afc59",
+      "sha256": "c40f213e31d1fa5f4e87c1449ba6a5f36cfecb29f3c1b06656ecfabfce45a21f",
+      "sha256_after": "c40f213e31d1fa5f4e87c1449ba6a5f36cfecb29f3c1b06656ecfabfce45a21f",
       "unchanged": true
     },
     {
@@ -1359,8 +1409,8 @@
       "state": "tracked",
       "tracked": true,
       "ignored": false,
-      "sha256": "0ed6066c5ad4ace1d610297e941648b663e69a38d02059610cdfe30765f58920",
-      "sha256_after": "0ed6066c5ad4ace1d610297e941648b663e69a38d02059610cdfe30765f58920",
+      "sha256": "f3074ab19c5adb6fd2aa7d9504aa764ff60924d6e3fab5b1b9201fb16157162a",
+      "sha256_after": "f3074ab19c5adb6fd2aa7d9504aa764ff60924d6e3fab5b1b9201fb16157162a",
       "unchanged": true
     },
     {
@@ -2210,6 +2260,22 @@
       "kind": "local_only"
     },
     {
+      "path": "exports/taxonomy/chemical-class-taxonomy.schema.jsonld",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "kind": "local_only"
+    },
+    {
+      "path": "exports/taxonomy/chemical-class-taxonomy.ttl",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "kind": "local_only"
+    },
+    {
       "path": "exports/taxonomy/classification-rules.yaml",
       "exists": true,
       "state": "tracked",
@@ -2255,38 +2321,6 @@
       "state": "tracked",
       "tracked": true,
       "ignored": false,
-      "kind": "local_only"
-    },
-    {
-      "path": "docs/plans/20261013i-cerberus-rollout-plan.md",
-      "exists": true,
-      "state": "ignored",
-      "tracked": false,
-      "ignored": true,
-      "kind": "local_only"
-    },
-    {
-      "path": "docs/plans/g1-vertical-slice-plan.md",
-      "exists": true,
-      "state": "ignored",
-      "tracked": false,
-      "ignored": true,
-      "kind": "local_only"
-    },
-    {
-      "path": "docs/plans/g2-query-registry-plan.md",
-      "exists": true,
-      "state": "ignored",
-      "tracked": false,
-      "ignored": true,
-      "kind": "local_only"
-    },
-    {
-      "path": "docs/plans/g3-temporal-contract-plan.md",
-      "exists": true,
-      "state": "ignored",
-      "tracked": false,
-      "ignored": true,
       "kind": "local_only"
     },
     {
@@ -2339,10 +2373,10 @@
     },
     {
       "path": ".venv",
-      "exists": false,
-      "state": "absent",
+      "exists": true,
+      "state": "ignored",
       "tracked": false,
-      "ignored": false,
+      "ignored": true,
       "kind": "local_only"
     },
     {

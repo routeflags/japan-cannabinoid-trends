@@ -2708,7 +2708,7 @@
     {
       "path": "datasets/cannabinoid-platform-trends/data/processed/manifest.json",
       "bytes": 876,
-      "sha256": "2d89d47b73b2888fcc3accb55cdb7106d172008bc1e769a3ad7d7c4f8d0a0f2e",
+      "sha256": "6aa16e53f5bd307097fbf76baa944e343c3ba1536ea901908cb4d4b175e98051",
       "format": "json",
       "sniff_state": "partial",
       "artifact_type": null,
@@ -2761,8 +2761,8 @@
     },
     {
       "path": "datasets/cannabinoid-platform-trends/data/processed/platform_coverage.csv",
-      "bytes": 7069,
-      "sha256": "2dfcee17723e13f18c2ef5a2affafe5896e98648dafac530c11c336eb1c88b3c",
+      "bytes": 7102,
+      "sha256": "32be5dd03fedeb49f024b0abd41773f87dde1680fac83c7a8cf7d6af4aa2d5ce",
       "format": "csv",
       "sniff_state": "partial",
       "artifact_type": null,
@@ -2788,8 +2788,8 @@
     },
     {
       "path": "datasets/cannabinoid-platform-trends/data/processed/source_run_index.csv",
-      "bytes": 7367,
-      "sha256": "ff28d70c026ffe8f59aa07e0ede7d4b41114fb4976bada3860bcbb9fe38afc59",
+      "bytes": 7410,
+      "sha256": "c40f213e31d1fa5f4e87c1449ba6a5f36cfecb29f3c1b06656ecfabfce45a21f",
       "format": "csv",
       "sniff_state": "partial",
       "artifact_type": null,
@@ -2815,8 +2815,8 @@
     },
     {
       "path": "datasets/cannabinoid-platform-trends/data/processed/trend_observations.csv",
-      "bytes": 30219,
-      "sha256": "0ed6066c5ad4ace1d610297e941648b663e69a38d02059610cdfe30765f58920",
+      "bytes": 30916,
+      "sha256": "f3074ab19c5adb6fd2aa7d9504aa764ff60924d6e3fab5b1b9201fb16157162a",
       "format": "csv",
       "sniff_state": "partial",
       "artifact_type": null,
