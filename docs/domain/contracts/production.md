@@ -51,6 +51,7 @@
 ## Required tests and CI checks
 
 - `tests/collection/test_adapter_contract.py`、`test_staging_driver.py`
+- `tests/domain/test_production_verification_separation.py`（生産・検証境界 T1–T4。U5）
 - `make audit-new-runs`（failures=0）、`make gates`（registries valid）
 - CI: `research-validation.yml` の collection 関連ステップ。
 
