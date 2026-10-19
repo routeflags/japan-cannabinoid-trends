@@ -1,7 +1,9 @@
 ---
 name: netloom
 description: |
-  第三者 API（Google Trends / Apify / X API v2 / GA4 / GSC / news / article / cache / contact / ga4-orders）への接続を netloom に集約するスキル。
+  第三者 API への接続を netloom に集約するスキル。netloom は薄いプロキシの Go 単体バイナリで、呼び出し側は URL・ヘッダ・認証方式を知らずに、1 コマンド = 1 往復で provider の答えをそのまま受け取る。すべての往復は VCR カセット（JSONL）に残り、`--replay` でオフライン再現できる（証跡付きの収集）。
+  **送信元の一覧と版は `netloom version --sources` / `version --json` が唯一の正**（本文と設計書が仕様）。副作用のある操作（実メールの送信・prod への書き込み・公開 DOI の登録）は明示フラグが要る。
+  以下、送信元ごとの要点:
   Google Trends はキーワード・地域・期間を指定して検索興味度（0–100 の相対指数）を取得し、
   2–5 語の相対比較も 1 回の呼び出しで取る。Apify は任意の actor を実行して dataset を読む。
   X API v2 は検索（直近 7 日 / 全期間）と投稿 1 件を取る。
@@ -66,7 +68,7 @@ description: |
   GOOGLE_TOKEN_FILE で読める（値は stdout / stderr / カセットに出ない）。
   交換の証跡（2 frame）は `--cassette FILE` で caller の記録置き場に置ける（例: `data/gsc/cassettes/<YYYYMMDD>-auth-gsc.jsonl`。issue #22）。
   すべての往復は VCR カセットに残り、カセットからオフライン再現できる（証跡付きの収集）。
-netloom-version: 0.6.0
+netloom-version: 0.6.2
 ---
 
 # netloom（第三者 API の収集プロキシ）
@@ -137,6 +139,8 @@ netloom skill install --scan <parent-dir> --depth 2        # 深さ上限を明�
 ```
 
 - `<parent-dir>` **自身とその配下**を**辞書順**に走査し、`.github/skills/netloom/SKILL.md` を持つリポジトリだけを対象にする（コピーが無いリポジトリには置かない — 新規導入は `--to`）。**レポジトリの配下は歩かない**（prune）: 各ディレクトリを Lstat 1 回で「レポジトリか」だけを確かめ、あれば記録して配下は列挙しない。**`.git` の状態（欠損・ファイル・ディレクトリ）には一切依存しない**、シンボリックリンクも辿らない。深さは**リポジトリで 6 段**まで（`--depth N` で変更可。`.delta/worktrees/<id>/<repo>` の 4 段は届く）。**リポジトリの checkout の中の入れ子のリポジトリは見つからない**（prune の帰結）
+- **Delta の worktree も見つかる**（issue #44）: Delta の worktree は `<repo>/.delta/worktrees/<id>/<repo>` という**入れ子の checkout** なので、リポジトリを記録した後も**その `.delta/worktrees/` の直下だけは訪問**する（worktree の id とその下の checkout を Lstat 1 回ずつ。中は歩かない）。例外は `.delta/worktrees` だけ（一般の入れ子は従来どおり見つからない）。`--depth` の上限は worktree にも効く
+- **部分を完全として読ませない**: 深さ上限で切った走査は末尾に `NOT VISITED: N directories (--depth M; raise --depth to look further)` の 1 行を出す（未訪問 0 件なら出ない。exit code は変わらない）
 - 書き込みの規則（プレビュー既定・`--force` 無しの拒否・`UP-TO-DATE` は触らない）は単一 `--to` と同じ。報告は対象ごとに 1 行（`TARGET:` + `STATUS:`。`UP-TO-DATE` / `INSTALLED` / `PREVIEW` / `REFUSED` / `FAILED`）、0 件は `NO TARGETS:` の 1 行で exit 0。どれか拒否 = exit 1、I/O 失敗 = exit 3（最も重いもの。**実際に歩いたディレクトリ**のエラーに限る — レポジトリの中身は歩らない）。`--to` と `--scan` は併用できない（exit 2）。`--depth` は `--scan` のみ（`--to` 併用・負値は exit 2）
 
 ---
