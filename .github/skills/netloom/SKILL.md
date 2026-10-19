@@ -68,7 +68,7 @@ description: |
   GOOGLE_TOKEN_FILE で読める（値は stdout / stderr / カセットに出ない）。
   交換の証跡（2 frame）は `--cassette FILE` で caller の記録置き場に置ける（例: `data/gsc/cassettes/<YYYYMMDD>-auth-gsc.jsonl`。issue #22）。
   すべての往復は VCR カセットに残り、カセットからオフライン再現できる（証跡付きの収集）。
-netloom-version: 0.6.2
+netloom-version: 0.6.3
 ---
 
 # netloom（第三者 API の収集プロキシ）
@@ -81,7 +81,7 @@ actor を curl で呼んだりしない（証跡とオフライン再現が失�
 `--replay` は同じ request の記録が複数あるとき、**その request の n 回目の要求に n 番目の記録**で答える（記録を順に消費する。**その request の記録を使い切ったら最初の記録** = issue #14 の規則）。site の mypage のように **1 コマンドが同じ URL を複数回要求する flow** はこの規則で live と同じ判定になる（設計書 §5.1）。**新しい証跡で再現したいときは `--cassette` を分ける**（`--cassette <新しいファイル>` で記録し、そのカセットを `--replay` する）。
 
 同じ request を `--cassette` で 2 回記録すると、**追記の前に stderr へ 1 行で知らされる**（`netloom: <file> already holds a record for this request: a replay answers with the first one`。値は出ない。初回記録・`--replay` では出ない。通知は答えを変えない — 答えは §5.1 の規則（その request を 1 回だけ要求するコマンドでは最初の記録）が決める。issue #17）。
-**カセットの検査はコマンドで行う**: `netloom cassette show --path FILE`（frame 一覧。payload 本文は出さず sha256 とバイト数（`N B` — 単位付き。issue #43）で示す）と `netloom cassette check --path FILE [--path FILE ...] [--env-file FILE]` — **live 実行後のレダクト検査はこのコマンドにする**（手作業の grep ではなく。env の実値をレダクタと同じ値の集合から**変数名と件数だけで**数え、ヒット 1 件でもあれば exit 1 / credential が 1 つも解決できなければ exit 2。`grep -Fc '\[REDACTED\]'` のように -F なのにエスケープを付けると「0 件」の誤検知を起こす — issue #18 の実測。設計書 付録 A.28）。
+**カセットの検査はコマンドで行う**: `netloom cassette show --path FILE`（frame 一覧。payload 本文は出さず sha256 とバイト数（`N B` — 単位付き。issue #43）で示す。**URL の `key=` / `access_token=` の値は表示時だけ `[REDACTED]`** — カセットのバイトと `--replay` の照合は変わらない）と `netloom cassette check --path FILE [--path FILE ...] [--env-file FILE]` — **live 実行後のレダクト検査はこのコマンドにする**（手作業の grep ではなく。env の実値をレダクタと同じ値の集合から**変数名と件数だけで**数え、ヒット 1 件でもあれば exit 1 / credential が 1 つも解決できなければ exit 2。`grep -Fc '\[REDACTED\]'` のように -F なのにエスケープを付けると「0 件」の誤検知を起こす — issue #18 の実測。設計書 付録 A.28）。
 
 **サイズの表示（issue #43）**: netloom がサイズを出すときは **UTF-8 バイト**で、**単位を必ず添える** — json はキー名に `bytes` を含める（`{"bytes": N}` か `xxx_bytes`。例 `article update --dry-run` の `fields_bytes`）、テキストは `N B`（例 `cassette show` のバイト数、`--dry-run` の `fields: citation=3 B`）。**単位なしの裸の数字を出さない**。**文字数を出す場面は今のところ無い**（出るようになったら `chars` という別キーで区別する）。
 
@@ -106,7 +106,7 @@ netloom は起動時に **cwd の env ファイルを自動で読む**（`<cwd>/
 - **apps-script**（Google Apps Script API v1。HTTP 直叩き）: `apps-script create-project` / `get-project` / `get-project-content` / `update-project-content` / `list-project-versions` / `create-version` / `list-deployments` / `get-deployment` / `create-deployment` / `update-deployment` / `delete-deployment` / `run-script` / `list-processes`（**1 コマンド = 認証 1 + データ 1 の 2 往復**。**書き込み 7 つと run-script は副作用** — live は owner 承認が前提（**run-script は任意の関数の実行**）。script id は `--script-id` 必須（netloom は推測しない。`list-processes` のみフィルタとして任意）。`--files` / `--parameters` は JSON であることだけを見てそのまま送る（**update-project-content は全ファイル置換**）。`pageSize` / `manifestFileName` / `devMode` は**与えたときだけ**送る（既定値は発明しない）。csv は無い。カセットはソースコード・デプロイメント・プロセスを含む — `.cassettes/` のみ・コミットしない。`--replay` はネット・credential 無し）
 - **youtube**（HTTP。YouTube Data API v3）: `youtube search` / `youtube videos`（**1 コマンド = 1 往復**。credential は query の `key` = `YOUTUBE_API_KEY`（psi / crux と同じ扱い。未設定なら 1 往復も送らず exit 2、`--replay` でも要る）。search は `part=snippet` + `type=video` 固定で **`publishedAfter` / `publishedBefore` の絶対日付範囲（年次スライス）を pass-through**（**Apify actor の rolling window では代替不可** = issue #29）、videos は `part=snippet,statistics,contentDetails` 固定（`publishedAt` / `statistics` の補完）。**quota は呼び出し側**: `search.list` は 100 units/回（`videos.list` は 1 unit）。**ページングは呼び出し側**（`--page-token` は pass-through。netloom は `nextPageToken` を追わない）。csv は無い。**キーはカセットの URL に残る** — `.cassettes/` のみ・コミットしない）
 - **zenodo**（HTTP。Zenodo REST API。**読み取り 4 コマンド + 書き込み 7 コマンド**）: `zenodo record` / `record-versions` / `deposition` / `deposition-files` と、`deposition-create` / `deposition-update` / `deposition-delete` / `deposition-upload` / `deposition-file-delete` / `deposition-newversion` / `deposition-publish`（**1 コマンド = 1 往復**。credential は **`ZENODO_TOKEN` を `Authorization: Bearer` で送る 11 コマンド共通の 1 規則** — 未設定なら 1 往復も送らず exit 2、`--replay` は不要。id は書いたまま path に入る。`--sort` / `--size` は**与えたときだけ**載る pass-through。`--input` は `{"metadata": …}` に包んで送る metadata 文書、`--file` は multipart で送るファイル。**ページング・リトライ・レート制限の待ちは作らない**。**csv は無く、`deposition-files`（配列）と `deposition-delete`（文書無し）は `text` も無い**。**publish だけが `--allow-publish` 必須**（公開 DOI は取り消せない）— 下書きの書き込みに門は無い。カセットは record / deposition の本文とファイルの証跡（field / sha256 / size。**バイトもファイル名も残さない**）を持つ — `.cassettes/` のみ・コミットしない）
-- **`cassette`**（ローカルコマンド。provider を呼ばない。カセットを読むだけ）: `cassette show --path FILE`（frame 一覧: seq / direction / method or status / url / payload の sha256 とバイト数（`N B`）/ at。**本文は出さない**）と `cassette check --path FILE [--path FILE ...] [--env-file FILE]`（カセットに env の実値が残っていないかを機械検査。**名前と件数だけ**を出して exit 1（ヒット）/ 0（0 件）/ 2（credential が 1 つも無）/ 3（読めない）。読み取り専用 — 往復しない・書き換えない。env の解決は §7.5 と同じ。設計書 付録 A.28）
+- **`cassette`**（ローカルコマンド。provider を呼ばない。カセットを読むだけ）: `cassette show --path FILE`（frame 一覧: seq / direction / method or status / url（**`key=` / `access_token=` の値は表示時だけ `[REDACTED]`** — カセットのバイトと replay の照合は変わらない）/ payload の sha256 とバイト数（`N B`）/ at。**本文は出さない**）と `cassette check --path FILE [--path FILE ...] [--env-file FILE]`（カセットに env の実値が残っていないかを機械検査。**名前と件数だけ**を出して exit 1（ヒット）/ 0（0 件）/ 2（credential が 1 つも無）/ 3（読めない）。読み取り専用 — 往復しない・書き換えない。env の解決は §7.5 と同じ。設計書 付録 A.28）
 - **`env check`**（ローカルコマンド。provider を呼ばない。往復しない・カセットも作らない）: `env check [--source ID]... [--env local|dev|prod] [--format text|json] [--env-file FILE[:FILE…]]` — **実行の前に前提を確かめる**。netloom が読む名前ごとに「設定されているか / どこから来たか（プロセス env / どのファイル）/ 誰が読むか」を出し、**env ファイルが定義しているのに netloom が読まない名前**（typo・残骸）も出す。**値は絶対に出ない**（§7.4。ログに貼れる）。`--source` で絞ると門になり、その送信元が必要とする名前が（代替を含めて）欠けていれば exit 1。設計書 付録 A.30
 
 ---
@@ -301,7 +301,7 @@ make trends-region  KEYWORD="CBX"        # 地域別（スコアは provider の
 make trends KEYWORD="CBX リキッド" REPLAY=.cassettes/20261017T144703Z-google-trends-interest-over-time-cbd-オイル.jsonl FORMAT=csv
 ```
 
-- カセットは**追記のみ。編集・削除しない**（証跡）
+- カセットは**追記のみ。編集・削除しない**（証跡）。**作成時の mode は 0600**（PII・売上・キーを含みうるため。env / トークンファイルと同じ姿勢。既存のカセットの mode は変えない）
 - 記録前にレダクトされる（秘密情報の実値は入らない）
 - `raw/` にカセットを置かない（呼び出し側の `raw/` は取得データ専用）
 - 再現は**記録と同じ request**（keyword/terms・geo・timeframe）でのみ成功する
