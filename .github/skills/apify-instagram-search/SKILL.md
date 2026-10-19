@@ -106,7 +106,7 @@ netloom apify dataset --dataset-id "$DS" --limit 6 --as json \
   | jq '.[0] | {code, caption: .caption.text, ig_play_count, like_count}'
 ```
 
-Actor 詳細（inputSchema）取得や actor 検索は netloom 非対応。本ワークスペースの `.mcp.json` `apify` は `TOOLS` 制限で `fetch-actor-details` が無効な場合、`apify-hosted` (`mcp-remote https://mcp.apify.com`) か `https://mcp.apify.com?tools=search-actors,fetch-actor-details` で wide MCP を使う。
+Actor 詳細（inputSchema）は netloom の `apify actor` + `apify build` で取得できる（`actor` の `taggedBuilds.latest.buildId` → `build` の `actorDefinition.input`）。actor 検索は netloom 非対応。本ワークスペースの `.mcp.json` `apify` は `TOOLS` 制限で `fetch-actor-details` が無効な場合、`apify-hosted` (`mcp-remote https://mcp.apify.com`) か `https://mcp.apify.com?tools=search-actors,fetch-actor-details` で wide MCP を使う。
 
 ### 方法B — netloom で既存 dataset / run を確認
 
@@ -127,7 +127,7 @@ netloom apify dataset --dataset-id gN4fgq80j5H58dA8C --as csv --out /tmp/instagr
 
 ### 方法C — MCP は管理・検索用途のみ
 
-Actor 実行・dataset 取得・run status は netloom を使う。Actor 詳細（inputSchema）取得、actor 検索、docs 検索は netloom 非対応のため、必要時だけ `apify-mcp` スキルを参照。
+Actor 実行・dataset 取得・run status・actor 詳細（inputSchema）は netloom を使う。actor 検索・docs 検索は netloom 非対応のため、必要時だけ `apify-mcp` スキルを参照。
 
 ## 検証実績 (2026-09-01)
 

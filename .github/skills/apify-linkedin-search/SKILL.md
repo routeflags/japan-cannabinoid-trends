@@ -164,19 +164,22 @@ netloom apify run-status --run-id jPYfwI1hwOG2phE75 \
 netloom apify run --actor M2FMdjRVeF1HPGFcc --wait 60 \
   --input '{"searchQuery":"Founder","profileScraperMode":"Short","maxItems":25,"locations":["Japan"]}' | jq .
 
-# 6. INPUT確認 (KVS; netloom 非対応のため Apify API 直叩きを維持)
-curl -s "https://api.apify.com/v2/key-value-stores/RfgHluUVfS9i3nz4j/records/INPUT?format=json" -H "Authorization: Bearer $APIFY_TOKEN" | jq .
+# 6. INPUT確認 (KVS)
+#    store id は run ごとに変わる。run の defaultKeyValueStoreId から取る
+STORE_ID=$(netloom apify run-status --run-id jPYfwI1hwOG2phE75 --format json \
+  | jq -r '.data.defaultKeyValueStoreId')
+netloom apify key-value-store --store-id "$STORE_ID" --key INPUT --format json | jq .
 ```
 
 ### 方法C — MCP は管理・検索用途のみ
 
-Actor 実行・dataset 取得・run status は netloom を使う。KVS INPUT 取得は netloom 非対応のため、方法Bの Apify API 直叩きを維持する。
+Actor 実行・dataset 取得・run status・KVS INPUT 取得は netloom を使う（KVS は `run-status` の `defaultKeyValueStoreId` を経由）。MCP は actor 検索・docs 検索・MCP サーバー管理の用途に限る。
 
 ## 検証実績 (2026-09-03)
 
 - Actor `M2FMdjRVeF1HPGFcc` (harvestapi/linkedin-profile-search, 0.0.265, rN8UwvEPlEHaGsjFK, No Cookies)
 - Input `searchQuery="weed" profileScraperMode=Full maxItems=20` → 20件取得, 20.5秒, `usageTotalUsd $0.18` (`search-page $0.10 + 20×$0.004`)
-- Run `jPYfwI1hwOG2phE75` / Dataset `bRGOoafmRLKx0ZilP` / KVS `RfgHluUVfS9i3nz4j` (INPUT + crawling-state)
+- Run `jPYfwI1hwOG2phE75` / Dataset `bRGOoafmRLKx0ZilP` / KVS `RfgHluUVfS9i3nz4j` (INPUT + crawling-state)。**KVS の id は run ごとに変わる**（現在は `run-status` の `defaultKeyValueStoreId` から取る。この固定値は当時の記録）
 - 出力 `https://console.apify.com/actors/M2FMdjRVeF1HPGFcc/runs/jPYfwI1hwOG2phE75#output` で全件確認可 (要 `APIFY_TOKEN`)
 
 ## 費用管理

@@ -90,9 +90,13 @@ echo '{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":
 
 ### Actor実行 → 結果取得（netloom 優先）
 ```bash
-# 1. 詳細取得（inputSchema確認; netloom 非対応なので MCP を使用）
-# tools/call fetch-actor-details {"actor":"TxU0ZBQIHdR20dr9C"}
-# → patient_discovery/instagram-search-reels / input: {query:string, maxPages:integer}
+# 1. 詳細取得（inputSchema 確認）
+# netloom（読み取りのみ・課金なし）: actor → build の 2 往復
+BUILD_ID=$(netloom apify actor --actor TxU0ZBQIHdR20dr9C --format json \
+  | jq -r '.data.taggedBuilds.latest.buildId')
+netloom apify build --build-id "$BUILD_ID" --format json \
+  | jq '.data.actorDefinition.input'
+# （MCP 経路: tools/call fetch-actor-details {"actor":"TxU0ZBQIHdR20dr9C"}）
 
 # 2. 実行（CBXリキッド例）
 R=$(netloom apify run --actor TxU0ZBQIHdR20dr9C --wait 45 \
@@ -107,7 +111,7 @@ netloom apify dataset --dataset-id "$DS" --limit 6 --as json | jq .
 netloom apify run-status --run-id "$RUN_ID" | jq '.data | {status, stats, usageTotalUsd}'
 ```
 
-MCP サーバー管理、actor 検索、Apify docs 検索、actor inputSchema 取得は netloom 非対応のため、上の `.mcp.json` / MCP 手順を維持する。
+MCP サーバー管理、actor 検索、Apify docs 検索は netloom 非対応のため、上の `.mcp.json` / MCP 手順を維持する（actor 詳細 / inputSchema は netloom の `apify actor` + `apify build` で取得できる）。
 
 ### 既存 dataset / run の確認（netloom）
 ```bash

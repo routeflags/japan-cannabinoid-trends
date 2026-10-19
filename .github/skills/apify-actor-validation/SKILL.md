@@ -251,19 +251,23 @@ Actor の研究利用可否を判断する際、以下の3点を結論として�
 # MCP経由
 fetch-actor-details {"actor": "ACTOR_ID"}
 
-# API直叩き（actor inputSchema 取得は netloom 非対応のため現行維持）
-source .env.d/apify.env
-curl -s "https://api.apify.com/v2/acts/ACTOR_ID" \
-  -H "Authorization: Bearer $APIFY_TOKEN" | jq '.data | {id, name, title, pricing}'
+# netloom（読み取りのみ・課金なし）
+netloom apify actor --actor ACTOR_ID --format json \
+  | jq '.data | {id, name, username, taggedBuilds}'
 ```
 
 ### Step 2: 入出力スキーマ確認
 
 ```bash
-# inputSchema と outputSchema を確認
-# actor inputSchema 取得 (`GET /v2/acts/{id}`) は netloom 非対応。
-curl -s "https://api.apify.com/v2/acts/ACTOR_ID" \
-  -H "Authorization: Bearer $APIFY_TOKEN" | jq '.data.inputSchema'
+# 入力スキーマを確認する（2 往復）
+# 1) actor 応答から latest build id を取る（actor の応答に inputSchema は無い）
+BUILD_ID=$(netloom apify actor --actor ACTOR_ID --format json \
+  | jq -r '.data.taggedBuilds.latest.buildId')
+
+# 2) build の actorDefinition.input が本物の JSON Schema
+#    （data.inputSchema は文字列の旧フィールドなので読まない）
+netloom apify build --build-id "$BUILD_ID" --format json \
+  | jq '.data.actorDefinition.input'
 ```
 
 ### Step 3: テスト実行
