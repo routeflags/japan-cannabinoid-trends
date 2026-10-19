@@ -93,6 +93,8 @@ netloom google-trends interest-by-region --term "CBX" --geo JP --timeframe "toda
 
 netloom の応答は**独自の envelope**（`{source, tool, geo, timeframe, terms:[…]}`）で、repository pipeline が読む MCP verbatim 形状（`src/collection/adapters/google_trends/adapter.py`）とは異なる。pipeline 用の run は従来どおり `make collect … --live`（collector: `google-trends-mcp`）で作り、この手順は手動・探索的な収集に使う。
 
+これは netloom 非対応という意味ではない。**意図的な選択**である: (a) adapter は `data` 配列と `content`（MCP tool result）の 2 形状だけを契約として受ける、(b) production の収集経路は CI（`.venv` + pytest）に閉じており、netloom バイナリを配備していない、(c) raw run は verbatim の MCP payload・導出系列・境界検証を既に保存している。transport を差し替える場合は、別 collector（例 `netloom-google-trends`）として registry に載せ、境界検証を再実行した上で owner 判断とする。
+
 ```bash
 # パラメータ設定（研究ごとに指定）
 KEYWORD="${1:?keyword required}"        # 例: "CBX リキッド"
