@@ -58,7 +58,7 @@ description: |
   GOOGLE_TOKEN_FILE で読める（値は stdout / stderr / カセットに出ない）。
   交換の証跡（2 frame）は `--cassette FILE` で caller の記録置き場に置ける（例: `data/gsc/cassettes/<YYYYMMDD>-auth-gsc.jsonl`。issue #22）。
   すべての往復は VCR カセットに残り、カセットからオフライン再現できる（証跡付きの収集）。
-netloom-version: 0.5.3
+netloom-version: 0.5.4
 ---
 
 # netloom（第三者 API の収集プロキシ）
@@ -77,7 +77,7 @@ actor を curl で呼んだりしない（証跡とオフライン再現が失�
 
 netloom は起動時に **cwd の env ファイルを自動で読む**（`<cwd>/.env` と `<cwd>/.env.d/*.env` を**両方**読む — `.env` が先で、同じ名前は `.env` が勝つ（issue #37）。`NETLOOM_ENV_FILE` で明示もできる — **1 つ、または `:` 区切りで複数**（`a.env:b.env`。全部を順に読み、先に定義されたものが勝つ。issue #25。**設定されている限り cwd の慣例は読まない**）。探索順・構文は設計書 §7.5）。だから **`set -a; source .env.d/xxx.env; set +a` を書かなくてよい**（書いてあっても動く）。**プロセスの環境変数が常に勝つ**ので、後から `export KEY=…` した値で上書きできる（値が空の env エントリでも勝つ）。読み込んだ値はこのプロセスの env に入り、**stdout / stderr / カセットには出ない**（レダクトされる — stderr に出るのは読み込んだファイル名と件数の 1 行だけ）。env ファイルは**ワークスペース外か gitignore の場所**に `chmod 600` で置き、コミットしない。
 
-- **Google Trends**（MCP stdio）: `google-trends interest-over-time` / `compare-terms`
+- **Google Trends**（MCP stdio）: `google-trends interest-over-time` / `compare-terms` / `related-queries` / `trending-now` / `interest-by-region`（ピン留めした`google-trends-mcp@0.1.1` の **5 ツール全部**。**1 コマンド = 1 MCP 往復**。検索語は `--keyword`（配列の `terms`）と `--term`（1 語）の 2 つの語がある）
 - **Apify**（HTTP）: `apify run` / `apify dataset` / `apify run-status` / `apify actor` / `apify build` / `apify key-value-store`
 - **X API v2**（HTTP）: `x search-recent` / `x search-all` / `x tweet`
 - **GA4**（HTTP。Google Analytics Data API）: `ga4 run-report` / `ga4 run-realtime-report` / `ga4 get-metadata`（**1 コマンド = 認証 1 + データ 1 の 2 往復**。`--property` または `GA4_PROPERTY_ID`）
@@ -195,7 +195,7 @@ gate (--source): 2 of 2 sources are missing a needed name — exit 1
 
 ---
 
-# Google Trends（2 コマンド）
+# Google Trends（5 コマンド）
 
 ## いつ使うか（トリガー）
 
@@ -223,22 +223,29 @@ make trends KEYWORD="CBD オイル" TIMEFRAME="today 5-y" FORMAT=csv OUT=/tmp/cb
 # 2–5 語の相対比較（1 回の呼び出し。同一 run 内だけ共通スケール）
 make compare TERMS="CBD オイル,CBN オイル"
 make compare TERMS="CBD オイル,CBN オイル,カンナビノイド" FORMAT=text
+
+# 関連クエリ（TOP / RISING）・本日のトレンド・地域別の興味度（issue #27。csv は無い）
+make trends-related KEYWORD="CBX"        # サーバーの schema は term（1 語）
+make trends-trending                      # TODAY のトレンド（GEO=JP。KEYWORD も TIMEFRAME も取らない）
+make trends-region  KEYWORD="CBX"        # 地域別（スコアは provider の指数）
 ```
 
 | 変数 | 既定 | 値 |
 |---|---|---|
-| `KEYWORD` | （必須。`trends`） | 検索語 1 つ |
+| `KEYWORD` | （必須。`trends` / `trends-related` / `trends-region`） | 検索語 1 つ（`--keyword` または `--term`） |
 | `TERMS` | （必須。`compare`） | 2–5 語のカンマ区切り |
-| `GEO` | `JP` | ISO 3166-1 alpha-2（空 = 全世界） |
-| `TIMEFRAME` | `today 12-m` | `today 1-m`（30日）/ `today 3-m`（90日）/ `today 12-m` / `today 5-y`（5年）**この 4 語彙のみ** |
-| `FORMAT` | `json` | `json` / `csv` / `text` / `verbatim` |
+| `GEO` | `JP` | ISO 3166-1 alpha-2（空 = 全世界。**`trends-trending` は 2 文字が必要**） |
+| `TIMEFRAME` | `today 12-m` | `today 1-m`（30日）/ `today 3-m`（90日）/ `today 12-m` / `today 5-y`（5年）**この 4 語彙のみ**（`trends-trending` は取らない） |
+| `FORMAT` | `json` | `json` / `csv` / `text` / `verbatim`。**`trends-related` / `trends-trending` / `trends-region` は `json` / `text` / `verbatim` の 3 つ**（`csv` を渡すと exit 2） |
 | `OUT` | （stdout） | 出力ファイル |
 | `REPLAY` | （live） | カセットからオフライン再現 |
 
 - `make help` が全ターゲットを表示。stdout は**データのみ**（ビルド表示は stderr）
 - 実行ごとに往復が `.cassettes/<UTC>-google-trends-….jsonl` に追記される（stderr にパスが出る）
 - バイナリを直接叩く場合は `bin/netloom google-trends interest-over-time --keyword …` /
-  `bin/netloom google-trends compare-terms --terms …`（フラグは `--help`）
+  `bin/netloom google-trends compare-terms --terms …` / `bin/netloom google-trends related-queries --term …` /
+  `bin/netloom google-trends trending-now --geo JP` / `bin/netloom google-trends interest-by-region --term …`（フラグは `--help`）
+- `trending-now` は **geo だけ** を取る（サーバーの schema に timeframe も term も無い。付けると exit 2）
 
 ## 出力形式（`FORMAT`）
 
@@ -248,6 +255,16 @@ make compare TERMS="CBD オイル,CBN オイル,カンナビノイド" FORMAT=te
 | `csv` | `term,geo,timeframe,date,value` | 表・スプレッドシート |
 | `text` | provider の表をそのまま（エスケープなし） | 人が読む |
 | `verbatim` | 受信した生バイト | 生データの確認（証跡用） |
+
+`related-queries` / `trending-now` / `interest-by-region` の `json`（issue #27。サーバーが返す text から読む。述べていないフィールドは足さない）:
+
+| コマンド | `json` の形 |
+|---|---|
+| `related-queries` | `{source, tool, geo, timeframe, term, top:[{query, value}], rising:[{query, value}]}` — **`value` は印字された文字列**（数値化は呼び出し側） |
+| `trending-now` | `{source, tool, geo, date, trends:[{query, traffic, article?:{source, title}}]}` — 記事は先頭 1 件だけ（無ければ省略） |
+| `interest-by-region` | `{source, tool, geo, timeframe, term, regions:[{region, code, score}]}` — `score` は整数（単位は provider の指数。範囲は検査しない） |
+
+空の答え（サーバーの 1 文 `No related queries found for this term.` など）は空の配列で、**失敗ではない**（exit 0）。
 
 `average` は **provider が返したときだけ**入る（`interest_over_time` には無い。計算で埋めない）。
 
@@ -261,6 +278,8 @@ make compare TERMS="CBD オイル,CBN オイル,カンナビノイド" FORMAT=te
   **12-m / 5-y でのみ一致**する — 粒度差の吸収は呼び出し側の仕事
 - `value: 0` は「そのバケットに検索が無かった」で、**収集失敗ではない**
 - `timeframe` は**要求条件**。観測された範囲ではない。`today 5-y` は実行時刻基準のローリング 5 年
+- **関連クエリの `value` はサーバーが印字した文字列**（rising の値は数値とは限らない）。`trending-now` の `traffic` も同じで、**数値化は呼び出し側**
+- **`interest-by-region` の `score` は provider の指数**（行は provider が value の降順に並べ、**上位 30 件**に切ったもの — netloom は並べ替えも切り捨てもしない）
 
 ## 証跡とオフライン再現
 
@@ -280,7 +299,7 @@ make trends KEYWORD="CBX リキッド" REPLAY=.cassettes/20261017T144703Z-google
 |---|---|---|
 | 0 | 成功 | — |
 | 1 | 失敗・拒否（replay 不一致、ツールがエラー、解釈できない応答） | stderr の 1 行を読む。応答形が変わった可能性は設計の付録 A.7 を確認 |
-| 2 | 引数・語彙（timeframe 語彙外、terms が 1 語/6 語、`--replay` と `--cassette` 併用） | 引数を直す |
+| 2 | 引数・語彙（timeframe 語彙外、terms が 1 語/6 語、`--term` 欠落、3 コマンドの `--format csv`、`--replay` と `--cassette` 併用） | 引数を直す |
 | 3 | I/O（`--out` に書けない） | パスを直す |
 | 124 | timeout（既定 300 秒） | 再実行、または owner に相談 |
 | 127 | `npx` 不在 | Node を導入する |

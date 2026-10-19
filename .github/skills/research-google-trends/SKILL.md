@@ -26,21 +26,26 @@ description: |
 
 ## 前提
 
-- OpenCode の MCP 設定に `google-trends` サーバーが登録済み（`opencode.json`）
-- npm パッケージ `google-trends-mcp`（API キー不要）
-- MCP サーバーはローカルで実行（trends.google.com の内部エンドポイントを使用）
+- **netloom v0.5.4+**（`netloom google-trends …`。ピン留めした `google-trends-mcp@0.1.1` の 5 ツールを全部呼べる）
+- Node / `npx`（netloom が `google-trends-mcp` を npx で起動する。API キー不要）
+- OpenCode の MCP 登録（`opencode.json` の `mcp.google-trends`）は**任意**。netloom 経由なら不要
+- MCP サーバーはローカルで起動し、trends.google.com の内部エンドポイントを使用する
 
 ---
 
-## MCP ツール一覧
+## ツール一覧（netloom コマンド）
 
-| ツール | 説明 | 使用例 |
-|--------|------|--------|
-| `interest_over_time` | 検索興味度の週次推移（0-100） | 過去1年の「CBX リキッド」の推移 |
-| `compare_terms` | 2-5キーワードの比較 | 「CBX リキッド」vs「CBD リキッド」 |
-| `related_queries` | 関連クエリ（上昇中を含む） | 「CBX」の関連検索 |
-| `trending_now` | 本日のトレンド検索 | 日本のトレンド |
-| `interest_by_region` | 地域別の興味度 | 日本の都道府県別 |
+| netloom コマンド | 元 MCP ツール | 説明 | 使用例 |
+|---|---|---|---|
+| `google-trends interest-over-time` | `interest_over_time` | 検索興味度の推移（0-100） | 過去1年の「CBX リキッド」の推移 |
+| `google-trends compare-terms` | `compare_terms` | 2-5キーワードの比較 | 「CBX リキッド」vs「CBD リキッド」 |
+| `google-trends related-queries` | `related_queries` | 関連クエリ（top / rising） | 「CBX」の関連検索 |
+| `google-trends trending-now` | `trending_now` | 本日のトレンド検索（geo のみ） | 日本のトレンド |
+| `google-trends interest-by-region` | `interest_by_region` | 地域別の興味度（provider 上位 30 件） | 日本の都道府県別 |
+
+- 各 **1 コマンド = 1 MCP 往復**。`--format` は `json`（既定）/ `text` / `verbatim`。**`csv` は無い**（exit 2）
+- **バケット粒度は timeframe で違う**: `today 1-m` / `today 3-m` は日次、`today 12-m` / `today 5-y` は週次・日曜起点（実測は netloom skill の GT 節）
+- 空の答え（関連クエリ 0 件など）は空配列で **exit 0**（失敗ではない）
 
 ---
 
@@ -61,53 +66,55 @@ description: |
 
 ## 実行方法
 
-### 方法A — MCP ツール経由（OpenCode 内）
+### 方法A — netloom（推奨）
 
-OpenCode のセッション内で MCP ツールを直接呼び出す：
+```bash
+# 興味度の推移（1語）
+netloom google-trends interest-over-time --keyword "CBX リキッド" --geo JP --timeframe "today 12-m" \
+  --format json --out /tmp/records.json
 
+# 比較（2-5語）
+netloom google-trends compare-terms --terms "CBX リキッド,CBD リキッド" --geo JP --timeframe "today 12-m"
+
+# 関連クエリ（top / rising）
+netloom google-trends related-queries --term "CBX" --geo JP --timeframe "today 12-m"
+
+# 本日のトレンド（geo だけ。term / timeframe は取らない）
+netloom google-trends trending-now --geo JP
+
+# 地域別（provider 上位 30 件）
+netloom google-trends interest-by-region --term "CBX" --geo JP --timeframe "today 12-m"
 ```
-1. interest_over_time を呼び出し
-   terms=["CBX リキッド"], geo="JP", timeframe="today 12-m"
 
-2. compare_terms を呼び出し（キーワード比較時）
-   terms=["CBX リキッド", "CBD リキッド"], geo="JP", timeframe="today 12-m"
+- 往復は cassette に残る（`.cassettes/` のみ・コミットしない）。`--replay` でオフライン再現できる
+- `--out FILE` で応答を保存できる（省略時は stdout）
 
-3. related_queries を呼び出し
-   term="CBX", geo="JP"
+### 方法B — 収集結果を raw run として保存する場合
 
-4. 結果を datasets/<study-id>/data/raw/google_trends/<run-id>/ に JSON で保存
-```
-
-### 方法B — スクリプト経由（バックグラウンド収集）
+netloom の応答は**独自の envelope**（`{source, tool, geo, timeframe, terms:[…]}`）で、repository pipeline が読む MCP verbatim 形状（`src/collection/adapters/google_trends/adapter.py`）とは異なる。pipeline 用の run は従来どおり `make collect … --live`（collector: `google-trends-mcp`）で作り、この手順は手動・探索的な収集に使う。
 
 ```bash
 # パラメータ設定（研究ごとに指定）
 KEYWORD="${1:?keyword required}"        # 例: "CBX リキッド"
 STUDY_ID="${2:?study_id required}"      # 例: "cbx-search-trends"
-GEO="${3:-JP}"                          # 地域コード
-TIMEFRAME="${4:-today 12-m}"            # 期間
+GEO="${3:-JP}"
+TIMEFRAME="${4:-today 12-m}"
 OUTPUT_DIR="${5:-datasets/${STUDY_ID}/data/raw/google_trends}"
 
-# タイムスタンプと run-id
 TIMESTAMP=$(date -u +"%Y%m%dT%H%M%SZ")
 RUN_ID="${TIMESTAMP}-google-trends-$(echo "$KEYWORD" | tr ' ' '-' | tr '[:upper:]' '[:lower:]')"
 SAVE_DIR="${OUTPUT_DIR}/${RUN_ID}"
 mkdir -p "$SAVE_DIR"
 
-echo "========================================="
-echo "研究ID: $STUDY_ID"
-echo "キーワード: $KEYWORD"
-echo "地域: $GEO"
-echo "期間: $TIMEFRAME"
-echo "保存先: $SAVE_DIR"
-echo "========================================="
-echo ""
-echo "MCP ツール interest_over_time を使用してデータを取得し、"
-echo "以下のパスに JSON で保存してください:"
-echo "  $SAVE_DIR/records.json"
-echo ""
-echo "run_metadata.json に以下を記録:"
-echo "  keyword, geo, timeframe, study_id, run_id, collection_timestamp"
+netloom google-trends interest-over-time \
+  --keyword "$KEYWORD" --geo "$GEO" --timeframe "$TIMEFRAME" \
+  --format json --out "$SAVE_DIR/records.json"
+
+# run_metadata.json には最低限を記録する（response_shape を必ず入れる）:
+#   keyword, geo, timeframe, study_id, run_id, collection_timestamp,
+#   response_shape: "netloom-envelope-v1"
+# datasets/**/data/raw/google_trends 配下の run は collection-run-v1 の対象で、
+# `make audit-new-runs` が現行契約を検査する。契約を満たさない run を置くと監査で落ちる。
 ```
 
 ---
@@ -146,10 +153,12 @@ echo "=== キーワード ==="
 ```
 datasets/<study-id>/data/raw/google_trends/
 └── {YYYYMMDDTHHMMSSZ}-google-trends-{keyword-slug}/
-    ├── records.json          ← 収集データ（interest_over_time 結果）
-    ├── comparison.json       ← 比較データ（compare_terms 結果、場合のみ）
-    ├── related_queries.json  ← 関連クエリ（related_queries 結果、場合のみ）
-    └── run_metadata.json     ← 実行メタデータ（keyword / geo / timeframe / study_id 付き）
+    ├── records.json          ← 収集データ（interest-over-time。netloom envelope v1）
+    ├── comparison.json       ← 比較データ（compare-terms 結果、場合のみ）
+    ├── related_queries.json  ← 関連クエリ（related-queries 結果、場合のみ）
+    ├── trending_now.json     ← 本日のトレンド（trending-now 結果、場合のみ）
+    ├── interest_by_region.json ← 地域別（interest-by-region 結果、場合のみ）
+    └── run_metadata.json     ← 実行メタデータ（keyword / geo / timeframe / study_id / response_shape 付き）
 ```
 
 **run-id 形式:** `YYYYMMDDTHHMMSSZ-google-trends-{keyword-slug}`（keyword を小文字・ハイフン連結）
@@ -214,7 +223,8 @@ datasets/<study-id>/data/raw/google_trends/
 | 0 件 / データなし | 低ボリュームクエリ | キーワードを広げる、期間を延長 |
 | 429 Too Many Requests | レート制限 | 2-5分待機して再試行 |
 | データが不安定 | 相対指数の特性 | 複数回収集、比較で補完 |
-| MCP ツールが見つからない | OpenCode 再起動が必要 | opencode を再起動して設定を反映 |
+| MCP ツールが見つからない（netloom 経由） | npx / Node が無い、またはサーバー起動失敗 | `npx --version` を確認し、`netloom google-trends …` の stderr と cassette を読む |
+| `--format csv` で exit 2 | GT の related-queries / trending-now / interest-by-region は csv 非対応 | `json` / `text` / `verbatim` を使う |
 | スコアが全て 0 | クエリが閾値未満 | 広いキーワードで再収集 |
 
 ---
@@ -229,7 +239,7 @@ datasets/<study-id>/data/raw/google_trends/
 地域: JP
 期間: today 12-m
 
-→ interest_over_time を呼び出し
+→ `netloom google-trends interest-over-time` を実行
 → 結果を datasets/cbx-search-trends/data/raw/google_trends/<run-id>/records.json に保存
 ```
 
@@ -241,7 +251,7 @@ datasets/<study-id>/data/raw/google_trends/
 地域: JP
 期間: today 12-m
 
-→ compare_terms を呼び出し
+→ `netloom google-trends compare-terms` を実行
 → 結果を comparison.json に保存
 ```
 
@@ -252,7 +262,7 @@ datasets/<study-id>/data/raw/google_trends/
 キーワード: "CBX"
 地域: JP
 
-→ related_queries を呼び出し
+→ `netloom google-trends related-queries` を実行
 → 結果を related_queries.json に保存
 ```
 
@@ -262,6 +272,6 @@ datasets/<study-id>/data/raw/google_trends/
 
 - **研究計画書:** `docs/plans/` 配下（研究ごとに作成）
 - **methodology:** `datasets/<study-id>/methodology.md`（研究ごとに作成）
-- **MCP 設定:** `opencode.json` の `mcp.google-trends`
+- **実行ツール:** `.github/skills/netloom/SKILL.md`（`netloom google-trends` の正本）
 - **上位スキル:** 研究用データ収集スキル
-- **MCP パッケージ:** [google-trends-mcp](https://github.com/purahmanian/google-trends-mcp)（MIT License）
+- **MCP パッケージ:** [google-trends-mcp](https://github.com/purahmanian/google-trends-mcp)（MIT License。netloom が npx で起動）
