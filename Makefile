@@ -9,6 +9,7 @@
 #   make adopt-all                    adopt every staged run (L1 verdict each)
 #   make platform-trends              rebuild processed Google Trends + YouTube release tables
 #   make audit-new-runs               new-run contract audit (read-only)
+#   make audit-publication            publication contract audit (read-only)
 #   make audit-snapshots              regenerate tracked docs/audits snapshots
 #   make gates                        validation gate scripts
 

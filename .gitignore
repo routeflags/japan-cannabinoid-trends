@@ -9,6 +9,15 @@
 # Secrets
 .env
 .env.*
+# Explicit: skill docs (.github/skills/apify-*) keep machine-local tokens in
+# .env.d/*.env (e.g. APIFY_TOKEN, chmod 600). Bare `.env.*` already matches the
+# `.env.d` dirname, but spell it out so the rule survives pattern edits.
+.env.d/*
+# Re-include the dir itself (`.env.*` above matches the `.env.d` dirname,
+# which would otherwise block all re-inclusions below it), then keep only
+# templates committable (key names only, no values).
+!.env.d/
+!.env.d/*.example
 *.key
 
 # macOS
@@ -57,5 +66,11 @@ datasets/*/data/private/
 # redistributed before review.
 .staging/
 .quarantine/
+
+# netloom VCR cassettes (recorded third-party round trips; see
+# .github/skills/netloom/SKILL.md). They hold provider responses, session
+# state, and query-string credentials (PSI/CRUX keys), so they are local
+# evidence only: keep them here and never commit them.
+.cassettes/
 
 /.agents
