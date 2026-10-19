@@ -88,25 +88,32 @@ Token必須: `call-actor` / storage系 / run系
 echo '{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2024-11-05","capabilities":{},"clientInfo":{"name":"test","version":"1.0.0"}}}' | /Users/bookair18/OS/media/06_symphony/symphony_workspaces/.github/bin/run-with-env.sh .env.d/apify.env /Users/bookair18/.anyenv/envs/nodenv/versions/24.13.1/bin/npx -y @apify/actors-mcp-server 2>&1 | head -5
 ```
 
-### Actor詳細 → 実行 → 結果取得（MCP stdio）
+### Actor実行 → 結果取得（netloom 優先）
 ```bash
-# 1. 詳細取得（inputSchema確認）
+# 1. 詳細取得（inputSchema確認; netloom 非対応なので MCP を使用）
 # tools/call fetch-actor-details {"actor":"TxU0ZBQIHdR20dr9C"}
 # → patient_discovery/instagram-search-reels / input: {query:string, maxPages:integer}
 
 # 2. 実行（CBXリキッド例）
-# tools/call call-actor {"actor":"TxU0ZBQIHdR20dr9C","input":{"query":"CBXリキッド","maxPages":1},"waitSecs":45}
-# → {runId:"whiuCNcuRxmDVWjLF", storages:{datasets:{default:{id:"gN4fgq80j5H58dA8C",itemCount:6}}}}
+R=$(netloom apify run --actor TxU0ZBQIHdR20dr9C --wait 45 \
+  --input '{"query":"CBXリキッド","maxPages":1}')
+RUN_ID=$(echo "$R" | jq -r '.data.id // .id')
+DS=$(echo "$R" | jq -r '.data.defaultDatasetId // .defaultDatasetId')
 
 # 3. 結果取得
-# tools/call get-dataset-items {"datasetId":"gN4fgq80j5H58dA8C","limit":6,"clean":true}
+netloom apify dataset --dataset-id "$DS" --limit 6 --as json | jq .
+
+# 4. 課金・ステータス確認
+netloom apify run-status --run-id "$RUN_ID" | jq '.data | {status, stats, usageTotalUsd}'
 ```
 
-### API直叩き（MCP不調時のフォールバック）
+MCP サーバー管理、actor 検索、Apify docs 検索、actor inputSchema 取得は netloom 非対応のため、上の `.mcp.json` / MCP 手順を維持する。
+
+### 既存 dataset / run の確認（netloom）
 ```bash
 source .env.d/apify.env
-curl -s "https://api.apify.com/v2/datasets/gN4fgq80j5H58dA8C/items?clean=true&format=json&limit=6" -H "Authorization: Bearer $APIFY_TOKEN" | jq .
-curl -s "https://api.apify.com/v2/actor-runs/whiuCNcuRxmDVWjLF" -H "Authorization: Bearer $APIFY_TOKEN" | jq '{status, stats}'
+netloom apify dataset --dataset-id gN4fgq80j5H58dA8C --limit 6 --as json | jq .
+netloom apify run-status --run-id whiuCNcuRxmDVWjLF | jq '.data | {status, stats}'
 ```
 
 ### 実績（2026-09-01）

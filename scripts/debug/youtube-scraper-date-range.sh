@@ -13,6 +13,7 @@ set -e
 DB_PATH="${DB_PATH:-datasets/youtube-consistency/data/trends.db}"
 APIFY_ENV="${APIFY_ENV:-/Users/bookair18/OS/media/06_symphony/symphony_workspaces/.env.d/apify.env}"
 ACTOR_ID="h7sDV53CddomktSi5"
+NETLOOM_BIN="${NETLOOM_BIN:-/Users/bookair18/.local/bin/netloom}"
 
 # パラメータ
 SEARCH_TERM="${1:-CBD リキッド}"
@@ -21,6 +22,10 @@ MAX_RESULTS="${3:-100}"
 
 # Apify トークン読み込み
 source "$APIFY_ENV"
+if [ ! -x "$NETLOOM_BIN" ]; then
+  NETLOOM_BIN="$(command -v netloom || true)"
+fi
+[ -n "$NETLOOM_BIN" ] || { echo "netloom が必要です"; exit 1; }
 
 echo "========================================="
 echo "YouTube 日付範囲指定データ取得"
@@ -42,10 +47,8 @@ echo ""
 echo "【Step 1】API 実行中..."
 ENCODED_QUERY=$(python3 -c "import urllib.parse; print(urllib.parse.quote('$SEARCH_TERM'))")
 
-R=$(curl -s -X POST "https://api.apify.com/v2/acts/${ACTOR_ID}/runs" \
-  -H "Authorization: Bearer $APIFY_TOKEN" \
-  -H "Content-Type: application/json" \
-  -d "{
+R=$("$NETLOOM_BIN" apify run --actor "$ACTOR_ID" --wait 1 \
+  --input "{
     \"startUrls\": [{\"url\": \"https://www.youtube.com/results?search_query=${ENCODED_QUERY}\"}],
     \"maxResults\": ${MAX_RESULTS},
     \"maxResultsShorts\": 0,
@@ -54,8 +57,9 @@ R=$(curl -s -X POST "https://api.apify.com/v2/acts/${ACTOR_ID}/runs" \
     \"sortVideosBy\": \"NEWEST\"
   }")
 
-APIFY_RUN_ID=$(echo "$R" | jq -r '.data.id')
-DATASET_ID=$(echo "$R" | jq -r '.data.defaultDatasetId')
+# netloom apify run の envelope は live 未検証のため、run-status で完了確認する。
+APIFY_RUN_ID=$(echo "$R" | jq -r '.data.id // .id')
+DATASET_ID=$(echo "$R" | jq -r '.data.defaultDatasetId // .defaultDatasetId')
 
 echo "  Apify Run ID: $APIFY_RUN_ID"
 echo "  Dataset ID: $DATASET_ID"
@@ -71,8 +75,7 @@ while [ "$STATUS" != "SUCCEEDED" ] && [ "$STATUS" != "FAILED" ] && [ "$WAITED" -
   sleep 10
   WAITED=$((WAITED + 10))
   
-  STATUS=$(curl -s "https://api.apify.com/v2/actor-runs/${APIFY_RUN_ID}" \
-    -H "Authorization: Bearer $APIFY_TOKEN" | jq -r '.data.status')
+  STATUS=$("$NETLOOM_BIN" apify run-status --run-id "$APIFY_RUN_ID" | jq -r '.data.status // .status')
   
   echo "  経過時間: ${WAITED}秒 | ステータス: $STATUS"
 done
@@ -90,8 +93,7 @@ sleep 3
 
 # Step 2: データ取得
 echo "【Step 2】データ取得中..."
-curl -s "https://api.apify.com/v2/datasets/${DATASET_ID}/items?clean=true&format=json" \
-  -H "Authorization: Bearer $APIFY_TOKEN" > "/tmp/${RUN_ID}_raw.json"
+"$NETLOOM_BIN" apify dataset --dataset-id "$DATASET_ID" --as json --out "/tmp/${RUN_ID}_raw.json"
 
 RECORD_COUNT=$(jq 'length' "/tmp/${RUN_ID}_raw.json")
 echo "  取得件数: $RECORD_COUNT"

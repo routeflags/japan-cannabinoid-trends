@@ -116,10 +116,8 @@ python3 scripts/debug/x_posts_qrm_lang.py "CBD リキッド" 2026-10-01 2026-11-
 source /Users/bookair18/OS/media/06_symphony/symphony_workspaces/.env.d/apify.env
 COOKIES=$(cat /tmp/x_cookies.json)
 
-R=$(curl -s -m 60 -X POST "https://api.apify.com/v2/acts/qrmKEcWmE4WGXuuvd/runs" \
-  -H "Authorization: Bearer $APIFY_TOKEN" \
-  -H "Content-Type: application/json" \
-  -d "$(jq -n --argjson cookies "$COOKIES" '{
+R=$(netloom apify run --actor qrmKEcWmE4WGXuuvd --wait 60 \
+  --input "$(jq -n --argjson cookies "$COOKIES" '{
     query: "CBD リキッド",
     search_type: "Latest",
     numberOfTweets: 10,
@@ -129,7 +127,7 @@ R=$(curl -s -m 60 -X POST "https://api.apify.com/v2/acts/qrmKEcWmE4WGXuuvd/runs"
     scrapeAll: false,
     cookies: $cookies
   }')")
-echo "$R" | jq -r '.data | "status=\(.status) run=\(.id)"'
+echo "$R" | jq -r '(.data // .) | "status=\(.status) run=\(.id)"'
 ```
 
 ---

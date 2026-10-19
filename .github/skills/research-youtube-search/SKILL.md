@@ -58,13 +58,11 @@ MAX_VIDEOS="${3:-100}"
 OUTPUT_DIR="${4:-datasets/${STUDY_ID}/data/raw/youtube}"
 
 # 収集実行
-R=$(curl -s -X POST "https://api.apify.com/v2/acts/gJvjeCYNraSfhIaNd/runs?waitForFinish=60" \
-  -H "Authorization: Bearer $APIFY_TOKEN" \
-  -H "Content-Type: application/json" \
-  -d "{\"search_term\":\"$KEYWORD\",\"max_videos\":$MAX_VIDEOS}")
+R=$(netloom apify run --actor gJvjeCYNraSfhIaNd --wait 60 \
+  --input "{\"search_term\":\"$KEYWORD\",\"max_videos\":$MAX_VIDEOS}")
 
-DS=$(echo "$R" | jq -r '.data.defaultDatasetId')
-RUN_ID=$(echo "$R" | jq -r '.data.id')
+DS=$(echo "$R" | jq -r '.data.defaultDatasetId // .defaultDatasetId')
+RUN_ID=$(echo "$R" | jq -r '.data.id // .id')
 TIMESTAMP=$(date -u +"%Y%m%dT%H%M%SZ")
 SAVE_RUN_ID="${TIMESTAMP}-youtube-$(echo "$KEYWORD" | tr ' ' '-' | tr '[:upper:]' '[:lower:]')"
 
@@ -73,12 +71,10 @@ SAVE_DIR="${OUTPUT_DIR}/${SAVE_RUN_ID}"
 mkdir -p "$SAVE_DIR"
 
 # データ取得
-curl -s "https://api.apify.com/v2/datasets/$DS/items?clean=true&format=json" \
-  -H "Authorization: Bearer $APIFY_TOKEN" > "$SAVE_DIR/records_raw.json"
+netloom apify dataset --dataset-id "$DS" --as json --out "$SAVE_DIR/records_raw.json"
 
 # メタデータ取得
-curl -s "https://api.apify.com/v2/actor-runs/$RUN_ID" \
-  -H "Authorization: Bearer $APIFY_TOKEN" | jq --arg keyword "$KEYWORD" --arg study "$STUDY_ID" '.data | {id, status, usageTotalUsd, startedAt, finishedAt, keyword: $keyword, study_id: $study}' \
+netloom apify run-status --run-id "$RUN_ID" | jq --arg keyword "$KEYWORD" --arg study "$STUDY_ID" '.data | {id, status, usageTotalUsd, startedAt, finishedAt, keyword: $keyword, study_id: $study}' \
   > "$SAVE_DIR/run_metadata.json"
 
 COUNT_RAW=$(jq 'length' "$SAVE_DIR/records.json")

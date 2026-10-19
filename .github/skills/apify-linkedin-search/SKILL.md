@@ -21,7 +21,7 @@ description: |
 
 - Apifyアカウントに **支払い方法登録済み** (無料 $5 付与後, 従量課金, minimal $0.10)
 - `.env.d/apify.env` に `APIFY_TOKEN=apify_api_...` が存在 (`apify-mcp` スキルで管理)
-- Node.js v18+ (本環境 v24.13.1) または Python + `curl`
+- netloom v0.4.3+（`/Users/bookair18/.local/bin/netloom`）または PATH 上の `netloom`
 - MCPは `apify-mcp` スキル参照。API直叩きでも可（MCP不調時のフォールバック）
 
 ## 料金モデル (2026-09-03, build 0.0.265, run jPYfwI1hwOG2phE75 実績)
@@ -119,71 +119,58 @@ Build `rN8UwvEPlEHaGsjFK` (0.0.265, 2026-08-24) 時点:
 
 ## 実行方法
 
-### 方法A — MCP経由 (推奨, `apify-mcp` 管理)
+### 方法A — netloom (推奨, API課金)
 
 ```bash
 # 1. 実行 (weed例, API課金, Full 20件 ≒1ページ)
-# tools/call call-actor {"actor":"M2FMdjRVeF1HPGFcc","input":{"searchQuery":"weed","profileScraperMode":"Full","maxItems":20},"waitSecs":60}
-# → { runId:"jPYfwI1hwOG2phE75", defaultDatasetId:"bRGOoafmRLKx0ZilP", itemCount:20, usageTotalUsd:0.18 }
+R=$(netloom apify run --actor M2FMdjRVeF1HPGFcc --wait 60 \
+  --input '{"searchQuery":"weed","profileScraperMode":"Full","maxItems":20}')
+RUN_ID=$(echo "$R" | jq -r '.data.id // .id')
+DS=$(echo "$R" | jq -r '.data.defaultDatasetId // .defaultDatasetId')
 
 # 2. 結果取得
-# tools/call get-dataset-items {"datasetId":"bRGOoafmRLKx0ZilP","limit":20,"clean":true}
-# → 20件 JSON (前述サンプル形式)
+netloom apify dataset --dataset-id "$DS" --limit 20 --as json \
+  | jq '.[0] | {linkedinUrl, headline, location: .location.linkedinText, connectionsCount}'
 
 # 3. 課金確認
-# tools/call get-actor-run {"runId":"jPYfwI1hwOG2phE75"}
-# → { usageTotalUsd: 0.18, chargedEventCounts: {"search-page":1,"full-profile":20} }
+netloom apify run-status --run-id "$RUN_ID" \
+  | jq '.data | {status, usageTotalUsd, chargedEventCounts}'
 ```
 
-### 方法B — API直叩き (MCP不調時のフォールバック, API課金)
+### 方法B — netloom と KVS API
 
 ```bash
 source .env.d/apify.env
 
-# 1. 非同期実行 (run, waitForFinish=60で同期待ち)
-curl -s -X POST "https://api.apify.com/v2/acts/M2FMdjRVeF1HPGFcc/runs?waitForFinish=60" \
-  -H "Authorization: Bearer $APIFY_TOKEN" -H "Content-Type: application/json" \
-  -d '{"searchQuery":"weed","profileScraperMode":"Full","maxItems":20}' | jq '{id, status, defaultDatasetId}'
+# 1. 実行 (run, waitForFinish=60で同期待ち)
+netloom apify run --actor M2FMdjRVeF1HPGFcc --wait 60 \
+  --input '{"searchQuery":"weed","profileScraperMode":"Full","maxItems":20}' \
+  | jq '{id: (.data.id // .id), status: (.data.status // .status), datasetId: (.data.defaultDatasetId // .defaultDatasetId)}'
 
 # → {"id":"jPYfwI1hwOG2phE75","status":"SUCCEEDED","defaultDatasetId":"bRGOoafmRLKx0ZilP"}
 
 # 2. データセット取得 (JSON)
-curl -s "https://api.apify.com/v2/datasets/bRGOoafmRLKx0ZilP/items?clean=true&format=json&limit=20" \
-  -H "Authorization: Bearer $APIFY_TOKEN" | jq '.[0] | {linkedinUrl, headline, location: .location.linkedinText, connectionsCount}'
+netloom apify dataset --dataset-id bRGOoafmRLKx0ZilP --limit 20 --as json \
+  | jq '.[0] | {linkedinUrl, headline, location: .location.linkedinText, connectionsCount}'
 
 # 3. CSVで保存
-curl -s "https://api.apify.com/v2/datasets/bRGOoafmRLKx0ZilP/items?clean=true&format=csv" \
-  -H "Authorization: Bearer $APIFY_TOKEN" -o /tmp/linkedin_search_weed.csv
+netloom apify dataset --dataset-id bRGOoafmRLKx0ZilP --as csv --out /tmp/linkedin_search_weed.csv
 
 # 4. 課金確認
-curl -s "https://api.apify.com/v2/actor-runs/jPYfwI1hwOG2phE75" -H "Authorization: Bearer $APIFY_TOKEN" \
-  | jq '{status, usageTotalUsd, chargedEventCounts}'
+netloom apify run-status --run-id jPYfwI1hwOG2phE75 \
+  | jq '.data | {status, usageTotalUsd, chargedEventCounts}'
 
 # 5. 地域フィルタ例 (日本, Short 25件)
-curl -s -X POST "https://api.apify.com/v2/acts/M2FMdjRVeF1HPGFcc/runs?waitForFinish=60" \
-  -H "Authorization: Bearer $APIFY_TOKEN" -H "Content-Type: application/json" \
-  -d '{"searchQuery":"Founder","profileScraperMode":"Short","maxItems":25,"locations":["Japan"]}' | jq .
+netloom apify run --actor M2FMdjRVeF1HPGFcc --wait 60 \
+  --input '{"searchQuery":"Founder","profileScraperMode":"Short","maxItems":25,"locations":["Japan"]}' | jq .
 
-# 6. INPUT確認 (KVS)
+# 6. INPUT確認 (KVS; netloom 非対応のため Apify API 直叩きを維持)
 curl -s "https://api.apify.com/v2/key-value-stores/RfgHluUVfS9i3nz4j/records/INPUT?format=json" -H "Authorization: Bearer $APIFY_TOKEN" | jq .
 ```
 
-### 方法C — Node.js MCP stdio (VS Codeで直接MCPツールが呼べない場合)
+### 方法C — MCP は管理・検索用途のみ
 
-```javascript
-// /tmp/linkedin_search.js
-const { spawn } = require('child_process');
-const server = spawn('/Users/bookair18/.anyenv/envs/nodenv/versions/24.13.1/bin/npx',
-  ['-y','@apify/actors-mcp-server'], { stdio:['pipe','pipe','pipe'], env:{...process.env, APIFY_TOKEN: process.env.APIFY_TOKEN}});
-let buf='', id=1;
-function call(name, args){ server.stdin.write(JSON.stringify({jsonrpc:'2.0',id:id++,method:'tools/call',params:{name,arguments:args}})+'\n'); }
-server.stdout.on('data', d=>{ buf+=d.toString(); let lines=buf.split('\n'); buf=lines.pop()||''; for(const l of lines) console.log(l); });
-setTimeout(()=>call('call-actor', {actor:'M2FMdjRVeF1HPGFcc', input:{searchQuery:'weed', profileScraperMode:'Full', maxItems:20}, waitSecs:60}), 3000);
-setTimeout(()=>process.exit(0), 40000);
-```
-```bash
-source .env.d/apify.env && node /tmp/linkedin_search.js 2>&1 | jq .
-```
+Actor 実行・dataset 取得・run status は netloom を使う。KVS INPUT 取得は netloom 非対応のため、方法Bの Apify API 直叩きを維持する。
 
 ## 検証実績 (2026-09-03)
 

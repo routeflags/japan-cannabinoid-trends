@@ -22,7 +22,7 @@ Apify Actor `cPYLH3QT9GyzKhB4S`（patient_discovery/twitter-search）を使っ�
 
 - Apifyアカウントに支払い方法登録済み
 - `.env.d/apify.env` に `APIFY_TOKEN=apify_api_...` が存在
-- Node.js v18+ または curl
+- netloom v0.4.3+（`/Users/bookair18/.local/bin/netloom`）または PATH 上の `netloom`
 
 ## 入力スキーマ
 
@@ -54,22 +54,20 @@ Actor に専用の日付パラメータはない。**`query` 内に X の検索�
 
 ## 実行方法
 
-### 方法A — API直叩き（推奨）
+### 方法A — netloom（推奨）
 
 ```bash
 source .env.d/apify.env
 
 # 基本検索（日付指定なし）
-curl -s -X POST "https://api.apify.com/v2/acts/cPYLH3QT9GyzKhB4S/runs?waitForFinish=60" \
-  -H "Authorization: Bearer $APIFY_TOKEN" -H "Content-Type: application/json" \
-  -d '{"query":"CBX リキッド","section":"latest","maxPages":1}' \
-  | jq '{id: .data.id, status: .data.status, datasetId: .data.defaultDatasetId}'
+netloom apify run --actor cPYLH3QT9GyzKhB4S --wait 60 \
+  --input '{"query":"CBX リキッド","section":"latest","maxPages":1}' \
+  | jq '{id: (.data.id // .id), status: (.data.status // .status), datasetId: (.data.defaultDatasetId // .defaultDatasetId)}'
 
 # 日付指定検索
-curl -s -X POST "https://api.apify.com/v2/acts/cPYLH3QT9GyzKhB4S/runs?waitForFinish=60" \
-  -H "Authorization: Bearer $APIFY_TOKEN" -H "Content-Type: application/json" \
-  -d '{"query":"CBX リキッド since:2026-08-01 until:2026-08-08","section":"latest","maxPages":2}' \
-  | jq '{id: .data.id, status: .data.status, datasetId: .data.defaultDatasetId}'
+netloom apify run --actor cPYLH3QT9GyzKhB4S --wait 60 \
+  --input '{"query":"CBX リキッド since:2026-08-01 until:2026-08-08","section":"latest","maxPages":2}' \
+  | jq '{id: (.data.id // .id), status: (.data.status // .status), datasetId: (.data.defaultDatasetId // .defaultDatasetId)}'
 ```
 
 ### データ取得（重要: chargedEventCounts を信じない）
@@ -80,8 +78,7 @@ curl -s -X POST "https://api.apify.com/v2/acts/cPYLH3QT9GyzKhB4S/runs?waitForFin
 
 # ✅ 新方法（データセットの中身を確認）
 DS="datasetId"  # 上記の実行で返った値
-curl -s "https://api.apify.com/v2/datasets/$DS/items?clean=true&format=json&limit=5" \
-  -H "Authorization: Bearer $APIFY_TOKEN" \
+netloom apify dataset --dataset-id "$DS" --limit 5 --as json \
   | jq '.[] | {tweet_id, screen_name, created_at, text: .text[0:80]}'
 ```
 
@@ -104,26 +101,23 @@ collect_month() {
   
   echo "=== $YEAR年$MONTH月データ取得 ==="
   
-  R=$(curl -s -X POST "https://api.apify.com/v2/acts/cPYLH3QT9GyzKhB4S/runs?waitForFinish=60" \
-    -H "Authorization: Bearer $APIFY_TOKEN" -H "Content-Type: application/json" \
-    -d "{\"query\":\"CBX リキッド since:$FIRST_DAY until:$NEXT_MONTH\",\"section\":\"latest\",\"maxPages\":2}")
+  R=$(netloom apify run --actor cPYLH3QT9GyzKhB4S --wait 60 \
+    --input "{\"query\":\"CBX リキッド since:$FIRST_DAY until:$NEXT_MONTH\",\"section\":\"latest\",\"maxPages\":2}")
   
-  DS=$(echo "$R" | jq -r '.data.defaultDatasetId')
+  DS=$(echo "$R" | jq -r '.data.defaultDatasetId // .defaultDatasetId')
   
   # chargedEventCounts を確認（参考程度に）
   CHARGED=$(echo "$R" | jq -r '.data.chargedEventCounts["apify-default-dataset-item"] // 0')
   echo "chargedEventCounts: $CHARGED"
   
   # データセットの中身を確認（正規の件数）
-  ACTUAL=$(curl -s "https://api.apify.com/v2/datasets/$DS/items?clean=true&format=json" \
-    -H "Authorization: Bearer $APIFY_TOKEN" | jq 'length')
+  ACTUAL=$(netloom apify dataset --dataset-id "$DS" --as json | jq 'length')
   echo "実際の件数: $ACTUAL"
   
   # 保存
   mkdir -p "data/x_cbx_${YEAR}$(printf '%02d' $MONTH)"
-  curl -s "https://api.apify.com/v2/datasets/$DS/items?clean=true&format=json" \
-    -H "Authorization: Bearer $APIFY_TOKEN" \
-    > "data/x_cbx_${YEAR}$(printf '%02d' $MONTH)/cbx_${YEAR}$(printf '%02d' $MONTH).json"
+  netloom apify dataset --dataset-id "$DS" --as json \
+    --out "data/x_cbx_${YEAR}$(printf '%02d' $MONTH)/cbx_${YEAR}$(printf '%02d' $MONTH).json"
   
   echo "保存完了: data/x_cbx_${YEAR}$(printf '%02d' $MONTH)/cbx_${YEAR}$(printf '%02d' $MONTH).json"
 }

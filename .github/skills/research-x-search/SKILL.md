@@ -77,25 +77,21 @@ TIMESTAMP=$(date -u +"%Y%m%dT%H%M%SZ")
 SAVE_RUN_ID="${TIMESTAMP}-x-$(echo "$KEYWORD" | tr ' ' '-' | tr '[:upper:]' '[:lower:]')"
 
 # 収集実行
-R=$(curl -s -X POST "https://api.apify.com/v2/acts/cPYLH3QT9GyzKhB4S/runs?waitForFinish=60" \
-  -H "Authorization: Bearer $APIFY_TOKEN" \
-  -H "Content-Type: application/json" \
-  -d "{\"query\":\"$QUERY\",\"section\":\"$SECTION\",\"maxPages\":$MAX_PAGES}")
+R=$(netloom apify run --actor cPYLH3QT9GyzKhB4S --wait 60 \
+  --input "{\"query\":\"$QUERY\",\"section\":\"$SECTION\",\"maxPages\":$MAX_PAGES}")
 
-DS=$(echo "$R" | jq -r '.data.defaultDatasetId')
-RUN_ID=$(echo "$R" | jq -r '.data.id')
+DS=$(echo "$R" | jq -r '.data.defaultDatasetId // .defaultDatasetId')
+RUN_ID=$(echo "$R" | jq -r '.data.id // .id')
 
 # 保存先
 SAVE_DIR="${OUTPUT_DIR}/${SAVE_RUN_ID}"
 mkdir -p "$SAVE_DIR"
 
 # データ取得
-curl -s "https://api.apify.com/v2/datasets/$DS/items?clean=true&format=json" \
-  -H "Authorization: Bearer $APIFY_TOKEN" > "$SAVE_DIR/records.json"
+netloom apify dataset --dataset-id "$DS" --as json --out "$SAVE_DIR/records.json"
 
 # メタデータ取得
-curl -s "https://api.apify.com/v2/actor-runs/$RUN_ID" \
-  -H "Authorization: Bearer $APIFY_TOKEN" | jq --arg query "$QUERY" --arg keyword "$KEYWORD" --arg study "$STUDY_ID" '.data | {id, status, usageTotalUsd, startedAt, finishedAt, query: $query, keyword: $keyword, study_id: $study}' \
+netloom apify run-status --run-id "$RUN_ID" | jq --arg query "$QUERY" --arg keyword "$KEYWORD" --arg study "$STUDY_ID" '.data | {id, status, usageTotalUsd, startedAt, finishedAt, query: $query, keyword: $keyword, study_id: $study}' \
   > "$SAVE_DIR/run_metadata.json"
 
 # 件数確認

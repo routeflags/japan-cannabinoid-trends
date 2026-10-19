@@ -39,6 +39,7 @@ ACTOR_ID="h7sDV53CddomktSi5"
 # 少なくとも1つを >0 にする必要がある。schema 上の maximum は 999999。
 MAX_RESULTS="${MAX_RESULTS:-20}"
 APIFY_ENV="${APIFY_ENV:-/Users/bookair18/OS/media/06_symphony/symphony_workspaces/.env.d/apify.env}"
+NETLOOM_BIN="${NETLOOM_BIN:-/Users/bookair18/.local/bin/netloom}"
 
 # --- 前提チェック ---
 if [ ! -f "$APIFY_ENV" ]; then
@@ -51,6 +52,10 @@ if [ -z "${APIFY_TOKEN:-}" ]; then
   echo "❌ APIFY_TOKEN が設定されていません ($APIFY_ENV)"
   exit 1
 fi
+if [ ! -x "$NETLOOM_BIN" ]; then
+  NETLOOM_BIN="$(command -v netloom || true)"
+fi
+[ -n "$NETLOOM_BIN" ] || { echo "❌ netloom が必要です"; exit 1; }
 command -v jq >/dev/null || { echo "❌ jq が必要です"; exit 1; }
 
 case "$DATE_FILTER" in
@@ -58,7 +63,6 @@ case "$DATE_FILTER" in
   *) echo "❌ dateFilter は hour|today|week|month|year のいずれか"; exit 1 ;;
 esac
 
-AUTH="Authorization: Bearer $APIFY_TOKEN"
 OUT1="/tmp/yt_idem_run1.txt"
 OUT2="/tmp/yt_idem_run2.txt"
 
@@ -75,22 +79,23 @@ echo ""
 search() {  # $1 = ラベル, 標準出力に videoId 一覧
   local label="$1"
   local r run ds status
-  r=$(curl -s -X POST "https://api.apify.com/v2/acts/${ACTOR_ID}/runs?waitForFinish=180" \
-    -H "$AUTH" -H "Content-Type: application/json" \
-    -d "$(jq -n --arg q "$SEARCH_TERM" --argjson m "$MAX_RESULTS" --arg f "$DATE_FILTER" \
-          '{searchQueries: [$q], maxResults: $m,
-            maxResultsShorts: 0, maxResultStreams: 0,
-            dateFilter: $f, sortingOrder: "date"}')")
-  run=$(echo "$r" | jq -r '.data.id // empty')
-  ds=$(echo "$r" | jq -r '.data.defaultDatasetId // empty')
-  status=$(echo "$r" | jq -r '.data.status // "UNKNOWN"')
+  r=$("$NETLOOM_BIN" apify run --actor "$ACTOR_ID" --wait 180 \
+    --input "$(jq -n --arg q "$SEARCH_TERM" --argjson m "$MAX_RESULTS" --arg f "$DATE_FILTER" \
+      '{searchQueries: [$q], maxResults: $m,
+        maxResultsShorts: 0, maxResultStreams: 0,
+        dateFilter: $f, sortingOrder: "date"}')")
+  # netloom apify run の envelope は live 未検証のため、必要なら
+  # `netloom apify run-status --run-id "$run"` で確認する。
+  run=$(echo "$r" | jq -r '.data.id // .id // empty')
+  ds=$(echo "$r" | jq -r '.data.defaultDatasetId // .defaultDatasetId // empty')
+  status=$(echo "$r" | jq -r '.data.status // .status // "UNKNOWN"')
   echo "[$label] run=$run status=$status" >&2
   if [ -z "$ds" ]; then
     echo "❌ [$label] dataset 取得失敗: $(echo "$r" | jq -c .)" >&2
     return 1
   fi
-  curl -s "https://api.apify.com/v2/datasets/${ds}/items?clean=true&format=json" \
-    -H "$AUTH" | jq -r '[.[] | .id // empty] | unique | .[]'
+  "$NETLOOM_BIN" apify dataset --dataset-id "$ds" --as json \
+    | jq -r '[.[] | .id // empty] | unique | .[]'
 }
 
 # --- Step 1: 2回独立取得 ---

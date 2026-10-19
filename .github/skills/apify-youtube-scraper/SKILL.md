@@ -112,22 +112,19 @@ Apify Actor `h7sDV53CddomktSi5`（streamers/youtube-scraper）を使って、You
 ```bash
 source /Users/bookair18/OS/media/06_symphony/symphony_workspaces/.env.d/apify.env
 
-R=$(curl -s -X POST "https://api.apify.com/v2/acts/h7sDV53CddomktSi5/runs?waitForFinish=90" \
-  -H "Authorization: Bearer $APIFY_TOKEN" \
-  -H "Content-Type: application/json" \
-  -d '{
+R=$(netloom apify run --actor h7sDV53CddomktSi5 --wait 90 \
+  --input '{
     "searchQueries": ["CBD リキッド"],
     "maxResults": 10,
     "maxResultsShorts": 0,
     "maxResultStreams": 0
   }')
 
-DS=$(echo "$R" | jq -r '.data.defaultDatasetId')
-RUN_ID=$(echo "$R" | jq -r '.data.id')
+DS=$(echo "$R" | jq -r '.data.defaultDatasetId // .defaultDatasetId')
+RUN_ID=$(echo "$R" | jq -r '.data.id // .id')
 
 # データ取得
-curl -s "https://api.apify.com/v2/datasets/$DS/items?clean=true&format=json" \
-  -H "Authorization: Bearer $APIFY_TOKEN"
+netloom apify dataset --dataset-id "$DS" --as json
 ```
 
 ### 日付指定付き
@@ -136,10 +133,8 @@ curl -s "https://api.apify.com/v2/datasets/$DS/items?clean=true&format=json" \
 source /Users/bookair18/OS/media/06_symphony/symphony_workspaces/.env.d/apify.env
 
 # 過去30日間の動画を取得
-R=$(curl -s -X POST "https://api.apify.com/v2/acts/h7sDV53CddomktSi5/runs?waitForFinish=90" \
-  -H "Authorization: Bearer $APIFY_TOKEN" \
-  -H "Content-Type: application/json" \
-  -d '{
+R=$(netloom apify run --actor h7sDV53CddomktSi5 --wait 90 \
+  --input '{
     "searchQueries": ["CBD リキッド"],
     "maxResults": 50,
     "maxResultsShorts": 0,
@@ -148,11 +143,10 @@ R=$(curl -s -X POST "https://api.apify.com/v2/acts/h7sDV53CddomktSi5/runs?waitFo
     "sortingOrder": "date"
   }')
 
-DS=$(echo "$R" | jq -r '.data.defaultDatasetId')
+DS=$(echo "$R" | jq -r '.data.defaultDatasetId // .defaultDatasetId')
 
 # データ取得
-curl -s "https://api.apify.com/v2/datasets/$DS/items?clean=true&format=json" \
-  -H "Authorization: Bearer $APIFY_TOKEN"
+netloom apify dataset --dataset-id "$DS" --as json
 ```
 
 ### 特定期間の動画を取得（channel URL 使用時）
@@ -165,10 +159,8 @@ curl -s "https://api.apify.com/v2/datasets/$DS/items?clean=true&format=json" \
 source /Users/bookair18/OS/media/06_symphony/symphony_workspaces/.env.d/apify.env
 
 # 2026年9月以降の動画を取得（対象チャンネルの /videos ページを指定）
-R=$(curl -s -X POST "https://api.apify.com/v2/acts/h7sDV53CddomktSi5/runs?waitForFinish=90" \
-  -H "Authorization: Bearer $APIFY_TOKEN" \
-  -H "Content-Type: application/json" \
-  -d '{
+R=$(netloom apify run --actor h7sDV53CddomktSi5 --wait 90 \
+  --input '{
     "startUrls": [{"url": "https://www.youtube.com/results?search_query=CBD+%E3%83%AA%E3%82%AD%E3%83%83%E3%83%89"}],
     "maxResults": 50,
     "maxResultsShorts": 0,
@@ -177,11 +169,10 @@ R=$(curl -s -X POST "https://api.apify.com/v2/acts/h7sDV53CddomktSi5/runs?waitFo
     "sortVideosBy": "NEWEST"
   }')
 
-DS=$(echo "$R" | jq -r '.data.defaultDatasetId')
+DS=$(echo "$R" | jq -r '.data.defaultDatasetId // .defaultDatasetId')
 
 # データ取得
-curl -s "https://api.apify.com/v2/datasets/$DS/items?clean=true&format=json" \
-  -H "Authorization: Bearer $APIFY_TOKEN"
+netloom apify dataset --dataset-id "$DS" --as json
 ```
 
 ---
@@ -192,12 +183,10 @@ curl -s "https://api.apify.com/v2/datasets/$DS/items?clean=true&format=json" \
 DS="datasetId"
 
 # 件数確認
-curl -s "https://api.apify.com/v2/datasets/$DS/items?clean=true&format=json" \
-  -H "Authorization: Bearer $APIFY_TOKEN" | jq 'length'
+netloom apify dataset --dataset-id "$DS" --as json | jq 'length'
 
 # 日付範囲確認
-curl -s "https://api.apify.com/v2/datasets/$DS/items?clean=true&format=json" \
-  -H "Authorization: Bearer $APIFY_TOKEN" | python3 -c "
+netloom apify dataset --dataset-id "$DS" --as json | python3 -c "
 import json
 import sys
 from datetime import datetime

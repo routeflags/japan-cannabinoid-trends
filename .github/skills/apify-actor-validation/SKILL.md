@@ -251,7 +251,7 @@ Actor の研究利用可否を判断する際、以下の3点を結論として�
 # MCP経由
 fetch-actor-details {"actor": "ACTOR_ID"}
 
-# API直叩き
+# API直叩き（actor inputSchema 取得は netloom 非対応のため現行維持）
 source .env.d/apify.env
 curl -s "https://api.apify.com/v2/acts/ACTOR_ID" \
   -H "Authorization: Bearer $APIFY_TOKEN" | jq '.data | {id, name, title, pricing}'
@@ -261,6 +261,7 @@ curl -s "https://api.apify.com/v2/acts/ACTOR_ID" \
 
 ```bash
 # inputSchema と outputSchema を確認
+# actor inputSchema 取得 (`GET /v2/acts/{id}`) は netloom 非対応。
 curl -s "https://api.apify.com/v2/acts/ACTOR_ID" \
   -H "Authorization: Bearer $APIFY_TOKEN" | jq '.data.inputSchema'
 ```
@@ -269,18 +270,19 @@ curl -s "https://api.apify.com/v2/acts/ACTOR_ID" \
 
 ```bash
 # 最小コストでテスト
-curl -s -X POST "https://api.apify.com/v2/acts/ACTOR_ID/runs?waitForFinish=60" \
-  -H "Authorization: Bearer $APIFY_TOKEN" \
-  -H "Content-Type: application/json" \
-  -d '{"<required_param>": "<test_value>"}'
+R=$(netloom apify run --actor ACTOR_ID --wait 60 \
+  --input '{"<required_param>": "<test_value>"}')
+RUN_ID=$(echo "$R" | jq -r '.data.id // .id')
+DATASET_ID=$(echo "$R" | jq -r '.data.defaultDatasetId // .defaultDatasetId')
+# netloom apify run の envelope は live 未検証。疑義があれば:
+# netloom apify run-status --run-id "$RUN_ID"
 ```
 
 ### Step 4: 出力検証
 
 ```bash
 # 収集データの品質を確認
-curl -s "https://api.apify.com/v2/datasets/DATASET_ID/items?clean=true&format=json&limit=5" \
-  -H "Authorization: Bearer $APIFY_TOKEN" | jq '.[0]'
+netloom apify dataset --dataset-id "$DATASET_ID" --limit 5 --as json | jq '.[0]'
 ```
 
 ### Step 5: 判定・記録

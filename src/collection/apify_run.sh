@@ -55,13 +55,18 @@ if [ -z "${APIFY_TOKEN:-}" ]; then
   exit 1
 fi
 command -v jq >/dev/null 2>&1 || { echo "jq が必要" >&2; exit 1; }
+NETLOOM_BIN="${NETLOOM_BIN:-/Users/bookair18/.local/bin/netloom}"
+if [ ! -x "$NETLOOM_BIN" ]; then
+  NETLOOM_BIN="$(command -v netloom || true)"
+fi
+[ -n "$NETLOOM_BIN" ] || { echo "netloom が必要" >&2; exit 1; }
 
-RESP="$(curl -s -X POST "https://api.apify.com/v2/acts/${ACTOR}/runs?waitForFinish=120" \
-  -H "Authorization: Bearer $APIFY_TOKEN" -H "Content-Type: application/json" \
-  -d "$INPUT_JSON")"
+RESP="$("$NETLOOM_BIN" apify run --actor "$ACTOR" --input "$INPUT_JSON" --wait 120)"
 echo "$RESP" > "${OUT_BASE}_run.json"
 
-# Apify API は run オブジェクトを {"data": {...}} で包む。失敗時は {"error": {...}}
+# netloom apify run は Apify run 応答を返す想定だが、envelope は live 未検証。
+# そのため {"data": {...}} と直下 run オブジェクトの両方を読む。疑義があれば
+# `netloom apify run-status --run-id "$RUNID"` で確認する。
 ERR="$(echo "$RESP" | jq -r '.data.error.message // .error.message // empty')"
 if [ -n "$ERR" ]; then
   echo "Apify API エラー: $ERR" >&2
@@ -79,7 +84,6 @@ if [ -z "${DS:-}" ]; then
   exit 1
 fi
 
-curl -s "https://api.apify.com/v2/datasets/${DS}/items?clean=true&format=json" \
-  -H "Authorization: Bearer $APIFY_TOKEN" -o "${OUT_BASE}.json"
+"$NETLOOM_BIN" apify dataset --dataset-id "$DS" --as json --out "${OUT_BASE}.json"
 COUNT="$(jq 'length' "${OUT_BASE}.json")"
 echo "saved: ${OUT_BASE}.json (${COUNT}件)"

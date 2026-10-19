@@ -85,17 +85,14 @@ Apify Actor `rBaTEHzveTxZPraGv`（x-posts-search）を使って、X (Twitter) �
 ```bash
 source /Users/bookair18/OS/media/06_symphony/symphony_workspaces/.env.d/apify.env
 
-R=$(curl -s -X POST "https://api.apify.com/v2/acts/rBaTEHzveTxZPraGv/runs?waitForFinish=90" \
-  -H "Authorization: Bearer $APIFY_TOKEN" \
-  -H "Content-Type: application/json" \
-  -d '{"query":"CBD リキッド","maxItems":50}')
+R=$(netloom apify run --actor rBaTEHzveTxZPraGv --wait 90 \
+  --input '{"query":"CBD リキッド","maxItems":50}')
 
-DS=$(echo "$R" | jq -r '.data.defaultDatasetId')
-RUN_ID=$(echo "$R" | jq -r '.data.id')
+DS=$(echo "$R" | jq -r '.data.defaultDatasetId // .defaultDatasetId')
+RUN_ID=$(echo "$R" | jq -r '.data.id // .id')
 
 # データ取得
-curl -s "https://api.apify.com/v2/datasets/$DS/items?clean=true&format=json" \
-  -H "Authorization: Bearer $APIFY_TOKEN"
+netloom apify dataset --dataset-id "$DS" --as json
 ```
 
 ### 日付指定付き
@@ -104,16 +101,13 @@ curl -s "https://api.apify.com/v2/datasets/$DS/items?clean=true&format=json" \
 source /Users/bookair18/OS/media/06_symphony/symphony_workspaces/.env.d/apify.env
 
 # 期間指定: since:YYYY-MM-DD until:YYYY-MM-DD
-R=$(curl -s -X POST "https://api.apify.com/v2/acts/rBaTEHzveTxZPraGv/runs?waitForFinish=90" \
-  -H "Authorization: Bearer $APIFY_TOKEN" \
-  -H "Content-Type: application/json" \
-  -d '{"query":"CBD リキッド since:2026-09-01 until:2026-10-01","maxItems":50}')
+R=$(netloom apify run --actor rBaTEHzveTxZPraGv --wait 90 \
+  --input '{"query":"CBD リキッド since:2026-09-01 until:2026-10-01","maxItems":50}')
 
-DS=$(echo "$R" | jq -r '.data.defaultDatasetId')
+DS=$(echo "$R" | jq -r '.data.defaultDatasetId // .defaultDatasetId')
 
 # データ取得
-curl -s "https://api.apify.com/v2/datasets/$DS/items?clean=true&format=json" \
-  -H "Authorization: Bearer $APIFY_TOKEN"
+netloom apify dataset --dataset-id "$DS" --as json
 ```
 
 ### 保存と日付変換
@@ -147,12 +141,10 @@ with open('/tmp/x_data_dated.json', 'w') as f:
 DS="datasetId"
 
 # 件数確認
-curl -s "https://api.apify.com/v2/datasets/$DS/items?clean=true&format=json" \
-  -H "Authorization: Bearer $APIFY_TOKEN" | jq 'length'
+netloom apify dataset --dataset-id "$DS" --as json | jq 'length'
 
 # 日付範囲確認
-curl -s "https://api.apify.com/v2/datasets/$DS/items?clean=true&format=json" \
-  -H "Authorization: Bearer $APIFY_TOKEN" | python3 -c "
+netloom apify dataset --dataset-id "$DS" --as json | python3 -c "
 import json
 from datetime import datetime
 data = json.load(sys.stdin)

@@ -43,8 +43,8 @@ description: |
 ### Step 1: 12ヶ月データ収集
 
 ```
-1. interest_over_time を呼び出し
-   terms=["<keyword>"], geo="JP", timeframe="today 12-m"
+1. `netloom google-trends interest-over-time` を呼び出し
+   `--keyword "<keyword>" --geo JP --timeframe "today 12-m"`
 
 2. 結果を {YYYYMMDDTHHMMSS}Z-google-trends-{keyword}-12m/ に保存
    - records_{keyword}_12m.json
@@ -54,8 +54,8 @@ description: |
 ### Step 2: 5年データ収集
 
 ```
-1. interest_over_time を呼び出し
-   terms=["<keyword>"], geo="JP", timeframe="today 5-y"
+1. `netloom google-trends interest-over-time` を呼び出し
+   `--keyword "<keyword>" --geo JP --timeframe "today 5-y"`
 
 2. 結果を {YYYYMMDDTHHMMSS}Z-google-trends-{keyword}-5y/ に保存
    - records_{keyword}_5y.json
@@ -160,10 +160,10 @@ datasets/cannabinoid-multi-trends/data/raw/google_trends/
 ### 例1: CBN の調査
 
 ```
-1. interest_over_time: terms=["CBN"], geo="JP", timeframe="today 12-m"
+1. `netloom google-trends interest-over-time --keyword "CBN" --geo JP --timeframe "today 12-m"`
    → 保存: .../20261002T081839Z-google-trends-cbn-12m/
 
-2. interest_over_time: terms=["CBN"], geo="JP", timeframe="today 5-y"
+2. `netloom google-trends interest-over-time --keyword "CBN" --geo JP --timeframe "today 5-y"`
    → 保存: .../20261002T082000Z-google-trends-cbn-5y/
 
 3. 初出時期特定: 2021-09-26以前（5年ウィンドウ起点時点ですでに存在）
@@ -174,8 +174,8 @@ datasets/cannabinoid-multi-trends/data/raw/google_trends/
 ### 例2: 新規キーワード CBC の調査
 
 ```
-1. interest_over_time: terms=["CBC"], geo="JP", timeframe="today 12-m"
-2. interest_over_time: terms=["CBC"], geo="JP", timeframe="today 5-y"
+1. `netloom google-trends interest-over-time --keyword "CBC" --geo JP --timeframe "today 12-m"`
+2. `netloom google-trends interest-over-time --keyword "CBC" --geo JP --timeframe "today 5-y"`
 3. 初出時期特定
 4. レポート作成: research/YYYYMMDD-first-mention-timeline.md
 ```

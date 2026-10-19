@@ -21,7 +21,7 @@ description: |
 
 - Apifyアカウントに **支払い方法登録済み** (無料 $5 付与後、従量課金)
 - `.env.d/apify.env` に `APIFY_TOKEN=apify_api_...` が存在 (`apify-mcp` スキルで管理)
-- Node.js v18+ (本環境 v24.13.1) または Python + `curl`
+- netloom v0.4.3+（`/Users/bookair18/.local/bin/netloom`）または PATH 上の `netloom`
 - MCPは `apify-mcp` スキル参照。API直叩きでも可（MCP不調時のフォールバック）
 
 ## 料金モデル (2026-09-01確認, build 1.0.14)
@@ -89,66 +89,45 @@ Build `CSX02NO8ZROJ67jQO` (2026-08-20) 時点:
 
 ## 実行方法
 
-### 方法A — MCP経由 (推奨, `apify-mcp` 管理)
+### 方法A — netloom (推奨, API課金)
 
 ```bash
 # 1. Actor詳細確認 (inputSchema)
 # tools/call fetch-actor-details {"actor":"TxU0ZBQIHdR20dr9C"}  # 本Actorは apify-mcp の TOOLS 制限で未公開のため、API直叩きか wide MCP (https://mcp.apify.com) を使用
 
 # 2. 実行 (CBXリキッド例, API課金)
-# tools/call call-actor {"actor":"TxU0ZBQIHdR20dr9C","input":{"query":"CBXリキッド","maxPages":1},"waitSecs":45}
-# → { runId:"whiuCNcuRxmDVWjLF", defaultDatasetId:"gN4fgq80j5H58dA8C", itemCount:6, usageTotalUsd:0.017 }
+R=$(netloom apify run --actor TxU0ZBQIHdR20dr9C --wait 45 \
+  --input '{"query":"CBXリキッド","maxPages":1}')
+RUN_ID=$(echo "$R" | jq -r '.data.id // .id')
+DS=$(echo "$R" | jq -r '.data.defaultDatasetId // .defaultDatasetId')
 
 # 3. 結果取得
-# tools/call get-dataset-items {"datasetId":"gN4fgq80j5H58dA8C","limit":6,"clean":true}
-# → 6件 JSON (前述サンプル形式)
+netloom apify dataset --dataset-id "$DS" --limit 6 --as json \
+  | jq '.[0] | {code, caption: .caption.text, ig_play_count, like_count}'
 ```
 
-本ワークスペースの `.mcp.json` `apify` は `TOOLS` 制限で `fetch-actor-details` が無効な場合、`apify-hosted` (`mcp-remote https://mcp.apify.com`) か `https://mcp.apify.com?tools=search-actors,fetch-actor-details` で wide MCP を使う。または方法BのAPI直叩き。
+Actor 詳細（inputSchema）取得や actor 検索は netloom 非対応。本ワークスペースの `.mcp.json` `apify` は `TOOLS` 制限で `fetch-actor-details` が無効な場合、`apify-hosted` (`mcp-remote https://mcp.apify.com`) か `https://mcp.apify.com?tools=search-actors,fetch-actor-details` で wide MCP を使う。
 
-### 方法B — API直叩き (MCP不調時のフォールバック, API課金)
+### 方法B — netloom で既存 dataset / run を確認
 
 ```bash
 source .env.d/apify.env
 
-# 1. 非同期実行 (run)
-curl -s -X POST "https://api.apify.com/v2/acts/TxU0ZBQIHdR20dr9C/runs?waitForFinish=60" \
-  -H "Authorization: Bearer $APIFY_TOKEN" -H "Content-Type: application/json" \
-  -d '{"query":"CBXリキッド","maxPages":1}' | jq '{id, status, defaultDatasetId}'
+# 1. データセット取得
+netloom apify dataset --dataset-id gN4fgq80j5H58dA8C --limit 6 --as json \
+  | jq '.[0] | {code, caption: .caption.text, ig_play_count, like_count}'
 
-# → {"id":"whiuCNcuRxmDVWjLF","status":"SUCCEEDED","defaultDatasetId":"gN4fgq80j5H58dA8C"}
+# 2. 課金確認
+netloom apify run-status --run-id whiuCNcuRxmDVWjLF \
+  | jq '.data | {status, usageTotalUsd, usageUsd}'
 
-# 2. データセット取得
-curl -s "https://api.apify.com/v2/datasets/gN4fgq80j5H58dA8C/items?clean=true&format=json&limit=6" \
-  -H "Authorization: Bearer $APIFY_TOKEN" | jq '.[0] | {code, caption: .caption.text, ig_play_count, like_count}'
-
-# 3. 課金確認
-curl -s "https://api.apify.com/v2/actor-runs/whiuCNcuRxmDVWjLF" -H "Authorization: Bearer $APIFY_TOKEN" \
-  | jq '{status, usageTotalUsd, usageUsd}'
-
-# CSVで保存
-curl -s "https://api.apify.com/v2/datasets/gN4fgq80j5H58dA8C/items?clean=true&format=csv" \
-  -H "Authorization: Bearer $APIFY_TOKEN" -o /tmp/instagram_reels_CBX.csv
+# 3. CSVで保存
+netloom apify dataset --dataset-id gN4fgq80j5H58dA8C --as csv --out /tmp/instagram_reels_CBX.csv
 ```
 
-### 方法C — Node.js MCP stdio (VS Codeで直接MCPツールが呼べない場合)
+### 方法C — MCP は管理・検索用途のみ
 
-`gmail-search` スキルと同様、MCP stdioを子プロセスで起動:
-
-```javascript
-// /tmp/instagram_search.js
-const { spawn } = require('child_process');
-const server = spawn('/Users/bookair18/.anyenv/envs/nodenv/versions/24.13.1/bin/npx',
-  ['-y','@apify/actors-mcp-server'], { stdio:['pipe','pipe','pipe'], env:{...process.env, APIFY_TOKEN: process.env.APIFY_TOKEN}});
-let buf='', id=1;
-function call(name, args){ server.stdin.write(JSON.stringify({jsonrpc:'2.0',id:id++,method:'tools/call',params:{name,arguments:args}})+'\n'); }
-server.stdout.on('data', d=>{ buf+=d.toString(); let lines=buf.split('\n'); buf=lines.pop()||''; for(const l of lines) console.log(l); });
-setTimeout(()=>call('call-actor', {actor:'TxU0ZBQIHdR20dr9C', input:{query:'CBXリキッド', maxPages:1}, waitSecs:45}), 3000);
-setTimeout(()=>process.exit(0), 25000);
-```
-```bash
-source .env.d/apify.env && node /tmp/instagram_search.js 2>&1 | jq .
-```
+Actor 実行・dataset 取得・run status は netloom を使う。Actor 詳細（inputSchema）取得、actor 検索、docs 検索は netloom 非対応のため、必要時だけ `apify-mcp` スキルを参照。
 
 ## 検証実績 (2026-09-01)
 
