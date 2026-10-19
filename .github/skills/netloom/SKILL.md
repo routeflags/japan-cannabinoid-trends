@@ -53,12 +53,20 @@ description: |
   **credential は query の `key` = `YOUTUBE_API_KEY`**（psi / crux と同じ扱い。未設定なら 1 往復も送らず exit 2、`--replay` でも要る。**キーはカセットの URL に残るので `.cassettes/` のみ・コミットしない**）。
   **絶対日付の年次スライス（`publishedAfter` / `publishedBefore`）は Apify actor（rolling window）では代替不可**（issue #29）。
   **quota は呼び出し側**: `search.list` は 100 units/回（`videos.list` は 1 unit）。**ページングも呼び出し側**（`--page-token` は provider の値をそのまま。netloom は `nextPageToken` を追わない）。csv は無い。
+  zenodo は Zenodo REST API から**公開 record・その版の一覧・自分の deposition とそのファイル**を読み、**下書きを書く**（作成 / metadata 更新 / 下書きの削除 / ファイルの upload（multipart）と file delete / newversion）
+  （`zenodo record --id ID` / `zenodo record-versions --id ID [--sort S] [--size N]` / `zenodo deposition --id ID` / `zenodo deposition-files --id ID` /
+  `zenodo deposition-create --input JSON|@FILE` / `zenodo deposition-update --id ID --input JSON|@FILE` / `zenodo deposition-delete --id ID` /
+  `zenodo deposition-upload --id ID --file PATH` / `zenodo deposition-file-delete --id ID --file-id FILEID` / `zenodo deposition-newversion --id ID`。**1 コマンド = 1 往復**。
+  **credential は 11 コマンド共通で必須**: `ZENODO_TOKEN` を `Authorization: Bearer` で送る（公開 record の読み取りにも送る 1 送信元 1 規則。未設定なら 1 往復も送らず exit 2、`--replay` は credential 不要）。
+  id は呼び出し側が書いたまま path に入る。`--sort` / `--size` は**与えたときだけ**載る pass-through（検査しない）。
+  **公開（DOI 登録）だけが不可逆**なので、`zenodo deposition-publish --id ID --allow-publish` は **`--allow-publish` が無ければ 1 往復も送らず exit 2**（`--replay` は不要）。下書きの書き込みには門を付けない。
+  csv は無く、`deposition-files` は**配列**・`deposition-delete` は**文書無し**なので `text` も無い（json / verbatim の 2 形。`--format text` は exit 2）。
   auth google はローカルコマンド（対話専用の Google OAuth 同意フロー）で、ブラウザ同意から
   トークンファイル（$HOME/.config/netloom/google-<source>.json、0600）を書き、GSC と GA4 はそのファイルを
   GOOGLE_TOKEN_FILE で読める（値は stdout / stderr / カセットに出ない）。
   交換の証跡（2 frame）は `--cassette FILE` で caller の記録置き場に置ける（例: `data/gsc/cassettes/<YYYYMMDD>-auth-gsc.jsonl`。issue #22）。
   すべての往復は VCR カセットに残り、カセットからオフライン再現できる（証跡付きの収集）。
-netloom-version: 0.5.4
+netloom-version: 0.6.0
 ---
 
 # netloom（第三者 API の収集プロキシ）
@@ -95,6 +103,7 @@ netloom は起動時に **cwd の env ファイルを自動で読む**（`<cwd>/
 - **calendar**（Google Calendar API v3。HTTP 直叩き）: `calendar list-calendars` / `list-events` / `get-event` / `create-event` / `update-event` / `delete-event`（**1 コマンド = 認証 1 + データ 1 の 2 往復**。**書き込み 3 つは副作用** — live の書き込みは owner 承認が前提。`update-event` は **PATCH = 1 往復**。`list-events` は**与えたフラグだけ**を送る（既定値は発明しない）。calendar id は `--calendar-id` → `GOOGLE_CALENDAR_ID` → `primary`。csv は無い。カセットは予定・参加者を含む — `.cassettes/` のみ・コミットしない。`--replay` はネット・credential 無し）
 - **apps-script**（Google Apps Script API v1。HTTP 直叩き）: `apps-script create-project` / `get-project` / `get-project-content` / `update-project-content` / `list-project-versions` / `create-version` / `list-deployments` / `get-deployment` / `create-deployment` / `update-deployment` / `delete-deployment` / `run-script` / `list-processes`（**1 コマンド = 認証 1 + データ 1 の 2 往復**。**書き込み 7 つと run-script は副作用** — live は owner 承認が前提（**run-script は任意の関数の実行**）。script id は `--script-id` 必須（netloom は推測しない。`list-processes` のみフィルタとして任意）。`--files` / `--parameters` は JSON であることだけを見てそのまま送る（**update-project-content は全ファイル置換**）。`pageSize` / `manifestFileName` / `devMode` は**与えたときだけ**送る（既定値は発明しない）。csv は無い。カセットはソースコード・デプロイメント・プロセスを含む — `.cassettes/` のみ・コミットしない。`--replay` はネット・credential 無し）
 - **youtube**（HTTP。YouTube Data API v3）: `youtube search` / `youtube videos`（**1 コマンド = 1 往復**。credential は query の `key` = `YOUTUBE_API_KEY`（psi / crux と同じ扱い。未設定なら 1 往復も送らず exit 2、`--replay` でも要る）。search は `part=snippet` + `type=video` 固定で **`publishedAfter` / `publishedBefore` の絶対日付範囲（年次スライス）を pass-through**（**Apify actor の rolling window では代替不可** = issue #29）、videos は `part=snippet,statistics,contentDetails` 固定（`publishedAt` / `statistics` の補完）。**quota は呼び出し側**: `search.list` は 100 units/回（`videos.list` は 1 unit）。**ページングは呼び出し側**（`--page-token` は pass-through。netloom は `nextPageToken` を追わない）。csv は無い。**キーはカセットの URL に残る** — `.cassettes/` のみ・コミットしない）
+- **zenodo**（HTTP。Zenodo REST API。**読み取り 4 コマンド + 書き込み 7 コマンド**）: `zenodo record` / `record-versions` / `deposition` / `deposition-files` と、`deposition-create` / `deposition-update` / `deposition-delete` / `deposition-upload` / `deposition-file-delete` / `deposition-newversion` / `deposition-publish`（**1 コマンド = 1 往復**。credential は **`ZENODO_TOKEN` を `Authorization: Bearer` で送る 11 コマンド共通の 1 規則** — 未設定なら 1 往復も送らず exit 2、`--replay` は不要。id は書いたまま path に入る。`--sort` / `--size` は**与えたときだけ**載る pass-through。`--input` は `{"metadata": …}` に包んで送る metadata 文書、`--file` は multipart で送るファイル。**ページング・リトライ・レート制限の待ちは作らない**。**csv は無く、`deposition-files`（配列）と `deposition-delete`（文書無し）は `text` も無い**。**publish だけが `--allow-publish` 必須**（公開 DOI は取り消せない）— 下書きの書き込みに門は無い。カセットは record / deposition の本文とファイルの証跡（field / sha256 / size。**バイトもファイル名も残さない**）を持つ — `.cassettes/` のみ・コミットしない）
 - **`cassette`**（ローカルコマンド。provider を呼ばない。カセットを読むだけ）: `cassette show --path FILE`（frame 一覧: seq / direction / method or status / url / payload の sha256 とバイト数（`N B`）/ at。**本文は出さない**）と `cassette check --path FILE [--path FILE ...] [--env-file FILE]`（カセットに env の実値が残っていないかを機械検査。**名前と件数だけ**を出して exit 1（ヒット）/ 0（0 件）/ 2（credential が 1 つも無）/ 3（読めない）。読み取り専用 — 往復しない・書き換えない。env の解決は §7.5 と同じ。設計書 付録 A.28）
 - **`env check`**（ローカルコマンド。provider を呼ばない。往復しない・カセットも作らない）: `env check [--source ID]... [--env local|dev|prod] [--format text|json] [--env-file FILE[:FILE…]]` — **実行の前に前提を確かめる**。netloom が読む名前ごとに「設定されているか / どこから来たか（プロセス env / どのファイル）/ 誰が読むか」を出し、**env ファイルが定義しているのに netloom が読まない名前**（typo・残骸）も出す。**値は絶対に出ない**（§7.4。ログに貼れる）。`--source` で絞ると門になり、その送信元が必要とする名前が（代替を含めて）欠けていれば exit 1。設計書 付録 A.30
 
@@ -1846,6 +1855,86 @@ make youtube-search QUERY='CBD オイル' REPLAY=data/youtube/cassettes/<記録>
 
 ---
 
+# Zenodo REST API（zenodo。読み取り 4 コマンド + 書き込み 7 コマンド。1 コマンド = 1 往復）
+
+## いつ使うか（トリガー）
+
+- 「この Zenodo の record（DOI / id）の文書を取って」（`zenodo record --id ID`）— タイトル・作成者・DOI・state などは応答の `metadata` / `pids` にある（netloom は解釈しない）
+- 「この record の**版の一覧**を取って」（`zenodo record-versions --id ID`）— 応答は provider の検索封筒（`hits.hits` / `hits.total`）で、`--format text` は `total: N` だけを述べる。`--sort` / `--size` は**与えたときだけ**送る
+- 「**自分の下書き**（deposition）の状態を見て」（`zenodo deposition --id ID`）— `state`（`inprogress` / `done` / `error`）と `submitted` が読める
+- 「その deposition の**ファイル一覧**を取って」（`zenodo deposition-files --id ID`）— 応答は**配列**（`filename` / `filesize` / `checksum` / `id`）。**`--format text` は無い**（exit 2）
+- 「**下書きを作って / metadata を直して / 消して**」（`zenodo deposition-create --input …` / `deposition-update --id ID --input …` / `deposition-delete --id ID`）— `--input` は metadata の文書で、netloom が `{"metadata": …}` に包んで送る。**下書きの書き込みに確認フラグは要らない**（公開側の副作用ではない）
+- 「**その下書きにファイルを上げて / 消して**」（`zenodo deposition-upload --id ID --file PATH` / `deposition-file-delete --id ID --file-id FILEID`）— upload は multipart（`-F "file=@…"` と同じ形）。**カセットには field / sha256 / size だけが残る**（バイトもファイル名も残さない）
+- 「**次の版の下書きを作って**」（`zenodo deposition-newversion --id ID`）
+- 「**公開して**」（`zenodo deposition-publish --id ID --allow-publish`）— **公開は取り消せない**（DOI が登録される）ので、**`--allow-publish` が無ければ 1 往復も送らず exit 2**。live は owner の承認があるときだけ
+
+## 前提: `ZENODO_TOKEN`（ヘッダで送る・11 コマンド共通）
+
+- `Authorization: Bearer <ZENODO_TOKEN>`。**1 送信元 1 規則**: 公開 record の読み取りにも送る（「このコマンドだけ匿名」の例外は無い）
+- env ファイルは**ワークスペース外**に `chmod 600` で置き、コミットしない（netloom は cwd の env ファイルを自動で読む）
+- **未設定なら 1 往復も送らず exit 2（カセットも作らない）。`--replay` は credential 不要**（ヘッダは照合キーではない）
+- **値はカセットに出ない**: `Authorization` は名前を残して `[REDACTED]`（既存規則）。stderr の失敗行でも伏せる。**スコープは `deposit:write`（下書きの書き込み）/ `deposit:actions`（publish などの action）** — Zenodo のスコープ表の 2 つ
+
+## 実行（1 コマンド = 1 往復 = カセット 2 frame）
+
+`make` ターゲットは**作っていない**（バイナリ直叩き。apify の判断 D8 と同じ）。
+
+```sh
+# 公開 record の文書（GET /api/records/<id>）
+bin/netloom zenodo record --id 123 --cassette "$C"
+bin/netloom zenodo record --id 123 --format text          # id / status / created のうち応答が述べたものだけ
+
+# 版の一覧（GET /api/records/<id>/versions。sort / size は与えたときだけ載る）
+bin/netloom zenodo record-versions --id 123 --sort mostrecent --size 5 --cassette "$C"
+bin/netloom zenodo record-versions --id 123 --format text # total: N
+
+# 自分の deposition（下書きを含む）とそのファイル
+bin/netloom zenodo deposition --id 456 --cassette "$C"
+bin/netloom zenodo deposition-files --id 456              # 配列。--format text は exit 2
+
+# 下書きの書き込み（公開側の副作用ではないので確認フラグ不要）
+bin/netloom zenodo deposition-create --input '{"title":"…","upload_type":"dataset"}' --cassette "$C"
+bin/netloom zenodo deposition-update --id 456 --input @metadata.json --cassette "$C"
+bin/netloom zenodo deposition-upload --id 456 --file records.csv --cassette "$C"
+bin/netloom zenodo deposition-file-delete --id 456 --file-id file-1 --cassette "$C"
+bin/netloom zenodo deposition-newversion --id 456 --cassette "$C"
+bin/netloom zenodo deposition-delete --id 456             # 下書きの削除（204 = 出力なしで exit 0）
+
+# 公開（不可逆。--allow-publish が無ければ exit 2 で何も送らない）
+bin/netloom zenodo deposition-publish --id 456 --allow-publish --cassette "$C"
+
+# オフライン再現（ネットも credential も使わない。request が一致しなければ exit 1）
+bin/netloom zenodo record --id 123 --replay "$C" --format verbatim
+```
+
+## 出力（`--format`）
+
+- `json`（既定）: 応答をインデント（キー順は受信のまま。配列もそのまま整列する）。**書き込みが本文無しで返ったとき（204 No Content）は何も書かず exit 0**
+- `text`: `record` = `id` / `status` / `created`、`record-versions` = `total`（`hits.total` の復唱）、`deposition` / `deposition-create` / `deposition-update` / `deposition-newversion` / `deposition-publish` = `id` / `state` / `submitted`、`deposition-upload` / `deposition-file-delete` = `id` / `filename` / `filesize` のうち**応答が述べたものだけ**。無い行は出さず、1 つも無ければ exit 1（要約の材料なし。**捏造しない**）
+- `verbatim`: 受信バイトそのまま（証跡用）
+- **csv は無い**（Zenodo の列の語彙を netloom が発明しない）。**`deposition-files` は配列・`deposition-delete` は文書無しなので `text` も無い**（`json` / `verbatim` の 2 形。`--format text` は exit 2）
+- **202 Accepted も成功**（publish。本文は provider が返したもの）
+
+## 証跡とオフライン再現（zenodo）
+
+- **1 コマンド = 2 frame**（`send` = method + url + headers（**レダクト済み**）/ `recv` = status + payload）
+- **照合キーは method + url + payload**。id / sort / size は URL に載るので、**ある record のカセットが別の record・別の sort に答えない**。**upload は証跡（field / sha256 / size）で照合**するので、**同じ名前の別のファイルは一致しない**
+- 既定名は `.cassettes/<UTC>-zenodo-<command>-<target>.jsonl`（`record-versions` は sort / size も、`deposition-file-delete` は file id も target に入る。**id を持たない `deposition-create` は `all`** = 別 request が同じ名前を共有しない）
+- **カセットは record / deposition の本文を持つ**（研究データのメタデータ・下書き）ので `.cassettes/`（gitignore）にだけ置き、**コミット・共有・`raw/` 配置をしない**。**upload のカセットに実ファイルのバイトは残らない**（field / sha256 / size だけ）
+- **live は owner の承認があるときだけ**（publish / delete の live は特に）。手順は `docs/plan/20261019-zenodo.md`
+
+## 失敗の見分け（zenodo）
+
+| exit | 何が起きたか | 直し方 |
+|---|---|---|
+| 0 | 2xx（202 も成功） | — |
+| 1 | API のエラー（400 / 401 / 403 / 404 / 429。**公開済み deposition の編集・削除を provider が拒否した場合を含む**。provider の言葉が 1 行）/ replay の不一致 / text 要約の材料なし | stderr の 1 行を読む。replay は同じ id / sort / size とコマンドで。**429 は provider のレート制限** — netloom はリトライしない |
+| 2 | `--id` / `--input` / `--file` / `--file-id` 無し・空白のみ / 語彙外 `--format`（`deposition-files` / `deposition-delete` の `text` を含む）/ **`--allow-publish` なしの publish** / **`ZENODO_TOKEN` 未設定** | 引数と env を直す（**何も送っていない**） |
+| 3 | I/O（`--out` / カセット / `--input @FILE` / `--file`） | パスを直す |
+| 124 | timeout（`--timeout`） | 窓を広げる |
+
+---
+
 # してはいけないこと
 
 - netloom に**解釈・比較・正規化**を求める（プロキシは判定しない。Apify の items も X の投稿も GA4 の集計値も同じ）
@@ -1961,6 +2050,13 @@ netloom は **producer**。採用は JCT 側の staging declaration / collection
 - **youtube の csv は作らない**（応答の `items[]` が深い入れ子（snippet / id / statistics / contentDetails）で、列の選択が netloom の解釈になる。psi / crux と同じ判断。json / text / verbatim のみ）
 - **youtube の live は親が実行**（2026-10-19 時点。search.list 1 本 + videos.list 1 本 ≒ 110 units。手順は `docs/plan/20261019-youtube.md` §5。実キーでの応答形（quota エラーの本文、`items` 構造の揺れ、`nextPageToken` の形）はその 1 回で判明する。設計書 §11 N31）
 - **youtube の予約コマンド（作らない。必要になったら 1 コマンド = 1 endpoint）**: `channels.list` / `playlistItems.list`（id → チャンネル補完）、search の `order` / `videoCaption` 等の追加 pass-through、`part` の自由指定（現状はコマンド固定。設計書 付録 A.31 判断 D3 / §11 N31）
+- **zenodo のカセットをコミット・共有する**（record / deposition の本文を持つ。`.cassettes/`（gitignore）か呼び出し側の記録置き場にだけ置く）
+- **`deposition-publish` を `--allow-publish` なしで live 実行しようとする**（exit 2 で止まる。**公開 DOI は取り消せない**ので、承認を明示する門。`--allow-prod-write` / `--allow-send` と同じ流儀）
+- **upload のカセットに実ファイルの中身を期待する・残す**（カセットには field / sha256 / size だけ。バイトもファイル名も残らない — replay は digest で照合する。設計書 付録 A.32 判断 D21）
+- **zenodo に下書きの門（確認フラグ）を期待する**（create / update / delete / upload / file delete / newversion は**公開側の副作用ではない**ので門が無い。門は不可逆な publish だけ。設計書 付録 A.32 判断 D19）
+- **zenodo に公開済み deposition の編集・削除を通させる**（Zenodo が拒否する — それが provider の答え。netloom は判定せず exit 1 で返す）
+- **zenodo の `--id` / `--file-id` を推測させる**（netloom は record / deposition / file の一覧を持たない。DOI を id にするときは**API の path が取る形**で書く — `/` は path の区切りになる）
+- **zenodo の live（特に publish / delete）を勝手に実行する**（`ZENODO_TOKEN` の手配と **publish / delete は owner の承認**が前提。手順は `docs/plan/20261019-zenodo.md`。実測で record の member / versions の封筒 / sort・size の受け付け / deposition の `state` / 書き込みの応答形が判明する）
 - **呼び出し側（japan-cannabinoid-trends）の置き換えは未処理**（旧スクリプト `scripts/collect-youtube-japanese-keywords.sh` 等の置き換え範囲は JCT が決める。**絶対日付の年次スライスは Apify actor では代替不可**なので、DDD の棚卸しの「置換不可（C）」は `youtube search` で解消しうる。設計書 §11 N31）
 - **同意フローのトークン更新（refresh だけを行うモード）は作らない**（データコマンドが毎回交換するので不要。`auth google` は同意 1 回。設計書 付録 A.22）
 

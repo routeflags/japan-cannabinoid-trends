@@ -55,6 +55,19 @@
 - 旧スクリプトが担っていた入力・出力・metadata がどこへ移ったか。
 - 既存 raw run の再現性に影響がないこと、または影響を limitations として記録したこと。
 
+### 2.0.1 netloom 置換状況（2026-10-19 更新）
+
+外部ツール = netloom（`routeflags/netloom`）で実装が進んだため、棚卸しの分類を更新する。
+
+| 対象 | 当初の分類 | 現在 | 根拠 |
+|---|---|---|---|
+| Apify skills / scripts（`apify run` / `dataset` / `run-status`） | A | **置換済み**（2026-10-19） | `aa79808`（netloom 0.4.3） |
+| Apify actor 詳細 / KVS（`apify actor` / `build` / `key-value-store`） | B（非対応） | **置換済み**（2026-10-19） | `01a82b0`（netloom 0.5.3） |
+| Google Trends の 3 ツール（related / trending / region） | C（欠落） | **置換済み**（2026-10-19） | `58772e4`（netloom 0.5.4） |
+| GT pipeline（`src/collection/adapters/google_trends`） | B | **自前経路を維持（意図的）** | `c19e623`。adapter は `data` / `content` の 2 形状のみ、CI に netloom 無し、raw が verbatim 証跡を保持 |
+| YouTube Data API v3 scripts | C | **置換可能（未実施）** | netloom 0.5.0 `youtube search`（絶対日付）/ `videos`。raw 再現検証と owner 判断待ち |
+| Zenodo（`publish-zenodo.py` / CI） | C | **置換可能（未実施）** | netloom 0.6.0 zenodo 11 コマンド。`ZENODO_TOKEN` の手配と owner 承認待ち |
+
 ### 2.1 Google Trends
 
 主な実行入口:
