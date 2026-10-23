@@ -12,12 +12,10 @@ cannabinoid-raw-collection
 
 | データソース | 観測期間 | 根拠 |
 |-------------|---------|------|
-| Google Trends（12ヶ月） | 2025-09-28 〜 2026-09-27（旧 8 化合物）/ 2025-10-19 〜 2026-10-18（2026-10-23 取得 3 化合物）（`today 12-m`、週次） | §2.1.3 |
-| Google Trends（5年） | 2021-10-10 〜 2026-10-11（2026-10-02〜10-15 の run）/ 2021-10-17 〜 2026-10-18（2026-10-23 再取得 4 化合物）（`today 5-y`、週次） | §2.1.1、§2.1.2 |
-| X (Twitter) | 2026-09-01 〜 2026-10-01（主系列）、CBD は 1 年 / 1ヶ月 / latest10 も | 2026-10-02・10-08 の run |
-| YouTube | 2026-10-02（7 検索語のスナップショット）、2026-10-08〜09 に追加 | Apify `gJvjeCYNraSfhIaNd` |
-| X (Twitter) | 2026-09-01 〜 2026-10-01（主系列）、CBD は 1 年 / 1ヶ月 / latest10 も | 2026-10-02・10-08 の run |
-| YouTube | 2026-10-02（7 化合物のスナップショット）、2026-10-08〜09 に追加 | Apify `gJvjeCYNraSfhIaNd` |
+| Google Trends（12ヶ月） | 2025-09-28 〜 2026-09-27（8 化合物）/ 2025-10-19 〜 2026-10-18（THCV・H4CBH・HHBD）。CRDH は記録値のみで週次系列なし | §2.1.3 |
+| Google Trends（5年） | 2021-10-10 〜 2026-10-11（9 化合物）/ 2021-10-17 〜 2026-10-18（THC・CBG・HHC・THCV、および共通スケール setA〜D） | §2.1.2、§2.1.4 |
+| X (Twitter) | 2026-09-01 〜 2026-10-01（主系列）、CBD は 1 年 / 1ヶ月 / latest10 も | §2.2 |
+| YouTube | 2026-10-02（公開集計に入る 7 検索語のスナップショット）、2026-10-08〜09 に追加 | §2.3 |
 
 ### 1.3 対象化合物
 
@@ -44,7 +42,7 @@ cannabinoid-raw-collection
 - **12ヶ月系列は 11 化合物が週次 raw を持ち、CRDH はサマリーのみ、THC-O は no data**（§2.1.3）。
 - 分類は [`metadata/taxonomy/compound-taxonomy.skos.jsonld`](../../metadata/taxonomy/compound-taxonomy.skos.jsonld) の `skos:broader`（major / minor / semisynthetic / synthetic）に従う。
 - **CBX はこの研究の対象外**: [`datasets/cbx-search-trends/`](../cbx-search-trends/) が担当する（`gt-summary` の 14 化合物目はそこ由来）。
-- 12ヶ月・5年以外に、比較セットと共通スケール比較（`common-scale-*`）と「リキッド」系クエリの run もある（`data/raw/google_trends/`）。
+- 12ヶ月・5年以外に、比較セット（12ヶ月 `common-scale-*` / 5年 `5y-common-scale-set*`）と「リキッド」系クエリの run もある（`data/raw/google_trends/`）。
 
 ---
 
@@ -66,20 +64,26 @@ cannabinoid-raw-collection
 
 **収集内容:**
 1. 各クエリの interest_over_time（1 クエリ 1 run。単独系列）
-2. 比較セットの compare_terms（2026-10-02・10-05・10-08 の run）
+2. 比較セットの compare_terms（§2.1.4 と下記「比較セット」）
 3. 関連クエリの related_queries（旧 SKILL 時代の手順。現在のパイプライン経路では未使用）
 
-**比較セット（2026-10-02 初回収集時）:**
-- セットA: CBD, THC, CBG, HHC, THCV
-- セットB: THC-O, THCH, CBD オイル, THC オイル, HHC オイル
+**比較セット（`compare_terms`）:**
+
+- 12ヶ月の単独系列とは別に、2026-10-02〜10-08 の 4 run（`comparison_setA` = CBD, THC, CBG, HHC, THCH /
+  `setB` = CBN, CRDP, HHCH, THC-O, THCV / `setC` = CBN, CBG, CBD / `setD` = H4CBH, HHBD, CRDP /
+  3 語比較 3 件 = CRDH・CBD・THC、THCH・CBD・THC、H4CBH・HHBD・CRDH）。
+- 12ヶ月のリキッド: 2026-10-12 の 3 run（phase-a と phase-a-repeat の `ja1`、phase-b の `ja2`〜`ja4`。
+  `CBX リキッド` をアンカーに含む）と、同表記の事前調査 1 run。
+- 5年: 2026-10-23 の setA〜D（§2.1.4）。
+- 比較セットの値は**同一 run 内での相対値**（その run の最大語が 100）。run をまたいで数値を比べない。
 
 **注意事項:**
 - Google Trends は相対指数（0-100）
 - 低ボリュームクエリはデータが返らない場合あり（閾値未満。**欠測であって 0 観測ではない**。§2.1.3）
 - 429 エラー時は 2-5 分待機
-- 2026-10-08 以前の旧 run は legacy 形状（`records_*.json` のみで `execution` ブロックが無い）。
-  2026-10-14 以降の run は `payload.json`（verbatim 応答）+ `records_<term>.json` + `run_metadata.json` +
-  `artifact-manifest.json` を持つ（2026-10-23 時点で 16 run。2026-10-12 の「リキッド」系 run はまだ legacy 形状）
+- 2026-10-12 以前の run は legacy 形状（`records_*.json` のみで `execution` ブロックが無い）。
+  2026-10-14 以降の run（5年再取得・12ヶ月再取得・5年共通スケール）は `payload.json`（verbatim 応答）+
+  `records_<term>.json` + `run_metadata.json` + `artifact-manifest.json` を持つ
 
 ### 2.1.1 5年ベースライン（summary-only / raw timeline missing）
 
@@ -120,8 +124,8 @@ cannabinoid-raw-collection
   `today 5-y` は収集時刻で解決されるため、窓をまたいだ比較はしない（別観測として扱う。相対 timeframe を
   絶対窓に固定できないことは §4.2 と [`docs/specs/gt-boundary-verification.md`](../../docs/specs/gt-boundary-verification.md)）。
 - Google Trends は**クエリ単位の相対指数（0-100）**であり、単独系列の平均値を化合物間で比較しないこと。
-  共通スケール比較 run（`common-scale-*`）は **12ヶ月にのみ**存在する。5年の共通スケール計測は無いため、
-  5年では化合物間比較ができない（`ISS-20261023-GT-009`）。
+  化合物間比較は共通スケール（§2.1.4）でのみ行う。12ヶ月の共通スケールは `common-scale-*`、5年の共通スケールは
+  `5y-common-scale-set*`。
 - 数値の正本は `docs/audits/gt-summary.json`（`processing.cli gt-summary` の生成物）。
   publication ページの 5年ブロックも同じコマンド（`--write`）が書く。
 - 残り 8 化合物（CBN・CRDH・CRDP・H4CBH・HHBD・HHCH・THCH・THC-O）の 5年 run は本表には載せず、
@@ -242,6 +246,7 @@ cannabinoid-raw-collection
 **注意事項:**
 - ページング重複あり、videoId で重複排除必須
 - timestamp は相対表記（"3 days ago" 等）
+- 説明文（`description`）は公開しない（連絡先メールが埋め込まれている事例があったため）。追跡するのは集計 2 表だけであり、生成は `python -m processing.cli youtube-export`。raw は Git 管理外のローカル証跡（[README](README.md#youtube-の収集と追跡)）
 
 ---
 
@@ -273,11 +278,8 @@ SKOS Concept ID を使用して化合物カテゴリを分類。
 | `tweet_id` | `tweet_id_hash` | SHA-256 ハッシュの**先頭 16 文字** |
 | `url` | （削除） | 個人情報のため削除 |
 
-> **2026-10-13 訂正:** 本表は以前「`screen_name` → `author_id` はハッシュ化」と
-> 記載していたが誤り。実成果物の `author_id` は初出順の連番である。また
-> `tweet_id_hash` は SHA-256 全長ではなく先頭 16 文字である。本 study は X raw を
-> リポジトリに保持していないため、この変換の適用先成果物は
-> `cbx-social-trends` 側にある。
+> 本表の `author_id` は初出順の連番であり、ハッシュではない。`tweet_id_hash` は SHA-256 の先頭 16 文字である。
+> 本 study は X raw をリポジトリに保持していないため、この変換の適用先成果物は `cbx-social-trends` 側にある。
 
 ---
 
@@ -333,6 +335,6 @@ API のコスト実績。X raw は Git 管理外のため、run の件数はロ�
 - 検証スクリプト: `scripts/validation/validate-data-schema.sh`
 - エクスポート: `scripts/export/`
 
-## 6. 研究軸の分離（2026-10-12 追記）
+## 6. 研究軸の分離
 
 cbx-search-trends は CBX 製品軸（CBX リキッド等の製品需要）の研究であり、cannabinoid-raw-collection は成分横断軸（CBD・THC・CBG・CBN・HHC 等の成分間比較）の研究である。両者は観測対象の軸が異なるため、クエリー設計・比較スケール・解釈を分離する。日本語「○○ リキッド」拡張（GTJA-20261012）は成分横断軸に属し、CBX は比較のアンカー語としてのみ用いる。
