@@ -7,6 +7,10 @@
 `README.md` のキーワード表  
 **GitHub:** [#4](https://github.com/routeflags/japan-cannabinoid-trends/issues/4)
 
+## 決定（owner, 2026-10-24）
+
+**選択肢 1（8 語を 5年で収集）**を採用する。窓は `2021-10-17_2026-10-18` で、main5 の観測範囲とは 1 週ずれる別観測になる。plan 案は下記「収集仕様」。
+
 ## 概要
 
 「リキッド」系クエリの 5年系列は **5/13 語**が既収集、**8 語が未収集**である。
@@ -212,8 +216,8 @@ PYTHONPATH=src python3 -c "import json; print([q['query_id'] for q in json.load(
 
 ## 完了条件
 
-- [ ] 方針の決定（owner）: option 1 / 2 / 3 のいずれか
-- [ ] 決定に応じた実施（8 語または 4 語の収集 run、または文書の明記）
+- [x] 方針の決定（owner）: option 1（8 語を 5年で収集、2026-10-24）
+- [ ] 決定に応じた実施（8 語の収集 run）
 - [ ] `README.md` のキーワード表の「未収集」注記が解消（または恒久的な範囲注記になる）
 
 ## owner への決定依頼

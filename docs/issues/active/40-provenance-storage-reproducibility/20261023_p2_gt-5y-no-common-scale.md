@@ -8,6 +8,11 @@
 `datasets/cannabinoid-raw-collection/methodology.md` §2.1.2  
 **GitHub:** [#5](https://github.com/routeflags/japan-cannabinoid-trends/issues/5)
 
+## 決定（owner, 2026-10-24）
+
+**選択肢 1（5年の共通スケール run を追加収集）**を採用する。2026-10-23 に setA〜D を収集済み（上記「対応状況」）。
+選択肢 2（`metric_dictionary.csv` と methodology への「化合物間でも比較不可」の追記）は選択されていないため、その項目は未対応のまま残る。
+
 ## 概要
 
 Google Trends の共通スケール（比較セット）計測は **12ヶ月だけ**で、**5年の共通スケールは 1 本も無い**。

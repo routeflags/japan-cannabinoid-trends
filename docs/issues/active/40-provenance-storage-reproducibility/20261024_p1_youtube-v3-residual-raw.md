@@ -6,6 +6,11 @@
 **対象:** `datasets/*/data/raw/youtube/`（Git 管理外・ローカルのみ）、`datasets/youtube-consistency/README.md`、`publication/research_cbx.html`、`datasets/cbx-social-trends/README.md`  
 **GitHub:** [#1](https://github.com/routeflags/japan-cannabinoid-trends/issues/1)
 
+## 決定（owner, 2026-10-24）
+
+**選択肢 1（3 件とも削除）**を採用する。削除は一次 checkout でのみ実行できる（YouTube raw は Git 管理外）。
+削除前の記録項目と再スキャン手順は下の (a) をそのまま使う。追跡ファイルの変更は不要。
+
 ## 検証制約
 
 YouTube raw は `.gitignore:2`（`**/data/raw/*`）の対象であり、Git 追跡層に存在しない。本 worktree にも複製されない。以下で確認済み：
@@ -62,6 +67,7 @@ git check-ignore -v .../20261004T135232Z-youtube-cbx-12months/records.json  → 
 ## 完了条件
 
 - [x] `*-dated` 14 run の削除（2026-10-24、一次側での報告。本 worktree 未検証。run ID 一覧の追記が残作業）
-- [ ] 残り 3 件の扱いの決定（(a) / (b)）と実施（一次側）
+- [x] 残り 3 件の扱いの決定（選択肢 1 = 3 件とも削除、2026-10-24）
+- [ ] 実施（一次側で削除、削除前記録と再スキャンを含む）
 - [ ] 実施内容（削除時の事前記録、または保持の根拠追記）の本 issue への記録
 - [ ] 公開ページ・README の記述と実体の一致確認

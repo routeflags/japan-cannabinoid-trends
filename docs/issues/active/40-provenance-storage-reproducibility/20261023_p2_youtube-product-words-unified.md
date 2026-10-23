@@ -7,6 +7,12 @@
 `README.md` のキーワード表, `methodology.md` §2.3・§6  
 **GitHub:** [#7](https://github.com/routeflags/japan-cannabinoid-trends/issues/7)
 
+## 決定（owner, 2026-10-24）
+
+**選択肢 1（リキッド 13 語を追加収集し、オイル 2 run を公開集計から外す）**を採用する。
+オイル 2 run の除外は、**置換となる 13 リキッド run が採用されてから**適用する（それまでは公開集計に残す）。
+actor と `max_videos` は既存 7 run に合わせる（`gJvjeCYNraSfhIaNd`、CBD/THC 100・他 50）。別 actor を使う場合は別途指示が必要。
+
 ## 概要
 
 同じ製品軸をプラットフォームごとに別の語で測っている。Google Trends は単独系列として「化合物語 + ` リキッド`」のみ（12ヶ月 13 語、5年 5 語）を収集し、YouTube は「オイル」2 語（`CBD オイル` / `THC オイル`）のみを収集している。X は製品語を持たない。提案は製品語を「化合物語 + ` リキッド`」に統一し、YouTube で不足する 13 run を追加収集すること。既存オイル 2 run の扱いは未決。raw は不変とする（除外は公開集計層のみ）。
@@ -107,6 +113,6 @@ CBX study が `CBX リキッド` を Apify actor `gJvjeCYNraSfhIaNd`（danek/you
 
 ## 完了条件
 
-- [ ] 方針の決定（owner）: （a）統一先の語彙（リキッド vs 現状維持。presurvey の `CBD オイル: 62 > CBD リキッド: 25` を踏まえる）、（b）オイル 2 run の扱い（除外 / 別軸残存。除外なら上記パッチ適用 + gate 再実行）、（c）X に製品語を追加するか（本 issue の範囲外だが owner が判断。現状 0）、（d）新規 13 run の actor（danek `gJvje...` vs scraper `h7sDV5...`）と `max_videos`（50/100）
-- [ ] 実施（YouTube のリキッド収集は handover 経路 + `make stage` / `make adopt-all` + `youtube-export`、または文書の明記）
+- [x] 方針の決定（owner）: 選択肢 1（リキッド 13 語を収集し、オイル 2 run を公開集計から外す、2026-10-24）
+- [ ] 実施（YouTube のリキッド 13 run 収集 + `youtube-export` 再生成 + オイル 2 run の除外）
 - [ ] README のキーワード表で製品語がプラットフォーム間で説明可能な状態になっている

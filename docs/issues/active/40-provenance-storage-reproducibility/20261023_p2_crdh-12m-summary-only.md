@@ -7,6 +7,10 @@
 `datasets/cannabinoid-raw-collection/methodology.md` §2.1.3  
 **GitHub:** [#3](https://github.com/routeflags/japan-cannabinoid-trends/issues/3)
 
+## 決定（owner, 2026-10-24）
+
+**選択肢 1（12ヶ月を 1 run 再取得）**を採用する。実施内容は下の (a)。既存 summary は残し、新しい系列を正本にする。
+
 ## 概要
 
 CRDH の 12ヶ月単独系列は週次 raw を持たない唯一の欠落（THC-O はソースが系列を返さない `NO_DATA` で別扱い）。
@@ -96,8 +100,8 @@ CRDH だけが取り残されている。`methodology.md` §2.1.3 の CRDH 行�
 
 ## 完了条件
 
-- [ ] owner が (a) / (b) / (c) を選択
-- [ ] (a) の場合: 新 run が catalog され `data` 53 週を持ち、
+- [x] owner が選択（選択肢 1 = (a) 12ヶ月を 1 run 再取得、2026-10-24）
+- [ ] (a) の実施: 新 run が catalog され `data` 53 週を持ち、
   `gt-summary --timeframe 12m --compound CRDH` が `shape=series` で平均を返すこと。
   §2.1.3 の CRDH 行が括弧なしの実測値になること。旧 summary は残すこと
 - [ ] (b) の場合: §2.1.3 に上記引用禁止の注記が入り、`avg_12m`・ピーク週・非ゼロ週数を引用する原稿・下流が無いこと

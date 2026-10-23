@@ -7,6 +7,11 @@
 `youtube_videos.csv`, `methodology.md` §2.3  
 **GitHub:** [#6](https://github.com/routeflags/japan-cannabinoid-trends/issues/6)
 
+## 決定（owner, 2026-10-24）
+
+**選択肢 1（8 語を追加収集）**を採用する。収集は外部 Apify 実行 → `staging-declaration-v1` → `make stage` / `make adopt-all` の経路で、
+`PUBLISHABLE_RUNS` への追加は provenance レビュー後。actor と `max_videos` は既存 7 run に合わせる。
+
 ## 制約
 
 YouTube raw ペイロードは gitignored（`.gitignore` の `**/data/raw/*`、例外は `google_trends` のみ）かつローカル限定であり、
@@ -103,7 +108,6 @@ Actor `gJvjeCYNraSfhIaNd`（`danek/youtube-search`）、1 run = 1 `search_term`�
 
 ## 完了条件
 
-- [ ] 方針の決定（owner: 選択肢 1 か 2 か。選択肢 1 なら `max_videos` 方針と費用承認を含む）
-- [ ] 実施: 選択肢 1 なら 8 run の外部収集 + stage/adopt（L1 通過）+ `PUBLISHABLE_RUNS` 追加 + `youtube-export` 再生成。
-  選択肢 2 なら methodology への範囲明記
+- [x] 方針の決定（owner: 選択肢 1、2026-10-24。`max_videos` は既存に合わせる）
+- [ ] 実施: 8 run の外部収集 + stage/adopt（L1 通過）+ `PUBLISHABLE_RUNS` 追加 + `youtube-export` 再生成
 - [ ] README のキーワード表・methodology §2.3・`youtube_runs.csv` の三者が一致している
