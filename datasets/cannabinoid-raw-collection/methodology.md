@@ -119,8 +119,9 @@ cannabinoid-raw-collection
 - 化合物間で**窓が 1 週ずれる**: `2021-10-10 〜 2026-10-11` の run と `2021-10-17 〜 2026-10-18` の run が混在する。
   `today 5-y` は収集時刻で解決されるため、窓をまたいだ比較はしない（別観測として扱う。相対 timeframe を
   絶対窓に固定できないことは §4.2 と [`docs/specs/gt-boundary-verification.md`](../../docs/specs/gt-boundary-verification.md)）。
-- Google Trends は**クエリ単位の相対指数（0-100）**であり、平均値の水準を化合物間で比較しないこと。
-  化合物間の比較は共通スケール比較 run（`common-scale-*`）が担う。
+- Google Trends は**クエリ単位の相対指数（0-100）**であり、単独系列の平均値を化合物間で比較しないこと。
+  共通スケール比較 run（`common-scale-*`）は **12ヶ月にのみ**存在する。5年の共通スケール計測は無いため、
+  5年では化合物間比較ができない（`ISS-20261023-GT-009`）。
 - 数値の正本は `docs/audits/gt-summary.json`（`processing.cli gt-summary` の生成物）。
   publication ページの 5年ブロックも同じコマンド（`--write`）が書く。
 - 残り 8 化合物（CBN・CRDH・CRDP・H4CBH・HHBD・HHCH・THCH・THC-O）の 5年 run は本表には載せず、
