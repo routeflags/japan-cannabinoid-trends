@@ -28,6 +28,14 @@
 | 6 | THC-O | Semi-Synthetic | ❌ | ✅ | ❌ |
 | 7 | THCH | Minor Phytocannabinoid | ✅ | ✅ | ❌ |
 
+> 上の表は **2026-10-02 の初回収集（12ヶ月）の範囲**。その後、5年を中心に収蔵範囲が広がっており、現在の raw（37 runs）には次も含む。範囲の正本は `data/raw/google_trends/` と [`docs/audits/gt-summary.json`](../../docs/audits/gt-summary.json)。
+>
+> - 5年系列（週次）: THC-O, H4CBH, HHBD, CBN, CRDH, CRDP, HHCH, CBD（CBD は 2026-10-15 再取得）
+> - 5年 baseline（サマリーのみ）: CBD, THC, CBG, HHC, THCV — 週次系列を収蔵していないため raw から検算できない
+> - 比較セットと共通スケール比較（`common-scale-*`）、表記事前調査、および「リキッド」系クエリの 12ヶ月 / 5年
+>
+> THCV と THC-O の Google Trends は上表で ❌ だが、THCV は 5年 baseline、THC-O は 5年系列で存在する（12ヶ月単独の取得がないだけ）。
+
 ## データソース
 
 | ソース | ツール | コスト | 状態 |
