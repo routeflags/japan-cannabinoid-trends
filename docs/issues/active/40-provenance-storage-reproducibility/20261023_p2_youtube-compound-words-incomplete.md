@@ -111,3 +111,86 @@ Actor `gJvjeCYNraSfhIaNd`（`danek/youtube-search`）、1 run = 1 `search_term`�
 - [x] 方針の決定（owner: 選択肢 1、2026-10-24。`max_videos` は既存に合わせる）
 - [ ] 実施: 8 run の外部収集 + stage/adopt（L1 通過）+ `PUBLISHABLE_RUNS` 追加 + `youtube-export` 再生成
 - [ ] README のキーワード表・methodology §2.3・`youtube_runs.csv` の三者が一致している
+
+## 実行準備（2026-10-24）
+
+選択肢 1 を実行可能な状態まで確定させた記録。**実収集は `APIFY_TOKEN` 未設定のため未実施**。raw・コード・監査スナップショットには触れていない。
+
+### ブロッカー
+
+- `APIFY_TOKEN` が未設定（`netloom env check --source apify` で unset を確認。`.env` なし、`.env.d/` には `apify.env.example` のみ）。ゆえに Apify の実実行はできない。
+- YouTube raw は Git 管理外で本 worktree に存在しない。既存 7 run の生ペイロードは見られない（以下は追跡層と specs・コードの読解による確定）。
+- owner に必要な操作: Apify トークンを発行し、安全な場所に配置する（値はコミットしないことだけ守り、値の指定は owner に委ねる。配置場所と権限は各 SKILL の手順に従う）。
+
+### 1. `staging-declaration-v1` の表現可否の結論
+
+今回の payload（danek/youtube-search の dataset export。入力は `search_term` + `max_videos` のみ）は宣言文書で表現できる。ただし次の2点は注意が必要で、1点は表現できない。
+
+| 宣言項目 | 可否 | 内容 |
+|---|---|---|
+| `run_id` | ○ | 宣言者が付与。形式は `research-youtube-search` SKILL 規定の `{TIMESTAMP}-youtube-{keyword-slug}`（小文字・空白→ハイフン。既存 7 run と同形）。衝突時は stage が `RUN_ID_ALREADY_EXISTS` で停止する。 |
+| `study_id` / `source_id` / `collector_id` | ○ | `cannabinoid-raw-collection` / `youtube` / `youtube-apify-search`（registry 登録済み、`external_id: gJvjeCYNraSfhIaNd` を実測）。version は registry の `unknown` のまま（stager は collector を昇格できない）。status `unverified` は L1 で可視化されるのみで採用を止めない（rehearsal で観測済み）。 |
+| `query.keyword` / `query_id` | ○ | 8 語すべて registry に active 登録あり（§3 の表。`canonical_text` を実測）。keyword → `query_id` は宣言者が明示し、driver は payload から推定しない。 |
+| `purpose` | ○ | 宣言者が記載（例: 本 issue 選択肢 1 の採用）。 |
+| `collection_request`（`search_term` / `max_videos`） | ○ | `submitted_parameters` は `allow_unknown` のため、actor の入力 2 項目をそのまま記録できる。L1 は値を検証しないが provenance として残る。 |
+| `collection_request.date_filter` | △ 要注意 | スキーマ上 required だが、danek actor に dateFilter 概念は存在しない。何を書いても request 事実の再現にはならないため、宣言値の意味と「日付絞りなし」である旨を `temporal.limitations` に明示する。`build_csv_run` 経由では scraper 側の `DATE_FILTERS` 語彙に縛られるため使わず、手書き宣言とする。 |
+| `reference_time` | ○ | Apify run の実行時刻（console Runs list / `run-status` の startedAt/finishedAt）。根拠を `timestamps.basis` に記録する。 |
+| `window`（絶対窓） | △ 導出根拠の明記が必須 | danek の `timestamp` は相対表記（"3 days ago" 等）で絶対日付を返さない（SKILL 制約）。window は payload の相対 timestamp または実行時刻基準で宣言し、collector が強制した境界でない旨を `boundary_semantics` / `limitations` に書く（COL-033 前例の文言を再利用）。payload から独立検証はできない（pipeline spec §3.4 の制限）。 |
+| `temporal.collector_window_type` | ○ | 日付絞りなしのため `unbounded` が相当。`exact_window_match: false`。未確証の値は書かない。 |
+| `timestamps` + `basis` | ○ | `run-status` の startedAt/finishedAt + basis（例: console 表示の JST→UTC 換算）。payload 自体に収集時刻列はない。取れなければ stage 不可（捏造しない）。 |
+| `execution.status` / `returned_count` | ○ | run の SUCCEEDED → `success` 等。`returned_count` 省略時は artifacts 合計から導出される。`success` + 0 件は `record_count: 0` の artifact が必須（L1-09）。`pagination_exhausted` は nullable のため不明なら省略する（推測しない）。 |
+| `artifacts`（JSON 推奨） | ○ | danek dataset の JSON export を `records.json`（配列）として stage。schema `youtube-search-result-list-v1` + `json-record-reader` で件数導出可。CSV の場合は `youtube-dataset-csv-v1` + `csv-record-reader`（列名不問。header の整形式のみ検査）。`record_count` は宣言または導出（S8 が照合）。**JSON で取得すること**（§2 の理由）。 |
+| dedup 情報 | ✗ 欄なし | スキーマに重複排除の欄はない。重複排除は下流の `youtube_export` が `videoId` で行う。宣言時は `records_raw.json`（排除前）と `records.json`（排除後）の両者を残すか、排除前件数を `environment` に記録する運用を宣言に書く（`research-youtube-search` SKILL が 2 ファイル保存を規定）。 |
+| actor run/dataset ID・build・課金実績 | △ `environment` のみ | `environment` は free-form のため `actor_run_id` / `apify_dataset_id` / `actor_build` / `cost_usd` 等は記録可能（20261015 宣言の前例）。未確認値は書かない（`unknown` 捏造禁止）。 |
+
+L1 通過のために宣言文書に書くこと（チェックリスト）: ① `query_id` は 8 語とも登録済み（実測済み。未登録は exit 2）② `collector_id: youtube-apify-search` は登録済み（実測済み）③ artifact schema は登録済み reader のもの（JSON/CSV とも登録済みを実測。未登録は S9 で隔離）④ 時刻の ISO 形式と前後関係、run_id の path 安全・衝突なし ⑤ status と artifact の整合（L1-09: `success` に artifact 必須、0 件 `success` は `record_count: 0` の artifact）⑥ secrets 混入なし（L1-10）。
+
+埋められない必須フィールドはないが、真の値が存在しない必須項目（`date_filter`）と payload だけでは定まらない項目（`window` の絶対値・`started_at/finished_at`）は、宣言者の実行記録と `limitations` / `basis` の明示が L1 通過の条件になる。確認できない項目は「確認できず」と書く。
+
+### 2. handover 経路の不一致と対応
+
+- `build_csv_run` / `stage_csv`（`src/collection/adapters/youtube/apify_csv.py`）は `COLLECTOR_ID: youtube-apify-scraper`（`h7sDV53CddomktSi5`、streamers/youtube-scraper）に固定され、request 語彙も scraper 側の `DATE_FILTERS` である。**danek 用の handover builder は存在しない**（registry エントリ + SKILL のみ）。8 語は手書き宣言 → `make stage` → `make adopt-all` の経路を取る。
+- 列対応表（件数照合には影響しないが、意味の混同防止のため記録する）:
+
+| 項目 | danek/youtube-search（今回使う側） | streamers/youtube-scraper（builder 側） |
+|---|---|---|
+| actor | `gJvjeCYNraSfhIaNd` / `danek/youtube-search` | `h7sDV53CddomktSi5` / `streamers/youtube-scraper` |
+| 入力 | `search_term` + `max_videos` のみ（日付概念なし） | `searchQueries` + `maxResults` + `dateFilter` 等 |
+| 動画 ID | `id.videoId` | `id` |
+| タイトル | `snippet.title` | `title` |
+| チャンネル | `snippet.channelTitle` / `snippet.channelHandle` | `channelName` |
+| 公開日 | `snippet.timestamp`（相対表記のみ） | `date`（ISO8601 絶対） |
+| その他 | `snippet.views` / `duration` / `badges` / `chapters` / `thumbnails` | `viewCount` / `duration` / `likes` / `commentsCount` / `url`（+ `input` 列に検索語） |
+
+- `csv-record-reader` は列名を問わない（header の整形式のみ検査）ため、どちらの形式でも S8 の件数照合は通る。しかし `youtube_export`（`src/processing/youtube_export.py`）は `data/raw/youtube/<run-id>/` の `*.json` のみを読むため、**CSV で stage した run は `video_rows: 0` になる**。8 語は danek の JSON dataset export で取得・保存し、`_item_to_row` が読める形状（`videoId` / `title` / `channel` / `snippet`）に合わせる。CSV で取る場合は export の対応が別途必要になり、本件では選ばない。
+- なお `youtube_export` は公開日を追跡列に含まない（`VIDEO_COLUMNS` は run_id / video_id / channel_title / title のみ）。danek の相対 timestamp でも export は成立する。window の絶対値は宣言者が別途定める（§1 の表どおり）。
+
+### 3. 8 run の実行仕様
+
+- `search_term` は `metadata/queries/query-registry.json` の `canonical_text` を実測して確定（`PYTHONPATH=src python3` で読取）。
+- `max_videos` は既存方針 CBD/THC=100・他=50。根拠は methodology §2.3 の表が正本であり、`youtube_runs.csv` の `video_rows`（CBD 22 / THC 25 / CBG 34 / HHC 28 / THCV 23。合計 182 を実測）が実績として整合する。8 語はすべて「他」に属するため 50。
+- 費用の上限: actor の課金額は追跡層（`collection-summary.md` §3・`youtube_runs.csv`）では確認できない。追跡層にあるのは請求実績（7 run 合計 ~$0.09）のみ。単価の正本は `apify-youtube-search` SKILL の記載（PAY_PER_EVENT: 起動 $0.00005 + $0.0005/件（FREE）/ $0.0002/件（GOLD+））。`max_videos=50` の上限は 1 run $0.02505（FREE）/ $0.01005（GOLD+）で、8 run 上限は約 $0.20 / 約 $0.08。methodology §2.3 のコスト目安（$0.050/$0.025）は起動費抜きの概算。
+- run-id 案: `research-youtube-search` SKILL 規定の `{TIMESTAMP}-youtube-{keyword-slug}`（小文字・空白→ハイフン）。日時部は実行時の UTC に置換する。
+
+| 語 | `search_term` | `query_id` | `max_videos` | run-id 案（日時部は実行時 UTC） |
+|---|---|---|---|---|
+| THC-O | `THC-O` | `thc-o-general-ja` | 50 | `<UTC>Z-youtube-thc-o` |
+| THCH | `THCH` | `thch-general-ja` | 50 | `<UTC>Z-youtube-thch` |
+| CBN | `CBN` | `cbn-general-ja` | 50 | `<UTC>Z-youtube-cbn` |
+| CRDH | `CRDH` | `crdh-general-ja` | 50 | `<UTC>Z-youtube-crdh` |
+| CRDP | `CRDP` | `crdp-general-ja` | 50 | `<UTC>Z-youtube-crdp` |
+| H4CBH | `H4CBH` | `h4cbh-general-ja` | 50 | `<UTC>Z-youtube-h4cbh` |
+| HHBD | `HHBD` | `hhbd-general-ja` | 50 | `<UTC>Z-youtube-hhbd` |
+| HHCH | `HHCH` | `hhch-general-ja` | 50 | `<UTC>Z-youtube-hhch` |
+
+- 既存 7 run（2026-10-02）とは別時点の観測になる。run 間で窓が違えば別観測として扱う（AGENTS.md: 同一クエリの再実行は非決定的になりうる）。
+
+### 4. 収集後に必要な手順（担当つき）
+
+1. owner: トークン配置（値はコミットしない）。
+2. 実行者（owner 承認済み）: 8 語 × 1 run を同一 actor で外部実行（1 実行 1 キーワード。入力は `search_term` + `max_videos` のみ）。`run-status`（status / startedAt / finishedAt / usageTotalUsd）と dataset ID を控える。dataset は JSON で保存し、`videoId` で重複排除して `records_raw.json`（排除前）と `records.json`（排除後）を作る（`research-youtube-search` SKILL の手順）。
+3. 実行者: `staging-declaration-v1` を 1 語 1 文書で作成（§1 のチェックリスト通り）→ `make stage DECLARATION=<file>`（`.venv` が無い場合は `PYTHONPATH=src python3 -m collection.core.cli stage --declaration <file> --workspace . --datasets-root datasets --config-dir config --metadata-dir metadata`）→ `make adopt-all`。quarantine に落ちたら理由を確認し、宣言を修正する（payload は byte 不変）。
+4. owner: provenance レビュー後、`PUBLISHABLE_RUNS` 追加を承認する。
+5. 実装者（コード変更・別作業）: `src/processing/youtube_export.py` の `PUBLISHABLE_RUNS` に 8 run を追加し、テスト（`tests/processing/test_youtube_export.py`）を更新する → `python -m processing.cli youtube-export` で 2 表を再生成する（Makefile に target は無い）。
+6. 文書担当 / owner: README のキーワード表と methodology §2.3 を更新する（文案は「文書更新の文案」節）。
+7. 実行者: 監査スナップショットを再生成する（`make audit-new-runs` / `make audit-snapshots` 等。新規 run の追加後は再生成が production 契約の手順）。本件では `docs/audits/` に触れていない。
