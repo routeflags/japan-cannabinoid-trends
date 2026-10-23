@@ -15,27 +15,36 @@
 
 ## 研究質問
 
-> 日本国内において、主要カンナビノイド化合物（CBD, THC, CBG, HHC, THCV, THC-O, THCH）の検索需要・SNS 言及・動画コンテンツはどう推移しているか？
+> 日本国内において、カンナビノイド各化合物の検索需要・SNS 言及・動画コンテンツはどう推移しているか？（当初は CBD / THC / CBG / HHC / THCV / THC-O / THCH の 7 化合物で開始し、5年系列の追加収集で 13 化合物に拡張）
 
-## 対象化合物
+## 対象化合物（2026-10-24 更新）
 
-| # | キーワード | カテゴリ | Google Trends | X | YouTube |
-|---|-----------|---------|:------------:|:-:|:-------:|
-| 1 | CBD | Major Phytocannabinoid | ✅ | ✅ | ✅ |
-| 2 | THC | Major Phytocannabinoid | ✅ | ✅ | ✅ |
-| 3 | CBG | Minor Phytocannabinoid | ✅ | ✅ | ✅ |
-| 4 | HHC | Semi-Synthetic | ✅ | ✅ | ✅ |
-| 5 | THCV | Minor Phytocannabinoid | ❌ | ✅ | ✅ |
-| 6 | THC-O | Semi-Synthetic | ❌ | ✅ | ❌ |
-| 7 | THCH | Minor Phytocannabinoid | ✅ | ✅ | ❌ |
+合計 **13 化合物**。当初は 12ヶ月収集の 7 化合物だけだったが、5年系列の追加収集と CBD の再取得で広がった。収集の詳細は [methodology.md](methodology.md) §1.3。
 
-> 上の表は **2026-10-02 の初回収集（12ヶ月）の範囲**。その後、5年を中心に収蔵範囲が広がっており、現在の raw（37 runs）には次も含む。範囲の正本は `data/raw/google_trends/` と [`docs/audits/gt-summary.json`](../../docs/audits/gt-summary.json)。
->
-> - 5年系列（週次）: THC-O, H4CBH, HHBD, CBN, CRDH, CRDP, HHCH, CBD（CBD は 2026-10-15 再取得）
-> - 5年 baseline（サマリーのみ）: CBD, THC, CBG, HHC, THCV — 週次系列を収蔵していないため raw から検算できない
-> - 比較セットと共通スケール比較（`common-scale-*`）、表記事前調査、および「リキッド」系クエリの 12ヶ月 / 5年
->
-> THCV と THC-O の Google Trends は上表で ❌ だが、THCV は 5年 baseline、THC-O は 5年系列で存在する（12ヶ月単独の取得がないだけ）。
+| 化合物 | 分類 | Google Trends 12ヶ月 | Google Trends 5年 | X | YouTube（公開分）|
+|--------|------|:----:|:----:|:-:|:-:|
+| CBD | major | ✅ | ✅（2026-10-15 再取得） | ✅ | ✅ |
+| THC | major | ✅ | サマリーのみ | ✅ | ✅ |
+| CBG | minor | ✅ | サマリーのみ | ✅ | ✅ |
+| HHC | semisynthetic | ✅ | サマリーのみ | ✅ | ✅ |
+| THCV | minor | データなし | サマリーのみ | ✅ | ✅ |
+| THC-O | semisynthetic | データなし | ✅ | ✅ | raw のみ |
+| THCH | minor | ✅ | ✅ | ✅ | raw のみ |
+| CBN | minor | ✅ | ✅ | — | raw のみ |
+| CRDH | synthetic | ✅ | ✅ | — | raw のみ |
+| CRDP | synthetic | ✅ | ✅ | — | raw のみ |
+| H4CBH | semisynthetic | — | ✅ | — | raw のみ |
+| HHBD | semisynthetic | — | ✅ | — | raw のみ |
+| HHCH | synthetic | ✅ | ✅ | — | raw のみ |
+
+読み方:
+
+- **「サマリーのみ」**: 週次系列を収蔵していない 5年 run（`…-5y-baseline`）の記録値。**raw から検算できない**（[methodology.md](methodology.md) §2.1.1）。
+- **「データなし」**: 取得はしたが Google Trends が閾値未満で系列を返さなかった（`…-nodata` run）。**欠測であって 0 観測ではない**。
+- **「—」**: そのソースでは収集していない（X の 6 化合物は [`datasets/cannabinoid-social-trends/`](../cannabinoid-social-trends/) が規制前後比較として収集している）。
+- **「YouTube（公開分）」**: 追跡している集計（[`data/processed/youtube_videos.csv`](data/processed/youtube_videos.csv)、182 動画）に含まれるか。raw だけ有ってまだ公開集計に入れていない run は `raw のみ`（provenance のレビュー待ち）。
+- **CBX はこの研究の対象外**（[`datasets/cbx-search-trends/`](../cbx-search-trends/) が担当）。`docs/audits/gt-summary.json` が 14 化合物なのはこの 1 件を含むため。
+- Google Trends の正本は `data/raw/google_trends/` と [`docs/audits/gt-summary.json`](../../docs/audits/gt-summary.json)。5年以外に 12ヶ月・比較セット・共通スケール比較（`common-scale-*`）・表記事前調査・「リキッド」系クエリの run がある。
 
 ## データソース
 
