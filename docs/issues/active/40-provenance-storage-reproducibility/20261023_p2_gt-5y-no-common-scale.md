@@ -19,7 +19,19 @@ Google Trends の共通スケール（比較セット）計測は **12ヶ月だ�
 - 比較セット / 共通スケール run は 13 本あり、**すべて `today 12-m`**:
   `comparison-setA`（5 語）、`common-scale-expansion`（3 セット）、`common-scale-crdh`、`common-scale-thch`、
   `common-scale-missing`、`ja-rikiddo-phase-a`（+ repeat）・`phase-b`（各 5 語）、CBX study の 3 本。
-- **5年の comparison run は 0 本**。5年の run はすべて単独系列。
+- **5年の comparison run は 0 本**だった。5年の run はすべて単独系列。
+
+## 対応状況
+
+**5年の共通スケールを取得済み（2026-10-23、option 1）**。アンカー（CBD, THC）を含む 4 セット、
+窓 `2021-10-17_2026-10-18`、各 262 週。アンカー値は 4 セットで一致（CBD 33 / THC 5）し、セット間を橋渡しできる。
+run: `20261023T171700Z-*setA`（CBD/THC/CBG/HHC/THCV）、`…T171709Z-*setB`（CBD/THC/THCH/CBN/CRDH）、
+`…T171717Z-*setC`（CBD/THC/CRDP/H4CBH/HHBD）、`…T171726Z-*setD`（CBD/THC/HHCH/THC-O）。
+成果物は verbatim `payload.json` + `comparison_<terms>.json`（`google-trends-comparison-v1`）。
+方法は `methodology.md` §2.1.4。
+
+**未対応（option 2）**: `metric_dictionary.csv` の limitations は `comparable_across_platforms: no` だけで、
+「化合物間でも比較不可」をまだ書いていない。生成物の正本は `src/processing/platform_trends.py`。
 
 ## 何が問題か
 
@@ -40,6 +52,6 @@ Google Trends の共通スケール（比較セット）計測は **12ヶ月だ�
 
 ## 完了条件
 
-- [ ] 方針の決定（owner）
-- [ ] 決定に応じた実施（収集 run / メトリクス辞書と methodology の明記）
+- [x] 5年の共通スケール run の収集（2026-10-23、option 1）
+- [ ] `metric_dictionary.csv` と methodology に「単独系列は化合物間でも比較不可」を明記（option 2）
 - [ ] 5年の化合物間比較が「データで支えられている」か「明示的に不可」かのどちらかになっている
