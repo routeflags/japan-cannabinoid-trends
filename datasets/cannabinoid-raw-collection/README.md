@@ -19,7 +19,7 @@
 
 ## 対象化合物（2026-10-24 更新）
 
-合計 **13 化合物**。当初は 12ヶ月収集の 7 化合物だけだったが、5年系列の追加収集（2026-10-23 に 4 化合物）で広がった。収集の詳細は [methodology.md](methodology.md) §1.3、§2.1.2。
+合計 **13 化合物**。当初は 12ヶ月収集の 7 化合物だけだったが、5年系列と 12ヶ月系列の追加収集（2026-10-23 に 4 化合物ずつ）で広がった。収集の詳細は [methodology.md](methodology.md) §1.3、§2.1.2、§2.1.3。
 
 | 化合物 | 分類 | Google Trends 12ヶ月 | Google Trends 5年 | X | YouTube（公開分）|
 |--------|------|:----:|:----:|:-:|:-:|
@@ -27,14 +27,14 @@
 | THC | major | ✅ | ✅（2026-10-23 再取得） | ✅ | ✅ |
 | CBG | minor | ✅ | ✅（2026-10-23 再取得） | ✅ | ✅ |
 | HHC | semisynthetic | ✅ | ✅（2026-10-23 再取得） | ✅ | ✅ |
-| THCV | minor | データなし | ✅（2026-10-23 再取得） | ✅ | ✅ |
+| THCV | minor | ✅（2026-10-23 再取得） | ✅（2026-10-23 再取得） | ✅ | ✅ |
 | THC-O | semisynthetic | データなし | ✅ | ✅ | raw のみ |
 | THCH | minor | ✅ | ✅ | ✅ | raw のみ |
 | CBN | minor | ✅ | ✅ | — | raw のみ |
 | CRDH | synthetic | ✅ | ✅ | — | raw のみ |
 | CRDP | synthetic | ✅ | ✅ | — | raw のみ |
-| H4CBH | semisynthetic | — | ✅ | — | raw のみ |
-| HHBD | semisynthetic | — | ✅ | — | raw のみ |
+| H4CBH | semisynthetic | ✅（2026-10-23 追加） | ✅ | — | raw のみ |
+| HHBD | semisynthetic | ✅（2026-10-23 追加） | ✅ | — | raw のみ |
 | HHCH | synthetic | ✅ | ✅ | — | raw のみ |
 
 読み方:
@@ -43,7 +43,9 @@
   （週次系列を収蔵しない `…-5y-baseline` の記録値）で raw から検算できなかったが、THC・CBG・HHC・THCV を
   ライブ再取得して解消した（[methodology.md](methodology.md) §2.1.1・§2.1.2）。旧 baseline run は raw に残るが、
   現在どの化合物の引用元でもない。
-- **「データなし」**: 取得はしたが Google Trends が閾値未満で系列を返さなかった（`…-nodata` run）。**欠測であって 0 観測ではない**。
+- **12ヶ月系列**: 12 化合物が週次 raw を持ち、THC-O だけは Google Trends が series を返さない（2026-10-23 に `NO_DATA` 応答を確認）。
+  THCV は 5年では系列があるが、12ヶ月は 53 週中 1 週だけ非ゼロ。
+- **「データなし」**: 取得はしたが Google Trends が閾値未満で系列を返さなかった（旧 `…-nodata` run、または 2026-10-23 の `NO_DATA` 応答）。**欠測であって 0 観測ではない**。
 - **「—」**: そのソースでは収集していない（X の 6 化合物は [`datasets/cannabinoid-social-trends/`](../cannabinoid-social-trends/) が規制前後比較として収集している）。
 - **「YouTube（公開分）」**: 追跡している集計（[`data/processed/youtube_videos.csv`](data/processed/youtube_videos.csv)、182 動画）に含まれるか。raw だけ有ってまだ公開集計に入れていない run は `raw のみ`（provenance のレビュー待ち）。
 - **CBX はこの研究の対象外**（[`datasets/cbx-search-trends/`](../cbx-search-trends/) が担当）。`docs/audits/gt-summary.json` が 14 化合物なのはこの 1 件を含むため。

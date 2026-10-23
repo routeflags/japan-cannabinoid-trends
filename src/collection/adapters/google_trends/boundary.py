@@ -62,6 +62,7 @@ __all__ = [
     "CAPTURE_MANIFEST_VERSION",
     "CAPTURE_TIMEZONE",
     "MEASUREMENT_STUDY_ID",
+    "NO_DATA_SENTENCE",
     "BoundaryCaptureError",
     "Capture",
     "ParsedPoint",
@@ -121,6 +122,11 @@ _RANGE_LABEL_WITH_YEARS = re.compile(
     r"(?P<year2>\d{4})$"
 )
 _ISO_LABEL = re.compile(r"^(?P<year>\d{4})-(?P<month>\d{2})-(?P<day>\d{2})$")
+
+#: The sentence ``google-trends-mcp`` returns when a term is below Google
+#: Trends' volume threshold (measured live 2026-10-23, ``THC-O`` today 12-m).
+#: Recognized so the run records "no data" (missing) instead of an unknown line.
+NO_DATA_SENTENCE = "Google Trends returned no data"
 
 
 class BoundaryCaptureError(ValueError):
@@ -308,6 +314,14 @@ def parse_tool_result(result) -> ParsedSeries:
     lines = text.splitlines()
     if lines and lines[0].strip().startswith("Error:"):
         raise BoundaryCaptureError("collection_failed", lines[0].strip())
+    if text.strip().startswith(NO_DATA_SENTENCE):
+        # Google Trends answers a term below its volume threshold with this
+        # sentence instead of a series (measured 2026-10-23, THC-O today 12-m).
+        # It is a *missing* observation, not a malformed or failed capture:
+        # keep the sentence as the reason so a run can say "the source returned
+        # no data" without inventing zero weeks.  The caller still records a
+        # failed/absent outcome - a no-data answer is never 0 observations.
+        raise BoundaryCaptureError("no_data", text.strip())
 
     header_terms = None
     geo = ""

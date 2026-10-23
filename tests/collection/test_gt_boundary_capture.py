@@ -194,6 +194,24 @@ def test_parser_refuses_a_response_without_a_header():
         raise AssertionError("a header-less response must be refused")
 
 
+def test_below_threshold_answer_is_no_data_not_an_unknown_line():
+    """Below the volume threshold Google Trends answers with one sentence
+    (measured 2026-10-23, THC-O today 12-m).  That is a missing observation
+    with a stable reason code - not a malformed capture and not zero weeks."""
+
+    text = (
+        "Google Trends returned no data for the given terms and timeframe. "
+        "Try a broader timeframe or different terms."
+    )
+    try:
+        parse_tool_result(_envelope(text))
+    except BoundaryCaptureError as error:
+        assert error.codes == ["no_data"]
+        assert str(error).startswith("Google Trends returned no data")
+    else:  # pragma: no cover
+        raise AssertionError("a no-data answer must not produce a series")
+
+
 # ---------------------------------------------------------------------------
 # manifest validation + verify (spec §4.3 / §4.4)
 # ---------------------------------------------------------------------------

@@ -220,3 +220,37 @@ def test_fixtures_are_explicitly_synthetic():
         assert fixture["fixture_kind"] == "recorded_replay"
         assert "NOT a captured response" in fixture["description"]
         assert "data" in fixture["response"]
+
+
+# ---------------------------------------------------------------------------
+# A response the parser refuses is still evidence
+# ---------------------------------------------------------------------------
+
+
+def test_unparseable_response_keeps_the_verbatim_answer():
+    """Google Trends answers a below-threshold term with an error result, not
+    an empty table.  The adapter must record a *failed* collection (missing,
+    never zero) and keep the verbatim response as the payload: discarding the
+    answer loses the only evidence of why there is no series."""
+
+    answer = {
+        "isError": True,
+        "content": [
+            {"type": "text", "text": "Error: Not enough data to show a series"}
+        ],
+    }
+
+    def call(tool, params):
+        return answer
+
+    adapter = GoogleTrendsMcpAdapter(SessionMcpTransport(call=call))
+    result = adapter.collect(make_plan())
+
+    assert result.status == "failed"
+    assert result.completeness == "missing"
+    assert result.returned_count == 0
+    assert result.observations == []
+    assert result.raw == answer
+    assert result.errors[0]["code"] == "PARSE_FAILED"
+    assert result.errors[0]["reason_codes"] == ["collection_failed"]
+    assert "Not enough data" in result.errors[0]["message"]

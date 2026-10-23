@@ -19,7 +19,7 @@ cannabinoid-raw-collection
 
 ### 1.3 対象化合物（2026-10-24 更新）
 
-この研究が扱うのは **13 化合物**。当初は下記の「12ヶ月収集」7 化合物だけだったが、5年系列の追加収集（2026-10-23 に 4 化合物）で広がった。
+この研究が扱うのは **13 化合物**。当初は下記の「12ヶ月収集」7 化合物だけだったが、5年系列と 12ヶ月系列の追加収集（2026-10-23 に 4 化合物ずつ）で広がった。
 
 | キーワード | SKOS notation | 分類（`skos:broader`） | 12ヶ月単独 | 5年系列 |
 |-----------|----------------|---------|:------:|:------:|
@@ -27,18 +27,19 @@ cannabinoid-raw-collection
 | THC | `compound_thc` | major | ✅ | ✅（2026-10-23 再取得） |
 | CBG | `compound_cbg` | minor | ✅ | ✅（2026-10-23 再取得） |
 | HHC | `compound_hhc` | semisynthetic | ✅ | ✅（2026-10-23 再取得） |
-| THCV | `compound_thcv` | minor | データなし | ✅（2026-10-23 再取得） |
-| THC-O | `compound_thc_o` | semisynthetic | データなし | ✅ |
+| THCV | `compound_thcv` | minor | ✅（2026-10-23 再取得） | ✅（2026-10-23 再取得） |
+| THC-O | `compound_thc_o` | semisynthetic | データなし（2026-10-23 再確認） | ✅ |
 | THCH | `compound_thch` | minor | ✅ | ✅ |
 | CBN | `compound_cbn` | minor | ✅ | ✅ |
 | CRDH | `compound_crdh` | synthetic | ✅ | ✅ |
 | CRDP | `compound_crdp` | synthetic | ✅ | ✅ |
-| H4CBH | `compound_h4cbh` | semisynthetic | — | ✅ |
-| HHBD | `compound_hhbd` | semisynthetic | — | ✅ |
+| H4CBH | `compound_h4cbh` | semisynthetic | ✅（2026-10-23 追加） | ✅ |
+| HHBD | `compound_hhbd` | semisynthetic | ✅（2026-10-23 追加） | ✅ |
 | HHCH | `compound_hhch` | synthetic | ✅ | ✅ |
 
-- **「データなし」**: 取得はしたが Google Trends が閾値未満として系列を返さなかった（run `…-nodata`）。欠測であって 0 観測ではない。
+- **「データなし」**: 取得はしたが Google Trends が閾値未満として系列を返さなかった（旧 run `…-nodata`、または 2026-10-23 の `NO_DATA` 応答 §2.1.3）。欠測であって 0 観測ではない。
 - **5年系列は 13 化合物すべてが週次 raw を持つ**（2026-10-23 完了）。summary-only だった旧 baseline run（§2.1.1）は raw に残るが、どの化合物の引用元でもない。
+- **12ヶ月系列は 12 化合物が週次 raw を持ち、1 化合物（THC-O）は Google Trends が no data を返す**（§2.1.3）。
 - 分類は [`metadata/taxonomy/compound-taxonomy.skos.jsonld`](../../metadata/taxonomy/compound-taxonomy.skos.jsonld) の `skos:broader`（major / minor / semisynthetic / synthetic）に従う。
 - **CBX はこの研究の対象外**: [`datasets/cbx-search-trends/`](../cbx-search-trends/) が担当する（`gt-summary` の 14 化合物目はそこ由来）。
 - 12ヶ月・5年以外に、比較セットと共通スケール比較（`common-scale-*`）と「リキッド」系クエリの run もある（`data/raw/google_trends/`）。
@@ -115,6 +116,44 @@ cannabinoid-raw-collection
   化合物間の比較は共通スケール比較 run（`common-scale-*`）が担う。
 - 数値の正本は `docs/audits/gt-summary.json`（`processing.cli gt-summary` の生成物）。
   publication ページの 5年ブロックも同じコマンド（`--write`）が書く。
+
+### 2.1.3 12ヶ月系列（週次 raw、2026-10-23 追加）
+
+12ヶ月系列は 2026-10-02 の収集では 7 化合物分しかなく、THCV・THC-O は nodata、H4CBH・HHBD は未収集だった。
+2026-10-23 に 4 化合物を再取得した（`today 12-m`、geo JP、窓
+[`metadata/windows/2025-10-19_2026-10-18.json`](../../metadata/windows/2025-10-19_2026-10-18.json)、
+計画書 `metadata/plans/gt-12m-recollect-{thcv,thc-o,h4cbh,hhbd}.json`）。
+
+| 化合物 | run（`data/raw/google_trends/`） | 結果 | 週数 | 平均 | 非ゼロ週 |
+|---|---|---|---:|---:|---:|
+| HHBD | `20261023T161921Z-google-trends-hhbd-12m` | success | 53 | 52.8491 | 37 |
+| THCV | `20261023T161929Z-google-trends-thcv-12m` | success | 53 | 1.8868 | 1 |
+| H4CBH | `20261023T162128Z-google-trends-h4cbh-12m-r2` | success | 53 | 57.8868 | 51 |
+| THC-O | （catalog せず）`20261023T162326Z-google-trends-thc-o-12m-r3` | **NO_DATA** | — | — | — |
+
+- 観測範囲は 3 run とも `2025-10-19 〜 2026-10-18`（登録窓と一致、53 週）。
+- **THC-O は Google Trends が no data を返した**。応答本文は
+  “Google Trends returned no data for the given terms and timeframe. Try a broader timeframe or different terms.”
+  で、`errors[].code = NO_DATA` として記録する（§2.1.3 追記の parser 規則 `no_data`）。
+  `status=failed` のため L1 は **quarantine** に置き catalog しない（`.quarantine/` は Git 管理外）。
+  すなわち THC-O の 12ヶ月欠測は「収集失敗」ではなく「**ソースが系列を返さない**」だが、
+  パイプラインに「no data を採用済み記録として残す」状態が無いのが現状（`ISS-20261023-GT-006`）。
+- **古い版の再取得失敗も記録に残す**: 2026-10-23 の 1 回目の H4CBH・THC-O は parser が応答を解釈できず
+  `PARSE_FAILED` で quarantine になった（当時の実装は解釈失敗時に**応答本文を捨てていた**）。
+  本文を保全するよう `collect()` を直した後、H4CBH は 2 回目で成功し、THC-O は本文が no data と判明した。
+  失敗した run は `.quarantine/` に残している（Git 管理外、raw は不変）。
+- **公開ページの 12ヶ月平均はこの系列と一致しない**（2026-10-23 実測）:
+
+  | ページ | 記載の 12ヶ月平均 | 今回の系列 |
+  |---|---:|---|
+  | `research_h4cbh.html` | 56 | 57.8868 |
+  | `research_hhbd.html` | 33 | 52.8491 |
+  | `research_thcv.html` | 3.1 | 1.8868 |
+  | `research_thc-o.html` | 8.2 | 系列なし（NO_DATA） |
+
+  ページの 12ヶ月ブロックは手書きで、`processing.cli gt-summary` は 5年ブロックしか生成しない
+  （`--write` の置換対象も 5年のみ）。数値の訂正と 12ヶ月ブロックの生成器追加は `ISS-20261023-GT-006`。
+  本作業では**ページの 12ヶ月数値を書き換えていない**（公開内容の変更は審査対象）。
 
 ### 2.2 X (Twitter)
 

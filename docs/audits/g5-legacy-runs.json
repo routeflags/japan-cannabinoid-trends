@@ -3,7 +3,7 @@
   "profile": "legacy_audit",
   "schema_id": "collection-run-v1",
   "target_glob": "datasets/**/run_metadata.json",
-  "count": 46,
+  "count": 49,
   "raw_modified": false,
   "runs": [
     {
@@ -594,6 +594,36 @@
       "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261023T160436Z-google-trends-thcv-5y/run_metadata.json",
       "sha256": "0727f20df124c2fcfe9a88cdf989a5cb46c2cf84bbbf86d871f70228a0b624c1",
       "sha256_after": "0727f20df124c2fcfe9a88cdf989a5cb46c2cf84bbbf86d871f70228a0b624c1",
+      "unchanged": true
+    },
+    {
+      "profile": "legacy_audit",
+      "run_id": "20261023T161921Z-google-trends-hhbd-12m",
+      "status": "complete",
+      "missing_fields": [],
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261023T161921Z-google-trends-hhbd-12m/run_metadata.json",
+      "sha256": "404591b61918fed903e0ca777c7efa773fd2c163f0094aa8cf0427edf92ebb36",
+      "sha256_after": "404591b61918fed903e0ca777c7efa773fd2c163f0094aa8cf0427edf92ebb36",
+      "unchanged": true
+    },
+    {
+      "profile": "legacy_audit",
+      "run_id": "20261023T161929Z-google-trends-thcv-12m",
+      "status": "complete",
+      "missing_fields": [],
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261023T161929Z-google-trends-thcv-12m/run_metadata.json",
+      "sha256": "eedf65e2e92e628eef3f4aa864aed9b95d93fc9f22bf0211530694d1ae903a84",
+      "sha256_after": "eedf65e2e92e628eef3f4aa864aed9b95d93fc9f22bf0211530694d1ae903a84",
+      "unchanged": true
+    },
+    {
+      "profile": "legacy_audit",
+      "run_id": "20261023T162128Z-google-trends-h4cbh-12m-r2",
+      "status": "complete",
+      "missing_fields": [],
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261023T162128Z-google-trends-h4cbh-12m-r2/run_metadata.json",
+      "sha256": "047811819e1f9713745a28d3a9d0c5e8dade8710e1d255a5f96173db6323b26c",
+      "sha256_after": "047811819e1f9713745a28d3a9d0c5e8dade8710e1d255a5f96173db6323b26c",
       "unchanged": true
     },
     {

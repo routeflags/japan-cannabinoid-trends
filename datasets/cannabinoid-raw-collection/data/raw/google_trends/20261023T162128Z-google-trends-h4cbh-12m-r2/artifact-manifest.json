@@ -1,0 +1,33 @@
+{
+  "schema_version": "1.0.0",
+  "run_id": "20261023T162128Z-google-trends-h4cbh-12m-r2",
+  "artifacts": [
+    {
+      "artifact_id": "20261023T162128Z-google-trends-h4cbh-12m-r2-payload-json",
+      "path": "payload.json",
+      "artifact_type": "raw_response",
+      "format": "json",
+      "schema_id": "google-trends-mcp-tool-result-v1",
+      "byte_length": 1702,
+      "sha256": "82aace29eee8f21c454e395c8d5716582febce70c39216ada1bf0737ef5db14c",
+      "layer": "raw",
+      "completeness": "complete",
+      "record_count": 53
+    },
+    {
+      "artifact_id": "20261023T162128Z-google-trends-h4cbh-12m-r2-records-h4cbh-json",
+      "path": "records_h4cbh.json",
+      "artifact_type": "timeseries",
+      "format": "json",
+      "schema_id": "google-trends-interest-over-time-v1",
+      "byte_length": 3260,
+      "sha256": "6eec5ed0e595977e213d89d3eab6d84a38b61f08a49e860db64609ffd8979e02",
+      "layer": "raw",
+      "completeness": "complete",
+      "record_count": 53,
+      "derived_from": [
+        "20261023T162128Z-google-trends-h4cbh-12m-r2-payload-json"
+      ]
+    }
+  ]
+}

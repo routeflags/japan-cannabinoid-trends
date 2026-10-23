@@ -145,6 +145,14 @@ Date	<term>
   - value が相対指数の範囲外（0–100 外）→ `value_out_of_range`
 - `isError:true` または本文が `Error:` で始まる場合は
   失敗 capture として記録する（系列を作らない）。
+- **no data 応答（2026-10-23 追記）**: 本文が
+  `Google Trends returned no data for the given terms and timeframe. Try a broader timeframe or different terms.`
+  で始まる場合、それは**閾値未満で系列が存在しない**というソースの回答であり、
+  `no_data` という安定した reason code で拒否する（`text_line_unknown` にしない）。
+  実測: `20261023T162326Z-google-trends-thc-o-12m-r3`（THC-O / `today 12-m`）。
+  系列を作らないのは同じだが、**欠測（missing）であって collection failure ではない**ので、
+  アダプタは `errors[].code = NO_DATA` / `reason_codes = ["no_data"]` として記録する。
+  なお `status=failed` のままだと L1 は quarantine に置く（採用記録に残せない点は `ISS-20261023-GT-006` §3）。
 - **形式検証（必須）:** 行列を回す前に**最初の 1 capture だけ**で `verify` を実行し、
   実形式が parser の許容形と一致することを確認する。不一致の場合は行列を停止し、
   実形式を記録した上で parser を更新（変更として追跡）してから再開する。

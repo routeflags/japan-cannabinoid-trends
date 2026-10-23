@@ -196,7 +196,41 @@ class GoogleTrendsMcpAdapter:
                 },
             )
 
-        observations = self.extract_observations(raw)
+        try:
+            observations = self.extract_observations(raw)
+        except ValueError as error:
+            # The server answered, but the answer is not a series the
+            # documented rules cover: Google Trends reports a term below its
+            # volume threshold as an error result / plain sentence rather
+            # than an empty table.  The verbatim response is kept as the
+            # payload - what the server said is the only evidence of *why*
+            # there is no series, and a discarded answer cannot be re-read.
+            # It is still a failed collection: missing, never zero
+            # observations (AGENTS.md).
+            reason_codes = list(getattr(error, "codes", []) or [])
+            # ``no_data`` means the source answered "below the volume
+            # threshold" - a different state from a broken capture, so it gets
+            # its own code (AGENTS.md: missing is not collection_failed).
+            code = "NO_DATA" if "no_data" in reason_codes else "PARSE_FAILED"
+            return CollectionResult(
+                raw=raw,
+                payload_schema_id=self.payload_schema_id,
+                status="failed",
+                errors=[
+                    {
+                        "code": code,
+                        "message": str(error) or error.__class__.__name__,
+                        "reason_codes": reason_codes,
+                    }
+                ],
+                returned_count=0,
+                pagination_exhausted=None,
+                completeness="missing",
+                submitted_parameters={
+                    "tool": TOOL_INTEREST_OVER_TIME,
+                    **params,
+                },
+            )
         observed_min, observed_max = _observed_bounds(observations)
         return CollectionResult(
             raw=raw,

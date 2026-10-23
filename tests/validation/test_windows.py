@@ -369,6 +369,7 @@ def test_repository_window_registry_is_present_and_valid():
         "2021-10-10_2026-10-12",
         "2021-10-17_2026-10-18",
         "2025-10-12_2026-10-12",
+        "2025-10-19_2026-10-18",
     }
     for document in documents:
         assert validate_document(document, TEMPORAL_WINDOW_SCHEMA).valid is True
