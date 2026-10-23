@@ -850,8 +850,8 @@
     },
     {
       "path": "datasets/cannabinoid-raw-collection/data/processed/collection-summary.md",
-      "bytes": 4255,
-      "sha256": "f273b7b61e0c4664573cd2712b21b3d6c9a5630dfa36174bc122b27c2a0b0f84",
+      "bytes": 3348,
+      "sha256": "8f2366f09cf09a1d2405116d2726b9fa4df0b80512ac3940305c8643de254001",
       "format": "text",
       "sniff_state": "partial",
       "artifact_type": null,

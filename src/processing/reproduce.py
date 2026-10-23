@@ -422,10 +422,10 @@ NON_REPRODUCIBLE: dict[str, NonReproducible] = {
     ),
     "datasets/cannabinoid-raw-collection/data/processed/collection-summary.md": NonReproducible(
         reason=(
-            "Hand-written collection summary combining source-side totals.  The "
-            "Google Trends tables can be recomputed from tracked records_*.json, "
-            "but the X (316 items) and YouTube (182 items) totals cannot; no "
-            "executable transformation has ever existed for this file."
+            "Hand-written collection record for the source-side totals that cannot be "
+            "recomputed: the X (316 items) count and the billed cost of both sources. "
+            "YouTube counts are mirrored from youtube_runs.csv and Google Trends values "
+            "are not copied here at all (docs/audits/gt-summary.json is their source)."
         ),
         missing_inputs=(
             "X and YouTube raw collections for the 2026-10-02 run (not in the "
@@ -433,8 +433,9 @@ NON_REPRODUCIBLE: dict[str, NonReproducible] = {
         ),
         upstream_step="collection run -> hand-written summary",
         notes=(
-            "A future improvement is to regenerate the Google Trends tables and "
-            "mark the X/YouTube rows as source-reported rather than re-derived.",
+            "Kept hand-written on purpose. Regenerating the numbers it does carry is "
+            "impossible from a clone, so the file states which row set it owns instead "
+            "of duplicating values that live in tracked artifacts."
         ),
     ),
 }
