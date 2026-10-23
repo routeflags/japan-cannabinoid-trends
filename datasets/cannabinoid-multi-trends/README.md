@@ -1,15 +1,16 @@
-# Cannabinoid Multi-Trends
+# Cannabinoid Raw Collection
 
-**Study ID:** cannabinoid-multi-trends
+**表示名:** カンナビノイド 原データ収集（Google Trends / X / YouTube の生記録）
+**Study ID:** `cannabinoid-multi-trends`（ID とディレクトリ名は安定識別子。raw の `run_metadata.json` が参照する）
 **Created:** 2026-10-02
 **Status:** ACTIVE
-**Scope:** 主要カンナビノイド7化合物（CBD, THC, CBG, HHC, THCV, THC-O, THCH）のトレンドデータ収集
+**Scope:** 主要カンナビノイド化合物の Google Trends / X / YouTube 原記録の収集
 
 ---
 
 ## 概要
 
-既存の CBX/H4CBH/HHBD データに加え、主要カンナビノイド化合物の市場トレンド・SNS 言及・動画コンテンツデータを収集し、カバレッジを充足させる研究。
+既存の CBX/H4CBH/HHBD データに加え、主要カンナビノイド化合物の市場トレンド・SNS 言及・動画コンテンツの**原記録を集める研究**。集計・配布は別研究 [`datasets/cannabinoid-platform-trends/`](../cannabinoid-platform-trends/)（横断集計）が担当する。ここは「素材」、あちらは「配布物」。
 
 ## 研究質問
 

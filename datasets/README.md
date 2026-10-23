@@ -46,8 +46,8 @@ raw 列は**そのマシンのローカル checkout に存在する source**（G
 
 | study | 何を扱うか | ローカル raw source | 追跡されている成果物 | release |
 |---|---|---|---|---|
-| [`cannabinoid-platform-trends`](cannabinoid-platform-trends/README.md) | 化合物 × プラットフォームの集計（Google Trends 5年 + YouTube 採用分。X は owner 判断で除外） | 無し（コミット済み証拠から生成） | `data/processed/` 5 ファイル、`metadata/schema/` 4 | ✓ |
-| [`cannabinoid-multi-trends`](cannabinoid-multi-trends/README.md) | 主要 7 化合物（+拡張）の Google Trends 5年/12ヶ月、X、YouTube | `google_trends`（追跡）, `x`, `youtube` | `data/raw/google_trends/`、`data/interim/` 1、`data/processed/collection-summary.md`、`metadata/`（data-catalog + 収集計画 9） | ✓ |
+| [`cannabinoid-platform-trends`](cannabinoid-platform-trends/README.md) | **横断集計（配布用）**: 化合物 × プラットフォームの観測表（Google Trends 5年 + YouTube 採用分。X は owner 判断で除外） | 無し（コミット済み証拠から生成） | `data/processed/` 5 ファイル、`metadata/schema/` 4 | ✓ |
+| [`cannabinoid-multi-trends`](cannabinoid-multi-trends/README.md) | **原データ収集**: カンナビノイド各化合物の Google Trends 5年/12ヶ月、X、YouTube の生記録 | `google_trends`（追跡）, `x`, `youtube` | `data/raw/google_trends/`、`data/interim/` 1、`data/processed/collection-summary.md`、`metadata/`（data-catalog + 収集計画 9） | ✓ |
 | [`cbx-search-trends`](cbx-search-trends/README.md) | CBX / H4CBH / HHBD の検索需要（Google Trends + Search Console） | `google_trends`（追跡）, `gsc` | `data/raw/google_trends/`、`analysis/` 2 | ✓ |
 | [`cbx-social-trends`](cbx-social-trends/README.md) | CBX の SNS 言及（X / YouTube / Instagram / TikTok） | `x`, `youtube`, `instagram`, `tiktok` | `analysis/` 8、`data/processed/` 4（YouTube 24 件フィルタ、X 月次粗集計） | ✓ |
 | [`cannabinoid-social-trends`](cannabinoid-social-trends/README.md) | 規制前後の X 言及 | `x` | `README.md` / `methodology.md` のみ | — |
@@ -58,6 +58,8 @@ raw 列は**そのマシンのローカル checkout に存在する source**（G
 | [`cbx-product-coa`](cbx-product-coa/README.md) | 市流通 CBX 製品の規格分析（COA） | `coa` | `README.md` のみ | — |
 
 `release` 列は `metadata/datapackage.json` の `resources` に載っているか（= 配布データパッケージの対象か）。載っていない研究は調査・支援用で、公開物の根拠には使えるが配布物ではない。
+
+**どの study がどれか**（似た名前の 2 研究）: `cannabinoid-multi-trends` は**原データ収集**、`cannabinoid-platform-trends` は**横断集計（配布用）**。`study_id` とディレクトリ名は安定識別子で、raw の `study_id` と配布パッケージの resource 名がこれを参照するため変えない（表示名は `metadata/studies/study-registry.json` の `title`）。
 
 ## どこから読むか
 

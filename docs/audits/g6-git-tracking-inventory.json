@@ -4,23 +4,32 @@
   "spec": "docs/plans/20261013f.md §15 (local plan; not tracked)",
   "target_root": "datasets",
   "include_private": false,
-  "count": 210,
+  "count": 211,
   "extra_count": 42,
   "raw_modified": false,
   "state_summary": {
-    "absent": 15,
-    "ignored": 1,
-    "tracked": 236
+    "absent": 16,
+    "tracked": 237
   },
   "entries": [
+    {
+      "path": "datasets/README.md",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "af59d0c4e700dfc93b8b073f8bac02fa5a6746ffd99558de6ee13d35937c42d5",
+      "sha256_after": "af59d0c4e700dfc93b8b073f8bac02fa5a6746ffd99558de6ee13d35937c42d5",
+      "unchanged": true
+    },
     {
       "path": "datasets/cannabinoid-multi-trends/README.md",
       "exists": true,
       "state": "tracked",
       "tracked": true,
       "ignored": false,
-      "sha256": "9b0d92367b470eb7c03c6b7b1e91e7e84a55298df7059189e83905de9918281b",
-      "sha256_after": "9b0d92367b470eb7c03c6b7b1e91e7e84a55298df7059189e83905de9918281b",
+      "sha256": "6af1c825fa31dcd96191cb4bdf473df079d18747c1313048972eada1e115eb24",
+      "sha256_after": "6af1c825fa31dcd96191cb4bdf473df079d18747c1313048972eada1e115eb24",
       "unchanged": true
     },
     {
@@ -1359,8 +1368,8 @@
       "state": "tracked",
       "tracked": true,
       "ignored": false,
-      "sha256": "dfbe3fe46ce5fffcfc6a7ac3903f80b26e1c03d23891e81d71b49afce616aee2",
-      "sha256_after": "dfbe3fe46ce5fffcfc6a7ac3903f80b26e1c03d23891e81d71b49afce616aee2",
+      "sha256": "e6c21330f10661c08cfd04da9a04b6741dd53131c154de522025787830594ccd",
+      "sha256_after": "e6c21330f10661c08cfd04da9a04b6741dd53131c154de522025787830594ccd",
       "unchanged": true
     },
     {
@@ -2373,10 +2382,10 @@
     },
     {
       "path": ".venv",
-      "exists": true,
-      "state": "ignored",
+      "exists": false,
+      "state": "absent",
       "tracked": false,
-      "ignored": true,
+      "ignored": false,
       "kind": "local_only"
     },
     {
@@ -2456,7 +2465,7 @@
   "ignore_warnings": [
     {
       "code": "GITIGNORE_BLANKET_PATTERN",
-      "path": ".gitignore:45",
+      "path": ".gitignore:54",
       "pattern": "*.db",
       "note": "blanket ignore pattern risks hiding research data; keep exclusions scoped"
     }

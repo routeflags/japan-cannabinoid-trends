@@ -1,6 +1,9 @@
-# Cannabinoid Platform Trends
+# Cannabinoid Cross-Platform Aggregates
 
-**Study ID:** `cannabinoid-platform-trends`
+**表示名:** カンナビノイド 横断集計（配布用データセット）
+**Study ID:** `cannabinoid-platform-trends`（ID とディレクトリ名は安定識別子。配布データパッケージ `metadata/datapackage.json` の resource 名がこれを参照する）
+
+**配布名:** この研究の集計結果は、リリース「Japan Cannabinoid Platform Trends Dataset 2026」（DOI [10.5281/zenodo.23390594](https://doi.org/10.5281/zenodo.23390594)）の中核をなす。研究名とリリース名が違うのは、リリース名を DOI 安定のために固定しているため。
 
 This study is the dataset-release track for comparing domestic cannabinoid
 trend observations across platforms. The first release slice uses only:
