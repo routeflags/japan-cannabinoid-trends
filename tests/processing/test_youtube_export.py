@@ -60,7 +60,8 @@ def test_published_run_is_exported_without_the_description(tmp_path):
     # The description is the field that carries third-party contact addresses,
     # so it must never reach the export.
     assert "someone@example.com" not in json.dumps(result["videos"])
-    assert result["runs"][0]["status"] == "exported"
+    assert [run["run_id"] for run in result["runs"]] == ["20261002T064739Z-youtube-cbd"]
+    assert result["withheld"] == []
 
 
 def test_unreviewed_and_withdrawn_runs_are_withheld_with_a_reason(tmp_path):
@@ -78,10 +79,13 @@ def test_unreviewed_and_withdrawn_runs_are_withheld_with_a_reason(tmp_path):
     result = build_video_export(study)
 
     assert result["videos"] == []
-    statuses = {run["run_id"]: run["status"] for run in result["runs"]}
-    assert "10-year series" in statuses["20261004T142147Z-youtube-cbd-10years"]
-    assert "YouTube Data API v3" in statuses["20261009T160738Z-youtube-cbd-dated"]
-    assert statuses["20260101T000000Z-youtube-unreviewed"] == (
+    # Nothing about a withheld run reaches the artifact: not its videos, not its
+    # run row.  The reason is kept for the operator and for the code only.
+    assert result["runs"] == []
+    withheld = {run["run_id"]: run["status"] for run in result["withheld"]}
+    assert "10-year series" in withheld["20261004T142147Z-youtube-cbd-10years"]
+    assert "YouTube Data API v3" in withheld["20261009T160738Z-youtube-cbd-dated"]
+    assert withheld["20260101T000000Z-youtube-unreviewed"] == (
         "provenance not reviewed for publication"
     )
 

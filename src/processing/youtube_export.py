@@ -45,7 +45,6 @@ RUN_COLUMNS = (
     "video_rows",
     "error_payloads",
     "unreadable_files",
-    "status",
 )
 
 #: Runs whose videos may be exported.  An allowlist, not a pattern: a run is
@@ -130,6 +129,7 @@ def build_video_export(study_dir) -> dict:
     raw = Path(study_dir) / "data" / "raw" / "youtube"
     videos: list[dict] = []
     runs: list[dict] = []
+    withheld: list[dict] = []
     for run_dir in sorted(p for p in raw.glob("*") if p.is_dir()) if raw.is_dir() else []:
         status = _status(run_dir.name)
         metadata = {}
@@ -144,17 +144,12 @@ def build_video_export(study_dir) -> dict:
         errors = 0
         unreadable = 0
         if status != "exported":
-            runs.append(
-                {
-                    "run_id": run_dir.name,
-                    "search_term": metadata.get("search_term", ""),
-                    "collected_at": metadata.get("collection_timestamp", ""),
-                    "video_rows": 0,
-                    "error_payloads": 0,
-                    "unreadable_files": 0,
-                    "status": status,
-                }
-            )
+            # Withheld runs are not written anywhere in the artifact: the ones
+            # that matter here were collected with means this repository has
+            # since excluded, and a published table must not read as an account
+            # of them.  The reason stays in code (EXCLUSION_REASONS) and in the
+            # operator's summary, never in the data.
+            withheld.append({"run_id": run_dir.name, "status": status})
             continue
         for payload_path in sorted(run_dir.glob("*.json")):
             if payload_path.name == "run_metadata.json":
@@ -184,11 +179,10 @@ def build_video_export(study_dir) -> dict:
                 "video_rows": video_rows,
                 "error_payloads": errors,
                 "unreadable_files": unreadable,
-                "status": status,
             }
         )
     videos.sort(key=lambda r: (r["run_id"], r["video_id"]))
-    return {"videos": videos, "runs": runs}
+    return {"videos": videos, "runs": runs, "withheld": withheld}
 
 
 def write_export(result: dict, output_dir) -> list[Path]:
@@ -202,7 +196,7 @@ def write_export(result: dict, output_dir) -> list[Path]:
     ):
         path = out / name
         with path.open("w", encoding="utf-8", newline="") as handle:
-            writer = csv.DictWriter(handle, fieldnames=list(columns))
+            writer = csv.DictWriter(handle, fieldnames=list(columns), lineterminator="\n")
             writer.writeheader()
             writer.writerows(rows)
         written.append(path)

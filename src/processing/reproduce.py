@@ -412,12 +412,12 @@ NON_REPRODUCIBLE: dict[str, NonReproducible] = {
         missing_inputs=(
             "datasets/cannabinoid-raw-collection/data/raw/youtube/ (local only)",
         ),
-        upstream_step="raw (YouTube run directories) -> per-run status table",
+        upstream_step="raw (YouTube run directories) -> published-run table",
         notes=(
-            "Lists every run with its status: exported, or the reason it is withheld "
-            "(incomplete 10-year series, YouTube Data API v3 runs withdrawn "
-            "2026-10-12, methodology test, provenance not reviewed). A withheld run "
-            "therefore never reads as a run with zero videos.",
+            "Lists the published runs only. Runs excluded by policy are deliberately "
+            "absent from the artifact (one of them came from a collection means this "
+            "repository no longer uses, and a published table must not read as an "
+            "account of it); the exclusion rules live in processing.youtube_export.",
         ),
     ),
     "datasets/cannabinoid-raw-collection/data/processed/collection-summary.md": NonReproducible(

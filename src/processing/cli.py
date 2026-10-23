@@ -362,18 +362,13 @@ def cmd_youtube_export(args) -> int:
     except OSError as error:
         _err(f"youtube export failed: {error}")
         return EXIT_IO
-    exported = [run for run in result["runs"] if run["status"] == "exported"]
     summary = {
         "study_dir": args.study_dir,
         "output_dir": args.output_dir,
-        "run_count": len(result["runs"]),
-        "exported_run_count": len(exported),
+        "exported_run_count": len(result["runs"]),
         "video_row_count": len(result["videos"]),
-        "withheld": [
-            {"run_id": run["run_id"], "status": run["status"]}
-            for run in result["runs"]
-            if run["status"] != "exported"
-        ],
+        "withheld_run_count": len(result["withheld"]),
+        "withheld": result["withheld"],
         "written": [str(path) for path in paths],
     }
     if args.format == "json":
@@ -381,8 +376,9 @@ def cmd_youtube_export(args) -> int:
     else:
         print(
             f"youtube export written: {args.output_dir} "
-            f"runs={summary['run_count']} exported={summary['exported_run_count']} "
-            f"videos={summary['video_row_count']} withheld={len(summary['withheld'])}"
+            f"exported_runs={summary['exported_run_count']} "
+            f"videos={summary['video_row_count']} "
+            f"withheld_runs={summary['withheld_run_count']} (not written)"
         )
     return EXIT_OK
 
