@@ -9,14 +9,31 @@
 
 ## 決定（owner, 2026-10-24）
 
-**選択肢 1（8 語を 5年で収集）**を採用する。窓は `2021-10-17_2026-10-18` で、main5 の観測範囲とは 1 週ずれる別観測になる。plan 案は下記「収集仕様」。
+**選択肢 1（8 語を 5年で収集）**を採用する。窓は `2021-10-17_2026-10-18` で、main5 の観測範囲とは 1 週ずれる別観測になる。plan は下記「収集仕様」の 8 件を作成し、各 1 run を収集した（結果は下記「実施」）。
+
+## 実施（2026-10-24）
+
+8 plan（`datasets/cannabinoid-raw-collection/metadata/plans/gt-5y-rikiddo-*.json`）を作成し、1 語 1 run で live 収集した（`today 5-y` / geo JP、窓 `2021-10-17_2026-10-18`）。429 は発生せず、全 8 run が 1 回の fetch で確定した。7 語は 262 週の系列を catalog し、THC-O リキッドは系列なし（`NO_DATA`、quarantine。欠測であって 0 観測ではない）。新規 8 run は main5（`2021-10-10 .. 2026-10-11`）とは別窓の別観測であり、単独系列の値を main5 と直接比較しない。
+
+| クエリ | run | 系列 | 週数 | 平均 | 非ゼロ週 |
+|---|---|---|---|---|---|
+| THCV リキッド | `20261023T185238Z-google-trends-ja-rikiddo-5y-thcv` | あり | 262 | 0.3817 | 1 |
+| THC-O リキッド | `20261023T185246Z-google-trends-ja-rikiddo-5y-thco` | なし（`NO_DATA`、quarantine） | — | — | — |
+| THCH リキッド | `20261023T185305Z-google-trends-ja-rikiddo-5y-thch` | あり | 262 | 6.0802 | 52 |
+| CRDH リキッド | `20261023T185311Z-google-trends-ja-rikiddo-5y-crdh` | あり | 262 | 0.6069 | 2 |
+| CRDP リキッド | `20261023T185317Z-google-trends-ja-rikiddo-5y-crdp` | あり | 262 | 1.1603 | 4 |
+| H4CBH リキッド | `20261023T185325Z-google-trends-ja-rikiddo-5y-h4cbh` | あり | 262 | 0.8168 | 4 |
+| HHBD リキッド | `20261023T185332Z-google-trends-ja-rikiddo-5y-hhbd` | あり | 262 | 0.8168 | 4 |
+| HHCH リキッド | `20261023T185339Z-google-trends-ja-rikiddo-5y-hhch` | あり | 262 | 1.9008 | 14 |
+
+平均は系列値の単純平均（derived）。観測範囲はいずれも `2021-10-17 .. 2026-10-18`、`window_id` は `2021-10-17_2026-10-18`。
 
 ## 概要
 
-「リキッド」系クエリの 5年系列は **5/13 語**が既収集、**8 語が未収集**である。
-唯一の 5年リキッド run は `20261012T064246Z-google-trends-ja-rikiddo-5y-main5`
-（CBD / CBG / CBN / HHC / THC リキッド）であり、
-未収集は **THCV / THC-O / THCH / H4CBH / HHBD / HHCH / CRDP / CRDH リキッド**の 8 語である。
+「リキッド」系クエリの 5年系列は、main5 の 5 語（CBD / CBG / CBN / HHC / THC リキッド）に加え、
+新規 8 run で 7 語（THCV / THCH / H4CBH / HHBD / HHCH / CRDP / CRDH リキッド）が系列を持つ。
+THC-O リキッドは 5年でも系列なし（`NO_DATA`、quarantine。欠測であって 0 観測ではない）。
+すなわち 5年リキッドは 13 語中 12 語が系列あり、1 語が系列なしである。
 12ヶ月は 13 語すべてを照会済みだが、12ヶ月の有無から 5年の有無は推定できない（下記）。
 
 ## 実測（tracked raw のみ）
@@ -37,6 +54,25 @@
 
 `run_metadata.json` の `queries` は上記 5 語のみ。`zero_status` は 5 語すべて `low_volume`。
 rate-limit 注記: CBD リキッド初回 429 → 約5分 backoff 後に成功（`rate_limit_429` に記録あり）。
+
+### 5年: 新規 8 語（別窓）の収集結果
+
+窓 `2021-10-17_2026-10-18`（`today 5-y`、geo JP）の 1 語 1 run。観測範囲はいずれも `2021-10-17 .. 2026-10-18`。
+平均は系列値の単純平均（derived）。
+
+| クエリ | run | 週数 | 観測範囲 | 平均 | 非ゼロ週 |
+|---|---|---|---|---|---|
+| THCV リキッド | `20261023T185238Z-google-trends-ja-rikiddo-5y-thcv` | 262 | 2021-10-17 .. 2026-10-18 | 0.3817 | 1 |
+| THCH リキッド | `20261023T185305Z-google-trends-ja-rikiddo-5y-thch` | 262 | 2021-10-17 .. 2026-10-18 | 6.0802 | 52 |
+| CRDH リキッド | `20261023T185311Z-google-trends-ja-rikiddo-5y-crdh` | 262 | 2021-10-17 .. 2026-10-18 | 0.6069 | 2 |
+| CRDP リキッド | `20261023T185317Z-google-trends-ja-rikiddo-5y-crdp` | 262 | 2021-10-17 .. 2026-10-18 | 1.1603 | 4 |
+| H4CBH リキッド | `20261023T185325Z-google-trends-ja-rikiddo-5y-h4cbh` | 262 | 2021-10-17 .. 2026-10-18 | 0.8168 | 4 |
+| HHBD リキッド | `20261023T185332Z-google-trends-ja-rikiddo-5y-hhbd` | 262 | 2021-10-17 .. 2026-10-18 | 0.8168 | 4 |
+| HHCH リキッド | `20261023T185339Z-google-trends-ja-rikiddo-5y-hhch` | 262 | 2021-10-17 .. 2026-10-18 | 1.9008 | 14 |
+
+THC-O リキッドは系列なし: `20261023T185246Z-google-trends-ja-rikiddo-5y-thco` は `execution.status = failed` / `errors[].code = NO_DATA` のため quarantine され、catalog されない。窓 `window_id` は `2021-10-17_2026-10-18`。
+
+H4CBH と HHBD は平均・非ゼロ週が一致するが、週次値は異なる別系列である（payload で確認）。
 
 ### 12ヶ月: phase-a（5 語）+ phase-b（8 語）で 13 語を照会、系列あり 8/13
 
@@ -113,10 +149,9 @@ phase-b `20261012T061614Z-google-trends-ja-rikiddo-phase-b-12m`:
 既存 plan `datasets/cannabinoid-raw-collection/metadata/plans/gt-5y-recollect-*.json` は
 すべて `*-general-ja`（bare）用であり、リキッド用 plan は存在しない。
 
-## 収集仕様（作成せず、案のみ。未承認・未実施）
+## 収集仕様
 
-option 1 / option 3 の新規収集は **owner 承認が必要**。以下は承認申請のための案であり、
-`metadata/plans/`・`metadata/queries/query-registry.json`・`README.md`・`methodology.md` には何も書いていない。
+option 1 は owner 承認済みで、下記の 8 plan を `datasets/cannabinoid-raw-collection/metadata/plans/gt-5y-rikiddo-*.json` に作成し、各 1 run を収集した（結果は上記「実施」)。
 
 - 共通フィールド（8 plan 共通）: `study_id = cannabinoid-raw-collection`、`source_id = google-trends`、
   `collector_id = google-trends-mcp`（`config/collectors.json` で `active` の唯一の collector）、
@@ -130,10 +165,8 @@ option 1 / option 3 の新規収集は **owner 承認が必要**。以下は承�
   各単独系列はピーク=100 正規化のため 8 語と main5 の 5 語を直接比較できない。
   化合物間比較には common-scale 収集が別途必要（bare 化合物分は ISS-20261023-GT-009 の
   `gt-5y-common-scale-setA..D` が担当。リキッド common-scale は本 issue の範囲外）。
-- `run_id` 規約: `<収集時刻>Z-google-trends-ja-rikiddo-5y-rikiddo8`
-  （例: 収集実行時に `2026102XT......Z-google-trends-ja-rikiddo-5y-rikiddo8` を採番。
-  main5 の `20261012T064246Z-google-trends-ja-rikiddo-5y-main5` に倣い、8 語バッチを 1 run にまとめる。
-  時刻部分は実行時に確定するため plan には書かない）。
+- `run_id` 規約: `<収集時刻>Z-google-trends-ja-rikiddo-5y-<slug>`（1 語 1 run。
+  例: `20261023T185238Z-google-trends-ja-rikiddo-5y-thcv`。時刻部分は実行時に確定するため plan には書かない）。
 - 費用: 無料。`google-trends-mcp` は npm パッケージ v0.1.1 で API キー不要
   （`docs/provenance/collector-inventory.md`: 「API キー不要」、`config/collectors.json` の evidence 同旨）。
 - 8 plan の差分は `plan_id` / `query_id` / `query.text` / `query.compound_id` のみ。代表 1 件の全文と残り 7 件の差分表を下記に示す。
@@ -217,8 +250,8 @@ PYTHONPATH=src python3 -c "import json; print([q['query_id'] for q in json.load(
 ## 完了条件
 
 - [x] 方針の決定（owner）: option 1（8 語を 5年で収集、2026-10-24）
-- [ ] 決定に応じた実施（8 語の収集 run）
-- [ ] `README.md` のキーワード表の「未収集」注記が解消（または恒久的な範囲注記になる）
+- [x] 決定に応じた実施（8 語の収集 run: 7 語が系列あり、THC-O は系列なしとして記録）
+- [x] `README.md` のキーワード表の「未収集」注記が解消（または恒久的な範囲注記になる）
 
 ## owner への決定依頼
 

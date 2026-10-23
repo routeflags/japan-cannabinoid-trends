@@ -3,16 +3,16 @@
   "profile": "provenance_assessment",
   "schema_id": "collection-run-v1",
   "target_glob": "datasets/**/run_metadata.json",
-  "count": 54,
+  "count": 61,
   "raw_modified": false,
   "summary": {
     "readiness": {
       "not_ready": 29,
-      "ready": 25
+      "ready": 32
     },
-    "mean_completeness": 0.5177,
-    "strict_valid": 25,
-    "integrity_verified": 25
+    "mean_completeness": 0.573,
+    "strict_valid": 32,
+    "integrity_verified": 32
   },
   "runs": [
     {
@@ -3650,6 +3650,461 @@
         "artifact_ids": [
           "20261023T171726Z-google-trends-5y-common-scale-setD-comparison-cbd-thc-hhch-thc-o-json",
           "20261023T171726Z-google-trends-5y-common-scale-setD-payload-json"
+        ],
+        "transformations": []
+      },
+      "evidence_refs": []
+    },
+    {
+      "run_id": "20261023T185238Z-google-trends-ja-rikiddo-5y-thcv",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261023T185238Z-google-trends-ja-rikiddo-5y-thcv/run_metadata.json",
+      "sha256": "5c49feb475a634c37d3a8a156cd941f332effdd6a3c107415d6938c6183ee113",
+      "sha256_after": "5c49feb475a634c37d3a8a156cd941f332effdd6a3c107415d6938c6183ee113",
+      "unchanged": true,
+      "strict_valid": true,
+      "strict_error_codes": [],
+      "completeness": {
+        "total": 22,
+        "verified": 22,
+        "score": 1.0,
+        "missing": [],
+        "essential_missing": []
+      },
+      "confidence": {
+        "fields": {
+          "schema_version": "observed",
+          "run_id": "observed",
+          "study_id": "observed",
+          "source_id": "observed",
+          "purpose": "observed",
+          "collector": "observed",
+          "collector.collector_id": "observed",
+          "collector.adapter_id": "observed",
+          "collection_started_at": "observed",
+          "query_provenance": "observed",
+          "query_provenance.query_id": "observed",
+          "query_provenance.submitted_query": "observed",
+          "temporal_provenance": "observed",
+          "temporal_provenance.window_id": "observed",
+          "temporal_provenance.requested_start": "observed",
+          "temporal_provenance.requested_end_exclusive": "observed",
+          "temporal_provenance.granularity": "observed",
+          "temporal_provenance.timezone": "observed",
+          "execution": "observed",
+          "execution.status": "observed",
+          "execution.returned_count": "observed",
+          "execution.errors": "observed"
+        },
+        "observed_count": 22,
+        "unknown_count": 0
+      },
+      "integrity": {
+        "manifest_reference": "artifact-manifest.json",
+        "manifest_present": true,
+        "manifest_valid": true,
+        "verified": true,
+        "artifact_issues": [],
+        "note": ""
+      },
+      "readiness": "ready",
+      "readiness_reasons": [
+        "strict valid, references resolve, artifacts verified"
+      ],
+      "lineage": {
+        "run_id": "20261023T185238Z-google-trends-ja-rikiddo-5y-thcv",
+        "artifact_ids": [
+          "20261023T185238Z-google-trends-ja-rikiddo-5y-thcv-payload-json",
+          "20261023T185238Z-google-trends-ja-rikiddo-5y-thcv-records-thcv-リキッド-json"
+        ],
+        "transformations": []
+      },
+      "evidence_refs": []
+    },
+    {
+      "run_id": "20261023T185305Z-google-trends-ja-rikiddo-5y-thch",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261023T185305Z-google-trends-ja-rikiddo-5y-thch/run_metadata.json",
+      "sha256": "c1a35eb8b1f4b11363337bc18567d63871d0712a5d0dc0c719326015b47d8940",
+      "sha256_after": "c1a35eb8b1f4b11363337bc18567d63871d0712a5d0dc0c719326015b47d8940",
+      "unchanged": true,
+      "strict_valid": true,
+      "strict_error_codes": [],
+      "completeness": {
+        "total": 22,
+        "verified": 22,
+        "score": 1.0,
+        "missing": [],
+        "essential_missing": []
+      },
+      "confidence": {
+        "fields": {
+          "schema_version": "observed",
+          "run_id": "observed",
+          "study_id": "observed",
+          "source_id": "observed",
+          "purpose": "observed",
+          "collector": "observed",
+          "collector.collector_id": "observed",
+          "collector.adapter_id": "observed",
+          "collection_started_at": "observed",
+          "query_provenance": "observed",
+          "query_provenance.query_id": "observed",
+          "query_provenance.submitted_query": "observed",
+          "temporal_provenance": "observed",
+          "temporal_provenance.window_id": "observed",
+          "temporal_provenance.requested_start": "observed",
+          "temporal_provenance.requested_end_exclusive": "observed",
+          "temporal_provenance.granularity": "observed",
+          "temporal_provenance.timezone": "observed",
+          "execution": "observed",
+          "execution.status": "observed",
+          "execution.returned_count": "observed",
+          "execution.errors": "observed"
+        },
+        "observed_count": 22,
+        "unknown_count": 0
+      },
+      "integrity": {
+        "manifest_reference": "artifact-manifest.json",
+        "manifest_present": true,
+        "manifest_valid": true,
+        "verified": true,
+        "artifact_issues": [],
+        "note": ""
+      },
+      "readiness": "ready",
+      "readiness_reasons": [
+        "strict valid, references resolve, artifacts verified"
+      ],
+      "lineage": {
+        "run_id": "20261023T185305Z-google-trends-ja-rikiddo-5y-thch",
+        "artifact_ids": [
+          "20261023T185305Z-google-trends-ja-rikiddo-5y-thch-payload-json",
+          "20261023T185305Z-google-trends-ja-rikiddo-5y-thch-records-thch-リキッド-json"
+        ],
+        "transformations": []
+      },
+      "evidence_refs": []
+    },
+    {
+      "run_id": "20261023T185311Z-google-trends-ja-rikiddo-5y-crdh",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261023T185311Z-google-trends-ja-rikiddo-5y-crdh/run_metadata.json",
+      "sha256": "e5c5e1d1eb6d3c57a60b1d1e42d4a5f4cd4613b89a25f4306247eb4147ccbba4",
+      "sha256_after": "e5c5e1d1eb6d3c57a60b1d1e42d4a5f4cd4613b89a25f4306247eb4147ccbba4",
+      "unchanged": true,
+      "strict_valid": true,
+      "strict_error_codes": [],
+      "completeness": {
+        "total": 22,
+        "verified": 22,
+        "score": 1.0,
+        "missing": [],
+        "essential_missing": []
+      },
+      "confidence": {
+        "fields": {
+          "schema_version": "observed",
+          "run_id": "observed",
+          "study_id": "observed",
+          "source_id": "observed",
+          "purpose": "observed",
+          "collector": "observed",
+          "collector.collector_id": "observed",
+          "collector.adapter_id": "observed",
+          "collection_started_at": "observed",
+          "query_provenance": "observed",
+          "query_provenance.query_id": "observed",
+          "query_provenance.submitted_query": "observed",
+          "temporal_provenance": "observed",
+          "temporal_provenance.window_id": "observed",
+          "temporal_provenance.requested_start": "observed",
+          "temporal_provenance.requested_end_exclusive": "observed",
+          "temporal_provenance.granularity": "observed",
+          "temporal_provenance.timezone": "observed",
+          "execution": "observed",
+          "execution.status": "observed",
+          "execution.returned_count": "observed",
+          "execution.errors": "observed"
+        },
+        "observed_count": 22,
+        "unknown_count": 0
+      },
+      "integrity": {
+        "manifest_reference": "artifact-manifest.json",
+        "manifest_present": true,
+        "manifest_valid": true,
+        "verified": true,
+        "artifact_issues": [],
+        "note": ""
+      },
+      "readiness": "ready",
+      "readiness_reasons": [
+        "strict valid, references resolve, artifacts verified"
+      ],
+      "lineage": {
+        "run_id": "20261023T185311Z-google-trends-ja-rikiddo-5y-crdh",
+        "artifact_ids": [
+          "20261023T185311Z-google-trends-ja-rikiddo-5y-crdh-payload-json",
+          "20261023T185311Z-google-trends-ja-rikiddo-5y-crdh-records-crdh-リキッド-json"
+        ],
+        "transformations": []
+      },
+      "evidence_refs": []
+    },
+    {
+      "run_id": "20261023T185317Z-google-trends-ja-rikiddo-5y-crdp",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261023T185317Z-google-trends-ja-rikiddo-5y-crdp/run_metadata.json",
+      "sha256": "27e7eb2d55090d049b48559e68ba42a89a7892f76dc5810085c01609711dd2d6",
+      "sha256_after": "27e7eb2d55090d049b48559e68ba42a89a7892f76dc5810085c01609711dd2d6",
+      "unchanged": true,
+      "strict_valid": true,
+      "strict_error_codes": [],
+      "completeness": {
+        "total": 22,
+        "verified": 22,
+        "score": 1.0,
+        "missing": [],
+        "essential_missing": []
+      },
+      "confidence": {
+        "fields": {
+          "schema_version": "observed",
+          "run_id": "observed",
+          "study_id": "observed",
+          "source_id": "observed",
+          "purpose": "observed",
+          "collector": "observed",
+          "collector.collector_id": "observed",
+          "collector.adapter_id": "observed",
+          "collection_started_at": "observed",
+          "query_provenance": "observed",
+          "query_provenance.query_id": "observed",
+          "query_provenance.submitted_query": "observed",
+          "temporal_provenance": "observed",
+          "temporal_provenance.window_id": "observed",
+          "temporal_provenance.requested_start": "observed",
+          "temporal_provenance.requested_end_exclusive": "observed",
+          "temporal_provenance.granularity": "observed",
+          "temporal_provenance.timezone": "observed",
+          "execution": "observed",
+          "execution.status": "observed",
+          "execution.returned_count": "observed",
+          "execution.errors": "observed"
+        },
+        "observed_count": 22,
+        "unknown_count": 0
+      },
+      "integrity": {
+        "manifest_reference": "artifact-manifest.json",
+        "manifest_present": true,
+        "manifest_valid": true,
+        "verified": true,
+        "artifact_issues": [],
+        "note": ""
+      },
+      "readiness": "ready",
+      "readiness_reasons": [
+        "strict valid, references resolve, artifacts verified"
+      ],
+      "lineage": {
+        "run_id": "20261023T185317Z-google-trends-ja-rikiddo-5y-crdp",
+        "artifact_ids": [
+          "20261023T185317Z-google-trends-ja-rikiddo-5y-crdp-payload-json",
+          "20261023T185317Z-google-trends-ja-rikiddo-5y-crdp-records-crdp-リキッド-json"
+        ],
+        "transformations": []
+      },
+      "evidence_refs": []
+    },
+    {
+      "run_id": "20261023T185325Z-google-trends-ja-rikiddo-5y-h4cbh",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261023T185325Z-google-trends-ja-rikiddo-5y-h4cbh/run_metadata.json",
+      "sha256": "3e2b6267caba11ab58446f3e19ff3b34b0b0cc0390a6d0be3566b7e4155d7b8e",
+      "sha256_after": "3e2b6267caba11ab58446f3e19ff3b34b0b0cc0390a6d0be3566b7e4155d7b8e",
+      "unchanged": true,
+      "strict_valid": true,
+      "strict_error_codes": [],
+      "completeness": {
+        "total": 22,
+        "verified": 22,
+        "score": 1.0,
+        "missing": [],
+        "essential_missing": []
+      },
+      "confidence": {
+        "fields": {
+          "schema_version": "observed",
+          "run_id": "observed",
+          "study_id": "observed",
+          "source_id": "observed",
+          "purpose": "observed",
+          "collector": "observed",
+          "collector.collector_id": "observed",
+          "collector.adapter_id": "observed",
+          "collection_started_at": "observed",
+          "query_provenance": "observed",
+          "query_provenance.query_id": "observed",
+          "query_provenance.submitted_query": "observed",
+          "temporal_provenance": "observed",
+          "temporal_provenance.window_id": "observed",
+          "temporal_provenance.requested_start": "observed",
+          "temporal_provenance.requested_end_exclusive": "observed",
+          "temporal_provenance.granularity": "observed",
+          "temporal_provenance.timezone": "observed",
+          "execution": "observed",
+          "execution.status": "observed",
+          "execution.returned_count": "observed",
+          "execution.errors": "observed"
+        },
+        "observed_count": 22,
+        "unknown_count": 0
+      },
+      "integrity": {
+        "manifest_reference": "artifact-manifest.json",
+        "manifest_present": true,
+        "manifest_valid": true,
+        "verified": true,
+        "artifact_issues": [],
+        "note": ""
+      },
+      "readiness": "ready",
+      "readiness_reasons": [
+        "strict valid, references resolve, artifacts verified"
+      ],
+      "lineage": {
+        "run_id": "20261023T185325Z-google-trends-ja-rikiddo-5y-h4cbh",
+        "artifact_ids": [
+          "20261023T185325Z-google-trends-ja-rikiddo-5y-h4cbh-payload-json",
+          "20261023T185325Z-google-trends-ja-rikiddo-5y-h4cbh-records-h4cbh-リキッド-json"
+        ],
+        "transformations": []
+      },
+      "evidence_refs": []
+    },
+    {
+      "run_id": "20261023T185332Z-google-trends-ja-rikiddo-5y-hhbd",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261023T185332Z-google-trends-ja-rikiddo-5y-hhbd/run_metadata.json",
+      "sha256": "effa74fb82eac0827ae2a47c344423ed64946eb5edbf51bb5967083a8791a8e3",
+      "sha256_after": "effa74fb82eac0827ae2a47c344423ed64946eb5edbf51bb5967083a8791a8e3",
+      "unchanged": true,
+      "strict_valid": true,
+      "strict_error_codes": [],
+      "completeness": {
+        "total": 22,
+        "verified": 22,
+        "score": 1.0,
+        "missing": [],
+        "essential_missing": []
+      },
+      "confidence": {
+        "fields": {
+          "schema_version": "observed",
+          "run_id": "observed",
+          "study_id": "observed",
+          "source_id": "observed",
+          "purpose": "observed",
+          "collector": "observed",
+          "collector.collector_id": "observed",
+          "collector.adapter_id": "observed",
+          "collection_started_at": "observed",
+          "query_provenance": "observed",
+          "query_provenance.query_id": "observed",
+          "query_provenance.submitted_query": "observed",
+          "temporal_provenance": "observed",
+          "temporal_provenance.window_id": "observed",
+          "temporal_provenance.requested_start": "observed",
+          "temporal_provenance.requested_end_exclusive": "observed",
+          "temporal_provenance.granularity": "observed",
+          "temporal_provenance.timezone": "observed",
+          "execution": "observed",
+          "execution.status": "observed",
+          "execution.returned_count": "observed",
+          "execution.errors": "observed"
+        },
+        "observed_count": 22,
+        "unknown_count": 0
+      },
+      "integrity": {
+        "manifest_reference": "artifact-manifest.json",
+        "manifest_present": true,
+        "manifest_valid": true,
+        "verified": true,
+        "artifact_issues": [],
+        "note": ""
+      },
+      "readiness": "ready",
+      "readiness_reasons": [
+        "strict valid, references resolve, artifacts verified"
+      ],
+      "lineage": {
+        "run_id": "20261023T185332Z-google-trends-ja-rikiddo-5y-hhbd",
+        "artifact_ids": [
+          "20261023T185332Z-google-trends-ja-rikiddo-5y-hhbd-payload-json",
+          "20261023T185332Z-google-trends-ja-rikiddo-5y-hhbd-records-hhbd-リキッド-json"
+        ],
+        "transformations": []
+      },
+      "evidence_refs": []
+    },
+    {
+      "run_id": "20261023T185339Z-google-trends-ja-rikiddo-5y-hhch",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261023T185339Z-google-trends-ja-rikiddo-5y-hhch/run_metadata.json",
+      "sha256": "020cc4a2282d4ff563f610c8e522b9a433b342fef88e2a067f34619d0bd3c025",
+      "sha256_after": "020cc4a2282d4ff563f610c8e522b9a433b342fef88e2a067f34619d0bd3c025",
+      "unchanged": true,
+      "strict_valid": true,
+      "strict_error_codes": [],
+      "completeness": {
+        "total": 22,
+        "verified": 22,
+        "score": 1.0,
+        "missing": [],
+        "essential_missing": []
+      },
+      "confidence": {
+        "fields": {
+          "schema_version": "observed",
+          "run_id": "observed",
+          "study_id": "observed",
+          "source_id": "observed",
+          "purpose": "observed",
+          "collector": "observed",
+          "collector.collector_id": "observed",
+          "collector.adapter_id": "observed",
+          "collection_started_at": "observed",
+          "query_provenance": "observed",
+          "query_provenance.query_id": "observed",
+          "query_provenance.submitted_query": "observed",
+          "temporal_provenance": "observed",
+          "temporal_provenance.window_id": "observed",
+          "temporal_provenance.requested_start": "observed",
+          "temporal_provenance.requested_end_exclusive": "observed",
+          "temporal_provenance.granularity": "observed",
+          "temporal_provenance.timezone": "observed",
+          "execution": "observed",
+          "execution.status": "observed",
+          "execution.returned_count": "observed",
+          "execution.errors": "observed"
+        },
+        "observed_count": 22,
+        "unknown_count": 0
+      },
+      "integrity": {
+        "manifest_reference": "artifact-manifest.json",
+        "manifest_present": true,
+        "manifest_valid": true,
+        "verified": true,
+        "artifact_issues": [],
+        "note": ""
+      },
+      "readiness": "ready",
+      "readiness_reasons": [
+        "strict valid, references resolve, artifacts verified"
+      ],
+      "lineage": {
+        "run_id": "20261023T185339Z-google-trends-ja-rikiddo-5y-hhch",
+        "artifact_ids": [
+          "20261023T185339Z-google-trends-ja-rikiddo-5y-hhch-payload-json",
+          "20261023T185339Z-google-trends-ja-rikiddo-5y-hhch-records-hhch-リキッド-json"
         ],
         "transformations": []
       },

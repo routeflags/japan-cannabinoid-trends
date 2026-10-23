@@ -1,0 +1,33 @@
+{
+  "schema_version": "1.0.0",
+  "run_id": "20261023T185238Z-google-trends-ja-rikiddo-5y-thcv",
+  "artifacts": [
+    {
+      "artifact_id": "20261023T185238Z-google-trends-ja-rikiddo-5y-thcv-payload-json",
+      "path": "payload.json",
+      "artifact_type": "raw_response",
+      "format": "json",
+      "schema_id": "google-trends-mcp-tool-result-v1",
+      "byte_length": 7590,
+      "sha256": "1f8c461891eec397d7a99aa792c0c6b430cdb491a11f67d74bd6c41ecaf1a7f6",
+      "layer": "raw",
+      "completeness": "complete",
+      "record_count": 262
+    },
+    {
+      "artifact_id": "20261023T185238Z-google-trends-ja-rikiddo-5y-thcv-records-thcv-リキッド-json",
+      "path": "records_thcv-リキッド.json",
+      "artifact_type": "timeseries",
+      "format": "json",
+      "schema_id": "google-trends-interest-over-time-v1",
+      "byte_length": 15343,
+      "sha256": "a97bbdee1f8c0944b70a83a38b6ac3ebb05bd8052db563084e4939b38887806c",
+      "layer": "raw",
+      "completeness": "complete",
+      "record_count": 262,
+      "derived_from": [
+        "20261023T185238Z-google-trends-ja-rikiddo-5y-thcv-payload-json"
+      ]
+    }
+  ]
+}

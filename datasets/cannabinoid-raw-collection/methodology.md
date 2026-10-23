@@ -13,7 +13,7 @@ cannabinoid-raw-collection
 | データソース | 観測期間 | 根拠 |
 |-------------|---------|------|
 | Google Trends（12ヶ月） | 2025-09-28 〜 2026-09-27（8 化合物）/ 2025-10-19 〜 2026-10-18（THCV・H4CBH・HHBD・CRDH） | §2.1.3 |
-| Google Trends（5年） | 2021-10-10 〜 2026-10-11（9 化合物）/ 2021-10-17 〜 2026-10-18（THC・CBG・HHC・THCV、および共通スケール setA〜D） | §2.1.2、§2.1.4 |
+| Google Trends（5年） | 2021-10-10 〜 2026-10-11（9 化合物）/ 2021-10-17 〜 2026-10-18（THC・CBG・HHC・THCV、および共通スケール setA〜D）。リキッドは main5 の 5 語が 2021-10-10 〜 2026-10-11、新規 7 語が 2021-10-17 〜 2026-10-18（THC-O は系列なし） | §2.1.2、§2.1.4 |
 | X (Twitter) | 2026-09-01 〜 2026-10-01（主系列）、CBD は 1 年 / 1ヶ月 / latest10 も | §2.2 |
 | YouTube | 2026-10-02（公開集計に入る 7 検索語のスナップショット）、2026-10-08〜09 に追加 | §2.3 |
 
@@ -128,7 +128,8 @@ cannabinoid-raw-collection
   `5y-common-scale-set*`。
 - 数値の正本は `docs/audits/gt-summary.json`（`processing.cli gt-summary` の生成物）。
   publication ページの 5年ブロックも同じコマンド（`--write`）が書く。
-- 残り 8 化合物（CBN・CRDH・CRDP・H4CBH・HHBD・HHCH・THCH・THC-O）の 5年 run は本表には載せず、
+- 5年リキッド系列は `data/raw/google_trends/` の main5 run（`20261012T064246Z-google-trends-ja-rikiddo-5y-main5`、5 語）と新規 8 run（7 語が系列、THC-O リキッドは系列なしで quarantine）に収蔵する。`docs/audits/gt-summary.json` は bare 化合物 13 + CBX のみを扱いリキッドを含まないため、リキッド run の特定は `docs/audits/g2-query-inventory.json`（クエリ照合）と `g4-storage-inventory.json`（成果物）、数値は各 run の `records_*.json` を正本とする。
+- 残り 8 化合物（CBN・CRDH・CRDP・H4CBH・HHBD・HHCH・THCH・THC-O）の5年 run は本表には載せず、
   `docs/audits/gt-summary.json` の各エントリの `run_id` / `path` を正本とする。
 
 ### 2.1.3 12ヶ月系列（週次 raw）
