@@ -367,6 +367,7 @@ def test_repository_window_registry_is_present_and_valid():
     documents = load_window_documents(WINDOWS_DIR)
     assert {document["window_id"] for document in documents} == {
         "2021-10-10_2026-10-12",
+        "2021-10-17_2026-10-18",
         "2025-10-12_2026-10-12",
     }
     for document in documents:
@@ -430,7 +431,7 @@ def test_validate_registries_covers_the_window_registry(capsys):
         for report in bundle["reports"]
         if report["schema_id"] == "temporal-window-v1"
     ]
-    assert len(window_targets) == 2
+    assert len(window_targets) == len(list(WINDOWS_DIR.glob("*.json")))
     assert all("metadata/windows/" in target or "metadata\\windows\\" in target for target in window_targets)
 
 

@@ -1,0 +1,10 @@
+{
+  "temporal_contract_version": "1.0.0",
+  "window_id": "2021-10-17_2026-10-18",
+  "timezone": "Asia/Tokyo",
+  "start": "2021-10-17T00:00:00Z",
+  "end_exclusive": "2026-10-18T00:00:00Z",
+  "granularity": "week",
+  "week_start": "sunday",
+  "calendar": "gregorian"
+}

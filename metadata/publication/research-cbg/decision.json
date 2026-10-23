@@ -3,12 +3,12 @@
   "record": "publication_decision",
   "decision_id": "publication-review-research-cbg",
   "artifact_id": "research-cbg",
-  "artifact_sha256": "e58c2014db937d2bec9ccdc6176359457d0df8853d9fe05d85bce7fbfb115db7",
+  "artifact_sha256": "d26ac2c68a227a79f57adae70d122e7be3382e218c12f5c25f2ef9fa9dcfe13d",
   "status": "requires_review",
   "reviewed_at": null,
   "reviewer": null,
   "criteria_version": "PC-7 / publication-contract-v1.0.0 (2026-10-15)",
   "recorded_at": "2026-10-15",
   "basis": "対象 publication はまだ公開していないため、承認済みとはせず requires_review として審査待ちを記録する。",
-  "notes": "PC-7 は判断記録が存在することを検査する。PUB-10 の公開承認は approved かつ同一 sha256 の decision が必要であり、この requires_review では公開不可。"
+  "notes": "PC-7 は判断記録が存在することを検査する。PUB-10 の公開承認は approved かつ同一 sha256 の decision が必要であり、この requires_review では公開不可。 2026-10-23、CBG の 5 年系列を週次 raw から再取得（run 20261023T160420Z-google-trends-cbg-5y）し、`processing.cli gt-summary --write` で 5 年ブロックを再生成した後の hash。summary-only だった旧 baseline の記録値は使っていない。内容審査は requires_review のまま。"
 }

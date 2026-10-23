@@ -4,8 +4,8 @@
   "schema_id": "query-registry-v1",
   "registry_version": "1.0.0",
   "target_glob": "datasets/**/run_metadata.json",
-  "count": 42,
-  "query_count": 88,
+  "count": 46,
+  "query_count": 92,
   "raw_modified": false,
   "states": {
     "exact_match": "the collected text equals a registered canonical_text",
@@ -15,7 +15,7 @@
     "unmapped": "no registered correspondence and no compound token"
   },
   "summary": {
-    "exact_match": 86,
+    "exact_match": 90,
     "variant_match": 1,
     "semantic_match_candidate": 1,
     "ambiguous": 0,
@@ -1177,6 +1177,94 @@
           "state": "exact_match",
           "classification": "relevant",
           "query_id": "cbd-general-ja",
+          "variant_id": null,
+          "detail": "registered_canonical",
+          "source_fields": [
+            "query_provenance.submitted_query"
+          ]
+        }
+      ]
+    },
+    {
+      "run_id": "20261023T160420Z-google-trends-cbg-5y",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261023T160420Z-google-trends-cbg-5y/run_metadata.json",
+      "status": "read",
+      "sha256": "b6e89dc09ea674f753db31f09f985aaac790302ea4f742b4018fdbe0eb221944",
+      "sha256_after": "b6e89dc09ea674f753db31f09f985aaac790302ea4f742b4018fdbe0eb221944",
+      "unchanged": true,
+      "extracted_query_count": 1,
+      "queries": [
+        {
+          "text": "CBG",
+          "state": "exact_match",
+          "classification": "relevant",
+          "query_id": "cbg-general-ja",
+          "variant_id": null,
+          "detail": "registered_canonical",
+          "source_fields": [
+            "query_provenance.submitted_query"
+          ]
+        }
+      ]
+    },
+    {
+      "run_id": "20261023T160428Z-google-trends-hhc-5y",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261023T160428Z-google-trends-hhc-5y/run_metadata.json",
+      "status": "read",
+      "sha256": "9c51d303868a087774e5d28a3e9bbc8827d16c110ef25cd14b93a4d983e7806b",
+      "sha256_after": "9c51d303868a087774e5d28a3e9bbc8827d16c110ef25cd14b93a4d983e7806b",
+      "unchanged": true,
+      "extracted_query_count": 1,
+      "queries": [
+        {
+          "text": "HHC",
+          "state": "exact_match",
+          "classification": "relevant",
+          "query_id": "hhc-general-ja",
+          "variant_id": null,
+          "detail": "registered_canonical",
+          "source_fields": [
+            "query_provenance.submitted_query"
+          ]
+        }
+      ]
+    },
+    {
+      "run_id": "20261023T160436Z-google-trends-thcv-5y",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261023T160436Z-google-trends-thcv-5y/run_metadata.json",
+      "status": "read",
+      "sha256": "0727f20df124c2fcfe9a88cdf989a5cb46c2cf84bbbf86d871f70228a0b624c1",
+      "sha256_after": "0727f20df124c2fcfe9a88cdf989a5cb46c2cf84bbbf86d871f70228a0b624c1",
+      "unchanged": true,
+      "extracted_query_count": 1,
+      "queries": [
+        {
+          "text": "THCV",
+          "state": "exact_match",
+          "classification": "relevant",
+          "query_id": "thcv-general-ja",
+          "variant_id": null,
+          "detail": "registered_canonical",
+          "source_fields": [
+            "query_provenance.submitted_query"
+          ]
+        }
+      ]
+    },
+    {
+      "run_id": "20261023T162500Z-google-trends-thc-5y",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261023T162500Z-google-trends-thc-5y/run_metadata.json",
+      "status": "read",
+      "sha256": "b875c6703de9e96deeac9f9fc8fe67b4b2cd4ed65ee1e419ee8a964d2290492a",
+      "sha256_after": "b875c6703de9e96deeac9f9fc8fe67b4b2cd4ed65ee1e419ee8a964d2290492a",
+      "unchanged": true,
+      "extracted_query_count": 1,
+      "queries": [
+        {
+          "text": "THC",
+          "state": "exact_match",
+          "classification": "relevant",
+          "query_id": "thc-general-ja",
           "variant_id": null,
           "detail": "registered_canonical",
           "source_fields": [

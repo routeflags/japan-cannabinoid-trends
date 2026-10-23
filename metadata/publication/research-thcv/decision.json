@@ -3,12 +3,12 @@
   "record": "publication_decision",
   "decision_id": "publication-review-research-thcv",
   "artifact_id": "research-thcv",
-  "artifact_sha256": "b15f10d84c0290bd718fe9ec94bb436b68a9cf0a2683b0bd6ec8d974b5069449",
+  "artifact_sha256": "dea3e47733dc2aadfd4dea35e42cf5859a4365a7acb5fb45f2854875e9b9739e",
   "status": "requires_review",
   "reviewed_at": null,
   "reviewer": null,
   "criteria_version": "PC-7 / publication-contract-v1.0.0 (2026-10-15)",
   "recorded_at": "2026-10-15",
   "basis": "対象 publication はまだ公開していないため、承認済みとはせず requires_review として審査待ちを記録する。",
-  "notes": "PC-7 は判断記録が存在することを検査する。PUB-10 の公開承認は approved かつ同一 sha256 の decision が必要であり、この requires_review では公開不可。"
+  "notes": "PC-7 は判断記録が存在することを検査する。PUB-10 の公開承認は approved かつ同一 sha256 の decision が必要であり、この requires_review では公開不可。 2026-10-23、THCV の 5 年系列を週次 raw から再取得（run 20261023T160436Z-google-trends-thcv-5y）し、`processing.cli gt-summary --write` で 5 年ブロックを再生成した後の hash。summary-only だった旧 baseline の記録値は使っていない。内容審査は requires_review のまま。"
 }

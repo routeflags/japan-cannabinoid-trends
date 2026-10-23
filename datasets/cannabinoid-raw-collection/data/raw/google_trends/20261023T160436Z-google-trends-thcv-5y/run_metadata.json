@@ -1,0 +1,70 @@
+{
+  "schema_version": "1.0.0",
+  "run_id": "20261023T160436Z-google-trends-thcv-5y",
+  "study_id": "cannabinoid-raw-collection",
+  "source_id": "google-trends",
+  "purpose": "5年系列の再取得（THCV）。20261008T093228Z-google-trends-5y-baseline は summary-only で週次系列を収蔵していないため raw から検算できない。新規 run として today 5-y / geo JP の系列を収集する。",
+  "collector": {
+    "collector_id": "google-trends-mcp",
+    "adapter_id": "google-trends-mcp@1",
+    "version": "0.1.1",
+    "provider": "mcp",
+    "transport": "mcp",
+    "external_id": "google-trends-mcp"
+  },
+  "collection_started_at": "2026-10-23T16:04:37Z",
+  "collection_finished_at": "2026-10-23T16:04:39Z",
+  "query_provenance": {
+    "query_id": "thcv-general-ja",
+    "submitted_query": "THCV",
+    "compound_id": "compound_thcv",
+    "query_registry_version": "1.0.0"
+  },
+  "temporal_provenance": {
+    "window_id": "2021-10-17_2026-10-18",
+    "requested_start": "2021-10-17T00:00:00Z",
+    "requested_end_exclusive": "2026-10-18T00:00:00Z",
+    "granularity": "week",
+    "timezone": "Asia/Tokyo",
+    "week_start": "sunday",
+    "collector_window_type": "relative_duration",
+    "boundary_semantics": "relative timeframe resolved by the collector at request time; weekly buckets (Sunday start) label the series; observed range 2021-10-17..2026-10-18",
+    "exact_window_match": false,
+    "observed_min_timestamp": "2021-10-17T00:00:00Z",
+    "observed_max_timestamp": "2026-10-18T00:00:00Z",
+    "reference_time": "2026-10-23T16:04:37.753992Z",
+    "limitations": [
+      "collector window type is relative_duration; the absolute requested window cannot be expressed exactly (boundary semantics unverified, c.md §6.2)",
+      "'today 5-y' is resolved nominally at the recorded reference time; Google Trends resolves it at request time and the actual boundaries are unverified (c.md §6.3)",
+      "coverage is recorded as partial/unknown until boundary verification (c.md §9)"
+    ],
+    "submitted_parameters": {
+      "tool": "interest_over_time",
+      "terms": [
+        "THCV"
+      ],
+      "geo": "JP",
+      "timeframe": "today 5-y"
+    }
+  },
+  "execution": {
+    "status": "success",
+    "returned_count": 262,
+    "errors": [],
+    "pagination_exhausted": true
+  },
+  "artifact_manifest": "artifact-manifest.json",
+  "environment": {
+    "collection_core_version": "1.0.0",
+    "adapter_contract_version": "1.0.0",
+    "runtime_version": "python-3.14.6",
+    "adapter": {
+      "tool": "interest_over_time",
+      "package": "google-trends-mcp",
+      "version": "0.1.1",
+      "collection_mode": "live",
+      "transport": "mcp"
+    },
+    "code_commit": "1610577364ab0dc4745c1da9a619b5348ee364fe"
+  }
+}

@@ -13,21 +13,21 @@ cannabinoid-raw-collection
 | データソース | 観測期間 | 根拠 |
 |-------------|---------|------|
 | Google Trends（12ヶ月・単独） | 2025-10 〜 2026-10（`today 12-m`） | 2026-10-02 初回収集 |
-| Google Trends（5年） | 2021-10-10 〜 2026-10-11（`today 5-y`、週次） | 2026-10-02〜2026-10-15 の複数 run（§2.1.1） |
+| Google Trends（5年） | 2021-10-10 〜 2026-10-11（旧 10 run）/ 2021-10-17 〜 2026-10-18（2026-10-23 再取得 4 run）（`today 5-y`、週次） | 2026-10-02〜2026-10-23 の複数 run（§2.1.1、§2.1.2） |
 | X (Twitter) | 2026-09-01 〜 2026-10-01（主系列）、CBD は 1 年 / 1ヶ月 / latest10 も | 2026-10-02・10-08 の run |
 | YouTube | 2026-10-02（7 化合物のスナップショット）、2026-10-08〜09 に追加 | Apify `gJvjeCYNraSfhIaNd` |
 
 ### 1.3 対象化合物（2026-10-24 更新）
 
-この研究が扱うのは **13 化合物**。当初は下記の「12ヶ月収集」7 化合物だけだったが、5年系列の追加収集と CBD の再取得で広がった。
+この研究が扱うのは **13 化合物**。当初は下記の「12ヶ月収集」7 化合物だけだったが、5年系列の追加収集（2026-10-23 に 4 化合物）で広がった。
 
 | キーワード | SKOS notation | 分類（`skos:broader`） | 12ヶ月単独 | 5年系列 |
 |-----------|----------------|---------|:------:|:------:|
 | CBD | `compound_cbd` | major | ✅ | ✅（2026-10-15 再取得） |
-| THC | `compound_thc` | major | ✅ | サマリーのみ |
-| CBG | `compound_cbg` | minor | ✅ | サマリーのみ |
-| HHC | `compound_hhc` | semisynthetic | ✅ | サマリーのみ |
-| THCV | `compound_thcv` | minor | データなし | サマリーのみ |
+| THC | `compound_thc` | major | ✅ | ✅（2026-10-23 再取得） |
+| CBG | `compound_cbg` | minor | ✅ | ✅（2026-10-23 再取得） |
+| HHC | `compound_hhc` | semisynthetic | ✅ | ✅（2026-10-23 再取得） |
+| THCV | `compound_thcv` | minor | データなし | ✅（2026-10-23 再取得） |
 | THC-O | `compound_thc_o` | semisynthetic | データなし | ✅ |
 | THCH | `compound_thch` | minor | ✅ | ✅ |
 | CBN | `compound_cbn` | minor | ✅ | ✅ |
@@ -38,7 +38,7 @@ cannabinoid-raw-collection
 | HHCH | `compound_hhch` | synthetic | ✅ | ✅ |
 
 - **「データなし」**: 取得はしたが Google Trends が閾値未満として系列を返さなかった（run `…-nodata`）。欠測であって 0 観測ではない。
-- **「サマリーのみ」**: 週次系列を収蔵していない run（§2.1.1）の記録値。raw からの独立検証はできない。
+- **5年系列は 13 化合物すべてが週次 raw を持つ**（2026-10-23 完了）。summary-only だった旧 baseline run（§2.1.1）は raw に残るが、どの化合物の引用元でもない。
 - 分類は [`metadata/taxonomy/compound-taxonomy.skos.jsonld`](../../metadata/taxonomy/compound-taxonomy.skos.jsonld) の `skos:broader`（major / minor / semisynthetic / synthetic）に従う。
 - **CBX はこの研究の対象外**: [`datasets/cbx-search-trends/`](../cbx-search-trends/) が担当する（`gt-summary` の 14 化合物目はそこ由来）。
 - 12ヶ月・5年以外に、比較セットと共通スケール比較（`common-scale-*`）と「リキッド」系クエリの run もある（`data/raw/google_trends/`）。
@@ -76,30 +76,45 @@ cannabinoid-raw-collection
   raw は immutable のため本 run には手を加えない。
 - 週数 261・5年平均・ピーク値・ピーク日・初出値・最新値は**記録値（observed summary）**であり、
   raw 時系列観測からの独立検証はできない。欠測をゼロ観測に読み替えないこと。
-  機械可読の記録は `docs/audits/gt-summary.json` の各化合物項目 `unavailable.raw_timeline`（shape `baseline`）にある。
 - `20261012T064246Z-google-trends-ja-rikiddo-5y-main5` の 5年系列は「CBD リキッド」等の別クエリ・別正規化であり、
   bare `CBD` の検証には使えない（`src/processing/gt_statistics.py` の `find_run` も除外する）。
-- CBD の再取得は完了（2026-10-15、`ISS-20261012-CBD-004`）。既存 summary の上書きはせず新規 run として保存した:
-  `data/raw/google_trends/20261015T205048Z-google-trends-cannabinoid-multi-trends/`
-  （bare `CBD`、geo JP / `today 5-y`、plan `metadata/plans/gt-5y-recollect-cbd.json`、`collect --live`、L1 通過後に catalog 採用）。
-  成果物は verbatim payload（`payload.json`）+ 解析済み系列（`records_cbd.json`）の2点。
-  観測 262 週（`2021-10-10 〜 2026-10-11`）、平均 34.0229・ピーク 2025-08-31（値 100）・初出値 44・最新値 13 は
-  **raw 系列からの算出値（derived）**であり、旧 baseline の記録値（261 週・平均 32.5・初出値 42・最新値 14）とは
-  収集窓・正規化が異なる別観測として区別する。旧 run は検証用に残すが、CBD の下流検証（`gt-summary` / publication）は新 run を用いる。
-  THC・CBG・HHC・THCV の4件は引き続き summary-only（shape `baseline`）のままである。
-- 原稿利用者向けの注意（2026-10-16 追記。外部 THCV 原稿 v1.9 での誤用 E1・E2 を受けた恒久ガード。2026-10-15 に CBD が series 化されたため baseline は残り4件）:
-  - baseline 4件（THC・CBG・HHC・THCV）にデータあり期間の端点を書ける記録は存在しない。
-    `timeframe: today 5-y` は相対表記であり、系列の範囲を示さない。
-    他化合物（例: CBN の `2021-10-10 〜 2026-10-11`）の `data_period` を流用しないこと。
-  - baseline run は週次系列の生データを収蔵していない（summary-only）。
-    「原稿の週次系列は run に含まれる」と書かないこと。週数・平均・ピーク・初出値・最新値は記録値であり、
-    raw 系列から検証できない。
-  - 週数 261（baseline）と 262（series）の差は run 形状の差に由来し、窓の長さからは決まらない。
-    期間の日数から週数を数え直さないこと。
-  - 機械可読の正本は `docs/audits/gt-summary.json`（各化合物の `shape` / `stats` / `unavailable` / `block`）。
-    生成 `block` 自体には端点・系列への言及を含めない方針のため（publication HTML・envelope hash への影響を避ける）、
-    利用時は必ず `unavailable`（`data_period` / `raw_timeline`）を併読すること。
+- **2026-10-23 時点で、本 run を引用する化合物は無い**。CBD は 2026-10-15、THC・CBG・HHC・THCV は
+  2026-10-23 に、それぞれ週次系列の run を新規収集して置き換えた（§2.1.2）。旧 run は証跡として残す。
+- 原稿利用者向けの注意（2026-10-16 追記。外部 THCV 原稿 v1.9 での誤用 E1・E2 を受けた恒久ガード）:
+  - 本 run の記録値（261 週・平均・ピーク・初出値・最新値）を、週次系列（262 週）の値と混ぜないこと。
+    両者は別の run・別の窓の観測であり、週数 261 と 262 の差は run 形状の差に由来する（期間の日数から数え直さないこと）。
+  - 「原稿の週次系列は本 run に含まれる」と書かないこと（summary-only であり、系列を収蔵していない）。
+  - 機械可読の正本は `docs/audits/gt-summary.json`。各化合物の `shape` / `stats` / `unavailable` を併読し、
+    `shape=baseline` の項目が現れたら `unavailable`（`data_period` / `raw_timeline`）を必ず添えること。
     検査は `tests/processing/test_gt_statistics.py` の baseline ガード群が行う。
+
+### 2.1.2 5年系列（週次 raw）
+
+2026-10-23 に、summary-only だった 4 化合物（THC・CBG・HHC・THCV）の週次系列をライブ収集し、
+**5年系列を 13 化合物すべてが週次 raw を持つ状態**にした（CBD は 2026-10-15 に完了、`ISS-20261012-CBD-004`）。
+
+| 化合物 | run（`data/raw/google_trends/`） | 収集 | `window_id` | 週数 | 平均 | ゼロ週 |
+|---|---|---|---|---:|---:|---:|
+| CBD | `20261015T205048Z-google-trends-cannabinoid-multi-trends` | 2026-10-15 | `2021-10-10_2026-10-12` | 262 | 34.0229 | 0 |
+| THC | `20261023T162500Z-google-trends-thc-5y` | 2026-10-23 | `2021-10-17_2026-10-18` | 262 | 12.4084 | 0 |
+| CBG | `20261023T160420Z-google-trends-cbg-5y` | 2026-10-23 | `2021-10-17_2026-10-18` | 262 | 48.1756 | 11 |
+| HHC | `20261023T160428Z-google-trends-hhc-5y` | 2026-10-23 | `2021-10-17_2026-10-18` | 262 | 2.4924 | 72 |
+| THCV | `20261023T160436Z-google-trends-thcv-5y` | 2026-10-23 | `2021-10-17_2026-10-18` | 262 | 7.4313 | 217 |
+
+- 経路: `collect --live`（`make collect` / `scripts/collection/google-trends-live-guard.py fetch` の時間制限つきラッパ）→
+  L1 ゲート通過後に catalog 採用。計画書は `metadata/plans/gt-5y-recollect-{thc,cbg,hhc,thcv}.json`、
+  窓は [`metadata/windows/2021-10-17_2026-10-18.json`](../../metadata/windows/2021-10-17_2026-10-18.json)。
+  成果物は CBD と同じ 2 点セット（verbatim `payload.json` + 解析済み `records_<term>.json`）。
+- 既存 raw は上書きしない。旧 baseline の summary JSON も残したまま、各化合物を**新規 run** として追加した（`raw/` は不変）。
+- 作業の詳細・制約・検証結果は [`docs/reports/20261023-gt-5y-recollection.md`](../../docs/reports/20261023-gt-5y-recollection.md)。
+- **窓が 1 週ずれる**: 2026-10-23 の `today 5-y` は `2021-10-17 〜 2026-10-18` に解決され、
+  2026-10-15 収集分（`2021-10-10 〜 2026-10-11`）とは 1 週ずれる。同一窓で取り直したのではなく、
+  **別窓の観測**として扱う（相対 timeframe を絶対窓に固定できないことは §4.2 と
+  [`docs/specs/gt-boundary-verification.md`](../../docs/specs/gt-boundary-verification.md)）。
+- Google Trends は**クエリ単位の相対指数（0-100）**であり、平均値の水準を化合物間で比較しないこと。
+  化合物間の比較は共通スケール比較 run（`common-scale-*`）が担う。
+- 数値の正本は `docs/audits/gt-summary.json`（`processing.cli gt-summary` の生成物）。
+  publication ページの 5年ブロックも同じコマンド（`--write`）が書く。
 
 ### 2.2 X (Twitter)
 
@@ -202,6 +217,7 @@ SKOS Concept ID を使用して化合物カテゴリを分類。
 | 制約 | 対策 |
 |------|------|
 | Google Trends 相対指数 | 絶対検索数ではない点を明記 |
+| Google Trends の窓は相対表記 | `today 5-y` は収集時刻で解決される（`exact_window_match=false`）。窓ごとに `window_id` を切り、run 間で窓が違えば別観測として扱う（§2.1.2） |
 | X シャドウバン | 0 件でも observed_zero として記録 |
 | 多義語（CBD, THC） | コンテキスト分析で誤検知を排除 |
 | コソソース間の比較 | 単位が異なるため直接比較不可 |

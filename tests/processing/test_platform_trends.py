@@ -39,7 +39,7 @@ def test_build_platform_trends_outputs_expected_release_slice(tmp_path) -> None:
         )
     }
     assert manifest["row_counts"] == {
-        "trend_observations": 68,
+        "trend_observations": 76,
         "platform_coverage": 28,
         "metric_dictionary": 6,
         "source_run_index": 20,

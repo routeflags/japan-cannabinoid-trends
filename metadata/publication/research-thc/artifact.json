@@ -6,8 +6,8 @@
   "layer": "publication",
   "source_kind": "html",
   "storage_policy_id": "publication-html-candidate",
-  "sha256": "7e12955cc8d62575918d3e4419548e7bae40e11e27a1700253f2d3aac1a27530",
-  "byte_length": 13833,
+  "sha256": "47e84474ce46b68fbfd604ad85eb637b7b17c776eef8ae5e7df039b3a4749e34",
+  "byte_length": 13991,
   "recorded_at": "2026-10-15",
-  "notes": "未公開 publication HTML。PC-7 の審査 envelope として内容 hash を固定する。対象 publication はまだ公開していないため、decision は requires_review から開始する。 v1.13.0 release metadata sync 後の hash。 v1.13.1 release metadata sync 後の hash。"
+  "notes": "未公開 publication HTML。PC-7 の審査 envelope として内容 hash を固定する。対象 publication はまだ公開していないため、decision は requires_review から開始する。 v1.13.0 release metadata sync 後の hash。 v1.13.1 release metadata sync 後の hash。 2026-10-23、THC の 5 年系列を週次 raw から再取得（run 20261023T162500Z-google-trends-thc-5y）し、`processing.cli gt-summary --write` で 5 年ブロックを再生成した後の hash。summary-only だった旧 baseline の記録値は使っていない。内容審査は requires_review のまま。"
 }

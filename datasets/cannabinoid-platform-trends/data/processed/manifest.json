@@ -17,7 +17,7 @@
     "source_run_index": "source_run_index.csv"
   },
   "row_counts": {
-    "trend_observations": 68,
+    "trend_observations": 76,
     "platform_coverage": 28,
     "metric_dictionary": 6,
     "source_run_index": 20

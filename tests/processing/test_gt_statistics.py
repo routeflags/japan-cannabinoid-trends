@@ -239,7 +239,9 @@ def test_report_recomputes_every_compound(report: dict) -> None:
 
     CBD joined the series shape in 2026-10-15 (ISS-20261012-CBD-004): the bare
     ``CBD`` today 5-y raw timeline was recollected live as a new run, so its
-    mean is computed from the weekly series rather than passed through."""
+    mean is computed from the weekly series rather than passed through.
+    THC, CBG, HHC and THCV followed on 2026-10-23 (same recipe, one new window),
+    so no compound's mean is passed through from a summary any more."""
 
     by_compound = {entry["compound"]: entry for entry in report["compounds"]}
 
@@ -248,7 +250,21 @@ def test_report_recomputes_every_compound(report: dict) -> None:
     assert by_compound["CBD"]["stats"]["mean"] == 34.0229
     # The re-collected compounds carry a weekly series, so their mean is
     # computed rather than passed through.
-    for compound in ("CBD", "CBN", "THC-O", "H4CBH", "HHBD", "HHCH", "CRDP", "THCH", "CBX"):
+    for compound in (
+        "CBD",
+        "CBN",
+        "THC-O",
+        "H4CBH",
+        "HHBD",
+        "HHCH",
+        "CRDP",
+        "THCH",
+        "CBX",
+        "THC",
+        "CBG",
+        "HHC",
+        "THCV",
+    ):
         assert by_compound[compound]["shape"] == "series", compound
         assert by_compound[compound]["stats"]["mean"] is not None, compound
     assert by_compound["CBX"]["run_id"] == "20261015T042857Z-google-trends-boundary-5y"
@@ -268,43 +284,65 @@ def test_every_page_carries_the_generated_block(report: dict) -> None:
         assert entry["block"] in page.read_text(encoding="utf-8"), entry["compound"]
 
 
-BASELINE_COMPOUNDS = ("THC", "CBG", "THCV", "HHC")
+#: 2026-10-23: the four compounds that only had the 2026-10-08 summary-only
+#: baseline run were recollected live, one run each (see the study methodology
+#: §2.1.1).  The baseline run stays in raw; it is no longer cited anywhere.
+RECOLLECTED_5Y = {
+    "THC": "20261023T162500Z-google-trends-thc-5y",
+    "CBG": "20261023T160420Z-google-trends-cbg-5y",
+    "HHC": "20261023T160428Z-google-trends-hhc-5y",
+    "THCV": "20261023T160436Z-google-trends-thcv-5y",
+}
 
 
-def test_report_keeps_baseline_periods_unrecorded(report: dict) -> None:
+def test_report_cites_no_summary_only_run(report: dict) -> None:
     """E1/E2 guard on the committed surface external authors read
-    (``docs/audits/gt-summary.json``): every ``shape=baseline`` compound keeps
-    weeks=261 as a recorded value, holds no ``data_period`` in ``stats``, and
-    names both ``data_period`` and ``raw_timeline`` as unavailable.  Its block
-    carries no endpoint range that a manuscript could quote as the run's range."""
+    (``docs/audits/gt-summary.json``): a summary-only run records no weekly
+    timeline, so it must not be the cited source for any compound.  Every
+    compound therefore reports ``shape=series`` with a period it can prove."""
 
     by_compound = {entry["compound"]: entry for entry in report["compounds"]}
 
-    for compound in BASELINE_COMPOUNDS:
+    assert report["summary"]["by_shape"] == {"series": 14}
+    for compound, entry in by_compound.items():
+        assert entry["shape"] == "series", compound
+        assert entry["run_id"] != "20261008T093228Z-google-trends-5y-baseline"
+        assert entry["unavailable"] == {}, compound
+        assert "data_period" in entry["stats"], compound
+
+
+def test_recollected_compounds_cite_their_own_window(report: dict) -> None:
+    """The four recollections share one window (2021-10-17 .. 2026-10-18), one
+    week later than the runs collected on 2026-10-15.  Each page must quote the
+    window of the run it cites."""
+
+    by_compound = {entry["compound"]: entry for entry in report["compounds"]}
+
+    for compound, run_id in RECOLLECTED_5Y.items():
         entry = by_compound[compound]
-        assert entry["shape"] == "baseline", compound
-        assert entry["stats"]["weeks"] == 261, compound
-        assert "data_period" not in entry["stats"], compound
-        assert "data_period" in entry["unavailable"], compound
-        assert "raw_timeline" in entry["unavailable"], compound
-        assert "〜" not in entry["block"], compound
+        assert entry["run_id"] == run_id, compound
+        assert entry["stats"]["weeks"] == 262, compound
+        assert entry["stats"]["data_period"] == "2021-10-17 〜 2026-10-18", compound
+        assert by_compound["CBN"]["stats"]["data_period"] not in entry["block"]
 
 
 def test_report_derives_each_period_from_its_own_run(report: dict) -> None:
     """E1 guard: no compound may borrow another compound's ``data_period``.
-    A series compound's period is computed from its own run's first/last dates,
-    and that range never appears in a baseline compound's block (THCV must not
-    quote CBN's ``2021-10-10 〜 2026-10-11``)."""
+    Each period is recomputed from that compound's own record, and a block
+    carries no other compound's range (THCV must not quote CBN's
+    ``2021-10-10 〜 2026-10-11``)."""
 
     by_compound = {entry["compound"]: entry for entry in report["compounds"]}
+    periods = {
+        compound: entry["stats"]["data_period"]
+        for compound, entry in by_compound.items()
+    }
 
-    cbn = by_compound["CBN"]
-    assert cbn["shape"] == "series"
-    record = load_record(REPO_ROOT / cbn["path"])
-    dates = [point["date"] for point in record["data"]]
-    assert cbn["stats"]["data_period"] == f"{dates[0]} 〜 {dates[-1]}"
-
-    for compound in BASELINE_COMPOUNDS:
-        block = by_compound[compound]["block"]
-        assert cbn["stats"]["data_period"] not in block, compound
-    assert "2021-10-10" not in by_compound["THCV"]["block"]
+    for compound, entry in by_compound.items():
+        record = load_record(REPO_ROOT / entry["path"])
+        dates = [point["date"] for point in record["data"]]
+        assert entry["stats"]["data_period"] == f"{dates[0]} 〜 {dates[-1]}"
+        for other, period in periods.items():
+            if other == compound or period == periods[compound]:
+                continue
+            assert period not in entry["block"], (compound, other)
