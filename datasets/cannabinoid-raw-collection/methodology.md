@@ -10,23 +10,38 @@ cannabinoid-raw-collection
 
 ### 1.2 観測期間
 
-| データソース | 観測期間 |
-|-------------|---------|
-| Google Trends | 2025-10 〜 2026-10 (today 12-m) |
-| X (Twitter) | 2026-09-01 〜 2026-10-01 |
-| YouTube | 2026-10-02 (スナップショット) |
+| データソース | 観測期間 | 根拠 |
+|-------------|---------|------|
+| Google Trends（12ヶ月・単独） | 2025-10 〜 2026-10（`today 12-m`） | 2026-10-02 初回収集 |
+| Google Trends（5年） | 2021-10-10 〜 2026-10-11（`today 5-y`、週次） | 2026-10-02〜2026-10-15 の複数 run（§2.1.1） |
+| X (Twitter) | 2026-09-01 〜 2026-10-01（主系列）、CBD は 1 年 / 1ヶ月 / latest10 も | 2026-10-02・10-08 の run |
+| YouTube | 2026-10-02（7 化合物のスナップショット）、2026-10-08〜09 に追加 | Apify `gJvjeCYNraSfhIaNd` |
 
-### 1.3 対象化合物
+### 1.3 対象化合物（2026-10-24 更新）
 
-| キーワード | SKOS Concept ID | カテゴリ |
-|-----------|----------------|---------|
-| CBD | compound_cbd | Major Phytocannabinoid |
-| THC | compound_thc | Major Phytocannabinoid |
-| CBG | compound_cbg | Minor Phytocannabinoid |
-| HHC | compound_hhc | Semi-Synthetic Cannabinoid |
-| THCV | compound_thcv | Minor Phytocannabinoid |
-| THC-O | compound_thc_o | Semi-Synthetic Cannabinoid |
-| THCH | compound_thch | Minor Phytocannabinoid |
+この研究が扱うのは **13 化合物**。当初は下記の「12ヶ月収集」7 化合物だけだったが、5年系列の追加収集と CBD の再取得で広がった。
+
+| キーワード | SKOS notation | 分類（`skos:broader`） | 12ヶ月単独 | 5年系列 |
+|-----------|----------------|---------|:------:|:------:|
+| CBD | `compound_cbd` | major | ✅ | ✅（2026-10-15 再取得） |
+| THC | `compound_thc` | major | ✅ | サマリーのみ |
+| CBG | `compound_cbg` | minor | ✅ | サマリーのみ |
+| HHC | `compound_hhc` | semisynthetic | ✅ | サマリーのみ |
+| THCV | `compound_thcv` | minor | データなし | サマリーのみ |
+| THC-O | `compound_thc_o` | semisynthetic | データなし | ✅ |
+| THCH | `compound_thch` | minor | ✅ | ✅ |
+| CBN | `compound_cbn` | minor | ✅ | ✅ |
+| CRDH | `compound_crdh` | synthetic | ✅ | ✅ |
+| CRDP | `compound_crdp` | synthetic | ✅ | ✅ |
+| H4CBH | `compound_h4cbh` | semisynthetic | — | ✅ |
+| HHBD | `compound_hhbd` | semisynthetic | — | ✅ |
+| HHCH | `compound_hhch` | synthetic | ✅ | ✅ |
+
+- **「データなし」**: 取得はしたが Google Trends が閾値未満として系列を返さなかった（run `…-nodata`）。欠測であって 0 観測ではない。
+- **「サマリーのみ」**: 週次系列を収蔵していない run（§2.1.1）の記録値。raw からの独立検証はできない。
+- 分類は [`metadata/taxonomy/compound-taxonomy.skos.jsonld`](../../metadata/taxonomy/compound-taxonomy.skos.jsonld) の `skos:broader`（major / minor / semisynthetic / synthetic）に従う。
+- **CBX はこの研究の対象外**: [`datasets/cbx-search-trends/`](../cbx-search-trends/) が担当する（`gt-summary` の 14 化合物目はそこ由来）。
+- 12ヶ月・5年以外に、比較セットと共通スケール比較（`common-scale-*`）と「リキッド」系クエリの run もある（`data/raw/google_trends/`）。
 
 ---
 
