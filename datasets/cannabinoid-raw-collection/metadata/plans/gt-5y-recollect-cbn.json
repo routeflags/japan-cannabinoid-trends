@@ -1,14 +1,14 @@
 {
-  "plan_id": "gt-5y-recollect-thch",
-  "study_id": "cannabinoid-multi-trends",
+  "plan_id": "gt-5y-recollect-cbn",
+  "study_id": "cannabinoid-raw-collection",
   "source_id": "google-trends",
   "collector_id": "google-trends-mcp",
-  "query_id": "thch-general-ja",
+  "query_id": "cbn-general-ja",
   "query": {
-    "text": "THCH",
+    "text": "CBN",
     "geo": "JP",
     "timeframe": "today 5-y",
-    "compound_id": "compound_thch"
+    "compound_id": "compound_cbn"
   },
   "required_capabilities": [
     "geo_filter",
@@ -22,5 +22,5 @@
     "week_start": "sunday",
     "timezone": "Asia/Tokyo"
   },
-  "purpose": "5年系列の再取得（THCH）。ISS-20261015-GT-003: 2026-10-02 の run は系列を保存しておらず 5 年平均を再計算できなかったため。"
+  "purpose": "5年系列の再取得（CBN）。ISS-20261015-GT-003: 2026-10-02 の run は系列を保存しておらず 5 年平均を再計算できなかったため。"
 }

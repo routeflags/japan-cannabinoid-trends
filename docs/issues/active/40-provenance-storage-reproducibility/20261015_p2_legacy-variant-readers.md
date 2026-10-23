@@ -52,7 +52,7 @@ no-data 応答、分散解析 JSON など 16 件）は、schema / reader が未�
   分散解析・差分（analysis 形状）3 件ほか
 - 実装スライス: no-data 応答（GT 品質に直結する「欠損はゼロではない」
   の機械保証。実ファイル
-  `datasets/cannabinoid-multi-trends/data/raw/google_trends/20261002T064135Z-google-trends-nodata/records_nodata.json`
+  `datasets/cannabinoid-raw-collection/data/raw/google_trends/20261002T064135Z-google-trends-nodata/records_nodata.json`
   の形状のみで判定し、推測なし）
 - 追加: `src/storage/readers/nodata.py`（`json-no-data-reader`。
   `keywords` モードのみ提供し `points` 等は拒否。per-bucket `data` を

@@ -8,7 +8,7 @@ cd /Users/bookair18/OS/home/Codes/github.com/routeflags/japan-cannabinoid-trends
 
 source /Users/bookair18/OS/media/06_symphony/symphony_workspaces/.env.d/youtube.env
 
-SAVE_DIR="datasets/cannabinoid-multi-trends/data/raw/youtube/$(date -u +"%Y%m%dT%H%M%SZ")-youtube-relevance-language-test"
+SAVE_DIR="datasets/cannabinoid-raw-collection/data/raw/youtube/$(date -u +"%Y%m%dT%H%M%SZ")-youtube-relevance-language-test"
 mkdir -p "$SAVE_DIR"
 
 echo "=== relevanceLanguage=ja テスト ==="

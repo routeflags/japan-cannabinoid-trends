@@ -3,7 +3,7 @@
 **ID:** ISS-20261012-CBD-002  
 **優先度:** P1 (High)  
 **ステータス:** RESOLVED (2026-10-15)  
-**対象:** `datasets/cannabinoid-multi-trends/data/raw/x/`、`datasets/cannabinoid-social-trends/data/raw/x/`、`publication/research_cbd.html`
+**対象:** `datasets/cannabinoid-raw-collection/data/raw/x/`、`datasets/cannabinoid-social-trends/data/raw/x/`、`publication/research_cbd.html`
 
 ## 概要
 
@@ -54,7 +54,7 @@ CBD X の run 単位の来歴を実測し、調査ページの X 期間表示を
 
 ### 実測
 
-- CBD の X run は 5 件（`cannabinoid-multi-trends` 4 件、`cannabinoid-social-trends` 1 件）。
+- CBD の X run は 5 件（`cannabinoid-raw-collection` 4 件、`cannabinoid-social-trends` 1 件）。
   run ごとの検索語・期間・Actor・取得上限・件数・状態を同レポートに記録した。
 - `20261002T064331Z-x-cbd` のみ query（`CBD since:2026-09-01 until:2026-10-01`、`section=latest`、
   `max_pages=3`）と Actor（`cPYLH3QT9GyzKhB4S`）が `run_metadata.json` に残る。

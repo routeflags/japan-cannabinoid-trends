@@ -15,7 +15,7 @@
 | **SECONDARY_STAKEHOLDERS** | Policymaker, forensic toxicologist, academic (NPS/drug policy), harm-reduction NGO |
 | **QUESTION** | Which cannabinoid terms are newly appearing in Japanese public search attention, and how quickly are they peaking or fading? |
 | **INFORMATION_GAP** | English-accessible, Japan-specific, longitudinal first-mention + momentum series does not exist publicly. Regulatory/policy audiences currently rely on news fragments or US/EU data. |
-| **PROPOSED_DATA** | Structured table: compound, SKOS concept id, first-mention date (with 5y-censoring flag), first value, peak value + week, 12-m standalone mean, comparison-set mean, persistence class (durable / episodic / fading), last observed nonzero week. Source data already in `datasets/cannabinoid-multi-trends/` + first-mention research MNT-20261002. |
+| **PROPOSED_DATA** | Structured table: compound, SKOS concept id, first-mention date (with 5y-censoring flag), first value, peak value + week, 12-m standalone mean, comparison-set mean, persistence class (durable / episodic / fading), last observed nonzero week. Source data already in `datasets/cannabinoid-raw-collection/` + first-mention research MNT-20261002. |
 | **DATA_SOURCE** | Google Trends (JP), today 12-m + today 5-y; public only. Cross-reference published product/regulatory dates where verifiable (not required for v1). |
 | **METHOD** | Descriptive statistics + first-detection rule + persistence classification (share of observed weeks with value > 0 in trailing 12 months; explicit censoring for terms below Trends threshold). No causal claims. |
 | **OUTPUT** | 1) Machine-readable CSV/JSON; 2) English landing page with citation units; 3) quarterly refresh; 4) DOI via existing Zenodo pipeline. |
@@ -112,7 +112,7 @@
 | **QUESTION** | Where can non-Japanese researchers find citable JP cannabinoid trend tables with methods? |
 | **INFORMATION_GAP** | Much analysis is Japanese-only; processed citation-ready tables with polysemy caveats are incomplete. |
 | **PROPOSED_DATA** | Clean processed CSV per compound + comparison sets + methodology PDF/MD in English; stable URLs per table. |
-| **DATA_SOURCE** | `datasets/cannabinoid-multi-trends/data/` already collected. |
+| **DATA_SOURCE** | `datasets/cannabinoid-raw-collection/data/` already collected. |
 | **METHOD** | Curation + documentation only. |
 | **OUTPUT** | English data pages + machine-readable files linked from CITATION.cff references. |
 | **UPDATE_FREQUENCY** | Per dataset release |

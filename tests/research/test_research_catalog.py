@@ -44,14 +44,27 @@ def test_g7_t06_catalog_rebuild_is_deterministic():
 def test_g7_t07_source_discovery_finds_both_slice_studies():
     result = find_artifacts(_catalog(), source_id="google-trends")
     studies = {e["study_id"] for e in result["entries"]}
-    assert {"cbx-search-trends", "cannabinoid-multi-trends"} <= studies
+    assert {"cbx-search-trends", "cannabinoid-raw-collection"} <= studies
+
+
+def test_renamed_study_is_reported_under_its_current_id():
+    """Raw records keep the pre-rename id; the catalog is derived, so it
+    reports the registered id and stays queryable by it."""
+    catalog = _catalog()
+    studies = {e["study_id"] for e in catalog["entries"]}
+    assert "cannabinoid-raw-collection" in studies
+    assert "cannabinoid-multi-trends" not in studies
+    # Nothing is lost: the pre-rename runs are still cataloged (only renamed).
+    assert find_artifacts(catalog, study_id="cannabinoid-raw-collection")[
+        "match_count"
+    ] > 0
 
 
 def test_g7_t08_compound_discovery_spans_studies_without_moving_data():
     """P2: discovery returns pointers; datasets/ layout is untouched."""
     result = find_artifacts(_catalog(), compound_id="compound_cbx")
     studies = {e["study_id"] for e in result["entries"]}
-    assert {"cbx-search-trends", "cannabinoid-multi-trends"} <= studies
+    assert {"cbx-search-trends", "cannabinoid-raw-collection"} <= studies
     assert result["match_count"] >= 2
 
 

@@ -1,6 +1,6 @@
 # Collection Summary
 
-**Study ID:** cannabinoid-multi-trends
+**Study ID:** cannabinoid-raw-collection
 **Collection Date:** 2026-10-02
 **Status:** COLLECTION_COMPLETE
 

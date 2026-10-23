@@ -34,7 +34,7 @@
 | G4 | ファイル形式の不統一 | 同一ソース内でも時期により保存形式が異なる | GT: `records_{kw}.json`（フル時系列）vs `{compound}_5y_summary.json`（要約のみ）vs `records_{kw}-5y.json`（新規フル）。X: `records.json` vs `{compound}.json` vs `pre/post/control` 3分割。YouTube: `records.json` vs `records_raw.json` vs 年別ページ vs SQLite |
 | G5 | 来歴記録の濃淡 | run_metadata の有無・項目が run ごとに異なる | 旧run: actor/query/section/max_pages のみ。新規GT run: anchor_terms/zero_status/purpose 付き。一部runは metadata 自体なし |
 | G6 | Git追跡方針の差 | GT のみ追跡、他はローカル保持のため、第三者の検証可能性が異なる | 追跡101件は全てGT。X/YouTube/TikTok/IG/COA のrawは `.gitignore` で除外 |
-| G7 | study 分割 | 同一成分のデータが複数 study に分散している | `cannabinoid-multi-trends`（成分横断）vs `cannabinoid-social-trends`（規制前後）vs `cbx-search-trends`（CBX製品軸） |
+| G7 | study 分割 | 同一成分のデータが複数 study に分散している | `cannabinoid-raw-collection`（成分横断）vs `cannabinoid-social-trends`（規制前後）vs `cbx-search-trends`（CBX製品軸） |
 
 G1〜G5 は取得設計の問題、G6〜G7 は保存・公開設計の問題である。
 いずれも「後から追加した手段・軸が、既存の手段・軸と整合していない」ことが根本原因である。

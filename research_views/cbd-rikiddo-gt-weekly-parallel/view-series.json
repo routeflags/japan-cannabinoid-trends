@@ -13,7 +13,7 @@
     {
       "series_id": "multi-phase-a-single-cbd",
       "run_id": "20261012T055259Z-google-trends-ja-rikiddo-phase-a-12m",
-      "artifact_file": "datasets/cannabinoid-multi-trends/data/raw/google_trends/20261012T055259Z-google-trends-ja-rikiddo-phase-a-12m/records_cbd-rikiddo.json",
+      "artifact_file": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261012T055259Z-google-trends-ja-rikiddo-phase-a-12m/records_cbd-rikiddo.json",
       "term": "CBD リキッド",
       "compound_id": "compound_cbd",
       "query_id": "cbd-liquid-ja",
@@ -23,7 +23,7 @@
     {
       "series_id": "multi-phase-a-repeat-single-cbd",
       "run_id": "20261012T060517Z-google-trends-ja-rikiddo-phase-a-repeat-12m",
-      "artifact_file": "datasets/cannabinoid-multi-trends/data/raw/google_trends/20261012T060517Z-google-trends-ja-rikiddo-phase-a-repeat-12m/records_cbd-rikiddo.json",
+      "artifact_file": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261012T060517Z-google-trends-ja-rikiddo-phase-a-repeat-12m/records_cbd-rikiddo.json",
       "term": "CBD リキッド",
       "compound_id": "compound_cbd",
       "query_id": "cbd-liquid-ja",

@@ -8,12 +8,12 @@ from storage.cli import EXIT_CONFIG, EXIT_IO, EXIT_OK, EXIT_REFUSED, main
 REPO_ROOT = Path(__file__).resolve().parents[2]
 SERIES = (
     REPO_ROOT
-    / "datasets/cannabinoid-multi-trends/data/raw/google_trends"
+    / "datasets/cannabinoid-raw-collection/data/raw/google_trends"
     / "20261012T064246Z-google-trends-ja-rikiddo-5y-main5/records_cbd-rikiddo-5y.json"
 )
 SUMMARY = (
     REPO_ROOT
-    / "datasets/cannabinoid-multi-trends/data/raw/google_trends"
+    / "datasets/cannabinoid-raw-collection/data/raw/google_trends"
     / "20261008T093228Z-google-trends-5y-baseline/cbd_5y_summary.json"
 )
 METADATA = REPO_ROOT / "metadata"

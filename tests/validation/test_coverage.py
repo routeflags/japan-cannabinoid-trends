@@ -35,7 +35,7 @@ REPO_ROOT = Path(__file__).resolve().parents[2]
 LEGACY_GT = (
     REPO_ROOT
     / "datasets"
-    / "cannabinoid-multi-trends"
+    / "cannabinoid-raw-collection"
     / "data"
     / "raw"
     / "google_trends"

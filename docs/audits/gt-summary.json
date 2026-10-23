@@ -40,7 +40,7 @@
       "compound": "CBD",
       "status": "computed",
       "run_id": "20261015T205048Z-google-trends-cannabinoid-multi-trends",
-      "path": "datasets/cannabinoid-multi-trends/data/raw/google_trends/20261015T205048Z-google-trends-cannabinoid-multi-trends/records_cbd.json",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261015T205048Z-google-trends-cannabinoid-multi-trends/records_cbd.json",
       "shape": "series",
       "stats": {
         "weeks": 262,
@@ -61,7 +61,7 @@
       "compound": "THC",
       "status": "computed",
       "run_id": "20261008T093228Z-google-trends-5y-baseline",
-      "path": "datasets/cannabinoid-multi-trends/data/raw/google_trends/20261008T093228Z-google-trends-5y-baseline/thc_5y_summary.json",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261008T093228Z-google-trends-5y-baseline/thc_5y_summary.json",
       "shape": "baseline",
       "stats": {
         "weeks": 261,
@@ -83,7 +83,7 @@
       "compound": "CBG",
       "status": "computed",
       "run_id": "20261008T093228Z-google-trends-5y-baseline",
-      "path": "datasets/cannabinoid-multi-trends/data/raw/google_trends/20261008T093228Z-google-trends-5y-baseline/cbg_5y_summary.json",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261008T093228Z-google-trends-5y-baseline/cbg_5y_summary.json",
       "shape": "baseline",
       "stats": {
         "weeks": 261,
@@ -105,7 +105,7 @@
       "compound": "CBN",
       "status": "computed",
       "run_id": "20261014T204841Z-google-trends-cannabinoid-multi-trends",
-      "path": "datasets/cannabinoid-multi-trends/data/raw/google_trends/20261014T204841Z-google-trends-cannabinoid-multi-trends/records_cbn.json",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261014T204841Z-google-trends-cannabinoid-multi-trends/records_cbn.json",
       "shape": "series",
       "stats": {
         "weeks": 262,
@@ -126,7 +126,7 @@
       "compound": "THCV",
       "status": "computed",
       "run_id": "20261008T093228Z-google-trends-5y-baseline",
-      "path": "datasets/cannabinoid-multi-trends/data/raw/google_trends/20261008T093228Z-google-trends-5y-baseline/thcv_5y_summary.json",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261008T093228Z-google-trends-5y-baseline/thcv_5y_summary.json",
       "shape": "baseline",
       "stats": {
         "weeks": 261,
@@ -148,7 +148,7 @@
       "compound": "THCH",
       "status": "computed",
       "run_id": "20261014T204901Z-google-trends-cannabinoid-multi-trends",
-      "path": "datasets/cannabinoid-multi-trends/data/raw/google_trends/20261014T204901Z-google-trends-cannabinoid-multi-trends/records_thch.json",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261014T204901Z-google-trends-cannabinoid-multi-trends/records_thch.json",
       "shape": "series",
       "stats": {
         "weeks": 262,
@@ -169,7 +169,7 @@
       "compound": "HHC",
       "status": "computed",
       "run_id": "20261008T093228Z-google-trends-5y-baseline",
-      "path": "datasets/cannabinoid-multi-trends/data/raw/google_trends/20261008T093228Z-google-trends-5y-baseline/hhc_5y_summary.json",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261008T093228Z-google-trends-5y-baseline/hhc_5y_summary.json",
       "shape": "baseline",
       "stats": {
         "weeks": 261,
@@ -191,7 +191,7 @@
       "compound": "THC-O",
       "status": "computed",
       "run_id": "20261014T204904Z-google-trends-cannabinoid-multi-trends",
-      "path": "datasets/cannabinoid-multi-trends/data/raw/google_trends/20261014T204904Z-google-trends-cannabinoid-multi-trends/records_thc-o.json",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261014T204904Z-google-trends-cannabinoid-multi-trends/records_thc-o.json",
       "shape": "series",
       "stats": {
         "weeks": 262,
@@ -212,7 +212,7 @@
       "compound": "H4CBH",
       "status": "computed",
       "run_id": "20261014T204855Z-google-trends-cannabinoid-multi-trends",
-      "path": "datasets/cannabinoid-multi-trends/data/raw/google_trends/20261014T204855Z-google-trends-cannabinoid-multi-trends/records_h4cbh.json",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261014T204855Z-google-trends-cannabinoid-multi-trends/records_h4cbh.json",
       "shape": "series",
       "stats": {
         "weeks": 262,
@@ -233,7 +233,7 @@
       "compound": "HHBD",
       "status": "computed",
       "run_id": "20261014T204857Z-google-trends-cannabinoid-multi-trends",
-      "path": "datasets/cannabinoid-multi-trends/data/raw/google_trends/20261014T204857Z-google-trends-cannabinoid-multi-trends/records_hhbd.json",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261014T204857Z-google-trends-cannabinoid-multi-trends/records_hhbd.json",
       "shape": "series",
       "stats": {
         "weeks": 262,
@@ -254,7 +254,7 @@
       "compound": "HHCH",
       "status": "computed",
       "run_id": "20261014T204859Z-google-trends-cannabinoid-multi-trends",
-      "path": "datasets/cannabinoid-multi-trends/data/raw/google_trends/20261014T204859Z-google-trends-cannabinoid-multi-trends/records_hhch.json",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261014T204859Z-google-trends-cannabinoid-multi-trends/records_hhch.json",
       "shape": "series",
       "stats": {
         "weeks": 262,
@@ -275,7 +275,7 @@
       "compound": "CRDP",
       "status": "computed",
       "run_id": "20261014T204852Z-google-trends-cannabinoid-multi-trends",
-      "path": "datasets/cannabinoid-multi-trends/data/raw/google_trends/20261014T204852Z-google-trends-cannabinoid-multi-trends/records_crdp.json",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261014T204852Z-google-trends-cannabinoid-multi-trends/records_crdp.json",
       "shape": "series",
       "stats": {
         "weeks": 262,
@@ -296,7 +296,7 @@
       "compound": "CRDH",
       "status": "computed",
       "run_id": "20261014T215738Z-google-trends-cannabinoid-multi-trends",
-      "path": "datasets/cannabinoid-multi-trends/data/raw/google_trends/20261014T215738Z-google-trends-cannabinoid-multi-trends/records_crdh.json",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261014T215738Z-google-trends-cannabinoid-multi-trends/records_crdh.json",
       "shape": "series",
       "stats": {
         "weeks": 262,

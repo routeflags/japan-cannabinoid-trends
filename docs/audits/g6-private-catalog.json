@@ -27,7 +27,7 @@
       "note": "contents never inspected; existence and exclusion state only"
     },
     {
-      "path": "datasets/cannabinoid-multi-trends/data/private",
+      "path": "datasets/cannabinoid-raw-collection/data/private",
       "exists": null,
       "tracked": false,
       "ignored": true,

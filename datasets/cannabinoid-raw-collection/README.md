@@ -1,7 +1,8 @@
 # Cannabinoid Raw Collection
 
 **表示名:** カンナビノイド 原データ収集（Google Trends / X / YouTube の生記録）
-**Study ID:** `cannabinoid-multi-trends`（ID とディレクトリ名は安定識別子。raw の `run_metadata.json` が参照する）
+**Study ID:** `cannabinoid-raw-collection`（ディレクトリ名と一致）
+**旧 `study_id`:** `cannabinoid-multi-trends`（2026-10-23 に改名）。raw の `run_metadata.json` は**収集時の ID のまま**（raw は不変）。旧 ID は [`study-registry.json`](../../metadata/studies/study-registry.json) の `previous_study_ids` に宣言され、research catalog が現在の ID に解決する。古い run id の末尾も旧名のまま。
 **Created:** 2026-10-02
 **Status:** ACTIVE
 **Scope:** 主要カンナビノイド化合物の Google Trends / X / YouTube 原記録の収集

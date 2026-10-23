@@ -72,6 +72,18 @@ _STUDY_ITEM = {
         "required": True,
         "empty": False,
     },
+    #: Ids this study was registered under before it was renamed.  Raw
+    #: records keep the id they were collected under (raw is immutable), so
+    #: a run document may cite a previous id; declaring it here keeps that
+    #: reference resolvable without editing the raw record.
+    "previous_study_ids": {
+        "type": "list",
+        "required": False,
+        "schema": {
+            "type": "string",
+            "empty": False,
+        },
+    },
 }
 
 STUDY_REGISTRY_SCHEMA = {

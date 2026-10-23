@@ -53,7 +53,7 @@
 
 ### 3.1 Google Trends
 
-**保存先:** `datasets/cannabinoid-multi-trends/data/raw/google_trends/`
+**保存先:** `datasets/cannabinoid-raw-collection/data/raw/google_trends/`
 
 | キーワード | キーワード群 | 地域 | 期間 |
 |-----------|-------------|------|------|
@@ -76,7 +76,7 @@
 
 ### 3.2 X (Twitter)
 
-**保存先:** `datasets/cannabinoid-multi-trends/data/raw/x/`
+**保存先:** `datasets/cannabinoid-raw-collection/data/raw/x/`
 
 | キーワード | 期間 | section | maxPages | コスト目安 |
 |-----------|------|---------|----------|-----------|
@@ -92,7 +92,7 @@
 
 ### 3.3 YouTube
 
-**保存先:** `datasets/cannabinoid-multi-trends/data/raw/youtube/`
+**保存先:** `datasets/cannabinoid-raw-collection/data/raw/youtube/`
 
 | キーワード | max_videos | コスト目安 |
 |-----------|-----------|-----------|
@@ -111,7 +111,7 @@
 ## 4. 保存先ディレクトリ
 
 ```
-datasets/cannabinoid-multi-trends/
+datasets/cannabinoid-raw-collection/
 ├── README.md
 ├── methodology.md
 ├── data/
@@ -150,7 +150,7 @@ datasets/cannabinoid-multi-trends/
 
 ### Step 1: プラン準備
 
-- [ ] `datasets/cannabinoid-multi-trends/` ディレクトリ作成
+- [ ] `datasets/cannabinoid-raw-collection/` ディレクトリ作成
 - [ ] `README.md` 作成
 - [ ] `methodology.md` 作成
 
@@ -225,11 +225,11 @@ datasets/cannabinoid-multi-trends/
 
 | 成果物 | 場所 |
 |--------|------|
-| Google Trends データ | `datasets/cannabinoid-multi-trends/data/raw/google_trends/` |
-| X データ | `datasets/cannabinoid-multi-trends/data/raw/x/` |
-| YouTube データ | `datasets/cannabinoid-multi-trends/data/raw/youtube/` |
-| サマリー | `datasets/cannabinoid-multi-trends/README.md` |
-| 方法論 | `datasets/cannabinoid-multi-trends/methodology.md` |
+| Google Trends データ | `datasets/cannabinoid-raw-collection/data/raw/google_trends/` |
+| X データ | `datasets/cannabinoid-raw-collection/data/raw/x/` |
+| YouTube データ | `datasets/cannabinoid-raw-collection/data/raw/youtube/` |
+| サマリー | `datasets/cannabinoid-raw-collection/README.md` |
+| 方法論 | `datasets/cannabinoid-raw-collection/methodology.md` |
 
 ---
 

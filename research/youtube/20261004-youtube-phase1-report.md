@@ -73,7 +73,7 @@
 ## データ保存先
 
 ```
-datasets/cannabinoid-multi-trends/data/raw/youtube/
+datasets/cannabinoid-raw-collection/data/raw/youtube/
 ├── 20261004T142147Z-youtube-cbd-10years/
 ├── 20261004T142430Z-youtube-cbg-10years/
 ├── 20261004T142508Z-youtube-thc-10years/

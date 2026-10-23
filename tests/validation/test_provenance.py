@@ -96,7 +96,7 @@ def test_complete_run_scores_full_marks():
 def test_legacy_shape_scores_zero_essentials():
     legacy = {
         "run_id": "20261002T063821Z-google-trends-cbd",
-        "study_id": "cannabinoid-multi-trends",
+        "study_id": "cannabinoid-raw-collection",
         "source": "google-trends",
     }
     result = assess_completeness(legacy)
@@ -151,7 +151,7 @@ def test_inferred_is_never_invented_for_legacy_runs():
     legacy = json.loads(
         (
             REPO_ROOT
-            / "datasets/cannabinoid-multi-trends/data/raw/google_trends"
+            / "datasets/cannabinoid-raw-collection/data/raw/google_trends"
             / "20261002T063821Z-google-trends-cbd/run_metadata.json"
         ).read_text(encoding="utf-8")
     )

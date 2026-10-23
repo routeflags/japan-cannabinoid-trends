@@ -9,7 +9,7 @@ cd /Users/bookair18/OS/home/Codes/github.com/routeflags/japan-cannabinoid-trends
 
 source /Users/bookair18/OS/media/06_symphony/symphony_workspaces/.env.d/youtube.env
 
-BASE_DIR="datasets/cannabinoid-multi-trends/data/raw/youtube/20261006T073000Z-youtube-japanese-keywords-remaining"
+BASE_DIR="datasets/cannabinoid-raw-collection/data/raw/youtube/20261006T073000Z-youtube-japanese-keywords-remaining"
 mkdir -p "$BASE_DIR"
 
 echo "=== 日本語キーワード YouTube データ再収集開始 ==="

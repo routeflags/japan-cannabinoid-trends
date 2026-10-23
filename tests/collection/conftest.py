@@ -32,7 +32,7 @@ REFERENCE_NOW_ISO = "2026-10-13T00:00:00Z"
 RECORDED_CBD_5Y = (
     REPO_ROOT
     / "datasets"
-    / "cannabinoid-multi-trends"
+    / "cannabinoid-raw-collection"
     / "data"
     / "raw"
     / "google_trends"

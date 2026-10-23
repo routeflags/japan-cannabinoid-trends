@@ -14,7 +14,7 @@
 |-------------|------|------|:------------:|--------|
 | **CBX Social Trends (202608)** | 2026-08-01 ～ 2026-08-31 | 日次 | **2,376件** | `datasets/cbx-social-trends/data/raw/x/202608/` |
 | **CBX Social Trends (26week)** | 2026-03-19 ～ 2026-09-24 | 週次 | **451件** | `datasets/cbx-social-trends/data/raw/x/26week/` |
-| **Cannabinoid Multi Trends** | 2026-10-02 | 一回 | **316件** | `datasets/cannabinoid-multi-trends/data/raw/x/` |
+| **Cannabinoid Multi Trends** | 2026-10-02 | 一回 | **316件** | `datasets/cannabinoid-raw-collection/data/raw/x/` |
 
 ---
 
@@ -150,7 +150,7 @@ datasets/
 │   ├── 202609/          ← 2026年9月のデータ (1ファイル)
 │   └── 26week/          ← 26週間の週次データ (451件)
 │
-├── cannabinoid-multi-trends/data/raw/x/
+├── cannabinoid-raw-collection/data/raw/x/
 │   ├── x-cbd/           ← CBD ツイート (60件)
 │   ├── x-thc/           ← THC ツイート (60件)
 │   ├── x-cbg/           ← CBG ツイート (40件)

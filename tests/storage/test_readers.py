@@ -19,17 +19,17 @@ FIXTURES = Path(__file__).parent / "fixtures"
 
 SERIES = (
     REPO_ROOT
-    / "datasets/cannabinoid-multi-trends/data/raw/google_trends"
+    / "datasets/cannabinoid-raw-collection/data/raw/google_trends"
     / "20261012T064246Z-google-trends-ja-rikiddo-5y-main5/records_cbd-rikiddo-5y.json"
 )
 SUMMARY = (
     REPO_ROOT
-    / "datasets/cannabinoid-multi-trends/data/raw/google_trends"
+    / "datasets/cannabinoid-raw-collection/data/raw/google_trends"
     / "20261008T093228Z-google-trends-5y-baseline/cbd_5y_summary.json"
 )
 COMPARISON = (
     REPO_ROOT
-    / "datasets/cannabinoid-multi-trends/data/raw/google_trends"
+    / "datasets/cannabinoid-raw-collection/data/raw/google_trends"
     / "20261002T064236Z-google-trends-comparison-setA/comparison_setA.json"
 )
 RELATED_QUERIES = (
@@ -39,22 +39,22 @@ RELATED_QUERIES = (
 )
 NO_DATA = (
     REPO_ROOT
-    / "datasets/cannabinoid-multi-trends/data/raw/google_trends"
+    / "datasets/cannabinoid-raw-collection/data/raw/google_trends"
     / "20261002T064135Z-google-trends-nodata/records_nodata.json"
 )
 AVERAGES = (
     REPO_ROOT
-    / "datasets/cannabinoid-multi-trends/data/raw/google_trends"
+    / "datasets/cannabinoid-raw-collection/data/raw/google_trends"
     / "20261012T055259Z-google-trends-ja-rikiddo-phase-a-12m/comparison_ja1.json"
 )
 AVERAGES_ALT_KEY = (
     REPO_ROOT
-    / "datasets/cannabinoid-multi-trends/data/raw/google_trends"
+    / "datasets/cannabinoid-raw-collection/data/raw/google_trends"
     / "20261005T100000Z-google-trends-common-scale-expansion/comparison_setB.json"
 )
 AVERAGES_WITH_PEAK = (
     REPO_ROOT
-    / "datasets/cannabinoid-multi-trends/data/raw/google_trends"
+    / "datasets/cannabinoid-raw-collection/data/raw/google_trends"
     / "20261008T125719Z-google-trends-common-scale-crdh/comparison.json"
 )
 QUERY_BATCH_OBJECTS = (
@@ -69,7 +69,7 @@ QUERY_BATCH_DATA_OBJECT = (
 )
 ENVELOPE_PAYLOAD = (
     REPO_ROOT
-    / "datasets/cannabinoid-multi-trends/data/raw/google_trends"
+    / "datasets/cannabinoid-raw-collection/data/raw/google_trends"
     / "20261014T204841Z-google-trends-cannabinoid-multi-trends/payload.json"
 )
 ENVELOPE_TOOL_RESULT = (

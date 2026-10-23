@@ -62,7 +62,7 @@ Data Catalog は `storage.cli catalog --output` で都度生成するのみで�
 検証:
 
 - `tests/storage/test_catalog.py` + `test_storage_cli.py`: 28 passed。
-- 実 study 実行: `catalog --study-dir datasets/cannabinoid-multi-trends --persist
+- 実 study 実行: `catalog --study-dir datasets/cannabinoid-raw-collection --persist
   --check-lineage` → exit 0、16 entries / 8 manifests / errors 0。2 回実行で
   sha256 一致（byte-identical）。`datasets/**/data/raw` の差分なし。
 - `validation.cli validate-registries`: valid（issues なし）。
@@ -77,7 +77,7 @@ Data Catalog は `storage.cli catalog --output` で都度生成するのみで�
 
 残務・リスク:
 
-- 生成物 `datasets/cannabinoid-multi-trends/metadata/data-catalog.json` は作業ツリーに
+- 生成物 `datasets/cannabinoid-raw-collection/metadata/data-catalog.json` は作業ツリーに
   未追跡のまま残している（派生出力であり、コミットは別判断。`data/processed/` 等と
   同様にコミット前例なし）。
 - 他 study への永続化は未実行（必要になった study ごとに同コマンドで生成する）。

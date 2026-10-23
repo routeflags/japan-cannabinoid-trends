@@ -52,7 +52,7 @@ def test_manifest_uses_raw_text_label_as_evidence():
 def test_correct_record_changes_only_the_bad_label_date():
     path = (
         ROOT
-        / "datasets/cannabinoid-multi-trends/data/raw/google_trends"
+        / "datasets/cannabinoid-raw-collection/data/raw/google_trends"
         / "20261012T060517Z-google-trends-ja-rikiddo-phase-a-repeat-12m"
         / "records_cbd-rikiddo.json"
     )

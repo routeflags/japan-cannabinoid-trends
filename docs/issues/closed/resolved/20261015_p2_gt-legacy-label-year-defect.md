@@ -3,7 +3,7 @@
 **ID:** ISS-20261015-GT-002
 **優先度:** P2 (Medium)
 **ステータス:** RESOLVED (2026-10-15)
-**対象:** `datasets/cannabinoid-multi-trends/data/raw/google_trends/20261012T055259Z-google-trends-ja-rikiddo-phase-a-12m/`, `datasets/cannabinoid-multi-trends/data/raw/google_trends/20261012T060517Z-google-trends-ja-rikiddo-phase-a-repeat-12m/`（凍結 legacy。本 issue では変更しない）
+**対象:** `datasets/cannabinoid-raw-collection/data/raw/google_trends/20261012T055259Z-google-trends-ja-rikiddo-phase-a-12m/`, `datasets/cannabinoid-raw-collection/data/raw/google_trends/20261012T060517Z-google-trends-ja-rikiddo-phase-a-repeat-12m/`（凍結 legacy。本 issue では変更しない）
 
 ## 概要
 
@@ -48,7 +48,7 @@ phase-a 系 2 run を `inconsistent` として報告した。原因は記録系�
 - 扱いは **downstream 補正** とした。raw JSON は凍結 legacy として編集しない。
 - `src/processing/gt_legacy_label_corrections.py` を追加し、該当 8 ファイルについて
   `2026-12-28` を downstream では `2025-12-28` と読む補正 manifest を決定論的に生成する。
-- 生成物は `datasets/cannabinoid-multi-trends/data/interim/google_trends/20261015_gt_legacy_label_corrections.json`。
+- 生成物は `datasets/cannabinoid-raw-collection/data/interim/google_trends/20261015_gt_legacy_label_corrections.json`。
   layer は `interim`、`raw_files_modified=false`、対象 raw ファイルの sha256 と `raw_text` 根拠を記録する。
 - 原本照合:
   - `phase-a-repeat` の 4 records は各 `records_*.json` 内の `raw_text` が

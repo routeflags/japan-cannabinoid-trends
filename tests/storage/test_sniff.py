@@ -13,20 +13,20 @@ REPO_ROOT = Path(__file__).resolve().parents[2]
 FIXTURES = Path(__file__).parent / "fixtures"
 R = REPO_ROOT / "datasets"
 
-SERIES = R / "cannabinoid-multi-trends/data/raw/google_trends/20261012T064246Z-google-trends-ja-rikiddo-5y-main5/records_cbd-rikiddo-5y.json"
+SERIES = R / "cannabinoid-raw-collection/data/raw/google_trends/20261012T064246Z-google-trends-ja-rikiddo-5y-main5/records_cbd-rikiddo-5y.json"
 LEGACY_SERIES = R / "cbx-search-trends/data/raw/google_trends/20261001T115959Z-google-trends-cbx-rikiddo/records.json"
-SUMMARY = R / "cannabinoid-multi-trends/data/raw/google_trends/20261008T093228Z-google-trends-5y-baseline/cbd_5y_summary.json"
-COMPARISON = R / "cannabinoid-multi-trends/data/raw/google_trends/20261002T064236Z-google-trends-comparison-setA/comparison_setA.json"
+SUMMARY = R / "cannabinoid-raw-collection/data/raw/google_trends/20261008T093228Z-google-trends-5y-baseline/cbd_5y_summary.json"
+COMPARISON = R / "cannabinoid-raw-collection/data/raw/google_trends/20261002T064236Z-google-trends-comparison-setA/comparison_setA.json"
 RELATED = R / "cbx-search-trends/data/raw/google_trends/20261001T115959Z-google-trends-cbx-rikiddo/related_queries.json"
-AVERAGES = R / "cannabinoid-multi-trends/data/raw/google_trends/20261012T055259Z-google-trends-ja-rikiddo-phase-a-12m/comparison_ja1.json"
-AVERAGES_ALT_KEY = R / "cannabinoid-multi-trends/data/raw/google_trends/20261005T100000Z-google-trends-common-scale-expansion/comparison_setB.json"
-AVERAGES_WITH_PEAK = R / "cannabinoid-multi-trends/data/raw/google_trends/20261008T125719Z-google-trends-common-scale-crdh/comparison.json"
+AVERAGES = R / "cannabinoid-raw-collection/data/raw/google_trends/20261012T055259Z-google-trends-ja-rikiddo-phase-a-12m/comparison_ja1.json"
+AVERAGES_ALT_KEY = R / "cannabinoid-raw-collection/data/raw/google_trends/20261005T100000Z-google-trends-common-scale-expansion/comparison_setB.json"
+AVERAGES_WITH_PEAK = R / "cannabinoid-raw-collection/data/raw/google_trends/20261008T125719Z-google-trends-common-scale-crdh/comparison.json"
 QUERY_BATCH_OBJECTS = R / "cbx-search-trends/data/raw/google_trends/20261001T121949Z-google-trends-h4cbh-hhbd/related_queries.json"
 QUERY_BATCH_DATA_OBJECT = R / "cbx-search-trends/data/raw/google_trends/20261001T132500Z-google-trends-disambiguated/records_disambiguated.json"
-ENVELOPE_PAYLOAD = R / "cannabinoid-multi-trends/data/raw/google_trends/20261014T204841Z-google-trends-cannabinoid-multi-trends/payload.json"
+ENVELOPE_PAYLOAD = R / "cannabinoid-raw-collection/data/raw/google_trends/20261014T204841Z-google-trends-cannabinoid-multi-trends/payload.json"
 ENVELOPE_TOOL_RESULT = R / "cbx-search-trends/data/raw/google_trends/20261015T042845Z-google-trends-boundary-1m/mcp-tool-result.json"
-NOTATION_PRESURVEY = R / "cannabinoid-multi-trends/data/raw/google_trends/20261012T054920Z-google-trends-notation-presurvey/comparison_notation.json"
-REPEAT_DIFF = R / "cannabinoid-multi-trends/data/raw/google_trends/20261012T060517Z-google-trends-ja-rikiddo-phase-a-repeat-12m/repeat_diff.json"
+NOTATION_PRESURVEY = R / "cannabinoid-raw-collection/data/raw/google_trends/20261012T054920Z-google-trends-notation-presurvey/comparison_notation.json"
+REPEAT_DIFF = R / "cannabinoid-raw-collection/data/raw/google_trends/20261012T060517Z-google-trends-ja-rikiddo-phase-a-repeat-12m/repeat_diff.json"
 
 
 def test_recorded_full_timeseries_is_recognized():
@@ -68,7 +68,7 @@ def test_related_queries_response_is_recognized():
 
 def test_no_data_response_is_recognized():
     result = sniff_path(
-        R / "cannabinoid-multi-trends/data/raw/google_trends/20261002T064135Z-google-trends-nodata/records_nodata.json"
+        R / "cannabinoid-raw-collection/data/raw/google_trends/20261002T064135Z-google-trends-nodata/records_nodata.json"
     )
     assert (result.format, result.state) == ("json", "recognized")
     assert result.schema_id == "google-trends-no-data-v1"

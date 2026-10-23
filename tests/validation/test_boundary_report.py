@@ -22,7 +22,7 @@ REPO_ROOT = Path(__file__).resolve().parents[2]
 RECORDED_5Y_RUN = (
     REPO_ROOT
     / "datasets"
-    / "cannabinoid-multi-trends"
+    / "cannabinoid-raw-collection"
     / "data"
     / "raw"
     / "google_trends"
@@ -199,7 +199,7 @@ def test_row_for_the_tracked_recorded_5y_run(tmp_path):
     """
 
     assert RECORDED_5Y_RUN.is_dir(), "the tracked 5y run is part of the repository"
-    report = build_boundary_report(REPO_ROOT / "datasets", study="cannabinoid-multi-trends")
+    report = build_boundary_report(REPO_ROOT / "datasets", study="cannabinoid-raw-collection")
     row = next(
         entry
         for entry in report["rows"]

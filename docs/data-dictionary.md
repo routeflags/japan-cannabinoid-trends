@@ -220,15 +220,15 @@
 
 ---
 
-## 6. 主要カンナビノイドトレンドデータ: `cannabinoid-multi-trends`
+## 6. 主要カンナビノイドトレンドデータ: `cannabinoid-raw-collection`
 
-**Study ID:** cannabinoid-multi-trends
+**Study ID:** cannabinoid-raw-collection
 **作成日:** 2026-10-02
 **対象化合物:** CBD, THC, CBG, HHC, THCV, THC-O, THCH
 
 ### 6.1 Google Trends データ
 
-**パス:** `datasets/cannabinoid-multi-trends/data/raw/google_trends/`
+**パス:** `datasets/cannabinoid-raw-collection/data/raw/google_trends/`
 
 | カラム名 | 型 | 単位 | 説明 | 欠損値の扱い |
 |----------|-----|------|------|-------------|
@@ -249,7 +249,7 @@
 
 ### 6.2 X (Twitter) データ
 
-**パス:** `datasets/cannabinoid-multi-trends/data/raw/x/`
+**パス:** `datasets/cannabinoid-raw-collection/data/raw/x/`
 
 | カラム名 | 型 | 単位 | 説明 | 欠損値の扱い |
 |----------|-----|------|------|-------------|
@@ -271,7 +271,7 @@
 
 ### 6.3 YouTube データ
 
-**パス:** `datasets/cannabinoid-multi-trends/data/raw/youtube/`
+**パス:** `datasets/cannabinoid-raw-collection/data/raw/youtube/`
 
 | カラム名 | 型 | 単位 | 説明 | 欠損値の扱い |
 |----------|-----|------|------|-------------|

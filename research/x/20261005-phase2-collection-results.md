@@ -101,7 +101,7 @@
 
 ```
 datasets/
-├── cannabinoid-multi-trends/data/raw/youtube/
+├── cannabinoid-raw-collection/data/raw/youtube/
 │   └── 20261005T140054Z-youtube-japanese-apify/
 │       ├── cbd-oil_raw.json
 │       ├── cbx-rikiddo_raw.json

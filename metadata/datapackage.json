@@ -267,8 +267,8 @@
       }
     },
     {
-      "name": "cannabinoid-multi-trends",
-      "path": "datasets/cannabinoid-multi-trends/",
+      "name": "cannabinoid-raw-collection",
+      "path": "datasets/cannabinoid-raw-collection/",
       "format": "json,csv",
       "description": "主要カンナビノイド7化合物（CBD, THC, CBG, HHC, THCV, THC-O, THCH）のトレンドデータ（Google Trends, X, YouTube）",
       "schema": {

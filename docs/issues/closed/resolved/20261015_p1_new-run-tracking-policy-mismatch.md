@@ -16,9 +16,9 @@ pre-commit の調査ページ検査パターン（`datasets/*/data/raw/google_tr
 ## 確認された観測
 
 ```
-$ git check-ignore -v --no-index datasets/cannabinoid-multi-trends/data/raw/<run-id>/payload.json
+$ git check-ignore -v --no-index datasets/cannabinoid-raw-collection/data/raw/<run-id>/payload.json
 .gitignore:2:**/data/raw/*        ... （無視される）
-$ git check-ignore -v --no-index datasets/cannabinoid-multi-trends/data/raw/google_trends/x/run_metadata.json
+$ git check-ignore -v --no-index datasets/cannabinoid-raw-collection/data/raw/google_trends/x/run_metadata.json
 .gitignore:7:!**/data/raw/google_trends/**  ... （追跡対象）
 ```
 

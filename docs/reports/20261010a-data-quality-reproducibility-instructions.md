@@ -33,7 +33,7 @@
 
 対象：
 
-- `datasets/cannabinoid-multi-trends/`
+- `datasets/cannabinoid-raw-collection/`
 - 関連する収集コード・メタデータ・集計コード
 
 ### 3.1 取得件数の再定義
@@ -93,7 +93,7 @@
 
 対象：
 
-`datasets/cannabinoid-multi-trends/data/processed/early-warning-index-v1.csv`
+`datasets/cannabinoid-raw-collection/data/processed/early-warning-index-v1.csv`
 
 ### 4.1 算出根拠の追跡
 

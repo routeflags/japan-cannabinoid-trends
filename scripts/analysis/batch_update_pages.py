@@ -17,44 +17,44 @@ with open(REPO_ROOT / "research/x/20261008-x-classification-batch1.json") as f:
 # YouTube data paths per compound
 YOUTUBE_PATHS = {
     "thc": [
-        "datasets/cannabinoid-multi-trends/data/raw/youtube/20261002T064821Z-youtube-thc/records.json",
-        "datasets/cannabinoid-multi-trends/data/raw/youtube/20261004T142508Z-youtube-thc-10years",
+        "datasets/cannabinoid-raw-collection/data/raw/youtube/20261002T064821Z-youtube-thc/records.json",
+        "datasets/cannabinoid-raw-collection/data/raw/youtube/20261004T142508Z-youtube-thc-10years",
     ],
     "cbg": [
-        "datasets/cannabinoid-multi-trends/data/raw/youtube/20261002T064828Z-youtube-cbg/records.json",
-        "datasets/cannabinoid-multi-trends/data/raw/youtube/20261004T142430Z-youtube-cbg-10years",
+        "datasets/cannabinoid-raw-collection/data/raw/youtube/20261002T064828Z-youtube-cbg/records.json",
+        "datasets/cannabinoid-raw-collection/data/raw/youtube/20261004T142430Z-youtube-cbg-10years",
     ],
     "cbn": [
-        "datasets/cannabinoid-multi-trends/data/raw/youtube/20261004T132844Z-youtube-cbn-2026-09-01-to-2026-10-01/records.json",
-        "datasets/cannabinoid-multi-trends/data/raw/youtube/20261004T142547Z-youtube-cbn-10years",
+        "datasets/cannabinoid-raw-collection/data/raw/youtube/20261004T132844Z-youtube-cbn-2026-09-01-to-2026-10-01/records.json",
+        "datasets/cannabinoid-raw-collection/data/raw/youtube/20261004T142547Z-youtube-cbn-10years",
     ],
     "thcv": [
-        "datasets/cannabinoid-multi-trends/data/raw/youtube/20261002T064857Z-youtube-thcv/records.json",
+        "datasets/cannabinoid-raw-collection/data/raw/youtube/20261002T064857Z-youtube-thcv/records.json",
     ],
     "hhc": [
-        "datasets/cannabinoid-multi-trends/data/raw/youtube/20261008T122515Z-youtube-hhc/records.json",
-        "datasets/cannabinoid-multi-trends/data/raw/youtube/20261002T064850Z-youtube-hhc/records.json",
+        "datasets/cannabinoid-raw-collection/data/raw/youtube/20261008T122515Z-youtube-hhc/records.json",
+        "datasets/cannabinoid-raw-collection/data/raw/youtube/20261002T064850Z-youtube-hhc/records.json",
     ],
     "thch": [
-        "datasets/cannabinoid-multi-trends/data/raw/youtube/20261008T122605Z-youtube-thch/records.json",
+        "datasets/cannabinoid-raw-collection/data/raw/youtube/20261008T122605Z-youtube-thch/records.json",
     ],
     "thc-o": [
-        "datasets/cannabinoid-multi-trends/data/raw/youtube/20261008T122647Z-youtube-thc-o/records.json",
+        "datasets/cannabinoid-raw-collection/data/raw/youtube/20261008T122647Z-youtube-thc-o/records.json",
     ],
     "h4cbh": [
-        "datasets/cannabinoid-multi-trends/data/raw/youtube/20261008T125306Z-youtube-h4cbh/records.json",
+        "datasets/cannabinoid-raw-collection/data/raw/youtube/20261008T125306Z-youtube-h4cbh/records.json",
     ],
     "hhbd": [
-        "datasets/cannabinoid-multi-trends/data/raw/youtube/20261008T125348Z-youtube-hhbd/records.json",
+        "datasets/cannabinoid-raw-collection/data/raw/youtube/20261008T125348Z-youtube-hhbd/records.json",
     ],
     "hhch": [
-        "datasets/cannabinoid-multi-trends/data/raw/youtube/20261008T125428Z-youtube-hhch/records.json",
+        "datasets/cannabinoid-raw-collection/data/raw/youtube/20261008T125428Z-youtube-hhch/records.json",
     ],
     "crdp": [
-        "datasets/cannabinoid-multi-trends/data/raw/youtube/20261008T125501Z-youtube-crdp/records.json",
+        "datasets/cannabinoid-raw-collection/data/raw/youtube/20261008T125501Z-youtube-crdp/records.json",
     ],
     "crdh": [
-        "datasets/cannabinoid-multi-trends/data/raw/youtube/20261008T125544Z-youtube-crdh/records.json",
+        "datasets/cannabinoid-raw-collection/data/raw/youtube/20261008T125544Z-youtube-crdh/records.json",
     ],
 }
 

@@ -464,7 +464,7 @@
         "youtube": {
           "count": 25,
           "period": "2026-10-01",
-          "source": "datasets/cannabinoid-multi-trends/data/raw/youtube/"
+          "source": "datasets/cannabinoid-raw-collection/data/raw/youtube/"
         },
         "googleTrends": {
           "commonScale": "Set A",
@@ -515,12 +515,12 @@
           "count": 40,
           "period": "2026-09-11 ~ 2026-09-30",
           "periodDays": 19,
-          "source": "datasets/cannabinoid-multi-trends/data/raw/x/20261002T064532Z-x-thcv/records.json"
+          "source": "datasets/cannabinoid-raw-collection/data/raw/x/20261002T064532Z-x-thcv/records.json"
         },
         "youtube": {
           "count": 23,
           "period": "2026-10-01",
-          "source": "datasets/cannabinoid-multi-trends/data/raw/youtube/"
+          "source": "datasets/cannabinoid-raw-collection/data/raw/youtube/"
         },
         "googleTrends": {
           "commonScale": "Set B",
@@ -533,12 +533,12 @@
           "count": 36,
           "period": "2026-09-04 ~ 2026-09-30",
           "periodDays": 26,
-          "source": "datasets/cannabinoid-multi-trends/data/raw/x/20261002T064549Z-x-thch/records.json"
+          "source": "datasets/cannabinoid-raw-collection/data/raw/x/20261002T064549Z-x-thch/records.json"
         },
         "youtube": {
           "count": 20,
           "period": "2026-10-01",
-          "source": "datasets/cannabinoid-multi-trends/data/raw/youtube/"
+          "source": "datasets/cannabinoid-raw-collection/data/raw/youtube/"
         },
         "googleTrends": {
           "commonScale": "Set A",
@@ -551,12 +551,12 @@
           "count": 40,
           "period": "2026-10-01",
           "periodDays": 1,
-          "source": "datasets/cannabinoid-multi-trends/data/raw/x/20261002T064454Z-x-hhc/records.json"
+          "source": "datasets/cannabinoid-raw-collection/data/raw/x/20261002T064454Z-x-hhc/records.json"
         },
         "youtube": {
           "count": 28,
           "period": "2026-10-01",
-          "source": "datasets/cannabinoid-multi-trends/data/raw/youtube/"
+          "source": "datasets/cannabinoid-raw-collection/data/raw/youtube/"
         },
         "googleTrends": {
           "commonScale": "Set A",
@@ -569,12 +569,12 @@
           "count": 40,
           "period": "2026-09-30 ~ 2026-10-01",
           "periodDays": 1,
-          "source": "datasets/cannabinoid-multi-trends/data/raw/x/20261002T064540Z-x-thc-o/records.json"
+          "source": "datasets/cannabinoid-raw-collection/data/raw/x/20261002T064540Z-x-thc-o/records.json"
         },
         "youtube": {
           "count": 30,
           "period": "2026-10-01",
-          "source": "datasets/cannabinoid-multi-trends/data/raw/youtube/"
+          "source": "datasets/cannabinoid-raw-collection/data/raw/youtube/"
         },
         "googleTrends": {
           "commonScale": "Set B",
@@ -592,7 +592,7 @@
         "youtube": {
           "count": 24,
           "period": "2026-10-01",
-          "source": "datasets/cannabinoid-multi-trends/data/raw/youtube/"
+          "source": "datasets/cannabinoid-raw-collection/data/raw/youtube/"
         },
         "googleTrends": {
           "commonScale": "Set D",
@@ -610,7 +610,7 @@
         "youtube": {
           "count": 22,
           "period": "2026-10-01",
-          "source": "datasets/cannabinoid-multi-trends/data/raw/youtube/"
+          "source": "datasets/cannabinoid-raw-collection/data/raw/youtube/"
         },
         "googleTrends": {
           "commonScale": "Set D",
@@ -628,7 +628,7 @@
         "youtube": {
           "count": 20,
           "period": "2026-10-01",
-          "source": "datasets/cannabinoid-multi-trends/data/raw/youtube/"
+          "source": "datasets/cannabinoid-raw-collection/data/raw/youtube/"
         },
         "googleTrends": {
           "commonScale": "Set B",
@@ -646,7 +646,7 @@
         "youtube": {
           "count": 27,
           "period": "2026-10-01",
-          "source": "datasets/cannabinoid-multi-trends/data/raw/youtube/"
+          "source": "datasets/cannabinoid-raw-collection/data/raw/youtube/"
         },
         "googleTrends": {
           "commonScale": "Set B",
@@ -664,7 +664,7 @@
         "youtube": {
           "count": 21,
           "period": "2026-10-01",
-          "source": "datasets/cannabinoid-multi-trends/data/raw/youtube/"
+          "source": "datasets/cannabinoid-raw-collection/data/raw/youtube/"
         },
         "googleTrends": {
           "commonScale": "Set D",

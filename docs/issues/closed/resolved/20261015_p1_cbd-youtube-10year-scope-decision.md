@@ -3,7 +3,7 @@
 **ID:** ISS-20261015-CBD-007  
 **優先度:** P1 (High)  
 **ステータス:** RESOLVED (2026-10-15)  
-**対象:** `ISS-20261012-CBD-003`, `ISS-20261015-COL-033`, `datasets/cannabinoid-multi-trends/data/raw/youtube/20261004T142147Z-youtube-cbd-10years/`, `metadata/provenance/declarations/20261015-youtube-csv-adoption.json`
+**対象:** `ISS-20261012-CBD-003`, `ISS-20261015-COL-033`, `datasets/cannabinoid-raw-collection/data/raw/youtube/20261004T142147Z-youtube-cbd-10years/`, `metadata/provenance/declarations/20261015-youtube-csv-adoption.json`
 
 ## 概要
 
@@ -42,7 +42,7 @@ provenance 不備を扱っている。一方で、オーナーは「CSV イン�
 ## 確認された観測
 
 - CBD-003 の対象:
-  - `datasets/cannabinoid-multi-trends/data/raw/youtube/20261004T142147Z-youtube-cbd-10years/`
+  - `datasets/cannabinoid-raw-collection/data/raw/youtube/20261004T142147Z-youtube-cbd-10years/`
   - 旧 10年収集 run。
   - 83 個の年別 JSON と `collection_log.txt` があり、2025 年は観測レコードなし / 欠測として記録されている。
   - 2023–2024 年も部分取得であり、完全な 10年系列として扱えない。

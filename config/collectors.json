@@ -20,7 +20,7 @@
       },
       "verified_at": "2026-10-12T06:42:46Z",
       "evidence": [
-        "datasets/cannabinoid-multi-trends/data/raw/google_trends/20261012T064246Z-google-trends-ja-rikiddo-5y-main5/run_metadata.json (mcp_version=0.1.1, geo=JP, timeframe=today 5-y)",
+        "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261012T064246Z-google-trends-ja-rikiddo-5y-main5/run_metadata.json (mcp_version=0.1.1, geo=JP, timeframe=today 5-y)",
         "datasets/cbx-search-trends/data/raw/google_trends/20261001T115959Z-google-trends-cbx-rikiddo/run_metadata.json (mcp_version=0.1.1, geo=JP, timeframe=today 12-m)",
         ".github/skills/research-google-trends/SKILL.md (tool list and parameters; npm google-trends-mcp, no API key)",
         "29 run_metadata.json in datasets/**/google_trends (all mcp_server=google-trends-mcp, mcp_version=0.1.1)"

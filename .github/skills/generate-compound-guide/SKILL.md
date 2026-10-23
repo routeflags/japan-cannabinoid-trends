@@ -505,7 +505,7 @@ FAQは必ず4問以上含める：
 | `publication/guide_cbx_rewrite.html` | テンプレート（CBX） |
 | `publication/guide_{compound}.html` | 生成されるページ |
 | `research/regulatory-status/` | 規制状況のデータ |
-| `datasets/cannabinoid-multi-trends/` | Google Trends データ |
+| `datasets/cannabinoid-raw-collection/` | Google Trends データ |
 
 ---
 

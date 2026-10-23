@@ -3,7 +3,37 @@
   "study_count": 10,
   "studies": [
     {
-      "study_id": "cannabinoid-multi-trends",
+      "study_id": "cannabinoid-platform-trends",
+      "registered": true,
+      "title": "Cannabinoid Platform Trends",
+      "has_readme": true,
+      "has_methodology": true,
+      "research_questions_quoted": [
+        "日本国内において、各カンナビノイド成分の国内トレンドと、Google Trends / YouTube で観測できる差異は何か？"
+      ],
+      "run_count": 0,
+      "catalog_entry_count": 0,
+      "layout": [
+        "README.md",
+        "data",
+        "metadata",
+        "methodology.md"
+      ],
+      "data_file_count": 5,
+      "has_data_raw": false,
+      "data_raw_file_count": 0,
+      "sources": [],
+      "compound_ids": [],
+      "query_ids": [],
+      "timeframes": [],
+      "measurement_ids": [],
+      "window_ids": [],
+      "has_artifact_manifest": false,
+      "coverage": "unevidenced",
+      "publication_status": "private_by_default"
+    },
+    {
+      "study_id": "cannabinoid-raw-collection",
       "registered": true,
       "title": "Cannabinoid Raw Collection",
       "has_readme": true,
@@ -82,36 +112,6 @@
         "2021-10-10_2026-10-12"
       ],
       "has_artifact_manifest": true,
-      "coverage": "unevidenced",
-      "publication_status": "private_by_default"
-    },
-    {
-      "study_id": "cannabinoid-platform-trends",
-      "registered": true,
-      "title": "Cannabinoid Cross-Platform Aggregates",
-      "has_readme": true,
-      "has_methodology": true,
-      "research_questions_quoted": [
-        "日本国内において、各カンナビノイド成分の国内トレンドと、Google Trends / YouTube で観測できる差異は何か？"
-      ],
-      "run_count": 0,
-      "catalog_entry_count": 0,
-      "layout": [
-        "README.md",
-        "data",
-        "metadata",
-        "methodology.md"
-      ],
-      "data_file_count": 5,
-      "has_data_raw": false,
-      "data_raw_file_count": 0,
-      "sources": [],
-      "compound_ids": [],
-      "query_ids": [],
-      "timeframes": [],
-      "measurement_ids": [],
-      "window_ids": [],
-      "has_artifact_manifest": false,
       "coverage": "unevidenced",
       "publication_status": "private_by_default"
     },
@@ -370,28 +370,28 @@
     {
       "compound_id": "compound_cbd",
       "study_ids": [
-        "cannabinoid-multi-trends",
+        "cannabinoid-raw-collection",
         "cbx-search-trends"
       ]
     },
     {
       "compound_id": "compound_cbx",
       "study_ids": [
-        "cannabinoid-multi-trends",
+        "cannabinoid-raw-collection",
         "cbx-search-trends"
       ]
     },
     {
       "compound_id": "compound_h4cbh",
       "study_ids": [
-        "cannabinoid-multi-trends",
+        "cannabinoid-raw-collection",
         "cbx-search-trends"
       ]
     },
     {
       "compound_id": "compound_hhbd",
       "study_ids": [
-        "cannabinoid-multi-trends",
+        "cannabinoid-raw-collection",
         "cbx-search-trends"
       ]
     }
@@ -399,7 +399,7 @@
   "representative_pair_verdicts": [
     {
       "compound_id": "compound_cbd",
-      "left": "cannabinoid-multi-trends:20261002T063821Z-google-trends-cbd",
+      "left": "cannabinoid-raw-collection:20261002T063821Z-google-trends-cbd",
       "right": "cbx-search-trends:20261001T115959Z-google-trends-cbx-rikiddo",
       "status": "conditional",
       "reasons": [
@@ -416,7 +416,7 @@
     },
     {
       "compound_id": "compound_cbx",
-      "left": "cannabinoid-multi-trends:20261012T055259Z-google-trends-ja-rikiddo-phase-a-12m",
+      "left": "cannabinoid-raw-collection:20261012T055259Z-google-trends-ja-rikiddo-phase-a-12m",
       "right": "cbx-search-trends:20261001T115959Z-google-trends-cbx-rikiddo",
       "status": "not_comparable",
       "reasons": [
@@ -425,7 +425,7 @@
     },
     {
       "compound_id": "compound_h4cbh",
-      "left": "cannabinoid-multi-trends:20261002T080652Z-google-trends-h4cbh-5y",
+      "left": "cannabinoid-raw-collection:20261002T080652Z-google-trends-h4cbh-5y",
       "right": "cbx-search-trends:20261001T121949Z-google-trends-h4cbh-hhbd",
       "status": "not_comparable",
       "reasons": [
@@ -434,7 +434,7 @@
     },
     {
       "compound_id": "compound_hhbd",
-      "left": "cannabinoid-multi-trends:20261002T080800Z-google-trends-hhbd-5y",
+      "left": "cannabinoid-raw-collection:20261002T080800Z-google-trends-hhbd-5y",
       "right": "cbx-search-trends:20261001T121949Z-google-trends-h4cbh-hhbd",
       "status": "not_comparable",
       "reasons": [
@@ -444,7 +444,7 @@
   ],
   "raw_file_count": 153,
   "raw_modified": false,
-  "raw_combined_sha256": "2e048a5b4e1bbae64bd1a18df3aad547a45eb8af704050d1d7273a4ffa9fc82e",
+  "raw_combined_sha256": "fd4ed7863a5d233f9c95bb77482644edd6e1955ef2d4a453550ee9c191c14b6d",
   "note": "non-destructive: study boundaries intact, raw and old metadata only read"
 }
 

@@ -18,7 +18,7 @@
 
 | study_id | 登録 | runs | data ファイル | data/raw | README | methodology | sources（catalog 索引） | compounds（索引） |
 |---|---|---|---|---|---|---|---|---|
-| `cannabinoid-multi-trends` | ✅ | 25 | 86 | 84 | ✅ | ✅ | google-trends | compound_cbd, compound_cbx, compound_crdp, compound_hhc |
+| `cannabinoid-raw-collection` | ✅ | 25 | 86 | 84 | ✅ | ✅ | google-trends | compound_cbd, compound_cbx, compound_crdp, compound_hhc |
 | `cbx-search-trends` | ✅ | 4 | 15 | 15 | ✅ | ✅ | google-trends | compound_cbd, compound_cbx |
 | `cannabinoid-social-trends` | ❌ | 0 | 0 | — | ✅ | ✅ | — | — |
 | `cbx-liquid-online-trend` | ❌ | 0 | 2 | — | ✅ | ✅ | — | — |
@@ -39,7 +39,7 @@
 
 ## 3. 所見（破壊的変更なし・判断は親へ）
 
-1. **study_id を持たない run が 3 件**: `20261005T100000Z-google-trends-common-scale-expansion`、`20261008T093228Z-google-trends-5y-baseline`、`common-scale-missing-20261009`（いずれも `datasets/cannabinoid-multi-trends/` 配下だが `study_id` フィールドなし）。catalog は `study_id: null` で索引化。P7 により補完しない。登録・補完の要否は親判断。
+1. **study_id を持たない run が 3 件**: `20261005T100000Z-google-trends-common-scale-expansion`、`20261008T093228Z-google-trends-5y-baseline`、`common-scale-missing-20261009`（いずれも `datasets/cannabinoid-raw-collection/` 配下だが `study_id` フィールドなし）。catalog は `study_id: null` で索引化。P7 により補完しない。登録・補完の要否は親判断。
 2. **THC / CBG 等の term が compound に索引化されない**: query-registry に単体クエリ（例: `THC`）が未登録のため `no_match`。catalog は空のまま（推測で対応付けない）。必要なら G2 側で query-registry 拡充後に再生成する。
 3. **未登録 7 study の run が将来 strict 検証で `REFERENCE_STUDY_UNREGISTERED` になる**: G7-T02 の意図どおりの契約動作。登録は study ごとに README ベースで段階追加する（本スライスは 2 study）。
 4. **coverage は全 study で `unevidenced`**（G3 manifest なし）。comparable 判定の上限が conditional である根拠のひとつ。

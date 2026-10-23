@@ -275,7 +275,7 @@ if __name__ == "__main__":
     keyword = "CBN"
     start_date = "2026-09-01"
     end_date = "2026-10-01"
-    study_id = "cannabinoid-multi-trends"
+    study_id = "cannabinoid-raw-collection"
     
     data = search_youtube(keyword, start_date, end_date)
     save_data(data, keyword, start_date, end_date, study_id)

@@ -23,9 +23,9 @@ def test_compare_command(capsys):
         _run(
             "compare",
             "--entry-a",
-            "cannabinoid-multi-trends:20261012T055259Z-google-trends-ja-rikiddo-phase-a-12m",
+            "cannabinoid-raw-collection:20261012T055259Z-google-trends-ja-rikiddo-phase-a-12m",
             "--entry-b",
-            "cannabinoid-multi-trends:20261012T060517Z-google-trends-ja-rikiddo-phase-a-repeat-12m",
+            "cannabinoid-raw-collection:20261012T060517Z-google-trends-ja-rikiddo-phase-a-repeat-12m",
         )
         == 0
     )

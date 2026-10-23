@@ -47,7 +47,7 @@ raw 列は**そのマシンのローカル checkout に存在する source**（G
 | study | 何を扱うか | ローカル raw source | 追跡されている成果物 | release |
 |---|---|---|---|---|
 | [`cannabinoid-platform-trends`](cannabinoid-platform-trends/README.md) | **横断集計（配布用）**: 化合物 × プラットフォームの観測表（Google Trends 5年 + YouTube 採用分。X は owner 判断で除外） | 無し（コミット済み証拠から生成） | `data/processed/` 5 ファイル、`metadata/schema/` 4 | ✓ |
-| [`cannabinoid-multi-trends`](cannabinoid-multi-trends/README.md) | **原データ収集**: カンナビノイド各化合物の Google Trends 5年/12ヶ月、X、YouTube の生記録 | `google_trends`（追跡）, `x`, `youtube` | `data/raw/google_trends/`、`data/interim/` 1、`data/processed/collection-summary.md`、`metadata/`（data-catalog + 収集計画 9） | ✓ |
+| [`cannabinoid-raw-collection`](cannabinoid-raw-collection/README.md) | **原データ収集**: カンナビノイド各化合物の Google Trends 5年/12ヶ月、X、YouTube の生記録 | `google_trends`（追跡）, `x`, `youtube` | `data/raw/google_trends/`、`data/interim/` 1、`data/processed/collection-summary.md`、`metadata/`（data-catalog + 収集計画 9） | ✓ |
 | [`cbx-search-trends`](cbx-search-trends/README.md) | CBX / H4CBH / HHBD の検索需要（Google Trends + Search Console） | `google_trends`（追跡）, `gsc` | `data/raw/google_trends/`、`analysis/` 2 | ✓ |
 | [`cbx-social-trends`](cbx-social-trends/README.md) | CBX の SNS 言及（X / YouTube / Instagram / TikTok） | `x`, `youtube`, `instagram`, `tiktok` | `analysis/` 8、`data/processed/` 4（YouTube 24 件フィルタ、X 月次粗集計） | ✓ |
 | [`cannabinoid-social-trends`](cannabinoid-social-trends/README.md) | 規制前後の X 言及 | `x` | `README.md` / `methodology.md` のみ | — |
@@ -59,7 +59,7 @@ raw 列は**そのマシンのローカル checkout に存在する source**（G
 
 `release` 列は `metadata/datapackage.json` の `resources` に載っているか（= 配布データパッケージの対象か）。載っていない研究は調査・支援用で、公開物の根拠には使えるが配布物ではない。
 
-**どの study がどれか**（似た名前の 2 研究）: `cannabinoid-multi-trends` は**原データ収集**、`cannabinoid-platform-trends` は**横断集計（配布用）**。`study_id` とディレクトリ名は安定識別子で、raw の `study_id` と配布パッケージの resource 名がこれを参照するため変えない（表示名は `metadata/studies/study-registry.json` の `title`）。
+**どの study がどれか**（似た役割の 2 研究）: `cannabinoid-raw-collection` は**原データ収集**（素材）、`cannabinoid-platform-trends` は**横断集計（配布用）**（配布物）。`cannabinoid-multi-trends` は前者の旧 `study_id` で、**raw の `run_metadata.json` は収集時の ID のまま**（raw は不変）。旧 ID は [`study-registry.json`](../metadata/studies/study-registry.json) の `previous_study_ids` で新 ID に解決される。研究の表示名は同じファイルの `title`、ディレクトリ名は `study_id` に一致する。
 
 ## どこから読むか
 
@@ -86,13 +86,14 @@ make gates               # 境界・契約のゲート
 ## 既知の欠落と注意
 
 - **`methodology.md` が無い研究**: `cbx-product-coa`、`x-consistency`、`youtube-consistency`。COA は `README.md` のみで `data/` も未作成。
-- **`data/interim/` はほぼ未使用**（実際の中間ファイルは `cannabinoid-multi-trends/data/interim/` の 1 件だけ）。
+- **`data/interim/` はほぼ未使用**（実際の中間ファイルは `cannabinoid-raw-collection/data/interim/` の 1 件だけ）。
 - **`youtube-consistency` の raw が無い**: README は YouTube データの main store と書くが、追跡層にもローカルにも COL-033 採用 6 run の payload は無く、`data/trends.db`（`*.db` で管理外）に集計が残るのみ。payload の同一性は宣言 [`metadata/provenance/declarations/20261015-youtube-csv-adoption.json`](../metadata/provenance/declarations/20261015-youtube-csv-adoption.json) の sha256 で担保している。
-- **再現できない processed**: `cbx-social-trends/data/processed/youtube_filtered_202607/` は `not_reproducible_from_repository`（フィルタ規則は記録、実行するコードが無い）。`cannabinoid-multi-trends/data/processed/collection-summary.md` も手書き。
+- **再現できない processed**: `cbx-social-trends/data/processed/youtube_filtered_202607/` は `not_reproducible_from_repository`（フィルタ規則は記録、実行するコードが無い）。`cannabinoid-raw-collection/data/processed/collection-summary.md` も手書き。
 - **欠測は 0 ではない**: 収集していない化合物 × プラットフォームは `not_collected` として記録する（`observed_zero` と混同しない）。
 - **`data/private/` は非公開**: `datasets/*/data/private/` は `.gitignore` で除外（現在は `cbx-social-trends/data/private/x_anonymization_mapping.json` の 1 件）。内容は検査・公開しない。
 - **GSC の raw は追跡されない**: `raw-data-policy.md` §4.1 の表は `data/raw/gsc/` を公開扱いと書くが、`.gitignore` の例外は `google_trends` のみ。`cbx-search-trends/data/raw/gsc/202607_queries.csv` はローカルのみ。
 - **worktree の盲点**: Git 管理外の raw は作業用 worktree に複製されないため、worktree 内で生成した監査は存在するファイルを `exists:false` と記録することがある。raw を見る監査は raw がある checkout で実行する。
+- **改名した研究の扱い**: 研究を改名すると、raw の `run_metadata.json` は収集時の `study_id` を持ち続ける（raw は不変）。旧 ID は `metadata/studies/study-registry.json` の `previous_study_ids` に宣言し、研究層（catalog / g7）は現在の ID に解決する。一方、**storage 層の監査（g4）と研究内 `metadata/data-catalog.json` は記録値をそのまま出す**ので、`study_id` が旧 ID のまま見えることがある。現在の ID は path と registry で確認する。
 
 ## 研究を追加するとき
 

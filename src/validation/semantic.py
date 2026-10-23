@@ -50,6 +50,7 @@ __all__ = [
     "check_schema_version",
     "check_study_registry",
     "check_temporal_semantics",
+    "canonical_study_id",
     "eligible_collectors",
     "scan_for_secrets",
 ]
@@ -671,7 +672,7 @@ def check_registry_references(document, registries: Registries) -> list[Issue]:
 
     study_id = document.get("study_id")
     if registries.studies and isinstance(study_id, str):
-        if _find(registries.studies, "study_id", study_id) is None:
+        if _find(registries.studies, "study_id", study_id) is None and not _is_previous_study_id(registries.studies, study_id):
             issues.append(
                 _issue(
                     "REFERENCE_STUDY_UNREGISTERED",
@@ -1009,6 +1010,43 @@ def scan_for_secrets(document) -> list[Issue]:
 # ---------------------------------------------------------------------------
 
 
+def _is_previous_study_id(studies, study_id: str) -> bool:
+    """Is ``study_id`` a historical id of a registered study?
+
+    A study can be renamed while its raw records keep the id they were
+    collected under (raw is immutable), so a run document may cite the
+    previous id.  ``previous_study_ids`` on the registry entry is the
+    declaration that makes such a reference resolve.
+    """
+    for study in studies:
+        if not isinstance(study, dict):
+            continue
+        previous = study.get("previous_study_ids")
+        if isinstance(previous, list) and study_id in previous:
+            return True
+    return False
+
+
+def canonical_study_id(studies, study_id):
+    """Map a historical study id to the id currently registered.
+
+    Returns ``study_id`` unchanged when it is a current id or is not
+    declared anywhere; callers that group records by study use this so
+    pre-rename raw records still land under the renamed study.
+    """
+    if not isinstance(study_id, str):
+        return study_id
+    for study in studies or []:
+        if not isinstance(study, dict):
+            continue
+        if study.get("study_id") == study_id:
+            return study_id
+        previous = study.get("previous_study_ids")
+        if isinstance(previous, list) and study_id in previous:
+            return study.get("study_id")
+    return study_id
+
+
 def check_study_registry(document) -> list:
     """Internal consistency of one study-registry document."""
     issues: list = []
@@ -1018,6 +1056,7 @@ def check_study_registry(document) -> list:
     if not isinstance(studies, list):
         return issues
     seen: set = set()
+    declared: dict = {}
     for index, study in enumerate(studies):
         if not isinstance(study, dict):
             continue
@@ -1034,6 +1073,48 @@ def check_study_registry(document) -> list:
                 )
             else:
                 seen.add(study_id)
+                declared[study_id] = index
+
+    # ``previous_study_ids`` declares the ids a study was registered under
+    # before it was renamed (raw records keep the id they were collected
+    # under, and raw is immutable).  An id may only be claimed once, and a
+    # claim may not shadow a current id: either would make the mapping from
+    # record to study ambiguous.
+    for index, study in enumerate(studies):
+        if not isinstance(study, dict):
+            continue
+        previous = study.get("previous_study_ids")
+        if not isinstance(previous, list):
+            continue
+        for position, previous_id in enumerate(previous):
+            pointer = join_pointer(
+                join_pointer(f"/studies/{index}", "previous_study_ids"),
+                str(position),
+            )
+            if not isinstance(previous_id, str) or not previous_id:
+                continue
+            if previous_id in seen:
+                issues.append(
+                    _issue(
+                        "STUDY_PREVIOUS_ID_CONFLICT",
+                        pointer,
+                        f"previous_study_ids entry {previous_id!r} is also "
+                        "a registered study_id",
+                        "study_uniqueness",
+                    )
+                )
+            elif previous_id in declared:
+                issues.append(
+                    _issue(
+                        "STUDY_PREVIOUS_ID_CONFLICT",
+                        pointer,
+                        f"previous_study_ids entry {previous_id!r} is "
+                        "declared by another study",
+                        "study_uniqueness",
+                    )
+                )
+            else:
+                declared[previous_id] = index
     return issues
 
 

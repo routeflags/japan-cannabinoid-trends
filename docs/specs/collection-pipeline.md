@@ -429,7 +429,7 @@ python -m validation.cli coverage-run --file <run_dir or run_metadata.json>
   （`docs/specs/gt-boundary-verification.md`）。行列（4 timeframe × 2 pass。pass 2 は
   参照時刻を 7 日以上離す必要がある）は未実行で、ISS-20261015-GT-001 は PENDING。
 - replay fixture は合成（録画形式に基づく）。ただし **2026-10-15 に、実記録
-  GT 応答（tracked `datasets/cannabinoid-multi-trends/data/raw/google_trends/
+  GT 応答（tracked `datasets/cannabinoid-raw-collection/data/raw/google_trends/
   20261012T064246Z-google-trends-ja-rikiddo-5y-main5/records_cbd-rikiddo-5y.json`）
   での照合を行った**: adapter の想定形状（`{keyword, geo, timeframe,
   collected_at, data:[{date, value}]}`）は実レスポンスと一致し、抽出件数

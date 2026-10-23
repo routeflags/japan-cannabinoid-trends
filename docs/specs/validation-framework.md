@@ -920,7 +920,7 @@ G6 仕様（`docs/plans/20261013f.md`）の垂直スライス。Git 運用全体
   リポジトリ外で実行され、その出力だけがコミットされている。
 - `cbx-social-trends/methodology.md` §2.1 は `data/raw/x/202608/` を raw の場所と
   して示すが、`data/raw/` にあるのは `.gitkeep` のみ。
-- `cannabinoid-multi-trends/methodology.md` §3.3 は `screen_name` → `author_id` を
+- `cannabinoid-raw-collection/methodology.md` §3.3 は `screen_name` → `author_id` を
   「ハッシュ化」と記載していたが、実成果物の `author_id` は初出順の連番（`docs/data-dictionary.md`
   が正しい）。
 

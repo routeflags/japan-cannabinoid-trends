@@ -18,7 +18,7 @@ DATASETS_ROOT = REPO_ROOT / "datasets"
 AUDIT_PATH = REPO_ROOT / "docs" / "audits" / "g3-temporal-inventory.json"
 NODATA_METADATA = (
     DATASETS_ROOT
-    / "cannabinoid-multi-trends"
+    / "cannabinoid-raw-collection"
     / "data"
     / "raw"
     / "google_trends"

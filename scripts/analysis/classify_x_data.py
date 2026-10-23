@@ -151,10 +151,10 @@ def main():
 
     # Define data sources for unclassified compounds
     data_sources = {
-        "HHC": "datasets/cannabinoid-multi-trends/data/raw/x/20261002T064454Z-x-hhc/records.json",
-        "THCV": "datasets/cannabinoid-multi-trends/data/raw/x/20261002T064532Z-x-thcv/records.json",
-        "THC-O": "datasets/cannabinoid-multi-trends/data/raw/x/20261002T064540Z-x-thc-o/records.json",
-        "THCH": "datasets/cannabinoid-multi-trends/data/raw/x/20261002T064549Z-x-thch/records.json",
+        "HHC": "datasets/cannabinoid-raw-collection/data/raw/x/20261002T064454Z-x-hhc/records.json",
+        "THCV": "datasets/cannabinoid-raw-collection/data/raw/x/20261002T064532Z-x-thcv/records.json",
+        "THC-O": "datasets/cannabinoid-raw-collection/data/raw/x/20261002T064540Z-x-thc-o/records.json",
+        "THCH": "datasets/cannabinoid-raw-collection/data/raw/x/20261002T064549Z-x-thch/records.json",
         "H4CBH": "datasets/cannabinoid-social-trends/data/raw/x/20261005T140548Z-h4cbh-hhbd-expanded/h4cbh_expanded.json",
         "HHBD": "datasets/cannabinoid-social-trends/data/raw/x/20261005T140548Z-h4cbh-hhbd-expanded/hhbd_expanded.json",
         "HHCH": "datasets/cannabinoid-social-trends/data/raw/x/20261008T121158Z-hhch/records.json",

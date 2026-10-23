@@ -3,7 +3,7 @@
 **ID:** ISS-20261012-CBD-004  
 **優先度:** P2 (Medium)  
 **ステータス:** RESOLVED (2026-10-15) — bare `CBD` の `today 5-y` raw 系列を新規 run として再取得し、下流検証を series 経路に切替。旧 summary-only run は未改変のまま残す
-**対象:** `datasets/cannabinoid-multi-trends/data/raw/google_trends/20261008T093228Z-google-trends-5y-baseline/`（旧、未改変）+ `datasets/cannabinoid-multi-trends/data/raw/google_trends/20261015T205048Z-google-trends-cannabinoid-multi-trends/`（新）
+**対象:** `datasets/cannabinoid-raw-collection/data/raw/google_trends/20261008T093228Z-google-trends-5y-baseline/`（旧、未改変）+ `datasets/cannabinoid-raw-collection/data/raw/google_trends/20261015T205048Z-google-trends-cannabinoid-multi-trends/`（新）
 
 ## 概要
 
@@ -41,7 +41,7 @@ summary 値と raw observation の区別も読み手に不明確になる。
 
 - [x] raw タイムラインが存在するか、その保管場所と来歴を確認する。（2026-10-15 調査: 下記「調査結果」）
 - [x] 見つからない場合は summary-only / raw missing と dataset metadata に記録する。
-  （`datasets/cannabinoid-multi-trends/methodology.md` §2.1.1 +
+  （`datasets/cannabinoid-raw-collection/methodology.md` §2.1.1 +
   `docs/audits/gt-summary.json` の baseline 5件 `unavailable.raw_timeline`。raw 自体には手を加えていない）
 - [x] summary の 261 点・平均・ピーク値を raw で検証できるか明示する。
   （できない。記録値であり raw 系列からの独立検証は不可。下記「調査結果」）
@@ -77,7 +77,7 @@ summary 値と raw observation の区別も読み手に不明確になる。
   いずれも `docs/audits/gt-summary.json` の `unavailable.data_period` /
   `unavailable.raw_timeline`（shape `baseline`）を読めば回避できた型である。
 - 本リポジトリ側の対応: `render_block` の出力は不変とし（publication HTML・envelope hash への影響を避ける）、
-  代わりに `datasets/cannabinoid-multi-trends/methodology.md` §2.1.1 に原稿利用者向け注意を追記し、
+  代わりに `datasets/cannabinoid-raw-collection/methodology.md` §2.1.1 に原稿利用者向け注意を追記し、
   `tests/processing/test_gt_statistics.py` に baseline ガード群
   （端点なし・系列言及なし・他化合物の期間の流用なし）を追加した。
 - 本 issue の完了条件（ライブ再取得）は変更しない。再取得が完了するまで baseline 5件は summary-only のままである。
@@ -86,7 +86,7 @@ summary 値と raw observation の区別も読み手に不明確になる。
 
 - オーナー承認のもと `collect --live` を単一クエリ（bare `CBD`、geo JP、`today 5-y`）で実行し、
   新規 run `20261015T205048Z-google-trends-cannabinoid-multi-trends/` を catalog に採用（L1 通過、既存 run は未改変）。
-  plan: `datasets/cannabinoid-multi-trends/metadata/plans/gt-5y-recollect-cbd.json`。
+  plan: `datasets/cannabinoid-raw-collection/metadata/plans/gt-5y-recollect-cbd.json`。
   成果物は verbatim payload（`payload.json`）+ 解析済み系列（`records_cbd.json`）。
   要求パラメータ（`submitted_parameters`: tool `interest_over_time` / terms `["CBD"]` / geo JP / timeframe `today 5-y`）は
   `run_metadata.json` の `temporal_provenance.submitted_parameters` に、観測範囲（`2021-10-10 〜 2026-10-11`）は

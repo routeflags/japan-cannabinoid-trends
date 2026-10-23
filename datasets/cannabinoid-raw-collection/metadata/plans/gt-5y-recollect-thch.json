@@ -1,14 +1,14 @@
 {
-  "plan_id": "gt-5y-recollect-crdh",
-  "study_id": "cannabinoid-multi-trends",
+  "plan_id": "gt-5y-recollect-thch",
+  "study_id": "cannabinoid-raw-collection",
   "source_id": "google-trends",
   "collector_id": "google-trends-mcp",
-  "query_id": "crdh-general-ja",
+  "query_id": "thch-general-ja",
   "query": {
-    "text": "CRDH",
+    "text": "THCH",
     "geo": "JP",
     "timeframe": "today 5-y",
-    "compound_id": "compound_crdh"
+    "compound_id": "compound_thch"
   },
   "required_capabilities": [
     "geo_filter",
@@ -22,5 +22,5 @@
     "week_start": "sunday",
     "timezone": "Asia/Tokyo"
   },
-  "purpose": "5年系列の再取得（CRDH）。ISS-20261015-GT-003: 2026-10-08 の run は要約形（series も last_value も保存せず）で、公開ページの最新値が算出不能だったため。"
+  "purpose": "5年系列の再取得（THCH）。ISS-20261015-GT-003: 2026-10-02 の run は系列を保存しておらず 5 年平均を再計算できなかったため。"
 }

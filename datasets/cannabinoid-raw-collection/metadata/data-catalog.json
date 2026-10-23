@@ -5,8 +5,8 @@
     "collection-run-v1"
   ],
   "datasets_root": "data",
-  "manifest_count": 8,
-  "count": 16,
+  "manifest_count": 9,
+  "count": 18,
   "errors": [],
   "entries": [
     {
@@ -287,6 +287,41 @@
       "path": "data/raw/google_trends/20261014T215738Z-google-trends-cannabinoid-multi-trends/records_crdh.json",
       "derived_from": [
         "20261014T215738Z-google-trends-cannabinoid-multi-trends-payload-json"
+      ]
+    },
+    {
+      "artifact_id": "20261015T205048Z-google-trends-cannabinoid-multi-trends-payload-json",
+      "study_id": "cannabinoid-multi-trends",
+      "run_id": "20261015T205048Z-google-trends-cannabinoid-multi-trends",
+      "source_id": "google-trends",
+      "compound_id": "compound_cbd",
+      "query_id": "cbd-general-ja",
+      "window_id": "2021-10-10_2026-10-12",
+      "artifact_type": "raw_response",
+      "format": "json",
+      "schema_id": "google-trends-mcp-tool-result-v1",
+      "layer": "raw",
+      "record_count": 262,
+      "completeness": "complete",
+      "path": "data/raw/google_trends/20261015T205048Z-google-trends-cannabinoid-multi-trends/payload.json"
+    },
+    {
+      "artifact_id": "20261015T205048Z-google-trends-cannabinoid-multi-trends-records-cbd-json",
+      "study_id": "cannabinoid-multi-trends",
+      "run_id": "20261015T205048Z-google-trends-cannabinoid-multi-trends",
+      "source_id": "google-trends",
+      "compound_id": "compound_cbd",
+      "query_id": "cbd-general-ja",
+      "window_id": "2021-10-10_2026-10-12",
+      "artifact_type": "timeseries",
+      "format": "json",
+      "schema_id": "google-trends-interest-over-time-v1",
+      "layer": "raw",
+      "record_count": 262,
+      "completeness": "complete",
+      "path": "data/raw/google_trends/20261015T205048Z-google-trends-cannabinoid-multi-trends/records_cbd.json",
+      "derived_from": [
+        "20261015T205048Z-google-trends-cannabinoid-multi-trends-payload-json"
       ]
     }
   ]

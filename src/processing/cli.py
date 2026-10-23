@@ -448,7 +448,7 @@ def build_parser() -> argparse.ArgumentParser:
     gt_corrections.add_argument(
         "--output",
         default=(
-            "datasets/cannabinoid-multi-trends/data/interim/google_trends/"
+            "datasets/cannabinoid-raw-collection/data/interim/google_trends/"
             "20261015_gt_legacy_label_corrections.json"
         ),
     )

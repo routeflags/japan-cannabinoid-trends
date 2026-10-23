@@ -29,6 +29,8 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
+from validation.semantic import canonical_study_id
+
 __all__ = [
     "RESEARCH_CATALOG_VERSION",
     "SOURCE_MEASUREMENTS",
@@ -143,6 +145,31 @@ def _term_index(query_registry, variants_registry) -> dict[str, tuple[str, str, 
                     base.get("intent_id"),
                 )
     return index
+
+
+def _apply_study_renames(entries: list[dict], root: Path) -> None:
+    """Report renamed studies under the id they are registered with now.
+
+    A raw ``run_metadata.json`` keeps the study id it was collected under,
+    and raw is immutable, so the record itself still says the old id.  The
+    catalog is derived, not raw: it resolves the old id through
+    ``previous_study_ids`` in the study registry so callers can query by
+    the current id.  An undeclared id is left exactly as recorded.
+    """
+    studies = _load_json(Path(root) / "metadata" / "studies" / "study-registry.json")
+    studies = studies.get("studies") if isinstance(studies, dict) else None
+    if not isinstance(studies, list):
+        return
+    for entry in entries:
+        study_id = entry.get("study_id")
+        canonical = canonical_study_id(studies, study_id)
+        if canonical == study_id or not isinstance(study_id, str):
+            continue
+        entry["study_id"] = canonical
+        entry_id = entry.get("catalog_entry_id")
+        prefix = f"{study_id}:"
+        if isinstance(entry_id, str) and entry_id.startswith(prefix):
+            entry["catalog_entry_id"] = canonical + entry_id[len(study_id):]
 
 
 def _default_registries(repo_root: Path):
@@ -308,6 +335,7 @@ def build_catalog(datasets_root, *, repo_root=None, query_registry=None, query_v
                 entries.append(_new_format_entry(run, manifest, artifact, run_dir, root))
         else:
             entries.append(_legacy_entry(run, run_dir, root, index))
+    _apply_study_renames(entries, root)
     entries.sort(
         key=lambda e: (
             str(e.get("study_id")),

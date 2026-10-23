@@ -282,7 +282,7 @@ Early Warning Index への反映
 | raw データ | `datasets/<study-id>/data/raw/youtube/` |
 | 月次/年間サマリー | `datasets/<study-id>/data/processed/` |
 | 比較レポート | `research/YYYYMMDD-*-youtube-report.md` |
-| Early Warning Index 更新 | `datasets/cannabinoid-multi-trends/data/processed/` |
+| Early Warning Index 更新 | `datasets/cannabinoid-raw-collection/data/processed/` |
 
 ---
 

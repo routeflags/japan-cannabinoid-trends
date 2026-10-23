@@ -4,7 +4,7 @@
 |------|------|
 | **収集日** | 2026-10-06 |
 | **目的** | 確立化合物の5年ベースラインデータ収集 |
-| **データパス** | `datasets/cannabinoid-multi-trends/data/raw/google_trends/20261008T093228Z-google-trends-5y-baseline/` |
+| **データパス** | `datasets/cannabinoid-raw-collection/data/raw/google_trends/20261008T093228Z-google-trends-5y-baseline/` |
 
 ---
 

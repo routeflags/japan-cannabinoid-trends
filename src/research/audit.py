@@ -20,6 +20,7 @@ from pathlib import Path
 from research import catalog as _catalog
 from research import comparability as _gate
 from validation.integrity import sha256_file
+from validation.semantic import canonical_study_id
 
 __all__ = ["AUDIT_VERSION", "build_study_inventory"]
 
@@ -76,10 +77,15 @@ def build_study_inventory(datasets_root, *, repo_root=None) -> dict:
     before = _raw_snapshot(datasets)
 
     catalog = _catalog.build_catalog(datasets, repo_root=root)
+    registry = _registered(root)
     by_study: dict[str, list[dict]] = {}
     for entry in catalog["entries"]:
         if isinstance(entry, dict):
-            by_study.setdefault(str(entry.get("study_id")), []).append(entry)
+            # Raw records keep the study id they were collected under, so a
+            # renamed study is still cited by its previous id there.  Group by
+            # the id that is registered *now*.
+            key = canonical_study_id(registry, str(entry.get("study_id")))
+            by_study.setdefault(key, []).append(entry)
 
     studies: list[dict] = []
     study_dirs = sorted(p for p in datasets.iterdir() if p.is_dir()) if datasets.is_dir() else []
@@ -104,7 +110,7 @@ def build_study_inventory(datasets_root, *, repo_root=None) -> dict:
         studies.append(
             {
                 "study_id": study_id,
-                "registered": study_id in {s.get("study_id") for s in _registered(root)},
+                "registered": study_id in {s.get("study_id") for s in registry},
                 "title": facts["title"],
                 "has_readme": facts["has_readme"],
                 "has_methodology": facts["has_methodology"],

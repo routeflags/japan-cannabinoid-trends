@@ -208,8 +208,8 @@ CBN の検索興味度指数は、2026-06-01 の指定薬物規制後17週間で
 - 収集日: 2026-10-02
 - 地域: JP（日本）
 - 期間: 2025-09-28 ～ 2026-09-27
-- 比較データ: `datasets/cannabinoid-multi-trends/data/raw/google_trends/20261002T064236Z-google-trends-comparison-setA/comparison_setA.json`
-- 個別データ: `datasets/cannabinoid-multi-trends/data/raw/google_trends/20261002T*`
+- 比較データ: `datasets/cannabinoid-raw-collection/data/raw/google_trends/20261002T064236Z-google-trends-comparison-setA/comparison_setA.json`
+- 個別データ: `datasets/cannabinoid-raw-collection/data/raw/google_trends/20261002T*`
 
 ---
 
@@ -219,5 +219,5 @@ CBN の検索興味度指数は、2026-06-01 の指定薬物規制後17週間で
 |---------|------|
 | `research/google-trends/20261004-google-trends-compound-summary.md` | 個別データの詳細 |
 | `research/regulatory-status/SUMMARY.md` | 規制状況サマリー |
-| `datasets/cannabinoid-multi-trends/data/processed/early-warning-index-v1.csv` | 早期警戒指数 |
-| `datasets/cannabinoid-multi-trends/data/raw/google_trends/20261002T064236Z-google-trends-comparison-setA/comparison_setA.json` | 共通スケール比較データ |
+| `datasets/cannabinoid-raw-collection/data/processed/early-warning-index-v1.csv` | 早期警戒指数 |
+| `datasets/cannabinoid-raw-collection/data/raw/google_trends/20261002T064236Z-google-trends-comparison-setA/comparison_setA.json` | 共通スケール比較データ |

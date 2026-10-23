@@ -301,7 +301,7 @@ WITHDRAWN: dict[str, Withdrawn] = {
             "src/validation/privacy.py exists.",
         ),
     ),
-    "datasets/cannabinoid-multi-trends/data/processed/early-warning-index-v1.csv": Withdrawn(
+    "datasets/cannabinoid-raw-collection/data/processed/early-warning-index-v1.csv": Withdrawn(
         withdrawn_on="2026-10-15",
         reason=(
             "Work-in-progress artifact: the maintainer withdrew it because its "
@@ -384,7 +384,7 @@ NON_REPRODUCIBLE: dict[str, NonReproducible] = {
             "and is deliberately kept: it is the only trace of the filter step.",
         ),
     ),
-    "datasets/cannabinoid-multi-trends/data/processed/collection-summary.md": NonReproducible(
+    "datasets/cannabinoid-raw-collection/data/processed/collection-summary.md": NonReproducible(
         reason=(
             "Hand-written collection summary combining source-side totals.  The "
             "Google Trends tables can be recomputed from tracked records_*.json, "

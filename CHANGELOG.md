@@ -265,7 +265,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - **キーワードカバレッジ拡張** (EXP-20261002)
-  - 新 Study: `cannabinoid-multi-trends`
+  - 新 Study: `cannabinoid-raw-collection`
   - 主要カンナビノイド7化合物を追加: CBD, THC, CBG, HHC, THCV, THC-O, THCH
   - Google Trends: 5キーワード × 52週 + 比較セット + 5年データ
   - X (Twitter): 7キーワード × 316件

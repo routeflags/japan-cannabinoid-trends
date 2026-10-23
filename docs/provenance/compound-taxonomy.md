@@ -8,7 +8,7 @@
 ## 2026-10-13 — 収集済みだが未登録だった5化合物を追加
 
 対象: `HHC` / `HHCH` / `THCH` / `THC-O` / `CRDP`。
-`datasets/cannabinoid-multi-trends/data/raw/google_trends/` に run が存在するのに
+`datasets/cannabinoid-raw-collection/data/raw/google_trends/` に run が存在するのに
 タクソノミーに概念が無く、検証済みクエリレジストリへ登録できない状態だった。
 
 | notation | 配置（broader） | 名称の根拠 | カテゴリの根拠 |
@@ -38,7 +38,7 @@
 
 1. ✅ `compound-synthetic` の `skos:narrower` に `compound-crdh` を追加（親子関係の非対称を解消）。
 2. ✅ `compound_h4cbh` / `compound_hhbd` を `compound-minor` から `compound-semisynthetic` へ移動。
-   根拠: `datasets/cannabinoid-multi-trends/data/processed/early-warning-index-v1.csv`
+   根拠: `datasets/cannabinoid-raw-collection/data/processed/early-warning-index-v1.csv`
    の `classification` 列が両方とも `Semi-Synthetic`（`source_run_ids=EXP-20261002`）、
    および `research/google-trends/20261002-first-mention-timeline.md`。
    `docs/data-dictionary.md` §6.4 のカテゴリ表には両者とも掲載が無く、矛盾しない。

@@ -12,6 +12,7 @@ from validation.core import validate_document
 from validation.schema_registry import get_schema
 from validation.semantic import (
     Registries,
+    canonical_study_id,
     check_measurement_registry,
     check_registry_references,
     check_study_registry,
@@ -46,7 +47,7 @@ def test_study_registry_covers_exactly_the_ten_studies():
     document = _load(STUDY_REGISTRY)
     assert [s["study_id"] for s in document["studies"]] == [
         "cbx-search-trends",
-        "cannabinoid-multi-trends",
+        "cannabinoid-raw-collection",
         "cannabinoid-platform-trends",
         "cannabinoid-social-trends",
         "cbx-liquid-online-trend",
@@ -110,7 +111,7 @@ def test_registered_slice_studies_pass_reference_check():
     registries = Registries.from_documents(study_registry=_load(STUDY_REGISTRY))
     for study_id in (
         "cbx-search-trends",
-        "cannabinoid-multi-trends",
+        "cannabinoid-raw-collection",
         "cannabinoid-platform-trends",
         "cannabinoid-social-trends",
         "cbx-liquid-online-trend",
@@ -122,6 +123,44 @@ def test_registered_slice_studies_pass_reference_check():
     ):
         issues = check_registry_references({"study_id": study_id}, registries)
         assert "REFERENCE_STUDY_UNREGISTERED" not in _codes(issues)
+
+
+def test_previous_study_id_reference_is_accepted():
+    """A raw record keeps the id it was collected under; a declared
+    previous id must still resolve (otherwise every pre-rename raw run
+    fails the reference check)."""
+    registries = Registries.from_documents(study_registry=_load(STUDY_REGISTRY))
+    issues = check_registry_references(
+        {"study_id": "cannabinoid-multi-trends"}, registries
+    )
+    assert "REFERENCE_STUDY_UNREGISTERED" not in _codes(issues)
+
+
+def test_previous_study_id_resolves_to_the_current_id():
+    studies = _load(STUDY_REGISTRY)["studies"]
+    assert canonical_study_id(studies, "cannabinoid-multi-trends") == (
+        "cannabinoid-raw-collection"
+    )
+    # A current id and an undeclared id are returned unchanged.
+    assert canonical_study_id(studies, "cbx-search-trends") == "cbx-search-trends"
+    assert canonical_study_id(studies, "unknown-study") == "unknown-study"
+
+
+def test_previous_study_id_that_shadows_a_current_id_fails():
+    document = _load(STUDY_REGISTRY)
+    document["studies"][0]["previous_study_ids"] = [
+        document["studies"][1]["study_id"]
+    ]
+    assert "STUDY_PREVIOUS_ID_CONFLICT" in _codes(check_study_registry(document))
+
+
+def test_previous_study_id_declared_twice_fails():
+    document = _load(STUDY_REGISTRY)
+    document["studies"][1]["previous_study_ids"] = [
+        "cannabinoid-multi-trends",
+        "cannabinoid-multi-trends",
+    ]
+    assert "STUDY_PREVIOUS_ID_CONFLICT" in _codes(check_study_registry(document))
 
 
 def test_duplicate_measurement_id_fails():

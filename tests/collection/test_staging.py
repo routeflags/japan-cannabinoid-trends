@@ -1,7 +1,7 @@
 """External collector staging: ``stage_run`` -> ``adopt_staged`` (G1 §13).
 
 These tests run the *real* recorded Google Trends series kept in the
-repository (``datasets/cannabinoid-multi-trends/data/raw/google_trends/``) through
+repository (``datasets/cannabinoid-raw-collection/data/raw/google_trends/``) through
 the staging producer, so the replay shape the adapter assumes is exercised
 against a response an MCP session actually returned.  The repository raw data
 is only read, never rewritten (hashes asserted before/after).
@@ -27,7 +27,7 @@ from collection.core.pipeline import (
 
 from conftest import RECORDED_CBD_5Y, load_json, make_plan, make_workspace
 
-STUDY_ID = "cannabinoid-multi-trends"
+STUDY_ID = "cannabinoid-raw-collection"
 RUN_ID = "20261012T064246Z-google-trends-staging-cbd-5y"
 SCHEMA_ID = "google-trends-interest-over-time-v1"
 

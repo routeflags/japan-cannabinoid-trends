@@ -4,7 +4,7 @@
 **優先度:** P1 (High)  
 **ステータス:** RESOLVED (2026-10-15) — 5 年系列を再取得し、ページの数値をすべて run から生成。PC-2 は公開契約の未実装項目として別途追跡  
 **対象:** `publication/research_h4cbh.html`, `publication/research_hhbd.html`,
-`publication/research_thc-o.html`, `datasets/cannabinoid-multi-trends/data/raw/google_trends/20261002T*/`,
+`publication/research_thc-o.html`, `datasets/cannabinoid-raw-collection/data/raw/google_trends/20261002T*/`,
 `src/processing/gt_statistics.py`, `src/validation/publication_contract.py`（PC-2）
 
 ## 概要

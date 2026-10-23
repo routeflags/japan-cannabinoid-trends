@@ -6,7 +6,7 @@
 
 - 検証方法: 独立 worktree（clean checkout、Python 3.14.6 / cerberus 1.3.8 / pytest 9.1.1）、
   検証スクリプトは `/tmp` 配下、入力は tracked な実記録 Google Trends 応答
-  （`datasets/cannabinoid-multi-trends/data/raw/google_trends/
+  （`datasets/cannabinoid-raw-collection/data/raw/google_trends/
   20261012T064246Z-google-trends-ja-rikiddo-5y-main5/records_cbd-rikiddo-5y.json`、
   262 点 / 2021-10-10 .. 2026-10-11）。
 - 判定は **verified / refuted / unverifiable** の 3 値。拒否経路は実際に発火させて確認。

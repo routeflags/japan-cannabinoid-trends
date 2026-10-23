@@ -21,9 +21,9 @@
       "evidence_id": "ev-collector-registry",
       "evidence_type": "registry_definition",
       "reference": "config/collectors.json",
-      "sha256": "0cc160861945570c376c000a6b8e3c3929d574073a9758b27c3e77ab244c8523",
-      "observed_at": "2026-10-15T21:32:30Z",
-      "note": "Collector registry used for P04/P05 reference checks. Registrar: Delta agent under owner instruction from smapira; witnessed current repository bytes and pinned for ISS-20261015-PRV-011."
+      "sha256": "b78bcb41aec0f3782ea47b5cbde09aff8510883e7631d6239d25e83e2383fd5b",
+      "observed_at": "2026-10-23T15:02:26Z",
+      "note": "Collector registry used for P04/P05 reference checks. Re-pinned 2026-10-23 after the cannabinoid-multi-trends -> cannabinoid-raw-collection rename: the only change is one evidence path. Originally pinned by a Delta agent under owner instruction from smapira for ISS-20261015-PRV-011."
     },
     {
       "evidence_id": "ev-query-registry",

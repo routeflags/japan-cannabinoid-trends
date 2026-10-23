@@ -450,9 +450,9 @@ sources_reviewed:
   - research/youtube/20261004-cbx-rikiddo-youtube-12months-report.md
   - research/google-trends/20261004-google-trends-compound-summary.md
   - datasets/cbx-social-trends/methodology.md
-  - datasets/cannabinoid-multi-trends/methodology.md
-  - datasets/cannabinoid-multi-trends/data/processed/early-warning-index-v1.csv
-  - datasets/cannabinoid-multi-trends/data/processed/collection-summary.md
+  - datasets/cannabinoid-raw-collection/methodology.md
+  - datasets/cannabinoid-raw-collection/data/processed/early-warning-index-v1.csv
+  - datasets/cannabinoid-raw-collection/data/processed/collection-summary.md
   - docs/plans/2026-09-18_x-data-improvement-plan.md
   - docs/issues/active/50-taxonomy-standards/20261002_p1_unvalidated-classification.md
   - docs/issues/closed/resolved/20261002_p1_tiktok-primary-label.md
@@ -486,9 +486,9 @@ publication_decision: N/A (strategy document, not dataset)
 
 ### Repository Data Sources
 
-1. YouTube Data API v3 collections — `datasets/cannabinoid-multi-trends/data/raw/youtube/` and `datasets/cbx-social-trends/data/raw/youtube/`
-2. X (Twitter) collections via Apify — `datasets/cbx-social-trends/data/raw/x/`, `datasets/cannabinoid-multi-trends/data/raw/x/`, `datasets/cannabinoid-social-trends/data/raw/x/`
-3. Google Trends collections — `datasets/cannabinoid-multi-trends/data/raw/google_trends/`, `datasets/cbx-search-trends/data/raw/google_trends/`
+1. YouTube Data API v3 collections — `datasets/cannabinoid-raw-collection/data/raw/youtube/` and `datasets/cbx-social-trends/data/raw/youtube/`
+2. X (Twitter) collections via Apify — `datasets/cbx-social-trends/data/raw/x/`, `datasets/cannabinoid-raw-collection/data/raw/x/`, `datasets/cannabinoid-social-trends/data/raw/x/`
+3. Google Trends collections — `datasets/cannabinoid-raw-collection/data/raw/google_trends/`, `datasets/cbx-search-trends/data/raw/google_trends/`
 
 ### Methodological Frameworks
 

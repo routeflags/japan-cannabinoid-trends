@@ -4,7 +4,7 @@
 - 作成日: 2026-10-12
 - 対象: 日本語「○○ リキッド」13語（スペースあり表記）＋比較クエリー JA-1〜JA-4
 - 収集源: Google Trends（google-trends-mcp v0.1.1）、geo=JP
-- 研究: cannabinoid-multi-trends
+- 研究: cannabinoid-raw-collection
 
 ## 1. 対象クエリー
 
@@ -95,10 +95,10 @@ Phase A を約12分後に同一条件で再取得し差分を計算（repeat_dif
 
 | run-id | 内容 | 保存パス |
 |---|---|---|
-| 20261012T054920Z-google-trends-notation-presurvey | 表記ゆれ3比較 | datasets/cannabinoid-multi-trends/data/raw/google_trends/20261012T054920Z-google-trends-notation-presurvey/ |
-| 20261012T055259Z-google-trends-ja-rikiddo-phase-a-12m | Phase A 主要5語＋JA-1 | datasets/cannabinoid-multi-trends/data/raw/google_trends/20261012T055259Z-google-trends-ja-rikiddo-phase-a-12m/ |
-| 20261012T060517Z-google-trends-ja-rikiddo-phase-a-repeat-12m | Phase A 再取得＋差分 | datasets/cannabinoid-multi-trends/data/raw/google_trends/20261012T060517Z-google-trends-ja-rikiddo-phase-a-repeat-12m/ |
-| 20261012T061614Z-google-trends-ja-rikiddo-phase-b-12m | Phase B 8語＋JA-2〜JA-4 | datasets/cannabinoid-multi-trends/data/raw/google_trends/20261012T061614Z-google-trends-ja-rikiddo-phase-b-12m/ |
-| 20261012T064246Z-google-trends-ja-rikiddo-5y-main5 | 5年 主要5語 | datasets/cannabinoid-multi-trends/data/raw/google_trends/20261012T064246Z-google-trends-ja-rikiddo-5y-main5/ |
+| 20261012T054920Z-google-trends-notation-presurvey | 表記ゆれ3比較 | datasets/cannabinoid-raw-collection/data/raw/google_trends/20261012T054920Z-google-trends-notation-presurvey/ |
+| 20261012T055259Z-google-trends-ja-rikiddo-phase-a-12m | Phase A 主要5語＋JA-1 | datasets/cannabinoid-raw-collection/data/raw/google_trends/20261012T055259Z-google-trends-ja-rikiddo-phase-a-12m/ |
+| 20261012T060517Z-google-trends-ja-rikiddo-phase-a-repeat-12m | Phase A 再取得＋差分 | datasets/cannabinoid-raw-collection/data/raw/google_trends/20261012T060517Z-google-trends-ja-rikiddo-phase-a-repeat-12m/ |
+| 20261012T061614Z-google-trends-ja-rikiddo-phase-b-12m | Phase B 8語＋JA-2〜JA-4 | datasets/cannabinoid-raw-collection/data/raw/google_trends/20261012T061614Z-google-trends-ja-rikiddo-phase-b-12m/ |
+| 20261012T064246Z-google-trends-ja-rikiddo-5y-main5 | 5年 主要5語 | datasets/cannabinoid-raw-collection/data/raw/google_trends/20261012T064246Z-google-trends-ja-rikiddo-5y-main5/ |
 
 各 run は run_metadata.json（source・collection_timestamp・query・filters・collector・retry・run identifier・raw 件数）を含む。raw は immutable とし、派生値は downstream で扱う。

@@ -5,7 +5,7 @@
 ### 1.1 研究 ID
 
 ```
-cannabinoid-multi-trends
+cannabinoid-raw-collection
 ```
 
 ### 1.2 観測期間
@@ -211,4 +211,4 @@ SKOS Concept ID を使用して化合物カテゴリを分類。
 
 ## 6. 研究軸の分離（2026-10-12 追記）
 
-cbx-search-trends は CBX 製品軸（CBX リキッド等の製品需要）の研究であり、cannabinoid-multi-trends は成分横断軸（CBD・THC・CBG・CBN・HHC 等の成分間比較）の研究である。両者は観測対象の軸が異なるため、クエリー設計・比較スケール・解釈を分離する。日本語「○○ リキッド」拡張（GTJA-20261012）は成分横断軸に属し、CBX は比較のアンカー語としてのみ用いる。
+cbx-search-trends は CBX 製品軸（CBX リキッド等の製品需要）の研究であり、cannabinoid-raw-collection は成分横断軸（CBD・THC・CBG・CBN・HHC 等の成分間比較）の研究である。両者は観測対象の軸が異なるため、クエリー設計・比較スケール・解釈を分離する。日本語「○○ リキッド」拡張（GTJA-20261012）は成分横断軸に属し、CBX は比較のアンカー語としてのみ用いる。

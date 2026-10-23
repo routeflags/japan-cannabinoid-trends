@@ -8,7 +8,7 @@
 | **Reviewer** | Academic Research Agent |
 | **Repository** | japan-cannabinoid-trends |
 | **Publisher** | Routeflags Co., Ltd. (COI: cannabinoid e-commerce) |
-| **Scope** | YouTube Data API v3 collections in `datasets/cannabinoid-multi-trends/data/raw/youtube/` and `datasets/cbx-social-trends/data/raw/youtube/` |
+| **Scope** | YouTube Data API v3 collections in `datasets/cannabinoid-raw-collection/data/raw/youtube/` and `datasets/cbx-social-trends/data/raw/youtube/` |
 
 ---
 
@@ -46,10 +46,10 @@ Sub-questions:
 
 | Source | Location | Collection Date | Method |
 |--------|----------|-----------------|--------|
-| Japanese keywords (10 years) | `datasets/cannabinoid-multi-trends/data/raw/youtube/20261004T144147Z-youtube-japanese-keywords-10years/` | 2026-10-04 | YouTube Data API v3 |
-| English CBD (10 years) | `datasets/cannabinoid-multi-trends/data/raw/youtube/20261004T142147Z-youtube-cbd-10years/` | 2026-10-04 | YouTube Data API v3 |
-| English CBG/THC/CBN (10 years) | `datasets/cannabinoid-multi-trends/data/raw/youtube/20261004T142*Z-youtube-*-10years/` | 2026-10-04 | YouTube Data API v3 |
-| Apify snapshot (7 keywords) | `datasets/cannabinoid-multi-trends/data/raw/youtube/20261002T064*Z-youtube-*/` | 2026-10-02 | Apify Actor `gJvjeCYNraSfhIaNd` |
+| Japanese keywords (10 years) | `datasets/cannabinoid-raw-collection/data/raw/youtube/20261004T144147Z-youtube-japanese-keywords-10years/` | 2026-10-04 | YouTube Data API v3 |
+| English CBD (10 years) | `datasets/cannabinoid-raw-collection/data/raw/youtube/20261004T142147Z-youtube-cbd-10years/` | 2026-10-04 | YouTube Data API v3 |
+| English CBG/THC/CBN (10 years) | `datasets/cannabinoid-raw-collection/data/raw/youtube/20261004T142*Z-youtube-*-10years/` | 2026-10-04 | YouTube Data API v3 |
+| Apify snapshot (7 keywords) | `datasets/cannabinoid-raw-collection/data/raw/youtube/20261002T064*Z-youtube-*/` | 2026-10-02 | Apify Actor `gJvjeCYNraSfhIaNd` |
 | CBX 12-months | `datasets/cbx-social-trends/data/raw/youtube/20261004T135232Z-youtube-cbx-12months/` | 2026-10-04 | YouTube Data API v3 |
 | CBX リキッド 12-months | `datasets/cbx-social-trends/data/raw/youtube/20261004T135457Z-youtube-cbx-rikiddo-12months/` | 2026-10-04 | YouTube Data API v3 |
 
@@ -60,9 +60,9 @@ Sub-questions:
 - `research/youtube/20261004-youtube-language-filter-analysis.md`
 - `research/youtube/20261004-cbx-youtube-12months-report.md`
 - `research/youtube/20261004-cbx-rikiddo-youtube-12months-report.md`
-- `datasets/cannabinoid-multi-trends/methodology.md`
-- `datasets/cannabinoid-multi-trends/data/processed/collection-summary.md`
-- `datasets/cannabinoid-multi-trends/data/processed/search-emergence-tracker-v1.csv`
+- `datasets/cannabinoid-raw-collection/methodology.md`
+- `datasets/cannabinoid-raw-collection/data/processed/collection-summary.md`
+- `datasets/cannabinoid-raw-collection/data/processed/search-emergence-tracker-v1.csv`
 
 ---
 
@@ -457,7 +457,7 @@ The collection log (`collection_log.txt`) confirms 0 records for all keyword-yea
 
 | Document | Update Required |
 |----------|-----------------|
-| `datasets/cannabinoid-multi-trends/methodology.md` | Add YouTube API quota constraint (100/day) |
+| `datasets/cannabinoid-raw-collection/methodology.md` | Add YouTube API quota constraint (100/day) |
 | `research/youtube/20261004-youtube-data-collection-plan.md` | Correct quota assumption (10,000 → 100) |
 | `research/youtube/20261004-youtube-phase1-report.md` | Correct CBD record counts (actual: 3,831, not 0) |
 | `research/youtube/20261004-youtube-language-filter-analysis.md` | Update Japanese video counts (423, not 653) |
@@ -559,9 +559,9 @@ research_documents_reviewed:
   - research/youtube/20261004-youtube-language-filter-analysis.md
   - research/youtube/20261004-cbx-youtube-12months-report.md
   - research/youtube/20261004-cbx-rikiddo-youtube-12months-report.md
-  - datasets/cannabinoid-multi-trends/methodology.md
-  - datasets/cannabinoid-multi-trends/data/processed/collection-summary.md
-  - datasets/cannabinoid-multi-trends/data/processed/search-emergence-tracker-v1.csv
+  - datasets/cannabinoid-raw-collection/methodology.md
+  - datasets/cannabinoid-raw-collection/data/processed/collection-summary.md
+  - datasets/cannabinoid-raw-collection/data/processed/search-emergence-tracker-v1.csv
 
 data_inspection:
   japanese_keywords: 40 files, all quota errors (429)
@@ -592,12 +592,12 @@ publication_decision: READY_WITH_MINOR_CHANGES
 
 ### Data Sources
 
-1. YouTube Data API v3 search results — `datasets/cannabinoid-multi-trends/data/raw/youtube/20261004T144147Z-youtube-japanese-keywords-10years/` (FAILED — quota errors)
-2. YouTube Data API v3 search results — `datasets/cannabinoid-multi-trends/data/raw/youtube/20261004T142147Z-youtube-cbd-10years/` (PARTIAL — 3,831 records)
-3. YouTube Data API v3 search results — `datasets/cannabinoid-multi-trends/data/raw/youtube/20261004T142430Z-youtube-cbg-10years/` (INSUFFICIENT — 50 records)
-4. YouTube Data API v3 search results — `datasets/cannabinoid-multi-trends/data/raw/youtube/20261004T142508Z-youtube-thc-10years/` (INSUFFICIENT — 50 records)
-5. YouTube Data API v3 search results — `datasets/cannabinoid-multi-trends/data/raw/youtube/20261004T142547Z-youtube-cbn-10years/` (FAILED — 0 records)
-6. Apify Actor `gJvjeCYNraSfhIaNd` — `datasets/cannabinoid-multi-trends/data/raw/youtube/20261002T064*Z-youtube-*/` (SNAPSHOT — 182 records)
+1. YouTube Data API v3 search results — `datasets/cannabinoid-raw-collection/data/raw/youtube/20261004T144147Z-youtube-japanese-keywords-10years/` (FAILED — quota errors)
+2. YouTube Data API v3 search results — `datasets/cannabinoid-raw-collection/data/raw/youtube/20261004T142147Z-youtube-cbd-10years/` (PARTIAL — 3,831 records)
+3. YouTube Data API v3 search results — `datasets/cannabinoid-raw-collection/data/raw/youtube/20261004T142430Z-youtube-cbg-10years/` (INSUFFICIENT — 50 records)
+4. YouTube Data API v3 search results — `datasets/cannabinoid-raw-collection/data/raw/youtube/20261004T142508Z-youtube-thc-10years/` (INSUFFICIENT — 50 records)
+5. YouTube Data API v3 search results — `datasets/cannabinoid-raw-collection/data/raw/youtube/20261004T142547Z-youtube-cbn-10years/` (FAILED — 0 records)
+6. Apify Actor `gJvjeCYNraSfhIaNd` — `datasets/cannabinoid-raw-collection/data/raw/youtube/20261002T064*Z-youtube-*/` (SNAPSHOT — 182 records)
 7. YouTube Data API v3 search results — `datasets/cbx-social-trends/data/raw/youtube/20261004T135232Z-youtube-cbx-12months/` (MODERATE — 600 records)
 8. YouTube Data API v3 search results — `datasets/cbx-social-trends/data/raw/youtube/20261004T135457Z-youtube-cbx-rikiddo-12months/` (**HIGHEST QUALITY** — 125 records)
 
@@ -608,9 +608,9 @@ publication_decision: READY_WITH_MINOR_CHANGES
 11. YouTube データ 言語フィルタ付き再分析 — `research/youtube/20261004-youtube-language-filter-analysis.md`
 12. CBX YouTube データ収集レポート（12ヶ月） — `research/youtube/20261004-cbx-youtube-12months-report.md`
 13. CBX リキッド YouTube データ収集レポート（12ヶ月） — `research/youtube/20261004-cbx-rikiddo-youtube-12months-report.md`
-14. Methodology — `datasets/cannabinoid-multi-trends/methodology.md`
-15. Collection Summary — `datasets/cannabinoid-multi-trends/data/processed/collection-summary.md`
-16. Japan Cannabinoid Search Emergence Tracker v1 — `datasets/cannabinoid-multi-trends/data/processed/search-emergence-tracker-v1.csv`
+14. Methodology — `datasets/cannabinoid-raw-collection/methodology.md`
+15. Collection Summary — `datasets/cannabinoid-raw-collection/data/processed/collection-summary.md`
+16. Japan Cannabinoid Search Emergence Tracker v1 — `datasets/cannabinoid-raw-collection/data/processed/search-emergence-tracker-v1.csv`
 
 ---
 

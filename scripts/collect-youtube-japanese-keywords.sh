@@ -9,7 +9,7 @@ set -e
 source /Users/bookair18/OS/media/06_symphony/symphony_workspaces/.env.d/youtube.env
 
 # パラメータ設定
-STUDY_ID="cannabinoid-multi-trends"
+STUDY_ID="cannabinoid-raw-collection"
 TIMESTAMP=$(date -u +"%Y%m%dT%H%M%SZ")
 SAVE_DIR="datasets/${STUDY_ID}/data/raw/youtube/${TIMESTAMP}-youtube-japanese-keywords-10years"
 mkdir -p "$SAVE_DIR"

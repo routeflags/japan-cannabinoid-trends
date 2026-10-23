@@ -31,7 +31,7 @@ Field                        Rule
 Removed fields (privacy): ``username``, ``author_name``, ``url``, ``text``.
 
 ``docs/data-dictionary.md`` documents this mapping and is the canonical
-description; ``cannabinoid-multi-trends/methodology.md`` §3.3 contradicted it
+description; ``cannabinoid-raw-collection/methodology.md`` §3.3 contradicted it
 (claiming ``author_id`` was hashed) and has been corrected to point here.
 """
 

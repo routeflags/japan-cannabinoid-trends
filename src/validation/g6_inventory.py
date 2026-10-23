@@ -58,7 +58,7 @@ KNOWN_LOCAL_ONLY_PATHS = (
 KNOWN_PRIVATE_MARKERS = (
     "datasets/cbx-social-trends/data/private",
     "datasets/cbx-search-trends/data/private",
-    "datasets/cannabinoid-multi-trends/data/private",
+    "datasets/cannabinoid-raw-collection/data/private",
     "datasets/cannabinoid-social-trends/data/private",
     "datasets/cbx-liquid-online-trend/data/private",
     "datasets/cbx-product-coa/data/private",

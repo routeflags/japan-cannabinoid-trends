@@ -11,7 +11,7 @@ description: |
 
 キーワードごとの Google Trends 調査スキル。**任意のキーワード**で再利用できるよう抽象化されている。
 
-各調査結果は `research/` 配下に Markdown で保存し、データは `datasets/cannabinoid-multi-trends/data/raw/google_trends/` に JSON で保存する。
+各調査結果は `research/` 配下に Markdown で保存し、データは `datasets/cannabinoid-raw-collection/data/raw/google_trends/` に JSON で保存する。
 
 ---
 
@@ -33,7 +33,7 @@ description: |
 | `geo` | string | — | `JP` | 地域コード |
 | `timeframe_12m` | string | — | `today 12-m` | 12ヶ月データの期間 |
 | `timeframe_5y` | string | — | `today 5-y` | 5年データの期間 |
-| `output_dir` | string | — | `datasets/cannabinoid-multi-trends/data/raw/google_trends/` | 保存先 |
+| `output_dir` | string | — | `datasets/cannabinoid-raw-collection/data/raw/google_trends/` | 保存先 |
 | `report_path` | string | — | `research/` | レポート保存先 |
 
 ---
@@ -90,7 +90,7 @@ else:
 ### データファイル
 
 ```
-datasets/cannabinoid-multi-trends/data/raw/google_trends/
+datasets/cannabinoid-raw-collection/data/raw/google_trends/
 ├── {YYYYMMDDTHHMMSS}Z-google-trends-{keyword}-12m/
 │   ├── records_{keyword}_12m.json
 │   └── run_metadata.json
@@ -187,7 +187,7 @@ datasets/cannabinoid-multi-trends/data/raw/google_trends/
 ### データ
 
 ```
-datasets/cannabinoid-multi-trends/data/raw/google_trends/
+datasets/cannabinoid-raw-collection/data/raw/google_trends/
 ```
 
 ### レポート
@@ -205,5 +205,5 @@ research/
 - **研究計画書:** `research/strategy/20261002-keyword-coverage-expansion.md`
 - **既存レポート:** `research/google-trends/20261002-first-mention-timeline.md`
 - **上位スキル:** `research-google-trends`（Google Trends 収集）
-- **データセット:** `datasets/cannabinoid-multi-trends/`
+- **データセット:** `datasets/cannabinoid-raw-collection/`
 - **タクソノミー:** `metadata/taxonomy/compound-taxonomy.skos.jsonld`

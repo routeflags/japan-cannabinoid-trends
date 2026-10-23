@@ -20,11 +20,11 @@
 
 ## 1. CBD の X run 一覧
 
-対象は `cannabinoid-multi-trends`（4 run）と `cannabinoid-social-trends`（1 run）。
+対象は `cannabinoid-raw-collection`（4 run）と `cannabinoid-social-trends`（1 run）。
 
 | run ディレクトリ | raw 件数 | 投稿 `created_at` 範囲（UTC） | query / 期間指定 | Actor | 取得上限 | 状態 |
 |---|---:|---|---|---|---|---|
-| `cannabinoid-multi-trends/data/raw/x/20261002T064331Z-x-cbd` | 60 | 2026-10-01 19:59–21:55（全件 10-01） | `CBD since:2026-09-01 until:2026-10-01`（section=`latest`） | `cPYLH3QT9GyzKhB4S` | `max_pages: 3` | 成功 |
+| `cannabinoid-raw-collection/data/raw/x/20261002T064331Z-x-cbd` | 60 | 2026-10-01 19:59–21:55（全件 10-01） | `CBD since:2026-09-01 until:2026-10-01`（section=`latest`） | `cPYLH3QT9GyzKhB4S` | `max_pages: 3` | 成功 |
 | `.../20261008T165031Z-x-cbd-1year` | 0 | — | unknown（run metadata に query なし） | unknown | unknown | SUCCEEDED・空レスポンス |
 | `.../20261008T165122Z-x-cbd-1m` | 60 | 2026-10-01 11:15–21:27（全件 10-01） | unknown | unknown | unknown | SUCCEEDED |
 | `.../20261008T165330Z-x-cbd-latest10` | 200 | 2026-10-07 23:40 – 2026-10-08 00:02 | unknown | unknown | unknown | SUCCEEDED |
@@ -56,7 +56,7 @@
 
 | 値 | 出所 run | raw ファイル | 定義 |
 |---|---|---|---|
-| **60** | `cannabinoid-multi-trends/data/raw/youtube/20261005T140054Z-youtube-japanese-apify` | `cbd-oil_raw.json`（2026-10-05 収集） | 検索クエリ「CBD オイル」のレスポンス件数（ページング重複を含む） |
+| **60** | `cannabinoid-raw-collection/data/raw/youtube/20261005T140054Z-youtube-japanese-apify` | `cbd-oil_raw.json`（2026-10-05 収集） | 検索クエリ「CBD オイル」のレスポンス件数（ページング重複を含む） |
 | **28** | 同上 | 同上 | 上記 60 件のユニーク動画 ID 数（重複排除後） |
 | **23** | `.../20261002T064905Z-youtube-cbd-オイル` | `records.json`（2026-10-02 収集） | **別取得**。クエリ名は同じでも run が異なり、ページの出所ではない |
 
