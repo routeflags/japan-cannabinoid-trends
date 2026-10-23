@@ -517,6 +517,21 @@ Failure of a publication gate must block release until resolved or explicitly do
 
 ---
 
+# Documentation Management
+
+Documentation must describe the currently effective specifications, state, constraints, and decision rationale. It must not serve as a duplicate Git change log.
+
+- Prefer direct descriptions of the current state over narratives of how that state evolved.
+- Do not repeat routine change dates, additions, corrections, recollections, or before/after differences when they are already traceable through Git history or the authoritative operational records.
+- Distinguish repository change history from information necessary to understand or verify research, specifications, and datasets. Preserve scientifically or technically significant history.
+- Retain decision rationale, compatibility requirements, provenance, reproducibility constraints, and audit evidence when needed for interpretation, verification, or downstream use.
+- Keep each type of information in its authoritative source: Git for repository changes; run metadata and methodology for collection conditions and data provenance; contracts and specifications for normative decisions. Reference the authoritative source rather than copying it.
+- Apply these principles to all documentation, not only README files. Avoid redundant statements across documents.
+
+**Removal criterion:** Remove historical commentary when its removal does not impair understanding of the current specification, use, verification, or decision-making, and the information remains traceable in its authoritative source. Do not remove history that is itself research evidence, a methodological requirement, or necessary to explain a material limitation.
+
+---
+
 # Git Rules
 
 Never commit:
