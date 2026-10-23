@@ -69,33 +69,33 @@ Google Trends の系列・窓・欠測は [methodology.md](methodology.md) §2.1
 [`docs/audits/gt-summary.json`](../../docs/audits/gt-summary.json)（5年）が正本。
 単独系列の平均と比較セット（`common-scale-*` の**共通スケール**値）は別物なので混ぜない。
 
-### X (Twitter)
+### 収集したキーワード
 
-raw は Git 管理外（ローカル証跡のみ）なので、件数は収集時の記録値。
+収集語は 3 種類しかない（化合物語・製品語・アンカー語）。各語は下表のどこかに 1 回だけ現れる。
 
-| キーワード | 件数 |
-|-----------|:----:|
-| CBD | 60 |
-| THC | 60 |
-| CBG | 40 |
-| HHC | 40 |
-| THCV | 40 |
-| THC-O | 40 |
-| THCH | 36 |
-| **合計** | **316** |
+| 種別 | 語 |
+|---|---|
+| 化合物語（13） | CBD, THC, CBG, HHC, THCV, THC-O, THCH, CBN, CRDH, CRDP, H4CBH, HHBD, HHCH |
+| 製品語 — リキッド（13） | 上の 13 語に「リキッド」を付けた形（`CBD リキッド` 〜 `THCV リキッド`、`THC-O リキッド` を含む） |
+| 製品語 — オイル（2） | CBD オイル, THC オイル |
+| アンカー語（この study の対象外） | CBX リキッド（CBX study の語。Google Trends の比較セットにだけ登場） |
 
-### YouTube
+| プラットフォーム | 収集時点 | 化合物語 | 製品語 | 測定モード |
+|---|---|---|---|---|
+| Google Trends | 2026-10-02, 10-08, 10-23 | 13 語すべて（THC-O は no data） | リキッド 13 語 | 12ヶ月・単独系列 |
+| Google Trends | 2026-10-02, 10-08, 10-14, 10-15, 10-23 | 13 語すべて | リキッド 5 語（CBD, CBG, CBN, HHC, THC） | 5年・単独系列 |
+| Google Trends | 2026-10-02, 10-05, 10-08, 10-12 | 12ヶ月の語の部分集合 | リキッド（phase-a/b）+ `CBX リキッド` | 比較セット / 共通スケール（12ヶ月） |
+| X (Twitter) | 2026-10-02, 10-08 | CBD, THC, CBG, HHC, THCV, THC-O, THCH（7 語） | なし | 単一クエリ（`{keyword} since:2026-09-01 until:2026-10-01`） |
+| YouTube | 2026-10-02（公開集計に入る 7 run） | CBD, THC, CBG, HHC, THCV（5 語） | オイル 2 語 | 単一クエリ（actor の入力は `search_term` + `max_videos` のみ） |
 
-| キーワード | 件数 |
-|-----------|:----:|
-| CBD | 22 |
-| THC | 25 |
-| CBG | 34 |
-| HHC | 28 |
-| THCV | 23 |
-| CBD オイル | 23 |
-| THC オイル | 27 |
-| **合計** | **182** |
+- **化合物語は 13 語で閉じている**。このうち 12ヶ月で系列が取れていないのは THC-O だけ（no data）。
+- **製品語のリキッドは Google Trends のみ**。12ヶ月は比較セットで測っているため、単独系列（上の 2 行）とは
+  別の共通スケール値であり、混ぜない。5年は 5 語のみ（`20261012T064246Z-google-trends-ja-rikiddo-5y-main5`）。
+- **X は化合物語だけ**（製品語なし）。**YouTube は化合物語 5 語 + オイル 2 語**で、リキッドは使っていない。
+- キーワード別の件数は X が [`data/processed/collection-summary.md`](data/processed/collection-summary.md)（raw は Git 管理外の
+  ローカル証跡なので記録値）、YouTube が下の `youtube_runs.csv`（run ごとの `video_rows`）。
+
+### YouTube の収集と追跡
 
 **追跡される形（集計のみ）**: raw は Git 管理外（`**/data/raw/*`、例外は `google_trends` のみ）で、**ローカル証跡のみ**。代わりに次の 2 表を追跡する（生成: `python -m processing.cli youtube-export`、実装 [`src/processing/youtube_export.py`](../../src/processing/youtube_export.py)）。
 
@@ -104,7 +104,7 @@ raw は Git 管理外（ローカル証跡のみ）なので、件数は収集�
 | `data/processed/youtube_videos.csv` | 182 | 1 行 = 1 動画（`run_id` / `video_id` / `channel_title` / `title`）。**説明文は出力しない** |
 | `data/processed/youtube_runs.csv` | 7 | 1 行 = 1 公開 run（検索語 / 収集時刻 / 動画行数 / error payload 数） |
 
-- 上の **182 件**は `youtube_videos.csv` の行数と一致する（22+25+34+28+23+23+27）。表に出る run も同じ 7 つ。
+- **182 件**は `youtube_videos.csv` の行数と一致する（run ごとの内訳は `youtube_runs.csv` の `video_rows`: 22+25+34+28+23+23+27）。
 - **説明文（`description`）は公開しない**: チャンネル運営者の連絡先メールが埋め込まれている事例があったため、追跡対象は ID・タイトル・チャンネル名だけにした（2026-10-23 の owner 判断）。
 - **公開日は含まれない**: この収集ペイロードに投稿日が無いので、空列を作らずに落とした。
 - **公開しない run は 2 表のどちらにも載せない**（2026-10-23）。除外した run には、本リポジトリが方針上使わない収集手段に由来するものや不完全系列が含まれるため、データ成果物の勘定に入れない。除外の判定と理由はコード（`src/processing/youtube_export.py` の `EXCLUSION_REASONS`）に閉じる。

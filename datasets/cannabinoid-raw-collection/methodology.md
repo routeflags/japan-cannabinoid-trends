@@ -60,7 +60,9 @@ cannabinoid-raw-collection
 - timeframe: 計画書ごとに `today 12-m` または `today 5-y`（**相対表記**。相対窓は収集時刻で解決されるため、
   絶対窓を [`metadata/windows/`](../../metadata/windows/) に登録して計画書から参照する。§2.1.2 の「窓」を参照）
 - 収集語: `metadata/queries/query-registry.json` の `query_id`（例 `cbd-general-ja` = `CBD`）。
-  表記は**登録された `canonical_text` のまま送る**（例: THC-O は `THC-O`。`THCO` のような別表記は未検証）
+  表記は**登録された `canonical_text` のまま送る**（例: THC-O は `THC-O`。`THCO` のような別表記は未検証）。
+  プラットフォーム別の収集語一覧（化合物語 13・リキッド 13・オイル 2・アンカー 1）は
+  [README の「収集したキーワード」](README.md#収集したキーワード)を正本とする。
 
 **収集内容:**
 1. 各クエリの interest_over_time（1 クエリ 1 run。単独系列）
