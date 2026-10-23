@@ -3,7 +3,8 @@
 **ID:** ISS-20261024-PRV-005  
 **優先度:** P1 (High)  
 **ステータス:** OPEN  
-**対象:** `datasets/*/data/raw/youtube/`（Git 管理外）、`docs/specs/youtube-data-api-v3-setup.md`、`publication/research_cbd.html`
+**対象:** `datasets/*/data/raw/youtube/`（Git 管理外）、`docs/specs/youtube-data-api-v3-setup.md`、`publication/research_cbd.html`  
+**GitHub:** [#1](https://github.com/routeflags/japan-cannabinoid-trends/issues/1)
 
 ## 概要
 
