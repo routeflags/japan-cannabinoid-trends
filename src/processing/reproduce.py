@@ -384,6 +384,42 @@ NON_REPRODUCIBLE: dict[str, NonReproducible] = {
             "and is deliberately kept: it is the only trace of the filter step.",
         ),
     ),
+    "datasets/cannabinoid-raw-collection/data/processed/youtube_videos.csv": NonReproducible(
+        reason=(
+            "Exported from the local YouTube raw runs by "
+            "processing.youtube_export (one row per video: id, title, channel). "
+            "That raw is not in the repository, so the export cannot be re-derived "
+            "from committed inputs."
+        ),
+        missing_inputs=(
+            "datasets/cannabinoid-raw-collection/data/raw/youtube/ (the 7 reviewed "
+            "2026-10-02 runs; ignored by **/data/raw/* and local only)",
+        ),
+        upstream_step="raw (YouTube search payload) -> per-video export",
+        notes=(
+            "Only the allowlisted runs are exported (PUBLISHABLE_RUNS in "
+            "processing/youtube_export.py); 22+25+34+28+23+23+27 = 182 rows reconcile "
+            "with the collection summary. Video descriptions are never exported "
+            "(they carry third-party contact addresses), and publish dates are absent "
+            "from these payloads instead of being reconstructed.",
+        ),
+    ),
+    "datasets/cannabinoid-raw-collection/data/processed/youtube_runs.csv": NonReproducible(
+        reason=(
+            "Per-run status for the YouTube runs, written by the same export step as "
+            "youtube_videos.csv; the raw it reads is not in the repository."
+        ),
+        missing_inputs=(
+            "datasets/cannabinoid-raw-collection/data/raw/youtube/ (local only)",
+        ),
+        upstream_step="raw (YouTube run directories) -> per-run status table",
+        notes=(
+            "Lists every run with its status: exported, or the reason it is withheld "
+            "(incomplete 10-year series, YouTube Data API v3 runs withdrawn "
+            "2026-10-12, methodology test, provenance not reviewed). A withheld run "
+            "therefore never reads as a run with zero videos.",
+        ),
+    ),
     "datasets/cannabinoid-raw-collection/data/processed/collection-summary.md": NonReproducible(
         reason=(
             "Hand-written collection summary combining source-side totals.  The "

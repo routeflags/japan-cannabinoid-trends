@@ -4,12 +4,12 @@
   "spec": "docs/plans/20261013f.md §15 (local plan; not tracked)",
   "target_root": "datasets",
   "include_private": false,
-  "count": 211,
+  "count": 213,
   "extra_count": 42,
   "raw_modified": false,
   "state_summary": {
     "absent": 16,
-    "tracked": 237
+    "tracked": 239
   },
   "entries": [
     {
@@ -18,8 +18,8 @@
       "state": "tracked",
       "tracked": true,
       "ignored": false,
-      "sha256": "a7c70e21af0de2bd2f640ee9397223b77f22e29f97943e6d0392258de47c3907",
-      "sha256_after": "a7c70e21af0de2bd2f640ee9397223b77f22e29f97943e6d0392258de47c3907",
+      "sha256": "45df3963f79654bbf0a24088401ae38bb35a867b5b8764cfd55bced719b32270",
+      "sha256_after": "45df3963f79654bbf0a24088401ae38bb35a867b5b8764cfd55bced719b32270",
       "unchanged": true
     },
     {
@@ -138,8 +138,8 @@
       "state": "tracked",
       "tracked": true,
       "ignored": false,
-      "sha256": "59354f6b64f7ea449c6363e47d3ab2dc0063d851298d7a8cea5c98a874bbffb8",
-      "sha256_after": "59354f6b64f7ea449c6363e47d3ab2dc0063d851298d7a8cea5c98a874bbffb8",
+      "sha256": "e9d802290d6abe3dbf8f59d71544c97a5d5d22ef7310b1fc6d55f5120fdddde9",
+      "sha256_after": "e9d802290d6abe3dbf8f59d71544c97a5d5d22ef7310b1fc6d55f5120fdddde9",
       "unchanged": true
     },
     {
@@ -160,6 +160,26 @@
       "ignored": false,
       "sha256": "f273b7b61e0c4664573cd2712b21b3d6c9a5630dfa36174bc122b27c2a0b0f84",
       "sha256_after": "f273b7b61e0c4664573cd2712b21b3d6c9a5630dfa36174bc122b27c2a0b0f84",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/processed/youtube_runs.csv",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "7ba980e7c4e2b4c85fc7b1a479067b445b7f4a7944e4e3c7bf748e9150a7d391",
+      "sha256_after": "7ba980e7c4e2b4c85fc7b1a479067b445b7f4a7944e4e3c7bf748e9150a7d391",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/processed/youtube_videos.csv",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "b94642f270a64282a600468ea31898fbb11c8ebc694adb1dadb9039f08743298",
+      "sha256_after": "b94642f270a64282a600468ea31898fbb11c8ebc694adb1dadb9039f08743298",
       "unchanged": true
     },
     {

@@ -89,6 +89,19 @@
 | THC オイル | 27 |
 | **合計** | **182** |
 
+**追跡される形（集計のみ）**: raw は Git 管理外（`**/data/raw/*`、例外は `google_trends` のみ）で、**ローカル証跡のみ**。代わりに次の 2 表を追跡する（生成: `python -m processing.cli youtube-export`、実装 [`src/processing/youtube_export.py`](../../src/processing/youtube_export.py)）。
+
+| ファイル | 行 | 内容 |
+|---|---|---|
+| `data/processed/youtube_videos.csv` | 182 | 1 行 = 1 動画（`run_id` / `video_id` / `channel_title` / `title`）。**説明文は出力しない** |
+| `data/processed/youtube_runs.csv` | 39 | 1 行 = 1 run（検索語 / 収集時刻 / 動画行数 / error payload 数 / 公開可否とその理由）|
+
+- 上の **182 件**は `youtube_videos.csv` の行数と一致する（22+25+34+28+23+23+27）。
+- **説明文（`description`）は公開しない**: チャンネル運営者の連絡先メールが埋め込まれている事例が 18 件あったため、追跡対象は ID・タイトル・チャンネル名だけにした（2026-10-23 の owner 判断）。
+- **公開日は含まれない**: この収集ペイロードに投稿日が無いので、空列を作らずに落とした（取得したのは YouTube Data API v3 経由の run だけで、それは 2026-10-12 に方針上撤回済み）。
+- **公開しない run も表に残す**: 不完全な 10 年系列（`ISS-20261012-CBD-003` で証拠·公開対象外）、YouTube Data API v3 由来（`*-dated`、2026-10-12 撤回）、手法検証用のテスト収集、provenance 未レビューの run は `youtube_runs.csv` に理由付きで載る（欠測を 0 件に見せない）。
+- 生成は raw を要求するので、clone では再導出できない（`processing.cli audit-processed` は `not_reproducible_from_repository` と記録する。ルールはコードとテストで固定済み）。
+
 ## ステータス
 
 | ステータス | 日付 |

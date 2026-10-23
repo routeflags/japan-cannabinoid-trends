@@ -432,8 +432,8 @@
     }
   },
   "dataCoverage": {
-    "lastAudit": "2026-10-09",
-    "auditNote": "X/Twitter data is limited to recent tweets due to Apify actor constraints. Historical date range filtering is not supported.",
+    "lastAudit": "2026-10-23",
+    "auditNote": "X/Twitter data is limited to recent tweets due to Apify actor constraints. Historical date range filtering is not supported. Distribution: only Google Trends raw (37 runs) and the aggregate YouTube tables (data/processed/youtube_*.csv, 182 videos) are tracked; the X and YouTube raw payloads are local evidence only (not distributed). The source paths below therefore point to non-distributed local files.",
     "compounds": {
       "CBD": {
         "x": {

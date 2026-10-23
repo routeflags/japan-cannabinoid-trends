@@ -20,28 +20,28 @@
     "include_private": false
   },
   "run_count": 42,
-  "count": 107,
+  "count": 109,
   "raw_modified": false,
   "judgment_summary": {
-    "missing_metadata": 10,
+    "missing_metadata": 12,
     "partially_recognized": 4,
     "recognized": 93
   },
   "format_summary": {
-    "csv": 6,
+    "csv": 8,
     "json": 100,
     "text": 1
   },
   "artifact_type_summary": {
     "comparison": 4,
-    "none": 14,
+    "none": 16,
     "raw_records": 1,
     "raw_response": 17,
     "summary": 24,
     "timeseries": 47
   },
   "manifest_summary": {
-    "missing": 81,
+    "missing": 83,
     "present": 26
   },
   "sqlite_present": false,
@@ -739,6 +739,60 @@
       "judgment": "missing_metadata",
       "notes": [
         "content:extension:md",
+        "legacy:no-manifest",
+        "lineage:unknown"
+      ]
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/processed/youtube_runs.csv",
+      "bytes": 3672,
+      "sha256": "7ba980e7c4e2b4c85fc7b1a479067b445b7f4a7944e4e3c7bf748e9150a7d391",
+      "format": "csv",
+      "sniff_state": "partial",
+      "artifact_type": null,
+      "schema_id": null,
+      "contains_full_timeseries": null,
+      "record_count": null,
+      "declared_data_points": null,
+      "reader_id": null,
+      "reader_registered": null,
+      "study_id": null,
+      "run_id": null,
+      "source_id": null,
+      "run_directory": null,
+      "metadata_state": "missing",
+      "manifest_state": "missing",
+      "verification": "unverifiable_no_manifest",
+      "judgment": "missing_metadata",
+      "notes": [
+        "content:extension:csv",
+        "legacy:no-manifest",
+        "lineage:unknown"
+      ]
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/processed/youtube_videos.csv",
+      "bytes": 22301,
+      "sha256": "b94642f270a64282a600468ea31898fbb11c8ebc694adb1dadb9039f08743298",
+      "format": "csv",
+      "sniff_state": "partial",
+      "artifact_type": null,
+      "schema_id": null,
+      "contains_full_timeseries": null,
+      "record_count": null,
+      "declared_data_points": null,
+      "reader_id": null,
+      "reader_registered": null,
+      "study_id": null,
+      "run_id": null,
+      "source_id": null,
+      "run_directory": null,
+      "metadata_state": "missing",
+      "manifest_state": "missing",
+      "verification": "unverifiable_no_manifest",
+      "judgment": "missing_metadata",
+      "notes": [
+        "content:extension:csv",
         "legacy:no-manifest",
         "lineage:unknown"
       ]

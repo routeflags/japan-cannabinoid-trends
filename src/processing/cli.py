@@ -46,6 +46,7 @@ from processing.gt_statistics import (
 )
 from processing.gt_legacy_label_corrections import write_manifest as write_gt_legacy_label_corrections
 from processing.platform_trends import build_platform_trends
+from processing.youtube_export import build_video_export, write_export
 from processing.reproduce import audit_processed_artifacts, reproduce_artifact
 from processing.rulespec import RuleSpecError, load_content_rules
 from validation.reporting import dump_json
@@ -354,6 +355,38 @@ def cmd_gt_summary(args) -> int:
     return EXIT_OK
 
 
+def cmd_youtube_export(args) -> int:
+    try:
+        result = build_video_export(args.study_dir)
+        paths = write_export(result, args.output_dir)
+    except OSError as error:
+        _err(f"youtube export failed: {error}")
+        return EXIT_IO
+    exported = [run for run in result["runs"] if run["status"] == "exported"]
+    summary = {
+        "study_dir": args.study_dir,
+        "output_dir": args.output_dir,
+        "run_count": len(result["runs"]),
+        "exported_run_count": len(exported),
+        "video_row_count": len(result["videos"]),
+        "withheld": [
+            {"run_id": run["run_id"], "status": run["status"]}
+            for run in result["runs"]
+            if run["status"] != "exported"
+        ],
+        "written": [str(path) for path in paths],
+    }
+    if args.format == "json":
+        print(dump_json(summary), end="")
+    else:
+        print(
+            f"youtube export written: {args.output_dir} "
+            f"runs={summary['run_count']} exported={summary['exported_run_count']} "
+            f"videos={summary['video_row_count']} withheld={len(summary['withheld'])}"
+        )
+    return EXIT_OK
+
+
 def cmd_gt_legacy_label_corrections(args) -> int:
     try:
         manifest = write_gt_legacy_label_corrections(
@@ -440,6 +473,23 @@ def build_parser() -> argparse.ArgumentParser:
     gt_summary.add_argument("--output", default=None)
     gt_summary.add_argument("--format", choices=("text", "json"), default="text")
     gt_summary.set_defaults(func=cmd_gt_summary)
+
+    youtube_export = sub.add_parser(
+        "youtube-export",
+        help=(
+            "write the aggregate-only YouTube view (per-video id/title/channel; "
+            "the raw stays local)"
+        ),
+    )
+    youtube_export.add_argument(
+        "--study-dir", default="datasets/cannabinoid-raw-collection"
+    )
+    youtube_export.add_argument(
+        "--output-dir",
+        default="datasets/cannabinoid-raw-collection/data/processed",
+    )
+    youtube_export.add_argument("--format", choices=("text", "json"), default="text")
+    youtube_export.set_defaults(func=cmd_youtube_export)
 
     gt_corrections = sub.add_parser(
         "gt-legacy-label-corrections",

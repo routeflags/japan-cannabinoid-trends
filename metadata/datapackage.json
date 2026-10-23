@@ -270,7 +270,7 @@
       "name": "cannabinoid-raw-collection",
       "path": "datasets/cannabinoid-raw-collection/",
       "format": "json,csv",
-      "description": "主要カンナビノイド7化合物（CBD, THC, CBG, HHC, THCV, THC-O, THCH）のトレンドデータ（Google Trends, X, YouTube）",
+      "description": "主要カンナビノイド化合物の原記録（Google Trends の raw 週次系列 37 runs、および YouTube の集計 182 動画 = data/processed/youtube_*.csv）。X と YouTube の raw は再配布条件のレビューにより非配布（ローカル証跡のみ）",
       "schema": {
         "fields": [
           {
@@ -307,11 +307,10 @@
           {
             "name": "source",
             "type": "string",
-            "description": "データソース",
+            "description": "データソース（追跡対象は Google Trends の raw と YouTube の集計。X は非配布）",
             "constraints": {
               "enum": [
                 "google-trends",
-                "x-twitter",
                 "youtube"
               ]
             }
@@ -333,7 +332,7 @@
           {
             "name": "record_count",
             "type": "integer",
-            "description": "取得件数 (X, YouTube)",
+            "description": "YouTube 集計の動画行数（raw 由来の per-video 値は持たない）",
             "constraints": {
               "minimum": 0
             }
