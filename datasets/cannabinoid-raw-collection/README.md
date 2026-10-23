@@ -82,15 +82,19 @@ Google Trends の系列・窓・欠測は [methodology.md](methodology.md) §2.1
 
 | プラットフォーム | 収集時点 | 化合物語 | 製品語 | 測定モード |
 |---|---|---|---|---|
-| Google Trends | 2026-10-02, 10-08, 10-23 | 13 語すべて（THC-O は no data） | リキッド 13 語 | 12ヶ月・単独系列 |
-| Google Trends | 2026-10-02, 10-08, 10-14, 10-15, 10-23 | 13 語すべて | リキッド 5 語（CBD, CBG, CBN, HHC, THC） | 5年・単独系列 |
+| Google Trends | 2026-10-02, 10-08, 10-23 | 13 語すべて（THC-O は no data） | リキッド 13 語（8 語が系列、5 語は no data） | 12ヶ月・単独系列 |
+| Google Trends | 2026-10-02, 10-08, 10-14, 10-15, 10-23 | 13 語すべて | リキッド 5 語（CBD, CBG, CBN, HHC, THC）。残り 8 語は未収集 | 5年・単独系列 |
 | Google Trends | 2026-10-02, 10-05, 10-08, 10-12 | 12ヶ月の語の部分集合 | リキッド（phase-a/b）+ `CBX リキッド` | 比較セット / 共通スケール（12ヶ月） |
 | X (Twitter) | 2026-10-02, 10-08 | CBD, THC, CBG, HHC, THCV, THC-O, THCH（7 語） | なし | 単一クエリ（`{keyword} since:2026-09-01 until:2026-10-01`） |
 | YouTube | 2026-10-02（公開集計に入る 7 run） | CBD, THC, CBG, HHC, THCV（5 語） | オイル 2 語 | 単一クエリ（actor の入力は `search_term` + `max_videos` のみ） |
 
 - **化合物語は 13 語で閉じている**。このうち 12ヶ月で系列が取れていないのは THC-O だけ（no data）。
 - **製品語のリキッドは Google Trends のみ**。12ヶ月は比較セットで測っているため、単独系列（上の 2 行）とは
-  別の共通スケール値であり、混ぜない。5年は 5 語のみ（`20261012T064246Z-google-trends-ja-rikiddo-5y-main5`）。
+  別の共通スケール値であり、混ぜない。
+- **5年のリキッドは 5 語だけ**（`20261012T064246Z-google-trends-ja-rikiddo-5y-main5`）。
+  12ヶ月で照会済みの残り 8 語（THCV / THC-O / THCH / CRDH / CRDP / H4CBH / HHBD / HHCH リキッド）は**未収集**で、
+  12ヶ月が no data でも 5年は取れることがある（HHC リキッドがその例）ため、照会しない限り不明（`ISS-20261023-GT-008`）。
+- **12ヶ月のリキッドは 13 語照会して 8 語が系列、5 語（HHC / CRDH / CRDP / THC-O / THCV リキッド）は no data**。
 - **X は化合物語だけ**（製品語なし）。**YouTube は化合物語 5 語 + オイル 2 語**で、リキッドは使っていない。
 - キーワード別の件数は X が [`data/processed/collection-summary.md`](data/processed/collection-summary.md)（raw は Git 管理外の
   ローカル証跡なので記録値）、YouTube が下の `youtube_runs.csv`（run ごとの `video_rows`）。
