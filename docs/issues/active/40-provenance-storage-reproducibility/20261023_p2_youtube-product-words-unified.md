@@ -116,3 +116,104 @@ CBX study が `CBX リキッド` を Apify actor `gJvjeCYNraSfhIaNd`（danek/you
 - [x] 方針の決定（owner）: 選択肢 1（リキッド 13 語を収集し、オイル 2 run を公開集計から外す、2026-10-24）
 - [ ] 実施（YouTube のリキッド 13 run 収集 + `youtube-export` 再生成 + オイル 2 run の除外）
 - [ ] README のキーワード表で製品語がプラットフォーム間で説明可能な状態になっている
+
+## 実行準備（2026-10-24）
+
+選択肢 1 を実行可能な状態まで確定させた記録。**実収集は `APIFY_TOKEN` 未設定のため未実施**。コード・raw・`docs/audits/` には触れていない。`staging-declaration-v1` の表現可否・`date_filter` の注意点・`youtube_export` が `*.json` しか読まない点（CSV で stage すると 0 件）・`max_videos` の根拠の考え方・run-id 規約・収集後の手順の枠組みは `20261023_p2_youtube-compound-words-incomplete.md`「実行準備（2026-10-24）」節（#6）に確定済みであり、ここでは繰り返さない。以下は #7 固有の差分である。
+
+### ブロッカー
+
+- `APIFY_TOKEN` が未設定（空変数であることを確認。値は読んでいない。`.env.d/` には `apify.env.example` のみ）。ゆえに Apify の実実行はできない。
+- YouTube raw は Git 管理外で本 worktree に存在しない。既存 7 run の生ペイロードは見られない（以下は追跡層 2 表と specs・コードの読解による確定）。
+- owner に必要な操作: Apify トークンを発行し、安全な場所に配置する（値はコミットしないことだけ守り、値の指定は owner に委ねる。配置場所と権限は各 SKILL の手順に従う）。
+
+### 1. 13 語の実行仕様
+
+- `search_term` は `metadata/queries/query-registry.json` の `*-liquid-ja`（CBX を除く 13 件）の `canonical_text` を実測して確定。13 件すべて `status: active`。
+- `max_videos` は owner 決定（「CBD/THC 100・他 50」）を化合物語幹に適用する。`CBD リキッド` / `THC リキッド` は 100、他の 11 語は 50。根拠は methodology §2.3 の表が正本であり、既存 7 run（CBD/THC 100・他 50）と同じ基準を語幹で引き継ぐため。13 語は別時点の別観測になる（AGENTS.md: 同一クエリの再実行は非決定的になりうる）。
+- run-id は YouTube 層の既存規約（日本語スラグ、例 `20261002T064905Z-youtube-cbd-オイル`）に寄せる: `<UTC>-youtube-<lower>-リキッド`。理由: (1) `PUBLISHABLE_RUNS` の値（日本語 `search_term`）との対応が一目瞭然、(2) `research-youtube-search` SKILL の生成式（`tr ' ' '-'` + 小文字化）に `CBD リキッド` を通すと `cbd-リキッド` になり一致する（SKILL 内の `cbd-liquid` は例示に過ぎない）、(3) GT 層の `rikiddo` ローマ字は GT run-id 規約（source + phase 情報を含む別層）のもので YouTube 層には適用されない、(4) 日本語 run-id の path 安全性は既存 7 run で実証済み。`THC-O` は registry の `thc-o` と整合させ `thc-o-リキッド` とする。日時部は実行時の UTC に置換する。
+
+| 語 | `search_term`（`canonical_text`） | `query_id` | `max_videos` | run-id 案（日時部は実行時 UTC） |
+|---|---|---|---|---|
+| CBD リキッド | `CBD リキッド` | `cbd-liquid-ja` | 100 | `<UTC>-youtube-cbd-リキッド` |
+| THC リキッド | `THC リキッド` | `thc-liquid-ja` | 100 | `<UTC>-youtube-thc-リキッド` |
+| CBG リキッド | `CBG リキッド` | `cbg-liquid-ja` | 50 | `<UTC>-youtube-cbg-リキッド` |
+| CBN リキッド | `CBN リキッド` | `cbn-liquid-ja` | 50 | `<UTC>-youtube-cbn-リキッド` |
+| HHC リキッド | `HHC リキッド` | `hhc-liquid-ja` | 50 | `<UTC>-youtube-hhc-リキッド` |
+| THCV リキッド | `THCV リキッド` | `thcv-liquid-ja` | 50 | `<UTC>-youtube-thcv-リキッド` |
+| THC-O リキッド | `THC-O リキッド` | `thc-o-liquid-ja` | 50 | `<UTC>-youtube-thc-o-リキッド` |
+| THCH リキッド | `THCH リキッド` | `thch-liquid-ja` | 50 | `<UTC>-youtube-thch-リキッド` |
+| CRDH リキッド | `CRDH リキッド` | `crdh-liquid-ja` | 50 | `<UTC>-youtube-crdh-リキッド` |
+| CRDP リキッド | `CRDP リキッド` | `crdp-liquid-ja` | 50 | `<UTC>-youtube-crdp-リキッド` |
+| H4CBH リキッド | `H4CBH リキッド` | `h4cbh-liquid-ja` | 50 | `<UTC>-youtube-h4cbh-リキッド` |
+| HHBD リキッド | `HHBD リキッド` | `hhbd-liquid-ja` | 50 | `<UTC>-youtube-hhbd-リキッド` |
+| HHCH リキッド | `HHCH リキッド` | `hhch-liquid-ja` | 50 | `<UTC>-youtube-hhch-リキッド` |
+
+- 費用上限（単価の出所は `.github/skills/apify-youtube-search/SKILL.md`。PAY_PER_EVENT: 起動 $0.00005 + $0.0005/件（FREE）/ $0.0002/件（GOLD+）。Build `lcBfQ1sbz5bx58c1X` 時点）:
+  - 採用案（2×100 + 11×50 = 上限 750 件）: FREE **約 $0.38**（`750×0.0005 + 13×0.00005 = $0.37565`）、GOLD+ 約 $0.15。
+  - 参考（一律 50 = 上限 650 件）: FREE 約 $0.33、GOLD+ 約 $0.13。一律 100（上限 1300 件）: FREE 約 $0.65、GOLD+ 約 $0.26。
+  - 上限は `max_videos` 基準の上限であり、実費は取得件数比例（既存 7 run の請求実績は合計 ~$0.09。`collection-summary.md` §3・§4）。methodology §2.3 のコスト目安（$0.050/$0.025）は起動費抜きの概算（#6 と同じ注意）。
+- 13 run は 1 バッチ・逐次実行（1 実行 1 キーワード。SKILL 推奨の `wait` 45 秒 + 1 秒間隔）。分割の必要はない。429・失敗時は待機して再試行し、リトライ番号を宣言に記録する。失敗は `collection_failed` として残し、`observed_zero` に読み替えない（#6 と同一方針）。
+
+### 2. オイル 2 run の除外: 適用可能な最小差分（未適用）
+
+`src/processing/youtube_export.py` を読解して確定。`_status()` / `build_video_export()` 自体の変更は不要（allowlist 駆動のため）。必要なのは `PUBLISHABLE_RUNS` から 2 行削除し、`EXCLUSION_REASONS` に 2 行追加することだけである。**適用してはいけない**（置換となる 13 リキッド run が存在しないため。先に外すと公開表が 7 run → 5 run / 182 行 → 132 行に縮み、置換なしに証拠が減る）。
+
+```python
+# 削除（PUBLISHABLE_RUNS から）:
+#   "20261002T064905Z-youtube-cbd-オイル": "CBD オイル",
+#   "20261002T064911Z-youtube-thc-オイル": "THC オイル",
+# 追加（EXCLUSION_REASONS に）:
+#   "20261002T064905Z-youtube-cbd-オイル": "superseded by liquid vocabulary, excluded from evidence (ISS-20261023-YT-011 / GitHub #7)",
+#   "20261002T064911Z-youtube-thc-オイル": "superseded by liquid vocabulary, excluded from evidence (ISS-20261023-YT-011 / GitHub #7)",
+```
+
+適用後の変化（追跡層 2 表を実測して算出。`youtube_runs.csv` 7 行 = CBD 22 / THC 25 / CBG 34 / HHC 28 / THCV 23 / CBD オイル 23 / THC オイル 27、合計 182 行）:
+
+| 成果物 | 現行 | 除外適用後 |
+|---|---:|---:|
+| `youtube_runs.csv` | 7 行 | **5 行**（オイル 2 行が消える） |
+| `youtube_videos.csv` | 182 行 | **132 行**（オイル 50 行 = 23+27 が消える） |
+| `withheld`（summary のみ、データに書かれない） | 6 run（`EXCLUSION_REASONS` 6 件） | 8 run |
+
+テストへの影響: `tests/processing/test_youtube_export.py` は tmp fixture のみで構成され、オイル run-id・7 run・182 行の固定期待値を**持たない**（唯一の件数 assertion は `runs[0]["video_rows"] == "1"`）。ゆえにこの除外差分だけでは既存テストは壊れない。他に `182` / オイル run-id を参照するのは `youtube_export.py` のコメントと `src/processing/reproduce.py` の `NonReproducible` notes（`22+25+34+28+23+23+27 = 182 rows` / `the 7 reviewed 2026-10-02 runs`）のみで、テストではない。ただし除外適用時は `reproduce.py` の文言更新が同時に必須になる（最小差分の 4 行だけでは不完全）。#6 の前例どおり、`PUBLISHABLE_RUNS` 変更時はテスト更新を同梱する運用とする。
+
+除外と同時に必要な作業（適用順序つき）:
+
+1. 13 リキッド run の採用（§4 の手順）。
+2. 上記 4 行のコード変更 + `reproduce.py` notes の更新 + テスト更新。
+3. `python -m processing.cli youtube-export` で 2 表を再生成（Makefile に target は無い）。
+4. `make audit-publication` の再実行と件数の突合せ（processed ⇄ raw）。
+5. README のキーワード表・methodology §2.3（YouTube 表にリキッド 13 語を追加し、オイル 2 語を除外済みとして記載）・`collection-summary.md` §3・§4（7 run / 182 行 / ~$0.09 の更新）の更新。
+6. 監査スナップショットの再生成（`make audit-new-runs` / `make audit-snapshots` 等）。
+
+### 3. リキッド run の公開可否と GT no-data 5 語の扱い
+
+- 新規 run は `PUBLISHABLE_RUNS` に載るまで `_status()` が `"provenance not reviewed for publication"` を返し、2 表のどちらにも書かれない（#6 と同じ規則。`test_unreviewed_and_withdrawn_runs_are_withheld_with_a_reason` が固定）。13 run を採用する際の追加差分の形（run-id は収集時に確定するため現時点ではキー未定のプレースホルダ。値は `canonical_text`）:
+
+```python
+# PUBLISHABLE_RUNS に追加（13 行。provenance レビュー後）:
+#   "<UTC>-youtube-cbd-リキッド": "CBD リキッド",
+#   "<UTC>-youtube-thc-リキッド": "THC リキッド",
+#   ...（§1 の表の 13 語ぶん。値は search_term と同一）
+```
+
+- 12ヶ月 GT で no data の 5 語（`HHC / CRDH / CRDP / THC-O / THCV リキッド`。`records_*.json` の `data` 長 0 を実測。残り 8 語は系列あり）は、YouTube 側の収集対象から外さない。GT の有無から YouTube の有無は推定できない（別現象: 検索需要 vs 動画存在。AGENTS.md: プラットフォーム間で指標を同等とみなさない）。YouTube で 0 件なら `observed_zero`（`record_count: 0` の artifact が L1-09 で必須）、失敗なら `collection_failed` であり、GT の no-data はどちらの根拠にもならない。
+
+### 4. 収集後に必要な手順（担当つき。#6 と同一枠組み）
+
+1. owner: トークン配置（値はコミットしない）。
+2. 実行者（owner 承認済み）: 13 語 × 1 run を同一 actor（`gJvjeCYNraSfhIaNd`）で外部実行（1 実行 1 キーワード。入力は `search_term` + `max_videos` のみ）。`run-status`（status / startedAt / finishedAt / usageTotalUsd）と dataset ID を控える。dataset は JSON で保存し、`videoId` で重複排除して `records_raw.json`（排除前）と `records.json`（排除後）を作る。**CSV で取らない**（`youtube_export` は `*.json` しか読まない）。
+3. 実行者: `staging-declaration-v1` を 1 語 1 文書で作成（#6 §1 のチェックリスト通り。`date_filter` は danek actor に概念が無い旨を `limitations` に明示し、手書き宣言とする）→ `make stage DECLARATION=<file>` → `make adopt-all`。quarantine に落ちたら理由を確認し、宣言を修正する（payload は byte 不変）。
+4. owner: provenance レビュー後、`PUBLISHABLE_RUNS` への 13 run 追加を承認する。
+5. 実装者（コード変更・別作業）: §3 の差分で `PUBLISHABLE_RUNS` に 13 run を追加し、テスト更新つき → `youtube-export` で 2 表を再生成。
+6. 実装者: §2 の差分でオイル 2 run を除外（**§5 の前には適用しない**）+ `reproduce.py` notes 更新 + テスト更新 → 2 表を再生成。
+7. 文書担当 / owner: README のキーワード表と methodology §2.3・`collection-summary.md` §3・§4 を更新する。
+8. 実行者: 監査スナップショットを再生成する（`make audit-new-runs` / `make audit-snapshots` 等）。本件では `docs/audits/` に触れていない。
+
+適用順序の原則: **リキッド 13 run 採用 → オイル 2 run 除外 → gate 再実行**。除外が先行してはならない。
+
+### #6 の確定内容との関係
+
+- 矛盾はない。経路（外部実行 → 手書き宣言 → `make stage` / `make adopt-all`）、JSON 取得の要請、`max_videos` の正本（methodology §2.3）、run-id 規約の式、担当分担は #6 の確定内容をそのまま使う。
+- 追加で分かった落とし穴: (1) SKILL 内に run-id slug の表記が 3 通り併存する（日本語スラグの既存 run / `rikiddo` ローマ字の GT run / SKILL 例示の `cbd-liquid`）。本件は YouTube 層の既存規約（日本語）に寄せると決めて解消した。(2) #7 記録の既存「除外パッチ案」（2 行削除・2 行追加）だけでは適用が不完全で、`reproduce.py` の `182 rows` / `7 reviewed runs` 文言の更新が同時に要る。(3) 除外差分だけでは既存テストは壊れない（固定期待値なし）。「影響を受けるテスト」は「なし」が実測結果であり、テスト更新は #6 前例の運用として同梱するものである。
