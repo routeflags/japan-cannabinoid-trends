@@ -13,10 +13,11 @@
 
 ## 概要
 
-CRDH の 12ヶ月単独系列は週次 raw を持たない唯一の欠落（THC-O はソースが系列を返さない `NO_DATA` で別扱い）。
-5年側は `20261014T215738Z-google-trends-cannabinoid-multi-trends` に 262 週の系列があるため、**12ヶ月のみの欠落**。
+CRDH の 12ヶ月系列は `20261024T000000Z-google-trends-crdh-12m` に週次 raw（53 週、窓 `2025-10-19_2026-10-18`）を持つ。
+旧 `20261008T102022Z-google-trends-crdh/records_crdh_12m.json` は週次系列を持たない記録値のみで、
+`avg_12m` 1.9・ピーク週 2025-11-09 週・非ゼロ週数 2 は raw から検算できない。**旧記録値は引用しない**（証跡としてのみ残す）。
+THC-O はソースが系列を返さない `NO_DATA` で別扱い。
 公開ページの 12ヶ月ブロックは共通スケール比較（raw あり）を根拠にしており、ページの数値自体に誤りはない。
-`avg_12m` 1.9・ピーク週・非ゼロ週数 2 は引用してはならない（出所不明の数値になる）。
 
 ## 事実（実測）
 
@@ -50,10 +51,9 @@ CRDH の 12ヶ月単独系列は週次 raw を持たない唯一の欠落（THC-
 
 ## 何が問題か
 
-原稿や下流が `avg_12m = 1.9`・ピーク週（2025-11-09 週）・非ゼロ週数 2 を引用すると出所不明の数値になる
-（`ISS-20261015-GT-003` と同型）。12ヶ月の他 3 化合物（THCV・H4CBH・HHBD）は 2026-10-23 に系列を取得済みで、
-CRDH だけが取り残されている。`methodology.md` §2.1.3 の CRDH 行は括弧付き記録値（（53）・（1.9）・（2））で
-区別済みだが、「引用してはならない」旨の明文はまだ無い。
+旧 summary の `avg_12m = 1.9`・ピーク週（2025-11-09 週）・非ゼロ週数 2 を原稿や下流が引用すると出所不明の数値になる
+（`ISS-20261015-GT-003` と同型）。週次系列を収蔵した今もこの 3 値は raw から再現できないため、引用先は新 run の系列値
+（平均 1.8868・ピーク 2026-10-11 週・非ゼロ 1 週）にする。
 
 ## 選択肢
 
@@ -101,8 +101,23 @@ CRDH だけが取り残されている。`methodology.md` §2.1.3 の CRDH 行�
 ## 完了条件
 
 - [x] owner が選択（選択肢 1 = (a) 12ヶ月を 1 run 再取得、2026-10-24）
-- [ ] (a) の実施: 新 run が catalog され `data` 53 週を持ち、
+- [x] (a) の実施: 新 run が catalog され `data` 53 週を持ち、
   `gt-summary --timeframe 12m --compound CRDH` が `shape=series` で平均を返すこと。
   §2.1.3 の CRDH 行が括弧なしの実測値になること。旧 summary は残すこと
 - [ ] (b) の場合: §2.1.3 に上記引用禁止の注記が入り、`avg_12m`・ピーク週・非ゼロ週数を引用する原稿・下流が無いこと
 - [ ] (c) の場合: (b) に加え、12ヶ月の CRDH 定量言及が共通スケール値のみになり、その正規化の違いが methodology に明記されること
+
+## 実施（2026-10-24）
+
+選択肢 (a) のとおり 12ヶ月を 1 run 再取得した。新 run `20261024T000000Z-google-trends-crdh-12m` が catalog され、
+`records_crdh.json` の `data` は 53 要素（観測 2025-10-19 〜 2026-10-18、非ゼロ 1 週、平均 1.8868、
+ピーク 100（2026-10-11 週）、最新値 0）。`run_metadata.json` の `window_id` は `2025-10-19_2026-10-18`、
+`exact_window_match=false`、`observed_min_timestamp=2025-10-19T00:00:00Z`・`observed_max_timestamp=2026-10-18T00:00:00Z`。
+
+- `gt-summary --timeframe 12m --compound CRDH`: 実施前は `partial`（weeks/mean/peak/last すべて算出不能）→
+  実施後は `shape=series`（weeks=53 mean=1.8868 peak=2026-10-11 last=0）で平均を返す。
+- 既存 summary（`20261008T102022Z-google-trends-crdh/records_crdh_12m.json`）は残している（raw 不変）。
+- 実行: `probe` → SUCCESS、`fetch` → SUCCESS（429 なし、追加の語・別 timeframe の収集なし）。
+  `pytest -q` は 1460 passed・4 skipped・11 failed。failed はいずれも監査スナップショットの鮮度試験
+  （`test_audit_report_freshness`・`test_query_semantics`・`test_storage_inventory_audit`・`test_temporal_inventory`）で、
+  新 run 収蔵後に committed スナップショットが古くなったため。スナップショット再生成は本変更の対象外のため未実施。

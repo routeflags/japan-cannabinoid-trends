@@ -19,30 +19,30 @@
     ],
     "include_private": false
   },
-  "run_count": 53,
-  "count": 131,
+  "run_count": 54,
+  "count": 133,
   "raw_modified": false,
   "judgment_summary": {
     "missing_metadata": 12,
     "partially_recognized": 4,
-    "recognized": 115
+    "recognized": 117
   },
   "format_summary": {
     "csv": 8,
-    "json": 122,
+    "json": 124,
     "text": 1
   },
   "artifact_type_summary": {
     "comparison": 8,
     "none": 16,
     "raw_records": 1,
-    "raw_response": 28,
+    "raw_response": 29,
     "summary": 24,
-    "timeseries": 54
+    "timeseries": 55
   },
   "manifest_summary": {
     "missing": 83,
-    "present": 48
+    "present": 50
   },
   "sqlite_present": false,
   "sqlite_note": "SQLite stores are local-only in this repository (see docs/specs/validation-framework.md G4 section); absence in the audit scope is recorded as not-present, never as zero content",
@@ -586,6 +586,18 @@
       "verification": "manifest_present",
       "artifact_count": 2,
       "sha256": "fe27a55c6fcd7fbbe5cb11dce075656cf91a3805ebb479befe3fd3bcece4f71f",
+      "lineage_note": null
+    },
+    {
+      "run_id": "20261024T000000Z-google-trends-crdh-12m",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261024T000000Z-google-trends-crdh-12m",
+      "study_id": "cannabinoid-raw-collection",
+      "source_id": "google-trends",
+      "metadata_state": "present",
+      "manifest_state": "present",
+      "verification": "manifest_present",
+      "artifact_count": 2,
+      "sha256": "1348f37eb145d1a6837afe8780e3271ae569ab652983988c1e5e439fcb8ccf2b",
       "lineage_note": null
     },
     {
@@ -3585,6 +3597,57 @@
       "judgment": "recognized",
       "notes": [
         "content:fields:content"
+      ]
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261024T000000Z-google-trends-crdh-12m/payload.json",
+      "bytes": 1650,
+      "sha256": "e0a66dabac7e3fbb8c75a3034ceab85a685398893ed22e3988b25d76876ef182",
+      "format": "json",
+      "sniff_state": "recognized",
+      "artifact_type": "raw_response",
+      "schema_id": "google-trends-mcp-tool-result-v1",
+      "contains_full_timeseries": false,
+      "record_count": null,
+      "declared_data_points": null,
+      "reader_id": "json-object-reader",
+      "reader_registered": true,
+      "study_id": "cannabinoid-raw-collection",
+      "run_id": "20261024T000000Z-google-trends-crdh-12m",
+      "source_id": "google-trends",
+      "run_directory": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261024T000000Z-google-trends-crdh-12m",
+      "metadata_state": "present",
+      "manifest_state": "present",
+      "verification": "manifest_present",
+      "judgment": "recognized",
+      "notes": [
+        "content:fields:content"
+      ]
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261024T000000Z-google-trends-crdh-12m/records_crdh.json",
+      "bytes": 3209,
+      "sha256": "2b77a9166ca855534c66c385207a52ed0d2218f1422a7da8a1214a71f1fd9943",
+      "format": "json",
+      "sniff_state": "recognized",
+      "artifact_type": "timeseries",
+      "schema_id": "google-trends-interest-over-time-v1",
+      "contains_full_timeseries": true,
+      "record_count": 53,
+      "declared_data_points": null,
+      "reader_id": "json-timeseries-reader",
+      "reader_registered": true,
+      "study_id": "cannabinoid-raw-collection",
+      "run_id": "20261024T000000Z-google-trends-crdh-12m",
+      "source_id": "google-trends",
+      "run_directory": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261024T000000Z-google-trends-crdh-12m",
+      "metadata_state": "present",
+      "manifest_state": "present",
+      "verification": "manifest_present",
+      "judgment": "recognized",
+      "notes": [
+        "content:series:date+value",
+        "content:points:53"
       ]
     },
     {

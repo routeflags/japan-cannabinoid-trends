@@ -12,7 +12,7 @@ cannabinoid-raw-collection
 
 | データソース | 観測期間 | 根拠 |
 |-------------|---------|------|
-| Google Trends（12ヶ月） | 2025-09-28 〜 2026-09-27（8 化合物）/ 2025-10-19 〜 2026-10-18（THCV・H4CBH・HHBD）。CRDH は記録値のみで週次系列なし | §2.1.3 |
+| Google Trends（12ヶ月） | 2025-09-28 〜 2026-09-27（8 化合物）/ 2025-10-19 〜 2026-10-18（THCV・H4CBH・HHBD・CRDH） | §2.1.3 |
 | Google Trends（5年） | 2021-10-10 〜 2026-10-11（9 化合物）/ 2021-10-17 〜 2026-10-18（THC・CBG・HHC・THCV、および共通スケール setA〜D） | §2.1.2、§2.1.4 |
 | X (Twitter) | 2026-09-01 〜 2026-10-01（主系列）、CBD は 1 年 / 1ヶ月 / latest10 も | §2.2 |
 | YouTube | 2026-10-02（公開集計に入る 7 検索語のスナップショット）、2026-10-08〜09 に追加 | §2.3 |
@@ -31,7 +31,7 @@ cannabinoid-raw-collection
 | THC-O | `compound_thc_o` | semisynthetic | データなし | ✅ |
 | THCH | `compound_thch` | minor | ✅ | ✅ |
 | CBN | `compound_cbn` | minor | ✅ | ✅ |
-| CRDH | `compound_crdh` | synthetic | サマリーのみ（§2.1.3） | ✅ |
+| CRDH | `compound_crdh` | synthetic | ✅ | ✅ |
 | CRDP | `compound_crdp` | synthetic | ✅ | ✅ |
 | H4CBH | `compound_h4cbh` | semisynthetic | ✅ | ✅ |
 | HHBD | `compound_hhbd` | semisynthetic | ✅ | ✅ |
@@ -39,7 +39,7 @@ cannabinoid-raw-collection
 
 - **「データなし」**: 取得はしたが Google Trends が閾値未満として系列を返さなかった。欠測であって 0 観測ではない。
 - **5年系列は 13 化合物すべてが週次 raw を持つ**（§2.1.2）。summary-only だった旧 baseline run（§2.1.1）は raw に残るが、どの化合物の引用元でもない。
-- **12ヶ月系列は 11 化合物が週次 raw を持ち、CRDH はサマリーのみ、THC-O は no data**（§2.1.3）。
+- **12ヶ月系列は 12 化合物が週次 raw を持ち、THC-O は no data**（§2.1.3）。CRDH の旧 summary（`records_crdh_12m.json`）は証跡として残るが、正本は週次系列の run。
 - 分類は [`metadata/taxonomy/compound-taxonomy.skos.jsonld`](../../metadata/taxonomy/compound-taxonomy.skos.jsonld) の `skos:broader`（major / minor / semisynthetic / synthetic）に従う。
 - **CBX はこの研究の対象外**: [`datasets/cbx-search-trends/`](../cbx-search-trends/) が担当する（`gt-summary` の 14 化合物目はそこ由来）。
 - 12ヶ月・5年以外に、比較セット（12ヶ月 `common-scale-*` / 5年 `5y-common-scale-set*`）と「リキッド」系クエリの run もある（`data/raw/google_trends/`）。
@@ -133,7 +133,7 @@ cannabinoid-raw-collection
 
 ### 2.1.3 12ヶ月系列（週次 raw）
 
-12ヶ月系列は 11 化合物が週次 raw を持ち、CRDH はサマリーのみ、THC-O は Google Trends が系列を返さない。
+12ヶ月系列は 12 化合物が週次 raw を持ち、THC-O は Google Trends が系列を返さない。
 収集は `today 12-m` / geo JP、1 化合物 1 run、窓 [`metadata/windows/`](../../metadata/windows/)、
 計画書 `metadata/plans/gt-12m-recollect-*.json`。値は各 run の `records_<term>.json` から算出:
 
@@ -150,14 +150,14 @@ cannabinoid-raw-collection
 | THCV | `20261023T161929Z-google-trends-thcv-12m` | 2025-10-19 〜 2026-10-18 | 53 | 1.8868 | 1 |
 | H4CBH | `20261023T162128Z-google-trends-h4cbh-12m-r2` | 同 | 53 | 57.8868 | 51 |
 | HHBD | `20261023T161921Z-google-trends-hhbd-12m` | 同 | 53 | 52.8491 | 37 |
-| CRDH | `20261008T102022Z-google-trends-crdh`（`records_crdh_12m.json`） | — | （53） | （1.9） | （2） |
+| CRDH | `20261024T000000Z-google-trends-crdh-12m` | 2025-10-19 〜 2026-10-18 | 53 | 1.8868 | 1 |
 | THC-O | （catalog せず）`20261023T162326Z-google-trends-thc-o-12m-r3` | — | — | — | — |
 
-- 上の 11 行が**週次系列**（`data` 配列あり）。
-- **CRDH は 12ヶ月だけ summary-only**: `records_crdh_12m.json` は `data_points` 53・`avg_12m` 1.9・
-  `nonzero_weeks` 2 の**記録値**で、週次系列を収蔵していない（括弧内の値は記録値であり raw からは検算できない）。
-  5年側は `20261014T215738Z-google-trends-cannabinoid-multi-trends` の系列があるので、**12ヶ月のみの欠落**。
-  再取得するかは未決（owner 判断）。
+- 上の 12 行が**週次系列**（`data` 配列あり）。
+- **CRDH の 12ヶ月系列**: `20261024T000000Z-google-trends-crdh-12m` の `records_crdh.json` に 53 週の週次系列がある
+  （窓 2025-10-19 〜 2026-10-18。THCV・H4CBH・HHBD の 2026-10-23 再取得と同一窓）。旧 `20261008T102022Z-google-trends-crdh` の
+  `records_crdh_12m.json`（`data_points` 53・`avg_12m` 1.9・`nonzero_weeks` 2 の記録値、週次系列なし）は証跡として残すが、
+  正本は新 run の系列とし、旧記録値は引用しない。
 - **THC-O は no data 応答**。本文は
   “Google Trends returned no data for the given terms and timeframe. Try a broader timeframe or different terms.”
   で、`errors[].code = NO_DATA`（parser の `no_data` 規則、`docs/specs/gt-boundary-verification.md` §4.4）として記録する。

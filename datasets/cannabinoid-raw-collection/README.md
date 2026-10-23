@@ -31,7 +31,7 @@
 | THC-O | semisynthetic | データなし | ✅ | ✅ | raw のみ |
 | THCH | minor | ✅ | ✅ | ✅ | raw のみ |
 | CBN | minor | ✅ | ✅ | — | raw のみ |
-| CRDH | synthetic | サマリーのみ | ✅ | — | raw のみ |
+| CRDH | synthetic | ✅ | ✅ | — | raw のみ |
 | CRDP | synthetic | ✅ | ✅ | — | raw のみ |
 | H4CBH | semisynthetic | ✅ | ✅ | — | raw のみ |
 | HHBD | semisynthetic | ✅ | ✅ | — | raw のみ |
@@ -40,8 +40,8 @@
 読み方:
 
 - **5年系列**: 表の 13 化合物すべてが週次 raw を持つ。旧 `…-5y-baseline` run は summary-only で、どの化合物の引用元でもない（証跡として残る。[methodology.md](methodology.md) §2.1.1・§2.1.2）。
-- **12ヶ月系列**: 11 化合物が週次 raw を持ち、CRDH は**サマリーのみ**（週次系列なし）、
-  THC-O は Google Trends が系列を返さない。THCV は 5年には系列があるが、12ヶ月は 53 週中 1 週だけ非ゼロ
+- **12ヶ月系列**: 12 化合物が週次 raw を持ち、
+  THC-O は Google Trends が系列を返さない。THCV・CRDH は 5年には系列があるが、12ヶ月は 53 週中 1 週だけ非ゼロ
   （[methodology.md](methodology.md) §2.1.3）。
 - **「サマリーのみ」**: 週次系列を収蔵していない run の記録値。raw からの独立検証はできない。
 - **「データなし」**: 取得はしたが Google Trends が閾値未満で系列を返さなかった。**欠測であって 0 観測ではない**。
@@ -54,7 +54,7 @@
 
 | ソース | ツール | コスト | 状態 |
 |--------|--------|--------|------|
-| Google Trends | google-trends-mcp 0.1.1（`collection.core.cli collect --live`） | 無料 | ✅ 5年 13/13 化合物・12ヶ月 11/13（欠測は §2.1.3） |
+| Google Trends | google-trends-mcp 0.1.1（`collection.core.cli collect --live`） | 無料 | ✅ 5年 13/13 化合物・12ヶ月 12/13（欠測は §2.1.3） |
 | X (Twitter) | Apify `cPYLH3QT9GyzKhB4S` | ~$0.80 | ✅ 7 化合物 |
 | YouTube | Apify `gJvjeCYNraSfhIaNd` | ~$0.09 | ✅ 7 検索語 |
 
@@ -122,7 +122,7 @@ Google Trends の系列・窓・欠測は [methodology.md](methodology.md) §2.1
 |-----------|------|
 | PLANNED | 2026-10-02 |
 | ACTIVE | 2026-10-02 |
-| COLLECTION_COMPLETE | 2026-10-23（5年 13/13・12ヶ月 11/13 化合物） |
+| COLLECTION_COMPLETE | 2026-10-24（5年 13/13・12ヶ月 12/13 化合物） |
 | COMPLETED | — |
 
 ## 関連
