@@ -254,3 +254,75 @@ def test_unparseable_response_keeps_the_verbatim_answer():
     assert result.errors[0]["code"] == "PARSE_FAILED"
     assert result.errors[0]["reason_codes"] == ["collection_failed"]
     assert "Not enough data" in result.errors[0]["message"]
+
+
+# ---------------------------------------------------------------------------
+# Comparison plans (shared scale)
+# ---------------------------------------------------------------------------
+
+
+COMPARISON_TEXT = (
+    "Comparison: CBD vs THC\n"
+    "Geo: JP | Timeframe: today 5-y\n"
+    "\n"
+    "Average interest scores (0-100):\n"
+    "  CBD: 33 <-- highest\n"
+    "  THC: 5\n"
+    "\n"
+    "Date\tCBD\tTHC\n"
+    "Oct 17\u2009–\u200923, 2021\t42\t7\n"
+    "Oct 24\u2009–\u200930, 2021\t35\t6\n"
+)
+
+
+def test_comparison_plan_calls_compare_terms_and_writes_shared_scale_rows():
+    """A plan that names several terms must reach ``compare_terms`` (never be
+    flattened to the first term) and produce a comparison document, because a
+    single-term series is normalized to its own peak and cannot be compared."""
+
+    seen = {}
+
+    def call(tool, params):
+        seen["tool"] = tool
+        seen["params"] = params
+        return {"content": [{"type": "text", "text": COMPARISON_TEXT}]}
+
+    adapter = GoogleTrendsMcpAdapter(SessionMcpTransport(call=call))
+    plan = make_plan()
+    plan["query"] = {
+        "terms": ["CBD", "THC"],
+        "geo": "JP",
+        "timeframe": "today 5-y",
+    }
+
+    assert adapter.validate_plan(plan) == []
+    result = adapter.collect(plan)
+
+    assert seen["tool"] == "compare_terms"
+    assert seen["params"]["terms"] == ["CBD", "THC"]
+    assert result.status == "success"
+    assert result.submitted_parameters["tool"] == "compare_terms"
+    assert result.returned_count == 2
+    assert result.observations[0] == {"date": "2021-10-17", "CBD": 42, "THC": 7}
+
+    derived = adapter.derived_artifacts(
+        plan, result, result.observations, "2026-10-23T00:00:00Z"
+    )
+    assert len(derived) == 1
+    assert derived[0]["schema_id"] == "google-trends-comparison-v1"
+    assert derived[0]["artifact_type"] == "comparison"
+    assert derived[0]["record_count"] == 2
+    assert derived[0]["document"]["terms"] == ["CBD", "THC"]
+    assert derived[0]["document"]["average_interest"] == {"CBD": 33, "THC": 5}
+
+
+def test_comparison_plan_refuses_more_than_five_terms():
+    adapter = GoogleTrendsMcpAdapter(SessionMcpTransport(call=lambda tool, params: None))
+    plan = make_plan()
+    plan["query"] = {
+        "terms": ["CBD", "THC", "CBG", "HHC", "THCV", "CBN"],
+        "geo": "JP",
+        "timeframe": "today 5-y",
+    }
+    violations = adapter.validate_plan(plan)
+    assert any("2..5" in violation for violation in violations), violations

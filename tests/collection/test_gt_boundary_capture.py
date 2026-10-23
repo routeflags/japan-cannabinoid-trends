@@ -18,6 +18,7 @@ from collection.adapters.google_trends.boundary import (
     MEASUREMENT_STUDY_ID,
     BoundaryCaptureError,
     main,
+    parse_comparison_tool_result,
     parse_tool_result,
     stage_capture,
     verify_capture_manifest,
@@ -659,3 +660,82 @@ def test_cli_stage_refuses_a_bad_manifest_before_writing(tmp_path, capsys):
     assert code == 1
     assert not (root / ".staging").exists()
     assert "run_id_unconventional" in capsys.readouterr().err
+
+
+def test_comparison_result_is_parsed_as_shared_scale_rows():
+    """``compare_terms`` is the only shared-scale measurement; its table has
+    one column per term and must not be flattened into a single series."""
+
+    text = (
+        "Comparison: CBD vs THC\n"
+        "Geo: JP | Timeframe: today 5-y\n"
+        "\n"
+        "Average interest scores (0-100):\n"
+        "  CBD: 33 <-- highest\n"
+        "  THC: 5\n"
+        "\n"
+        "Date\tCBD\tTHC\n"
+        "Oct 17\u2009–\u200923, 2021\t42\t7\n"
+        "Oct 24\u2009–\u200930, 2021\t35\t6\n"
+    )
+    parsed = parse_comparison_tool_result(_envelope(text))
+
+    assert parsed.terms == ("CBD", "THC")
+    assert parsed.geo == "JP"
+    assert parsed.timeframe == "today 5-y"
+    assert parsed.averages == {"CBD": 33, "THC": 5}
+    assert parsed.points[0].date == "2021-10-17"
+    assert parsed.points[0].values == {"CBD": 42, "THC": 7}
+
+    document = parsed.records_document("2026-10-23T00:00:00Z")
+    assert document["terms"] == ["CBD", "THC"]
+    assert document["average_interest"] == {"CBD": 33, "THC": 5}
+    assert document["data"][0] == {"date": "2021-10-17", "CBD": 42, "THC": 7}
+
+
+def test_comparison_refuses_a_row_that_does_not_match_the_terms():
+    text = (
+        "Comparison: CBD vs THC\n"
+        "Geo: JP | Timeframe: today 5-y\n"
+        "\n"
+        "Average interest scores (0-100):\n"
+        "  CBD: 33 <-- highest\n"
+        "  THC: 5\n"
+        "\n"
+        "Date\tCBD\tTHC\n"
+        "Oct 17\u2009–\u200923, 2021\t42\n"
+    )
+    try:
+        parse_comparison_tool_result(_envelope(text))
+    except BoundaryCaptureError as error:
+        assert error.codes == ["row_shape_unknown"]
+    else:  # pragma: no cover
+        raise AssertionError("a short row must not be parsed partially")
+
+
+def test_comparison_refuses_out_of_range_and_no_data():
+    out_of_range = (
+        "Comparison: CBD vs THC\n"
+        "Geo: JP | Timeframe: today 5-y\n"
+        "\n"
+        "Average interest scores (0-100):\n"
+        "  CBD: 33 <-- highest\n"
+        "  THC: 5\n"
+        "\n"
+        "Date\tCBD\tTHC\n"
+        "Oct 17\u2009–\u200923, 2021\t420\t7\n"
+    )
+    try:
+        parse_comparison_tool_result(_envelope(out_of_range))
+    except BoundaryCaptureError as error:
+        assert "value_out_of_range" in error.codes
+    else:  # pragma: no cover
+        raise AssertionError("a relative index above 100 must be refused")
+
+    no_data = "Google Trends returned no data for the given terms and timeframe."
+    try:
+        parse_comparison_tool_result(_envelope(no_data))
+    except BoundaryCaptureError as error:
+        assert error.codes == ["no_data"]
+    else:  # pragma: no cover
+        raise AssertionError("a no-data answer is not an empty comparison")

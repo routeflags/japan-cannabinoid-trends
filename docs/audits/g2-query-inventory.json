@@ -4,8 +4,8 @@
   "schema_id": "query-registry-v1",
   "registry_version": "1.0.0",
   "target_glob": "datasets/**/run_metadata.json",
-  "count": 49,
-  "query_count": 95,
+  "count": 53,
+  "query_count": 99,
   "raw_modified": false,
   "states": {
     "exact_match": "the collected text equals a registered canonical_text",
@@ -15,7 +15,7 @@
     "unmapped": "no registered correspondence and no compound token"
   },
   "summary": {
-    "exact_match": 93,
+    "exact_match": 97,
     "variant_match": 1,
     "semantic_match_candidate": 1,
     "ambiguous": 0,
@@ -1331,6 +1331,94 @@
           "state": "exact_match",
           "classification": "relevant",
           "query_id": "thc-general-ja",
+          "variant_id": null,
+          "detail": "registered_canonical",
+          "source_fields": [
+            "query_provenance.submitted_query"
+          ]
+        }
+      ]
+    },
+    {
+      "run_id": "20261023T171700Z-google-trends-5y-common-scale-setA",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261023T171700Z-google-trends-5y-common-scale-setA/run_metadata.json",
+      "status": "read",
+      "sha256": "d21ab076f82f5c8f8a456e31a4ff980f62c23e163a15d643b3c16fb2bb9acee2",
+      "sha256_after": "d21ab076f82f5c8f8a456e31a4ff980f62c23e163a15d643b3c16fb2bb9acee2",
+      "unchanged": true,
+      "extracted_query_count": 1,
+      "queries": [
+        {
+          "text": "CBD vs THC vs CBG vs HHC vs THCV",
+          "state": "exact_match",
+          "classification": "relevant",
+          "query_id": "comparison-5y-setA",
+          "variant_id": null,
+          "detail": "registered_canonical",
+          "source_fields": [
+            "query_provenance.submitted_query"
+          ]
+        }
+      ]
+    },
+    {
+      "run_id": "20261023T171709Z-google-trends-5y-common-scale-setB",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261023T171709Z-google-trends-5y-common-scale-setB/run_metadata.json",
+      "status": "read",
+      "sha256": "52cd219b50293a201ac50c4ae180b209c467adaf9b2f443e9b4f79ee612fb09c",
+      "sha256_after": "52cd219b50293a201ac50c4ae180b209c467adaf9b2f443e9b4f79ee612fb09c",
+      "unchanged": true,
+      "extracted_query_count": 1,
+      "queries": [
+        {
+          "text": "CBD vs THC vs THCH vs CBN vs CRDH",
+          "state": "exact_match",
+          "classification": "relevant",
+          "query_id": "comparison-5y-setB",
+          "variant_id": null,
+          "detail": "registered_canonical",
+          "source_fields": [
+            "query_provenance.submitted_query"
+          ]
+        }
+      ]
+    },
+    {
+      "run_id": "20261023T171717Z-google-trends-5y-common-scale-setC",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261023T171717Z-google-trends-5y-common-scale-setC/run_metadata.json",
+      "status": "read",
+      "sha256": "7947f37306aebe047546cf8a2ac8e17e91c82e506da3e801c51729eb6da08038",
+      "sha256_after": "7947f37306aebe047546cf8a2ac8e17e91c82e506da3e801c51729eb6da08038",
+      "unchanged": true,
+      "extracted_query_count": 1,
+      "queries": [
+        {
+          "text": "CBD vs THC vs CRDP vs H4CBH vs HHBD",
+          "state": "exact_match",
+          "classification": "relevant",
+          "query_id": "comparison-5y-setC",
+          "variant_id": null,
+          "detail": "registered_canonical",
+          "source_fields": [
+            "query_provenance.submitted_query"
+          ]
+        }
+      ]
+    },
+    {
+      "run_id": "20261023T171726Z-google-trends-5y-common-scale-setD",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261023T171726Z-google-trends-5y-common-scale-setD/run_metadata.json",
+      "status": "read",
+      "sha256": "fe27a55c6fcd7fbbe5cb11dce075656cf91a3805ebb479befe3fd3bcece4f71f",
+      "sha256_after": "fe27a55c6fcd7fbbe5cb11dce075656cf91a3805ebb479befe3fd3bcece4f71f",
+      "unchanged": true,
+      "extracted_query_count": 1,
+      "queries": [
+        {
+          "text": "CBD vs THC vs HHCH vs THC-O",
+          "state": "exact_match",
+          "classification": "relevant",
+          "query_id": "comparison-5y-setD",
           "variant_id": null,
           "detail": "registered_canonical",
           "source_fields": [

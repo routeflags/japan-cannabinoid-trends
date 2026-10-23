@@ -1,0 +1,33 @@
+{
+  "plan_id": "gt-5y-common-scale-setA",
+  "study_id": "cannabinoid-raw-collection",
+  "source_id": "google-trends",
+  "collector_id": "google-trends-mcp",
+  "query_id": "comparison-5y-setA",
+  "query": {
+    "terms": [
+      "CBD",
+      "THC",
+      "CBG",
+      "HHC",
+      "THCV"
+    ],
+    "geo": "JP",
+    "timeframe": "today 5-y",
+    "compound_id": "compound_cbd",
+    "text": "CBD vs THC vs CBG vs HHC vs THCV"
+  },
+  "required_capabilities": [
+    "geo_filter",
+    "relative_date_range"
+  ],
+  "window": {
+    "window_id": "2021-10-17_2026-10-18",
+    "start": "2021-10-17T00:00:00Z",
+    "end_exclusive": "2026-10-18T00:00:00Z",
+    "granularity": "week",
+    "week_start": "sunday",
+    "timezone": "Asia/Tokyo"
+  },
+  "purpose": "5年の共通スケール計測（ISS-20261023-GT-009）。単独系列は各語のピーク=100 に正規化されるため化合物間比較ができない。12ヶ月の common-scale と同じくアンカー（CBD, THC）を含むセットで共通スケールの週次系列を取得する。"
+}

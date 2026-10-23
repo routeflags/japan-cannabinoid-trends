@@ -1,0 +1,33 @@
+{
+  "schema_version": "1.0.0",
+  "run_id": "20261023T171700Z-google-trends-5y-common-scale-setA",
+  "artifacts": [
+    {
+      "artifact_id": "20261023T171700Z-google-trends-5y-common-scale-setA-payload-json",
+      "path": "payload.json",
+      "artifact_type": "raw_response",
+      "format": "json",
+      "schema_id": "google-trends-mcp-tool-result-v1",
+      "byte_length": 11122,
+      "sha256": "3d7a33dce1feff50eb1fd6c58c63a41127ed4bed7814e34b04b50a58841a6921",
+      "layer": "raw",
+      "completeness": "complete",
+      "record_count": 262
+    },
+    {
+      "artifact_id": "20261023T171700Z-google-trends-5y-common-scale-setA-comparison-cbd-thc-cbg-hhc-thcv-json",
+      "path": "comparison_cbd-thc-cbg-hhc-thcv.json",
+      "artifact_type": "comparison",
+      "format": "json",
+      "schema_id": "google-trends-comparison-v1",
+      "byte_length": 32266,
+      "sha256": "b59341ac6ac71b4ae5f624af844406e791dd94b09a10c765c512cc90cd045c5e",
+      "layer": "raw",
+      "completeness": "complete",
+      "record_count": 262,
+      "derived_from": [
+        "20261023T171700Z-google-trends-5y-common-scale-setA-payload-json"
+      ]
+    }
+  ]
+}

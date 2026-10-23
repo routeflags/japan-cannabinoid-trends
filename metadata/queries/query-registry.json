@@ -248,6 +248,38 @@
       "language": "ja",
       "canonical_text": "THCV リキッド",
       "status": "active"
+    },
+    {
+      "query_id": "comparison-5y-setA",
+      "compound_id": "compound_cbd",
+      "intent_id": "other",
+      "language": "ja",
+      "canonical_text": "CBD vs THC vs CBG vs HHC vs THCV",
+      "status": "active"
+    },
+    {
+      "query_id": "comparison-5y-setB",
+      "compound_id": "compound_cbd",
+      "intent_id": "other",
+      "language": "ja",
+      "canonical_text": "CBD vs THC vs THCH vs CBN vs CRDH",
+      "status": "active"
+    },
+    {
+      "query_id": "comparison-5y-setC",
+      "compound_id": "compound_cbd",
+      "intent_id": "other",
+      "language": "ja",
+      "canonical_text": "CBD vs THC vs CRDP vs H4CBH vs HHBD",
+      "status": "active"
+    },
+    {
+      "query_id": "comparison-5y-setD",
+      "compound_id": "compound_cbd",
+      "intent_id": "other",
+      "language": "ja",
+      "canonical_text": "CBD vs THC vs HHCH vs THC-O",
+      "status": "active"
     }
   ]
 }

@@ -143,6 +143,12 @@ Date	<term>
   - 単一 term なのに value が複数ある行 → `row_shape_unknown`。比較表（複数 term）は
     従来どおり `multi_term_unsupported`
   - value が相対指数の範囲外（0–100 外）→ `value_out_of_range`
+- **比較応答（`compare_terms`、2026-10-23 追記）**: 複数語を 1 つの共通スケールで測る唯一の計測で、形式は
+  `Comparison: A vs B` / `Geo: … | Timeframe: …` / `Average interest scores (0-100):` の下に
+  `  A: 33 <-- highest` 形式の行 / `Date\tA\tB` の表。
+  parser は `parse_comparison_tool_result` が担い、語数と列数が一致しない行は `row_shape_unknown`、
+  語数が 1 なら `comparison_terms_missing` で拒否する（列を黙って 1 本に減らさない）。
+  単独系列とは別の文書（`google-trends-comparison-v1`）として保存し、単独系列の系列文書に混ぜない。
 - `isError:true` または本文が `Error:` で始まる場合は
   失敗 capture として記録する（系列を作らない）。
 - **no data 応答（2026-10-23 追記）**: 本文が

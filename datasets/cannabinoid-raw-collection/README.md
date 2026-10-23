@@ -68,7 +68,8 @@
 Google Trends の系列・窓・欠測は [methodology.md](methodology.md) §2.1.2・§2.1.3 と
 [`docs/audits/gt-summary.json`](../../docs/audits/gt-summary.json)（5年）が正本。
 単独系列の平均と比較セット（`common-scale-*` の**共通スケール**値）は別物なので混ぜない。
-共通スケールは **12ヶ月にのみ**存在し、**5年の共通スケール計測は無い**（5年は化合物間比較ができない = `ISS-20261023-GT-009`）。
+**5年の共通スケールは 2026-10-23 に取得済み**（アンカー CBD/THC を含む 4 セット、[methodology.md](methodology.md) §2.1.4）。
+12ヶ月の共通スケールは `common-scale-*` の各 run。
 
 ### 収集したキーワード
 
@@ -85,7 +86,8 @@ Google Trends の系列・窓・欠測は [methodology.md](methodology.md) §2.1
 |---|---|---|---|---|
 | Google Trends | 2026-10-02, 10-08, 10-23 | 13 語すべて（THC-O は no data） | リキッド 13 語（8 語が系列、5 語は no data） | 12ヶ月・単独系列 |
 | Google Trends | 2026-10-02, 10-08, 10-14, 10-15, 10-23 | 13 語すべて | リキッド 5 語（CBD, CBG, CBN, HHC, THC）。残り 8 語は未収集 | 5年・単独系列 |
-| Google Trends | 2026-10-02, 10-05, 10-08, 10-12 | 12ヶ月の語の部分集合 | リキッド（phase-a/b）+ `CBX リキッド` | 比較セット / 共通スケール（**12ヶ月のみ**。5年は無い） |
+| Google Trends | 2026-10-02, 10-05, 10-08, 10-12 | 12ヶ月の語の部分集合 | リキッド（phase-a/b）+ `CBX リキッド` | 比較セット / 共通スケール（12ヶ月） |
+| Google Trends | 2026-10-23 | 13 語（アンカー CBD/THC を含む 4 セット） | なし | 5年の共通スケール（`compare_terms`） |
 | X (Twitter) | 2026-10-02, 10-08 | CBD, THC, CBG, HHC, THCV, THC-O, THCH（7 語） | なし | 単一クエリ（`{keyword} since:2026-09-01 until:2026-10-01`） |
 | YouTube | 2026-10-02（公開集計に入る 7 run） | CBD, THC, CBG, HHC, THCV（5 語） | オイル 2 語 | 単一クエリ（actor の入力は `search_term` + `max_videos` のみ） |
 

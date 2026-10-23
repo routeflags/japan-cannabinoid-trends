@@ -37,6 +37,12 @@ __all__ = [
 ]
 
 TOOL_INTEREST_OVER_TIME = "interest_over_time"
+#: The multi-term tool. ``compare_terms`` measures several terms on one shared
+#: scale, which is the only measurement the repository can compare compounds
+#: with (a single-term series is normalized to its own peak).
+TOOL_COMPARE_TERMS = "compare_terms"
+#: Google Trends accepts at most five terms in one comparison request.
+MAX_COMPARE_TERMS = 5
 
 #: Timeframes observed in the recorded runs and documented in the
 #: research-google-trends skill.  Derived from the shared G3 timeframe models
@@ -128,20 +134,40 @@ class GoogleTrendsMcpAdapter:
     payload_schema_id = "google-trends-mcp-tool-result-v1"
     #: Schema of the parsed series (the shape every recorded run uses).
     series_schema_id = "google-trends-interest-over-time-v1"
+    #: Schema of a shared-scale comparison document (multi-term run).
+    comparison_schema_id = "google-trends-comparison-v1"
 
     def __init__(self, transport, capabilities=None):
         self._transport = transport
         self._capabilities = dict(capabilities or {})
+        #: tool this instance last requested (set by ``collect``)
+        self._tool = TOOL_INTEREST_OVER_TIME
 
     def capabilities(self) -> dict:
         return dict(self._capabilities)
 
+    def _plan_terms(self, plan: dict) -> list:
+        """The terms a plan asks for: ``query.terms`` (comparison) or
+        ``query.text`` (single term)."""
+
+        query = plan.get("query") if isinstance(plan.get("query"), dict) else {}
+        terms = query.get("terms")
+        if isinstance(terms, list):
+            return [term for term in terms if isinstance(term, str) and term]
+        text = query.get("text")
+        return [text] if isinstance(text, str) and text else []
+
     def validate_plan(self, plan: dict) -> list:
         violations: list[str] = []
         query = plan.get("query") if isinstance(plan.get("query"), dict) else {}
-        text = query.get("text")
-        if not isinstance(text, str) or not text:
-            violations.append("query.text is required")
+        terms = self._plan_terms(plan)
+        if not terms:
+            violations.append("query.text (or query.terms) is required")
+        if isinstance(query.get("terms"), list) and not 2 <= len(terms) <= MAX_COMPARE_TERMS:
+            violations.append(
+                f"query.terms must name 2..{MAX_COMPARE_TERMS} terms "
+                f"(got {len(terms)})"
+            )
         geo = query.get("geo", "")
         if geo and (not isinstance(geo, str) or not _GEO_PATTERN.fullmatch(geo)):
             violations.append(
@@ -166,15 +192,18 @@ class GoogleTrendsMcpAdapter:
     def _request_params(self, plan: dict) -> dict:
         query = plan.get("query") if isinstance(plan.get("query"), dict) else {}
         return {
-            "terms": [query.get("text")],
+            "terms": self._plan_terms(plan),
             "geo": query.get("geo", ""),
             "timeframe": query.get("timeframe"),
         }
 
     def collect(self, plan: dict) -> CollectionResult:
         params = self._request_params(plan)
+        self._tool = (
+            TOOL_COMPARE_TERMS if len(params["terms"]) > 1 else TOOL_INTEREST_OVER_TIME
+        )
         try:
-            raw = self._transport.call(TOOL_INTEREST_OVER_TIME, params)
+            raw = self._transport.call(self._tool, params)
         except TransportError as error:
             # A failed collection is recorded as failure evidence - it is
             # never converted into zero observations (AGENTS.md).
@@ -227,7 +256,7 @@ class GoogleTrendsMcpAdapter:
                 pagination_exhausted=None,
                 completeness="missing",
                 submitted_parameters={
-                    "tool": TOOL_INTEREST_OVER_TIME,
+                    "tool": self._tool,
                     **params,
                 },
             )
@@ -243,7 +272,7 @@ class GoogleTrendsMcpAdapter:
             pagination_exhausted=True,
             completeness="complete",
             observations=observations,
-            submitted_parameters={"tool": TOOL_INTEREST_OVER_TIME, **params},
+            submitted_parameters={"tool": self._tool, **params},
             temporal={
                 "granularity": "week",
                 "week_start": "sunday",
@@ -264,9 +293,11 @@ class GoogleTrendsMcpAdapter:
         )
 
     def extract_observations(self, raw) -> list:
-        """Parse the source response into ``{date, value}`` observations.
+        """Parse the source response into observations.
 
-        Two shapes reach this method:
+        Single-term responses become ``{date, value}`` points; a comparison
+        response becomes ``{date, <term>: value, ...}`` rows on one shared
+        scale.  Two shapes reach this method per tool:
 
         - the **verbatim MCP tool result** (``content`` text table) - what a
           live session returns and what the raw artifact keeps;
@@ -274,8 +305,8 @@ class GoogleTrendsMcpAdapter:
           the derived artifact.
 
         The text table is parsed by the instrument's verified parser
-        (``boundary.parse_tool_result``, spec §4.4); the import is local because
-        that module imports this one.
+        (``boundary.parse_tool_result`` / ``parse_comparison_tool_result``,
+        spec §4.4); the import is local because that module imports this one.
         """
 
         if not isinstance(raw, dict):
@@ -292,15 +323,23 @@ class GoogleTrendsMcpAdapter:
                     observations.append({"date": point["date"], "value": point["value"]})
             return observations
         if "content" in raw:
-            from collection.adapters.google_trends.boundary import parse_tool_result
+            from collection.adapters.google_trends.boundary import (
+                parse_comparison_tool_result,
+                parse_tool_result,
+            )
 
+            if self._tool == TOOL_COMPARE_TERMS:
+                parsed = parse_comparison_tool_result(raw)
+                return [
+                    {"date": point.date, **point.values} for point in parsed.points
+                ]
             parsed = parse_tool_result(raw)
             return [{"date": point.date, "value": point.value} for point in parsed.points]
         return []
 
     def describe_execution(self) -> dict:
         description = {
-            "tool": TOOL_INTEREST_OVER_TIME,
+            "tool": self._tool,
             "package": "google-trends-mcp",
             "version": self.version,
         }
@@ -323,6 +362,29 @@ class GoogleTrendsMcpAdapter:
         if not points:
             return []
         query = plan.get("query") if isinstance(plan.get("query"), dict) else {}
+        if len(self._plan_terms(plan)) > 1:
+            # A comparison run's readable form is the shared-scale document
+            # (``google-trends-comparison-v1``): the terms, their average
+            # scores and the weekly rows, exactly as the tool printed them.
+            document = {
+                "terms": self._plan_terms(plan),
+                "geo": query.get("geo", ""),
+                "timeframe": query.get("timeframe"),
+                "collected_at": _iso_moment(collected_at),
+                "average_interest": _comparison_averages(result.raw, self._tool),
+                "data": [dict(point) for point in points],
+            }
+            slug = "-".join(term_slug(term) for term in self._plan_terms(plan))
+            return [
+                {
+                    "path": f"comparison_{slug}.json",
+                    "artifact_type": "comparison",
+                    "format": "json",
+                    "schema_id": self.comparison_schema_id,
+                    "document": document,
+                    "record_count": len(points),
+                }
+            ]
         document = {
             "keyword": query.get("text"),
             "geo": query.get("geo", ""),
@@ -343,6 +405,25 @@ class GoogleTrendsMcpAdapter:
                 "record_count": len(points),
             }
         ]
+
+
+def _comparison_averages(raw, tool: str) -> dict:
+    """The shared-scale average scores printed in a comparison response.
+
+    A live response carries them; a replayed ``data`` document may not, and a
+    missing average is recorded as an empty map rather than invented.
+    """
+
+    if tool != TOOL_COMPARE_TERMS or not isinstance(raw, dict):
+        return {}
+    if "content" not in raw:
+        return {}
+    from collection.adapters.google_trends.boundary import parse_comparison_tool_result
+
+    try:
+        return dict(parse_comparison_tool_result(raw).averages)
+    except ValueError:
+        return {}
 
 
 def _iso_moment(value):

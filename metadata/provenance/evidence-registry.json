@@ -29,7 +29,7 @@
       "evidence_id": "ev-query-registry",
       "evidence_type": "registry_definition",
       "reference": "metadata/queries/query-registry.json",
-      "sha256": "689f6fb5f842bf3e0b2af3dbe3c4f40ec8e67467abbeb2486403da171d6fbd00",
+      "sha256": "1650ea6cd0e4894b47874a229a89910075bc2d9e31e3f52cc3cac8a5d0c0234c",
       "observed_at": "2026-10-15T21:32:30Z",
       "note": "Query registry (schema_version 1.0.0) used for P06/P17 checks. Registrar: Delta agent under owner instruction from smapira; witnessed current repository bytes and pinned for ISS-20261015-PRV-011."
     },

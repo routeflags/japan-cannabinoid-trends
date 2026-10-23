@@ -63,7 +63,11 @@ __all__ = [
     "CAPTURE_TIMEZONE",
     "MEASUREMENT_STUDY_ID",
     "NO_DATA_SENTENCE",
+    "AVERAGES_HEADER",
     "BoundaryCaptureError",
+    "ComparisonPoint",
+    "ParsedComparison",
+    "parse_comparison_tool_result",
     "Capture",
     "ParsedPoint",
     "ParsedSeries",
@@ -128,6 +132,14 @@ _ISO_LABEL = re.compile(r"^(?P<year>\d{4})-(?P<month>\d{2})-(?P<day>\d{2})$")
 #: Recognized so the run records "no data" (missing) instead of an unknown line.
 NO_DATA_SENTENCE = "Google Trends returned no data"
 
+#: ``compare_terms`` response markers (measured live 2026-10-23, CBD vs THC
+#: today 5-y): the shared-scale header and one ``<term>: <score>`` line per
+#: term, with ``<-- highest`` appended to the maximum.
+AVERAGES_HEADER = "Average interest scores (0-100):"
+_AVERAGE_LINE = re.compile(
+    r"^\s+(?P<term>.+?):\s+(?P<value>\d{1,3})(?:\s+<--\s*highest)?\s*$"
+)
+
 
 class BoundaryCaptureError(ValueError):
     """A capture cannot be used; ``codes`` are stable reason codes."""
@@ -143,6 +155,39 @@ class BoundaryCaptureError(ValueError):
 class ParsedPoint:
     date: str  # ISO 8601 date of the weekly bucket label (bucket start)
     value: int
+
+
+@dataclass(frozen=True)
+class ComparisonPoint:
+    """One weekly bucket of a shared-scale comparison: label + per-term values."""
+
+    date: str
+    values: dict
+
+
+@dataclass(frozen=True)
+class ParsedComparison:
+    """A ``compare_terms`` response: terms measured on one shared scale."""
+
+    terms: tuple
+    geo: str
+    timeframe: str
+    averages: dict
+    points: tuple  # of ComparisonPoint
+
+    def records_document(self, collected_at: str) -> dict:
+        """The repository's recorded comparison shape (``google-trends-comparison-v1``)."""
+
+        return {
+            "terms": list(self.terms),
+            "geo": self.geo,
+            "timeframe": self.timeframe,
+            "collected_at": collected_at,
+            "average_interest": dict(self.averages),
+            "data": [
+                {"date": point.date, **point.values} for point in self.points
+            ],
+        }
 
 
 @dataclass(frozen=True)
@@ -406,6 +451,169 @@ def parse_tool_result(result) -> ParsedSeries:
         terms=tuple(header_terms),
         geo=geo,
         timeframe=timeframe,
+        points=tuple(points),
+    )
+
+
+def parse_comparison_tool_result(result) -> "ParsedComparison":
+    """Parse one verbatim ``compare_terms`` tool result.
+
+    ``compare_terms`` measures several terms on one shared scale, which is the
+    only way the repository can compare compounds (each ``interest_over_time``
+    series is normalized to its own peak).  The documented response is::
+
+        Comparison: CBD vs THC
+        Geo: JP | Timeframe: today 5-y
+
+        Average interest scores (0-100):
+          CBD: 33 <-- highest
+          THC: 5
+
+        Date\tCBD\tTHC
+        Oct 12 – 18, 2021\t42\t7
+        ...
+
+    Refusals mirror :func:`parse_tool_result`: a no-data answer is
+    ``no_data``, an error result is ``collection_failed``, and anything the
+    documented rules do not cover is refused with a stable code rather than
+    partially parsed.
+    """
+
+    if isinstance(result, dict) and result.get("isError") is True:
+        text = ""
+        try:
+            text = _tool_text(result)
+        except BoundaryCaptureError:
+            text = ""
+        raise BoundaryCaptureError(
+            "collection_failed", (text or "MCP tool reported isError=true").strip()
+        )
+
+    text = _tool_text(result)
+    lines = text.splitlines()
+    if lines and lines[0].strip().startswith("Error:"):
+        raise BoundaryCaptureError("collection_failed", lines[0].strip())
+    if text.strip().startswith(NO_DATA_SENTENCE):
+        raise BoundaryCaptureError("no_data", text.strip())
+
+    terms: tuple = ()
+    geo = ""
+    timeframe = ""
+    averages: dict = {}
+    points = []
+    in_averages = False
+    for line in lines:
+        stripped = line.strip()
+        if not stripped:
+            continue
+        if stripped.startswith("Comparison: "):
+            terms = tuple(
+                part.strip()
+                for part in stripped[len("Comparison: ") :].split(" vs ")
+                if part.strip()
+            )
+            continue
+        if stripped.startswith("Geo: "):
+            body = stripped[len("Geo: ") :]
+            geo, _, remainder = body.partition(" | Timeframe: ")
+            geo = geo.strip()
+            timeframe = remainder.strip() if remainder else ""
+            continue
+        if stripped == AVERAGES_HEADER:
+            in_averages = True
+            continue
+        if stripped.startswith("Date\t"):
+            header_terms = tuple(part.strip() for part in stripped.split("\t")[1:])
+            if not terms:
+                raise BoundaryCaptureError(
+                    "header_missing", "data table appears before the comparison header"
+                )
+            if header_terms != terms:
+                raise BoundaryCaptureError(
+                    "header_mismatch",
+                    "data columns do not match the compared terms: "
+                    f"{header_terms!r} != {terms!r}",
+                )
+            in_averages = False
+            continue
+        if in_averages:
+            match = _AVERAGE_LINE.match(line)
+            if match is None:
+                raise BoundaryCaptureError(
+                    "averages_line_unknown", f"unrecognized average line: {line!r}"
+                )
+            term = match.group("term").strip()
+            if term not in terms:
+                raise BoundaryCaptureError(
+                    "header_mismatch",
+                    f"average line names a term not in the header: {term!r}",
+                )
+            value = int(match.group("value"))
+            if not 0 <= value <= 100:
+                raise BoundaryCaptureError(
+                    "value_out_of_range",
+                    f"relative index must be within 0-100: {value} for {term!r}",
+                )
+            averages[term] = value
+            continue
+        if "\t" not in line:
+            raise BoundaryCaptureError(
+                "text_line_unknown", f"unrecognized response line: {line!r}"
+            )
+        label, _, raw_values = line.partition("\t")
+        fields = [field.strip() for field in raw_values.split("\t")]
+        if not terms or len(fields) != len(terms):
+            raise BoundaryCaptureError(
+                "row_shape_unknown",
+                f"a comparison row must carry one value per term ({len(terms)}); "
+                f"{len(fields)} found: {line!r}",
+            )
+        values = {}
+        for term, raw in zip(terms, fields):
+            try:
+                value = int(raw)
+            except ValueError:
+                raise BoundaryCaptureError(
+                    "value_not_integer",
+                    f"non-integer value for {term!r}: {raw!r}",
+                ) from None
+            if not 0 <= value <= 100:
+                raise BoundaryCaptureError(
+                    "value_out_of_range",
+                    f"relative index must be within 0-100: {value} for {term!r}",
+                )
+            values[term] = value
+        points.append(ComparisonPoint(date=_label_to_date(label.strip()), values=values))
+
+    if len(terms) < 2:
+        raise BoundaryCaptureError(
+            "comparison_terms_missing",
+            "a comparison response must name at least two terms",
+        )
+    if not points:
+        raise BoundaryCaptureError(
+            "empty_series", "response carries no data rows (missing is not zero)"
+        )
+    dates = [point.date for point in points]
+    if any(later <= earlier for earlier, later in zip(dates, dates[1:])):
+        raise BoundaryCaptureError(
+            "labels_out_of_order",
+            "tool labels are not in strictly ascending order",
+        )
+    if not geo or not timeframe:
+        raise BoundaryCaptureError(
+            "header_missing", "response does not carry geo / timeframe"
+        )
+    if set(averages) != set(terms):
+        raise BoundaryCaptureError(
+            "averages_incomplete",
+            f"average scores cover {sorted(averages)} of {sorted(terms)}",
+        )
+    return ParsedComparison(
+        terms=terms,
+        geo=geo,
+        timeframe=timeframe,
+        averages=averages,
         points=tuple(points),
     )
 

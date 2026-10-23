@@ -176,6 +176,24 @@ cannabinoid-raw-collection
 - 12ヶ月側には 5年側の [`docs/audits/gt-summary.json`](../../docs/audits/gt-summary.json) に相当する機械可読レポートが無い
   （`gt-summary --timeframe 12m` はレポートを出せるが `--write` は 5年のみ。`ISS-20261023-GT-006` §2）。
 
+### 2.1.4 5年の共通スケール（週次、`compare_terms`）
+
+5年の単独系列は各語のピーク=100 に正規化されるため、化合物間比較ができない（`ISS-20261023-GT-009`）。
+そこで `compare_terms` で**アンカー（CBD, THC）を含む 4 セット**を取得し、共通スケールの週次系列を持たせた。
+
+| セット | run（`data/raw/google_trends/`） | 語 | 平均（共通スケール） |
+|---|---|---|---|
+| A | `20261023T171700Z-google-trends-5y-common-scale-setA` | CBD, THC, CBG, HHC, THCV | CBD 33 / THC 5 / CBG 1 / HHC 2 / THCV 0 |
+| B | `20261023T171709Z-google-trends-5y-common-scale-setB` | CBD, THC, THCH, CBN, CRDH | CBD 33 / THC 5 / THCH 2 / CBN 5 / CRDH 0 |
+| C | `20261023T171717Z-google-trends-5y-common-scale-setC` | CBD, THC, CRDP, H4CBH, HHBD | CBD 33 / THC 5 / CRDP 0 / H4CBH 0 / HHBD 0 |
+| D | `20261023T171726Z-google-trends-5y-common-scale-setD` | CBD, THC, HHCH, THC-O | CBD 33 / THC 5 / HHCH 1 / THC-O 0 |
+
+- 窓は `2021-10-17_2026-10-18`（262 週）、geo JP、`today 5-y`。計画書は `metadata/plans/gt-5y-common-scale-set{A..D}.json`。
+- **アンカー（CBD 33・THC 5）が 4 セットで一致**しているので、セット間を橋渡しできる（各語はアンカー経由で同じスケールに載る）。
+- 成果物は verbatim `payload.json` + 共通スケール文書 `comparison_<terms>.json`（schema `google-trends-comparison-v1`）。
+- **単独系列の平均とは比較しない**（別の正規化）。化合物間比較はこの共通スケール内でのみ行う。
+- 平均が 0 の語（THCV・CRDH・CRDP・H4CBH・HHBD・THC-O）は、262 週のうち非ゼロがごく少ない語である。0 観測ではない。
+
 ### 2.2 X (Twitter)
 
 **ツール:** Apify Actor `cPYLH3QT9GyzKhB4S` (patient_discovery/twitter-search)

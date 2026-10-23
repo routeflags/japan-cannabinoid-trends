@@ -3,10 +3,10 @@
   "profile": "g3_temporal_inventory",
   "spec": "docs/plans/20261013c.md §15 (local plan; not tracked)",
   "target_glob": "datasets/**/run_metadata.json",
-  "count": 49,
+  "count": 53,
   "raw_modified": false,
   "classification_summary": {
-    "verified": 20,
+    "verified": 24,
     "inferred": 29,
     "unknown": 0,
     "ambiguous": 0
@@ -1295,6 +1295,106 @@
       "reference": {
         "value": "2026-10-23T16:03:58.911948Z",
         "source": "records_thc.json"
+      },
+      "observed_bounds": {
+        "start": "2021-10-17T00:00:00Z",
+        "end_exclusive": "2026-10-25T00:00:00Z",
+        "basis": "bucket_labels"
+      },
+      "pagination": true,
+      "completeness_evidence": [],
+      "classification": "verified",
+      "resolved_absolute_window": null,
+      "resolution_note": "not derived: conversion of legacy relative periods into absolute windows is prohibited (P1, c.md §15)"
+    },
+    {
+      "run_id": "20261023T171700Z-google-trends-5y-common-scale-setA",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261023T171700Z-google-trends-5y-common-scale-setA/run_metadata.json",
+      "sha256": "d21ab076f82f5c8f8a456e31a4ff980f62c23e163a15d643b3c16fb2bb9acee2",
+      "timeframes": [
+        {
+          "value": "today 5-y",
+          "source": "comparison_cbd-thc-cbg-hhc-thcv.json"
+        }
+      ],
+      "reference": {
+        "value": "2026-10-23T17:17:02.358631Z",
+        "source": "comparison_cbd-thc-cbg-hhc-thcv.json"
+      },
+      "observed_bounds": {
+        "start": "2021-10-17T00:00:00Z",
+        "end_exclusive": "2026-10-25T00:00:00Z",
+        "basis": "bucket_labels"
+      },
+      "pagination": true,
+      "completeness_evidence": [],
+      "classification": "verified",
+      "resolved_absolute_window": null,
+      "resolution_note": "not derived: conversion of legacy relative periods into absolute windows is prohibited (P1, c.md §15)"
+    },
+    {
+      "run_id": "20261023T171709Z-google-trends-5y-common-scale-setB",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261023T171709Z-google-trends-5y-common-scale-setB/run_metadata.json",
+      "sha256": "52cd219b50293a201ac50c4ae180b209c467adaf9b2f443e9b4f79ee612fb09c",
+      "timeframes": [
+        {
+          "value": "today 5-y",
+          "source": "comparison_cbd-thc-thch-cbn-crdh.json"
+        }
+      ],
+      "reference": {
+        "value": "2026-10-23T17:17:10.733936Z",
+        "source": "comparison_cbd-thc-thch-cbn-crdh.json"
+      },
+      "observed_bounds": {
+        "start": "2021-10-17T00:00:00Z",
+        "end_exclusive": "2026-10-25T00:00:00Z",
+        "basis": "bucket_labels"
+      },
+      "pagination": true,
+      "completeness_evidence": [],
+      "classification": "verified",
+      "resolved_absolute_window": null,
+      "resolution_note": "not derived: conversion of legacy relative periods into absolute windows is prohibited (P1, c.md §15)"
+    },
+    {
+      "run_id": "20261023T171717Z-google-trends-5y-common-scale-setC",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261023T171717Z-google-trends-5y-common-scale-setC/run_metadata.json",
+      "sha256": "7947f37306aebe047546cf8a2ac8e17e91c82e506da3e801c51729eb6da08038",
+      "timeframes": [
+        {
+          "value": "today 5-y",
+          "source": "comparison_cbd-thc-crdp-h4cbh-hhbd.json"
+        }
+      ],
+      "reference": {
+        "value": "2026-10-23T17:17:18.964135Z",
+        "source": "comparison_cbd-thc-crdp-h4cbh-hhbd.json"
+      },
+      "observed_bounds": {
+        "start": "2021-10-17T00:00:00Z",
+        "end_exclusive": "2026-10-25T00:00:00Z",
+        "basis": "bucket_labels"
+      },
+      "pagination": true,
+      "completeness_evidence": [],
+      "classification": "verified",
+      "resolved_absolute_window": null,
+      "resolution_note": "not derived: conversion of legacy relative periods into absolute windows is prohibited (P1, c.md §15)"
+    },
+    {
+      "run_id": "20261023T171726Z-google-trends-5y-common-scale-setD",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261023T171726Z-google-trends-5y-common-scale-setD/run_metadata.json",
+      "sha256": "fe27a55c6fcd7fbbe5cb11dce075656cf91a3805ebb479befe3fd3bcece4f71f",
+      "timeframes": [
+        {
+          "value": "today 5-y",
+          "source": "comparison_cbd-thc-hhch-thc-o.json"
+        }
+      ],
+      "reference": {
+        "value": "2026-10-23T17:17:27.159515Z",
+        "source": "comparison_cbd-thc-hhch-thc-o.json"
       },
       "observed_bounds": {
         "start": "2021-10-17T00:00:00Z",
