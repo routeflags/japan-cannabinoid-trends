@@ -9,13 +9,13 @@
     "recursive_audit_required": true
   },
   "summary": {
-    "issue_count": 85,
-    "active_count": 27,
+    "issue_count": 86,
+    "active_count": 28,
     "closed_count": 58,
     "status_counts": {
       "DOCUMENTED": 1,
       "MITIGATED": 1,
-      "OPEN": 25,
+      "OPEN": 26,
       "PENDING": 2,
       "RESOLVED": 56
     },
@@ -124,13 +124,13 @@
         "X official API は request-only evidence と live request 制御を持つまでは実収集しない",
         "new-run tracking policy と legacy label year defect が検証ルールに反映される"
       ],
-      "issue_count": 7,
+      "issue_count": 8,
       "status_counts": {
-        "OPEN": 7
+        "OPEN": 8
       },
       "priority_counts": {
         "P1": 2,
-        "P2": 4,
+        "P2": 5,
         "P3": 1
       },
       "issues": [
@@ -175,6 +175,12 @@
           "priority": "P2",
           "status": "OPEN",
           "path": "docs/issues/active/30-production-collection-expansion/20261024_p2_gt-5y-common-scale-product-words.md"
+        },
+        {
+          "id": "ISS-20261024-COL-016",
+          "priority": "P2",
+          "status": "OPEN",
+          "path": "docs/issues/active/30-production-collection-expansion/20261024_p2_cbx-in-scope.md"
         }
       ]
     },
