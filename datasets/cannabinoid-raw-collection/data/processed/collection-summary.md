@@ -46,7 +46,11 @@
 
 ## 3. YouTube
 
-- 公開集計は 7 run / 182 動画行（`youtube_runs.csv` の `video_rows` 合計と一致、error payload 0・unreadable 0）。
+- 公開集計は 16 run / 397 動画行（`youtube_runs.csv` の `video_rows` 合計と一致、error payload 0・unreadable 0）。
+  内訳は 2026-10-02 の 7 run（22+25+34+28+23+23+27 = 182）に 2026-10-08 の 9 run
+  （27+20+30+24+22+20+27+21+24 = 215）を加えたもの。2026-10-08 の 9 run は
+  actor・検索語・取得上限が未記録のため `search_term` / `collected_at` が空欄。
+  HHC は 2 run を別観測として残す。
   run 別の内訳・収集時刻は [`youtube_runs.csv`](youtube_runs.csv)、動画行は
   [`youtube_videos.csv`](youtube_videos.csv)。
 

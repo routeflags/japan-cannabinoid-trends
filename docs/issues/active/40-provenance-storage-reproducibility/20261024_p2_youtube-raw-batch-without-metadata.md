@@ -125,9 +125,9 @@ owner は v3 由来 CBN run を「統合」と回答した。一方、一次 che
 
 ## 完了条件
 
-- [ ] 上表の 9 run を example に、allowlist 指定 run のみを run 内 `videoId` 重複排除・安定ソートで出力する自動テストを追加する。
-- [ ] 同一 raw での繰り返し実行が同一 CSV を生成し、run 間で同じ動画があっても別観測として保持する。
-- [ ] 上表の 9 run（2026-10-08 収集・未登録）を追加し、`youtube_runs.csv` 16 run / `youtube_videos.csv` 397 行になることを検算する（一覧外の v3 由来 CBN run は含めない）。
-- [ ] `search_term` など未記録項目を推測せず空欄で表し、methodology に未記録の収集条件と処理方法を記載する。
-- [ ] README・`collection-summary.md`・`reproduce.py` の記述を成果物の実測に合わせ、監査スナップショットを再生成する。
+- [x] 上表の 9 run を example に、allowlist 指定 run のみを run 内 `videoId` 重複排除・安定ソートで出力する自動テストを追加する。
+- [x] 同一 raw での繰り返し実行が同一 CSV を生成し、run 間で同じ動画があっても別観測として保持する。
+- [x] 上表の 9 run（2026-10-08 収集・未登録）を追加し、`youtube_runs.csv` 16 run / `youtube_videos.csv` 397 行になることを検算する（一覧外の v3 由来 CBN run は含めない）。
+- [x] `search_term` など未記録項目を推測せず空欄で表し、methodology に未記録の収集条件と処理方法を記載する。
+- [x] README・`collection-summary.md`・`reproduce.py` の記述を成果物の実測に合わせ、監査スナップショットを再生成する。
 - [ ] CBN v3 run の扱いについて owner の確認を得て、#1 と本 issue の方針を一致させる。

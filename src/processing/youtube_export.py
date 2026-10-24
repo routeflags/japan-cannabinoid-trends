@@ -50,7 +50,8 @@ RUN_COLUMNS = (
 #: Runs whose videos may be exported.  An allowlist, not a pattern: a run is
 #: published only once its provenance has been reviewed, and the numbers here
 #: reconcile with the collection summary the study already reports
-#: (22+25+34+28+23+23+27 = 182 videos, 2026-10-02).
+#: (22+25+34+28+23+23+27 = 182 videos, 2026-10-02; plus
+#: 27+20+30+24+22+20+27+21+24 = 215 videos, 2026-10-08; 397 total in 16 runs).
 PUBLISHABLE_RUNS = {
     "20261002T064739Z-youtube-cbd": "CBD",
     "20261002T064821Z-youtube-thc": "THC",
@@ -59,6 +60,21 @@ PUBLISHABLE_RUNS = {
     "20261002T064857Z-youtube-thcv": "THCV",
     "20261002T064905Z-youtube-cbd-オイル": "CBD オイル",
     "20261002T064911Z-youtube-thc-オイル": "THC オイル",
+    # 2026-10-08 batch (ISS-20261024-YT-013): actor, search_term and the
+    # retrieval limit are unrecorded, so the value stays "" (empty).  The
+    # exporter must not infer the term from the run-id or the row count, and
+    # these runs do not supply a search_term via run_metadata.json (6 runs
+    # have no such file; the other 3 carry only an Apify id/status with no
+    # collection fields).
+    "20261008T122515Z-youtube-hhc": "",
+    "20261008T122605Z-youtube-thch": "",
+    "20261008T122647Z-youtube-thc-o": "",
+    "20261008T125306Z-youtube-h4cbh": "",
+    "20261008T125348Z-youtube-hhbd": "",
+    "20261008T125428Z-youtube-hhch": "",
+    "20261008T125501Z-youtube-crdp": "",
+    "20261008T125544Z-youtube-crdh": "",
+    "20261008T145348Z-youtube-cbn": "",
 }
 
 #: Why the other runs stay out.  A run that is not exported is written to

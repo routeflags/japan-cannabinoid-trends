@@ -393,12 +393,15 @@ NON_REPRODUCIBLE: dict[str, NonReproducible] = {
         ),
         missing_inputs=(
             "datasets/cannabinoid-raw-collection/data/raw/youtube/ (the 7 reviewed "
-            "2026-10-02 runs; ignored by **/data/raw/* and local only)",
+            "2026-10-02 runs and the 9 reviewed 2026-10-08 runs; ignored by "
+            "**/data/raw/* and local only)",
         ),
         upstream_step="raw (YouTube search payload) -> per-video export",
         notes=(
             "Only the allowlisted runs are exported (PUBLISHABLE_RUNS in "
-            "processing/youtube_export.py); 22+25+34+28+23+23+27 = 182 rows reconcile "
+            "processing/youtube_export.py); 22+25+34+28+23+23+27 = 182 rows "
+            "(2026-10-02) plus 27+20+30+24+22+20+27+21+24 = 215 rows "
+            "(2026-10-08), 397 in total, reconcile "
             "with the collection summary. Video descriptions are never exported "
             "(they carry third-party contact addresses), and publish dates are absent "
             "from these payloads instead of being reconstructed.",

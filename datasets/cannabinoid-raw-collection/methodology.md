@@ -244,8 +244,14 @@ cannabinoid-raw-collection
 | CBD オイル | 50 |
 | THC オイル | 50 |
 
+**2026-10-08 の 9 run の追加（[`ISS-20261024-YT-013`](../../docs/issues/active/40-provenance-storage-reproducibility/20261024_p2_youtube-raw-batch-without-metadata.md)）:**
+- 既存 7 run に加え、2026-10-08 収集の 9 run（`20261008T122515Z-youtube-hhc`・`20261008T122605Z-youtube-thch`・`20261008T122647Z-youtube-thc-o`・`20261008T125306Z-youtube-h4cbh`・`20261008T125348Z-youtube-hhbd`・`20261008T125428Z-youtube-hhch`・`20261008T125501Z-youtube-crdp`・`20261008T125544Z-youtube-crdh`・`20261008T145348Z-youtube-cbn`）を公開集計に統合した。公開集計は 16 run / 397 動画行。
+- この 9 run は actor・検索語・取得上限（`max_videos`）が未記録である。run-id や行数から補わず、`youtube_runs.csv` の `search_term` / `collected_at` は空欄とする。
+- HHC は 2026-10-02（28 動画）と 2026-10-08（27 動画）を別 run として両方残す。共通の `videoId` があっても run をまたいで畳まない（反復観測として識別する）。
+- v3 由来の CBN run（`20261004T132844Z-youtube-cbn-2026-09-01-to-2026-10-01`）は含めない（owner 確認待ち）。
+
 **注意事項:**
-- ページング重複あり、videoId で重複排除必須
+- ページング重複あり、videoId で重複排除必須（run 内で畳み、run 間では畳まない）
 - timestamp は相対表記（"3 days ago" 等）
 - 説明文（`description`）は公開しない（連絡先メールが埋め込まれている事例があったため）。追跡するのは集計 2 表だけであり、生成は `python -m processing.cli youtube-export`。raw は Git 管理外のローカル証跡（[README](README.md#youtube-の収集と追跡)）
 
