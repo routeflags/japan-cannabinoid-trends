@@ -2,7 +2,7 @@
 
 **ID:** ISS-20261023-GT-007  
 **優先度:** P2 (Medium)  
-**ステータス:** OPEN  
+**ステータス:** RESOLVED (2026-10-24) — 12ヶ月系列を新規 run で収集し、旧 summary の記録値は引用しない扱いにした  
 **対象:** `datasets/cannabinoid-raw-collection/data/raw/google_trends/20261008T102022Z-google-trends-crdh/`,
 `datasets/cannabinoid-raw-collection/methodology.md` §2.1.3  
 **GitHub:** [#3](https://github.com/routeflags/japan-cannabinoid-trends/issues/3)

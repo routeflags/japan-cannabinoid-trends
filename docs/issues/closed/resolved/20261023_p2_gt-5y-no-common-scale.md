@@ -2,7 +2,7 @@
 
 **ID:** ISS-20261023-GT-009  
 **優先度:** P2 (Medium)  
-**ステータス:** OPEN  
+**ステータス:** RESOLVED (2026-10-24) — 5年の共通スケール setA〜D を収集し、アンカーの週次一致まで検証した  
 **対象:** `datasets/cannabinoid-raw-collection/data/raw/google_trends/`（`common-scale-*` / `comparison-*`）,
 `datasets/cannabinoid-platform-trends/data/processed/metric_dictionary.csv`,
 `datasets/cannabinoid-raw-collection/methodology.md` §2.1.2  

@@ -2,7 +2,7 @@
 
 **ID:** ISS-20261023-GT-008  
 **優先度:** P2 (Medium)  
-**ステータス:** OPEN  
+**ステータス:** RESOLVED (2026-10-24) — 8 語を 5年で収集し、7 語が系列・THC-O リキッドは NO_DATA（欠測）として確定した  
 **対象:** `datasets/cannabinoid-raw-collection/data/raw/google_trends/20261012T064246Z-google-trends-ja-rikiddo-5y-main5/`、
 `README.md` のキーワード表  
 **GitHub:** [#4](https://github.com/routeflags/japan-cannabinoid-trends/issues/4)

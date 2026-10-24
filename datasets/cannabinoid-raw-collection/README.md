@@ -130,9 +130,7 @@ Google Trends の系列・窓・欠測は [methodology.md](methodology.md) §2.1
 - 方法と制約: [methodology.md](methodology.md)（5年 §2.1.2 / 12ヶ月 §2.1.3）
 - 収集計画書: [`metadata/plans/`](metadata/plans/)、窓: [`metadata/windows/`](../../metadata/windows/)
 - 既知の欠測と未決事項: [`ISS-20261023-GT-006`](../../docs/issues/active/40-provenance-storage-reproducibility/20261023_p2_gt-12m-recollection-findings.md)（12ヶ月の欠測・ページ数値）、
-  [`ISS-20261023-GT-005`](../../docs/issues/active/40-provenance-storage-reproducibility/20261023_p2_gt-5y-recollection-residuals.md)（5年の窓・反復測定・公開承認）、
-  [`ISS-20261023-GT-007`](../../docs/issues/active/40-provenance-storage-reproducibility/20261023_p2_crdh-12m-summary-only.md)（CRDH の 12ヶ月 summary-only）、
-  [`ISS-20261023-GT-008`](../../docs/issues/active/40-provenance-storage-reproducibility/20261023_p2_gt-rikiddo-5y-incomplete.md)（5年リキッド 5/13 語）
+  [`ISS-20261023-GT-005`](../../docs/issues/active/40-provenance-storage-reproducibility/20261023_p2_gt-5y-recollection-residuals.md)（5年の窓・反復測定・公開承認）
 - 初回の計画書: `research/strategy/20261002-keyword-coverage-expansion.md`
 - 収集サマリー: `data/processed/collection-summary.md`
 - 配布物: [`datasets/cannabinoid-platform-trends/`](../cannabinoid-platform-trends/)、
