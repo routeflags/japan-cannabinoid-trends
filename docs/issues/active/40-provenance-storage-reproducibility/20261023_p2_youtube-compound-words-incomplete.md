@@ -29,15 +29,25 @@ YouTube raw ペイロードは gitignored（`.gitignore` の `**/data/raw/*`、�
   デフォルト `--study-dir datasets/cannabinoid-raw-collection` / `--output-dir .../data/processed`）。
   導出不能宣言は `src/processing/reproduce.py` の `NonReproducible`（raw がリポジトリ外のため clone では再導出不可。
   README も「生成は raw を要求するので、clone では再導出できない」と記載）。
-- **未収集（8 語）**: THC-O, THCH, CBN, CRDH, CRDP, H4CBH, HHBD, HHCH。
-  README §対象化合物の YouTube 列はこの 8 語を「raw のみ」と記すが、raw がローカル限定のため本 worktree では検証不能。
-  追跡層（2 表）に 8 語の行は存在しない。
+- **raw 未採用（8 語）**: THC-O, THCH, CBN, CRDH, CRDP, H4CBH, HHBD, HHCH。
+  README §対象化合物の YouTube 列はこの 8 語を `raw のみ` と記す。ローカル raw を実測したところ、**raw は存在する**が
+  収集条件の記録が無く採用できない（下記「既存 raw の実測」）。追跡層（2 表）に 8 語の行は存在しない。
 - `EXCLUSION_REASONS` は新規 run に影響しない。新規 run id は `PUBLISHABLE_RUNS` にも
   `EXCLUSION_REASONS` にも載らないため `_status()` は `"provenance not reviewed for publication"` を返し、
   `build_video_export` はその run を **withhold（2 表のどちらにも書かない）** する
  （`tests/processing/test_youtube_export.py::test_unreviewed_and_withheld_with_a_reason` がこの規則を固定）。
   新規 8 語を追跡層に載せるには `PUBLISHABLE_RUNS` への追加（コード変更 + テスト更新 + provenance レビュー）が必須。
   `EXCLUSION_REASONS` の 6 件（10-year 不完全系列 5 件 + methodology test 1 件）は既存の除外理由であり、新規収集とは無関係。
+
+## 既存 raw の実測（2026-10-24）
+
+一次 checkout のローカル raw を読み取り専用で確認した。8 化合物の raw（2026-10-08 の 9 run）は実在するが、
+収集条件（actor・`search_term`・`max_videos`）が記録されておらず、6 run には `run_metadata.json` すら無い。
+`staging-declaration-v1` は未確認値を許さないため、このバッチは採用できない。詳細・実測表・選択肢は
+`ISS-20261024-YT-013`（#10）に分離した。
+
+本 issue の決定（8 語を追加収集する）は変わらないが、その理由は「データが無い」ではなく
+「採用できる来歴が無い」である。`raw のみ` は未収集を意味しない。
 
 ## 収集条件（既存と同じ）
 
@@ -73,7 +83,7 @@ Actor `gJvjeCYNraSfhIaNd`（`danek/youtube-search`）、1 run = 1 `search_term`�
 
 ## 選択肢と帰結
 
-### 1. 8 語を追加収集する（新規収集のため owner 承認が必要: 実費 + 新スナップショットの採用判断）
+### 1. 8 語を追加収集する（新規収集のため owner 承認が必要: 実収集の労力 + 新スナップショットの採用判断）
 
 手順: ① 同一 actor（`gJvjeCYNraSfhIaNd`）で 8 語 × 1 run を外部実行（`max_videos` は既存方針に合わせる）
 → ② 1 語 1 文書の `staging-declaration-v1` で `make stage` / `make adopt-all`（request と観測範囲を分離記録）
