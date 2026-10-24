@@ -73,8 +73,15 @@ description: |
   （`playwright shot --url URL --out PATH [--full-page] [--playwright-version V]` / `html` / `eval --url URL --script FILE --out PATH`。出力は PNG / JS 実行後の DOM / 戻り値の JSON。
   `--viewport` / `--wait-until` は pass-through。**カセットは無く `--cassette` / `--replay` / `--format` は exit 2**。ブラウザの導入は呼び出し側（`npx playwright install chromium`）、`node` / `npx` が無ければ exit 127。
   **版とブラウザは対**（`playwright@V` は chromium ビルド `<rev>` を要求する。ピン = 1.63.0 = chromium-1243。導入済みが別のビルドなら `--playwright-version V` で合わせる）。live は未実測（修正後の 3 コマンドを親が実行する）。
-  **`flow`（issue #53）は 4 つ目のコマンド**: `playwright flow --script FILE --out PATH [--timeout SEC] [--playwright-version V]` = **1 コマンド = 1 セッション = 1 ブラウザ起動 = N ページ読み込み**（「1 コマンド = 1 往復」の明示的な例外 — カートは browser context を跨げば引けない）。スクリプトを **Node コンテキスト**で評価し **`page` / `context` を引数に渡す**（`eval` のページコンテキストと別）。スクリプトは**async function の本体**（トップレベル await 可）、**return 値**が `--out` に JSON。**`--url` / `--viewport` / `--wait-until` は無い**（渡すと exit 2）。`gtag` / `dataLayer` のスタブはスクリプト側、netloom はページの JS を書き換えない。live は親が dev サーバーで実行する）。
-  **dev / ステージングが HTTP Basic の背後にあるとき**: playwright（4 コマンド共通）の子プロセスは（設定されていれば）`HTTP_BASIC_AUTH_USER` / `HTTP_BASIC_AUTH_PASS` を名指しの値として受け取る — スクリプトの先頭で `await context.setExtraHTTPHeaders({Authorization: 'Basic ' + Buffer.from(`${process.env.HTTP_BASIC_AUTH_USER}:${process.env.HTTP_BASIC_AUTH_PASS}`).toString('base64')})` を足すだけ（netloom はヘッダを自動で付けない。値はログ・エラー行に出ない）。
+  **`flow`（issue #53）は 4 つ目のコマンド**: `playwright flow --script FILE --out PATH [--timeout SEC] [--playwright-version V] [--env-allow NAME,...]` = **1 コマンド = 1 セッション = 1 ブラウザ起動 = N ページ読み込み**（「1 コマンド = 1 往復」の明示的な例外 — カートは browser context を跨げば引けない）。スクリプトを **Node コンテキスト**で評価し **`page` / `context` を引数に渡す**（`eval` のページコンテキストと別）。スクリプトは**async function の本体**（トップレベル await 可）、**return 値**が `--out` に JSON。**`--url` / `--viewport` / `--wait-until` は無い**（渡すと exit 2）。**スクリプトは `about:blank` から始まる — ページ内の `fetch` や DOM 参照の前に `page.goto` で対象ページを開くこと**（`about:blank` からの `fetch` は別 origin 扱いで CORS で失敗する = `TypeError: Failed to fetch`。`eval` から移すときに踏む罠 = issue #59）。`gtag` / `dataLayer` のスタブはスクリプト側、netloom はページの JS を書き換えない。live は親が dev サーバーで実行する）。
+  **dev / ステージングが HTTP Basic の背後にあるとき**: playwright（4 コマンド共通）は **`HTTP_BASIC_AUTH_USER` / `HTTP_BASIC_AUTH_PASS` の両方が設定されているときだけ、netloom（ハーネス）が `Authorization: Basic <base64(user:pass)>` ヘッダをすべての要求に付ける**（issue #57。`site` ソースが transport で同じ 2 変数から同じヘッダを組むのと同じ形。片方だけなら付けない・未設定なら何もしない = 401 ページをそのまま証跡にできる）。`flow` のスクリプトが自分で `setExtraHTTPHeaders` を呼んでも同じヘッダになる（同じ 2 変数。1 回で足りる）。値はログ・エラー行に出ない。`env check --source playwright` がこの 2 変数を申告する（★ 任意 = 門にはしない）
+  **flow のサンドボックスに届くもの（issue #61）**: スクリプト（Node コンテキスト）が `process.env` で読めるのは下の表だけ。**それ以外は届かない**（プロセス env 全体は継承しない）。`--env-allow` は `flow` だけが持つ（`shot` / `html` / `eval` に渡すと exit 2）。未設定の名前があると **exit 2 で何も始めない**（ブラウザ起動なし・`--out` なし）。**設定済みの空文字は空文字として届く**（`"FOO" in process.env` が真・値は `""`）。渡した値は netloom の出力（stdout / stderr の失敗行）には出ない（`[REDACTED]`）。**部分一致で伏せる**ので、1〜2 文字のような短い値を名指すと netloom 自身の行の同じ文字列も伏せる（値を出さないことを優先する安全側）。**ただしスクリプトが自分で `process.env.FOO` を return すると、その値は呼び出し側自身の `--out` に入る** — スクリプトの答えであって netloom の出力ではない。秘密を return しないのは呼び出し側の責任。
+  | 届くもの | 条件 |
+  |---|---|
+  | `PATH` / `HOME` | 常に |
+  | `HTTP_BASIC_AUTH_USER` / `HTTP_BASIC_AUTH_PASS` | 両方が設定されているときだけ（ハーネスが Basic ヘッダも付ける） |
+  | `--env-allow` で名指した名前 | 設定されているとき（空文字を含む。未設定は exit 2） |
+  | それ以外 | 届かない |
   devtools は **CDP の観測**（`chrome-devtools-mcp@1.11.0` を MCP のまま使う = google-trends / gmail と同じ経路）で、**1 コマンド = 決まった並びの `tools/call`**（issue #49 / #52。**「1 コマンド = 1 `tools/call`」の例外**）
   （`devtools network|console|snapshot --url URL --out PATH [--format json|text|verbatim]` / `devtools trace --url URL --out DIR [--analyze]`。
   network / console / snapshot = `navigate_page` → 読む（**2**）、trace = start → navigate → stop（**3**、`--analyze` で **4**）。
@@ -89,7 +96,7 @@ description: |
   **解決順（issue #51）**: ①`GOOGLE_TOKEN_FILE`（設定されていればそれを使う）→ ②ソース既定パス `~/.config/netloom/google-<name>.json`（**存在的きのみ** = auth google の書込先と対称。apps-script の既定名は `gas`）→ ③`GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET` / `GOOGLE_REFRESH_TOKEN`。**Google の交換が失敗したときだけ**、失敗行に「どの credential を使ったか」（パスまたは変数名。値は出さない）が 1 つ足される（切り分け用）。`env check` の門は既定パスが存在的きときも満たされる。
   交換の証跡（2 frame）は `--cassette FILE` で caller の記録置き場に置ける（例: `data/gsc/cassettes/<YYYYMMDD>-auth-gsc.jsonl`。issue #22）。
   すべての往復は VCR カセットに残り、カセットからオフライン再現できる（証跡付きの収集）。
-netloom-version: 0.8.7
+netloom-version: 0.10.1
 ---
 
 # netloom（第三者 API の収集プロキシ）
@@ -118,6 +125,7 @@ netloom は起動時に **cwd の env ファイルを自動で読む**（`<cwd>/
 - **contact**（HTTP。EC-CUBE お問い合わせ API）: `contact list|get|create|update|delete`（**1 コマンド = 1 往復**。同じ環境・同じ認証。**応答に顧客の PII が入る**）
 - **ga4-orders**（HTTP。EC-CUBE GA4 受注同期 API）: `ga4-orders list|get|create|update|delete`（**1 コマンド = 1 往復**。`X-GA4-API-Key` + `GA4_API_KEY`。**GA4 Data API の `ga4` とは別物**。応答に売上が入る）
 - **landing-page**（HTTP。EC-CUBE LandingPage API）: `landing-page list|get|create|update|delete`（**1 コマンド = 1 往復**。同じ環境・同じ認証（`X-API-Key` + dev の Basic）。`--clear-cache` は create / update / delete に付く（1 往復のまま）。**prod 未デプロイ** = live 受入は dev のみ。**LP の本文（`body` / `js` / `css`）は業務データ** — カセットは `.cassettes/` のみ・コミットしない）
+- **product**（HTTP。EC-CUBE 商品 / 成分 / 資材 API。**12 コマンド**）: `product list|get|get-by-code|create|update|delete` / `product component-list|component-get|component-purchases` / `product material-list|material-get|material-purchases`（**1 コマンド = 1 往復**。同じ環境・同じ認証（`X-API-Key` + dev の Basic）。**書き込み（create / update / delete）は ContentSync42 プラグイン有効時のみ** — 無効なら 405。`--purge` は取り消し不可の物理削除。**応答は商品と購買履歴（成分 / 資材の詳細は調達原価）を含む** — カセットは `.cassettes/` のみ・コミットしない）
 - **openseo**（HTTP。ローカル OpenSEO の MCP over HTTP）: `openseo list-projects` / `keyword-metrics` / `ranked-keywords` / `domain-overview` / `serp-competitors`（**1 コマンド = 1 往復**。credential 不要。Docker コンテナは呼び出し側が起動・停止する）
 - **gmail**（MCP stdio。既存の Gmail サーバーの再利用）: `gmail send-email`（**1 コマンド = 1 MCP 往復**。**送信は副作用** — live は実メールが飛ぶ。**live は `--allow-send`（make は `ALLOW_SEND=1`）が必須** — 無ければ exit 2 で送らない。OAuth はサーバー側）
 - **meta-page / meta-instagram**（HTTP。Meta Graph API v25.0。Facebook Page / Instagram）: `meta-page posts|post|post-insights` / `meta-instagram media|media-insights`（**1 コマンド = 1 往復**。`PAGE_TOKEN` / `USER_TOKEN` は別のトークン。**ページングは回さない**。csv は無い）
@@ -130,7 +138,7 @@ netloom は起動時に **cwd の env ファイルを自動で読む**（`<cwd>/
 - **zenodo**（HTTP。Zenodo REST API。**読み取り 4 コマンド + 書き込み 7 コマンド**）: `zenodo record` / `record-versions` / `deposition` / `deposition-files` と、`deposition-create` / `deposition-update` / `deposition-delete` / `deposition-upload` / `deposition-file-delete` / `deposition-newversion` / `deposition-publish`（**1 コマンド = 1 往復**。credential は **`ZENODO_TOKEN` を `Authorization: Bearer` で送る 11 コマンド共通の 1 規則** — 未設定なら 1 往復も送らず exit 2、`--replay` は不要。id は書いたまま path に入る。`--sort` / `--size` は**与えたときだけ**載る pass-through。`--input` は `{"metadata": …}` に包んで送る metadata 文書、`--file` は multipart で送るファイル。**ページング・リトライ・レート制限の待ちは作らない**。**csv は無く、`deposition-files`（配列）と `deposition-delete`（文書無し）は `text` も無い**。**publish だけが `--allow-publish` 必須**（公開 DOI は取り消せない）— 下書きの書き込みに門は無い。カセットは record / deposition の本文とファイルの証跡（field / sha256 / size。**バイトもファイル名も残さない**）を持つ — `.cassettes/` のみ・コミットしない）
 - **`cassette`**（ローカルコマンド。provider を呼ばない。カセットを読むだけ）: `cassette show --path FILE`（frame 一覧: seq / direction / method or status / url（**`key=` / `access_token=` の値は表示時だけ `[REDACTED]`** — カセットのバイトと replay の照合は変わらない）/ payload の sha256 とバイト数（`N B`）/ at。**本文は出さない**）と `cassette check --path FILE [--path FILE ...] [--env-file FILE]`（カセットに env の実値が残っていないかを機械検査。**名前と件数だけ**を出して exit 1（ヒット）/ 0（0 件）/ 2（credential が 1 つも無）/ 3（読めない）。読み取り専用 — 往復しない・書き換えない。env の解決は §7.5 と同じ。設計書 付録 A.28）
 - **lighthouse**（ローカル計測。**exec。カセットなし**）: `lighthouse run --url URL --out DIR [--runs N] [--form-factor mobile|desktop] [--chrome-path PATH] [--lighthouse-version V]` — **1 コマンド = N 回の exec**（既定 5）。`run1.json` 〜 `runN.json` に **Lighthouse の生 JSON を置くだけ**（parse しない。中央値も判定もしない）。**カセットは無く `--cassette` / `--replay` / `--format` は exit 2** — 証跡は `--out`（新規は 0600）。`node` / `npx` は前提（無ければ 1 回も起動せず exit 127）。**psi / crux とは別測定系**（混ぜない = ローカル Lighthouse が正）。live は実測済み（2026-10-19: exit 0・約 21 秒・`run1.json` 921,296 B・0600）
-- **playwright**（ローカルブラウザ。**exec。カセットなし**）: `playwright shot --url URL --out PATH [--full-page]` / `playwright html --url URL --out PATH` / `playwright eval --url URL --script FILE --out PATH` / **`playwright flow --script FILE --out PATH [--timeout SEC] [--playwright-version V]`** — `shot|html|eval` は **1 コマンド = 1 ページ読み込み = 1 回の exec**、**`flow` は 1 コマンド = 1 セッション = 1 ブラウザ起動 = N ページ読み込み**（起票元の 5 ステップのように複数ページにまたがる操作を検証する。**「1 コマンド = 1 往復」の明示的な例外** — カートは browser context を跨げば引けない = 設計 付録 A.35 追補 2）。出力は `--out`: **PNG / JS 実行後の DOM / 戻り値の JSON**（`eval` = `page.evaluate(string)` と同じ評価 / **`flow` = async function の本体を Node コンテキストで評価し `page` / `context` を渡す。return 値が JSON**。戻り値は解釈しない。スクリプトの内容はログに出ない）。**カセットは無く `--cassette` / `--replay` / `--format` は exit 2**。ブラウザは **Playwright 自身の Chromium** で、**インストールは呼び出し側**（`npx playwright install chromium`。無ければツールのエラー = exit 1。netloom は何もインストールしない）。**版とブラウザは対** — 既定はピン 1.63.0（= chromium-1243）、導入済みに合わせて選ぶなら `--playwright-version V`（`--lighthouse-version` と同じ pass-through）
+- **playwright**（ローカルブラウザ。**exec。カセットなし**）: `playwright shot --url URL --out PATH [--full-page]` / `playwright html --url URL --out PATH` / `playwright eval --url URL --script FILE --out PATH` / **`playwright flow --script FILE --out PATH [--timeout SEC] [--playwright-version V] [--env-allow NAME,...]`** — `shot|html|eval` は **1 コマンド = 1 ページ読み込み = 1 回の exec**、**`flow` は 1 コマンド = 1 セッション = 1 ブラウザ起動 = N ページ読み込み**（起票元の 5 ステップのように複数ページにまたがる操作を検証する。**「1 コマンド = 1 往復」の明示的な例外** — カートは browser context を跨げば引けない = 設計 付録 A.35 追補 2）。出力は `--out`: **PNG / JS 実行後の DOM / 戻り値の JSON**（`eval` = `page.evaluate(string)` と同じ評価 / **`flow` = async function の本体を Node コンテキストで評価し `page` / `context` を渡す。return 値が JSON**。戻り値は解釈しない。スクリプトの内容はログに出ない）。**カセットは無く `--cassette` / `--replay` / `--format` は exit 2**。ブラウザは **Playwright 自身の Chromium** で、**インストールは呼び出し側**（`npx playwright install chromium`。無ければツールのエラー = exit 1。netloom は何もインストールしない）。**版とブラウザは対** — 既定はピン 1.63.0（= chromium-1243）、導入済みに合わせて選ぶなら `--playwright-version V`（`--lighthouse-version` と同じ pass-through）
 - **devtools**（CDP の観測。**MCP stdio のまま**。カセットあり）: `devtools network|console|snapshot --url URL --out PATH [--format json|text|verbatim]` / `devtools trace --url URL --out DIR [--analyze]` — **1 コマンド = 決まった並びの `tools/call`**（1 セッション・1 `initialize`。network / console / snapshot = 2、trace = 3、`--analyze` = 4。**「1 コマンド = 1 `tools/call`」の唯一の例外** = 設計 付録 A.36）。答えは **`--out`**（network / console / snapshot = 1 ファイル、trace = DIR に `trace.json` + `--analyze` なら `insight.txt`。**stdout には出さない**。`--out` は必須 = exit 2。新規は 0600）。json（既定）= provider 自身の `structuredContent` をインデント 2 でそのまま / text = provider の描画 / verbatim = 生バイト。**csv は無く、trace は `--format` を持たない**。**`network --match REGEXP [--max-details N]`（issue #52）はマッチした要求の詳細を同一セッションで取得する**（呼び出し回数 = **2 + M**、M = min(マッチ数, `--max-details`)。既定 **10**。`--out` はリストのまま、**各詳細は `<out>-detail-<requestId>.json` に 1 文書ずつ**（provider の文書そのまま・詳細は常に json）。**reqid はセッション内の id** なのでリストしたセッション内で取る（別コマンドの id では引けない = 実測 2026-10-20 に exit 1 で確認。`request` コマンドは削除）。詳細の答えは POST ボディ・Cookie / Set-Cookie を含む。マッチ 0 件でも exit 0）。**カセットは普通に記録する**（`--replay` は並びの順に照合。同じ request の反復でも壊れない）。**`npx` / `node` が無ければ 1 往復もせず exit 127**、`isError` / JSON-RPC error = exit 1。**Chrome は `chrome-devtools-mcp` が自分で起動する**（無ければツールのエラー = exit 1。netloom は導入も分類もしない）。**サーバーは `--no-page-id-routing` で起動する**（既定の `pageIdRouting` は全 page-scoped ツールの schema に必須の `pageId` を足す — 渡さないと `navigate_page` が isError。2026-10-19 の live 実測 = A.36 判断 D23）。**計測ではない**（PageSpeed の数値と混ぜない = 観察の道具）。live は親が実行する（2026-10-19 の 1 回目で欠陥を発見・修正済み。修正後の再実行待ち）
 - **`env check`**（ローカルコマンド。provider を呼ばない。往復しない・カセットも作らない）: `env check [--source ID]... [--env local|dev|prod] [--format text|json] [--env-file FILE[:FILE…]]` — **実行の前に前提を確かめる**。netloom が読む名前ごとに「設定されているか / どこから来たか（プロセス env / どのファイル）/ 誰が読むか」を出し、**env ファイルが定義しているのに netloom が読まない名前**（typo・残骸）も出す。**値は絶対に出ない**（§7.4。ログに貼れる）。`--source` で絞ると門になり、その送信元が必要とする名前が（代替を含めて）欠けていれば exit 1。設計書 付録 A.30。**空値（`KEY=`）は `empty` と表示され、門では missing とみなす**（issue #56。「門が通るのに実行が失敗する」をなくすため。値は出さない）。**`<.env>` が `.env.d/` の同名の定義を隠しているとき**（§7.5 の解決順の帰結）は行末に `shadowed by: <ファイル>` を足す（明示リスト `NETLOOM_ENV_FILE` / `--env-file` では出さない = それは「そのリストだけ」の解決）。
 
@@ -858,7 +866,7 @@ GOOGLE_TOKEN_FILE="$HOME/.config/netloom/google-gsc.json" bin/netloom gsc sites
 - env ファイルは**ワークスペース外**に置く。**コミットしない**。`chmod 600` にする。値は stdout / stderr /
   カセットのどこにも出ない（`X-API-Key` と `Authorization` は名前を残して `[REDACTED]`）
 - **どれか欠けていれば netloom は 1 往復も送らず exit 2**（カセットも作らない）
-- **開発サーバーの base URL は env `EC_DEV_BASE_URL` から読む**（news / article / cache / contact / ga4-orders / landing-page の 6 送信元共通。**コードに値は無い**）。未設定なら `--env dev` のコマンドは **exit 2**（メッセージに変数名が出る。1 往復も送らない）。`--replay` でも要る（URL がカセットの照合に要る）
+- **開発サーバーの base URL は env `EC_DEV_BASE_URL` から読む**（news / article / cache / contact / ga4-orders / landing-page / product の **7 送信元共通**。**コードに値は無い**）。未設定なら `--env dev` のコマンドは **exit 2**（メッセージに変数名が出る。1 往復も送らない）。`--replay` でも要る（URL がカセットの照合に要る）
 - **値は credential ではない**ので、カセットの URL にはそのまま載る（証跡として必要。レダクトされない）。呼び出し側（seo-operations）は同じ値に `ADMIN_DEV_URL` の名前を付けて `.env.d/admin_dev.env` に置く
 - `cache clear` はニュースと記事 API の共用キャッシュクリア（同じ場所・同じ認証）
 
@@ -1192,6 +1200,128 @@ make landing-page-update ID=3 INPUT='{"title":"x"}' CLEAR_CACHE=1 REPLAY=.casset
 - 1 コマンド = **2 frame**（`send` / `recv`）。失敗（400 / 401 / 404 / 500）もカセットに残り、replay は**同じ失敗**を返す
 - `X-API-Key` と dev の `Authorization` は記録前に `[REDACTED]`
 - **カセットは LP の本文（業務データ）を含み、レダクトされない**。`.cassettes/`（gitignore）にだけ置き、**コミット・共有・`raw/` 配置をしない**。カセットは**追記のみ**（編集・削除しない）
+
+---
+
+# product（EC-CUBE 商品 / 成分 / 資材 API。12 コマンド）
+
+ショップの商品（コアの `dtb_product` 系）と成分（StrainAdmin）・資材（MaterialManager42）を、news と同じ形で扱う。環境（`--env dev|prod`）・認証（`X-API-Key` + dev の Basic = `SEO_API_KEY`）・prod ガード・カセットの規則は **news と同じ**（上の節）。**product / component / material は 1 つの送信元**（同じサービス・同じキー・同じ環境で、呼び出し元のスキルは 1 つの単位）。
+
+**読み取り（v1）は常時、書き込み（C/U/D）は ContentSync42 プラグイン有効時のみ**（無効時は書き込みルートが未登録で **405**）。**商品の価格・在庫変更は通知系（`plg_price_cut` / `plg_in_stock`）と DB トリガーに波及する**（管理画面と同じ `postUpdate` 経由）。
+
+**応答は商品と購買履歴（成分 / 資材の詳細は調達原価）を含む**: netloom はレダクトしない（replay の同一結果が証跡の意味。contact / ga4-orders と同じ判断）。**カセットは `.cassettes/`（gitignore）にだけ置き、コミット・共有・`raw/` 配置をしない**。**テスト fixture は偽データのみ**。
+
+**本文はそのまま返る（netloom は解釈しない）**: 成功の `{success,id,message,item}`、失敗の `{success,false,error}`、SKU 重複の `matches` など、応答の形は店側の `ec-product-api` スキルの持ち物。netloom は status と本文をそのまま渡すだけ（§2.2）。
+
+## EC-CUBE 系 7 送信元の認証ルール（この節が正）
+
+| 送信元 | ヘッダ | 読む変数 |
+|---|---|---|
+| article / news / contact / cache / landing-page / **product** | `X-API-Key` | `SEO_API_KEY`（**共用。新規キーは作らない**） |
+| ga4-orders | `X-GA4-API-Key` | `GA4_API_KEY`（**この 1 つだけ別**） |
+
+- dev（`--env dev`）は上に加えて `HTTP_BASIC_AUTH_USER` / `HTTP_BASIC_AUTH_PASS` が要る（netloom が `Authorization: Basic <base64(user:pass)>` を組む。**本番は送らない**）。**どれか欠けたら 1 往復も送らず exit 2**（カセットも作らない。欠けた名前は stderr の 1 行に出る。値は出ない）
+- **prod への書き込みは `--allow-prod-write` が必須**（読み取りは不要。読み取りに付けると exit 2。`--purge` を含む delete も同じ門）
+
+## いつ使うか（トリガー）
+
+- 「商品を一覧 / 取得したい」「SKU（商品コード）で引きたい」「商品を登録 / 更新 / 廃止 / 物理削除したい」
+- 「成分・資材のマスタを見たい」「その商品の成分 / 資材を見たい」「購買履歴を見たい」
+- 「開発サーバーで試したい」（`NEWS_ENV=dev`。prod は `NEWS_ENV=prod` + 書き込みは `ALLOW_PROD_WRITE=1`）
+
+## 実行（1 コマンド = 1 往復 = カセット 2 frame）
+
+```sh
+# 一覧（`--format csv` は固定の列。フィルタは API のパラメータ名のまま、指定時のみ載る）
+make product-list LIMIT=20 OFFSET=0
+make product-list LIMIT=100 STATUS=3 FORMAT=csv OUT=/tmp/abolished.csv
+make product-list LIMIT=0 STOCK=out FORMAT=json            # limit=0 は items 空 + total だけ（件数取得）
+make product-list NAME='CBD' CODE=CBD-LQ CATEGORY_ID=57 TAG_ID=12
+
+# 1 件 / SKU 引き（`--format text` は id / name / code / status の要約）
+make product-get ID=179
+make product-get-by-code CODE=CBD-LQ-10-30                   # 重複コードは API の 409（matches 付き）= exit 1
+
+# 作成 → 更新 → 削除（`--purge` は取り消し不可の物理削除。既定の廃止は冪等）
+make product-create INPUT='{"name":"invented","classes":[{"price02":4980}]}'
+make product-update ID=179 INPUT='{"status":1,"classes":[{"id":541,"price02":4480,"stock":20}]}'
+make product-delete ID=179
+make product-delete ID=179 PURGE=1                           # 参照があると 409（廃止を使って）
+
+# 成分 / 資材（マスタ一覧は商品非依存。--product-id を付けるとその商品の紐づけ）
+make product-component-list LIMIT=20 TYPE=effect              # effect_type はマスタ値 1|2|3
+make product-component-list PRODUCT_ID=160 KEYWORD=crd        # その商品の成分等
+make product-component-get ID=10                              # base_unit_cost / latest_purchase を含む（text は id / component_name / unit / is_enabled）
+make product-component-purchases ID=10 LIMIT=20               # text は一覧と同じ（total / limit / offset / items: N）
+make product-material-list PRODUCT_ID=164 SCOPE=class         # scope は --product-id と併用時のみ有効（単独は API が 400）
+make product-material-list PRODUCT_CLASS_ID=541               # 規格単位のみ（product_id とは同時指定不可）
+make product-material-get ID=1                                # text は id / name / material_code / unit / is_active
+make product-material-purchases ID=1 LIMIT=20                 # text は一覧と同じ
+```
+
+| 変数 | 既定 | 値 |
+|---|---|---|
+| `ID` | （get / update / delete / 成分・資材の get と purchases で必須） | 商品 / 成分 / 資材の ID |
+| `CODE` | （get-by-code で必須） | 商品コード（SKU）。path に入る |
+| `INPUT` | （create / update で必須） | 本文の JSON（または `INPUT=@body.json`。`name` / `classes[]` は API の必須。**未知キーは API が 400 で弾く**） |
+| `PURGE` | （未指定 = 廃止） | `1` で `?mode=purge`（**取り消し不可**。参照があると 409） |
+| `LIMIT` / `OFFSET` | （API の既定 = limit 20・上限 100） | 5 つの list 形コマンドの件数 / 読み飛ばし（**指定時のみ載る。limit=0 は total だけ**） |
+| `NAME` / `CODE` / `STATUS` / `STOCK` / `STOCK_STATUS` / `CATEGORY_ID` / `TAG_ID` | （未指定） | `list` のフィルタ（API のパラメータ名のまま。**`status` の既定は 1・2 で、3（廃止）は明示時のみ**） |
+| `TYPE` / `PRODUCT_ID` / `KEYWORD` | （未指定） | `component-list` / `material-list` のフィルタ（`type` は component / effect / flavor / terpene） |
+| `PRODUCT_CLASS_ID` / `SCOPE` / `IS_ACTIVE` | （未指定） | `material-list` のフィルタ（`scope` = product / class。`is_active` 未指定は有効・無効の両方） |
+| `NEWS_ENV` / `ALLOW_PROD_WRITE` / `FORMAT` / `CASSETTE` / `OUT` / `REPLAY` / `TIMEOUT` | news と同じ | （`FORMAT` の語彙は下） |
+
+- **フィルタの値は netloom が検証しない**（§2.2）: `status` / `stock` / `stock_status` / `type` / `scope` / `is_active` の嫌な値、`scope` の単独使用、`product_id` と `product_class_id` の同時指定は**API の 400 が答える**（そのまま返る）
+- **日付フィルタ（`update_date_start` / `update_date_end`）は無い**（起票元が外部同期仕様と突き合わせ未確認。必要になったら別 issue）
+- **`--clear-cache` は無い**（商品の書き込み API は `clear_cache` を受け付けず、プラグインが内部でキャッシュをクリアする。付けると exit 2）
+
+## 出力の読み方（`FORMAT`）
+
+| 値 | 内容 |
+|---|---|
+| `json`（既定） | API の文書のまま（`success` / `total` / `items` / `item` / `message` / `mode` など）。**値を解釈しない** |
+| `csv` | **`list` のみ**。列は `id,name,code,price02,price02_inc_tax,stock,stock_unlimited,status,categories,main_image,update_date` の固定で、API が述べていない項目は空セル。**他のコマンドに `csv` は exit 2** |
+| `text` | 一覧 = `total` / `limit` / `offset` / `items: N`（**成分 / 資材の一覧と 2 つの purchases も同じ** — 封筒だけを数え、item の項目は名指さない）、商品の 1 件 = `id` / `name` / `code` / `status`、**成分の 1 件 = `id` / `component_name` / `unit` / `is_enabled` / 資材の 1 件 = `id` / `name` / `material_code` / `unit` / `is_active`**（**価格・原価は出さない** = 商品 get の要約と同じ規則）、書き込み = `success` / `message` / `mode`（`mode` は delete の `abolish` / `purge`）。応答が述べた member だけを出し、**どれも述べていない応答は exit 1** |
+| `verbatim` | 受信バイトそのまま |
+
+## 状態コード（**そのまま返る。netloom はどれも解釈しない**）
+
+| HTTP | 意味（店側のスキルの言葉） | 切り分け |
+|---|---|---|
+| 400 | パラメータ不正 / 本文の検証エラー / 未知キー / `scope` の単独使用など | 送った値と本文を確かめる（エラー文面はそのまま stderr に出る） |
+| 401 | API キーが無効 | `netloom env check --source product` が読む名前を出す（失敗行にもこの 1 行が付く） |
+| 404 | 対象なし（商品 / 成分 / 資材の ID） | ID を確かめる |
+| 405 | 書き込みルート未登録（ContentSync42 無効） | プラグインの有効化を確かめる |
+| 409 | 商品コード重複（`matches` 付き）/ 参照のある商品の purge | ID で引き直す（先頭を黙って返さない安全側の仕様）/ 廃止を使う |
+| 500 | API キー未設定など（サーバー側） | `env` の `SEO_API_KEY` を確かめる |
+
+## コマンド体系の差（7 送信元。**変えない**）
+
+EC-CUBE 系は `list` / `get` / `create` / `update` / `delete` + `--limit` / `--offset` / `--input` / `--env` / `--allow-prod-write` で揃っている。**残る差は 3 つだけ**で、いずれも意図的: ① `ga4-orders` のヘッダ名（`X-GA4-API-Key`。別の資格情報）② `cache` は `clear` 1 動詞（エンドポイントが 1 つ）③ 書き込みの prod 門（安全要件）。**SKU 引きだけは動詞が別**（`get-by-code` — `get --code` に寄せるとルートの選択が送信元定義の外に出るため。設計 付録 A.37 判断 D4）。
+
+## 失敗の見分け（product）
+
+news と同じ（exit 1 / 2 / 3 / 124。付録 A.37）。
+
+| exit | 意味 | 次の行動 |
+|---|---|---|
+| 0 | 2xx | — |
+| 1 | 400 / 401 / 404 / 405 / 409 / 500（API の応答のまま）・接続失敗・replay 不一致 | 上の状態コード表と stderr の 1 行、カセットを読む |
+| 2 | 引数・設定（`--id` / `--code` / `--input` 欠落、JSON でない本文、語彙外の `--env` / `--format`、**prod 書き込みのフラグ無し**、読み取りのフラグ、dev ホスト未設定、credential 未設定、`--clear-cache` / `--fields` を付けた） | 引数と env を直す（**何も送っていない**） |
+| 3 | I/O（`--out` / カセット / `@FILE`） | パスを直す |
+| 124 | timeout（`--timeout`。既定 300 秒） | 再実行、または owner に相談 |
+
+## 証跡とオフライン再現（product）
+
+```sh
+make product-list LIMIT=20                      # 記録（.cassettes/<UTC>-product-list-all.jsonl）
+make product-list LIMIT=20 REPLAY=.cassettes/20261021T120000Z-product-list-all.jsonl
+make product-get-by-code CODE=CBD-LQ-10-30 REPLAY=.cassettes/…-product-get-by-code-cbd-lq-10-30.jsonl
+```
+
+- 1 コマンド = **2 frame**（`send` / `recv`）。失敗（400 / 401 / 404 / 405 / 409 / 500）もカセットに残り、replay は**同じ失敗**を返す
+- `X-API-Key` と dev の `Authorization` は記録前に `[REDACTED]`
+- **カセットは商品と購買履歴（成分 / 資材の詳細は調達原価）を含む**。`.cassettes/`（gitignore）にだけ置き、**コミット・共有しない**。`raw/` に置かない。カセットは**追記のみ**（編集・削除しない）
 
 ---
 
@@ -2050,6 +2180,7 @@ bin/netloom playwright html --url https://www.thch-vape.shop/ --out /tmp/pw/fron
 
 # flow: 1 コマンド = 1 セッション = N ページ読み込み（issue #53。設計 付録 A.35 追補 2）
 #   スクリプトは「page と context を引数に受ける async function の本体」。await page.goto / page.click がそのまま通る
+#   **スクリプトは about:blank から始まる — ページ内の fetch / DOM 参照の前に page.goto で対象ページを開くこと**（CORS: TypeError: Failed to fetch を踏む = issue #59）
 #   return した値（undefined は null）が --out に JSON（インデント 2）。--url / --viewport / --wait-until は無い（渡すと exit 2）
 #   window.gtag / dataLayer のスタブはスクリプト側の仕事（netloom はページの JS を書き換えない）
 printf '%s\n' \
@@ -2064,7 +2195,8 @@ printf '%s\n' \
 bin/netloom playwright flow --script /tmp/pw/flow.js --out /tmp/pw/flow-result.json --timeout 300
 # make playwright-flow PLAYWRIGHT_OUT=/tmp/pw/flow.json SCRIPT=/tmp/pw/flow.js [TIMEOUT=SEC]
 
-# eval のスクリプトは page.evaluate(string) と同じに評価される（式、または関数のソース。文は IIFE に包む）
+# eval のスクリプトは page.evaluate(string) と同じに評価される（1 つの式。関数ソースは自分で呼ぶ: (() => document.title)()。文は IIFE に包む — 設計 付録 A.35 追補 4 判断 D40）
+#   flow へ移すときは最初に書く: flow のスクリプトは about:blank から始まるので、page.goto で対象ページを開いてから fetch / DOM 参照をする（issue #59）
 # --viewport / --wait-until は pass-through（未知の値はツールが答える。flow には無い）
 ```
 
