@@ -44,7 +44,7 @@
 - **週次系列は全面で比較できるわけではない**: 5年は 2 つの窓に分かれ（9 化合物が 2021-10-10 〜、4 化合物が 2021-10-17 〜）、12ヶ月も 2 窓に分かれる。また各 run は自分のピーク=100 に正規化されるので、単独系列の値を化合物間で比べない。化合物間の比較は共通スケール（§2.1.4）でのみ行う。
 - **「データなし」**: 取得はしたが Google Trends が閾値未満で系列を返さなかった。**欠測であって 0 観測ではない**。
 - **「—」**: そのソースでは収集していない（X の 6 化合物は [`datasets/cannabinoid-social-trends/`](../cannabinoid-social-trends/) が規制前後比較として収集している）。
-- **「YouTube（公開分）」**: 追跡している集計（[`data/processed/youtube_videos.csv`](data/processed/youtube_videos.csv)、397 動画）に含まれるか。`raw のみ` は raw がローカルに在るが公開集計に入れていない状態を指す。2026-10-08 のバッチは公開集計に採用したが、収集条件（actor・検索語・取得上限）は未記録である（[`ISS-20261024-YT-013`](../../docs/issues/active/40-provenance-storage-reproducibility/20261024_p2_youtube-raw-batch-without-metadata.md)）。
+- **「YouTube（公開分）」**: 追跡している集計（[`data/processed/youtube_videos.csv`](data/processed/youtube_videos.csv)、397 動画）に含まれるか。2026-10-02 の 7 run は検索語・取得上限を記録済み、2026-10-08 の 9 run は actor・検索語・取得上限が未記録（[`ISS-20261024-YT-013`](../../docs/issues/active/40-provenance-storage-reproducibility/20261024_p2_youtube-raw-batch-without-metadata.md)）。
 - **CBX はこの研究の対象外**（[`datasets/cbx-search-trends/`](../cbx-search-trends/) が担当）。`docs/audits/gt-summary.json` が 14 化合物なのはこの 1 件を含むため。
 - Google Trends の正本は `data/raw/google_trends/` と [`docs/audits/gt-summary.json`](../../docs/audits/gt-summary.json)。単独系列（12ヶ月・5年）のほかに、比較セット／共通スケール（12ヶ月 `common-scale-*`・5年 `5y-common-scale-set*`）・表記事前調査・「リキッド」系クエリの run がある。
 
@@ -53,8 +53,8 @@
 | ソース | ツール | 状態 |
 |--------|--------|------|
 | Google Trends | google-trends-mcp 0.1.1（`collection.core.cli collect --live`） | ✅ 5年 13/13 化合物・12ヶ月 12/13（欠測は §2.1.3） |
-| X (Twitter) | Apify `cPYLH3QT9GyzKhB4S` | ✅ 7 化合物 |
-| YouTube | Apify `gJvjeCYNraSfhIaNd` | ✅ 7 検索語 |
+| X (Twitter) | Apify `cPYLH3QT9GyzKhB4S` | ✅ 7 化合物（CBD は追加で 1 年 / 1ヶ月 / latest10 の 3 run。条件は未記録） |
+| YouTube | Apify `gJvjeCYNraSfhIaNd` | ✅ 16 run（2026-10-02 の 7 run は検索語を記録、2026-10-08 の 9 run は未記録） |
 
 > **関連データセットとの役割分担**: 本データセットは**トレンド分析**（複数プラットフォームの出現・時系列分布）が目的。
 > YouTube 検索結果の**一貫性・再現性検証**は [`datasets/youtube-consistency/`](../youtube-consistency/) が担当しており、
@@ -86,7 +86,7 @@ Google Trends の系列・窓・欠測は [methodology.md](methodology.md) §2.1
 | Google Trends | 2026-10-02, 10-08, 10-14, 10-15, 10-23 | 13 語すべて | リキッド 13 語中 12 語が系列（main5 の 5 語 + 別窓の新規 7 語）。THC-O は系列なし | 5年・単独系列 |
 | Google Trends | 2026-10-02, 10-05, 10-08, 10-12 | 12ヶ月の語の部分集合 | リキッド（phase-a/b）+ `CBX リキッド` | 比較セット / 共通スケール（12ヶ月） |
 | Google Trends | 2026-10-23 | 13 語（アンカー CBD/THC を含む 4 セット） | なし | 5年の共通スケール（`compare_terms`） |
-| X (Twitter) | 2026-10-02, 10-08 | CBD, THC, CBG, HHC, THCV, THC-O, THCH（7 語） | なし | 単一クエリ（`{keyword} since:2026-09-01 until:2026-10-01`） |
+| X (Twitter) | 2026-10-02, 10-08 | CBD, THC, CBG, HHC, THCV, THC-O, THCH（7 語） | なし | 単一クエリ（`{keyword} since:2026-09-01 until:2026-10-01`）。CBD は追加 3 run（条件未記録） |
 | YouTube | 2026-10-02（公開集計に入る 7 run）・2026-10-08（公開集計に加えた 9 run。検索語・取得上限は未記録） | 5 語（検索語を記録）＋ 2026-10-08 の 8 語（検索語未記録） | オイル 2 語 | 単一クエリ（actor の入力は `search_term` + `max_videos` のみ。2026-10-08 の 9 run は検索語・収集時刻が未記録のため `youtube_runs.csv` の `search_term` / `collected_at` が空欄） |
 
 - **化合物語は 13 語で閉じている**。このうち 12ヶ月で系列が取れていないのは THC-O だけ（no data）。
@@ -121,7 +121,7 @@ Google Trends の系列・窓・欠測は [methodology.md](methodology.md) §2.1
 |-----------|------|
 | PLANNED | 2026-10-02 |
 | ACTIVE | 2026-10-02 |
-| COLLECTION_COMPLETE | 2026-10-24（5年 13/13・12ヶ月 12/13 化合物） |
+| COLLECTION_COMPLETE | 2026-10-24（Google Trends 5年 13/13・12ヶ月 12/13 化合物、YouTube 13 化合物 + オイル 2 語の 16 run） |
 | COMPLETED | — |
 
 ## 関連

@@ -14,8 +14,8 @@ cannabinoid-raw-collection
 |-------------|---------|------|
 | Google Trends（12ヶ月） | 2025-09-28 〜 2026-09-27（8 化合物）/ 2025-10-19 〜 2026-10-18（THCV・H4CBH・HHBD・CRDH） | §2.1.3 |
 | Google Trends（5年） | 2021-10-10 〜 2026-10-11（9 化合物）/ 2021-10-17 〜 2026-10-18（THC・CBG・HHC・THCV、および共通スケール setA〜D）。リキッドは main5 の 5 語が 2021-10-10 〜 2026-10-11、新規 7 語が 2021-10-17 〜 2026-10-18（THC-O は系列なし） | §2.1.2、§2.1.4 |
-| X (Twitter) | 2026-09-01 〜 2026-10-01（主系列）、CBD は 1 年 / 1ヶ月 / latest10 も | §2.2 |
-| YouTube | 2026-10-02（公開集計に入る 7 検索語のスナップショット）、2026-10-08〜09 に追加 | §2.3 |
+| X (Twitter) | 2026-09-01 〜 2026-10-01（主系列、7 語）。CBD は追加で 1 年 / 1ヶ月 / latest10 の 3 run（2026-10-08）もある（§2.2） | §2.2 |
+| YouTube | 2026-10-02（7 run。検索語・`max_videos` を記録）/ 2026-10-08（9 run。検索語・取得上限は未記録） | §2.3 |
 
 ### 1.3 対象化合物
 
@@ -69,9 +69,12 @@ cannabinoid-raw-collection
 
 **比較セット（`compare_terms`）:**
 
-- 12ヶ月の単独系列とは別に、2026-10-02〜10-08 の 4 run（`comparison_setA` = CBD, THC, CBG, HHC, THCH /
-  `setB` = CBN, CRDP, HHCH, THC-O, THCV / `setC` = CBN, CBG, CBD / `setD` = H4CBH, HHBD, CRDP /
-  3 語比較 3 件 = CRDH・CBD・THC、THCH・CBD・THC、H4CBH・HHBD・CRDH）。
+- 12ヶ月の比較セットは 3 日付に分かれる。
+  - 2026-10-02 `comparison_setA` = CBD, THC, CBG, HHC, THCH（1 run）
+  - 2026-10-05 `common-scale-expansion` = setB（CBN, CRDP, HHCH, THC-O, THCV）/ setC（CBN, CBG, CBD）/
+    setD（H4CBH, HHBD, CRDP）（1 run に 3 比較）
+  - 2026-10-08 `common-scale-crdh`（CRDH, CBD, THC）/ `common-scale-thch`（THCH, CBD, THC）/
+    `common-scale-missing`（H4CBH, HHBD, CRDH）
 - 12ヶ月のリキッド: 2026-10-12 の 3 run（phase-a と phase-a-repeat の `ja1`、phase-b の `ja2`〜`ja4`。
   `CBX リキッド` をアンカーに含む）と、同表記の事前調査 1 run。
 - 5年: 2026-10-23 の setA〜D（§2.1.4）。
@@ -223,7 +226,18 @@ cannabinoid-raw-collection
 **注意事項:**
 - シャドウバンの可能性（THC 等の敏感キーワード）
 - 0 件でも observed_zero として記録
-- chargedEventCounts を信用せず、records.json の件数を確認
+- 集計件数ではなく `records.json` の実レコード数で確認する
+
+**CBD の追加 3 run（2026-10-08、`data/raw/x/`）:**
+
+| run | `records.json` 行 | 備考 |
+|---|---:|---|
+| `20261008T165031Z-x-cbd-1year` | 0 | `status: SUCCEEDED` の 0 件（observed_zero） |
+| `20261008T165122Z-x-cbd-1m` | 60 | |
+| `20261008T165330Z-x-cbd-latest10` | 200 | |
+
+- 3 run とも `run_metadata.json` に収集条件（クエリ・`maxPages`・窓）の記録が無く、実行状態の 3 項目だけを持つ。
+  run-id から読める以上の条件を推定しない。件数は `collection-summary.md` §2 に記録する（X raw は Git 管理外のため）。
 
 ### 2.3 YouTube
 
@@ -232,7 +246,7 @@ cannabinoid-raw-collection
 **パラメータ:**
 - max_videos: 50-100（キーワードに依存）
 
-**収集キーワード:**
+**検索語と `max_videos` が記録されている 7 run（2026-10-02）:**
 
 | キーワード | max_videos |
 |-----------|-----------|
@@ -264,7 +278,7 @@ cannabinoid-raw-collection
 | ソース | キー | 方法 |
 |--------|------|------|
 | X | tweet_id | ユニーク ID で重複排除 |
-| YouTube | videoId | ユニーク ID で重複排除 |
+| YouTube | videoId | run 内のユニーク ID で重複排除。run 間は畳まない（同じ動画が 2 run に出れば 2 行）|
 | Google Trends | date | 週次データで重複なし |
 
 ### 3.2 分類
