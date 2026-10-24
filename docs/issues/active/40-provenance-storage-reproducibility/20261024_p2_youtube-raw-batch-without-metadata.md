@@ -17,6 +17,34 @@
 収集条件が残っていない項目（actor・検索語・取得上限）は「未記録」と記載し、ディレクトリ名や行数から補わない。
 再取得は要件にしない。raw は不変のまま、成果物を作る処理とその規則をコード・methodology に明記する。
 
+## 用語: run と「9 run」の定義
+
+- **run** = `data/raw/youtube/<run-id>/` の 1 ディレクトリ。`run-id` は `<UTC>Z-youtube-<slug>` で、1 run = 1 回の検索実行（1 検索語・1 時点）。
+  エクスポートは run 単位で行い、`youtube_runs.csv` の 1 行が 1 run に対応する。
+- **「9 run」= エクスポートの allowlist（`PUBLISHABLE_RUNS`）に未登録の 9 run** を指す。**新規収集ではない**。
+  いずれも 2026-10-08 に収集済みで、一次 checkout の `data/raw/youtube/` に存在する。
+  「新規」は「新しく集めた」ではなく「**集計に新しく加える**」の意味である。
+- 9 の内訳は **8 化合物 + HHC の反復 1 run**。HHC は 2026-10-02 の公開 run（`20261002T064850Z-youtube-hhc`、28 行）とは別 run として残す。
+
+| # | run-id | 語 | `records.json` 行（run 内ユニーク `videoId`） |
+|---|---|---|---:|
+| 1 | `20261008T122515Z-youtube-hhc` | HHC（反復） | 27 |
+| 2 | `20261008T122605Z-youtube-thch` | THCH | 20 |
+| 3 | `20261008T122647Z-youtube-thc-o` | THC-O | 30 |
+| 4 | `20261008T125306Z-youtube-h4cbh` | H4CBH | 24 |
+| 5 | `20261008T125348Z-youtube-hhbd` | HHBD | 22 |
+| 6 | `20261008T125428Z-youtube-hhch` | HHCH | 20 |
+| 7 | `20261008T125501Z-youtube-crdp` | CRDP | 27 |
+| 8 | `20261008T125544Z-youtube-crdh` | CRDH | 21 |
+| 9 | `20261008T145348Z-youtube-cbn` | CBN | 24 |
+| | **合計** | | **215** |
+
+- 集計後は 7 + 9 = **16 run**。動画行は 182 + 215 = **397 行**（ただしこの 9 run の外にある
+  `20261004T132844Z-youtube-cbn-2026-09-01-to-2026-10-01`（v3 由来、50 行）は含めない。後述の別途確認事項）。
+- 「run 内重複排除」= 1 run の中の同じ `videoId` を 1 行に畳む（既存の規則）。
+  「run 間重複保持」= 別 run に同じ `videoId` が現れても畳まず、それぞれの `run_id` で残す（HHC の 2 run など）。
+- 「安定した再実行」= 同じ raw と同じコードで再実行したとき、行の集合だけでなく並び順も一致する（`videos.sort` のキーで固定）。
+
 ## 実データ（主証拠）
 
 raw は gitignored（`.gitignore` の `**/data/raw/*`、例外は `google_trends`）なので Delta worktree には無く、
@@ -97,9 +125,9 @@ owner は v3 由来 CBN run を「統合」と回答した。一方、一次 che
 
 ## 完了条件
 
-- [ ] `PUBLISHABLE_RUNS` に指定した run のみを、run 内 `videoId` 重複排除・安定ソートで出力する自動テストを追加する。
+- [ ] 上表の 9 run を example に、allowlist 指定 run のみを run 内 `videoId` 重複排除・安定ソートで出力する自動テストを追加する。
 - [ ] 同一 raw での繰り返し実行が同一 CSV を生成し、run 間で同じ動画があっても別観測として保持する。
-- [ ] 2026-10-08 の 9 run を追加し、`youtube_runs.csv` 16 run / `youtube_videos.csv` 397 行になることを検算する（CBN v3 run は含めない）。
+- [ ] 上表の 9 run（2026-10-08 収集・未登録）を追加し、`youtube_runs.csv` 16 run / `youtube_videos.csv` 397 行になることを検算する（一覧外の v3 由来 CBN run は含めない）。
 - [ ] `search_term` など未記録項目を推測せず空欄で表し、methodology に未記録の収集条件と処理方法を記載する。
 - [ ] README・`collection-summary.md`・`reproduce.py` の記述を成果物の実測に合わせ、監査スナップショットを再生成する。
 - [ ] CBN v3 run の扱いについて owner の確認を得て、#1 と本 issue の方針を一致させる。
