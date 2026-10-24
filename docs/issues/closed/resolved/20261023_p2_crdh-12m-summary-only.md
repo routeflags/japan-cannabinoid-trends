@@ -68,7 +68,6 @@ THC-O はソースが系列を返さない `NO_DATA` で別扱い。
 | 提出パラメータ | `tool=interest_over_time`、`terms=["CRDH"]`、`geo="JP"`、`timeframe="today 12-m"` |
 | 窓（`metadata/windows/2025-10-19_2026-10-18.json` が存在） | `window_id="2025-10-19_2026-10-18"`（他 3 化合物 THCV・H4CBH・HHBD の 2026-10-23 再取得と同一窓。窓をまたいだ比較をしない制約（§2.1.3）のため本窓を選ぶ） |
 | 計画書 | `metadata/plans/gt-12m-recollect-crdh.json` を新規作成（`gt-12m-recollect-thcv.json` と同型。現時点で同名計画書は無い） |
-| 費用 | 無料（`google-trends-mcp` アダプタの live 収集。既存 run の `environment.adapter` と同一手段） |
 | 成果物 | `data/raw/google_trends/<YYYYMMDDTHHMMSSZ-google-trends-crdh-12m>/` に `records_crdh.json`（53 週の `data` 配列）・`payload.json`・`run_metadata.json`・`artifact-manifest.json`（2026-10-23 再取得 3 run と同構成）。既存 `records_crdh_12m.json` は残す |
 
 再取得後は `gt-summary --timeframe 12m --compound CRDH` が `shape=series` で平均を算出できることを確認し、

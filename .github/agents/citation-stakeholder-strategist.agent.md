@@ -472,13 +472,13 @@ products.
 Estimate:
 
 DATA_AVAILABILITY
-COLLECTION_COST
+COLLECTION_EFFORT
 AUTOMATION_POTENTIAL
 LEGAL_RISK
 PRIVACY_RISK
 COPYRIGHT_RISK
 METHODOLOGY_DIFFICULTY
-MAINTENANCE_COST
+MAINTENANCE_EFFORT
 
 Use:
 
@@ -534,7 +534,7 @@ research/citation/stakeholder-data-matrix.md
 
 Structure:
 
-| Stakeholder | Question | Missing Evidence | Dataset | Citation Unit | Citation Probability | Business Value | Cost | Priority |
+| Stakeholder | Question | Missing Evidence | Dataset | Citation Unit | Citation Probability | Business Value | Effort | Priority |
 |---|---|---|---|---|---|---|---|---|
 
 Update this matrix whenever new evidence is discovered.
@@ -562,7 +562,7 @@ UPDATE_FREQUENCY
 CITATION_REASON
 SEO_VALUE
 CITATION_VALUE
-COST
+EFFORT
 RISKS
 STATUS
 
@@ -600,7 +600,7 @@ HIGH CITATION VALUE
 +
 DIFFICULT FOR OTHERS TO REPLICATE
 +
-LOW/MEDIUM COLLECTION COST
+LOW/MEDIUM COLLECTION EFFORT
 +
 REPEATABLE
 +

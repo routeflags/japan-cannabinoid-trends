@@ -32,11 +32,11 @@
 
 補足（`run_metadata.json` にある観測値）:
 
-| run | Apify run id | `usageTotalUsd` |
-|---|---|---:|
-| `20261008T165031Z-x-cbd-1year` | `oF6ROQ72XgwNk9oGV` | 0.0020 |
-| `20261008T165122Z-x-cbd-1m` | `AjPrtAfunbZhQwA3a` | 0.0020 |
-| `20261008T165330Z-x-cbd-latest10` | `9lUGIaA0aMabDyAy9` | 0.3058 |
+| run | Apify run id |
+|---|---|
+| `20261008T165031Z-x-cbd-1year` | `oF6ROQ72XgwNk9oGV` |
+| `20261008T165122Z-x-cbd-1m` | `AjPrtAfunbZhQwA3a` |
+| `20261008T165330Z-x-cbd-latest10` | `9lUGIaA0aMabDyAy9` |
 
 ## 2. 判定
 

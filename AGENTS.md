@@ -183,6 +183,39 @@ the observed data range. Never treat an observed range as the search condition.
 
 ---
 
+# Scope Exclusion: Cost
+
+The study does not measure or report what its collection costs. Cost is not an
+observation, not a derived value, and not a reproduction condition, so it has
+no place in a dataset, a specification, or a publication.
+
+Do not record monetary cost in any tracked artifact: no currency amounts, unit
+prices, budgets, billed totals, cost estimates, or free/paid pricing notes for
+a source, and no cost fields (`cost_usd`, `usageTotalUsd`, `costPerCompound`,
+`costEstimate`) in declarations, run records, registries, or configuration.
+
+The following remain allowed:
+
+- stating that a collection run is charged for and therefore needs owner
+  approval, without an amount (a safety condition, not a record);
+- handling payment or credit failures as request states (HTTP 402, exhausted
+  credits) in collector code and its error vocabulary;
+- monetary values that are observed research data in their own right:
+  statutory penalties, product prices, advertising metrics such as CPC. Those
+  belong to the dataset that defines them and follow its rules; they are not
+  this study's operating cost, and removing them would delete observations;
+- vendor price references kept to run a paid collector
+  (`.github/skills/apify-*`). They are tool references, not study records, and
+  must not be copied into `datasets/`, `docs/`, `research/`, or `metadata/`.
+
+Write effort and workload as 労力 / 工数 (time, labour), never as a cost
+figure.
+
+`tests/validation/test_cost_notation_ban.py` enforces the rule over tracked
+documents, data, and configuration.
+
+---
+
 # Run Identity
 
 Every collection execution should have a unique run identifier.

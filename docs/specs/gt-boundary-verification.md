@@ -63,7 +63,7 @@
 
 ### 4.1 計測器
 
-- 承認された MCP セッション（`google-trends` server = npm `google-trends-mcp`、MIT、API キー不要・無料）から
+- 承認された MCP セッション（`google-trends` server = npm `google-trends-mcp`、MIT、API キー不要）から
   `interest_over_time` を呼び、**verbatim の tool result** を capture する。
 - 本リポジトリは自らライブ収集を実行しない（`adapter.py` docstring）。実行はメンテナの承認後に限る。
 - Apify 等の有償・資格情報必須の経路は使わない。シークレットをファイルに書かない。

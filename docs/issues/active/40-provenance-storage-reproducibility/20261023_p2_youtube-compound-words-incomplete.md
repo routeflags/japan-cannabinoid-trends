@@ -46,16 +46,9 @@ Actor `gJvjeCYNraSfhIaNd`（`danek/youtube-search`）、1 run = 1 `search_term`�
 
 > `"required": ["search_term", "max_videos"]`（Input Schema、Build `lcBfQ1sbz5bx58c1X` 時点）
 > `| max_videos | ✅ | \`10\` (default 10, 1-100) | 取得上限。100超は要相談 (support@) |`
-> `> \`max_videos\` は **件数** (ページ数ではない) で課金も件数比例。`
 
-課金（同 SKILL）:
+`max_videos` は**件数**（ページ数ではない）。
 
-> `課金: **PAY_PER_EVENT** — \`Actor Start $0.00005\` + \`result $0.0005/件\` (FREE) → GOLD以上 \`$0.0002/件\``
-> `計算例: \`max_videos=10\` で10件取得 → \`0.00005 + 10×0.0005 = $0.00505\` (FREE)`
-> `| 予算超過防止 | \`max_videos\` を5-20に制限。100が上限, 1回で100件→ $0.05 (FREE) 程度。 |`
-
-8 語分の上限コスト（FREE、start 込み）: `max_videos` 50 → 1 run $0.02505 × 8 = **約 $0.20**、
-100 → 1 run $0.05005 × 8 = **約 $0.40**。GOLD 以上なら約 4 割（50 件 × 8 で約 $0.08）。
 既存 run の `max_videos` は methodology §2.3 の表が正本（CBD / THC 100、他 50）。比較可能性のため方針は既存に合わせる。
 
 ## 収集経路: パイプラインではなく外部収集 + `make stage`
@@ -95,7 +88,7 @@ Actor `gJvjeCYNraSfhIaNd`（`danek/youtube-search`）、1 run = 1 `search_term`�
 
 手順: methodology §2.3 に範囲限定の旨と理由を追記し、README の YouTube 列の「raw のみ」表示と整合させる
 （raw が実在するなら local 証跡として残し、追跡層には載せない。raw が無い語は「未収集」と読み替える）。
-帰結: コード変更なし・コストなし。ただし Google Trends 13 語 / X 7 語との被覆差は恒久的な制約として残り、
+帰結: コード変更なし。ただし Google Trends 13 語 / X 7 語との被覆差は恒久的な制約として残り、
 化合物間比較での YouTube エビデンスは 5 語に限定される。
 
 ## 文書更新の文案（README / methodology は編集権限外のため提案のみ）
@@ -141,7 +134,7 @@ Actor `gJvjeCYNraSfhIaNd`（`danek/youtube-search`）、1 run = 1 `search_term`�
 | `execution.status` / `returned_count` | ○ | run の SUCCEEDED → `success` 等。`returned_count` 省略時は artifacts 合計から導出される。`success` + 0 件は `record_count: 0` の artifact が必須（L1-09）。`pagination_exhausted` は nullable のため不明なら省略する（推測しない）。 |
 | `artifacts`（JSON 推奨） | ○ | danek dataset の JSON export を `records.json`（配列）として stage。schema `youtube-search-result-list-v1` + `json-record-reader` で件数導出可。CSV の場合は `youtube-dataset-csv-v1` + `csv-record-reader`（列名不問。header の整形式のみ検査）。`record_count` は宣言または導出（S8 が照合）。**JSON で取得すること**（§2 の理由）。 |
 | dedup 情報 | ✗ 欄なし | スキーマに重複排除の欄はない。重複排除は下流の `youtube_export` が `videoId` で行う。宣言時は `records_raw.json`（排除前）と `records.json`（排除後）の両者を残すか、排除前件数を `environment` に記録する運用を宣言に書く（`research-youtube-search` SKILL が 2 ファイル保存を規定）。 |
-| actor run/dataset ID・build・課金実績 | △ `environment` のみ | `environment` は free-form のため `actor_run_id` / `apify_dataset_id` / `actor_build` / `cost_usd` 等は記録可能（20261015 宣言の前例）。未確認値は書かない（`unknown` 捏造禁止）。 |
+| actor run/dataset ID・build | △ `environment` のみ | `environment` は free-form のため `actor_run_id` / `apify_dataset_id` / `actor_build` 等は記録可能（20261015 宣言の前例）。未確認値は書かない（`unknown` 捏造禁止）。 |
 
 L1 通過のために宣言文書に書くこと（チェックリスト）: ① `query_id` は 8 語とも登録済み（実測済み。未登録は exit 2）② `collector_id: youtube-apify-search` は登録済み（実測済み）③ artifact schema は登録済み reader のもの（JSON/CSV とも登録済みを実測。未登録は S9 で隔離）④ 時刻の ISO 形式と前後関係、run_id の path 安全・衝突なし ⑤ status と artifact の整合（L1-09: `success` に artifact 必須、0 件 `success` は `record_count: 0` の artifact）⑥ secrets 混入なし（L1-10）。
 
@@ -169,7 +162,6 @@ L1 通過のために宣言文書に書くこと（チェックリスト）: ①
 
 - `search_term` は `metadata/queries/query-registry.json` の `canonical_text` を実測して確定（`PYTHONPATH=src python3` で読取）。
 - `max_videos` は既存方針 CBD/THC=100・他=50。根拠は methodology §2.3 の表が正本であり、`youtube_runs.csv` の `video_rows`（CBD 22 / THC 25 / CBG 34 / HHC 28 / THCV 23。合計 182 を実測）が実績として整合する。8 語はすべて「他」に属するため 50。
-- 費用の上限: actor の課金額は追跡層（`collection-summary.md` §3・`youtube_runs.csv`）では確認できない。追跡層にあるのは請求実績（7 run 合計 ~$0.09）のみ。単価の正本は `apify-youtube-search` SKILL の記載（PAY_PER_EVENT: 起動 $0.00005 + $0.0005/件（FREE）/ $0.0002/件（GOLD+））。`max_videos=50` の上限は 1 run $0.02505（FREE）/ $0.01005（GOLD+）で、8 run 上限は約 $0.20 / 約 $0.08。methodology §2.3 のコスト目安（$0.050/$0.025）は起動費抜きの概算。
 - run-id 案: `research-youtube-search` SKILL 規定の `{TIMESTAMP}-youtube-{keyword-slug}`（小文字・空白→ハイフン）。日時部は実行時の UTC に置換する。
 
 | 語 | `search_term` | `query_id` | `max_videos` | run-id 案（日時部は実行時 UTC） |
@@ -188,7 +180,7 @@ L1 通過のために宣言文書に書くこと（チェックリスト）: ①
 ### 4. 収集後に必要な手順（担当つき）
 
 1. owner: トークン配置（値はコミットしない）。
-2. 実行者（owner 承認済み）: 8 語 × 1 run を同一 actor で外部実行（1 実行 1 キーワード。入力は `search_term` + `max_videos` のみ）。`run-status`（status / startedAt / finishedAt / usageTotalUsd）と dataset ID を控える。dataset は JSON で保存し、`videoId` で重複排除して `records_raw.json`（排除前）と `records.json`（排除後）を作る（`research-youtube-search` SKILL の手順）。
+2. 実行者（owner 承認済み）: 8 語 × 1 run を同一 actor で外部実行（1 実行 1 キーワード。入力は `search_term` + `max_videos` のみ）。`run-status`（status / startedAt / finishedAt）と dataset ID を控える。dataset は JSON で保存し、`videoId` で重複排除して `records_raw.json`（排除前）と `records.json`（排除後）を作る（`research-youtube-search` SKILL の手順）。
 3. 実行者: `staging-declaration-v1` を 1 語 1 文書で作成（§1 のチェックリスト通り）→ `make stage DECLARATION=<file>`（`.venv` が無い場合は `PYTHONPATH=src python3 -m collection.core.cli stage --declaration <file> --workspace . --datasets-root datasets --config-dir config --metadata-dir metadata`）→ `make adopt-all`。quarantine に落ちたら理由を確認し、宣言を修正する（payload は byte 不変）。
 4. owner: provenance レビュー後、`PUBLISHABLE_RUNS` 追加を承認する。
 5. 実装者（コード変更・別作業）: `src/processing/youtube_export.py` の `PUBLISHABLE_RUNS` に 8 run を追加し、テスト（`tests/processing/test_youtube_export.py`）を更新する → `python -m processing.cli youtube-export` で 2 表を再生成する（Makefile に target は無い）。

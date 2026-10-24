@@ -9,8 +9,8 @@
 | ソース | 本ファイルに書くもの | 正本 |
 |---|---|---|
 | Google Trends | 書かない（raw が追跡されているため全て再導出できる） | `data/raw/google_trends/`、[`docs/audits/gt-summary.json`](../../../../docs/audits/gt-summary.json)、[methodology.md](../../methodology.md) §2.1.2〜§2.1.4 |
-| X (Twitter) | 件数・費用（raw は Git 管理外のローカル証跡なので、これが唯一の追跡記録） | 本ファイル |
-| YouTube | 費用。件数は追跡 CSV と一致することを確認するだけにし、内訳は CSV を参照 | [`youtube_runs.csv`](youtube_runs.csv)（生成: `python -m processing.cli youtube-export`） |
+| X (Twitter) | 件数（raw は Git 管理外のローカル証跡なので、これが唯一の追跡記録） | 本ファイル |
+| YouTube | 書かない。件数は追跡 CSV と一致することを確認し、内訳も CSV を参照 | [`youtube_runs.csv`](youtube_runs.csv)（生成: `python -m processing.cli youtube-export`） |
 
 手書きのため `src/processing/reproduce.py` の `NON_REPRODUCIBLE` に
 `not_reproducible_from_repository` として宣言している。
@@ -29,18 +29,18 @@
 期間: `2026-09-01` 〜 `2026-10-01`。クエリは `{keyword} since:2026-09-01 until:2026-10-01`。
 件数は取得時点の値であり、シャドウバンや削除の影響を受けうる。raw はリポジトリ外（ローカル証跡のみ）。
 
-| キーワード | 件数 | maxPages | 費用（請求実績） |
-|-----------|:----:|:--------:|----------------:|
-| CBD | 60 | 3 | $0.152 |
-| THC | 60 | 3 | $0.152 |
-| CBG | 40 | 2 | $0.102 |
-| HHC | 40 | 2 | $0.102 |
-| THCV | 40 | 2 | $0.102 |
-| THC-O | 40 | 2 | $0.102 |
-| THCH | 36 | 2 | $0.092 |
-| **合計** | **316** | | **~$0.80** |
+| キーワード | 件数 | maxPages |
+|-----------|:----:|:--------:|
+| CBD | 60 | 3 |
+| THC | 60 | 3 |
+| CBG | 40 | 2 |
+| HHC | 40 | 2 |
+| THCV | 40 | 2 |
+| THC-O | 40 | 2 |
+| THCH | 36 | 2 |
+| **合計** | **316** | |
 
-計画時の目安は [methodology.md](../../methodology.md) §2.2。
+計画時のパラメータは [methodology.md](../../methodology.md) §2.2。
 
 ---
 
@@ -49,24 +49,10 @@
 - 公開集計は 7 run / 182 動画行（`youtube_runs.csv` の `video_rows` 合計と一致、error payload 0・unreadable 0）。
   run 別の内訳・収集時刻は [`youtube_runs.csv`](youtube_runs.csv)、動画行は
   [`youtube_videos.csv`](youtube_videos.csv)。
-- 費用（請求実績）: CBD $0.011 / THC $0.013 / CBG $0.017 / HHC $0.014 / THCV $0.012 /
-  CBD オイル $0.012 / THC オイル $0.014。**合計 ~$0.09**。
-  計画時の目安は [methodology.md](../../methodology.md) §2.3。
 
 ---
 
-## 4. コスト実績
-
-| ソース | 予算 | 実績 |
-|--------|------|------|
-| Google Trends | 無料 | 無料 |
-| X (Twitter) | $0.64 | ~$0.80 |
-| YouTube | $0.23 | ~$0.09 |
-| **合計** | **$0.87** | **~$0.89** |
-
----
-
-## 5. 制約事項
+## 4. 制約事項
 
 1. Google Trends はクエリ単位の相対指数（0-100）。単独系列の平均を化合物間で比較しない（[methodology.md](../../methodology.md) §2.1.2）。
 2. 低ボリューム語は閾値未満で系列が返らない。**欠測であって 0 観測ではない**（§2.1.3）。

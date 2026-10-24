@@ -417,7 +417,7 @@ def build_parser():
     parser.add_argument("published_after", nargs="?", default="2026-01-01")
     parser.add_argument("published_before", nargs="?", default="2026-02-01")
     parser.add_argument("max_items", nargs="?", type=int, default=50,
-                        help="取得上限件数（課金に直結。50-100推奨）")
+                        help="取得上限件数（50-100推奨）")
     parser.add_argument("--lang", default=os.environ.get("X_LANG", "ja"),
                         help="言語フィルタ (ISO 639-1)。空文字で無指定")
     parser.add_argument("--search-type", default="Latest",

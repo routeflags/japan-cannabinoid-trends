@@ -87,29 +87,22 @@ CBX study が `CBX リキッド` を Apify actor `gJvjeCYNraSfhIaNd`（danek/you
 
 これは公開集計層の変更であり、**publication gate の対象**。`make audit-publication` の再実行、件数の突合せ（processed ⇄ raw）、`methodology.md` §2.3・§6 と README キーワード表の更新、制限事項の文書化が必要。COL-030 §4.1 により、行単位の動画集計であっても公開レビュー承認までは公開しない。
 
-## コストと経路（13 リキッド run）
+## 経路（13 リキッド run）
 
-単価の根拠は `.github/skills/apify-youtube-search/SKILL.md`（actor `gJvjeCYNraSfhIaNd`）: 起動 `$0.00005`/回 + `$0.0005`/件（FREE）、GOLD 以上は `$0.0002`/件。
-
-| `max_videos` | 上限件数（13 run） | FREE 目安 | GOLD 目安 |
-|---:|---:|---:|---:|
-| 50 | 650 件 | **約 $0.33**（`650×0.0005 + 13×0.00005`） | 約 $0.13 |
-| 100 | 1300 件 | **約 $0.65**（`1300×0.0005 + 13×0.00005`） | 約 $0.26 |
-
-既存 YouTube 7 run の `collection-summary.md` §3.1 では `max_videos` 50（CBG/HHC/THCV/オイル2）と 100（CBD/THC）が混在。13 語の `max_videos` 方針は未決。
+既存 YouTube 7 run の `collection-summary.md` §3 では `max_videos` 50（CBG/HHC/THCV/オイル2）と 100（CBD/THC）が混在。13 語の `max_videos` 方針は未決。
 
 経路の制約:
 
 - YouTube 収集は **`collect --live` では実行できない**。`src/collection/adapters/youtube/apify_csv.py` の `YouTubeApifyCsvAdapter.collect()` は常に `LIVE_TRANSPORT_UNIMPLEMENTED` で失敗し、`request.py` は dry-run の input 計画のみで送信しない（fail-closed）。
 - 正規経路は CSV handover: 外部で actor を実行 → `build_csv_run` で `staging-declaration-v1` を作成 → `make stage DECLARATION=<file>` → `make adopt-all` → `youtube-export` 再生成。
-- actor 選択は未決。前例は `gJvjeCYNraSfhIaNd`（$0.50/1,000件）だが、現行パイプラインの採用 actor は `h7sDV53CddomktSi5`（streamers/youtube-scraper、日付フィルタ対応、`config/collectors.json` 登録、**$2.40/1,000件** = 約4.8倍）。同じ 13 run（上限 50/100）なら上限目安は約 $1.56 / $3.12。どちらを使うかは owner 判断。
-- いずれも Apify トークン・支払い方法・コストガード・明示的承認が前提。**本タスクでは収集を実行していない。**
+- actor 選択は未決。前例は `gJvjeCYNraSfhIaNd`（danek/youtube-search。入力は `search_term` + `max_videos` のみ）だが、現行パイプラインの採用 actor は `h7sDV53CddomktSi5`（streamers/youtube-scraper、日付フィルタ対応、`config/collectors.json` 登録）。**日付フィルタを取るか、入力の単純さを取るか**が選択の分岐で、どちらを使うかは owner 判断。
+- いずれも Apify トークンと明示的承認が前提。**本タスクでは収集を実行していない。**
 
 ## 選択肢
 
-1. **YouTube にリキッド 13 語を追加収集し、オイル 2 run は公開集計から外す**（語彙を一本化）。新規コストは上限約 $0.33（50件）〜 $0.65（100件、FREE・danek actor）。`youtube_videos.csv` は 132 行 + 新規 13 run 分になる。除外は上記の `EXCLUSION_REASONS` 変更 + gate 再実行。
-2. **リキッド 13 語を追加し、オイルは別軸として残す**（両方を公開）。新規コストは同じ。`youtube_videos.csv` は 182 行 + 新規分。ただし「オイル軸は n=2 語のみ・今後の追加なし」という偏った軸を公開物として維持する理由の文書化が必要。
-3. **語彙統一はせず、現状を methodology に明記する**（収集コスト $0）。プラットフォーム間で製品語が異なることを制限事項として記録し、比較時は語彙差を明示する。
+1. **YouTube にリキッド 13 語を追加収集し、オイル 2 run は公開集計から外す**（語彙を一本化）。`youtube_videos.csv` は 132 行 + 新規 13 run 分になる。除外は上記の `EXCLUSION_REASONS` 変更 + gate 再実行。
+2. **リキッド 13 語を追加し、オイルは別軸として残す**（両方を公開）。`youtube_videos.csv` は 182 行 + 新規分。ただし「オイル軸は n=2 語のみ・今後の追加なし」という偏った軸を公開物として維持する理由の文書化が必要。
+3. **語彙統一はせず、現状を methodology に明記する**。プラットフォーム間で製品語が異なることを制限事項として記録し、比較時は語彙差を明示する。
 
 ## 完了条件
 
@@ -149,10 +142,6 @@ CBX study が `CBX リキッド` を Apify actor `gJvjeCYNraSfhIaNd`（danek/you
 | HHBD リキッド | `HHBD リキッド` | `hhbd-liquid-ja` | 50 | `<UTC>-youtube-hhbd-リキッド` |
 | HHCH リキッド | `HHCH リキッド` | `hhch-liquid-ja` | 50 | `<UTC>-youtube-hhch-リキッド` |
 
-- 費用上限（単価の出所は `.github/skills/apify-youtube-search/SKILL.md`。PAY_PER_EVENT: 起動 $0.00005 + $0.0005/件（FREE）/ $0.0002/件（GOLD+）。Build `lcBfQ1sbz5bx58c1X` 時点）:
-  - 採用案（2×100 + 11×50 = 上限 750 件）: FREE **約 $0.38**（`750×0.0005 + 13×0.00005 = $0.37565`）、GOLD+ 約 $0.15。
-  - 参考（一律 50 = 上限 650 件）: FREE 約 $0.33、GOLD+ 約 $0.13。一律 100（上限 1300 件）: FREE 約 $0.65、GOLD+ 約 $0.26。
-  - 上限は `max_videos` 基準の上限であり、実費は取得件数比例（既存 7 run の請求実績は合計 ~$0.09。`collection-summary.md` §3・§4）。methodology §2.3 のコスト目安（$0.050/$0.025）は起動費抜きの概算（#6 と同じ注意）。
 - 13 run は 1 バッチ・逐次実行（1 実行 1 キーワード。SKILL 推奨の `wait` 45 秒 + 1 秒間隔）。分割の必要はない。429・失敗時は待機して再試行し、リトライ番号を宣言に記録する。失敗は `collection_failed` として残し、`observed_zero` に読み替えない（#6 と同一方針）。
 
 ### 2. オイル 2 run の除外: 適用可能な最小差分（未適用）
@@ -184,7 +173,7 @@ CBX study が `CBX リキッド` を Apify actor `gJvjeCYNraSfhIaNd`（danek/you
 2. 上記 4 行のコード変更 + `reproduce.py` notes の更新 + テスト更新。
 3. `python -m processing.cli youtube-export` で 2 表を再生成（Makefile に target は無い）。
 4. `make audit-publication` の再実行と件数の突合せ（processed ⇄ raw）。
-5. README のキーワード表・methodology §2.3（YouTube 表にリキッド 13 語を追加し、オイル 2 語を除外済みとして記載）・`collection-summary.md` §3・§4（7 run / 182 行 / ~$0.09 の更新）の更新。
+5. README のキーワード表・methodology §2.3（YouTube 表にリキッド 13 語を追加し、オイル 2 語を除外済みとして記載）・`collection-summary.md` §3（7 run / 182 行の更新）の更新。
 6. 監査スナップショットの再生成（`make audit-new-runs` / `make audit-snapshots` 等）。
 
 ### 3. リキッド run の公開可否と GT no-data 5 語の扱い
@@ -203,7 +192,7 @@ CBX study が `CBX リキッド` を Apify actor `gJvjeCYNraSfhIaNd`（danek/you
 ### 4. 収集後に必要な手順（担当つき。#6 と同一枠組み）
 
 1. owner: トークン配置（値はコミットしない）。
-2. 実行者（owner 承認済み）: 13 語 × 1 run を同一 actor（`gJvjeCYNraSfhIaNd`）で外部実行（1 実行 1 キーワード。入力は `search_term` + `max_videos` のみ）。`run-status`（status / startedAt / finishedAt / usageTotalUsd）と dataset ID を控える。dataset は JSON で保存し、`videoId` で重複排除して `records_raw.json`（排除前）と `records.json`（排除後）を作る。**CSV で取らない**（`youtube_export` は `*.json` しか読まない）。
+2. 実行者（owner 承認済み）: 13 語 × 1 run を同一 actor（`gJvjeCYNraSfhIaNd`）で外部実行（1 実行 1 キーワード。入力は `search_term` + `max_videos` のみ）。`run-status`（status / startedAt / finishedAt）と dataset ID を控える。dataset は JSON で保存し、`videoId` で重複排除して `records_raw.json`（排除前）と `records.json`（排除後）を作る。**CSV で取らない**（`youtube_export` は `*.json` しか読まない）。
 3. 実行者: `staging-declaration-v1` を 1 語 1 文書で作成（#6 §1 のチェックリスト通り。`date_filter` は danek actor に概念が無い旨を `limitations` に明示し、手書き宣言とする）→ `make stage DECLARATION=<file>` → `make adopt-all`。quarantine に落ちたら理由を確認し、宣言を修正する（payload は byte 不変）。
 4. owner: provenance レビュー後、`PUBLISHABLE_RUNS` への 13 run 追加を承認する。
 5. 実装者（コード変更・別作業）: §3 の差分で `PUBLISHABLE_RUNS` に 13 run を追加し、テスト更新つき → `youtube-export` で 2 表を再生成。

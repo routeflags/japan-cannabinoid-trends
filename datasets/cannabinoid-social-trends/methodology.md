@@ -24,7 +24,7 @@
 - **run-id**: `YYYYMMDDTHHMMSSZ-<内容>` 形式で一意に振番
   （2026-10-04 の初期 2 run は規約化以前の `YYYYMMDD-<内容>` 形式）
 - **成果物**: `records.json`（投稿 items リスト）+ `run_metadata.json`
-  （Apify run の `id` / `status` / `usageTotalUsd` / 開始終了時刻）
+  （Apify run の `id` / `status` / 開始終了時刻）
 
 収集パラメータの完全な記録は run ディレクトリ内の metadata に依存する。
 `run_metadata.json` が存在しない run（例: `20261008T102022Z-crdh`）では

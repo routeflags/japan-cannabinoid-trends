@@ -33,7 +33,7 @@ raw 収集データセット。自然実験（pre-post 比較 + 対照系列）�
   `cbg_control.json` — Apify Actor の items リスト（投稿単位:
   `tweet_id`, `screen_name`, `created_at`, `text`, `favorites` 等）
 - `run_metadata.json` — Apify Actor run のメタデータ
-  （`id`, `status`, `usageTotalUsd`, `startedAt`, `finishedAt`）
+  （`id`, `status`, `startedAt`, `finishedAt`）
 
 pre/post ファイルを持つ run は「規制前」「規制後」の 2 窓で収集し、
 `cbg_control.json` は**指定を受けていない CBG を対照系列**として同一方法で収集したもの

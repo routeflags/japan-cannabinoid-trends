@@ -57,7 +57,6 @@
         "actor_build": "0.0.313",
         "origin": "API",
         "requests": 239,
-        "cost_usd": "0.67",
         "payload_sha256": "98617d1c25f55329805dbd2a433e06979fc624fa836e137e139f7a13eed25f13",
         "export_filename": "dataset_youtube-scraper_2026-10-10_14-19-47-693.csv"
       }
@@ -117,7 +116,6 @@
         "actor_build": "0.0.313",
         "origin": "API",
         "requests": 417,
-        "cost_usd": "1.19",
         "payload_sha256": "7eece62b331248cf1ae28b8db39453ef5c2f4b39b625542784d0fe793d4b7c27",
         "export_filename": "dataset_youtube-scraper_2026-10-10_14-34-29-080.csv"
       }
@@ -177,7 +175,6 @@
         "actor_build": "0.0.313",
         "origin": "API",
         "requests": 482,
-        "cost_usd": "1.37",
         "payload_sha256": "cc2dfbf4f0249233b8e8fb188cae74670968708a33a9a24a9375e6d64aa199a1",
         "export_filename": "dataset_youtube-scraper_2026-10-10_14-44-21-126.csv"
       }
@@ -237,7 +234,6 @@
         "actor_build": "0.0.313",
         "origin": "API",
         "requests": 494,
-        "cost_usd": "1.40",
         "payload_sha256": "f644cb0315930882aea82731a05a0919996838e3fc7f25f18527e875a231599e",
         "export_filename": "dataset_youtube-scraper_2026-10-10_14-57-27-682.csv"
       }
@@ -297,7 +293,6 @@
         "actor_build": "0.0.313",
         "origin": "API",
         "requests": 372,
-        "cost_usd": "1.06",
         "payload_sha256": "2d9f0b1cab94631cedaf6eab5f63b682e3c62058a855bb0125497ef7c389ffca",
         "export_filename": "dataset_youtube-scraper_2026-10-10_16-49-15-671.csv"
       }
@@ -358,7 +353,6 @@
         "actor_build": "0.0.313",
         "origin": "API",
         "requests": 416,
-        "cost_usd": "1.18",
         "payload_sha256": "77aae4113ccbdb6de275315835a543a631cd44c16d32f1b77cbdbcd6433066e5",
         "export_filename": "dataset_youtube-scraper_2026-10-11_19-19-00-950.csv"
       }

@@ -31,8 +31,8 @@ Fail-closed rules (one rule, applied uniformly):
   the skill's filter-less example is the unbounded shape.  Emitting
   ``dateFilter="all"`` would invent actor behavior;
 - ``max_results`` / Shorts / streams counts, when given, are passed through
-  as integers only -- cost bounds belong to the still-blocked cost guard, so
-  no budget is enforced or implied here;
+  as integers only -- count limits belong to the still-blocked live-request
+  control (COL-032), so no limit is enforced or implied here;
 - channel-URL mode (``startUrls`` / ``oldestPostDate`` / ``sortVideosBy``)
   is never emitted: this planner is keyword-search-only.
 
@@ -40,7 +40,8 @@ Sending is out of scope: no token, no run start, no dataset fetch.  Live
 transport stays fail-closed (``LIVE_TRANSPORT_UNIMPLEMENTED`` in
 :mod:`collection.adapters.youtube.apify_csv`) until Apify cloud evidence
 (PRV-013: actor input / run / dataset corroboration), an owner-supplied
-token, and a cost guard are all present with explicit approval.
+token, and the live-request control (COL-032) are all present with explicit
+approval.
 """
 
 from __future__ import annotations
@@ -93,8 +94,8 @@ def _require_max_results(value):
     if isinstance(value, bool) or not isinstance(value, int) or value <= 0:
         raise YouTubeApifyRequestError(
             f"max_results must be a positive integer or be omitted "
-            f"(got {value!r}; cost bounds are unverified and belong to the "
-            "blocked cost guard, not this planner)"
+            f"(got {value!r}; count limits are unverified and belong to the "
+            "blocked live-request control, not this planner)"
         )
     return value
 

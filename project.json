@@ -241,20 +241,17 @@
       "x": {
         "languageFilter": "lang:ja",
         "queryFormat": "{compound} リキッド",
-        "actor": "cPYLH3QT9GyzKhB4S",
-        "costPerCompound": "~$0.10"
+        "actor": "cPYLH3QT9GyzKhB4S"
       },
       "youtube": {
         "languageFilter": null,
         "queryFormat": "{compound} リキッド",
         "actor": "gJvjeCYNraSfhIaNd",
-        "costPerCompound": "~$0.05",
         "note": "No language filter available. Japanese queries preferred to surface Japanese content."
       },
       "googleTrends": {
         "queryFormat": "{compound}",
-        "mcp": "google-trends",
-        "costPerCompound": "free"
+        "mcp": "google-trends"
       }
     },
     "compounds": {
@@ -408,12 +405,6 @@
         },
         "commonScaleSet": "Set D"
       }
-    },
-    "costEstimate": {
-      "x": "~$1.30 (13 compounds × $0.10)",
-      "youtube": "~$0.65 (13 compounds × $0.05)",
-      "googleTrends": "free",
-      "total": "~$1.95"
     }
   },
   "thcIsomers": {

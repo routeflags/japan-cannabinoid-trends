@@ -98,7 +98,6 @@ YYYYMMDDTHHMMSSZ-tiktok-cbx-liquid
   "apify_run_id": "whiuCNcuRxmDVWjLF",
   "apify_dataset_id": "gN4fgq80j5H58dA8C",
   "raw_record_count": 6,
-  "cost_usd": 0.017,
   "collector": "social-media-operations",
   "collector_version": "1.0"
 }
@@ -164,18 +163,18 @@ japan-cannabinoid-trends/datasets/cbx-social-trends/data/raw/tiktok/<run-id>/
 |------|------|
 | TikTok の description 空 | API バージョン確認、別 Actor への切替検討 |
 | クエリ非決定性 | 複数回収集、run-id で区別 |
-| 課金超過 | limit で制限、都度コスト確認 |
+| 取得上限超過 | limit で制限 |
 
 過去に想定していた Instagram のシャドウバン対策（クエリ多様化）は、2026-10-01 の
 定点観測廃止により対象外（§2.1）。
 
 ---
 
-## 7. コスト分担
+## 7. 運用の分担
 
 | 項目 | 負担 |
 |------|------|
-| Apify 課金 | social-media-operations（データ所有者） |
+| 収集の実行 | social-media-operations（データ所有者） |
 | ストレージ | japan-cannabinoid-trends（共有先） |
 | 人手 | 双方（エクスポート・コピー） |
 

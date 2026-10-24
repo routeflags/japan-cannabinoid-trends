@@ -78,33 +78,33 @@
 
 **保存先:** `datasets/cannabinoid-raw-collection/data/raw/x/`
 
-| キーワード | 期間 | section | maxPages | コスト目安 |
-|-----------|------|---------|----------|-----------|
-| CBD | 2026-09-01 〜 2026-10-01 | latest | 3 | $0.152 |
-| THC | 2026-09-01 〜 2026-10-01 | latest | 3 | $0.152 |
-| CBG | 2026-09-01 〜 2026-10-01 | latest | 2 | $0.077 |
-| HHC | 2026-09-01 〜 2026-10-01 | latest | 2 | $0.077 |
-| THCV | 2026-09-01 〜 2026-10-01 | latest | 2 | $0.077 |
-| THC-O | 2026-09-01 〜 2026-10-01 | latest | 2 | $0.052 |
-| THCH | 2026-09-01 〜 2026-10-01 | latest | 2 | $0.052 |
+| キーワード | 期間 | section | maxPages |
+|-----------|------|---------|----------|
+| CBD | 2026-09-01 〜 2026-10-01 | latest | 3 |
+| THC | 2026-09-01 〜 2026-10-01 | latest | 3 |
+| CBG | 2026-09-01 〜 2026-10-01 | latest | 2 |
+| HHC | 2026-09-01 〜 2026-10-01 | latest | 2 |
+| THCV | 2026-09-01 〜 2026-10-01 | latest | 2 |
+| THC-O | 2026-09-01 〜 2026-10-01 | latest | 2 |
+| THCH | 2026-09-01 〜 2026-10-01 | latest | 2 |
 
-**合計:** ~240件 / ~$0.64
+**合計:** ~240件
 
 ### 3.3 YouTube
 
 **保存先:** `datasets/cannabinoid-raw-collection/data/raw/youtube/`
 
-| キーワード | max_videos | コスト目安 |
-|-----------|-----------|-----------|
-| CBD | 100 | $0.050 |
-| THC | 100 | $0.050 |
-| CBG | 50 | $0.025 |
-| HHC | 50 | $0.025 |
-| THCV | 50 | $0.025 |
-| CBD オイル | 50 | $0.025 |
-| THC オイル | 50 | $0.025 |
+| キーワード | max_videos |
+|-----------|-----------|
+| CBD | 100 |
+| THC | 100 |
+| CBG | 50 |
+| HHC | 50 |
+| THCV | 50 |
+| CBD オイル | 50 |
+| THC オイル | 50 |
 
-**合計:** 450件 / ~$0.23
+**合計:** 450件
 
 ---
 
@@ -135,18 +135,7 @@ datasets/cannabinoid-raw-collection/
 
 ---
 
-## 5. コスト見積
-
-| ソース | コスト |
-|--------|--------|
-| Google Trends | **無料** |
-| X (Twitter) | **$0.64** |
-| YouTube | **$0.23** |
-| **合計** | **~$0.87** |
-
----
-
-## 6. 実行ステップ
+## 5. 実行ステップ
 
 ### Step 1: プラン準備
 
@@ -154,7 +143,7 @@ datasets/cannabinoid-raw-collection/
 - [ ] `README.md` 作成
 - [ ] `methodology.md` 作成
 
-### Step 2: Google Trends 収集（無料）
+### Step 2: Google Trends 収集
 
 - [ ] CBD（単独 + オイル/リキッド）
 - [ ] THC（単独 + オイル）
@@ -166,7 +155,7 @@ datasets/cannabinoid-raw-collection/
 - [ ] 比較セットA（CBD, THC, CBG, HHC, THCV）
 - [ ] 比較セットB（THC-O, THCH, CBD オイル, THC オイル, HHC オイル）
 
-### Step 3: X (Twitter) 収集（~$0.64）
+### Step 3: X (Twitter) 収集
 
 - [ ] CBD
 - [ ] THC
@@ -176,7 +165,7 @@ datasets/cannabinoid-raw-collection/
 - [ ] THC-O
 - [ ] THCH
 
-### Step 4: YouTube 収集（~$0.23）
+### Step 4: YouTube 収集
 
 - [ ] CBD（100件）
 - [ ] THC（100件）
@@ -197,7 +186,6 @@ datasets/cannabinoid-raw-collection/
 - [ ] Google Trends スコア範囲確認（0-100）
 - [ ] X/YouTube 件数確認
 - [ ] キーワード含有率確認
-- [ ] コスト実績確認
 
 ### Step 7: ドキュメント
 
@@ -240,7 +228,6 @@ datasets/cannabinoid-raw-collection/
 | **多義語** | CBD, THC は高頻度検索語。コンテキスト分析が必要 |
 | **レート制限** | Google Trends 429 エラー時は 2-5 分待機 |
 | **シャドウバン** | X は敏感キーワード（THC 等）で 0 件になる可能性あり |
-| **コスト管理** | 各ソースの usageTotalUsd を都度確認 |
 | **COI 開示** | 研究報告時は商業関係を明示 |
 | **比較可能性** | Google Trends は相対指数、X/YouTube は絶対件数。直接比較不可 |
 

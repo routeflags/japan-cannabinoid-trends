@@ -93,13 +93,13 @@ capture は「承認された MCP セッションが得た **verbatim の tool r
 
 > **D1: ISS-20261015-GT-001 のライブ境界計測を、`docs/specs/gt-boundary-verification.md` §4 の手順どおり実行してよいか。**
 >
-> - 対象: `google-trends-mcp`（npm, MIT, API キー不要, 無料）、geo=JP、term=`CBX`（登録クエリ `cbx-general-ja`）。
+> - 対象: `google-trends-mcp`（npm, MIT, API キー不要）、geo=JP、term=`CBX`（登録クエリ `cbx-general-ja`）。
 > - 規模: 4 timeframe × 2 UTC 日 = 8 tool call（+ 429 時の backoff 再試行）。1 パス目と 2 パス目は 7 日以上空ける。
 > - 保存先: `cbx-search-trends`（既存 study）の `data/raw/google_trends/` に catalog。
 > - 承認する場合: 手順実行 → `boundary-report` が `eligible=true` を出せば、**別コミット**で昇格（手続きは spec §6。本 issue はライブ実行後に `RESOLVED` へ）。
 > - 承認しない場合: `exact=false` を継続し、その理由と見直し条件を GT-001 に記録（issue は `PENDING` のまま）。
 
-補足: 実行コストは約 8 call / 無料。レート制限対策として call 間隔を空ける（既存記録: 429 後 2〜5 分の backoff で回復）。
+補足: 実行は約 8 call。レート制限対策として call 間隔を空ける（既存記録: 429 後 2〜5 分の backoff で回復）。
 
 ## 6. 設計判断と根拠（recon）
 
@@ -253,7 +253,7 @@ timeframe 別サマリ（observed）:
 前提:
 
 - メンテナの承認（D1、§5）。
-- 承認済み MCP セッション（`google-trends` サーバ = npm `google-trends-mcp`、無料・キー不要）。
+- 承認済み MCP セッション（`google-trends` サーバ = npm `google-trends-mcp`、キー不要）。
   本作業環境では `node v26.8.1` / `npm` / `npx` の存在のみ確認（ライブ呼び出しはしていない）。
 - ネットワーク。所要は約 8 tool call + 429 時の backoff。2 パス目は 7 日以上後。
 
@@ -331,7 +331,7 @@ commit `6d1c624` を独立 worktree・独自スクリプトで検証した（リ
 
 | 項目 | 値 |
 |---|---|
-| 計測器 | `google-trends-mcp@0.1.1`（MIT、API キー不要・無料）を MCP stdio セッションで起動（`collection.adapters.google_trends.mcp_session`） |
+| 計測器 | `google-trends-mcp@0.1.1`（MIT、API キー不要）を MCP stdio セッションで起動（`collection.adapters.google_trends.mcp_session`） |
 | 行列 | term `CBX`（登録クエリ `cbx-general-ja`）/ geo `JP` / `today 1-m`, `today 3-m`, `today 12-m`, `today 5-y` |
 | capture manifest | `manifest.json`（ワークスペース外。spec §4.3 により証拠の正本ではない）、sha256 `f39995eb24e3008367ee776b6763037aa704c1a5594f1c413b5bb4410bcdecd8`、絶対パスは記録しない（一時ディレクトリ） |
 | 429 / retry | なし（4 call すべて 1 回で成功、`isError` なし） |
@@ -386,7 +386,7 @@ python -m collection.core.cli adopt --staged .staging/<run-id>   # 4 run
    from collection.adapters.google_trends.mcp_session import McpStdioSession
    from datetime import datetime, timezone
 
-   session = McpStdioSession()  # google-trends-mcp@0.1.1（MIT、キー不要・無料）
+   session = McpStdioSession()  # google-trends-mcp@0.1.1（MIT、キー不要）
    session.start()
    try:
        for timeframe in ("today 1-m", "today 3-m", "today 12-m", "today 5-y"):

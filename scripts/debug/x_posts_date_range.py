@@ -387,7 +387,7 @@ def build_parser():
     parser.add_argument("published_after", nargs="?", default="2026-01-01")
     parser.add_argument("published_before", nargs="?", default="2026-02-01")
     parser.add_argument("max_items", nargs="?", type=int, default=50,
-                        help="取得上限件数（課金に直結。50-100推奨）")
+                        help="取得上限件数（50-100推奨）")
     parser.add_argument("--db-path", default=os.environ.get("DB_PATH", DEFAULT_DB_PATH))
     parser.add_argument("--env-file",
                         default=os.environ.get("APIFY_ENV", DEFAULT_APIFY_ENV),

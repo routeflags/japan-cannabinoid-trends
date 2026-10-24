@@ -14,8 +14,8 @@ COL-030 boundary (no exceptions): nothing here reads credentials, issues a
 live request, or handles a response body.  No tweet IDs / user IDs / text /
 URLs / per-post records exist anywhere in this package — only request-side
 facts (endpoint, query text, absolute bounds).  Live collection stays with
-``ISS-20261015-COL-031`` (collector registration), cost control with
-``ISS-20261015-COL-032``, and request-only evidence with
+``ISS-20261015-COL-031`` (collector registration), live-request control
+(count limits) with ``ISS-20261015-COL-032``, and request-only evidence with
 ``ISS-20261015-PRV-033``.
 
 Nothing in this package is registered in ``collection.adapters`` dispatch

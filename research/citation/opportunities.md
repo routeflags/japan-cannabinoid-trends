@@ -23,7 +23,7 @@
 | **CITATION_REASON** | Journalists need "when did X appear in Japan" numbers; policymakers need search-emergence framing; academics need structured JP NPS-adjacent series. Easy validation sentences. |
 | **SEO_VALUE** | MEDIUM — English compound+Japan queries underserved |
 | **CITATION_VALUE** | HIGH — originality + scarcity + media/policy utility |
-| **COST** | LOW — data already collected; primarily curation, English writeup, chart, method note |
+| **EFFORT** | LOW — data already collected; primarily curation, English writeup, chart, method note |
 | **RISKS** | Google Trends relative-index misuse; polysemy (CBD/THC); COI perception if framed as promoting CBX-adjacent compounds; 5-year left-censoring for legacy compounds |
 | **STATUS** | **PRIORITIZED** |
 
@@ -42,12 +42,12 @@
 | **PROPOSED_DATA** | Preregistered checklist scored on public product pages / packaging photos: COA link present, COA current (<12 months), batch ID linkable, quantified major cannabinoids, THC residual stated, manufacturer identifiable, Japanese-language ingredient disclosure. Publish per-product scores + aggregate rates with inclusion criteria. |
 | **DATA_SOURCE** | Public e-commerce and brand product pages (manual/scripted collection of public listing data only; no login, no PII, no scraping against ToS where prohibited — prefer manual sample of N=60–100). |
 | **METHOD** | Descriptive prevalence statistics + inter-rater agreement if multi-coder; fixed checklist; publish inclusion frame; report confidence intervals as descriptive only (non-probability sample caveat). |
-| **OUTPUT** | Survey report (EN+JA), aggregate CSV (product-level scores without proprietary pricing if needed), methodology + preregistration note. |
+| **OUTPUT** | Survey report (EN+JA), aggregate CSV (product-level scores without provider-restricted figures if needed), methodology + preregistration note. |
 | **UPDATE_FREQUENCY** | Semiannual or annual |
 | **CITATION_REASON** | Highest historical citation density for consumer-safety market audits; concrete "% COA available" numbers journalists and NGOs reuse. |
 | **SEO_VALUE** | MEDIUM–HIGH |
 | **CITATION_VALUE** | HIGH |
-| **COST** | MEDIUM — sampling frame design, collection labor, COI controls |
+| **EFFORT** | MEDIUM — sampling frame design, collection labor, COI controls |
 | **RISKS** | **High COI** — must exclude publisher's own products from primary rate or report stratified results; competitor challenges on sample bias; legal care around comparative claims |
 | **STATUS** | **RESEARCHING** (design stage) |
 
@@ -71,7 +71,7 @@
 | **CITATION_REASON** | Creates recurring citation targets; journalists cite "as of QX 2026" numbers. |
 | **SEO_VALUE** | MEDIUM |
 | **CITATION_VALUE** | MEDIUM–HIGH (grows with series age) |
-| **COST** | LOW–MEDIUM after pipeline is stable |
+| **EFFORT** | LOW–MEDIUM after pipeline is stable |
 | **RISKS** | Must not become promotional; must keep COI disclosure and separate market data from product marketing |
 | **STATUS** | **DISCOVERED** |
 
@@ -95,7 +95,7 @@
 | **CITATION_REASON** | Unique Japan-specific timing evidence for NPS/market-emergence literature. |
 | **SEO_VALUE** | LOW–MEDIUM |
 | **CITATION_VALUE** | MEDIUM–HIGH (academic) |
-| **COST** | MEDIUM — event sourcing is labor-intensive |
+| **EFFORT** | MEDIUM — event sourcing is labor-intensive |
 | **RISKS** | Causal overreach; event-source bias; COI if events selected to flatter CBX narrative |
 | **STATUS** | **DISCOVERED** |
 
@@ -119,7 +119,7 @@
 | **CITATION_REASON** | Lowers barrier to academic reuse of existing assets. |
 | **SEO_VALUE** | MEDIUM |
 | **CITATION_VALUE** | MEDIUM (enables other citations) |
-| **COST** | LOW |
+| **EFFORT** | LOW |
 | **RISKS** | Overclaiming market share from relative Trends scores |
 | **STATUS** | **RESEARCHING** |
 

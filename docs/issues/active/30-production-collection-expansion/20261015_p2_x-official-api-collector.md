@@ -32,7 +32,7 @@ Apify 経由の運用知識（skill / notes）だけがあり、パイプライ�
 ## 対応方針
 
 - **owner 決定（2026-10-15）:** X は live request へ進まない。当面は mock / dry-run と
-  request-only evidence の実装に限定し、実課金や X 元投稿データのリポジトリ保存を伴う経路は
+  request-only evidence の実装に限定し、外部への実リクエストや X 元投稿データのリポジトリ保存を伴う経路は
   禁止する。
 - `collection.core.contracts` の adapter 契約に従う X 用 adapter（transport = 公式 API）を実装し、
   `config/collectors.json` に新しい collector（例 `x-api-v2`）を **`unverified` で追加**する
@@ -44,21 +44,21 @@ Apify 経由の運用知識（skill / notes）だけがあり、パイプライ�
 - 既存 Apify 資産の扱いを記録する: registry の旧 collector は履歴参照として残す（`legacy` /
   `deprecated` 相当）、skill / notes には「公式 API へ移行済み」の日付付き注記を入れる。
 - 実取得で得た X 元投稿データはリポジトリ artifact にしない。既存 core に接続する場合も、採用対象は機密除去済み request-only evidence と派生集計に限り、raw を手書きしない。
-- 費用・予算は `ISS-20261015-COL-032`、証跡は `ISS-20261015-PRV-033` が受け持つ。
+- 件数上限と実行制御は `ISS-20261015-COL-032`、証跡は `ISS-20261015-PRV-033` が受け持つ。
 
 ## 完了条件
 
 - [ ] X 公式 API v2 の adapter + collector 登録（`validate-registries` green を維持）
-- [ ] ページネーション・レート制限・エラー処理のモックテスト（実課金を発生させない。指示書 §8）
+- [ ] ページネーション・レート制限・エラー処理のモックテスト（外部への実リクエストを発生させない。指示書 §8）
 - [ ] 絶対期間（`start_time` / `end_time`）の可否を実測で registry に反映
 - [ ] 既存 Apify X 資産の扱い（履歴参照 / 注記）の記録
 - [ ] 1 run 以上の dry-run / mock / request-only evidence 経路を現行契約で検証（X 元投稿データはリポジトリに保存しない）
 
 ## 依存
 
-- `ISS-20261015-COL-032`（費用管理なしでは実取得に進まない）
+- `ISS-20261015-COL-032`（live request 制御なしでは実取得に進まない）
 - `ISS-20261015-PRV-033`（request-only evidence なしの実取得は完了条件を満たさない）
-- owner 決定済み: `ISS-20261015-COL-030` U2 の当面値は **0 円 / live request 禁止**。
+- owner 決定済み: `ISS-20261015-COL-030` U2 の当面値は **live request 禁止**。
 - 未確定: `ISS-20261015-COL-030` U3（サンプリング条件）。live 実行は別途 owner 承認まで行わない。
 
 ## 対応記録（2026-10-15）

@@ -170,7 +170,8 @@ L2 が `not_comparable` になることはある。
 - `environment` のパイプライン所有キー（`adapter` / `collection_core_version` /
   `adapter_contract_version` / `runtime_version` / `code_commit`）はパイプラインが
   書く。宣言側は収集固有の詳細を足せるだけで、上書きできない（`collect` と同一規則。
-  `code_commit` はワークスペースが git checkout のときだけ記録する）。
+  `code_commit` はワークスペースが git checkout のときだけ記録する）。費用の項目
+  （`cost_usd` など）は置かない（`AGENTS.md` Scope Exclusion: Cost）。
 - **artifact の中身は検査しない**: 宣言された `record_count` は L1 の storage
   contract が登録 reader と突き合わせる（S8）。同じ規則を 2 実装しない。
 - payload は **byte 単位でコピー**し、manifest の SHA-256 / byte 長はディスク上の

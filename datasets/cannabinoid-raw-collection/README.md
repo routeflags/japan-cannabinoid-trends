@@ -50,11 +50,11 @@
 
 ## データソース
 
-| ソース | ツール | コスト | 状態 |
-|--------|--------|--------|------|
-| Google Trends | google-trends-mcp 0.1.1（`collection.core.cli collect --live`） | 無料 | ✅ 5年 13/13 化合物・12ヶ月 12/13（欠測は §2.1.3） |
-| X (Twitter) | Apify `cPYLH3QT9GyzKhB4S` | ~$0.80 | ✅ 7 化合物 |
-| YouTube | Apify `gJvjeCYNraSfhIaNd` | ~$0.09 | ✅ 7 検索語 |
+| ソース | ツール | 状態 |
+|--------|--------|------|
+| Google Trends | google-trends-mcp 0.1.1（`collection.core.cli collect --live`） | ✅ 5年 13/13 化合物・12ヶ月 12/13（欠測は §2.1.3） |
+| X (Twitter) | Apify `cPYLH3QT9GyzKhB4S` | ✅ 7 化合物 |
+| YouTube | Apify `gJvjeCYNraSfhIaNd` | ✅ 7 検索語 |
 
 > **関連データセットとの役割分担**: 本データセットは**トレンド分析**（複数プラットフォームの出現・時系列分布）が目的。
 > YouTube 検索結果の**一貫性・再現性検証**は [`datasets/youtube-consistency/`](../youtube-consistency/) が担当しており、

@@ -60,8 +60,8 @@ class XApiDryRunAdapter:
     Dry-run surface: :meth:`plan_request` compiles a collection plan into the
     request parameters (via :mod:`collection.adapters.x.request`) without
     touching the network.  :meth:`collect` refuses — live X requests are
-    banned until the cost guard (COL-032) and request-only evidence (PRV-033)
-    pass with explicit owner approval (COL-030 U2: 0 yen / live forbidden).
+    banned until the live-request control (COL-032) and request-only evidence
+    (PRV-033) pass with explicit owner approval (COL-030 U2: live forbidden).
     """
 
     source_id = SOURCE_ID
@@ -102,9 +102,9 @@ class XApiDryRunAdapter:
         """
         message = (
             "live X collection is not implemented and is currently banned: "
-            "repository execution is limited to mock/dry-run until the cost "
-            "guard (COL-032) and request-only evidence (PRV-033) pass with "
-            "explicit owner approval (COL-030 U2)"
+            "repository execution is limited to mock/dry-run until the "
+            "live-request control (COL-032) and request-only evidence "
+            "(PRV-033) pass with explicit owner approval (COL-030 U2)"
         )
         return CollectionResult(
             raw={

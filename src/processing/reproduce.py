@@ -423,9 +423,9 @@ NON_REPRODUCIBLE: dict[str, NonReproducible] = {
     "datasets/cannabinoid-raw-collection/data/processed/collection-summary.md": NonReproducible(
         reason=(
             "Hand-written collection record for the source-side totals that cannot be "
-            "recomputed: the X (316 items) count and the billed cost of both sources. "
-            "YouTube counts are mirrored from youtube_runs.csv and Google Trends values "
-            "are not copied here at all (docs/audits/gt-summary.json is their source)."
+            "recomputed: the X (316 items) count. YouTube counts are mirrored from "
+            "youtube_runs.csv and Google Trends values are not copied here at all "
+            "(docs/audits/gt-summary.json is their source)."
         ),
         missing_inputs=(
             "X and YouTube raw collections for the 2026-10-02 run (not in the "

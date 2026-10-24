@@ -121,7 +121,7 @@
       "objective": "ドメイン上の「生産」パイプラインを Google Trends 以外の collection / window / staging へ拡張する。",
       "exit_criteria": [
         "非 GT collector / window compiler の契約と失敗モードが文書化・実装される",
-        "X official API は request-only evidence と cost control を持つまでは実収集しない",
+        "X official API は request-only evidence と live request 制御を持つまでは実収集しない",
         "new-run tracking policy と legacy label year defect が検証ルールに反映される"
       ],
       "issue_count": 6,
@@ -156,7 +156,7 @@
           "id": "ISS-20261015-COL-032",
           "priority": "P2",
           "status": "OPEN",
-          "path": "docs/issues/active/30-production-collection-expansion/20261015_p2_x-api-cost-control.md"
+          "path": "docs/issues/active/30-production-collection-expansion/20261015_p2_x-live-request-control.md"
         },
         {
           "id": "ISS-20261015-COL-031",

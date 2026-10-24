@@ -11,7 +11,6 @@ description: |
 Apify Actor `cPYLH3QT9GyzKhB4S`（patient_discovery/twitter-search）を使って、X (Twitter) の投稿をキーワード検索で取得する。
 
 - Actor: `cPYLH3QT9GyzKhB4S` / patient_discovery/twitter-search — Twitter Search Scraper (No Login, Cookieless)
-- 課金: **PAY_PER_EVENT** — `Actor Start $0.002` + `result $0.0025/件` (FREE)
 - 認証: `.env.d/apify.env` の `APIFY_TOKEN`
 
 ## トリガー
@@ -149,15 +148,6 @@ collect_month 2026 7
 | `replies` | 返信数 |
 | `url` | ツイートURL |
 
-## 費用管理
-
-| 項目 | コスト |
-|------|--------|
-| Actor Start | $0.002/回 |
-| 取得1件 | $0.0025/件 |
-| 月次データ（100件想定） | $0.002 + 100×$0.0025 = $0.252 |
-| 5ヶ月分（500件想定） | 約$1.26 |
-
 ## トラブルシューティング
 
 | 症状 | 原因 | 対処 |
@@ -169,7 +159,7 @@ collect_month 2026 7
 
 ## 重要な教訓
 
-1. **`chargedEventCounts` を信用してはいけない** — 課金フィールドであり、データ件数を正確に反映しない場合がある
+1. **`chargedEventCounts` を信用してはいけない** — 取得件数を正確に反映しない場合がある
 2. **必ずデータセットの中身を確認する** — `get-dataset-items` で実際の件数を確認してから判断する
 3. **推測を事実として扱わない** — 「0件」だから「ブロックされている」とは限らない
 4. **日付指定は `query` 内に書く** — Actor に専用パラメータはない

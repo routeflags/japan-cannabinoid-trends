@@ -16,7 +16,7 @@ Transports:
   the fixture does not describe (no fabricated responses);
 - :class:`SessionMcpTransport` - the live path.  It only works when an
   approved MCP session callable is injected; this repository does not execute
-  live collection on its own (cost / rate limits / credentials).
+  live collection on its own (rate limits / credentials).
 """
 
 from __future__ import annotations

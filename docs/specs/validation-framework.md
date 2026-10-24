@@ -464,7 +464,7 @@ Phase 1 監査のとおり、リポジトリには**実在する JSON Schema フ
   - `collection-plan-v1` への adapter 向け任意フィールド追加（後方互換。
     既存 plan 文書の判定は不変 — `test_collection_plan.py`）。
 - **未実施（親・ユーザーの判断事項）**:
-  - ライブ収集（課金・レート制限・資格情報）の実行と実レスポンスでの契約照合。
+  - ライブ収集（レート制限・資格情報）の実行と実レスポンスでの契約照合。
   - 既存 shell（`apify_run.sh` 等）・skill（`research-google-trends` 等）の
     G1 フローへの移行（移行パスは `collection.core.cli adopt`）。
   - Quarantine の正式な運用（保持期間・アクセス制御・レビュー手順）。

@@ -35,7 +35,7 @@ metadata に query / observation period が記録されていない run もあ�
 
 - raw ファイルは変更しない。
 - 既存 metadata、collection log、Actor run 情報で query と期間を検証し、確認できない値は unknown とする。
-- 必要な場合のみ、費用・取得条件・API制約を事前に明示した別 run として再収集を提案する。
+- 必要な場合のみ、取得条件・API制約を事前に明示した別 run として再収集を提案する。
 - 既存の 0 件 run を、根拠なく `observed_zero` と扱わない。
 
 ## 完了条件

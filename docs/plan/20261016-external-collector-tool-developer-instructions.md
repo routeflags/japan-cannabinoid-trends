@@ -172,7 +172,6 @@ gJvjeCYNraSfhIaNd / danek/youtube-search
 | keyword search | `search_term` 必須 | keyword / query を受けて動画検索 |
 | max videos | `max_videos` 必須、上限100 | 取得上限を明示し metadata に保存 |
 | output fields | videoId、title、channel、duration、views、thumbnail、badges 等 | 取得できる範囲を raw payload と parsed record の両方で保存 |
-| cost tracking | Apify run の `usageTotalUsd` | 有料 backend の場合は cost / usage を metadata に保存 |
 | API fallback | MCP不調時に Apify REST API | backend 実装を抽象化し、MCP / REST を選べるようにする |
 
 注意:
@@ -338,7 +337,6 @@ datasets/<study-id>/data/raw/<source>/<run-id>/
 | `deduplicated_record_count` | if deduped | dedupe 後 count |
 | `status` | yes | `observed_nonzero` / `observed_zero` / `missing` / `collection_failed` / `partial` / `unknown` |
 | `errors` | when failure | error code / message。秘密情報は含めない |
-| `cost` | if paid backend | usageTotalUsd / quota units |
 
 ### 5.3 Google Trends record
 
@@ -467,7 +465,7 @@ collector-tool youtube search --backend apify-scraper --query ... --date-filter 
 skill には次を残す。
 
 - backend 選択基準
-- 料金・quota の注意
+- quota の注意
 - 相対日付と絶対日付の違い
 - public / private / redistribution の注意
 - output の読み方
@@ -605,7 +603,7 @@ APIFY_TOKEN=
 
 - apify-youtube-search。
 - apify-youtube-scraper。
-- cost / actor run id / dataset id logging。
+- actor run id / dataset id logging。
 
 受け入れ条件:
 

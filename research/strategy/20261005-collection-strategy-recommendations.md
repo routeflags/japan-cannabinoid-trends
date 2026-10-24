@@ -49,7 +49,7 @@ The recommendations draw on established frameworks in computational social scien
 ### Five Key Recommendations
 
 **1. Decouple YouTube collection strategy by research goal: Apify for discovery, API for longitudinal depth.**
-The evidence suggests that the YouTube Data API v3's 100-search/day quota fundamentally constrains Japanese keyword collection, while the Apify actor (`gJvjeCYNraSfhIaNd`) offers per-request billing without quota limits. Best practices indicate that Japanese-language cannabinoid content discovery should use Apify (unlimited queries, $0.0005/item), while longitudinal time-series tracking of specific queries (e.g., CBX リキッド) should use the YouTube API's `publishedAfter`/`publishedBefore` parameters across multiple days. Neither method alone is sufficient.
+The evidence suggests that the YouTube Data API v3's 100-search/day quota fundamentally constrains Japanese keyword collection, while the Apify actor (`gJvjeCYNraSfhIaNd`) works without a daily quota. Best practices indicate that Japanese-language cannabinoid content discovery should use Apify (no daily query quota), while longitudinal time-series tracking of specific queries (e.g., CBX リキッド) should use the YouTube API's `publishedAfter`/`publishedBefore` parameters across multiple days. Neither method alone is sufficient.
 
 **2. Use `relevanceLanguage=ja` as the primary Japanese-content filter, not Japanese keywords alone.**
 Methodological literature on YouTube search behavior indicates that `regionCode=JP` does not filter by language, and English keywords return predominantly English content (confirmed: 0–11% Japanese in current English-keyword datasets, versus 68% for the Japanese-English hybrid query "CBX リキッド"). The YouTube API's `relevanceLanguage=ja` parameter should be applied in all collections targeting Japanese content. This parameter was not used in the failed Japanese keyword collection and should be tested immediately.
@@ -194,28 +194,28 @@ The evidence from repository collection logs supports a three-tier prioritizatio
 
 **Expected Impact:** Dual-coder assessment with κ ≥ 0.70 would transform classification from an undocumented process to a reproducible measurement, directly addressing ISS-20261002-004 and enabling the publication of classification percentages with stated reliability.
 
-### 4. Cost Estimates
+### 4. Collection Volume Estimates
 
-**Apify X Search (`cPYLH3QT9GyzKhB4S`): $0.002 start + $0.0025/item**
+**Apify X Search (`cPYLH3QT9GyzKhB4S`)**
 
-| Scenario | Items | Cost | Notes |
-|----------|:-----:|:----:|-------|
-| Single compound, n=200, 6-month range | ~200 | $0.502 | 1 query, maxPages=10 |
-| 5 priority compounds, n=200 each, quarterly | ~1,000 | $2.50 | 5 queries × 200 items |
-| Monthly rolling (5 compounds × 6 months) | ~6,000 | $15.00 | Sustained monitoring |
-| With dual queries per compound (recall improvement) | ~12,000 | $30.00 | 10 queries total |
-| Classification validation (n=100 double-coded) | 0 (reuses existing) | $0 | Labor only |
+| Scenario | Items | Notes |
+|----------|:-----:|-------|
+| Single compound, n=200, 6-month range | ~200 | 1 query, maxPages=10 |
+| 5 priority compounds, n=200 each, quarterly | ~1,000 | 5 queries × 200 items |
+| Monthly rolling (5 compounds × 6 months) | ~6,000 | Sustained monitoring |
+| With dual queries per compound (recall improvement) | ~12,000 | 10 queries total |
+| Classification validation (n=100 double-coded) | 0 (reuses existing) | Labor only |
 
-**Comparison with existing costs:**
+**Volume of existing collections:**
 
-| Existing Collection | Items | Cost |
-|---------------------|:-----:|:----:|
-| CBX daily (August 2026) | 2,376 | $5.94 |
-| CBX 26-week | 451 | $1.13 |
-| Multi-compound snapshot (Oct 2026) | 316 | $0.80 |
-| H4CBH + HHBD (3 months each) | 80 | $0.008 |
+| Existing Collection | Items |
+|---------------------|:-----:|
+| CBX daily (August 2026) | 2,376 |
+| CBX 26-week | 451 |
+| Multi-compound snapshot (Oct 2026) | 316 |
+| H4CBH + HHBD (3 months each) | 80 |
 
-The recommended n≥200 × 5-compound quarterly collection ($2.50/quarter) is well within the demonstrated cost range and represents a modest investment for substantially improved statistical precision.
+The recommended n≥200 × 5-compound quarterly collection is comparable in volume to the existing collections and substantially improves statistical precision.
 
 ---
 
@@ -338,14 +338,14 @@ Include a cross-platform temporal alignment table for CBX リキッド showing m
 | **Test `relevanceLanguage=ja` parameter** with 5 English compound queries via YouTube API (5 queries = 500 units = 5 days at current rate; or 1 day if quota resets) | Low | Determine if Japanese content rate improves with parameter |
 | **Create classification taxonomy file** (`metadata/taxonomy/x-content-classification.yaml`) with operational definitions | Low | Addresses ISS-20261002-004 P1 |
 | **Dual-code 100-post subset** of existing H4CBH/HHBD data; calculate Cohen's kappa | Medium | Establishes baseline reliability; validates or invalidates existing percentages |
-| **Apify Japanese keyword test**: Collect CBD オイル, カンナビノイド, CBN オイル via Apify (3 × 50 items = ~$0.075) | Low | Determines Japanese content yield for Tier 2 keywords |
+| **Apify Japanese keyword test**: Collect CBD オイル, カンナビノイド, CBN オイル via Apify (3 × 50 items) | Low | Determines Japanese content yield for Tier 2 keywords |
 | **Document quota constraint** in all methodology files (100 queries/day, not 10,000) | Low | Corrects documented error; improves reproducibility |
 
 ### Phase 2 (Short-term — 1–2 months)
 
 | Action | Effort | Expected Outcome |
 |--------|:------:|------------------|
-| **Implement monthly X collection cycle**: 5 priority compounds × n≥200, using expanded maxPages and date ranges (~$2.50/quarter) | Medium | Moves samples from n=40 to n≥200; enables acceptable precision |
+| **Implement monthly X collection cycle**: 5 priority compounds × n≥200, using expanded maxPages and date ranges | Medium | Moves samples from n=40 to n≥200; enables acceptable precision |
 | **Implement monthly YouTube collection cycle**: CBX リキッド + 2 rotating keywords, `relevanceLanguage=ja`, across 3 months | Medium | Builds longitudinal Japanese-language YouTube datasets |
 | **Cross-platform temporal alignment table** for CBX リキッド (GT + X + YouTube, monthly bins) | Medium | First systematic multi-platform integration artifact |
 | **Move collection commands** to `src/collection/` with parameterized scripts | Medium | Improves reproducibility |
@@ -363,17 +363,17 @@ Include a cross-platform temporal alignment table for CBX リキッド showing m
 
 ---
 
-## Cost-Benefit Analysis
+## Volume-Benefit Analysis
 
-### API Costs
+### Data Yield
 
-| Service | Monthly Cost (Recommended) | Annual Cost | Data Yield |
-|---------|:--------------------------:|:-----------:|------------|
-| Google Trends | ¥0 (free) | ¥0 | Weekly index, 12+ compounds |
-| X/Twitter (Apify) | ~$0.83/month (5 compounds × n≈70/month) | ~$10 | ~4,200 posts/year |
-| YouTube API v3 | ¥0 (free, quota-limited) | ¥0 | ~60 searches/month = ~3,000 video records/year |
-| YouTube (Apify, discovery) | ~$0.15/month (3 keywords × 50 items) | ~$1.80 | ~1,800 video records/year |
-| **Total** | **~$1.00/month** | **~$12/year** | **~9,000 data records/year** |
+| Service | Collection Volume (Recommended) | Data Yield |
+|---------|:-------------------------------:|------------|
+| Google Trends | 1 query per term | Weekly index, 12+ compounds |
+| X/Twitter (Apify) | 5 compounds × n≈70/month | ~4,200 posts/year |
+| YouTube API v3 | quota-limited (100 searches/day) | ~60 searches/month = ~3,000 video records/year |
+| YouTube (Apify, discovery) | 3 keywords × 50 items/month | ~1,800 video records/year |
+| **Total** | | **~9,000 data records/year** |
 
 ### Time Investment
 
@@ -397,11 +397,11 @@ Include a cross-platform temporal alignment table for CBX リキッド showing m
 | Reproducibility | Partial (ad-hoc commands) | Scripted, preregistered, versioned | Publication-ready |
 | Compound coverage (X) | 2 compounds (H4CBH, HHBD) | 7+ compounds with n≥200 | Broadens scope |
 
-### Cost-Benefit Assessment
+### Why the Improvements Are Warranted
 
-**The evidence suggests that the recommended improvements represent a high-value investment.** Monthly API costs (~$1.00) are negligible relative to the methodological gains: (1) samples large enough for meaningful descriptive statistics, (2) classification reliability that enables publication of content-type proportions, (3) multi-platform temporal alignment that supports triangulated claims, and (4) reproducible collection processes that meet publication standards.
+**The evidence suggests that the recommended improvements represent a substantial methodological gain:** (1) samples large enough for meaningful descriptive statistics, (2) classification reliability that enables publication of content-type proportions, (3) multi-platform temporal alignment that supports triangulated claims, and (4) reproducible collection processes that meet publication standards.
 
-The primary cost is time (8–15 hours/month), which is the binding constraint rather than API budgets. The phased roadmap allows incremental adoption, with Phase 1 deliverables (relevanceLanguage test, taxonomy file, kappa assessment) achievable in 1–2 weeks with minimal effort.
+The binding constraint is analyst time (8–15 hours/month). The phased roadmap allows incremental adoption, with Phase 1 deliverables (relevanceLanguage test, taxonomy file, kappa assessment) achievable in 1–2 weeks with minimal effort.
 
 ---
 
@@ -419,7 +419,7 @@ The primary cost is time (8–15 hours/month), which is the binding constraint r
 - "`relevanceLanguage=ja` **may improve** Japanese content yield for English compound queries" — requires empirical test
 - "n≥200 **would provide** acceptable precision for descriptive prevalence estimates" — based on standard statistical formulas, not yet validated in this context
 - "Temporal triangulation across platforms **supports** more robust trend claims than single-platform analysis" — methodological literature recommendation, not yet implemented
-- "The Apify actor **offers a viable alternative** to YouTube API for Japanese keyword discovery" — based on cost structure and absence of quota constraints, but Japanese content yield not yet measured
+- "The Apify actor **offers a viable alternative** to YouTube API for Japanese keyword discovery" — based on the absence of quota constraints, but Japanese content yield not yet measured
 
 ### Preliminary Evidence (Appropriate Qualification)
 

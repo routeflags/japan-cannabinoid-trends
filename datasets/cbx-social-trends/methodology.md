@@ -244,20 +244,7 @@ tweet_id,createdAt,lang,username,author_name,views,likes,reposts,replies,url,tex
 
 ---
 
-## 8. Cost Tracking
-
-| Collection | Actor | Items | Cost (USD) |
-|------------|-------|-------|------------|
-| X daily (August) | cPYLH3QT9GyzKhB4S | ~2,376 | ~$5.94 |
-| X 26-week | cPYLH3QT9GyzKhB4S | 451 | ~$1.13 |
-| YouTube | gJvjeCYNraSfhIaNd | 50 | ~$0.025 |
-| Instagram | TxU0ZBQIHdR20dr9C | 6 | ~$0.017 |
-| TikTok | jQfZ1h9FrcWcliKZX | 20 | ~$0.008 |
-| **Total** | | | **~$7.12** |
-
----
-
-## 9. Reproducibility
+## 8. Reproducibility
 
 To reproduce this dataset, separate the two steps:
 
@@ -276,7 +263,7 @@ To reproduce this dataset, separate the two steps:
 
 ---
 
-## 10. Citation
+## 9. Citation
 
 ```
 Routeflags Co., Ltd. (2026).

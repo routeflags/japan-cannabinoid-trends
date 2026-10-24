@@ -23,7 +23,7 @@ Apify Actor `cPYLH3QT9GyzKhB4S`（Twitter Search）を使って CBX リキッド
 
 | フィールド | 意味 | 信頼性 |
 |-----------|------|--------|
-| `chargedEventCounts` | 課金カウンタ | **不正確な場合がある** |
+| `chargedEventCounts` | Actor の集計カウンタ | **不正確な場合がある** |
 | `defaultDatasetId` | データセットID | ✅ 正常 |
 | `get-dataset-items` | 実際のデータ | ✅ 信頼できる |
 
@@ -67,7 +67,7 @@ Apify Actor `cPYLH3QT9GyzKhB4S`（Twitter Search）を使って CBX リキッド
 
 | # | 間違い | なぜ起きたか |
 |---|--------|-------------|
-| 1 | `chargedEventCounts` をデータ件数として扱った | 課金フィールドとデータ件数が別物だと知らなかった |
+| 1 | `chargedEventCounts` をデータ件数として扱った | 集計カウンタとデータ件数が別物だと知らなかった |
 | 2 | データセットの中身を確認しなかった | 「0件」という表示をそのまま信じた |
 | 3 | 「X がブロックしている」と結論した | 確認せずに推測を事実として扱った |
 | 4 | 「過去データは取れない」と結論した | 日付指定の方法を知らなかった |
@@ -90,14 +90,7 @@ Apify Actor `cPYLH3QT9GyzKhB4S`（Twitter Search）を使って CBX リキッド
 - Apify X データ取得スキルに日付指定機能を組み込む
 - データ整合性ドキュメントに「chargedEventCounts の制約」を記載
 
-## 6. 費用
-
-| 項目 | コスト |
-|------|--------|
-| 日付指定テスト（1回） | $0.002 + 5件×$0.0025 = $0.0145 |
-| 5〜7月取得（3ヶ月分） | 約 $0.05〜$0.15 |
-
-## 7. 記録場所
+## 6. 記録場所
 
 - このレポート: `projects/ec/research/20260917/punch-pattern-apify-date-filter.md`
 - データ整合性: `projects/ec/seo/20260915/cbx_x_data_integrity.md`

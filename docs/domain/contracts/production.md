@@ -58,6 +58,6 @@
 
 ## Escalation and human approval triggers
 
-- 新規 source の live 収集開始（特に費用発生系。X official API は owner 明示承認が別途必要）。
+- 新規 source の live 収集開始（X official API は owner 明示承認が別途必要）。
 - 新規 adapter の capability 宣言（`unverified`→実測値への変更は記録を伴う）。
 - 収集条件の変更（query / window / filter）は run として区別し、仮説に有利な run の黙示選択をしない（AGENTS.md Repeated Collection）。

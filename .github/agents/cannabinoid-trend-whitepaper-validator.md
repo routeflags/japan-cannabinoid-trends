@@ -177,7 +177,6 @@ language:
 requested_results:
 returned_results:
 runtime:
-cost:
 missing_fields:
 ```
 

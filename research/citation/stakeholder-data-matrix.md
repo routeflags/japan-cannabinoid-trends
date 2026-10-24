@@ -8,7 +8,7 @@
 
 ## Matrix
 
-| Stakeholder | Question | Missing Evidence | Dataset | Citation Unit | Citation Probability | Business Value | Cost | Priority |
+| Stakeholder | Question | Missing Evidence | Dataset | Citation Unit | Citation Probability | Business Value | Effort | Priority |
 |---|---|---|---|---|:---:|:---:|:---:|:---:|
 | Journalist / data journalist | When did cannabinoid X first appear in Japan? Which semi-synthetic is emerging now? | English, Japan-specific first-mention series; ranking-ready numbers | Japan Cannabinoid Search Emergence Tracker | "HHBD first appeared in Japanese Google Trends data on 2025-11-30, roughly 8 months after H4CBH (2025-04-06)." | 4/5 | 3/5 | LOW | **P1** |
 | Journalist / consumer media | Do Japanese cannabinoid products disclose COAs / labeling? | Market-wide (not own-product) transparency rates | Japan Cannabinoid Product Transparency Survey | "Only X% of sampled Japan-market cannabinoid products displayed a current certificate of analysis." | 4/5 | 4/5 | MEDIUM | **P1** |

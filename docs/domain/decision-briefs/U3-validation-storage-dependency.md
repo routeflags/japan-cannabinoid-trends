@@ -79,7 +79,7 @@
 - **状態:** **採用（一部として。本 protocol（§4）に吸収。コード変更なし）。**
 
 - **内容:** context-map U3 行の記載を維持する。コード変更なし。
-- **メリット:** 変更コストゼロ、ランタイムリスクゼロ。両端が範囲外であることと整合し、地図の責務を広げない。
+- **メリット:** 既存コードの変更なしで済み、ランタイムリスクもない。両端が範囲外であることと整合し、地図の責務を広げない。
 - **リスク:** パッケージレベルの双方向が残る。将来のモジュール移動・import 追加で true cycle を作り込む余地が残る（ただし今日のテストは green）。
 - **追加テスト候補:** T1 型の AST pin テストを validation ↔ storage 用に新設する（例: `storage/inventory.py` が validation から import してよいのは `validation.integrity.sha256_file` のみ、`validation/storage_contract.py` が storage から読むのは read 系 API のみ、を allowlist で固定）。doc-only で終えるか、この pin まで行うかは owner 判断。
 
@@ -89,7 +89,7 @@
 
 - **内容:** 許可する方向と範囲を文書＋テストで固定する。例: validation → storage の read 系参照を許可、storage → validation はハッシュ primitive（`validation.integrity`）のみ許可、判定モジュール（`validation.gates` / `storage_contract` の判定部分）への逆依存は禁止。
 - **メリット:** 例外ではなく規則になる。ドリフトを機械的に検出できる。
-- **リスク:** 範囲外同士の関係に地図が口を出す形になり、境界文書の責務が膨らむ。allowlist の保守コストが発生する。`sha256_file` のような共有 primitive が増えるたびに規則改定が要る。
+- **リスク:** 範囲外同士の関係に地図が口を出す形になり、境界文書の責務が膨らむ。allowlist の保守負担が発生する。`sha256_file` のような共有 primitive が増えるたびに規則改定が要る。
 - **追加テスト候補:** 選択肢 1 の pin テストを両方向 allowlist 化したもの。既存 T1 と同形（stdlib AST 走査）のため実装は軽い。CI 配線（`research-validation.yml` への追加有無）も決める必要がある。
 
 ### 選択肢 3: 中間の contract abstraction に寄せる
@@ -98,7 +98,7 @@
 
 - **内容:** 双方向を断つ。例: `sha256_file` を両者の中立な共有場所（あるいは storage 側の所有）に移し、storage → validation の辺を消す。完全形では reader protocol / descriptor の所有も整理する。
 - **メリット:** 層構造が最もきれいになる。パッケージ循環の議論自体が消える。
-- **リスク:** ランタイムコードの変更であり、影響範囲が広い（`sha256_file` の利用者は `collection/core/provenance.py`、`research/audit.py`、`research/views.py` にも及ぶ）。import 移行＋全 suite＋監査 freshness の再確認が必須。範囲外同士の辺のために生産・研究の import に触るのは費用対効果が悪い。
+- **リスク:** ランタイムコードの変更であり、影響範囲が広い（`sha256_file` の利用者は `collection/core/provenance.py`、`research/audit.py`、`research/views.py` にも及ぶ）。import 移行＋全 suite＋監査 freshness の再確認が必須。範囲外同士の辺のために生産・研究の import に触るのは得るものに対して手間が大きい。
 - **追加テスト候補:** 移行前後で `contract-ledger`・監査スナップショットの再生成一致（freshness）、全 suite green。pin テストは不要になる（辺が消えるため）。
 
 ## 6. 決定記録（owner決定 2026-10-16）

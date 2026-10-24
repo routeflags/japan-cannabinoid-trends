@@ -167,7 +167,7 @@ option 1 は owner 承認済みで、下記の 8 plan を `datasets/cannabinoid-
   `gt-5y-common-scale-setA..D` が担当。リキッド common-scale は本 issue の範囲外）。
 - `run_id` 規約: `<収集時刻>Z-google-trends-ja-rikiddo-5y-<slug>`（1 語 1 run。
   例: `20261023T185238Z-google-trends-ja-rikiddo-5y-thcv`。時刻部分は実行時に確定するため plan には書かない）。
-- 費用: 無料。`google-trends-mcp` は npm パッケージ v0.1.1 で API キー不要
+- `google-trends-mcp` は npm パッケージ v0.1.1 で API キー不要
   （`docs/provenance/collector-inventory.md`: 「API キー不要」、`config/collectors.json` の evidence 同旨）。
 - 8 plan の差分は `plan_id` / `query_id` / `query.text` / `query.compound_id` のみ。代表 1 件の全文と残り 7 件の差分表を下記に示す。
 
@@ -217,7 +217,7 @@ option 1 は owner 承認済みで、下記の 8 plan を `datasets/cannabinoid-
 
 1. **8 語を 5年で収集する**: 上記 8 plan を新規収集し、5年リキッドを 13/13 にする。
    結果は空系列の可能性もある（特に 12ヶ月でも空の 4 語）。別窓・別正規化のため main5 の 5 語と直接比較はできない。
-   新規収集のため owner 承認が必要。費用は無料。
+   新規収集のため owner 承認が必要。
 2. **5 語を意図的な範囲として methodology / README に明記する**: 収集しない。
    5年カバレッジは 5/13 のまま。文書案（適用せず、案のみ）:
    「5年の ○○リキッド系列は CBD / CBG / CBN / HHC / THC リキッドの 5 語のみを収録する

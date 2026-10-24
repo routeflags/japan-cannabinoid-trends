@@ -16,7 +16,7 @@
 
 - `data-youtube`: v3 derived を残し、採用 6 runs 表 (run_id/キーワード/件数/dateFilter/観測範囲) と合計 2288 (224+395+456+468+352+393) を追加。宣言・issue への参照、dateFilter-vs-観測範囲の区別、search-sample としての制約を記載。CBX 採用なしを明示。
 - `data-youtube-analysis`: v3 125 + Apify 24件フィルタの由来を維持し、24件が COL-033 と別物であること、CBD リキッド 2 runs (456 all / 393 year) を CBX 証拠に流用しないことを追記。per-post 行の追加なし。
-- 照合: ページ内訳は宣言の `returned_count` と一致。raw は触らない。tracked/public 層への per-post・非公開データの漏洩なし (集計のみ、actor run ID/dataset ID/費用等の公開なし)。
+- 照合: ページ内訳は宣言の `returned_count` と一致。raw は触らない。tracked/public 層への per-post・非公開データの漏洩なし (集計のみ、actor run ID/dataset ID 等の公開なし)。
 - envelope: `metadata/publication/research-cbx/{artifact,evidence,decision}.json` を現行 hash `5ba5c823e8aace4f03bee3cd8087c2792cfbd9ad0a5db3f76f1d3479032e494c` (22315 bytes) に更新。decision は `requires_review` のまま (承認の発明なし)。
 - gate: `validation.cli gate-publication --artifact/--decision/--evidence (research-cbx)` を実行。verdict=BLOCKED (PUB-04/PUB-10 FAIL、未公開の想定どおり。PUB-05 PASS)。承認は対象外。`docs/audits/g6-publication-eligibility.json` (別 artifact の invocation record) は上書きしない。
 
