@@ -96,7 +96,7 @@ description: |
   **解決順（issue #51）**: ①`GOOGLE_TOKEN_FILE`（設定されていればそれを使う）→ ②ソース既定パス `~/.config/netloom/google-<name>.json`（**存在的きのみ** = auth google の書込先と対称。apps-script の既定名は `gas`）→ ③`GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET` / `GOOGLE_REFRESH_TOKEN`。**Google の交換が失敗したときだけ**、失敗行に「どの credential を使ったか」（パスまたは変数名。値は出さない）が 1 つ足される（切り分け用）。`env check` の門は既定パスが存在的きときも満たされる。
   交換の証跡（2 frame）は `--cassette FILE` で caller の記録置き場に置ける（例: `data/gsc/cassettes/<YYYYMMDD>-auth-gsc.jsonl`。issue #22）。
   すべての往復は VCR カセットに残り、カセットからオフライン再現できる（証跡付きの収集）。
-netloom-version: 0.12.1
+netloom-version: 0.12.2
 ---
 
 # netloom（第三者 API の収集プロキシ）
@@ -1089,7 +1089,7 @@ make contact-list LIMIT=10 REPLAY=.cassettes/20261019T120000Z-contact-list-all.j
 ショップの GA4 受注同期（SalesReport42 の `plg_sales_report42_ga4_order`。`sync_status` = pending /
 `eccube_order_id` の紐づけ）の CRUD を、news と同じ形で扱う。環境（`--env dev|prod`）・dev の Basic・
 prod ガード・カセットの規則は **news と同じ**。**認証だけが違う**: **`X-GA4-API-Key` ヘッダで
-`GA4_API_KEY` を送る**（`SEO_API_KEY` ではない）。
+`GA4_API_KEY` を送る**（ヘッダ名も変数名も news と別。**値はショップの `SEO_API_KEY` と同じもの** = 下の注意）。
 
 **GA4 Data API の `ga4` とは別物**: あちらは集計レポートを Analytics Data API（HTTP。Google の refresh grant）で読む送信元で、こちらは
 ショップの受注テーブルを HTTP で管理する送信元。名前が似ているが、コマンドも認証も別（`--property` などは
@@ -1106,16 +1106,16 @@ prod ガード・カセットの規則は **news と同じ**。**認証だけが
 
 - 「GA4 の受注が同期されているか確認したい」（`ga4-orders list` / `get`）
 - 「`sync_status` を `synced` にし、`eccube_order_id` を紐づけたい」（`ga4-orders update`）
-- 「バックフィル / テストで受注を 1 件登録したい」（`ga4-orders create`。必須は `transaction_id` / `value`）
+- 「バックフィル / テストで受注を 1 件登録したい」（`ga4-orders create`。必須は `transaction_id` / `value`。**`transaction_id` は実在する `dtb_order.order_no`（文字列）** — 2026-10-24 の契約変更で、実在しない番号は 422）
 
 ## 実行（1 コマンド = 1 往復 = カセット 2 frame）
 
 ```sh
-make ga4-orders-list LIMIT=10 OFFSET=0       # 一覧（`--format csv` は固定の列）
-make ga4-orders-get ID=7                     # 1 件（text は id / transaction_id / sync_status）
-make ga4-orders-update ID=7 INPUT='{"sync_status":"synced","eccube_order_id":1234}'
-make ga4-orders-delete ID=7
-make ga4-orders-create INPUT='{"transaction_id":"invented-tx-1","value":1500.00}'   # バックフィル・テスト用
+make ga4-orders-list LIMIT=10 OFFSET=0       # 一覧（`--format csv` は固定の列。最後の列は item_count）
+make ga4-orders-get ID=7                     # 1 件（text は order の id / transaction_id / sync_status）
+make ga4-orders-update ID=7 INPUT='{"sync_status":"synced","eccube_order_id":1234}'   # 現状 405
+make ga4-orders-delete ID=7                  # 現状 405
+make ga4-orders-create INPUT='{"transaction_id":"<実在する order_no>","value":1500}'   # バックフィル・テスト用。実在しない番号は 422
 ```
 
 | 変数 | 既定 | 値 |
@@ -1125,15 +1125,13 @@ make ga4-orders-create INPUT='{"transaction_id":"invented-tx-1","value":1500.00}
 | `LIMIT` / `OFFSET` | （API の既定） | 一覧の件数 / 読み飛ばし（`list` のみ） |
 | `NEWS_ENV` / `ALLOW_PROD_WRITE` / `FORMAT` / `CASSETTE` / `OUT` / `REPLAY` / `TIMEOUT` | news と同じ | |
 
-- `csv` の列は `id,transaction_id,value,tax,shipping,coupon,user_id,device_category,referrer,source,medium,campaign,items`
-  の固定（`items` の入れ子配列は 1 セル。`sync_status` / `eccube_order_id` は json / verbatim で読む）
-- `text` の書き込み要約は `status` / `message` / `ga4_order_id` / `sync_status`（実装済みの受信端点は
-  `{"status":"accepted",…}` の形を返す — 実測。応答に無い項目は出ない）
+- `csv` の列は `id,transaction_id,value,tax,shipping,coupon,user_id,device_category,referrer,source,medium,campaign,item_count` の固定（**一覧の item は明細配列を持たず `item_count` だけ**。`sync_status` / `eccube_order_id` は json / verbatim で読む）
+- **応答の封筒は `status`（ok / error）**（2026-10-24 の契約）: 一覧 = `{status,total,limit,offset,items}`、詳細 = `{status,order:{…,items:[…]}}`（**`order` の下**）、書き込み = `{status,message,ga4_order_id,…}`。**text** は list = `total` / `limit` / `offset` / `items: <件数>`、get = `order` の `id` / `transaction_id` / `sync_status`、書き込み = `status` / `message` / `ga4_order_id` / `existing_ga4_order_id` / `sync_status`
+- **`create` の 2 つの応答を混同しない**: 実在しない受注番号は **422**（exit 1。本文は出力しない）、真の重複は **200 `{"status":"skipped",…,"existing_ga4_order_id":N}`**（**成功** = exit 0。その行は既にある）
+- **`update` / `delete` は現状 405**（ショップ側にルートが無い = `Allow: POST`。exit 1）。コマンドは残してあるので、ルートが付いた日にそのまま動く。**失敗を成功に偽装しない**（405 は本文も出力しない）
+- **`GA4_API_KEY` の値はショップの `.env` の `SEO_API_KEY` と同じもの**（サーバーが `X-GA4-API-Key` を `hash_equals` で比べる。netloom の変数名は `GA4_API_KEY`）。揃っていないと 401 `Invalid API key.`
 - `--env prod` の書き込み（create / update / delete）は `--allow-prod-write` が無ければ exit 2。読み取りは不要
-- **応答の封筒は完全には観測できていない**: 実装済みなのは受信（POST）だけで、一覧 / 詳細 / 更新 / 削除は
-  まだ shop 側の実装が見当たらない（2026-10-19 時点の読み取り）。json / verbatim はそのまま渡すが、
-  **csv / text が exit 1 になる場合は封筒が仮定（news / contact 型）と違う** — 呼び出し側は json を使う
-  （付録 A.18）
+- **一覧の絞り込み（`sync_status` / `transaction_id`）は未実装**（API は受け付ける）。必要なら 1 フラグずつ足す（それまでは `--limit` / `--offset` を進める）
 
 ## 証跡とオフライン再現（ga4-orders）
 
