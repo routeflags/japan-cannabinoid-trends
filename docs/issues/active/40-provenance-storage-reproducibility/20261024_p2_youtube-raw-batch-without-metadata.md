@@ -30,7 +30,7 @@ raw は gitignored（`.gitignore` の `**/data/raw/*`、例外は `google_trends
 
 | run ディレクトリ | 語（ディレクトリ名から） | `records_raw.json` 行 | `records.json` 行（ユニーク `videoId`） | `run_metadata.json` |
 |---|---|---:|---:|---|
-| `20261008T122515Z-youtube-hhc` | HHC | 60 | 27 | Apify run オブジェクトのみ |
+| `20261008T122515Z-youtube-hhc` | HHC | 60 | 27 | 3 項目だけの中間生成物 |
 | `20261008T122605Z-youtube-thch` | THCH | 60 | 20 | 同上 |
 | `20261008T122647Z-youtube-thc-o` | THC-O | 60 | 30 | 同上 |
 | `20261008T125306Z-youtube-h4cbh` | H4CBH | 60 | 24 | **なし** |
@@ -40,12 +40,25 @@ raw は gitignored（`.gitignore` の `**/data/raw/*`、例外は `google_trends
 | `20261008T125544Z-youtube-crdh` | CRDH | 60 | 21 | **なし** |
 | `20261008T145348Z-youtube-cbn` | CBN | 60 | 24 | **なし** |
 
-- 「Apify run オブジェクトのみ」の中身は `{"id": "...", "status": "SUCCEEDED", "usageTotalUsd": ...}` で、
-  **`search_term` / `max_videos` / `dataset_id` / `record_count` を持たない**。公開 7 run の `run_metadata.json` は
-  `run_id` / `dataset_id` / `study_id` / `source` / `search_term` / `max_videos` / `record_count` を持つので、
-  同じ仕組みで作られた記録ではない。
-- `usageTotalUsd` は AGENTS.md「Scope Exclusion: Cost」が禁じる費用フィールドである。raw は未追跡なので現状は追跡物に混入していないが、
-  来歴を写す作業をする場合はこのフィールドを転記しない。
+- 「3 項目だけの中間生成物」の中身は `id` / `status` / **費用フィールド 1 個**（AGENTS.md が禁じるため名称はここに書かない）の 3 キーだけで、
+  **Apify の生レスポンスでも、この study の `run_metadata.json` 仕様でもない**。
+  - Apify の actor-run オブジェクトは `defaultDatasetId` / `startedAt` / `finishedAt` / `usage` など多くのキーを持つ
+    （`.github/skills/apify-youtube-search/SKILL.md` が `.data.defaultDatasetId` と `.data | {status, …}` の投影例を使っており、応答に多くのキーがあることの証拠になる）。
+    3 キーはその応答から必要な項目だけを抜き出した投影であり、**中間生成物（派生物）**である。
+  - 3 ファイルとも **84 バイト**で、`records_raw.json` / `records.json` の書き込みの **1 秒後**に書かれている
+    （例 `20261008T122515Z-youtube-hhc`: payload 21:25:31、metadata 21:25:32 JST）。収集作業の中で
+    「payload を保存 → status を 3 項目だけ保存」という順に書かれたことを示す。
+  - この 3 キーを書き出すコードはリポジトリに無い（`src/` `scripts/` `config/` を費用フィールド名で検索して 0 件。
+    history の `-S` 検索でも該当なし）。当時の実行スクリプトは残っていない（`tmp/` の同種スクリプト
+    `gt_phase_a_save.mjs` が `JSON.stringify(..., null, 2) + "\n"` で同じ体裁の metadata を書いており、
+    追跡されない一時スクリプトで書かれたとみられるが、そのファイル自体は現存しない）。
+  - **`run_metadata.json` という名前が、公開 7 run の同名ファイル（`run_id` / `dataset_id` / `search_term` /
+    `max_videos` / `record_count`）と衝突している**ため、収集記録と誤読しやすい。実際に本 issue の初版でも
+    「Apify run オブジェクトのみ」と書き違えた。
+  - **`search_term` / `max_videos` / `dataset_id` / `record_count` を持たない**ので、この 3 ファイルからは
+    収集条件を復元できない。復元できるのは Apify の run id・status と、ディレクトリ名の日時だけである。
+- 3 キーのうち 1 つは AGENTS.md「Scope Exclusion: Cost」が禁じる費用フィールドである。raw は未追跡なので現状は追跡物に混入していないが、
+  来歴を写す作業をする場合はこの項目を転記しない（本記録にも名称を書かない）。
 - ペイロード形状は公開 7 run と同一（`kind: youtube#searchResult`、`snippet` に `description` を含まない）。
   `records_raw.json` はページング重複を含み、`records.json` が `videoId` でユニーク化したもの（両者の差分は重複のみで、
   `records.json` は `records_raw.json` の部分集合）。
@@ -94,6 +107,8 @@ EOF
    この記載と実データが食い違う。
 4. HHC の 2 回測定、CBN の v3 由来 raw（`ISS-20261024-PRV-005` / #1）との関係が未決のまま併存している。
 5. README の `raw のみ` は「provenance のレビュー待ち」とだけ書いており、**レビューしても採用できない理由**（来歴の欠落）に触れていない。
+6. raw の中に **`run_metadata.json` という名前の中間生成物**（Apify 応答から 3 項目だけ抜いたもの）が 3 run 分残っており、
+   収集記録と課読しやすい。raw は不変なので、改名・削除は owner の判断が必要。
 
 ## 選択肢（owner 判断）
 
@@ -114,6 +129,8 @@ EOF
 - D2: HHC の 2 回測定（28 動画と 27 動画）の記録方法
 - D3: CBN の v3 raw（#1）と 2026-10-08 raw の関係
 - D4: README の `raw のみ` に「来歴未記録のため採用できない」と書くか
+- D5: 3 run 分の `run_metadata.json`（3 キーの中間生成物）をどう扱うか。raw は不変なので、
+  ① そのまま残し本記録で注記する、② 別名に改名する（例 `apify_status.json`）、③ 削除する。いずれも owner の目の届く作業になる。
 
 ## 完了条件
 
