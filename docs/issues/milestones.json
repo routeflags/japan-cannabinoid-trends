@@ -9,13 +9,13 @@
     "recursive_audit_required": true
   },
   "summary": {
-    "issue_count": 83,
-    "active_count": 25,
+    "issue_count": 84,
+    "active_count": 26,
     "closed_count": 58,
     "status_counts": {
       "DOCUMENTED": 1,
       "MITIGATED": 1,
-      "OPEN": 23,
+      "OPEN": 24,
       "PENDING": 2,
       "RESOLVED": 56
     },
@@ -281,13 +281,13 @@
         "IPTC unmapped concepts と compound rare membership が解消または制限記録される",
         "chemical vs route vocabulary の境界が taxonomy に反映される"
       ],
-      "issue_count": 2,
+      "issue_count": 3,
       "status_counts": {
-        "OPEN": 2
+        "OPEN": 3
       },
       "priority_counts": {
         "P1": 1,
-        "P2": 1
+        "P2": 2
       },
       "issues": [
         {
@@ -301,6 +301,12 @@
           "priority": "P2",
           "status": "OPEN",
           "path": "docs/issues/active/50-taxonomy-standards/20261015_p2_compound-rare-membership.md"
+        },
+        {
+          "id": "ISS-20261024-TAX-014",
+          "priority": "P2",
+          "status": "OPEN",
+          "path": "docs/issues/active/50-taxonomy-standards/20261024_p2_compound-additions-hha-thcnm.md"
         }
       ]
     },
