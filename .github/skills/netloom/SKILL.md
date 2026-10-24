@@ -96,7 +96,7 @@ description: |
   **解決順（issue #51）**: ①`GOOGLE_TOKEN_FILE`（設定されていればそれを使う）→ ②ソース既定パス `~/.config/netloom/google-<name>.json`（**存在的きのみ** = auth google の書込先と対称。apps-script の既定名は `gas`）→ ③`GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET` / `GOOGLE_REFRESH_TOKEN`。**Google の交換が失敗したときだけ**、失敗行に「どの credential を使ったか」（パスまたは変数名。値は出さない）が 1 つ足される（切り分け用）。`env check` の門は既定パスが存在的きときも満たされる。
   交換の証跡（2 frame）は `--cassette FILE` で caller の記録置き場に置ける（例: `data/gsc/cassettes/<YYYYMMDD>-auth-gsc.jsonl`。issue #22）。
   すべての往復は VCR カセットに残り、カセットからオフライン再現できる（証跡付きの収集）。
-netloom-version: 0.12.0
+netloom-version: 0.12.1
 ---
 
 # netloom（第三者 API の収集プロキシ）
@@ -1476,7 +1476,7 @@ make gmail-send-email TO='alert@example.test' SUBJECT='日次アラート' BODY=
 | `SUBJECT` | （必須） | 件名（そのまま送る） |
 | `BODY` | （必須） | 本文（そのまま送る。`@FILE` 可: `BODY='@/path/to/body.txt'` — ファイルのバイトがそのまま本文になる（issue #34）。本文が `@` で始まる場合はファイルとして読まれる） |
 | `ALLOW_SEND` | （live は必須） | `1` で実送信を承認する（`--allow-send`。**無ければ live は exit 2 で 1 通も送らない・npx も起動しない**。`REPLAY` は不要） |
-| `HTML_BODY` | （任意） | **同じ 1 通の HTML パート**（`--html-body`。issue #64）。`HTML_BODY='<b>太字</b>'` または `HTML_BODY='@digest.html'`（ファイルのバイトがそのまま）。**付ければ `body` と `htmlBody` が同じ `tools/call` に載る**（往復は増えない） |
+| `HTML_BODY` | （任意） | **同じ 1 通の HTML パート**（`--html-body`。issue #64）。`HTML_BODY='<b>太字</b>'` または `HTML_BODY='@digest.html'`（ファイルのバイトがそのまま）。**付ければ `body` と `htmlBody` が同じ `tools/call` に載る**（往復は増えない）。**実サーバーは `mimeType` を同時に送らないと `htmlBody` を使わない**（既定 text/plain）ので、netloom は `htmlBody` を名指したときだけ **`mimeType: multipart/alternative` も同じ引数に載せる**（issue #66。付けなければ 3 メンバーのまま） |
 # mcp（任意の stdio MCP サーバー。1 コマンド = 1 tools/call）
 
 netloom に送信元が無い MCP サーバー（stdio）でも、**往復をカセットに残したいとき**は `mcp call` を使う（設計 **A.38**。issue #65）。**サーバーも pin もツール名も netloom は持たない** — `--server` / `--tool` が呼び出し側の表明で、netloom は `npx -y <server>` を起動し、`initialize` → `notifications/initialized` → `tools/call` 1 回を記録する。
@@ -2429,7 +2429,7 @@ netloom は **producer**。採用は JCT 側の staging declaration / collection
 - 実行時に `tools/list` は呼ばない（schema は開発時に 1 回だけ確認して設計 付録 A.7 に記録）
 - **gmail は実装済み**（`gmail send-email` の 1 コマンド。上の節。1 コマンド = 1 MCP 往復）。**送信の live は未実行**（実メールが飛ぶため owner 承認待ち。手順は `docs/plan/20261019-gmail.md` §7）。**呼び出し側（seo-operations の `daily_alert.py` / `test_gmail_mcp.py`）の載せ替えは未処理** — 証跡付きの送信への切替は seo-operations の作業（設計書 §11 N17）
 - gmail の他のツール（`draft_email` / `read_email` / `search_emails` / `list_email_labels` / ラベル / フィルタ / 添付の 18 ツール）は**予約（作らない）**（必要になった時点で 1 コマンド = 1 ツール。設計書 付録 A.20）
-- gmail の `cc` / `bcc` / 添付は**送らない**（`htmlBody` は `--html-body` を名指したときだけ同じ往復で送る。issue #64。付録 A.20）
+- gmail の `cc` / `bcc` / 添付は**送らない**（`htmlBody` は `--html-body` を名指したときだけ同じ往復で送り、そのときは実サーバーの要件で `mimeType: multipart/alternative` も載る。issue #64 / #66。付録 A.20）
 - **Meta Graph API の live は未実行**（このマシンに `PAGE_TOKEN` / `USER_TOKEN` / `PAGE_ID` / `IG_ACCOUNT_ID` が無い。手順は `docs/plan/20261019-meta-graph.md` §7）
 - **Graph API が `Authorization: Bearer` を受け付けるかは未確認**（live の 401 で判明する。クエリ方式（`access_token`）+ URL レダクトへの切替は owner 判断。設計書 §11 N18）
 - **Meta のページング自動化・リトライ・metric / fields の allow-list は作らない**（薄いプロキシ。次のページは応答の `paging.next` で呼び出し側が回す）
