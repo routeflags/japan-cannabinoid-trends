@@ -96,7 +96,7 @@ description: |
   **解決順（issue #51）**: ①`GOOGLE_TOKEN_FILE`（設定されていればそれを使う）→ ②ソース既定パス `~/.config/netloom/google-<name>.json`（**存在的きのみ** = auth google の書込先と対称。apps-script の既定名は `gas`）→ ③`GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET` / `GOOGLE_REFRESH_TOKEN`。**Google の交換が失敗したときだけ**、失敗行に「どの credential を使ったか」（パスまたは変数名。値は出さない）が 1 つ足される（切り分け用）。`env check` の門は既定パスが存在的きときも満たされる。
   交換の証跡（2 frame）は `--cassette FILE` で caller の記録置き場に置ける（例: `data/gsc/cassettes/<YYYYMMDD>-auth-gsc.jsonl`。issue #22）。
   すべての往復は VCR カセットに残り、カセットからオフライン再現できる（証跡付きの収集）。
-netloom-version: 0.11.0
+netloom-version: 0.12.0
 ---
 
 # netloom（第三者 API の収集プロキシ）
@@ -1477,6 +1477,65 @@ make gmail-send-email TO='alert@example.test' SUBJECT='日次アラート' BODY=
 | `BODY` | （必須） | 本文（そのまま送る。`@FILE` 可: `BODY='@/path/to/body.txt'` — ファイルのバイトがそのまま本文になる（issue #34）。本文が `@` で始まる場合はファイルとして読まれる） |
 | `ALLOW_SEND` | （live は必須） | `1` で実送信を承認する（`--allow-send`。**無ければ live は exit 2 で 1 通も送らない・npx も起動しない**。`REPLAY` は不要） |
 | `HTML_BODY` | （任意） | **同じ 1 通の HTML パート**（`--html-body`。issue #64）。`HTML_BODY='<b>太字</b>'` または `HTML_BODY='@digest.html'`（ファイルのバイトがそのまま）。**付ければ `body` と `htmlBody` が同じ `tools/call` に載る**（往復は増えない） |
+# mcp（任意の stdio MCP サーバー。1 コマンド = 1 tools/call）
+
+netloom に送信元が無い MCP サーバー（stdio）でも、**往復をカセットに残したいとき**は `mcp call` を使う（設計 **A.38**。issue #65）。**サーバーも pin もツール名も netloom は持たない** — `--server` / `--tool` が呼び出し側の表明で、netloom は `npx -y <server>` を起動し、`initialize` → `notifications/initialized` → `tools/call` 1 回を記録する。
+
+## いつ使うか（トリガー）
+
+- 「MCP サーバーの取得を netloom 経由にして証跡を残したい」（`mcp call`）
+- 「失敗したときにサーバーが何を返したか知りたい」（失敗もカセットに残る）
+- 送信元があるもの（gsc / ga4 / meta / product など）は**そちらを使う**（語彙・整形・受入が済んでいる）
+
+## 実行（1 コマンド = 1 往復 = カセット 1 セッション）
+
+```sh
+# LinkedIn のフィード（例。 サーバーもツール名も呼び出し側が書く）
+netloom mcp call --server linkedin-mcp-tools@2.0.3 --tool get_feed \
+  --args '{"count":25}' --env LINKEDIN_PROFILE_DIR --out feed.json
+
+# make から
+make mcp-call SERVER='linkedin-mcp-tools@2.0.3' TOOL=get_feed ARGS='{"count":25}' \
+  ENV_NAMES=LINKEDIN_PROFILE_DIR OUT=feed.json
+
+# 記録済みカセットから再現（サーバーを起動しない。npx も要らない）
+netloom mcp call --server linkedin-mcp-tools@2.0.3 --tool get_feed --args '{"count":25}' --replay .cassettes/…jsonl
+```
+
+| 変数 | 既定 | 値 |
+|---|---|---|
+| `SERVER` | （必須） | サーバーの npm spec（`npx -y <spec>`。**pin は呼び出し側の表明**。空白を含む spec は exit 2） |
+| `TOOL` | （必須） | ツール名（**そのまま送る**。存在しない名前はサーバーの答え = exit 1。空・空白のみは exit 2） |
+| `ARGS` | `{}` | 引数の JSON または `@FILE`（**JSON オブジェクトのみ**。member 名も値も検証しない。JSON でなければ exit 2、ファイルが読めなければ exit 3） |
+| `ENV_NAMES` | （任意） | 子に渡す**変数名**（カンマ区切り。**値は環境から読む** — `NAME=VALUE` は exit 2。未設定の名前は exit 2 で何も起動しない。名指した値は出力で `[REDACTED]`） |
+| `FORMAT` | `json` | `json` / `text` / `verbatim`（**csv は無い**） |
+| `CASSETTE` / `OUT` / `REPLAY` / `TIMEOUT` | 他と同じ | `--cassette` / `--out` / `--replay` / `--timeout`（既定 300 秒） |
+
+## 出力の読み方
+
+- `json`（既定）= **ツールの文書**。結果の最初の text ブロックが JSON なら indent 2、そうでなければ**文字列としての JSON**。text ブロックが無く `structuredContent` があればそれ。**MCP の封筒（`content` / `isError`）は書かない**
+- `text` = text ブロックそのまま、`verbatim` = 受信した result のバイトそのまま（証跡用。封筒ごと見たいときはこれ）
+- 迷ったら `cassette show` で生の frame を見る（`text` / `verbatim` と同じものが入っている）
+
+## 失敗の見分け（mcp）
+
+| exit | 意味 | 次の行動 |
+|---|---|---|
+| 0 | `tools/call` 成功 | — |
+| 1 | `isError` / JSON-RPC エラー / **replay 不一致** / ツール名が存在しない | stderr の 1 行とカセットを読む（provider の文言がそのまま入っている） |
+| 2 | 引数・設定（`--server` / `--tool` の欠落・空白、`--args` が JSON オブジェクトでない、`--env` の代入・空の名前・**未設定の名前**、`--format csv`、`--replay` と `--cassette` の併用） | 引数を直す（値はコマンドラインに書かない） |
+| 3 | I/O（`--out` / カセット / `--args @FILE`） | パスを直す |
+| 124 | timeout（`--timeout`。既定 300 秒） | サーバーの重さを見る（ログインが要るサーバーは遅い）。再実行 |
+| 127 | `npx` / `node` が無い | Node を入れる（`--replay` は要らない） |
+
+## 証跡・秘匿・注意
+
+- カセットは **`.cassettes/<UTC>-mcp-call-<server>-<tool>.jsonl`**（**サーバーとツールが run の identity**）。`--cassette` / `REPLAY=` で置き場を変えられる
+- **記録前にレダクト**される: `Cookie` / `set-cookie` / `authorization` / `*_token` / `*_key` は**名前で値が消える**（`internal/adapters/redact`。新しい名前は 0 行）。**`--env` で名指した値もレダクト対象**。**未確認**: cookie 名が JSON の member 名でなく生のテキストで返る場合は初回 live でカセットを確認する（A.38 / §11 N36）
+- **プロファイル（クッキーを含む）は netloom がコピーも変更もしない** — パスを `--env` で渡すだけ（子の環境は PATH / HOME + 名指した名前だけ）。**live の利用条件（LinkedIn の ToS・レート）は呼び出し側の責任**
+- カセットには**引数と provider のデータ**が入るので `.cassettes/`（gitignore）にだけ置き、**コミット・共有・`raw/` 配置をしない**（追記のみ）
+- **netloom は `tools/list` を呼ばない**ので、ツール名・引数の正しさはサーバーの答えでしか分からない（§2.2）
+
 # Meta Graph API（Facebook Page / Instagram。2 送信元。5 コマンド）
 
 Meta Graph API（base URL は `https://graph.facebook.com/v25.0`。呼び出し側の `fetch_meta_metrics.py` の `API_VER` と同じ）を**VCR を通す薄いプロキシ**として扱う。fields / metric の語彙検証・ページングの自動化・リトライ・レート制限の待ち・値の解釈・正規化は**無い**（Meta が返したエラーはそのまま返る）。**1 コマンド = 1 往復**。
