@@ -40,10 +40,8 @@
 読み方:
 
 - **5年系列**: 表の 13 化合物すべてが週次 raw を持つ。旧 `…-5y-baseline` run は summary-only で、どの化合物の引用元でもない（証跡として残る。[methodology.md](methodology.md) §2.1.1・§2.1.2）。
-- **12ヶ月系列**: 12 化合物が週次 raw を持ち、
-  THC-O は Google Trends が系列を返さない。THCV・CRDH は 5年には系列があるが、12ヶ月は 53 週中 1 週だけ非ゼロ
-  （[methodology.md](methodology.md) §2.1.3）。
-- **「サマリーのみ」**: 週次系列を収蔵していない run の記録値。raw からの独立検証はできない。
+- **12ヶ月系列**: 12 化合物が週次 raw を持ち、THC-O は Google Trends が系列を返さない。THCV・CRDH は 12ヶ月が 53 週中 1 週だけ非ゼロ（[methodology.md](methodology.md) §2.1.3）。CRDH の旧 summary（`records_crdh_12m.json`）は証跡として残るが、その記録値（`avg_12m` 1.9 等）は raw から再現できないので引用しない。
+- **週次系列は全面で比較できるわけではない**: 5年は 2 つの窓に分かれ（9 化合物が 2021-10-10 〜、4 化合物が 2021-10-17 〜）、12ヶ月も 2 窓に分かれる。また各 run は自分のピーク=100 に正規化されるので、単独系列の値を化合物間で比べない。化合物間の比較は共通スケール（§2.1.4）でのみ行う。
 - **「データなし」**: 取得はしたが Google Trends が閾値未満で系列を返さなかった。**欠測であって 0 観測ではない**。
 - **「—」**: そのソースでは収集していない（X の 6 化合物は [`datasets/cannabinoid-social-trends/`](../cannabinoid-social-trends/) が規制前後比較として収集している）。
 - **「YouTube（公開分）」**: 追跡している集計（[`data/processed/youtube_videos.csv`](data/processed/youtube_videos.csv)、182 動画）に含まれるか。raw だけ有ってまだ公開集計に入れていない run は `raw のみ`（provenance のレビュー待ち）。
@@ -67,6 +65,7 @@
 Google Trends の系列・窓・欠測は [methodology.md](methodology.md) §2.1.2・§2.1.3 と
 [`docs/audits/gt-summary.json`](../../docs/audits/gt-summary.json)（5年）が正本。
 単独系列の平均と比較セット（`common-scale-*` の**共通スケール**値）は別物なので混ぜない。
+単独系列の平均は化合物間でも比べない（正規化が語ごとに違う）。比較は共通スケールでのみ行う。
 **5年の共通スケールはアンカー CBD/THC を含む 4 セット**（[methodology.md](methodology.md) §2.1.4）。
 12ヶ月の共通スケールは `common-scale-*` の各 run。
 
