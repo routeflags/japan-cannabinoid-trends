@@ -168,7 +168,12 @@ def _metric_rows() -> list[dict[str, str]]:
             "meaning": "Mean of weekly Google Trends relative interest values in the available 5-year run.",
             "comparable_across_platforms": "no",
             "evidence_level": "derived",
-            "limitations": "Google Trends values are source-normalized relative indices, not absolute search volume.",
+            "limitations": (
+                "Google Trends values are source-normalized relative indices, not "
+                "absolute search volume. Each run is normalized to its own peak, "
+                "so a mean is not comparable between compounds either; use the "
+                "common-scale comparison runs for that."
+            ),
         },
         {
             "metric": "relative_interest_peak_value",
@@ -177,7 +182,11 @@ def _metric_rows() -> list[dict[str, str]]:
             "meaning": "Maximum weekly Google Trends relative interest value in the available 5-year run.",
             "comparable_across_platforms": "no",
             "evidence_level": "derived",
-            "limitations": "Peak value is within-run normalized; it is not comparable to YouTube counts.",
+            "limitations": (
+                "Peak value is within-run normalized; it is not comparable to "
+                "YouTube counts, and not comparable between compounds (every run "
+                "peaks at 100)."
+            ),
         },
         {
             "metric": "relative_interest_latest_value",
@@ -186,7 +195,10 @@ def _metric_rows() -> list[dict[str, str]]:
             "meaning": "Latest weekly Google Trends relative interest value in the available 5-year run.",
             "comparable_across_platforms": "no",
             "evidence_level": "observed",
-            "limitations": "Latest value depends on the run window and Google Trends normalization.",
+            "limitations": (
+                "Latest value depends on the run window and Google Trends "
+                "normalization; it is not comparable between compounds."
+            ),
         },
         {
             "metric": "nonzero_weeks",
@@ -238,7 +250,11 @@ def build_platform_trends(repo_root: str | Path, output_dir: str | Path) -> dict
         query_id = query.query_id if query else ""
         query_text = query.canonical_text if query else compound
         period_start, period_end, granularity = _period_from_gt(entry)
-        limitations = "Google Trends relative index; not an absolute search count and not comparable to YouTube returned_count."
+        limitations = (
+            "Google Trends relative index; not an absolute search count, not "
+            "comparable to YouTube returned_count, and not comparable between "
+            "compounds (each run is normalized to its own peak)."
+        )
         if entry.get("unavailable"):
             limitations += " Some temporal completeness fields are unavailable for this run."
         metric_specs = (

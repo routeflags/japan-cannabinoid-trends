@@ -811,8 +811,8 @@
     },
     {
       "path": "datasets/cannabinoid-platform-trends/data/processed/metric_dictionary.csv",
-      "bytes": 1457,
-      "sha256": "53f53fbf2d798517cb529c03af54cab6adfb2eb5420e67d1cd8792bfb8276d71",
+      "bytes": 1703,
+      "sha256": "101bd2cf64de5bfeb2b0004affe3456ae46e2eda0638dee060f82ef5426b1b00",
       "format": "csv",
       "sniff_state": "partial",
       "artifact_type": null,
@@ -892,8 +892,8 @@
     },
     {
       "path": "datasets/cannabinoid-platform-trends/data/processed/trend_observations.csv",
-      "bytes": 33373,
-      "sha256": "8b5033de4cdd1158460f44291058e7aad395103fac69f43e61c6257b85822690",
+      "bytes": 38833,
+      "sha256": "e3cebd58632832ac538dd75b11184d446aa6631d2c10ab92cbc253b511d9c5d4",
       "format": "csv",
       "sniff_state": "partial",
       "artifact_type": null,

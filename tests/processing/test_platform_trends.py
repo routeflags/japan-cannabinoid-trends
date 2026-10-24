@@ -135,6 +135,38 @@ def test_metric_dictionary_blocks_common_scale_interpretation(tmp_path) -> None:
     )
 
 
+def test_normalized_metrics_say_they_are_not_comparable_between_compounds(
+    tmp_path,
+) -> None:
+    """A per-term normalization makes the mean a within-term position, not a rank.
+
+    The common-scale runs (methodology §2.1.4) are the only basis for comparing
+    compounds, so both the dictionary and every Google Trends observation have
+    to say so; otherwise a reader takes the 5-year means, which the observation
+    table lists compound by compound, as a ranking.
+    """
+
+    build_platform_trends(REPO_ROOT, tmp_path)
+
+    metrics = _rows(tmp_path / "metric_dictionary.csv")
+    normalized = {
+        "relative_interest_mean_5y",
+        "relative_interest_peak_value",
+        "relative_interest_latest_value",
+    }
+    for row in metrics:
+        if row["metric"] in normalized:
+            assert "not comparable between compounds" in row["limitations"], row["metric"]
+
+    observations = _rows(tmp_path / "trend_observations.csv")
+    google_trends = [row for row in observations if row["platform"] == "google_trends"]
+    assert google_trends
+    assert all(
+        "not comparable between compounds" in row["limitations"]
+        for row in google_trends
+    )
+
+
 def test_platform_trends_build_is_deterministic(tmp_path) -> None:
     first = tmp_path / "first"
     second = tmp_path / "second"

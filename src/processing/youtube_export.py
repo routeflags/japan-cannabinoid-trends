@@ -61,9 +61,10 @@ PUBLISHABLE_RUNS = {
     "20261002T064911Z-youtube-thc-オイル": "THC オイル",
 }
 
-#: Why the other runs stay out.  They are still listed in ``youtube_runs.csv``
-#: with this status, so an excluded run never looks like a run with zero
-#: videos (AGENTS.md: missing is not zero).
+#: Why the other runs stay out.  A run that is not exported is written to
+#: neither table -- a published table must not read as an account of it -- so the
+#: reason stays here and in the operator's summary, never in the data (AGENTS.md:
+#: missing is not zero).
 EXCLUSION_REASONS = {
     "20261004T142147Z-youtube-cbd-10years": "incomplete 10-year series excluded from evidence (ISS-20261012-CBD-003): 2025 missing, 2023-2024 partial",
     "20261004T142430Z-youtube-cbg-10years": "incomplete 10-year series excluded from evidence (ISS-20261012-CBD-003)",

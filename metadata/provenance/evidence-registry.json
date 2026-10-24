@@ -21,9 +21,9 @@
       "evidence_id": "ev-collector-registry",
       "evidence_type": "registry_definition",
       "reference": "config/collectors.json",
-      "sha256": "b78bcb41aec0f3782ea47b5cbde09aff8510883e7631d6239d25e83e2383fd5b",
-      "observed_at": "2026-10-23T15:02:26Z",
-      "note": "Collector registry used for P04/P05 reference checks. Re-pinned 2026-10-23 after the cannabinoid-multi-trends -> cannabinoid-raw-collection rename: the only change is one evidence path. Originally pinned by a Delta agent under owner instruction from smapira for ISS-20261015-PRV-011."
+      "sha256": "185636cb7ee94049baa864325402f643cae589dbe007d96df1ad06c9bc1e8bb2",
+      "observed_at": "2026-10-24T00:00:00Z",
+      "note": "Collector registry used for P04/P05 reference checks. Re-pinned 2026-10-24: the youtube-apify-search evidence list dropped scripts/collect-youtube-japanese-keywords.sh, which used the YouTube Data API v3 this repository no longer collects with. Originally pinned by a Delta agent under owner instruction from smapira for ISS-20261015-PRV-011."
     },
     {
       "evidence_id": "ev-query-registry",

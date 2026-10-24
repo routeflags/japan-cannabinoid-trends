@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
-  "generated_at": "2026-10-16",
-  "generated_by": "manual issue triage using validation.issues.audit_issues",
+  "generated_at": "2026-10-24",
+  "generated_by": "validation.issues.audit_issues: issues grouped by their directory; the milestones' objective / exit_criteria / title are hand-written and kept as they are",
   "purpose": "未対応 issue を milestone 別に整理し、対応済み issue を closed/ 配下に分離するためのローカル台帳。issue 本体ではないため Markdown ではなく JSON とする。",
   "source": {
     "issues_dir": "docs/issues",
@@ -9,18 +9,18 @@
     "recursive_audit_required": true
   },
   "summary": {
-    "issue_count": 72,
-    "active_count": 17,
-    "closed_count": 55,
+    "issue_count": 81,
+    "active_count": 23,
+    "closed_count": 58,
     "status_counts": {
       "DOCUMENTED": 1,
       "MITIGATED": 1,
-      "OPEN": 15,
+      "OPEN": 21,
       "PENDING": 2,
-      "RESOLVED": 53
+      "RESOLVED": 56
     },
     "open_p0": 0,
-    "open_p1": 3,
+    "open_p1": 4,
     "failure_count": 0
   },
   "layout": {
@@ -129,8 +129,8 @@
         "OPEN": 6
       },
       "priority_counts": {
-        "P2": 3,
         "P1": 2,
+        "P2": 3,
         "P3": 1
       },
       "issues": [
@@ -182,12 +182,13 @@
         "legacy reader・SQLite live verification・coverage manifest の未接続を解消する",
         "private X data retention と request-only evidence が方針として記録される"
       ],
-      "issue_count": 5,
+      "issue_count": 11,
       "status_counts": {
-        "OPEN": 5
+        "OPEN": 11
       },
       "priority_counts": {
-        "P2": 5
+        "P1": 1,
+        "P2": 10
       },
       "issues": [
         {
@@ -219,6 +220,42 @@
           "priority": "P2",
           "status": "OPEN",
           "path": "docs/issues/active/40-provenance-storage-reproducibility/20261015_p2_x-request-only-evidence.md"
+        },
+        {
+          "id": "ISS-20261023-GT-006",
+          "priority": "P2",
+          "status": "OPEN",
+          "path": "docs/issues/active/40-provenance-storage-reproducibility/20261023_p2_gt-12m-recollection-findings.md"
+        },
+        {
+          "id": "ISS-20261023-GT-005",
+          "priority": "P2",
+          "status": "OPEN",
+          "path": "docs/issues/active/40-provenance-storage-reproducibility/20261023_p2_gt-5y-recollection-residuals.md"
+        },
+        {
+          "id": "ISS-20261023-PRV-004",
+          "priority": "P2",
+          "status": "OPEN",
+          "path": "docs/issues/active/40-provenance-storage-reproducibility/20261023_p2_study-rename-followups.md"
+        },
+        {
+          "id": "ISS-20261023-YT-010",
+          "priority": "P2",
+          "status": "OPEN",
+          "path": "docs/issues/active/40-provenance-storage-reproducibility/20261023_p2_youtube-compound-words-incomplete.md"
+        },
+        {
+          "id": "ISS-20261023-YT-011",
+          "priority": "P2",
+          "status": "OPEN",
+          "path": "docs/issues/active/40-provenance-storage-reproducibility/20261023_p2_youtube-product-words-unified.md"
+        },
+        {
+          "id": "ISS-20261024-PRV-005",
+          "priority": "P1",
+          "status": "OPEN",
+          "path": "docs/issues/active/40-provenance-storage-reproducibility/20261024_p1_youtube-v3-residual-raw.md"
         }
       ]
     },
@@ -289,11 +326,11 @@
     }
   ],
   "closed": {
-    "issue_count": 55,
+    "issue_count": 58,
     "status_counts": {
       "DOCUMENTED": 1,
       "MITIGATED": 1,
-      "RESOLVED": 53
+      "RESOLVED": 56
     },
     "issues": [
       {
@@ -625,6 +662,24 @@
         "priority": "P3",
         "status": "RESOLVED",
         "path": "docs/issues/closed/resolved/20261016_p3_private-catalog-local-state-churn.md"
+      },
+      {
+        "id": "ISS-20261023-GT-007",
+        "priority": "P2",
+        "status": "RESOLVED",
+        "path": "docs/issues/closed/resolved/20261023_p2_crdh-12m-summary-only.md"
+      },
+      {
+        "id": "ISS-20261023-GT-009",
+        "priority": "P2",
+        "status": "RESOLVED",
+        "path": "docs/issues/closed/resolved/20261023_p2_gt-5y-no-common-scale.md"
+      },
+      {
+        "id": "ISS-20261023-GT-008",
+        "priority": "P2",
+        "status": "RESOLVED",
+        "path": "docs/issues/closed/resolved/20261023_p2_gt-rikiddo-5y-incomplete.md"
       }
     ]
   }

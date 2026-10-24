@@ -93,8 +93,7 @@
       },
       "verified_at": null,
       "evidence": [
-        ".github/skills/apify-youtube-search/SKILL.md (actor gJvjeCYNraSfhIaNd = danek/youtube-search)",
-        "scripts/collect-youtube-japanese-keywords.sh"
+        ".github/skills/apify-youtube-search/SKILL.md (actor gJvjeCYNraSfhIaNd = danek/youtube-search)"
       ]
     },
     {

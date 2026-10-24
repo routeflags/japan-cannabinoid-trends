@@ -14,7 +14,7 @@
 | `google-trends-mcp` | google-trends | MCP（npm `google-trends-mcp` v0.1.1、API キー不要） | **active** | `geo_filter`=supported, `relative_date_range`=supported, 他 unknown | `datasets/**/google_trends/**/run_metadata.json` 29 件（mcp_server=mcp_version=0.1.1、geo=JP、today 12-m / 5-y の実使用） / `.github/skills/research-google-trends/SKILL.md` |
 | `x-apify-twitter-search` | x | Apify `cPYLH3QT9GyzKhB4S`（patient_discovery/twitter-search） | unverified | 全 unknown | `.github/skills/apify-x-search/SKILL.md` / `src/collection/x/apify-x-search.md` / `docs/provenance.md`（2026-08 収集 147 件） / `datasets/cbx-social-trends/analysis/x-data-collection-plan.md` |
 | `youtube-apify-scraper` | youtube | Apify `h7sDV53CddomktSi5`（streamers/youtube-scraper） | unverified | 全 unknown | `.github/skills/apify-youtube-scraper/SKILL.md` / `datasets/cbx-social-trends/data/processed/youtube_filtered_202607/` |
-| `youtube-apify-search` | youtube | Apify `gJvjeCYNraSfhIaNd`（danek/youtube-search） | unverified | 全 unknown | `.github/skills/apify-youtube-search/SKILL.md` / `scripts/collect-youtube-japanese-keywords.sh` |
+| `youtube-apify-search` | youtube | Apify `gJvjeCYNraSfhIaNd`（danek/youtube-search） | unverified | 全 unknown | `.github/skills/apify-youtube-search/SKILL.md` |
 | `tiktok-apify-search` | tiktok | Apify `jQfZ1h9FrcWcliKZX`（novi/tiktok-search-api） | unverified | 全 unknown | `src/collection/tiktok/fetch_tiktok.sh` / `.github/skills/apify-tiktok-search/SKILL.md` |
 | `instagram-apify-search` | instagram | Apify `TxU0ZBQIHdR20dr9C`（patient_discovery/instagram-search-reels） | unverified | 全 unknown | `src/collection/instagram/fetch_instagram.sh` / `.github/skills/apify-instagram-search/SKILL.md` |
 
@@ -30,6 +30,12 @@
 - 昇格条件（提案）: `apify-actor-validation` skill の Phase 1〜3 相当の検証
   （既存データによる機能確認 + capability の実測）を行い、本台帳と registry の
   `capabilities` / `verified_at` / `evidence` を同時に更新する。
+- **YouTube の収集手段から YouTube Data API v3 を除外する**（2026-10-12 の方針決定）。
+  `YOUTUBE_API_KEY` を読む経路（旧 `scripts/collect-youtube-japanese-keywords*.sh`、
+  netloom の `youtube search` / `youtube videos`）は、絶対日付範囲を表現できる点では
+  便利だが、本リポジトリの収集には使わない。採用するのは Apify actor
+  （`gJvjeCYNraSfhIaNd` / `h7sDV53CddomktSi5`）経由のみで、相対期間の制約は
+  観測範囲を実測で記録することで扱う。
 
 ---
 
