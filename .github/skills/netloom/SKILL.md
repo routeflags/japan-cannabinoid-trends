@@ -96,7 +96,7 @@ description: |
   **解決順（issue #51）**: ①`GOOGLE_TOKEN_FILE`（設定されていればそれを使う）→ ②ソース既定パス `~/.config/netloom/google-<name>.json`（**存在的きのみ** = auth google の書込先と対称。apps-script の既定名は `gas`）→ ③`GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET` / `GOOGLE_REFRESH_TOKEN`。**Google の交換が失敗したときだけ**、失敗行に「どの credential を使ったか」（パスまたは変数名。値は出さない）が 1 つ足される（切り分け用）。`env check` の門は既定パスが存在的きときも満たされる。
   交換の証跡（2 frame）は `--cassette FILE` で caller の記録置き場に置ける（例: `data/gsc/cassettes/<YYYYMMDD>-auth-gsc.jsonl`。issue #22）。
   すべての往復は VCR カセットに残り、カセットからオフライン再現できる（証跡付きの収集）。
-netloom-version: 0.10.1
+netloom-version: 0.11.0
 ---
 
 # netloom（第三者 API の収集プロキシ）
@@ -1461,12 +1461,13 @@ Gmail の送信（`@gongrzhe/server-gmail-autoauth-mcp`、stdio）を **VCR を�
 make gmail-send-email TO='alert@example.test' SUBJECT='日次アラート' BODY='本文です' ALLOW_SEND=1
 make gmail-send-email TO='a@example.test, b@example.test' SUBJECT='…' BODY='…' ALLOW_SEND=1   # 宛先はカンマ区切り → 配列
 make gmail-send-email TO='alert@example.test' SUBJECT='日次アラート' BODY='@/path/to/body.txt' ALLOW_SEND=1   # 本文をファイルで渡す（改行の多い本文はこれ）
+make gmail-send-email TO='alert@example.test' SUBJECT='日次アラート' BODY='@digest.md' HTML_BODY='@digest.html' ALLOW_SEND=1   # HTML パートも同じ 1 通で送る（表示を整えたいとき）
 
 # 記録済みカセットから再現（ネットも npx も使わない。メールは飛ばない。ALLOW_SEND 不要）
 make gmail-send-email TO='alert@example.test' SUBJECT='日次アラート' BODY='本文です' REPLAY=.cassettes/…-gmail-send-email-alert-example-test.jsonl
 ```
 
-バイナリを直接叩く場合は `bin/netloom gmail send-email --to … --subject … --body … --allow-send`
+バイナリを直接叩く場合は `bin/netloom gmail send-email --to … --subject … --body … [--html-body …] --allow-send`
 （`--allow-send` を忘れると exit 2 で送らない）。
 
 | 変数 | 既定 | 値 |
@@ -1475,6 +1476,7 @@ make gmail-send-email TO='alert@example.test' SUBJECT='日次アラート' BODY=
 | `SUBJECT` | （必須） | 件名（そのまま送る） |
 | `BODY` | （必須） | 本文（そのまま送る。`@FILE` 可: `BODY='@/path/to/body.txt'` — ファイルのバイトがそのまま本文になる（issue #34）。本文が `@` で始まる場合はファイルとして読まれる） |
 | `ALLOW_SEND` | （live は必須） | `1` で実送信を承認する（`--allow-send`。**無ければ live は exit 2 で 1 通も送らない・npx も起動しない**。`REPLAY` は不要） |
+| `HTML_BODY` | （任意） | **同じ 1 通の HTML パート**（`--html-body`。issue #64）。`HTML_BODY='<b>太字</b>'` または `HTML_BODY='@digest.html'`（ファイルのバイトがそのまま）。**付ければ `body` と `htmlBody` が同じ `tools/call` に載る**（往復は増えない） |
 # Meta Graph API（Facebook Page / Instagram。2 送信元。5 コマンド）
 
 Meta Graph API（base URL は `https://graph.facebook.com/v25.0`。呼び出し側の `fetch_meta_metrics.py` の `API_VER` と同じ）を**VCR を通す薄いプロキシ**として扱う。fields / metric の語彙検証・ページングの自動化・リトライ・レート制限の待ち・値の解釈・正規化は**無い**（Meta が返したエラーはそのまま返る）。**1 コマンド = 1 往復**。
@@ -1537,8 +1539,8 @@ make meta-instagram-media-insights MEDIA_ID=<media-id> METRICS='reach,likes,comm
 |---|---|---|
 | 0 | 送信できた（result の text に message id） | — |
 | 1 | ツールの isError・JSON-RPC の error（サーバー側の OAuth 失敗・宛先の拒否など）・replay 不一致 | stderr の 1 行とカセットを読む。OAuth なら `~/.gmail-mcp/` の状態を（サーバーの領分として）確認する |
-| 2 | 引数・設定（`--to` / `--subject` / `--body` 欠落、**`--allow-send` なしの live 送信**、`--allow-send` を他のコマンドに付けた場合、`--format csv`、`--replay` と `--cassette` の併用） | 引数を直す（送信の承認は `--allow-send` / `ALLOW_SEND=1`） |
-| 3 | I/O（`--out` / カセット） | パスを直す |
+| 2 | 引数・設定（`--to` / `--subject` / `--body` 欠落、**`--html-body` が何も述べない**（空 / 空白のみ / 空のファイル）、**`--allow-send` なしの live 送信**、`--allow-send` を他のコマンドに付けた場合、`--format csv`、`--replay` と `--cassette` の併用） | 引数を直す（送信の承認は `--allow-send` / `ALLOW_SEND=1`） |
+| 3 | I/O（`--out` / カセット / `--body` / `--html-body` の `@FILE`） | パスを直す |
 | 124 | timeout（`--timeout`。既定 300 秒） | 再実行、または owner に相談 |
 | 127 | `npx` が無い | Node / `npx` を入れる（`npx --version`） |
 
@@ -1553,7 +1555,7 @@ make gmail-send-email TO='alert@example.test' SUBJECT='…' BODY='…' REPLAY=.c
 ```
 
 - 1 コマンド = init / initialized / tools/call の send と 2 つの recv。失敗もカセットに残る
-- **カセットは宛先・件名・本文を含む**ので `.cassettes/`（gitignore）にだけ置き、**コミット・共有しない**。
+- **カセットは宛先・件名・本文（`--html-body` を名指したときは HTML も）を含む**ので `.cassettes/`（gitignore）にだけ置き、**コミット・共有しない**。
   `raw/` に置かない。カセットは**追記のみ**（編集・削除しない）
 - `json`（既定）は provider の応答を整形したもの: 一覧 = `{data:[…], paging:{…}}`、単一 = `{id, message, created_time, …}`、insights = `{data:[{name, period, values:[{value}]}]}`
 - `text` は 1〜2 行の要約: 一覧・insights は `data: <件数>` と、あれば `paging.next`（次の 1 往復に使う URL。**netloom は回さない**）、単一 post は `id` / `created_time`
@@ -2304,7 +2306,7 @@ bin/netloom devtools network --url https://www.thch-vape.shop/ --out /tmp/dt/rep
 - **contact / ga4-orders のカセットをコミット・共有する**（顧客の PII / 売上を含み、**レダクトされない**）
 - **`X-GA4-API-Key` / `GA4_API_KEY` を ga4（GA4 Data API）の送信元と混同する**（別物。あちらは Analytics Data API を Google の refresh grant で読む）
 - **openseo のカセットをコミット・共有する**（プロジェクト id と実キーワードのメトリクスを含む）
-- **gmail のカセットをコミット・共有する**（宛先・件名・本文を含む）
+- **gmail のカセットをコミット・共有する**（宛先・件名・本文（と HTML）を含む）
 - **gmail の live 送信を owner 承認なしに実行する**（実メールが飛ぶ。gmail の節）
 - **`--allow-send`（make は `ALLOW_SEND=1`）なしで実メールを送ろうとする**（exit 2 で止まる。実メールが飛ぶと知らずに出すのを避けるための門。`ALLOW_PROD_WRITE=1` と同じ流儀）
 - **gmail の credential（`~/.gmail-mcp/` の中身）を読む・出力する**（サーバーの領分。netloom は関知しない）
@@ -2368,7 +2370,7 @@ netloom は **producer**。採用は JCT 側の staging declaration / collection
 - 実行時に `tools/list` は呼ばない（schema は開発時に 1 回だけ確認して設計 付録 A.7 に記録）
 - **gmail は実装済み**（`gmail send-email` の 1 コマンド。上の節。1 コマンド = 1 MCP 往復）。**送信の live は未実行**（実メールが飛ぶため owner 承認待ち。手順は `docs/plan/20261019-gmail.md` §7）。**呼び出し側（seo-operations の `daily_alert.py` / `test_gmail_mcp.py`）の載せ替えは未処理** — 証跡付きの送信への切替は seo-operations の作業（設計書 §11 N17）
 - gmail の他のツール（`draft_email` / `read_email` / `search_emails` / `list_email_labels` / ラベル / フィルタ / 添付の 18 ツール）は**予約（作らない）**（必要になった時点で 1 コマンド = 1 ツール。設計書 付録 A.20）
-- gmail の `cc` / `bcc` / `htmlBody` / 添付は**送らない**（呼び出し側が名指した `to` / `subject` / `body` の 3 つだけ。付録 A.20）
+- gmail の `cc` / `bcc` / 添付は**送らない**（`htmlBody` は `--html-body` を名指したときだけ同じ往復で送る。issue #64。付録 A.20）
 - **Meta Graph API の live は未実行**（このマシンに `PAGE_TOKEN` / `USER_TOKEN` / `PAGE_ID` / `IG_ACCOUNT_ID` が無い。手順は `docs/plan/20261019-meta-graph.md` §7）
 - **Graph API が `Authorization: Bearer` を受け付けるかは未確認**（live の 401 で判明する。クエリ方式（`access_token`）+ URL レダクトへの切替は owner 判断。設計書 §11 N18）
 - **Meta のページング自動化・リトライ・metric / fields の allow-list は作らない**（薄いプロキシ。次のページは応答の `paging.next` で呼び出し側が回す）
