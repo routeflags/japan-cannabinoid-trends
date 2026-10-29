@@ -20,28 +20,28 @@
     "include_private": false
   },
   "run_count": 61,
-  "count": 149,
+  "count": 147,
   "raw_modified": false,
   "judgment_summary": {
-    "missing_metadata": 14,
+    "missing_metadata": 12,
     "partially_recognized": 4,
     "recognized": 131
   },
   "format_summary": {
-    "csv": 8,
+    "csv": 6,
     "json": 138,
     "text": 3
   },
   "artifact_type_summary": {
     "comparison": 8,
-    "none": 18,
+    "none": 16,
     "raw_records": 1,
     "raw_response": 36,
     "summary": 24,
     "timeseries": 62
   },
   "manifest_summary": {
-    "missing": 85,
+    "missing": 83,
     "present": 64
   },
   "sqlite_present": false,
@@ -946,8 +946,8 @@
     },
     {
       "path": "datasets/cannabinoid-raw-collection/data/processed/README.md",
-      "bytes": 433,
-      "sha256": "5866d68684354a1c90c8247098c0dbb7ca8604fae6d12715aa723ef1b0a99ae2",
+      "bytes": 247,
+      "sha256": "d3a0ebcc8ce0e320da8808fa96dba1a060754f21d64feda07a92aa6ac55a53fc",
       "format": "text",
       "sniff_state": "partial",
       "artifact_type": null,
@@ -973,8 +973,8 @@
     },
     {
       "path": "datasets/cannabinoid-raw-collection/data/processed/collection-summary.md",
-      "bytes": 3573,
-      "sha256": "31f02b501243af34bd7f11d37a994121f44165996eeef2d23d53c2a4cfd6bd65",
+      "bytes": 2900,
+      "sha256": "22e6b52ae3a3b0ca846bf481aa2fd63f9a054a449e130728efa04f8f3bd21695",
       "format": "text",
       "sniff_state": "partial",
       "artifact_type": null,
@@ -994,60 +994,6 @@
       "judgment": "missing_metadata",
       "notes": [
         "content:extension:md",
-        "legacy:no-manifest",
-        "lineage:unknown"
-      ]
-    },
-    {
-      "path": "datasets/cannabinoid-raw-collection/data/processed/youtube_runs.csv",
-      "bytes": 775,
-      "sha256": "4336ddbd2a7fe2d7f9f79976a7b401edd423492a79c1e242ec03f4d083ce6bae",
-      "format": "csv",
-      "sniff_state": "partial",
-      "artifact_type": null,
-      "schema_id": null,
-      "contains_full_timeseries": null,
-      "record_count": null,
-      "declared_data_points": null,
-      "reader_id": null,
-      "reader_registered": null,
-      "study_id": null,
-      "run_id": null,
-      "source_id": null,
-      "run_directory": null,
-      "metadata_state": "missing",
-      "manifest_state": "missing",
-      "verification": "unverifiable_no_manifest",
-      "judgment": "missing_metadata",
-      "notes": [
-        "content:extension:csv",
-        "legacy:no-manifest",
-        "lineage:unknown"
-      ]
-    },
-    {
-      "path": "datasets/cannabinoid-raw-collection/data/processed/youtube_videos.csv",
-      "bytes": 52596,
-      "sha256": "c11dfe2972c0e4a16ab0f59f95010c0493ef39962c4dbbdb167fc80e8840ade8",
-      "format": "csv",
-      "sniff_state": "partial",
-      "artifact_type": null,
-      "schema_id": null,
-      "contains_full_timeseries": null,
-      "record_count": null,
-      "declared_data_points": null,
-      "reader_id": null,
-      "reader_registered": null,
-      "study_id": null,
-      "run_id": null,
-      "source_id": null,
-      "run_directory": null,
-      "metadata_state": "missing",
-      "manifest_state": "missing",
-      "verification": "unverifiable_no_manifest",
-      "judgment": "missing_metadata",
-      "notes": [
-        "content:extension:csv",
         "legacy:no-manifest",
         "lineage:unknown"
       ]

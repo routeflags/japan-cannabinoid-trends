@@ -384,51 +384,12 @@ NON_REPRODUCIBLE: dict[str, NonReproducible] = {
             "and is deliberately kept: it is the only trace of the filter step.",
         ),
     ),
-    "datasets/cannabinoid-raw-collection/data/processed/youtube_videos.csv": NonReproducible(
-        reason=(
-            "Exported from the local YouTube raw runs by "
-            "processing.youtube_export (one row per video: id, title, channel). "
-            "That raw is not in the repository, so the export cannot be re-derived "
-            "from committed inputs."
-        ),
-        missing_inputs=(
-            "datasets/cannabinoid-raw-collection/data/raw/youtube/ (the 7 reviewed "
-            "2026-10-02 runs and the 9 reviewed 2026-10-08 runs; ignored by "
-            "**/data/raw/* and local only)",
-        ),
-        upstream_step="raw (YouTube search payload) -> per-video export",
-        notes=(
-            "Only the allowlisted runs are exported (PUBLISHABLE_RUNS in "
-            "processing/youtube_export.py); 22+25+34+28+23+23+27 = 182 rows "
-            "(2026-10-02) plus 27+20+30+24+22+20+27+21+24 = 215 rows "
-            "(2026-10-08), 397 in total, reconcile "
-            "with the collection summary. Video descriptions are never exported "
-            "(they carry third-party contact addresses), and publish dates are absent "
-            "from these payloads instead of being reconstructed.",
-        ),
-    ),
-    "datasets/cannabinoid-raw-collection/data/processed/youtube_runs.csv": NonReproducible(
-        reason=(
-            "Per-run status for the YouTube runs, written by the same export step as "
-            "youtube_videos.csv; the raw it reads is not in the repository."
-        ),
-        missing_inputs=(
-            "datasets/cannabinoid-raw-collection/data/raw/youtube/ (local only)",
-        ),
-        upstream_step="raw (YouTube run directories) -> published-run table",
-        notes=(
-            "Lists the published runs only. Runs excluded by policy are deliberately "
-            "absent from the artifact (one of them came from a collection means this "
-            "repository no longer uses, and a published table must not read as an "
-            "account of it); the exclusion rules live in processing.youtube_export.",
-        ),
-    ),
     "datasets/cannabinoid-raw-collection/data/processed/collection-summary.md": NonReproducible(
         reason=(
             "Hand-written collection record for the source-side totals that cannot be "
-            "recomputed: the X (316 items) count. YouTube counts are mirrored from "
-            "youtube_runs.csv and Google Trends values are not copied here at all "
-            "(docs/audits/gt-summary.json is their source)."
+            "recomputed: the X (316 items) count. The YouTube aggregates were removed "
+            "on 2026-10-29 (no source raw in the study); Google Trends values are not "
+            "copied here at all (docs/audits/gt-summary.json is their source)."
         ),
         missing_inputs=(
             "X and YouTube raw collections for the 2026-10-02 run (not in the "

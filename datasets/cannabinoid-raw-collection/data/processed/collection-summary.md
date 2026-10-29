@@ -55,13 +55,7 @@
 
 ## 3. YouTube
 
-- 公開集計は 16 run / 397 動画行（`youtube_runs.csv` の `video_rows` 合計と一致、error payload 0・unreadable 0）。
-  内訳は 2026-10-02 の 7 run（22+25+34+28+23+23+27 = 182）に 2026-10-08 の 9 run
-  （27+20+30+24+22+20+27+21+24 = 215）を加えたもの。2026-10-08 の 9 run は
-  actor・検索語・取得上限が未記録のため `search_term` / `collected_at` が空欄。
-  HHC は 2 run を別観測として残す。
-  run 別の内訳・収集時刻は [`youtube_runs.csv`](youtube_runs.csv)、動画行は
-  [`youtube_videos.csv`](youtube_videos.csv)。
+集計物は 2026-10-29 に削除した（研究内に参照元の raw が無いため、owner 決定）。
 
 ---
 
@@ -70,4 +64,3 @@
 1. Google Trends はクエリ単位の相対指数（0-100）。単独系列の平均を化合物間で比較しない（[methodology.md](../../methodology.md) §2.1.2）。
 2. 低ボリューム語は閾値未満で系列が返らない。**欠測であって 0 観測ではない**（§2.1.3）。
 3. X の件数は取得時点の記録値であり、再現できない。0 件でも observed_zero として扱う（§2.2）。
-4. YouTube はページング重複があるため、ユニーク `videoId` で重複排除している（run 内で畳み、run 間の同じ動画は別行として残す。§3.1）。
