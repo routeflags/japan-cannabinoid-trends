@@ -49,9 +49,9 @@
         "metadata",
         "methodology.md"
       ],
-      "data_file_count": 200,
+      "data_file_count": 201,
       "has_data_raw": true,
-      "data_raw_file_count": 196,
+      "data_raw_file_count": 197,
       "sources": [
         "google-trends",
         "google-trends-mcp"
@@ -449,9 +449,9 @@
       ]
     }
   ],
-  "raw_file_count": 229,
+  "raw_file_count": 230,
   "raw_modified": false,
-  "raw_combined_sha256": "331d926f203bbfc33355841361b5c96cba76fe251e62a93a527ec8de1b939815",
+  "raw_combined_sha256": "915bdb9b63d04ebe0c8b6721b6ec1c904619dc19a2f862b18d01e03b06336f26",
   "note": "non-destructive: study boundaries intact, raw and old metadata only read"
 }
 

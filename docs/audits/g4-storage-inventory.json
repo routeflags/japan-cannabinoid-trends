@@ -20,28 +20,28 @@
     "include_private": false
   },
   "run_count": 61,
-  "count": 147,
+  "count": 148,
   "raw_modified": false,
   "judgment_summary": {
-    "missing_metadata": 12,
+    "missing_metadata": 13,
     "partially_recognized": 4,
     "recognized": 131
   },
   "format_summary": {
     "csv": 8,
     "json": 138,
-    "text": 1
+    "text": 2
   },
   "artifact_type_summary": {
     "comparison": 8,
-    "none": 16,
+    "none": 17,
     "raw_records": 1,
     "raw_response": 36,
     "summary": 24,
     "timeseries": 62
   },
   "manifest_summary": {
-    "missing": 83,
+    "missing": 84,
     "present": 64
   },
   "sqlite_present": false,
@@ -4089,6 +4089,33 @@
       "notes": [
         "content:series:date+value",
         "content:points:53"
+      ]
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/README.md",
+      "bytes": 2043,
+      "sha256": "c2e15564777919f35becb9aadf64fa7f866030d1bdf2b7cdf8504e2c83a6f8c3",
+      "format": "text",
+      "sniff_state": "partial",
+      "artifact_type": null,
+      "schema_id": null,
+      "contains_full_timeseries": null,
+      "record_count": null,
+      "declared_data_points": null,
+      "reader_id": null,
+      "reader_registered": null,
+      "study_id": null,
+      "run_id": null,
+      "source_id": null,
+      "run_directory": null,
+      "metadata_state": "missing",
+      "manifest_state": "missing",
+      "verification": "unverifiable_no_manifest",
+      "judgment": "missing_metadata",
+      "notes": [
+        "content:extension:md",
+        "legacy:no-manifest",
+        "lineage:unknown"
       ]
     },
     {
