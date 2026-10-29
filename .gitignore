@@ -73,4 +73,6 @@ datasets/*/data/private/
 # evidence only: keep them here and never commit them.
 .cassettes/
 
-/.agents
+/.agents/*
+!/.agents/skills/
+!/.agents/skills/**
