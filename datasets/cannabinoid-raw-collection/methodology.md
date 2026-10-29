@@ -246,22 +246,25 @@ cannabinoid-raw-collection
 **パラメータ:**
 - max_videos: 50-100（キーワードに依存）
 
-**検索語と `max_videos` が記録されている 7 run（2026-10-02）:**
+**2026-10-02 の 7 run は API 疎通検証であり観測ではない（owner 2026-10-29）：**
 
-| キーワード | max_videos |
-|-----------|-----------|
-| CBD | 100 |
-| THC | 100 |
-| CBG | 50 |
-| HHC | 50 |
-| THCV | 50 |
-| CBD オイル | 50 |
-| THC オイル | 50 |
+| キーワード | max_videos | run ディレクトリ |
+|-----------|-----------|------------------|
+| CBD | 100 | `20261002T064739Z-youtube-cbd` |
+| THC | 100 | `20261002T064821Z-youtube-thc` |
+| CBG | 50 | `20261002T064828Z-youtube-cbg` |
+| HHC | 50 | `20261002T064850Z-youtube-hhc` |
+| THCV | 50 | `20261002T064857Z-youtube-thcv` |
+| CBD オイル | 50 | `20261002T064905Z-youtube-cbd-オイル` |
+| THC オイル | 50 | `20261002T064911Z-youtube-thc-オイル` |
+
+- 上は actor の疎通確認のための試行であり、この研究の観測データではない。`run_metadata.json` の `search_term` / `max_videos` は検証実行時の入力記録であり、収集条件の証拠にはならない。
+- よって追跡中の `youtube_videos.csv` 397 行のうち 182 行、`youtube_runs.csv` 16 行のうち 7 行は検証データが混入している状態にある。集計物の再構築は 2026-10-08 の 9 run が本収集であることの確認を待って行う。
 
 **2026-10-08 の 9 run の追加（[`ISS-20261024-YT-013`](../../docs/issues/active/40-provenance-storage-reproducibility/20261024_p2_youtube-raw-batch-without-metadata.md)）:**
 - 既存 7 run に加え、2026-10-08 収集の 9 run（`20261008T122515Z-youtube-hhc`・`20261008T122605Z-youtube-thch`・`20261008T122647Z-youtube-thc-o`・`20261008T125306Z-youtube-h4cbh`・`20261008T125348Z-youtube-hhbd`・`20261008T125428Z-youtube-hhch`・`20261008T125501Z-youtube-crdp`・`20261008T125544Z-youtube-crdh`・`20261008T145348Z-youtube-cbn`）を公開集計に統合した。公開集計は 16 run / 397 動画行。
 - この 9 run は actor・検索語・取得上限（`max_videos`）が未記録である。run-id や行数から補わず、`youtube_runs.csv` の `search_term` / `collected_at` は空欄とする。
-- HHC は 2026-10-02（28 動画）と 2026-10-08（27 動画）を別 run として両方残す。共通の `videoId` があっても run をまたいで畳まない（反復観測として識別する）。
+- HHC は 2026-10-02（28 動画）と 2026-10-08（27 動画）を別 run として両方残す。共通の `videoId` があっても run をまたいで畳まない（反復観測として識別する）。ただし 2026-10-02 側は上記のとおり疎通検証であり、反復観測の比較対象にはならない。
 - v3 由来の CBN run（`20261004T132844Z-youtube-cbn-2026-09-01-to-2026-10-01`）は含めない（owner 確認待ち）。
 
 **注意事項:**

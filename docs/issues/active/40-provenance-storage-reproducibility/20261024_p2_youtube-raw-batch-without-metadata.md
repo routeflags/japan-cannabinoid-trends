@@ -8,6 +8,10 @@
 「YouTube（公開分）」列, `methodology.md` §2.3  
 **GitHub:** [#10](https://github.com/routeflags/japan-cannabinoid-trends/issues/10)
 
+## 前提の訂正（2026-10-29）
+
+2026-10-02 の 7 run は API 疎通検証であり観測ではない（owner 2026-10-29）。以下に書く「既存の公開集計」「既存 7 run」「HHC の反復」はこの前提の上に組まれており、集計物（`youtube_videos.csv` 397 行中の 182 行、`youtube_runs.csv` 16 行中の 7 行）に検証データが混入している。集計物の再構築と本 issue の完了条件は、2026-10-08 の 9 run が本収集であることの確認を待つ。methodology §2.3 に訂正を記録済み。
+
 ## 概要
 
 2026-10-08 の YouTube raw 9 run（HHC / THC-O / THCH / CBN / CRDH / CRDP / H4CBH / HHBD / HHCH）は実在し、
