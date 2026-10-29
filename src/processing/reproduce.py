@@ -441,6 +441,14 @@ NON_REPRODUCIBLE: dict[str, NonReproducible] = {
             "of duplicating values that live in tracked artifacts."
         ),
     ),
+    "datasets/cannabinoid-raw-collection/data/processed/README.md": NonReproducible(
+        reason=(
+            "Hand-written directory documentation: what each aggregate is, how it is "
+            "generated, and the known smoke-test contamination. No data content."
+        ),
+        missing_inputs=("none: documentation only",),
+        upstream_step="authored alongside the aggregates",
+    ),
 }
 
 def _read_rows(path: Path) -> list[dict[str, str]]:

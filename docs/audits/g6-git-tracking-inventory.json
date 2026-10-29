@@ -4,12 +4,12 @@
   "spec": "docs/plans/20261013f.md §15 (local plan; not tracked)",
   "target_root": "datasets",
   "include_private": false,
-  "count": 311,
+  "count": 312,
   "extra_count": 42,
   "raw_modified": false,
   "state_summary": {
     "absent": 16,
-    "tracked": 337
+    "tracked": 338
   },
   "entries": [
     {
@@ -150,6 +150,16 @@
       "ignored": false,
       "sha256": "f429c789adf7af1015012e5805dee8f80c2aca1c718586e897d716b7f4216264",
       "sha256_after": "f429c789adf7af1015012e5805dee8f80c2aca1c718586e897d716b7f4216264",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/processed/README.md",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "5866d68684354a1c90c8247098c0dbb7ca8604fae6d12715aa723ef1b0a99ae2",
+      "sha256_after": "5866d68684354a1c90c8247098c0dbb7ca8604fae6d12715aa723ef1b0a99ae2",
       "unchanged": true
     },
     {
