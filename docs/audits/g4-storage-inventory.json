@@ -20,28 +20,28 @@
     "include_private": false
   },
   "run_count": 61,
-  "count": 145,
+  "count": 146,
   "raw_modified": false,
   "judgment_summary": {
-    "missing_metadata": 10,
+    "missing_metadata": 11,
     "partially_recognized": 4,
     "recognized": 131
   },
   "format_summary": {
     "csv": 6,
     "json": 138,
-    "text": 1
+    "text": 2
   },
   "artifact_type_summary": {
     "comparison": 8,
-    "none": 14,
+    "none": 15,
     "raw_records": 1,
     "raw_response": 36,
     "summary": 24,
     "timeseries": 62
   },
   "manifest_summary": {
-    "missing": 81,
+    "missing": 82,
     "present": 64
   },
   "sqlite_present": false,
@@ -913,6 +913,33 @@
       "judgment": "missing_metadata",
       "notes": [
         "content:extension:csv",
+        "legacy:no-manifest",
+        "lineage:unknown"
+      ]
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/README.md",
+      "bytes": 419,
+      "sha256": "9cd32cdba812f8a5d91de9acc488a527a419783899b3e01ee61e5953cb8c4574",
+      "format": "text",
+      "sniff_state": "partial",
+      "artifact_type": null,
+      "schema_id": null,
+      "contains_full_timeseries": null,
+      "record_count": null,
+      "declared_data_points": null,
+      "reader_id": null,
+      "reader_registered": null,
+      "study_id": null,
+      "run_id": null,
+      "source_id": null,
+      "run_directory": null,
+      "metadata_state": "missing",
+      "manifest_state": "missing",
+      "verification": "unverifiable_no_manifest",
+      "judgment": "missing_metadata",
+      "notes": [
+        "content:extension:md",
         "legacy:no-manifest",
         "lineage:unknown"
       ]
