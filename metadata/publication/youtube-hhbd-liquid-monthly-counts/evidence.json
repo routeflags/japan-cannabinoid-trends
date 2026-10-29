@@ -1,0 +1,47 @@
+{
+  "schema_version": "1.0.0",
+  "record": "publication_review_evidence",
+  "artifact_id": "youtube-hhbd-liquid-monthly-counts",
+  "recorded_at": "2026-10-29",
+  "provenance_present": true,
+  "integrity": "verified",
+  "schema_valid": true,
+  "personal_data_reviewed": true,
+  "source_terms_confirmed": true,
+  "redistribution_confirmed": true,
+  "copyright_confirmed": true,
+  "anonymization_applied": true,
+  "citations": {
+    "provenance_present": [
+      "datasets/cannabinoid-raw-collection/methodology.md §2.3 and §3.4 describe the adopted run and its deterministic monthly aggregation.",
+      "metadata/provenance/declarations/20261010-youtube-hhbd-liquid-cannabinoid-raw-collection.json identifies the study, query, run, request, source payload and returned record count.",
+      "src/processing/reproduce.py DERIVATIONS and src/processing/youtube_monthly_aggregate.py define the executable derivation."
+    ],
+    "integrity": [
+      "SHA-256 recomputed from datasets/cannabinoid-raw-collection/data/processed/youtube_monthly_counts.csv on 2026-10-29: a9469453521cf38d8d60a8e32e7be8f9f7d2c753a9441d8cee9b7ad0db65b860.",
+      "PYTHONPATH=src python3 -m processing.cli reproduce --artifact datasets/cannabinoid-raw-collection/data/processed/youtube_monthly_counts.csv returned reproducible; 31 derived rows match 31 artifact rows."
+    ],
+    "schema_valid": [
+      "The artifact has 11 documented columns in artifact.json; their names match processing.youtube_monthly_aggregate.OUTPUT_COLUMNS.",
+      "datasets/cannabinoid-raw-collection/methodology.md §3.4 defines UTC calendar-month grouping, distinct-ID counting, omitted empty months and the sample-count interpretation."
+    ],
+    "personal_data_reviewed": [
+      "The CSV has 31 monthly aggregate rows and contains no video ID, title, channel, description or per-video engagement value.",
+      "The owner reviewed the 19 monthly cells below 5 (including 14 cells of 1) and confirmed: “問題ない” (owner reply in this thread, 2026-10-29)."
+    ],
+    "source_terms_confirmed": [
+      "The owner confirmed “済み” when asked whether the conditions allowing publication and redistribution of this YouTube aggregate had been checked (owner reply in this thread, 2026-10-29)."
+    ],
+    "redistribution_confirmed": [
+      "The owner confirmed the applicable publication and redistribution conditions as checked (owner reply in this thread, 2026-10-29). Approval applies to this aggregate only; the source raw is excluded."
+    ],
+    "copyright_confirmed": [
+      "The owner confirmed that the conditions for publication and redistribution of this aggregate had been checked; the artifact contains aggregate counts, not video content (owner reply in this thread, 2026-10-29)."
+    ],
+    "anonymization_applied": [
+      "Distinct video IDs are counted by UTC publication month; no row-level video fields are included.",
+      "The owner explicitly limited approval to the intermediate aggregate and excluded raw: “rawは公開しない。中間集計ファイルは問題ない” (owner reply in this thread, 2026-10-29)."
+    ]
+  },
+  "notes": "The owner accepted the sparse monthly counts without additional suppression. This is a decision for this artifact, not a general small-cell threshold."
+}

@@ -290,6 +290,12 @@ SKOS Concept ID を使用して化合物カテゴリを分類。
 > 本表の `author_id` は初出順の連番であり、ハッシュではない。`tweet_id_hash` は SHA-256 の先頭 16 文字である。
 > 本 study は X raw をリポジトリに保持していないため、この変換の適用先成果物は `cbx-social-trends` 側にある。
 
+### 3.4 YouTube 月別集計
+
+`make youtube-aggregate` が採用済みの HHBD リキッド 1 run を読み、`date` を UTC の暦月に変換して `id` のユニーク件数を集計する。run 内の重複 ID は1件に数え、同じ ID が異なる月に現れた場合は処理を停止する。出力には動画 ID、タイトル、チャンネル、説明文、個別の反応数を含めない。
+
+出力は [`data/processed/youtube_monthly_counts.csv`](data/processed/youtube_monthly_counts.csv)。月に結果がない場合は行を作らず、0件とは記録しない。件数は `HHBD リキッド` の YouTube 検索結果に含まれた動画の標本数であり、その月にYouTube全体で公開された動画数を表さない。raw の SHA-256 と件数を run metadata / artifact manifest と照合し、raw は変更しない。月別集計は公開審査済みで、承認は当該 CSV の SHA-256 に限定される（[審査記録](../../metadata/publication/youtube-hhbd-liquid-monthly-counts/decision.json)）。raw は公開対象外。外部公開・リリースは別途実施していない。
+
 ---
 
 ## 4. 品質管理

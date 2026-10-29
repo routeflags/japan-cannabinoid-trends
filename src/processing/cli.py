@@ -7,6 +7,8 @@
   X input (read-only; no per-post output)
 - ``build-platform-trends``  Google Trends + YouTube cross-platform release
   tables (X excluded by owner decision)
+- ``youtube-monthly-aggregate``  monthly counts from the adopted HHBD YouTube
+  search-result sample (no per-video fields)
 
 The Python API (:mod:`processing.reproduce`, :mod:`processing.classify`) is the
 primary interface; this CLI exposes it for operators and CI.
@@ -47,6 +49,11 @@ from processing.gt_statistics import (
 from processing.gt_legacy_label_corrections import write_manifest as write_gt_legacy_label_corrections
 from processing.platform_trends import build_platform_trends
 from processing.youtube_export import build_video_export, write_export
+from processing.youtube_monthly_aggregate import (
+    YouTubeAggregationError,
+    build_youtube_monthly_aggregate,
+    write_youtube_monthly_aggregate,
+)
 from processing.reproduce import audit_processed_artifacts, reproduce_artifact
 from processing.rulespec import RuleSpecError, load_content_rules
 from validation.reporting import dump_json
@@ -383,6 +390,30 @@ def cmd_youtube_export(args) -> int:
     return EXIT_OK
 
 
+def cmd_youtube_monthly_aggregate(args) -> int:
+    try:
+        rows, diagnostics = build_youtube_monthly_aggregate(
+            args.study_dir, run_id=args.run_id
+        )
+        path = write_youtube_monthly_aggregate(rows, args.output)
+    except YouTubeAggregationError as error:
+        _err(f"YouTube monthly aggregation failed: {error}")
+        return EXIT_DATA
+    except OSError as error:
+        _err(f"YouTube monthly aggregation failed: {error}")
+        return EXIT_IO
+
+    print(
+        f"YouTube monthly aggregate written: {path} "
+        f"raw_records={diagnostics['raw_record_count']} "
+        f"distinct_videos={diagnostics['distinct_video_count']} "
+        f"duplicates_removed={diagnostics['duplicates_removed']} "
+        f"months={diagnostics['month_count']} "
+        f"input_sha256={diagnostics['input_sha256']}"
+    )
+    return EXIT_OK
+
+
 def cmd_gt_legacy_label_corrections(args) -> int:
     try:
         manifest = write_gt_legacy_label_corrections(
@@ -486,6 +517,26 @@ def build_parser() -> argparse.ArgumentParser:
     )
     youtube_export.add_argument("--format", choices=("text", "json"), default="text")
     youtube_export.set_defaults(func=cmd_youtube_export)
+
+    youtube_monthly = sub.add_parser(
+        "youtube-monthly-aggregate",
+        help="aggregate the adopted HHBD YouTube run by UTC publication month",
+    )
+    youtube_monthly.add_argument(
+        "--study-dir", default="datasets/cannabinoid-raw-collection"
+    )
+    youtube_monthly.add_argument(
+        "--run-id",
+        default="20261010T141947Z-youtube-cannabinoid-raw-collection",
+    )
+    youtube_monthly.add_argument(
+        "--output",
+        default=(
+            "datasets/cannabinoid-raw-collection/data/processed/"
+            "youtube_monthly_counts.csv"
+        ),
+    )
+    youtube_monthly.set_defaults(func=cmd_youtube_monthly_aggregate)
 
     gt_corrections = sub.add_parser(
         "gt-legacy-label-corrections",

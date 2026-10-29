@@ -20,28 +20,28 @@
     "include_private": false
   },
   "run_count": 62,
-  "count": 147,
+  "count": 148,
   "raw_modified": false,
   "judgment_summary": {
-    "missing_metadata": 11,
+    "missing_metadata": 12,
     "partially_recognized": 5,
     "recognized": 131
   },
   "format_summary": {
-    "csv": 7,
+    "csv": 8,
     "json": 138,
     "text": 2
   },
   "artifact_type_summary": {
     "comparison": 8,
-    "none": 16,
+    "none": 17,
     "raw_records": 1,
     "raw_response": 36,
     "summary": 24,
     "timeseries": 62
   },
   "manifest_summary": {
-    "missing": 82,
+    "missing": 83,
     "present": 65
   },
   "sqlite_present": false,
@@ -931,8 +931,8 @@
     },
     {
       "path": "datasets/cannabinoid-raw-collection/data/README.md",
-      "bytes": 489,
-      "sha256": "f74cc96ba339bd1efec813e2535cf0b48cafe714296dcf6d14240568c5142c0f",
+      "bytes": 609,
+      "sha256": "3828a41e81b1b2101d74bd17128c4435491705dc7e898c7fe88f6973ad142e58",
       "format": "text",
       "sniff_state": "partial",
       "artifact_type": null,
@@ -979,6 +979,33 @@
       "judgment": "missing_metadata",
       "notes": [
         "content:json_object",
+        "legacy:no-manifest",
+        "lineage:unknown"
+      ]
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/processed/youtube_monthly_counts.csv",
+      "bytes": 5536,
+      "sha256": "a9469453521cf38d8d60a8e32e7be8f9f7d2c753a9441d8cee9b7ad0db65b860",
+      "format": "csv",
+      "sniff_state": "partial",
+      "artifact_type": null,
+      "schema_id": null,
+      "contains_full_timeseries": null,
+      "record_count": null,
+      "declared_data_points": null,
+      "reader_id": null,
+      "reader_registered": null,
+      "study_id": null,
+      "run_id": null,
+      "source_id": null,
+      "run_directory": null,
+      "metadata_state": "missing",
+      "manifest_state": "missing",
+      "verification": "unverifiable_no_manifest",
+      "judgment": "missing_metadata",
+      "notes": [
+        "content:extension:csv",
         "legacy:no-manifest",
         "lineage:unknown"
       ]

@@ -1,0 +1,72 @@
+{
+  "gate": "publication_eligibility",
+  "criteria": "G6 §10.2 (PUB-01..PUB-10)",
+  "artifact_id": "youtube-hhbd-liquid-monthly-counts",
+  "artifact_sha256": "a9469453521cf38d8d60a8e32e7be8f9f7d2c753a9441d8cee9b7ad0db65b860",
+  "decision_id": "publication-review-youtube-hhbd-liquid-monthly-counts",
+  "verdict": "SUPPORTED",
+  "checks": [
+    {
+      "id": "PUB-01",
+      "title": "provenance exists",
+      "status": "PASS",
+      "detail": "provenance reference supplied"
+    },
+    {
+      "id": "PUB-02",
+      "title": "artifact integrity passes",
+      "status": "PASS",
+      "detail": "artifact hash verified"
+    },
+    {
+      "id": "PUB-03",
+      "title": "publication schema valid",
+      "status": "PASS",
+      "detail": "publication schema reviewed"
+    },
+    {
+      "id": "PUB-04",
+      "title": "personal-data review",
+      "status": "PASS",
+      "detail": "personal-data review recorded"
+    },
+    {
+      "id": "PUB-05",
+      "title": "secret scan",
+      "status": "PASS",
+      "detail": "no credential-like fields or values in the review envelope"
+    },
+    {
+      "id": "PUB-06",
+      "title": "source terms confirmed",
+      "status": "PASS",
+      "detail": "confirmation recorded"
+    },
+    {
+      "id": "PUB-07",
+      "title": "redistribution conditions confirmed",
+      "status": "PASS",
+      "detail": "confirmation recorded"
+    },
+    {
+      "id": "PUB-08",
+      "title": "copyright / contract constraints confirmed",
+      "status": "PASS",
+      "detail": "confirmation recorded"
+    },
+    {
+      "id": "PUB-09",
+      "title": "anonymization / aggregation applied",
+      "status": "PASS",
+      "detail": "anonymization / aggregation recorded"
+    },
+    {
+      "id": "PUB-10",
+      "title": "publication approval recorded",
+      "status": "PASS",
+      "detail": "approved decision pins this artifact hash"
+    }
+  ],
+  "failed": [],
+  "warnings": []
+}

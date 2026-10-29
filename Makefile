@@ -8,6 +8,7 @@
 #   make stage DECLARATION=<file>      stage external payloads (COL-017 driver)
 #   make adopt-all                    adopt every staged run (L1 verdict each)
 #   make platform-trends              rebuild processed Google Trends + YouTube release tables
+#   make youtube-aggregate            build HHBD YouTube monthly result counts
 #   make audit-new-runs               new-run contract audit (read-only)
 #   make audit-adoption               adoption backlog: raw run dirs and the metadata a
 #                                     declaration needs (run where the raw layer is)
@@ -23,10 +24,10 @@ METADATA ?= metadata
 GATE ?= registries
 GATE_ARGS ?=
 
-.PHONY: help test collect stage adopt-all platform-trends audit-new-runs audit-adoption audit-publication audit-snapshots gates check-venv
+.PHONY: help test collect stage adopt-all platform-trends youtube-aggregate audit-new-runs audit-adoption audit-publication audit-snapshots gates check-venv
 
 help:
-	@echo "Targets: test | stage DECLARATION=<file> | adopt-all | platform-trends | audit-new-runs | audit-adoption | audit-publication | audit-snapshots | gates"
+	@echo "Targets: test | stage DECLARATION=<file> | adopt-all | platform-trends | youtube-aggregate | audit-new-runs | audit-adoption | audit-publication | audit-snapshots | gates"
 
 # Local development runs through .venv (see docs/specs/validation-framework.md
 # §2).  Fail fast with setup guidance when the interpreter is absent instead of
@@ -54,6 +55,9 @@ adopt-all: check-venv
 
 platform-trends: check-venv
 	$(PYTHON) -m processing.cli build-platform-trends --output-dir datasets/cannabinoid-platform-trends/data/processed
+
+youtube-aggregate: check-venv
+	$(PYTHON) -m processing.cli youtube-monthly-aggregate
 
 audit-new-runs: check-venv
 	$(PYTHON) -m validation.cli audit-new-runs

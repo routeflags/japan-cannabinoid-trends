@@ -149,6 +149,28 @@ REPORTS: tuple[Report, ...] = (
             "absence of the file is asserted."
         ),
     ),
+    Report(
+        "docs/audits/g6-youtube-hhbd-publication-eligibility.json",
+        (
+            "validation.cli",
+            "gate-publication",
+            "--artifact",
+            "metadata/publication/youtube-hhbd-liquid-monthly-counts/artifact.json",
+            "--decision",
+            "metadata/publication/youtube-hhbd-liquid-monthly-counts/decision.json",
+            "--evidence",
+            "metadata/publication/youtube-hhbd-liquid-monthly-counts/evidence.json",
+        ),
+        kind=INVOCATION_RECORD,
+        artifact_path=(
+            "datasets/cannabinoid-raw-collection/data/processed/"
+            "youtube_monthly_counts.csv"
+        ),
+        notes=(
+            "Owner-approved, hash-pinned publication review for the HHBD liquid "
+            "YouTube monthly aggregate only; the source raw is excluded."
+        ),
+    ),
 )
 
 _BY_KIND = {

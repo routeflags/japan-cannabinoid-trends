@@ -45,6 +45,10 @@ from processing.platform_trends import (
     RUN_INDEX_COLUMNS,
     build_platform_trends,
 )
+from processing.youtube_monthly_aggregate import (
+    OUTPUT_COLUMNS as YOUTUBE_MONTHLY_COLUMNS,
+    aggregate_youtube_rows,
+)
 from processing.rulespec import ContentRules, load_content_rules
 from validation.storage_policy import git_tracked
 
@@ -216,6 +220,21 @@ DERIVATIONS: dict[str, Derivation] = {
             "Generated manifest for the cannabinoid-platform-trends processed "
             "tables. It records the source documents and row counts.",
         ),
+    ),
+    "datasets/cannabinoid-raw-collection/data/processed/youtube_monthly_counts.csv": Derivation(
+        source=(
+            "datasets/cannabinoid-raw-collection/data/raw/youtube/"
+            "20261010T141947Z-youtube-cannabinoid-raw-collection/"
+            "dataset_youtube-scraper_2026-10-10_14-19-47-693.csv"
+        ),
+        columns=YOUTUBE_MONTHLY_COLUMNS,
+        kind="youtube-monthly-search-results",
+        notes=(
+            "Count distinct returned video IDs by UTC month from the HHBD リキッド "
+            "YouTube run. This describes one search-result sample, not all YouTube "
+            "uploads. Months with no returned rows are omitted, not encoded as zero.",
+        ),
+        source_published=False,
     ),
 }
 
@@ -585,6 +604,9 @@ def reproduce_artifact(
 
         source_rows = _read_rows(source_path)
         derived, _diagnostics = aggregate_coarse_monthly_rows(source_rows)
+    elif derivation.kind == "youtube-monthly-search-results":
+        source_rows = _read_rows(source_path)
+        derived, _diagnostics = aggregate_youtube_rows(source_rows)
     else:  # pragma: no cover - registry is closed; guarded by tests
         raise ValueError(f"unknown derivation kind: {derivation.kind!r}")
 

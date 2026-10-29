@@ -1,0 +1,14 @@
+{
+  "schema_version": "1.0.0",
+  "record": "publication_decision",
+  "decision_id": "publication-review-youtube-hhbd-liquid-monthly-counts",
+  "artifact_id": "youtube-hhbd-liquid-monthly-counts",
+  "artifact_sha256": "a9469453521cf38d8d60a8e32e7be8f9f7d2c753a9441d8cee9b7ad0db65b860",
+  "status": "approved",
+  "reviewed_at": "2026-10-29",
+  "reviewer": "smapira",
+  "criteria_version": "G6 §10.2 / §11 (publication eligibility and hash-pinned approval)",
+  "recorded_at": "2026-10-29",
+  "basis": "Owner confirmed that monthly values below 5 are acceptable (“問題ない”), that the publication and redistribution conditions are checked (“済み”), and that raw is not to be published while the intermediate aggregate is acceptable (“rawは公開しない。中間集計ファイルは問題ない”).",
+  "notes": "Approval is limited to the processed aggregate at the exact SHA-256 recorded here. It does not approve publication of the raw YouTube records or any other artifact."
+}

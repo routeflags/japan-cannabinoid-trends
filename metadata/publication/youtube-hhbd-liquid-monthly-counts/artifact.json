@@ -1,0 +1,29 @@
+{
+  "schema_version": "1.0.0",
+  "record": "publication_artifact_descriptor",
+  "artifact_id": "youtube-hhbd-liquid-monthly-counts",
+  "path": "datasets/cannabinoid-raw-collection/data/processed/youtube_monthly_counts.csv",
+  "layer": "processed",
+  "source_kind": "social",
+  "storage_policy_id": "processed-public-candidate",
+  "schema_id": "youtube-monthly-search-results-v1",
+  "sha256": "a9469453521cf38d8d60a8e32e7be8f9f7d2c753a9441d8cee9b7ad0db65b860",
+  "byte_length": 5536,
+  "data_rows": 31,
+  "columns": 11,
+  "column_definitions": [
+    {"name": "source", "type": "string", "description": "Source platform."},
+    {"name": "run_id", "type": "string", "description": "Adopted collection run identifier."},
+    {"name": "query_id", "type": "string", "description": "Registered query identifier."},
+    {"name": "query_text", "type": "string", "description": "Submitted query."},
+    {"name": "metric", "type": "string", "description": "Metric name; returned video sample count."},
+    {"name": "value", "type": "integer", "description": "Distinct returned video IDs in the month."},
+    {"name": "unit", "type": "string", "description": "Count unit; videos."},
+    {"name": "period_start", "type": "date", "description": "UTC calendar-month start, inclusive."},
+    {"name": "period_end_exclusive", "type": "date", "description": "Next UTC calendar-month start, exclusive."},
+    {"name": "granularity", "type": "string", "description": "Aggregation period; month."},
+    {"name": "status", "type": "string", "description": "Observation state; observed_nonzero for represented months."}
+  ],
+  "recorded_at": "2026-10-29",
+  "notes": "Counts returned by the single HHBD リキッド YouTube search run, not all YouTube uploads. The source raw file is not part of this publication candidate."
+}

@@ -99,7 +99,7 @@ Google Trends の系列・窓・欠測は [methodology.md](methodology.md) §2.1
 
 ### YouTube の収集と追跡
 
-採用済み raw は [`data/raw/youtube/20261010T141947Z-youtube-cannabinoid-raw-collection/`](data/raw/youtube/20261010T141947Z-youtube-cannabinoid-raw-collection/) の 1 run（HHBD リキッド、224 records）。raw は非追跡で、CSV は公開用集計物ではない。採用宣言は [`20261010-youtube-hhbd-liquid-cannabinoid-raw-collection.json`](../../metadata/provenance/declarations/20261010-youtube-hhbd-liquid-cannabinoid-raw-collection.json)。
+採用済み raw は [`data/raw/youtube/20261010T141947Z-youtube-cannabinoid-raw-collection/`](data/raw/youtube/20261010T141947Z-youtube-cannabinoid-raw-collection/) の 1 run（HHBD リキッド、224 records）。raw は非追跡かつ公開対象外。月別の検索結果件数は [`data/processed/youtube_monthly_counts.csv`](data/processed/youtube_monthly_counts.csv) に集計し、この中間集計ファイルのみ公開承認済み（[審査記録](../../metadata/publication/youtube-hhbd-liquid-monthly-counts/decision.json)）。値は検索結果の標本数で、YouTube 全体の投稿数ではない。外部公開・リリースはまだ実施していない。採用宣言は [`20261010-youtube-hhbd-liquid-cannabinoid-raw-collection.json`](../../metadata/provenance/declarations/20261010-youtube-hhbd-liquid-cannabinoid-raw-collection.json)。
 
 ## ステータス
 

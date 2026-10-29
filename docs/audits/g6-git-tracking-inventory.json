@@ -4,13 +4,13 @@
   "spec": "docs/plans/20261013f.md §15 (local plan; not tracked)",
   "target_root": "datasets",
   "include_private": false,
-  "count": 312,
-  "extra_count": 42,
+  "count": 313,
+  "extra_count": 43,
   "raw_modified": false,
   "state_summary": {
     "absent": 14,
     "ignored": 5,
-    "tracked": 335
+    "tracked": 337
   },
   "entries": [
     {
@@ -139,8 +139,8 @@
       "state": "tracked",
       "tracked": true,
       "ignored": false,
-      "sha256": "de07a9de1ba682e9c1fbe1055a4fd2bc33e0ca4aa95d9ba4025feaff1b460ad7",
-      "sha256_after": "de07a9de1ba682e9c1fbe1055a4fd2bc33e0ca4aa95d9ba4025feaff1b460ad7",
+      "sha256": "954ec1216617ffa2d19d442c3038813ee4647d2087f94b6cf9cf96906a0c0d42",
+      "sha256_after": "954ec1216617ffa2d19d442c3038813ee4647d2087f94b6cf9cf96906a0c0d42",
       "unchanged": true
     },
     {
@@ -149,8 +149,8 @@
       "state": "tracked",
       "tracked": true,
       "ignored": false,
-      "sha256": "f74cc96ba339bd1efec813e2535cf0b48cafe714296dcf6d14240568c5142c0f",
-      "sha256_after": "f74cc96ba339bd1efec813e2535cf0b48cafe714296dcf6d14240568c5142c0f",
+      "sha256": "3828a41e81b1b2101d74bd17128c4435491705dc7e898c7fe88f6973ad142e58",
+      "sha256_after": "3828a41e81b1b2101d74bd17128c4435491705dc7e898c7fe88f6973ad142e58",
       "unchanged": true
     },
     {
@@ -161,6 +161,16 @@
       "ignored": false,
       "sha256": "f429c789adf7af1015012e5805dee8f80c2aca1c718586e897d716b7f4216264",
       "sha256_after": "f429c789adf7af1015012e5805dee8f80c2aca1c718586e897d716b7f4216264",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/processed/youtube_monthly_counts.csv",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "a9469453521cf38d8d60a8e32e7be8f9f7d2c753a9441d8cee9b7ad0db65b860",
+      "sha256_after": "a9469453521cf38d8d60a8e32e7be8f9f7d2c753a9441d8cee9b7ad0db65b860",
       "unchanged": true
     },
     {
@@ -2479,8 +2489,8 @@
       "state": "tracked",
       "tracked": true,
       "ignored": false,
-      "sha256": "f2e3129dba057d737be3eccd8eef959dbbc93fadce491ec3f982c86fd08e6dd0",
-      "sha256_after": "f2e3129dba057d737be3eccd8eef959dbbc93fadce491ec3f982c86fd08e6dd0",
+      "sha256": "5b41b5ca678ee76406717aa20b5da08795ed75d3d76f595cb60ec57dbcc7439b",
+      "sha256_after": "5b41b5ca678ee76406717aa20b5da08795ed75d3d76f595cb60ec57dbcc7439b",
       "unchanged": true
     },
     {
@@ -3241,6 +3251,14 @@
     },
     {
       "path": "docs/audits/g6-publication-eligibility.md",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "kind": "local_only"
+    },
+    {
+      "path": "docs/audits/g6-youtube-hhbd-publication-eligibility.json",
       "exists": true,
       "state": "tracked",
       "tracked": true,
