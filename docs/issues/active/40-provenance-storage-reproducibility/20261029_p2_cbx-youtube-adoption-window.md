@@ -3,6 +3,7 @@
 **ID:** ISS-20261029-PRV-016
 **優先度:** P2 (Medium)
 **ステータス:** OPEN
+**GitHub:** [#14](https://github.com/routeflags/japan-cannabinoid-trends/issues/14)
 **対象:** `datasets/cbx-social-trends/data/raw/youtube/`（一次 checkout、4 run ＋ 4 の loose ファイル）、
 `datasets/cbx-social-trends/{README.md, methodology.md}`、`src/validation/adoption.py`、
 `src/collection/core/staging.py`（`staging-declaration-v1`）
