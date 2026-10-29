@@ -4,12 +4,12 @@
   "spec": "docs/plans/20261013f.md §15 (local plan; not tracked)",
   "target_root": "datasets",
   "include_private": false,
-  "count": 310,
+  "count": 308,
   "extra_count": 42,
   "raw_modified": false,
   "state_summary": {
     "absent": 16,
-    "tracked": 336
+    "tracked": 334
   },
   "entries": [
     {
@@ -138,8 +138,8 @@
       "state": "tracked",
       "tracked": true,
       "ignored": false,
-      "sha256": "0795384fbaef9dbfb4eb9bc7a9cdbbb63a4d30b37e475464fca864ebc464d902",
-      "sha256_after": "0795384fbaef9dbfb4eb9bc7a9cdbbb63a4d30b37e475464fca864ebc464d902",
+      "sha256": "44e2dc6186060242aae9f67c715b883e531f72c3a4f1bdc231afce3d48238ae8",
+      "sha256_after": "44e2dc6186060242aae9f67c715b883e531f72c3a4f1bdc231afce3d48238ae8",
       "unchanged": true
     },
     {
@@ -150,26 +150,6 @@
       "ignored": false,
       "sha256": "f429c789adf7af1015012e5805dee8f80c2aca1c718586e897d716b7f4216264",
       "sha256_after": "f429c789adf7af1015012e5805dee8f80c2aca1c718586e897d716b7f4216264",
-      "unchanged": true
-    },
-    {
-      "path": "datasets/cannabinoid-raw-collection/data/processed/README.md",
-      "exists": true,
-      "state": "tracked",
-      "tracked": true,
-      "ignored": false,
-      "sha256": "d3a0ebcc8ce0e320da8808fa96dba1a060754f21d64feda07a92aa6ac55a53fc",
-      "sha256_after": "d3a0ebcc8ce0e320da8808fa96dba1a060754f21d64feda07a92aa6ac55a53fc",
-      "unchanged": true
-    },
-    {
-      "path": "datasets/cannabinoid-raw-collection/data/processed/collection-summary.md",
-      "exists": true,
-      "state": "tracked",
-      "tracked": true,
-      "ignored": false,
-      "sha256": "22e6b52ae3a3b0ca846bf481aa2fd63f9a054a449e130728efa04f8f3bd21695",
-      "sha256_after": "22e6b52ae3a3b0ca846bf481aa2fd63f9a054a449e130728efa04f8f3bd21695",
       "unchanged": true
     },
     {
@@ -2458,8 +2438,8 @@
       "state": "tracked",
       "tracked": true,
       "ignored": false,
-      "sha256": "b84e515cc0e73fa5b63f841d92c53f13e32acec9705e434924e9e213e37e534b",
-      "sha256_after": "b84e515cc0e73fa5b63f841d92c53f13e32acec9705e434924e9e213e37e534b",
+      "sha256": "5bfa37e9df857f61c083d7bcfbf02034c84a93c668a6be14e373578fcf28e3a7",
+      "sha256_after": "5bfa37e9df857f61c083d7bcfbf02034c84a93c668a6be14e373578fcf28e3a7",
       "unchanged": true
     },
     {

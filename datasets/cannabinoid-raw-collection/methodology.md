@@ -237,7 +237,7 @@ cannabinoid-raw-collection
 | `20261008T165330Z-x-cbd-latest10` | 200 | |
 
 - 3 run とも `run_metadata.json` に収集条件（クエリ・`maxPages`・窓）の記録が無く、実行状態の 3 項目だけを持つ。
-  run-id から読める以上の条件を推定しない。件数は `collection-summary.md` §2 に記録する（X raw は Git 管理外のため）。
+  run-id から読める以上の条件を推定しない。
 
 ### 2.3 YouTube
 

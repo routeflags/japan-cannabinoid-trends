@@ -96,9 +96,7 @@ Google Trends の系列・窓・欠測は [methodology.md](methodology.md) §2.1
   新規 8 run は main5 と窓が異なる別観測であり（main5 は 2021-10-10 〜 2026-10-11、新規は 2021-10-17 〜 2026-10-18）、単独系列の値をまたいで比較しない。
   THC-O リキッドは 5年でも系列なし（`NO_DATA`）。12ヶ月が no data でも 5年は取れることがある（HHC リキッドがその例）。
 - **12ヶ月のリキッドは 13 語照会して 8 語が系列、5 語（HHC / CRDH / CRDP / THC-O / THCV リキッド）は no data**。
-- **X は化合物語だけ**（製品語なし）。YouTube の集計物は 2026-10-29 に削除した。
-- キーワード別の件数は X が [`data/processed/collection-summary.md`](data/processed/collection-summary.md)（raw は Git 管理外の
-  ローカル証跡なので記録値）。
+- **X は化合物語だけ**（製品語なし）。
 
 ### YouTube の収集と追跡
 
@@ -121,7 +119,6 @@ Google Trends の系列・窓・欠測は [methodology.md](methodology.md) §2.1
   [`ISS-20261023-GT-005`](../../docs/issues/active/40-provenance-storage-reproducibility/20261023_p2_gt-5y-recollection-residuals.md)（5年の窓・反復測定・公開承認）、
   [`ISS-20261024-YT-013`](../../docs/issues/active/40-provenance-storage-reproducibility/20261024_p2_youtube-raw-batch-without-metadata.md)（YouTube の `raw のみ` 8 化合物）
 - 初回の計画書: `research/strategy/20261002-keyword-coverage-expansion.md`
-- 収集サマリー: `data/processed/collection-summary.md`
 - 配布物: [`datasets/cannabinoid-platform-trends/`](../cannabinoid-platform-trends/)、
   既存研究: [`datasets/cbx-search-trends/`](../cbx-search-trends/), [`datasets/cbx-social-trends/`](../cbx-social-trends/)
 - タクソノミー: `metadata/taxonomy/compound-taxonomy.skos.jsonld`

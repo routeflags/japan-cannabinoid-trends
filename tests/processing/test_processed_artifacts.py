@@ -329,7 +329,7 @@ def test_audit_is_read_only_over_raw_data() -> None:
 def test_artifact_in_no_registry_fails_the_audit(monkeypatch) -> None:
     """A newly committed processed artifact must not skip this question."""
 
-    target = "datasets/cannabinoid-raw-collection/data/processed/collection-summary.md"
+    target = "datasets/cbx-social-trends/data/processed/youtube_filtered_202607/records_filtered.csv"
     monkeypatch.delitem(NON_REPRODUCIBLE, target)
     report = audit_processed_artifacts(REPO_ROOT, REPO_ROOT / "datasets")
     assert target in report["failures"]

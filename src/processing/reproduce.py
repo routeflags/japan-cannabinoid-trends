@@ -384,32 +384,6 @@ NON_REPRODUCIBLE: dict[str, NonReproducible] = {
             "and is deliberately kept: it is the only trace of the filter step.",
         ),
     ),
-    "datasets/cannabinoid-raw-collection/data/processed/collection-summary.md": NonReproducible(
-        reason=(
-            "Hand-written collection record for the source-side totals that cannot be "
-            "recomputed: the X (316 items) count. The YouTube aggregates were removed "
-            "on 2026-10-29 (no source raw in the study); Google Trends values are not "
-            "copied here at all (docs/audits/gt-summary.json is their source)."
-        ),
-        missing_inputs=(
-            "X and YouTube raw collections for the 2026-10-02 run (not in the "
-            "repository)",
-        ),
-        upstream_step="collection run -> hand-written summary",
-        notes=(
-            "Kept hand-written on purpose. Regenerating the numbers it does carry is "
-            "impossible from a clone, so the file states which row set it owns instead "
-            "of duplicating values that live in tracked artifacts."
-        ),
-    ),
-    "datasets/cannabinoid-raw-collection/data/processed/README.md": NonReproducible(
-        reason=(
-            "Hand-written directory documentation: what each aggregate is, how it is "
-            "generated, and the known smoke-test contamination. No data content."
-        ),
-        missing_inputs=("none: documentation only",),
-        upstream_step="authored alongside the aggregates",
-    ),
 }
 
 def _read_rows(path: Path) -> list[dict[str, str]]:
