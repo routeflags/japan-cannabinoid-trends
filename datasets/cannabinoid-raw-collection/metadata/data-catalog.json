@@ -5,8 +5,8 @@
     "collection-run-v1"
   ],
   "datasets_root": "data",
-  "manifest_count": 28,
-  "count": 56,
+  "manifest_count": 29,
+  "count": 57,
   "errors": [],
   "entries": [
     {
@@ -323,6 +323,22 @@
       "derived_from": [
         "20261015T205048Z-google-trends-cannabinoid-multi-trends-payload-json"
       ]
+    },
+    {
+      "artifact_id": "20261010T141947Z-youtube-cannabinoid-raw-collection-dataset-youtube-scraper-2026-10-10-14-19-47-693-csv",
+      "study_id": "cannabinoid-raw-collection",
+      "run_id": "20261010T141947Z-youtube-cannabinoid-raw-collection",
+      "source_id": "youtube",
+      "compound_id": "compound_hhbd",
+      "query_id": "hhbd-liquid-ja",
+      "window_id": "2020-09-30T00:00:00Z_2026-10-06T00:00:00Z",
+      "artifact_type": "raw_records",
+      "format": "csv",
+      "schema_id": "youtube-dataset-csv-v1",
+      "layer": "raw",
+      "record_count": 224,
+      "completeness": "complete",
+      "path": "data/raw/youtube/20261010T141947Z-youtube-cannabinoid-raw-collection/dataset_youtube-scraper_2026-10-10_14-19-47-693.csv"
     },
     {
       "artifact_id": "20261023T160420Z-google-trends-cbg-5y-payload-json",

@@ -246,6 +246,11 @@ def test_catalog_membership_is_reported_not_decided(tmp_path: Path) -> None:
                         "path": (
                             "raw/probe/20261013T000000Z-probe-cbd/payload_0.json"
                         )
+                    },
+                    {
+                        "path": (
+                            "data/raw/probe/20261013T000000Z-probe-thc/payload_0.json"
+                        )
                     }
                 ]
             }
@@ -255,8 +260,8 @@ def test_catalog_membership_is_reported_not_decided(tmp_path: Path) -> None:
     report = build_adoption_backlog(datasets)
     by_name = {run["run_dir"]: run for run in report["runs"]}
     assert by_name["20261013T000000Z-probe-cbd"]["catalogued"] is True
-    assert by_name["20261013T000000Z-probe-thc"]["catalogued"] is False
-    assert report["uncatalogued_count"] == 1
+    assert by_name["20261013T000000Z-probe-thc"]["catalogued"] is True
+    assert report["uncatalogued_count"] == 0
 
 
 def test_audit_reads_metadata_and_writes_nothing(tmp_path: Path) -> None:

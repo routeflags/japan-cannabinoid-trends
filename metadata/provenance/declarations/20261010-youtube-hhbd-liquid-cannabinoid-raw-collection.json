@@ -1,0 +1,68 @@
+{
+  "declaration_version": "staging-declaration-v1",
+  "description": "Adopt the owner-approved HHBD リキッド YouTube export into cannabinoid-raw-collection. The payload is the same Apify export identified in the youtube-consistency declaration; this declaration records its use in this study.",
+  "runs": [
+    {
+      "run_id": "20261010T141947Z-youtube-cannabinoid-raw-collection",
+      "study_id": "cannabinoid-raw-collection",
+      "source_id": "youtube",
+      "collector_id": "youtube-apify-scraper",
+      "purpose": "Owner-approved adoption of the HHBD リキッド YouTube dataset export into this study.",
+      "query": {
+        "keyword": "HHBD リキッド",
+        "query_id": "hhbd-liquid-ja"
+      },
+      "window": {
+        "start": "2020-09-30T00:00:00Z",
+        "end_exclusive": "2026-10-06T00:00:00Z",
+        "granularity": "day",
+        "timezone": "UTC"
+      },
+      "collection_request": {
+        "date_filter": "all",
+        "reference_time": "2026-10-10T14:19:48Z",
+        "max_videos": 999999
+      },
+      "temporal": {
+        "collector_window_type": "unbounded",
+        "boundary_semantics": "Observed video publish-date range in the payload; not the API condition.",
+        "exact_window_match": false,
+        "limitations": [
+          "The request used date_filter=all. window.start and window.end_exclusive describe the observed video publish-date range and are not the API search condition."
+        ]
+      },
+      "timestamps": {
+        "started_at": "2026-10-10T14:15:44Z",
+        "finished_at": "2026-10-10T14:19:48Z",
+        "basis": "Apify console Runs list supplied by the owner; displayed timestamps were converted from JST to UTC. The export filename timestamp agrees within seconds."
+      },
+      "execution": {
+        "status": "success",
+        "returned_count": 224,
+        "errors": []
+      },
+      "artifacts": [
+        {
+          "source": "local-ref/youtube-csv-7/dataset_youtube-scraper_2026-10-10_14-19-47-693.csv",
+          "path": "dataset_youtube-scraper_2026-10-10_14-19-47-693.csv",
+          "artifact_type": "raw_records",
+          "format": "csv",
+          "schema_id": "youtube-dataset-csv-v1",
+          "completeness": "complete",
+          "record_count": 224
+        }
+      ],
+      "environment": {
+        "actor_run_id": "P6Fd5BGjiR0qqrbMO",
+        "apify_dataset_id": "yrzTkTmakOVdQXNNU",
+        "actor_build": "0.0.313",
+        "origin": "API",
+        "requests": 239,
+        "payload_sha256": "98617d1c25f55329805dbd2a433e06979fc624fa836e137e139f7a13eed25f13",
+        "export_filename": "dataset_youtube-scraper_2026-10-10_14-19-47-693.csv",
+        "previous_study_run_id": "20261010T141947Z-youtube-youtube-consistency",
+        "previous_study_id": "youtube-consistency"
+      }
+    }
+  ]
+}

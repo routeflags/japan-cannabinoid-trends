@@ -21,21 +21,21 @@
 
 合計 **13 化合物**。化合物ごとの収集状況は下表、収集条件は [methodology.md](methodology.md) §1.3、§2.1.2、§2.1.3。
 
-| 化合物 | 分類 | Google Trends 12ヶ月 | Google Trends 5年 | X | YouTube（公開分）|
+| 化合物 | 分類 | Google Trends 12ヶ月 | Google Trends 5年 | X | YouTube raw |
 |--------|------|:----:|:----:|:-:|:-:|
-| CBD | major | ✅ | ✅ | ✅ | ✅ |
-| THC | major | ✅ | ✅ | ✅ | ✅ |
-| CBG | minor | ✅ | ✅ | ✅ | ✅ |
-| HHC | semisynthetic | ✅ | ✅ | ✅ | ✅ |
-| THCV | minor | ✅ | ✅ | ✅ | ✅ |
-| THC-O | semisynthetic | データなし | ✅ | ✅ | ✅ |
-| THCH | minor | ✅ | ✅ | ✅ | ✅ |
-| CBN | minor | ✅ | ✅ | — | ✅ |
-| CRDH | synthetic | ✅ | ✅ | — | ✅ |
-| CRDP | synthetic | ✅ | ✅ | — | ✅ |
-| H4CBH | semisynthetic | ✅ | ✅ | — | ✅ |
+| CBD | major | ✅ | ✅ | ✅ | — |
+| THC | major | ✅ | ✅ | ✅ | — |
+| CBG | minor | ✅ | ✅ | ✅ | — |
+| HHC | semisynthetic | ✅ | ✅ | ✅ | — |
+| THCV | minor | ✅ | ✅ | ✅ | — |
+| THC-O | semisynthetic | データなし | ✅ | ✅ | — |
+| THCH | minor | ✅ | ✅ | ✅ | — |
+| CBN | minor | ✅ | ✅ | — | — |
+| CRDH | synthetic | ✅ | ✅ | — | — |
+| CRDP | synthetic | ✅ | ✅ | — | — |
+| H4CBH | semisynthetic | ✅ | ✅ | — | — |
 | HHBD | semisynthetic | ✅ | ✅ | — | ✅ |
-| HHCH | synthetic | ✅ | ✅ | — | ✅ |
+| HHCH | synthetic | ✅ | ✅ | — | — |
 
 読み方:
 
@@ -44,7 +44,7 @@
 - **週次系列は全面で比較できるわけではない**: 5年は 2 つの窓に分かれ（9 化合物が 2021-10-10 〜、4 化合物が 2021-10-17 〜）、12ヶ月も 2 窓に分かれる。また各 run は自分のピーク=100 に正規化されるので、単独系列の値を化合物間で比べない。化合物間の比較は共通スケール（§2.1.4）でのみ行う。
 - **「データなし」**: 取得はしたが Google Trends が閾値未満で系列を返さなかった。**欠測であって 0 観測ではない**。
 - **「—」**: そのソースでは収集していない（X の 6 化合物は [`datasets/cannabinoid-social-trends/`](../cannabinoid-social-trends/) が規制前後比較として収集している）。
-- **「YouTube（公開分）」**: 2026-10-29 に集計物を削除した（研究内に参照元 raw が無いため）。
+- **YouTube raw**: この研究に採用したのは HHBD リキッド 1 run。ほかの化合物の YouTube raw はこの study にない。
 - **CBX はこの研究の対象外**（[`datasets/cbx-search-trends/`](../cbx-search-trends/) が担当）。`docs/audits/gt-summary.json` が 14 化合物なのはこの 1 件を含むため。
 - Google Trends の正本は `data/raw/google_trends/` と [`docs/audits/gt-summary.json`](../../docs/audits/gt-summary.json)。単独系列（12ヶ月・5年）のほかに、比較セット／共通スケール（12ヶ月 `common-scale-*`・5年 `5y-common-scale-set*`）・表記事前調査・「リキッド」系クエリの run がある。
 
@@ -54,11 +54,10 @@
 |--------|--------|------|
 | Google Trends | google-trends-mcp 0.1.1（`collection.core.cli collect --live`） | ✅ 5年 13/13 化合物・12ヶ月 12/13（欠測は §2.1.3） |
 | X (Twitter) | Apify `cPYLH3QT9GyzKhB4S` | ✅ 7 化合物（CBD は追加で 1 年 / 1ヶ月 / latest10 の 3 run。条件は未記録） |
-| YouTube | Apify `gJvjeCYNraSfhIaNd` | 集計物は 2026-10-29 に削除（研究内に参照元 raw が無いため） |
+| YouTube | Apify `h7sDV53CddomktSi5` (`streamers/youtube-scraper`) | HHBD リキッド 1 run を採用。raw は非追跡 |
 
-> **関連データセットとの役割分担**: 本データセットは**トレンド分析**（複数プラットフォームの出現・時系列分布）が目的。
-> YouTube 検索結果の**一貫性・再現性検証**は [`datasets/youtube-consistency/`](../youtube-consistency/) が担当しており、
-> そちらは別の Actor（`h7sDV53CddomktSi5` / streamers/youtube-scraper）を使う。両者は目的・ Actor・格納形式（本件は raw ファイル、同件は SQLite）が異なるため重複ではなく分業である。
+> **関連データセットとの役割分担**: 本データセットはカンナビノイドのトレンド分析用 raw を収蔵する。
+> [`datasets/youtube-consistency/`](../youtube-consistency/) は YouTube 検索結果の一貫性・再現性検証を目的とする別研究である。
 
 ## 収集結果
 
@@ -87,11 +86,11 @@ Google Trends の系列・窓・欠測は [methodology.md](methodology.md) §2.1
 | Google Trends | 2026-10-02, 10-05, 10-08, 10-12 | 12ヶ月の語の部分集合 | リキッド（phase-a/b）+ `CBX リキッド` | 比較セット / 共通スケール（12ヶ月） |
 | Google Trends | 2026-10-23 | 13 語（アンカー CBD/THC を含む 4 セット） | なし | 5年の共通スケール（`compare_terms`） |
 | X (Twitter) | 2026-10-02, 10-08 | CBD, THC, CBG, HHC, THCV, THC-O, THCH（7 語） | なし | 単一クエリ（`{keyword} since:2026-09-01 until:2026-10-01`）。CBD は追加 3 run（条件未記録） |
-| YouTube | 2026-10-02（疎通検証 7 run）・2026-10-08（9 run） | —（集計物は 2026-10-29 に削除） | — | 単一クエリ |
+| YouTube | 2026-10-10 | HHBD リキッド（1 run） | — | 単一クエリ |
 
 - **化合物語は 13 語で閉じている**。このうち 12ヶ月で系列が取れていないのは THC-O だけ（no data）。
-- **製品語のリキッドは Google Trends のみ**。12ヶ月は比較セットで測っているため、単独系列（上の 2 行）とは
-  別の共通スケール値であり、混ぜない。
+- **製品語のリキッド**は Google Trends と YouTube で使う。YouTube の採用済み raw は HHBD リキッド 1 run。
+  Google Trends の比較セットは単独系列とは別の共通スケール値であり、混ぜない。
 - **5年のリキッドは 13 語中 12 語が系列**（`20261012T064246Z-google-trends-ja-rikiddo-5y-main5` の 5 語 + 新規 8 run のうち 7 語）。
   新規 8 run は main5 と窓が異なる別観測であり（main5 は 2021-10-10 〜 2026-10-11、新規は 2021-10-17 〜 2026-10-18）、単独系列の値をまたいで比較しない。
   THC-O リキッドは 5年でも系列なし（`NO_DATA`）。12ヶ月が no data でも 5年は取れることがある（HHC リキッドがその例）。
@@ -100,7 +99,7 @@ Google Trends の系列・窓・欠測は [methodology.md](methodology.md) §2.1
 
 ### YouTube の収集と追跡
 
-集計物（`youtube_runs.csv` 16 行、`youtube_videos.csv` 397 行）は 2026-10-29 に削除した（研究内に参照元の raw が無いため、owner 決定）。
+採用済み raw は [`data/raw/youtube/20261010T141947Z-youtube-cannabinoid-raw-collection/`](data/raw/youtube/20261010T141947Z-youtube-cannabinoid-raw-collection/) の 1 run（HHBD リキッド、224 records）。raw は非追跡で、CSV は公開用集計物ではない。採用宣言は [`20261010-youtube-hhbd-liquid-cannabinoid-raw-collection.json`](../../metadata/provenance/declarations/20261010-youtube-hhbd-liquid-cannabinoid-raw-collection.json)。
 
 ## ステータス
 

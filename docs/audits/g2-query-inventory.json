@@ -4,8 +4,8 @@
   "schema_id": "query-registry-v1",
   "registry_version": "1.0.0",
   "target_glob": "datasets/**/run_metadata.json",
-  "count": 61,
-  "query_count": 107,
+  "count": 62,
+  "query_count": 108,
   "raw_modified": false,
   "states": {
     "exact_match": "the collected text equals a registered canonical_text",
@@ -15,7 +15,7 @@
     "unmapped": "no registered correspondence and no compound token"
   },
   "summary": {
-    "exact_match": 105,
+    "exact_match": 106,
     "variant_match": 1,
     "semantic_match_candidate": 1,
     "ambiguous": 0,
@@ -1595,6 +1595,28 @@
           "state": "exact_match",
           "classification": "relevant",
           "query_id": "crdh-general-ja",
+          "variant_id": null,
+          "detail": "registered_canonical",
+          "source_fields": [
+            "query_provenance.submitted_query"
+          ]
+        }
+      ]
+    },
+    {
+      "run_id": "20261010T141947Z-youtube-cannabinoid-raw-collection",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/youtube/20261010T141947Z-youtube-cannabinoid-raw-collection/run_metadata.json",
+      "status": "read",
+      "sha256": "6d5f2ede5d59ec96a9264eb569b5f26e8c0218dd2eabe25e895a47ad84f72248",
+      "sha256_after": "6d5f2ede5d59ec96a9264eb569b5f26e8c0218dd2eabe25e895a47ad84f72248",
+      "unchanged": true,
+      "extracted_query_count": 1,
+      "queries": [
+        {
+          "text": "HHBD リキッド",
+          "state": "exact_match",
+          "classification": "relevant",
+          "query_id": "hhbd-liquid-ja",
           "variant_id": null,
           "detail": "registered_canonical",
           "source_fields": [

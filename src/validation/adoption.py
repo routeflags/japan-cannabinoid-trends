@@ -212,8 +212,12 @@ def _catalogued(paths: set[str] | None, study_dir: Path, directory: Path) -> boo
         relative = directory.relative_to(study_dir / "data").as_posix()
     except ValueError:
         return False
-    prefix = f"{relative}/"
-    return any(entry == relative or entry.startswith(prefix) for entry in paths)
+    prefixes = (relative, f"data/{relative}")
+    return any(
+        entry == prefix or entry.startswith(f"{prefix}/")
+        for entry in paths
+        for prefix in prefixes
+    )
 
 
 def build_adoption_backlog(datasets_root, *, include_private: bool = False) -> dict:

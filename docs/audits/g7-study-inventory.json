@@ -41,20 +41,21 @@
       "research_questions_quoted": [
         "日本国内において、カンナビノイド各化合物の検索需要・SNS 言及・動画コンテンツはどう推移しているか？"
       ],
-      "run_count": 53,
-      "catalog_entry_count": 78,
+      "run_count": 54,
+      "catalog_entry_count": 79,
       "layout": [
         "README.md",
         "data",
         "metadata",
         "methodology.md"
       ],
-      "data_file_count": 199,
+      "data_file_count": 202,
       "has_data_raw": true,
-      "data_raw_file_count": 197,
+      "data_raw_file_count": 200,
       "sources": [
         "google-trends",
-        "google-trends-mcp"
+        "google-trends-mcp",
+        "youtube"
       ],
       "compound_ids": [
         "compound_cbd",
@@ -111,9 +112,11 @@
         "today 5-y"
       ],
       "measurement_ids": [
-        "search_interest_index"
+        "search_interest_index",
+        "video_publication_count"
       ],
       "window_ids": [
+        "2020-09-30T00:00:00Z_2026-10-06T00:00:00Z",
         "2021-10-10_2026-10-12",
         "2021-10-17_2026-10-18",
         "2025-10-19_2026-10-18"
@@ -449,9 +452,9 @@
       ]
     }
   ],
-  "raw_file_count": 230,
+  "raw_file_count": 233,
   "raw_modified": false,
-  "raw_combined_sha256": "915bdb9b63d04ebe0c8b6721b6ec1c904619dc19a2f862b18d01e03b06336f26",
+  "raw_combined_sha256": "5256ef14bdf2e31a9739bf53df8642b7c4daff765cf4e5a88316bee377f9921f",
   "note": "non-destructive: study boundaries intact, raw and old metadata only read"
 }
 

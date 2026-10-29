@@ -15,7 +15,7 @@ cannabinoid-raw-collection
 | Google Trends（12ヶ月） | 2025-09-28 〜 2026-09-27（8 化合物）/ 2025-10-19 〜 2026-10-18（THCV・H4CBH・HHBD・CRDH） | §2.1.3 |
 | Google Trends（5年） | 2021-10-10 〜 2026-10-11（9 化合物）/ 2021-10-17 〜 2026-10-18（THC・CBG・HHC・THCV、および共通スケール setA〜D）。リキッドは main5 の 5 語が 2021-10-10 〜 2026-10-11、新規 7 語が 2021-10-17 〜 2026-10-18（THC-O は系列なし） | §2.1.2、§2.1.4 |
 | X (Twitter) | 2026-09-01 〜 2026-10-01（主系列、7 語）。CBD は追加で 1 年 / 1ヶ月 / latest10 の 3 run（2026-10-08）もある（§2.2） | §2.2 |
-| YouTube | 2026-10-02（7 run。検索語・`max_videos` を記録）/ 2026-10-08（9 run。検索語・取得上限は未記録） | §2.3 |
+| YouTube | 2026-10-10（HHBD リキッド、1 run、224 records。公開日範囲 2020-09-30 〜 2026-10-05） | §2.3 |
 
 ### 1.3 対象化合物
 
@@ -241,37 +241,21 @@ cannabinoid-raw-collection
 
 ### 2.3 YouTube
 
-**ツール:** Apify Actor `gJvjeCYNraSfhIaNd` (danek/youtube-search)
+**ツール:** Apify Actor `h7sDV53CddomktSi5` (`streamers/youtube-scraper`)
 
-**パラメータ:**
-- max_videos: 50-100（キーワードに依存）
+本研究に採用した YouTube raw は次の 1 run である。
 
-**2026-10-02 の 7 run は API 疎通検証であり観測ではない（owner 2026-10-29）：**
+| 検索語 | 取得上限 | 件数 | 公開日範囲（UTC） | run |
+|---|---:|---:|---|---|
+| `HHBD リキッド` | 999999 | 224 | 2020-09-30 〜 2026-10-05 | `20261010T141947Z-youtube-cannabinoid-raw-collection` |
 
-| キーワード | max_videos | run ディレクトリ |
-|-----------|-----------|------------------|
-| CBD | 100 | `20261002T064739Z-youtube-cbd` |
-| THC | 100 | `20261002T064821Z-youtube-thc` |
-| CBG | 50 | `20261002T064828Z-youtube-cbg` |
-| HHC | 50 | `20261002T064850Z-youtube-hhc` |
-| THCV | 50 | `20261002T064857Z-youtube-thcv` |
-| CBD オイル | 50 | `20261002T064905Z-youtube-cbd-オイル` |
-| THC オイル | 50 | `20261002T064911Z-youtube-thc-オイル` |
-
-- 上は actor の疎通確認のための試行であり、この研究の観測データではない。`run_metadata.json` の `search_term` / `max_videos` は検証実行時の入力記録であり、収集条件の証拠にはならない。
-
-**2026-10-08 の 9 run の追加（[`ISS-20261024-YT-013`](../../docs/issues/active/40-provenance-storage-reproducibility/20261024_p2_youtube-raw-batch-without-metadata.md)）:**
-
-集計物は 2026-10-29 に削除した（研究内に参照元の raw が無いため、owner 決定）。以下は削除前の方法の記録である。
-
-- 既存 7 run に加え、2026-10-08 収集の 9 run（`20261008T122515Z-youtube-hhc`・`20261008T122605Z-youtube-thch`・`20261008T122647Z-youtube-thc-o`・`20261008T125306Z-youtube-h4cbh`・`20261008T125348Z-youtube-hhbd`・`20261008T125428Z-youtube-hhch`・`20261008T125501Z-youtube-crdp`・`20261008T125544Z-youtube-crdh`・`20261008T145348Z-youtube-cbn`）を公開集計に統合した。
-- この 9 run は actor・検索語・取得上限（`max_videos`）が未記録である。run-id や行数から補わず、`youtube_runs.csv` の `search_term` / `collected_at` は空欄とする。
-- HHC は 2026-10-02（28 動画）と 2026-10-08（27 動画）を別 run として両方残す。共通の `videoId` があっても run をまたいで畳まない（反復観測として識別する）。ただし 2026-10-02 側は上記のとおり疎通検証であり、反復観測の比較対象にはならない。
-- v3 由来の CBN run（`20261004T132844Z-youtube-cbn-2026-09-01-to-2026-10-01`）は含めない（owner 確認待ち）。
+- request の `date_filter` は `all`。上表の公開日範囲は payload 中の動画公開日の最小〜最大であり、検索条件ではない。
+- 収集時刻、Actor run ID、dataset ID、payload hash、request の詳細は run の `run_metadata.json` と採用宣言に記録する。
+- この CSV の `date` は動画の公開日時であり、相対時刻ではない。
+- 2026-10-02 の YouTube run は API 疎通検証であり、本研究の観測としては扱わない。
 
 **注意事項:**
-- ページング重複あり、videoId で重複排除必須（run 内で畳み、run 間では畳まない）
-- timestamp は相対表記（"3 days ago" 等）
+- raw CSV は無加工で保持する。重複排除や公開用集計は別途、再現可能な処理として行う。
 
 ---
 

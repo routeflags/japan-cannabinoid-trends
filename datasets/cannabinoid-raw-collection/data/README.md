@@ -5,4 +5,5 @@
 | ディレクトリ | 内容 |
 |---|---|
 | [`raw/google_trends/`](raw/google_trends/) | 追跡する Google トレンド raw 56 run |
+| [`raw/youtube/`](raw/youtube/) | YouTube raw 1 run（非追跡） |
 | [`interim/google_trends/`](interim/google_trends/) | 作業中の補正ファイル |

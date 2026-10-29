@@ -3,10 +3,10 @@
   "profile": "g3_temporal_inventory",
   "spec": "docs/plans/20261013c.md §15 (local plan; not tracked)",
   "target_glob": "datasets/**/run_metadata.json",
-  "count": 61,
+  "count": 62,
   "raw_modified": false,
   "classification_summary": {
-    "verified": 32,
+    "verified": 33,
     "inferred": 29,
     "unknown": 0,
     "ambiguous": 0
@@ -1602,6 +1602,19 @@
         "basis": "bucket_labels"
       },
       "pagination": true,
+      "completeness_evidence": [],
+      "classification": "verified",
+      "resolved_absolute_window": null,
+      "resolution_note": "not derived: conversion of legacy relative periods into absolute windows is prohibited (P1, c.md §15)"
+    },
+    {
+      "run_id": "20261010T141947Z-youtube-cannabinoid-raw-collection",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/youtube/20261010T141947Z-youtube-cannabinoid-raw-collection/run_metadata.json",
+      "sha256": "6d5f2ede5d59ec96a9264eb569b5f26e8c0218dd2eabe25e895a47ad84f72248",
+      "timeframes": [],
+      "reference": null,
+      "observed_bounds": null,
+      "pagination": null,
       "completeness_evidence": [],
       "classification": "verified",
       "resolved_absolute_window": null,

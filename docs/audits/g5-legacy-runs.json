@@ -3,7 +3,7 @@
   "profile": "legacy_audit",
   "schema_id": "collection-run-v1",
   "target_glob": "datasets/**/run_metadata.json",
-  "count": 61,
+  "count": 62,
   "raw_modified": false,
   "runs": [
     {
@@ -754,6 +754,16 @@
       "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261024T000000Z-google-trends-crdh-12m/run_metadata.json",
       "sha256": "1348f37eb145d1a6837afe8780e3271ae569ab652983988c1e5e439fcb8ccf2b",
       "sha256_after": "1348f37eb145d1a6837afe8780e3271ae569ab652983988c1e5e439fcb8ccf2b",
+      "unchanged": true
+    },
+    {
+      "profile": "legacy_audit",
+      "run_id": "20261010T141947Z-youtube-cannabinoid-raw-collection",
+      "status": "complete",
+      "missing_fields": [],
+      "path": "datasets/cannabinoid-raw-collection/data/raw/youtube/20261010T141947Z-youtube-cannabinoid-raw-collection/run_metadata.json",
+      "sha256": "6d5f2ede5d59ec96a9264eb569b5f26e8c0218dd2eabe25e895a47ad84f72248",
+      "sha256_after": "6d5f2ede5d59ec96a9264eb569b5f26e8c0218dd2eabe25e895a47ad84f72248",
       "unchanged": true
     },
     {

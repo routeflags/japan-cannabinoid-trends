@@ -4,11 +4,12 @@
   "spec": "docs/plans/20261013f.md §15 (local plan; not tracked)",
   "target_root": "datasets",
   "include_private": false,
-  "count": 309,
+  "count": 312,
   "extra_count": 42,
   "raw_modified": false,
   "state_summary": {
-    "absent": 16,
+    "absent": 14,
+    "ignored": 5,
     "tracked": 335
   },
   "entries": [
@@ -138,8 +139,8 @@
       "state": "tracked",
       "tracked": true,
       "ignored": false,
-      "sha256": "44e2dc6186060242aae9f67c715b883e531f72c3a4f1bdc231afce3d48238ae8",
-      "sha256_after": "44e2dc6186060242aae9f67c715b883e531f72c3a4f1bdc231afce3d48238ae8",
+      "sha256": "de07a9de1ba682e9c1fbe1055a4fd2bc33e0ca4aa95d9ba4025feaff1b460ad7",
+      "sha256_after": "de07a9de1ba682e9c1fbe1055a4fd2bc33e0ca4aa95d9ba4025feaff1b460ad7",
       "unchanged": true
     },
     {
@@ -148,8 +149,8 @@
       "state": "tracked",
       "tracked": true,
       "ignored": false,
-      "sha256": "9cd32cdba812f8a5d91de9acc488a527a419783899b3e01ee61e5953cb8c4574",
-      "sha256_after": "9cd32cdba812f8a5d91de9acc488a527a419783899b3e01ee61e5953cb8c4574",
+      "sha256": "f74cc96ba339bd1efec813e2535cf0b48cafe714296dcf6d14240568c5142c0f",
+      "sha256_after": "f74cc96ba339bd1efec813e2535cf0b48cafe714296dcf6d14240568c5142c0f",
       "unchanged": true
     },
     {
@@ -2133,13 +2134,43 @@
       "unchanged": true
     },
     {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/youtube/20261010T141947Z-youtube-cannabinoid-raw-collection/artifact-manifest.json",
+      "exists": true,
+      "state": "ignored",
+      "tracked": false,
+      "ignored": true,
+      "sha256": "17fc82cd6fc7e666266f868354f98e4aa59d95a07acd5e0d0f7a3f8b42c463dd",
+      "sha256_after": "17fc82cd6fc7e666266f868354f98e4aa59d95a07acd5e0d0f7a3f8b42c463dd",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/youtube/20261010T141947Z-youtube-cannabinoid-raw-collection/dataset_youtube-scraper_2026-10-10_14-19-47-693.csv",
+      "exists": true,
+      "state": "ignored",
+      "tracked": false,
+      "ignored": true,
+      "sha256": "98617d1c25f55329805dbd2a433e06979fc624fa836e137e139f7a13eed25f13",
+      "sha256_after": "98617d1c25f55329805dbd2a433e06979fc624fa836e137e139f7a13eed25f13",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/youtube/20261010T141947Z-youtube-cannabinoid-raw-collection/run_metadata.json",
+      "exists": true,
+      "state": "ignored",
+      "tracked": false,
+      "ignored": true,
+      "sha256": "6d5f2ede5d59ec96a9264eb569b5f26e8c0218dd2eabe25e895a47ad84f72248",
+      "sha256_after": "6d5f2ede5d59ec96a9264eb569b5f26e8c0218dd2eabe25e895a47ad84f72248",
+      "unchanged": true
+    },
+    {
       "path": "datasets/cannabinoid-raw-collection/metadata/data-catalog.json",
       "exists": true,
       "state": "tracked",
       "tracked": true,
       "ignored": false,
-      "sha256": "e75f2971115af7f8ab80d2e402313d19b4e2306df4c56db6f9c89c339b14ed8b",
-      "sha256_after": "e75f2971115af7f8ab80d2e402313d19b4e2306df4c56db6f9c89c339b14ed8b",
+      "sha256": "c2d64ffe704b71f2d112ab7ab79982f977728c4c34a7bb9ae89a06d811d4d670",
+      "sha256_after": "c2d64ffe704b71f2d112ab7ab79982f977728c4c34a7bb9ae89a06d811d4d670",
       "unchanged": true
     },
     {
@@ -2448,8 +2479,8 @@
       "state": "tracked",
       "tracked": true,
       "ignored": false,
-      "sha256": "5bfa37e9df857f61c083d7bcfbf02034c84a93c668a6be14e373578fcf28e3a7",
-      "sha256_after": "5bfa37e9df857f61c083d7bcfbf02034c84a93c668a6be14e373578fcf28e3a7",
+      "sha256": "05dd475ecd51c28f78795696a2f79592f8bf3b997c33e11e304d6af167286332",
+      "sha256_after": "05dd475ecd51c28f78795696a2f79592f8bf3b997c33e11e304d6af167286332",
       "unchanged": true
     },
     {
@@ -3338,10 +3369,10 @@
     },
     {
       "path": ".staging",
-      "exists": false,
-      "state": "absent",
+      "exists": true,
+      "state": "ignored",
       "tracked": false,
-      "ignored": false,
+      "ignored": true,
       "kind": "local_only"
     },
     {
@@ -3362,10 +3393,10 @@
     },
     {
       "path": ".venv",
-      "exists": false,
-      "state": "absent",
+      "exists": true,
+      "state": "ignored",
       "tracked": false,
-      "ignored": false,
+      "ignored": true,
       "kind": "local_only"
     },
     {
