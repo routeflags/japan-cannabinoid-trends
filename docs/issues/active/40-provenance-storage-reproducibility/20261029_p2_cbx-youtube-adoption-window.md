@@ -64,17 +64,16 @@ raw の移動は別途の判断（`previous_study_ids` による解決で足り�
 
 ## 決定依頼
 
-**Q1. 窓の意味づけ（推奨: 選択肢 a）**
+**Q1. 窓の意味づけ → 回答: (c) 不採用（owner 2026-10-29）。** CBX YouTube の 4 run は採用しない。公開済みの 24 件は「記録値であり再計算しない」として methodology に留保する。以下は検討時の選択肢の記録である。
 
 - (a) `window` = 要求の広がりを表す `1970-01-01` .. 収集時刻、`collector_window_type: unbounded`、
   `boundary_semantics` に「payload に絶対公開日が無いため、この窓は観測レンジではなく無制限の要求を表す」と明記し、`limitations` に相対時刻のみであることを書く。
 - (b) `window` = 収集日 1 日。単純だが「その日の動画だけを探した」と誤読される。
-- (c) この 2 run は採用しない。公開済みの 24 件は「記録値であり再計算しない」として methodology に留保する。
+- (c) この 2 run は採用しない。公開済みの 24 件は「記録値であり再計算しない」として methodology に留保する。← 採用
 
-**Q2. v1 の扱い。** `…T074851Z`（20 件）は `…T075500Z-v2`（26 件）に置き換えられた初回 run と見られる。
-採用は v2 のみとし、v1 は「置換済み」として理由をコード・operator summary に残す（`youtube_export.py` の withheld と同じ扱い）か、両方残すか。
+**Q2. v1 の扱い。** 不採用決定により両 run とも採用対象外。v1 が v2 に置き換えられた初回実行であることは methodology §3.4 に記録済み。
 
-**Q3. `max_videos`。** 未記録のまま採用する（#10 の 9 run と同じく空欄・テストで固定）か、owner が Apify コンソールで run input を確認して補うか。
+**Q3. `max_videos`。** 不採用決定により回答不要。取得上限は未記録のまま残る。
 
 **Q4. YouTube 以外の停滞 run。** 本 issue の対象は CBX YouTube だが、同型の停滞は
 `cannabinoid-raw-collection` の YouTube 25 run にもある（`metadata_missing` 13 / `vendor_envelope` 3 / `metadata_unrecognized` 1）。
@@ -82,10 +81,10 @@ raw の移動は別途の判断（`previous_study_ids` による解決で足り�
 
 ## 完了条件
 
-- Q1–Q4 の回答がこのファイルに記録されている。
-- 回答に従って宣言文書を作成し、`make stage` → `make adopt-all` で採用（または不採用の理由を記録）。
+- Q1 の回答がこのファイルに記録されている（(c) 不採用、owner 2026-10-29）。
+- 公開済み 24 件を「記録値であり再計算しない」として methodology に留保する。
 - `methodology.md` §3.4 の帰属誤りが直っている（本 issue で対応済み）。
-- `make audit-adoption` の `no_run_metadata` から対象 run が消えている（不採用を選んだ場合は理由の記録で代替）。
+- Q4（`cannabinoid-raw-collection` の YouTube 25 run の扱い）は別途判断する。本 issue は Q4 の回答まで OPEN のまま残す。
 
 ## 参照
 

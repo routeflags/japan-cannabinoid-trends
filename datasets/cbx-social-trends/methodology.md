@@ -118,7 +118,7 @@ Actor はすべて `gJvjeCYNraSfhIaNd`（danek/youtube-search）。
 | 3 | 2026-10-01 run 2 | `20261001T075500Z-youtube-cbx-rikiddo-v2/` | 07:56:04–07:56:20 | 26 | actor、検索語 `CBX リキッド` | 取得上限 |
 | 4 | 2026-10-04 v3 | `20261004T135232Z-youtube-cbx-12months/`, `20261004T135457Z-youtube-cbx-rikiddo-12months/` | — | 月別ファイル | v3 経路（月別・クォータ記録あり） | 採用対象外 |
 
-- 公開集計（CBX 関連 24 件）の出所は **run 2**（26 レコードをフィルタ）。run 1 は置き換えられた初回実行。
+- 公開集計（CBX 関連 24 件）の出所は **run 2**（26 レコードをフィルタ）。run 1 は置き換えられた初回実行。**この 24 件は記録値であり、宣言文書を経ていないため raw から再計算しない**（owner 2026-10-29: 当該 4 run は採用しない）。
 - 2026-10-01 の 2 件の `run_metadata.json` は Apify の run envelope（`id` / `status` / 開始・終了時刻）だけで、検索語・取得上限・地域は含まない。検索語 `CBX リキッド` は README と research note の記録による。
 - payload に絶対公開日は無い（`snippet.timestamp` が `2 weeks ago` のような相対表記のみ。ISO 日時の出現 0 件）。したがって公開日レンジは復元できず、`staging-declaration-v1` の `window` に観測レンジを書けない。採用方法は ISS-20261029-PRV-016 で決定する。
 - 期間指定の入力が actor に無い。この系列は時系列比較に使わず、収集時点の検索結果件数としてのみ扱う。
