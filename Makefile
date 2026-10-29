@@ -9,6 +9,8 @@
 #   make adopt-all                    adopt every staged run (L1 verdict each)
 #   make platform-trends              rebuild processed Google Trends + YouTube release tables
 #   make audit-new-runs               new-run contract audit (read-only)
+#   make audit-adoption               adoption backlog: raw run dirs and the metadata a
+#                                     declaration needs (run where the raw layer is)
 #   make audit-publication            publication contract audit (read-only)
 #   make audit-snapshots              regenerate tracked docs/audits snapshots
 #   make gates                        validation gate scripts
@@ -21,10 +23,10 @@ METADATA ?= metadata
 GATE ?= registries
 GATE_ARGS ?=
 
-.PHONY: help test collect stage adopt-all platform-trends audit-new-runs audit-publication audit-snapshots gates check-venv
+.PHONY: help test collect stage adopt-all platform-trends audit-new-runs audit-adoption audit-publication audit-snapshots gates check-venv
 
 help:
-	@echo "Targets: test | stage DECLARATION=<file> | adopt-all | platform-trends | audit-new-runs | audit-publication | audit-snapshots | gates"
+	@echo "Targets: test | stage DECLARATION=<file> | adopt-all | platform-trends | audit-new-runs | audit-adoption | audit-publication | audit-snapshots | gates"
 
 # Local development runs through .venv (see docs/specs/validation-framework.md
 # §2).  Fail fast with setup guidance when the interpreter is absent instead of
@@ -55,6 +57,11 @@ platform-trends: check-venv
 
 audit-new-runs: check-venv
 	$(PYTHON) -m validation.cli audit-new-runs
+
+# The raw layer is machine-local (untracked), so this target has no committed
+# snapshot: it answers about the checkout it runs in.
+audit-adoption: check-venv
+	$(PYTHON) -m validation.cli audit-adoption --datasets-root $(DATASETS)
 
 audit-publication: check-venv
 	$(PYTHON) -m validation.cli audit-publication

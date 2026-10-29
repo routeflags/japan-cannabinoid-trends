@@ -25,6 +25,8 @@ Commands
 - ``audit-apify-evidence`` read-only PRV-013 checklist: the Apify cloud evidence
                         request list against its source declaration (never calls
                         Apify; exit 0 means honest, not complete)
+- ``audit-adoption``      the adoption backlog: every raw run directory and the
+                        state of the metadata a declaration needs
 - ``contract-ledger``     the derived inventory of every declared contract
 - ``audit-publication``   the publication contract (record-only; see the module)
 - ``gate-publication``    record-only G6 §10 publication eligibility gate
@@ -62,6 +64,7 @@ import json
 import sys
 from pathlib import Path
 
+from validation.adoption import build_adoption_backlog
 from validation.apify_evidence import audit_apify_evidence
 from validation.boundary import build_boundary_report
 from validation.comparability import compare_runs
@@ -989,6 +992,68 @@ def cmd_audit_new_runs(args) -> int:
         f"new={report['new_run_count']}, failures={report['failure_count']}"
     )
     return EXIT_DATA if report["failure_count"] else EXIT_OK
+
+
+def cmd_audit_adoption(args) -> int:
+    """Every raw run directory, with the state of its declaration inputs.
+
+    ``audit-new-runs`` and ``audit-provenance`` discover runs by their metadata
+    file, so a raw run directory without one is absent from both.  This audit
+    walks the raw layer instead and reports the adoption backlog (see
+    ``validation/adoption.py``).  Informational by design: an undeclared run is
+    a backlog item, not a data failure; only unreadable metadata and an empty
+    run directory are violations.
+    """
+    try:
+        report = build_adoption_backlog(
+            args.datasets_root, include_private=args.include_private
+        )
+    except (OSError, ValueError) as error:
+        _err(f"adoption audit failed: {error.__class__.__name__}: {error}")
+        return EXIT_CONFIG
+
+    if args.output:
+        try:
+            _write_output(args.output, report)
+        except OSError as error:
+            _err(
+                f"cannot write audit output: {args.output} "
+                f"({error.__class__.__name__})"
+            )
+            return EXIT_IO
+        _err(f"adoption audit written: {args.output}")
+    elif args.format == "json":
+        print(dump_json(report), end="")
+    else:
+        for run in report["runs"]:
+            if run["state"] == "run_metadata":
+                continue
+            print(
+                f"{run['study_id']}/{run['source_id']}/{run['run_dir']} "
+                f"{run['state']}"
+                f"{'' if run['run_id_form'] else ' (not in run-id form)'}"
+                f"{'' if not run['catalogued'] else ' catalogued'}"
+            )
+        for entry in report["loose_files"]:
+            print(
+                f"{entry['study_id']}/{entry['source_id']}/{entry['name']} "
+                f"loose_payload_file"
+            )
+    _err(
+        f"adoption audit: {report['run_count']} run dir(s) in "
+        f"{report['source_count']} source dir(s), "
+        f"run_metadata={report['run_metadata_count']}, "
+        f"no_run_metadata={report['no_run_metadata_count']}, "
+        f"request_unrecorded={report['request_unrecorded_count']}, "
+        f"window_unrecorded={report['window_unrecorded_count']}, "
+        f"run_id_mismatch={report['run_id_mismatch_count']}, "
+        f"uncatalogued={report['uncatalogued_count']}, "
+        f"sources_without_catalog={report['sources_without_catalog_count']}, "
+        f"empty={report['empty_run_count']}, "
+        f"loose_files={report['loose_file_count']}, "
+        f"violations={len(report['violations'])}"
+    )
+    return EXIT_DATA if report["violations"] else EXIT_OK
 
 
 def cmd_audit_issues(args) -> int:
@@ -2081,6 +2146,23 @@ def build_parser() -> argparse.ArgumentParser:
     audit_apify.add_argument("--output", default=None)
     audit_apify.add_argument("--format", choices=("text", "json"), default="text")
     audit_apify.set_defaults(handler=cmd_audit_apify_evidence)
+
+    audit_adoption = sub.add_parser(
+        "audit-adoption",
+        help="adoption backlog: every raw run directory and the metadata a "
+        "declaration needs (read-only; no default output because the raw "
+        "layer is machine-local)",
+    )
+    audit_adoption.add_argument("--datasets-root", default="datasets")
+    audit_adoption.add_argument("--output", default=None)
+    audit_adoption.add_argument("--format", choices=("text", "json"), default="text")
+    audit_adoption.add_argument(
+        "--include-private",
+        action="store_true",
+        help="also scan directories named 'private' (excluded by default; "
+        "AGENTS.md private data)",
+    )
+    audit_adoption.set_defaults(handler=cmd_audit_adoption)
 
     audit_new = sub.add_parser(
         "audit-new-runs",

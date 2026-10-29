@@ -8,8 +8,7 @@
   "extra_count": 42,
   "raw_modified": false,
   "state_summary": {
-    "absent": 14,
-    "ignored": 2,
+    "absent": 16,
     "tracked": 336
   },
   "entries": [
@@ -2869,8 +2868,8 @@
       "state": "tracked",
       "tracked": true,
       "ignored": false,
-      "sha256": "612fcd4a07f0462ad297a9e6e27103f486601d0acb3f1800494b08943d7b22c1",
-      "sha256_after": "612fcd4a07f0462ad297a9e6e27103f486601d0acb3f1800494b08943d7b22c1",
+      "sha256": "44f8a8775c82e26edde743d44eaae19217037153975a5b2546a995cd463eb638",
+      "sha256_after": "44f8a8775c82e26edde743d44eaae19217037153975a5b2546a995cd463eb638",
       "unchanged": true
     },
     {
@@ -2999,8 +2998,8 @@
       "state": "tracked",
       "tracked": true,
       "ignored": false,
-      "sha256": "7c93875332d6e066d604594a5b3555e7f9febf94453bed6226c25b7d14cf01f6",
-      "sha256_after": "7c93875332d6e066d604594a5b3555e7f9febf94453bed6226c25b7d14cf01f6",
+      "sha256": "b9b8642241520f0d8008d87722022d0224a7c959002b9df3af04520ba91cd7ce",
+      "sha256_after": "b9b8642241520f0d8008d87722022d0224a7c959002b9df3af04520ba91cd7ce",
       "unchanged": true
     },
     {
@@ -3349,18 +3348,18 @@
     },
     {
       "path": ".staging",
-      "exists": true,
-      "state": "ignored",
+      "exists": false,
+      "state": "absent",
       "tracked": false,
-      "ignored": true,
+      "ignored": false,
       "kind": "local_only"
     },
     {
       "path": ".quarantine",
-      "exists": true,
-      "state": "ignored",
+      "exists": false,
+      "state": "absent",
       "tracked": false,
-      "ignored": true,
+      "ignored": false,
       "kind": "local_only"
     },
     {

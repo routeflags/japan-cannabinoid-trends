@@ -22,7 +22,7 @@ X (Twitter)、YouTube、Instagram、TikTok における CBX 関連コンテン�
 |--------|----------|------|------|
 | X (Twitter) — 日別 | `cPYLH3QT9GyzKhB4S` | 2,376 (raw) / 147 (processed) | 2026-08-01~09-08 |
 | X (Twitter) — 26週 | `cPYLH3QT9GyzKhB4S` | 381 (raw) | 2026-03-19~09-17 |
-| YouTube | `gJvjeCYNraSfhIaNd` | **24件 (フィルタ後、CBX関連: 24件)** | ✅ 再取得成功 2026-10-01 |
+| YouTube | `gJvjeCYNraSfhIaNd` | **24件 (フィルタ後、CBX関連: 24件)** | ✅ 再取得成功 2026-10-01。出所は `20261001T075500Z-youtube-cbx-rikiddo-v2`（26 レコード） |
 | Instagram | `TxU0ZBQIHdR20dr9C` | 6 (CBX関連: 0) | 要再取得 |
 | TikTok | `jQfZ1h9FrcWcliKZX` | 20 (description空) | 要再取得 |
 

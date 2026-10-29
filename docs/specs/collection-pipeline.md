@@ -280,6 +280,11 @@ Readiness の機械評価。`inferred` の自動付与はしない）。証拠�
 `validate-registries` が実検証する）。旧 run の監査は
 `validation.cli audit-provenance`（既定出力
 `docs/audits/g5-provenance-assessment.json`。非破壊・`raw_modified: false`）。
+採用バックログ（raw に存在するのに宣言文書がない run）は
+`validation.cli audit-adoption` が列挙する。`audit-provenance` と
+`audit-new-runs` は `run_metadata.json` を起点に run を発見するため、
+これを持たない raw ディレクトリは現れない。仕様は
+`docs/specs/validation-framework.md` §22.6。
 P01（run_id 一意性）は `validate-study` が strict run 横断で検査し、P17
 （`query_registry_version` 追跡可能性）は意味検証が warning/info で報告する
 （いずれも既存 strict 合格を FAIL に変えない）。詳細は

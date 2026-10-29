@@ -95,6 +95,7 @@ report = outcome.to_report().to_dict()
 | `gates.py` | 収集前/後ゲート（Phase 6。後ゲート = L1: 欠測/完全性/artifact 検証込み） |
 | `legacy.py` | Legacy Audit Profile・凍結 run_id リスト（Phase 8） |
 | `provenance.py` | G5 来歴評価: Completeness / Confidence / Integrity / Readiness（読取専用。`inferred` 自動付与なし）・Evidence Registry 検査・run_id 一意性・`audit-provenance` 集計 |
+| `adoption.py` | raw 層の採用バックログ: `data/raw/<source>/<run-dir>/` を 1 ディレクトリ 1 状態で列挙し、宣言文書が必要とするメタデータの有無を返す（読取専用。raw を書かない） |
 | `cli.py` | CLI（下記 §5） |
 | `research/catalog.py` | G7: 派生 Research Catalog（発見索引。Manifest/Registry から再生成、決定的。P2/P4） |
 | `research/comparability.py` | G7: CS01-CS13 横断ゲート（測定/時間サブセットは `validation.comparability` に委譲。`comparable` は完全証拠時のみ） |
@@ -1180,8 +1181,35 @@ staged → `adopt` を案内する。パスは字句的に正規化するため 
   §21.2（メンテナ決定 2026-10-13）を匿名化済み成果物の公開承認として転記した。
   別の形にする場合はその 1 フィールドと再実行で変更できる。
 
-## 23. タクソノミーと文書の整合（2026-10-13）
+### 22.6 raw 層の棚卸し（採用バックログ）
 
+`audit-new-runs` と `audit-provenance` は `run_metadata.json` を起点に run を発見する。そのため `run_metadata.json` を持たない raw ディレクトリはどちらの監査にも現れず、採用されていないことが「停止」ではなく「不可視」になる。
+
+`validation.cli audit-adoption`（`src/validation/adoption.py`、読取専用）は発見単位を raw 層そのものに変える:
+
+```text
+datasets/<study>/data/raw/<source>/<run-dir>/
+```
+
+状態はディレクトリ自身の内容だけで決める。
+
+| state | 内容 | 宣言文書に残る作業 |
+|---|---|---|
+| `run_metadata` | `run_id` を持つ JSON（現行 framework / legacy Google Trends / Apify 風の 3 世代すべて） | 契約適合性は `audit-new-runs` の判定 |
+| `vendor_envelope` | `run_id` を持たず collector の run envelope（`id` / `status`）のみ | source・query・窓・時刻根拠を payload 外から供給 |
+| `metadata_unrecognized` | JSON だが `run_id` も vendor envelope も無い | 同上（run を特定できない） |
+| `metadata_unreadable` | JSON オブジェクトとして読めない | 宣言で置換 |
+| `metadata_missing` | `run_metadata.json` が無い | 同上 |
+
+`run_metadata` には、宣言文書が埋めるべき値の有無を付ける: `request_recorded`（`query` / `queries` / `keyword` / `keywords` / `search_term` のいずれか）、`window_recorded`（絶対窓。`window` オブジェクトか `start_date` + `end_date`。`today 12-m` のような相対指定は窓ではない）。`run_id_matches_directory` はメタデータの `run_id` とディレクトリ名の不一致を返す。ディレクトリ名が run-id 形式（AGENTS.md “Run Identity”）でない場合は `run_id_form: false` として、ファイル欠落ではなくレイアウトの逸脱として見える。
+
+run ディレクトリに入っていない payload ファイルは `loose_files` として別枠で数える。判定はしない。`catalogued` は study の `metadata/data-catalog.json` がそのディレクトリ配下のパスを持つか（所属の事実）だけを返し、採用可否は返さない。
+
+- `private` / `.quarantine` は既定で走査しない（`audit-artifacts` と同じ除外。`--include-private` で解除）。
+- 違反（exit 1）は 2 種類だけ: `metadata_unreadable` と空の run ディレクトリ。採用待ちは違反ではなくバックログ項目。
+- 既定出力ファイルは無い。raw 層はマシンローカル（untracked）なので、追跡スナップショットはそのマシンの状態をリポジトリの状態として固定してしまう。`make audit-adoption` は実行した checkout について答える。
+
+## 23. タクソノミーと文書の整合（2026-10-13）
 ### 23.1 見つかった欠陥（最大のものは当初の想定外）
 
 1. **JSON の重複キーによる無言のデータ欠落。** 両 SKOS ファイルは 1 概念につき

@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0.0",
-  "generated_at": "2026-10-24",
+  "generated_at": "2026-10-29",
   "generated_by": "validation.issues.audit_issues: issues grouped by their directory; the milestones' objective / exit_criteria / title are hand-written and kept as they are",
   "purpose": "未対応 issue を milestone 別に整理し、対応済み issue を closed/ 配下に分離するためのローカル台帳。issue 本体ではないため Markdown ではなく JSON とする。",
   "source": {
@@ -9,13 +9,13 @@
     "recursive_audit_required": true
   },
   "summary": {
-    "issue_count": 86,
-    "active_count": 28,
+    "issue_count": 87,
+    "active_count": 29,
     "closed_count": 58,
     "status_counts": {
       "DOCUMENTED": 1,
       "MITIGATED": 1,
-      "OPEN": 26,
+      "OPEN": 27,
       "PENDING": 2,
       "RESOLVED": 56
     },
@@ -194,13 +194,13 @@
         "legacy reader・SQLite live verification・coverage manifest の未接続を解消する",
         "private X data retention と request-only evidence が方針として記録される"
       ],
-      "issue_count": 13,
+      "issue_count": 14,
       "status_counts": {
-        "OPEN": 13
+        "OPEN": 14
       },
       "priority_counts": {
         "P1": 1,
-        "P2": 12
+        "P2": 13
       },
       "issues": [
         {
@@ -280,6 +280,12 @@
           "priority": "P2",
           "status": "OPEN",
           "path": "docs/issues/active/40-provenance-storage-reproducibility/20261024_p2_run-id-versus-recorded-time.md"
+        },
+        {
+          "id": "ISS-20261029-PRV-016",
+          "priority": "P2",
+          "status": "OPEN",
+          "path": "docs/issues/active/40-provenance-storage-reproducibility/20261029_p2_cbx-youtube-adoption-window.md"
         }
       ]
     },
