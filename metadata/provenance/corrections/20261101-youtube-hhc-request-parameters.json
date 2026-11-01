@@ -1,0 +1,138 @@
+{
+  "schema_version": "1.0.0",
+  "record": "declaration_correction",
+  "correction_id": "correction-20261101-youtube-hhc-request-parameters",
+  "created_at": "2026-11-01",
+  "status": "recorded",
+  "study_id": "cannabinoid-raw-collection",
+  "source_id": "youtube",
+  "summary": "The two HHC declarations recorded the run limit under the previous actor's max_videos key and did not record the current actor input vocabulary, the portable handover reference, or the limits' evidence state. The original handover bytes are kept unchanged because a staged run's run_metadata.json records environment.handover.declaration_sha256; rewriting the declaration would silently break that link. Corrected provenance copies are added next to the originals and pinned here. No raw payload or raw run metadata is edited.",
+  "handover_hash_policy": "A staging declaration is part of the raw run's recorded handover. This record changes the interpretation, not the handover bytes. The corrected declarations are not re-staging documents: staging the same run id again must fail closed with RUN_ID_ALREADY_EXISTS.",
+  "original_declarations": [
+    {
+      "path": "metadata/provenance/declarations/20261101-youtube-hhc-cannabinoid-raw-collection.json",
+      "sha256": "5cab06431233cd43171089531c972f2f8c76043621124f436263347dc355d1d0",
+      "role": "handover record for 20261101T085920Z-youtube-cannabinoid-raw-collection"
+    },
+    {
+      "path": "metadata/provenance/declarations/20261101-youtube-hhc-liquid-cannabinoid-raw-collection.json",
+      "sha256": "eaa71bcc5cce89836e31b65d2e6bb960a65072da9aa01f5a9d1a4b1426c4b984",
+      "role": "handover record for 20261101T091646Z-youtube-cannabinoid-raw-collection"
+    }
+  ],
+  "corrected_declarations": [
+    {
+      "path": "metadata/provenance/declarations/20261101-youtube-hhc-cannabinoid-raw-collection-corrected.json",
+      "sha256": "c63288e29a24fc2862bad71032929c8b403660b429d0bf3e5a3a16b975d55cd5",
+      "role": "current provenance copy; retained out-of-scope compound-term run"
+    },
+    {
+      "path": "metadata/provenance/declarations/20261101-youtube-hhc-liquid-cannabinoid-raw-collection-corrected.json",
+      "sha256": "986e7e737040ac9ba32c2a21c843b1c5671e79b9451afde339e0946b1afa384f",
+      "role": "current provenance copy; primary liquid-only coverage run"
+    }
+  ],
+  "corrections": [
+    {
+      "run_id": "20261101T085920Z-youtube-cannabinoid-raw-collection",
+      "field": "collection_request.max_videos",
+      "recorded_value": 500,
+      "corrected_field": "collection_request.actor_input.maxResults",
+      "corrected_value": 500,
+      "basis": "The original declaration records 500 under max_videos. max_videos is the previous actor's input key and is not accepted by h7sDV53CddomktSi5; the value 500 is carried over as the recorded limit, not re-derived from the payload."
+    },
+    {
+      "run_id": "20261101T085920Z-youtube-cannabinoid-raw-collection",
+      "field": "collection_request.searchQueries",
+      "recorded_value": null,
+      "corrected_value": [
+        "HHC"
+      ],
+      "basis": "The actor takes one query per run. The export's input column is 'HHC' for all 482 records, matching the declared keyword."
+    },
+    {
+      "run_id": "20261101T085920Z-youtube-cannabinoid-raw-collection",
+      "field": "collection_request.maxResultsShorts / maxResultStreams",
+      "recorded_value": null,
+      "corrected_value": 0,
+      "basis": "Owner correction 2026-11-01 states both limits were 0. The export's type column is 'video' for all 482 records (no short/stream rows), which is consistent but is not proof of the input value."
+    },
+    {
+      "run_id": "20261101T091646Z-youtube-cannabinoid-raw-collection",
+      "field": "collection_request.max_videos",
+      "recorded_value": 500,
+      "corrected_field": "collection_request.actor_input.maxResults",
+      "corrected_value": 500,
+      "basis": "The original declaration records 500 under max_videos. max_videos is the previous actor's input key and is not accepted by h7sDV53CddomktSi5; the value 500 is carried over as the recorded limit, not re-derived from the payload."
+    },
+    {
+      "run_id": "20261101T091646Z-youtube-cannabinoid-raw-collection",
+      "field": "collection_request.searchQueries",
+      "recorded_value": null,
+      "corrected_value": [
+        "HHC リキッド"
+      ],
+      "basis": "The actor takes one query per run. The export's input column is 'HHC リキッド' for all 412 records, matching the declared keyword."
+    },
+    {
+      "run_id": "20261101T091646Z-youtube-cannabinoid-raw-collection",
+      "field": "collection_request.maxResultsShorts / maxResultStreams",
+      "recorded_value": null,
+      "corrected_value": 0,
+      "basis": "Owner correction 2026-11-01 states both limits were 0. The export's type column is 'video' for all 412 records (no short/stream rows), which is consistent but is not proof of the input value."
+    }
+  ],
+  "actor_build": [
+    {
+      "run_id": "20261101T085920Z-youtube-cannabinoid-raw-collection",
+      "value": "DNnMNbpTBkxkxiqx9",
+      "basis": "Recorded in the original declaration's environment.actor_build."
+    },
+    {
+      "run_id": "20261101T091646Z-youtube-cannabinoid-raw-collection",
+      "value": null,
+      "basis": "Not recorded in the original declaration or the export. Do not infer it from the HHC compound run; retrieve it from the Apify run detail (ISS-20261015-PRV-013)."
+    }
+  ],
+  "execution_facts": [
+    {
+      "run_id": "20261101T085920Z-youtube-cannabinoid-raw-collection",
+      "reported_status": "success",
+      "reported_errors": [],
+      "returned_count": 482,
+      "pagination_exhausted": null,
+      "final_run_status_verified": false,
+      "search_completeness": "unknown",
+      "basis": "The original declaration records success with no errors. The Apify final run status object is not available offline, so the status is recorded as reported, not verified. 482 records against the recorded maxResults 500 do not establish that no further matches existed."
+    },
+    {
+      "run_id": "20261101T091646Z-youtube-cannabinoid-raw-collection",
+      "reported_status": "success",
+      "reported_errors": [],
+      "returned_count": 412,
+      "pagination_exhausted": null,
+      "final_run_status_verified": false,
+      "search_completeness": "unknown",
+      "basis": "The original declaration records success with no errors. The Apify final run status object is not available offline, so the status is recorded as reported, not verified. 412 records against the recorded maxResults 500 do not establish that no further matches existed."
+    }
+  ],
+  "portable_handover": {
+    "replaced": "Operator-local absolute Desktop paths in the original artifacts[].source",
+    "with": "local-ref/youtube-20261101/<export filename>",
+    "unchanged": "The artifact path and SHA-256 identify the payload; only the operator-local source reference is made portable."
+  },
+  "raw_untouched": {
+    "payloads": true,
+    "run_metadata": true,
+    "statement": "No file under data/raw/ was read for edits, rewritten, or removed by this correction. The payload SHA-256 values in the corrected declarations match the original declarations and the exported files."
+  },
+  "limitations": [
+    "The owner-reported actor input is recorded with its basis; it has not been corroborated against the Apify run-detail input JSON in this checkout.",
+    "The liquid run's actor build remains unknown.",
+    "The corrected declarations are provenance copies, not replay instructions; re-staging the existing run ids fails closed."
+  ],
+  "next_actions": [
+    "Owner: retrieve the actor input JSON and final run status for both runs from Apify run detail and add them to the cloud-evidence request list (ISS-20261015-PRV-013).",
+    "Maintainer: if the declarations are ever reissued, issue a new run id; never rewrite a handover document whose SHA-256 is recorded in raw run metadata."
+  ]
+}

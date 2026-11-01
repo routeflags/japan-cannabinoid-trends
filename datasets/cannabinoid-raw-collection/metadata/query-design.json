@@ -1,0 +1,35 @@
+{
+  "schema_version": "1.0.0",
+  "study_id": "cannabinoid-raw-collection",
+  "query_designs": [
+    {
+      "design_id": "youtube-liquid-only-primary",
+      "source_id": "youtube",
+      "status": "active",
+      "decided": "2026-11-01",
+      "decided_by": "owner",
+      "primary_intent_id": "product_liquid",
+      "query_pattern": "<compound> リキッド",
+      "one_query_per_run": true,
+      "coverage_unit": "compound_id",
+      "out_of_primary_intent_ids": [
+        "compound_general",
+        "product_oil",
+        "product_other",
+        "other"
+      ],
+      "retained_out_of_scope_policy": "Raw payloads and declarations for out-of-primary runs stay in place as provenance. They are excluded from primary coverage counts and are never treated as a required companion run.",
+      "rationale": "This collection observes a Japanese-market product signal, not a country-limited platform count. (a) The actor input has no geo filter. (b) The Japanese product term リキッド approximates a market restriction through the query language. (c) That approximation is not a geographic guarantee. A bare compound term is not limited to Japanese product content, so it measures a different unit and is outside the primary design.",
+      "limitations": [
+        "Query-language restriction is approximate: Japanese-language content about non-Japanese markets, and non-Japanese-language content about the Japanese market, are not separated.",
+        "The actor returns a search-result sample, not a census.",
+        "Out-of-primary runs do not complete coverage for any compound."
+      ],
+      "distribution": {
+        "study_id": "cannabinoid-platform-trends",
+        "included": false,
+        "reason": "The distribution slice uses the COL-033 YouTube declaration only; the raw study's YouTube runs are outside that slice."
+      }
+    }
+  ]
+}

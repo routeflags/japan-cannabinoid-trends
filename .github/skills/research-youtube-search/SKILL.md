@@ -2,15 +2,23 @@
 name: research-youtube-search
 description: |
   研究用の YouTube 検索スキル。
-  キーワード・研究ID を指定して、YouTube 動画を収集する。
+  研究が宣言したクエリ設計に従って YouTube 動画を収集し、staging 宣言へ渡す。
 ---
 
 # Research YouTube 検索スキル
 
 研究用の YouTube データ収集スキル。**任意のキーワード・研究ID** で再利用できるよう抽象化されている。
+各研究は `datasets/<study-id>/` 配下にデータを保存し、このスキルは収集・重複排除の確認・staging 宣言への受け渡しを担当する。
+研究計画書（`docs/plans/` 配下）と study のクエリ設計に定められた値をそのまま入力として使う。
 
-各研究は `datasets/<study-id>/` 配下にデータを保存し、このスキルは収集・重複排除・品質チェックのみを担当する。
-研究計画書（`docs/plans/` 配下）に定められたパラメータをそのまま入力として使う。
+## このスキルの位置づけ
+
+- **1 実行 = 1 クエリ**。複数クエリを 1 run にまとめない。
+- **クエリ設計は study が宣言する**。このスキルは「化合物研究なら必ず 2 語」のような普遍規則を持たない。
+- 現在の collector は Apify Actor `h7sDV53CddomktSi5`（`streamers/youtube-scraper`）。
+- 取得した payload は **byte 単位で保持**し、`staging-declaration-v1` → `make stage` → `make adopt-all` で採用する。
+- raw は不変。重複排除は下流の再現可能な処理で行う。
+- 課金は発生するため owner 承認を前提とする。**金額は追跡成果物に記録しない**（AGENTS.md Scope Exclusion）。
 
 ---
 
@@ -27,196 +35,229 @@ description: |
 
 | パラメータ | 型 | 必須 | デフォルト | 説明 |
 |-----------|-----|------|-----------|------|
-| `keyword` | string | ✅ | — | 検索キーワード（研究対象に応じて指定） |
-| `study_id` | string | ✅ | — | 研究ID。保存先 `datasets/<study_id>/data/raw/youtube/` に決定 |
-| `max_videos` | integer | — | `100` | 最大取得数（Actor 上限 100） |
+| `keyword` | string | ✅ | — | 検索語。query registry の `canonical_text` をそのまま使う |
+| `query_id` | string | ✅ | — | `metadata/queries/query-registry.json` の ID。宣言に記録する |
+| `study_id` | string | ✅ | — | 研究ID。保存先 `datasets/<study_id>/data/raw/youtube/` を決める |
+| `max_results` | integer | — | Actor の既定 | Actor input の `maxResults`。取得上限 |
+| `date_filter` | string | — | なし | `hour` / `today` / `week` / `month` / `year`。**絶対日付は不可** |
 | `output_dir` | string | — | `datasets/<study_id>/data/raw/youtube/` | 保存先 |
 
-> キーワードは研究ごとに異なるため固定しない。研究計画書で定めた値をそのまま使う。
+> `max_videos` は旧 Actor `gJvjeCYNraSfhIaNd` の入力名であり、現行 Actor には存在しない。
+> 新規ワークフローでは使わない。旧宣言に残る `max_videos` は**歴史的記録**としてのみ読む。
 
 ---
 
-## 前提
+## クエリ設計は study が宣言する
 
-- Apify アカウントに支払い方法登録済み
-- `.env.d/apify.env` に `APIFY_TOKEN=apify_api_...` が存在
-- 環境変数のパス: `/Users/bookair18/OS/media/06_symphony/symphony_workspaces/.env.d/apify.env`
+クエリの種類と数は study の設計事実であり、このスキルに固定しない。
+研究ごとに `datasets/<study>/metadata/query-design.json`（または計画書）で次を宣言する。
+
+- どの `intent_id` を primary とするか
+- 1 run 1 クエリか
+- primary 外の語をどう扱うか（保持する / 収集しない）
+- どの配布物に含めるか
+
+### この collection の宣言（`cannabinoid-raw-collection`）
+
+宣言ファイル: `datasets/cannabinoid-raw-collection/metadata/query-design.json`
+design: `youtube-liquid-only-primary`
+
+| 区分 | 語 | `intent_id` | 扱い |
+|---|---|---|---|
+| **primary** | `<compound> リキッド` | `product_liquid` | 1 化合物 1 クエリ（1 run）。一次被覆に数える |
+| **primary 外** | `HHC` などの裸の化合物語 | `compound_general` | 収集しても **保持する証跡**。一次被覆に数えない。必須の対でもない |
+
+理由:
+
+1. この collection の観測は国単位のプラットフォーム件数ではない。
+2. Actor 入力に **geo filter はない**（`searchQueries` / `maxResults` / `maxResultsShorts` / `maxResultStreams` / `dateFilter` / `sortingOrder` のみ）。
+3. 日本語の製品語「リキッド」が、**検索語ベースで日本市場向け製品コンテンツを近似的に絞り込む**。
+4. これは geo 保証ではない。日本語コンテンツでも海外市場向けは混ざり、日本語以外の国内向けコンテンツは拾えない。
+5. 裸の化合物語は日本語製品コンテンツに限定されず、同じ観測単位にならない。したがって primary 外。
+
+**重要:**
+
+- 裸の化合物語 run は削除しない（raw は不変）。ただし primary coverage の件数・化合物数に加えない。
+- 「HHC と HHC リキッドを必ず対で取る」という規則は**この study にはない**。HHC の裸語 run は保持された out-of-scope 証跡であり、liquid coverage を完成させない。
+- 別の study は別の設計を宣言できる。この liquid-only 規則を他のキーワード収集へコピーしない。
 
 ---
 
-## 実行コマンド
+## 現在の Actor 入力
 
-### 基本収集
+Actor: `h7sDV53CddomktSi5`（`streamers/youtube-scraper`）
+
+| 入力キー | 型 | 必須 | 説明 |
+|-----------|-----|------|------|
+| `searchQueries` | array | ✅ | **1 要素だけ**入れる（1 run 1 クエリ） |
+| `maxResults` | integer | — | 取得上限。件数でありページ数ではない |
+| `maxResultsShorts` | integer | — | Shorts 上限。`0` で除外 |
+| `maxResultStreams` | integer | — | ストリーム上限。`0` で除外 |
+| `dateFilter` | string | — | **相対期間のみ**（`hour` / `today` / `week` / `month` / `year`） |
+| `sortingOrder` | string | — | `relevance` / `rating` / `date` / `views` |
+
+`dateFilter` を**指定しない**場合、Actor 入力には絶対日付窓もローリング窓も存在しない。
+宣言では `date_filter: "all"` を「日付フィルタなし」の宣言語彙として使い、`limitations` に
+「Actor の enum 値ではなく、入力に `dateFilter` を渡していないことを表す」と書く。
+Actor に `all` という値はないため、`dateFilter: "all"` を送ってはいけない。
+
+---
+
+## request と観測窓は別物
+
+| 事実 | 何を表すか | どこに記録するか |
+|---|---|---|
+| **request** | Actor に渡した入力（`searchQueries` / `maxResults` / `maxResultsShorts` / `maxResultStreams` / `dateFilter` の有無）と `reference_time` | 宣言の `collection_request` と `run_metadata.json` の `submitted_parameters` |
+| **observed window** | payload に含まれた動画の公開日を正規化した半開区間 | 宣言の `window` と `temporal` |
+
+観測窓の正規化（UTC、`[start, end_exclusive)`）:
+
+- `start` = 返された動画の `date` の最小日の `00:00:00Z`
+- `end_exclusive` = 返された動画の `date` の最大日 + 1 日の `00:00:00Z`
+- これは**返された項目の観測範囲**であり、検索条件でも、全動画が存在した証明でもない。
+- 同じ検索語でも run が違えば窓は別。run をまたいで件数を合算しない。
+
+---
+
+## 実行
 
 ```bash
-source /Users/bookair18/OS/media/06_symphony/symphony_workspaces/.env.d/apify.env
+# 前提: .env.d/apify.env に APIFY_TOKEN がある（値はコミットしない）
+# 1 run = 1 query
+KEYWORD="<query registry の canonical_text>"
+QUERY_ID="<query_id>"
+STUDY_ID="<study_id>"
+MAX_RESULTS="${MAX_RESULTS:-10}"   # Actor の既定は 10。研究で決めた上限に置き換える
+DATE_FILTER="${DATE_FILTER:-}"    # 空 = dateFilter を送らない（unbounded）
 
-# パラメータ設定（研究ごとに指定）
-KEYWORD="${1:?keyword required}"    # 例: "CBX リキッド", "CBD リキッド"
-STUDY_ID="${2:?study_id required}"  # 例: "cbx-social-trends"
-MAX_VIDEOS="${3:-100}"
-OUTPUT_DIR="${4:-datasets/${STUDY_ID}/data/raw/youtube}"
+INPUT=$(jq -n \
+  --arg q "$KEYWORD" \
+  --argjson max "$MAX_RESULTS" \
+  --arg filter "$DATE_FILTER" \
+  '{
+    searchQueries: [$q],
+    maxResults: $max,
+    maxResultsShorts: 0,
+    maxResultStreams: 0
+  }
+  + (if $filter == "" then {} else {dateFilter: $filter} end)')
 
-# 収集実行
-R=$(netloom apify run --actor gJvjeCYNraSfhIaNd --wait 60 \
-  --input "{\"search_term\":\"$KEYWORD\",\"max_videos\":$MAX_VIDEOS}")
-
+R=$(netloom apify run --actor h7sDV53CddomktSi5 --wait 90 --input "$INPUT")
 DS=$(echo "$R" | jq -r '.data.defaultDatasetId // .defaultDatasetId')
-RUN_ID=$(echo "$R" | jq -r '.data.id // .id')
-TIMESTAMP=$(date -u +"%Y%m%dT%H%M%SZ")
-SAVE_RUN_ID="${TIMESTAMP}-youtube-$(echo "$KEYWORD" | tr ' ' '-' | tr '[:upper:]' '[:lower:]')"
+ACTOR_RUN=$(echo "$R" | jq -r '.data.id // .id')
 
-# 保存先
-SAVE_DIR="${OUTPUT_DIR}/${SAVE_RUN_ID}"
-mkdir -p "$SAVE_DIR"
+# 実行状態を控える（status / startedAt / finishedAt / build。無い値は作らない）
+netloom apify run-status --run-id "$ACTOR_RUN" > /tmp/youtube-run-status.json
 
-# データ取得
-netloom apify dataset --dataset-id "$DS" --as json --out "$SAVE_DIR/records_raw.json"
-
-# メタデータ取得
-netloom apify run-status --run-id "$RUN_ID" | jq --arg keyword "$KEYWORD" --arg study "$STUDY_ID" '.data | {id, status, usageTotalUsd, startedAt, finishedAt, keyword: $keyword, study_id: $study}' \
-  > "$SAVE_DIR/run_metadata.json"
-
-COUNT_RAW=$(jq 'length' "$SAVE_DIR/records.json")
-echo "========================================="
-echo "研究ID: $STUDY_ID"
-echo "キーワード: $KEYWORD"
-echo "保存先: $SAVE_DIR"
-echo "件数(重複排除前): ${COUNT_RAW}"
-echo "Cost: $(jq -r '.usageTotalUsd' "$SAVE_DIR/run_metadata.json")"
-echo "========================================="
+# dataset を flat CSV（id / title / date / ...）で保存する
+mkdir -p "datasets/${STUDY_ID}/data/raw/youtube/<run-id>"
+netloom apify dataset --dataset-id "$DS" --as csv \
+  --out "datasets/${STUDY_ID}/data/raw/youtube/<run-id>/<export>.csv"
 ```
 
-### 重複排除（必須）
+- `<run-id>` は `YYYYMMDDTHHMMSSZ-youtube-<study-id>` 形式（AGENTS.md Run Identity）。
+- CSV は**そのまま**保存する。列を書き換えない。`id` と `title` は必ず含まれる。
+- `run_metadata.json` / `artifact-manifest.json` は手書きしない。`make stage` / `make adopt-all` が
+  `collection-run-v1` / `artifact-manifest-v1` として生成する。
+- `run-status` に build が無い場合は `null` と「未記録」を宣言に書く。推測しない。
 
-YouTube 検索はページングで重複を返す。**必ず重複排除する。**
+---
+
+## 重複排除（raw は変更しない）
+
+YouTube 検索はページングで同じ動画を返すことがある。**raw は変更せず**、件数だけを確認する。
 
 ```bash
-SAVE_DIR="<保存先パス>"
-
-python3 -c "
-import json
-
-with open('${SAVE_DIR}/records_raw.json') as f:
-    data = json.load(f)
-
-# videoId で重複排除
-seen = set()
-unique = []
-for item in data:
-    vid = item.get('id', {}).get('videoId')
-    if vid and vid not in seen:
-        seen.add(vid)
-        unique.append(item)
-
-# 保存
-with open('${SAVE_DIR}/records.json', 'w') as f:
-    json.dump(unique, f, ensure_ascii=False, indent=2)
-
-print(f'総件数: {len(data)}')
-print(f'重複排除後: {len(unique)}')
-"
-
-# CSV 出力
-python3 -c "
-import json, csv
-
-with open('${SAVE_DIR}/records.json') as f:
-    data = json.load(f)
-
-rows = []
-for r in data:
-    sn = r.get('snippet', {})
-    rows.append({
-        'videoId': r.get('id', {}).get('videoId', ''),
-        'title': sn.get('title', ''),
-        'channel': sn.get('channelTitle', ''),
-        'views': sn.get('views', 0),
-        'duration': sn.get('duration', ''),
-        'timestamp': sn.get('timestamp', ''),
-        'url': f\"https://youtube.com/watch?v={r.get('id', {}).get('videoId', '')}\"
-    })
-
-with open('${SAVE_DIR}/records.csv', 'w', newline='') as f:
-    writer = csv.DictWriter(f, fieldnames=rows[0].keys())
-    writer.writeheader()
-    writer.writerows(rows)
-
-print(f'CSV保存完了: {len(rows)}件')
-"
+python3 - "$CSV" <<'PY'
+import csv, sys
+rows = list(csv.DictReader(open(sys.argv[1], encoding="utf-8", newline="")))
+ids = [row["id"] for row in rows if row.get("id")]
+unique = set(ids)
+print("raw_count:", len(rows))
+print("deduplicated_count:", len(unique))
+print("duplicates_removed:", len(ids) - len(unique))
+print("input_values:", sorted({row.get("input", "") for row in rows}))
+print("types:", sorted({row.get("type", "") for row in rows}))
+PY
 ```
 
-### 使用例
+- キーは **`id`**。`videoId` ではない（現行 CSV の列名）。
+- run 内だけで重複排除する。run をまたいで畳まない。
+- 排除前・排除後・除去件数は宣言の `environment` に記録する（raw_count / deduplicated_count / duplicates_removed）。
+- 分析用の dedup は下流の再現可能な処理で行う。raw を上書きしない。
 
-上記コマンドをスクリプトとして保存して使う場合の例（キーワード・研究IDは研究ごとに置き換える）:
+---
+
+## 保存先と staging レイアウト
+
+```
+datasets/<study-id>/data/raw/youtube/<run-id>/
+├── <export>.csv              ← Actor の flat CSV（byte 単位で保持）
+├── run_metadata.json         ← collection-run-v1（stage / adopt が生成）
+└── artifact-manifest.json    ← artifact-manifest-v1（stage / adopt が生成）
+```
+
+- raw は Git 管理外（`.gitignore` の `**/data/raw/*`、例外は `google_trends` のみ）。
+- 採用宣言は `metadata/provenance/declarations/<date>-youtube-<slug>.json`（`staging-declaration-v1`）。
+- 宣言には `query` / `window` / `collection_request` / `temporal` / `timestamps` / `execution` /
+  `artifacts` / `environment` を書く。`environment` には `actor_run_id` / `apify_dataset_id` /
+  `actor_build`（判明した場合）/ `payload_sha256` を記録する。
+- 宣言には金額項目を書かない。
+- 実行:
 
 ```bash
-# 1. キーワード + 研究ID 指定
-bash research-youtube-search.sh "CBX リキッド" "cbx-social-trends"
-
-# 2. 別キーワード + 別研究
-bash research-youtube-search.sh "CBD リキッド" "cbd-social-trends"
-
-# 3. キーワード + 研究ID + 件数指定
-bash research-youtube-search.sh "カンナビノイド リキッド" "cannabinoid-social-trends" "50"
+make stage DECLARATION=metadata/provenance/declarations/<file>.json
+make adopt-all
 ```
 
 ---
 
 ## データ品質チェック
 
-収集後、必ず以下を確認:
+収集後、**読み取り専用**で確認する。
 
 ```bash
-SAVE_DIR="<保存先パス>"
-KEYWORD="<使用したキーワード>"
+CSV="<保存先>/<export>.csv"
 
-# 1. 重複排除後の件数確認
-echo "=== ユニーク件数 ==="
-jq 'length' "$SAVE_DIR/records.json"
+# 1. CSV record 数（行数ではなく csv の record 数）
+python3 -c "
+import csv,sys
+rows=list(csv.DictReader(open('$CSV', encoding='utf-8', newline='')))
+print(len(rows))
+"
 
-# 2. キーワード含有件数確認（キーワードは研究ごとに変更。
-#    関連語フィルタが必要な場合は研究の定義に従ってパターンを指定する）
-echo "=== キーワード含有件数 ==="
-jq -r '.[].snippet.title' "$SAVE_DIR/records.json" | grep -ci "$KEYWORD" || echo "0"
+# 2. id のユニーク数と重複
+python3 -c "
+import csv,collections
+rows=list(csv.DictReader(open('$CSV', encoding='utf-8', newline='')))
+c=collections.Counter(r['id'] for r in rows)
+print('unique', len(c), 'duplicates', sum(v-1 for v in c.values() if v>1))
+"
 
-# 3. チャンネル分布
-echo "=== チャンネル分布 ==="
-jq -r '.[].snippet.channelTitle' "$SAVE_DIR/records.json" | sort | uniq -c | sort -rn | head -10
+# 3. 検索語と type の確認（1 query / Shorts・stream 除外の確認）
+python3 -c "
+import csv,collections
+rows=list(csv.DictReader(open('$CSV', encoding='utf-8', newline='')))
+print(collections.Counter(r.get('input','') for r in rows))
+print(collections.Counter(r.get('type','') for r in rows))
+"
 
-# 4. 再生数上位
-echo "=== 再生数上位10 ==="
-jq -r '.[] | "\(.snippet.views) \(.snippet.title)"' "$SAVE_DIR/records.json" | sort -rn | head -10
+# 4. 観測窓（UTC、半開区間）
+python3 -c "
+import csv,datetime
+rows=list(csv.DictReader(open('$CSV', encoding='utf-8', newline='')))
+d=sorted(r['date'] for r in rows if r.get('date'))
+print('first', d[0], 'last', d[-1])
+"
 ```
 
----
+確認すること:
 
-## 保存先
-
-研究IDごとに保存先が分かれる。
-
-```
-datasets/<study-id>/data/raw/youtube/
-└── {YYYYMMDDTHHMMSSZ}-youtube-{keyword-slug}/
-    ├── records_raw.json      ← 生データ（重複あり）
-    ├── records.json          ← 重複排除後
-    ├── records.csv           ← CSV 形式
-    └── run_metadata.json     ← 実行メタデータ（keyword / study_id 付き）
-```
-
-**run-id 形式:** `YYYYMMDDTHHMMSSZ-youtube-{keyword-slug}`（keyword を小文字・ハイフン連結）
-**例:** `20261001T120000Z-youtube-cbd-liquid`（キーワード `CBD リキッド` の場合）
-
----
-
-## 費用
-
-| 項目 | 単価 | 件数/回（max_videos=100 の場合） | 収集費用 |
-|------|------|---------|---------|
-| Actor 起動 | $0.00005 | 1 | $0.00005 |
-| 取得 | $0.0005/件 | ~100 | ~$0.050 |
-| **合計** | | | **~$0.050/回** |
-| **月額** | | 収集回数に依存 | 収集回数 × ~$0.050 |
+- `input` が宣言した 1 クエリだけである。
+- `type` が `video` のみ（`maxResultsShorts` / `maxResultStreams` が 0 の場合）。
+- `id` の重複数が宣言の `duplicates_removed` と一致する。
+- 観測窓が宣言の `window.start` / `window.end_exclusive` と一致する。
+- 件数が宣言の `execution.returned_count` / `record_count` と一致する。
 
 ---
 
@@ -224,11 +265,14 @@ datasets/<study-id>/data/raw/youtube/
 
 | 制約 | 対策 |
 |------|------|
-| ページング重複 | 必ず videoId で重複排除 |
-| max_videos 上限 | 100 件で制限 |
-| 検索結果の非決定性 | 複数回収集、run-id で区別 |
-| 一般動画の混入 | タイトルでキーワード関連を手動フィルタ |
-| キーワードの固定化 | 研究ごとに keyword / 保存先をパラメータで渡す（スキル内にハードコードしない） |
+| 検索結果は標本であり census ではない | 件数を YouTube 全体の投稿数として書かない |
+| ページング重複 | `id` で run 内 dedup。raw は変更しない |
+| 検索結果の非決定性 | 同じ語でも run を分け、run_id で区別する。件数を合算しない |
+| `dateFilter` は相対のみ | 絶対日付窓を Actor 入力に書かない。観測窓と request を分離する |
+| geo filter がない | 日本語「リキッド」による近似的な市場限定。geo 保証ではないと書く |
+| 取得上限 | `maxResults`（件数）。`max_videos` を新規入力に使わない |
+| 課金 | owner 承認。金額は追記しない |
+| raw の不変性 | 編集・削除・列変更をしない。修正は下流で行う |
 
 ---
 
@@ -236,27 +280,32 @@ datasets/<study-id>/data/raw/youtube/
 
 | 症状 | 原因 | 対処 |
 |------|------|------|
-| 関連 0 件 | クエリが一般動画に回避 | キーワードを確認、別クエリ試行 |
-| 重複が多い | YouTube 検索の仕様 | records_raw.json から重複排除 |
-| 401 Unauthorized | APIFY_TOKEN 無効 | `.env.d/apify.env` を確認 |
-| max_videos 超過 | 上限 100 | 100 で制限 |
+| 0 件 | クエリがニッチ / フィルタが強すぎる | クエリ設計を見直す。0 は `observed_zero` であって収集不要ではない |
+| 重複が多い | YouTube 検索のページング | `id` で run 内 dedup を確認。raw は保持 |
+| `dateFilter` エラー | 絶対日付を渡した | 相対値のみ使う。絶対窓は観測として記録する |
+| `maxResults` が効かない | 旧 `max_videos` を送っている | 現行キー `maxResults` に直す |
+| 401 Unauthorized | `APIFY_TOKEN` 無効 | `.env.d/apify.env` を確認（値は表示・コミットしない） |
 
 ---
 
 ## 収集実績の記録
 
-実行のたびに、実績（クエリ・件数・重複排除後件数・費用）は各研究のメタデータに記録する:
+実行のたびに、次を記録する（金額は記録しない）:
 
-- `datasets/<study-id>/data/raw/youtube/{run-id}/run_metadata.json` … 実行単位の記録
-- `datasets/<study-id>/metadata/runs/` … 研究全体の実行履歴
+- `datasets/<study-id>/data/raw/youtube/<run-id>/run_metadata.json` … 実行単位（pipeline が生成）
+- `datasets/<study-id>/data/raw/youtube/<run-id>/artifact-manifest.json` … payload の SHA-256 / 件数
+- `metadata/provenance/declarations/<date>-youtube-<slug>.json` … 宣言（query / request / window / 実行状態）
+- 研究全体の履歴は study の methodology / issue に残す。
 
-スキル内に特定研究の実績を固定で書き込まない（別キーワード・別期間での再利用を妨げないため）。
+スキル内に特定研究の実績値を固定で書き込まない（別キーワード・別期間での再利用を妨げないため）。
 
 ---
 
 ## 関連
 
 - **研究計画書:** `docs/plans/` 配下（研究ごとに作成）
-- **methodology:** `datasets/<study-id>/methodology.md`（研究ごとに作成）
-- **上位スキル:** `apify-youtube-search`（汎用 YouTube 検索）
+- **クエリ設計:** `datasets/<study>/metadata/query-design.json`（study が宣言）
+- **methodology:** `datasets/<study>/methodology.md`
+- **Actor 仕様:** `apify-youtube-scraper` スキル（入力スキーマ・日付フィルタの実測）
+- **上位スキル:** `apify-youtube-search`（旧 Actor。新規収集では使わない）
 - **管理スキル:** `apify-mcp`（MCP 起動・認証）

@@ -216,7 +216,7 @@ if dates:
 
 - 公開動画のみ。限定公開/非公開は対象外
 - `date` は **絶対日付 (ISO8601)** で返る
-- 1実行1クエリ（複数クエリは `searchQueries` 配列で指定可）
+- `searchQueries` は配列を受け付けるが、研究収集は **1 run 1 クエリ**（`research-youtube-search`）。複数語を 1 run にまとめない。
 - `dateFilter` は検索クエリ使用時のみ機能
 - `oldestPostDate` は URL 使用時のみ機能
 

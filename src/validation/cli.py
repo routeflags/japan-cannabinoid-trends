@@ -27,6 +27,17 @@ Commands
                         Apify; exit 0 means honest, not complete)
 - ``audit-adoption``      the adoption backlog: every raw run directory and the
                         state of the metadata a declaration needs
+- ``audit-raw-completeness``
+                        every catalog/declaration run id resolves to raw run
+                        metadata in this checkout (read-only, checkout-local)
+- ``snapshot-guard``      preflight/postflight guard for ``audit-snapshots``:
+                        refuse a partial raw checkout and a lost run id
+- ``audit-youtube-coverage``
+                        primary liquid YouTube coverage, with retained
+                        out-of-scope compound-term runs reported separately
+- ``audit-distribution-scope``
+                        the release slice's COL-033 YouTube scope against the
+                        raw study (report-only; ``--strict`` for drift)
 - ``contract-ledger``     the derived inventory of every declared contract
 - ``audit-publication``   the publication contract (record-only; see the module)
 - ``gate-publication``    record-only G6 §10 publication eligibility gate
@@ -91,6 +102,11 @@ from validation.provenance import (
     find_duplicate_run_ids,
 )
 from validation.publication_contract import build_publication_contract_report
+from validation.distribution_scope import build_distribution_scope
+from validation.raw_completeness import build_raw_completeness
+from validation.snapshot_guard import postflight as snapshot_postflight
+from validation.snapshot_guard import preflight as snapshot_preflight
+from validation.youtube_scope import build_youtube_scope
 from validation.query_semantics import (
     build_query_inventory,
     check_query_registry,
@@ -1054,6 +1070,192 @@ def cmd_audit_adoption(args) -> int:
         f"violations={len(report['violations'])}"
     )
     return EXIT_DATA if report["violations"] else EXIT_OK
+
+
+def cmd_audit_raw_completeness(args) -> int:
+    """Every catalog/declaration run resolves to raw on this checkout.
+
+    Read-only and checkout-local: an absent ``data/raw/`` root means this
+    checkout cannot show the claim, not that the claim is false.  Exit 1 is a
+    finding for the operator standing in front of this checkout.
+    """
+    try:
+        report = build_raw_completeness(
+            args.datasets_root,
+            args.declarations_dir,
+            args.corrections_dir,
+            args.repo_root,
+        )
+    except (OSError, ValueError) as error:
+        _err(f"raw completeness audit failed: {error.__class__.__name__}: {error}")
+        return EXIT_CONFIG
+
+    if args.output:
+        try:
+            _write_output(args.output, report)
+        except OSError as error:
+            _err(
+                f"cannot write audit output: {args.output} "
+                f"({error.__class__.__name__})"
+            )
+            return EXIT_IO
+        _err(f"raw completeness audit written: {args.output}")
+    elif args.format == "json":
+        print(dump_json(report), end="")
+    else:
+        for run in report["missing"]:
+            print(
+                f"{run['study_id']}/{run['source_id']}/{run['run_id']} "
+                f"{run['state']}"
+            )
+    _err(
+        f"raw completeness: claims={report['claim_count']} "
+        f"present={report['present_count']} "
+        f"missing={report['missing_count']} "
+        f"(directory={report['missing_directory_count']}, "
+        f"run_metadata={report['missing_run_metadata_count']}) "
+        f"correction_violations={report['correction_violation_count']}"
+    )
+    return EXIT_DATA if report["failure_count"] else EXIT_OK
+
+
+def cmd_snapshot_guard(args) -> int:
+    """Refuse a snapshot regeneration this checkout cannot substantiate."""
+    try:
+        if args.phase == "preflight":
+            report = snapshot_preflight(
+                args.datasets_root,
+                args.audits_dir,
+                args.declarations_dir,
+                expected_run_ids=args.expected_run_ids,
+                state_file=args.state_file,
+            )
+        else:
+            report = snapshot_postflight(args.state_file, args.audits_dir)
+    except (OSError, ValueError, json.JSONDecodeError) as error:
+        _err(f"snapshot guard failed: {error.__class__.__name__}: {error}")
+        return EXIT_CONFIG
+
+    if args.output:
+        try:
+            _write_output(args.output, report)
+        except OSError as error:
+            _err(
+                f"cannot write audit output: {args.output} "
+                f"({error.__class__.__name__})"
+            )
+            return EXIT_IO
+    elif args.format == "json":
+        print(dump_json(report), end="")
+    else:
+        for run_id in report.get("missing_run_ids", []):
+            print(f"missing raw run: {run_id}")
+        for run_id in report.get("lost_run_ids", []):
+            print(f"lost snapshot run id: {run_id}")
+    if args.phase == "preflight":
+        _err(
+            f"snapshot preflight: expected={report['expected_run_id_count']} "
+            f"present={report['present_raw_run_count']} "
+            f"adopted_missing={report['adopted_missing_raw_count']} "
+            f"missing={report['missing_raw_run_count']} "
+            f"snapshot_ids={report['snapshot_run_id_count']} "
+            f"refused={report['refused']}"
+        )
+    else:
+        _err(
+            f"snapshot postflight: before={report['before_run_id_count']} "
+            f"after={report['after_run_id_count']} "
+            f"lost={report['lost_run_id_count']} "
+            f"added={report['added_run_id_count']} "
+            f"refused={report['refused']}"
+        )
+    return EXIT_DATA if report["refused"] else EXIT_OK
+
+
+def cmd_audit_youtube_coverage(args) -> int:
+    """Primary liquid YouTube coverage, with retained out-of-scope runs split out."""
+    try:
+        report = build_youtube_scope(
+            args.study,
+            query_design_path=args.query_design,
+            query_registry_path=args.query_registry,
+            declarations_dir=args.declarations_dir,
+            catalog_path=args.catalog,
+            datasets_root=args.datasets_root,
+            require_complete=args.require_complete,
+        )
+    except (OSError, ValueError) as error:
+        _err(f"YouTube coverage audit failed: {error.__class__.__name__}: {error}")
+        return EXIT_CONFIG
+
+    if args.output:
+        try:
+            _write_output(args.output, report)
+        except OSError as error:
+            _err(
+                f"cannot write audit output: {args.output} "
+                f"({error.__class__.__name__})"
+            )
+            return EXIT_IO
+    elif args.format == "json":
+        print(dump_json(report), end="")
+    else:
+        for run in report["retained_out_of_scope_runs"]:
+            print(
+                f"retained out-of-scope: {run['run_id']} "
+                f"({run.get('intent_id')}, {run.get('query_text')})"
+            )
+        for compound_id in report["missing_compounds"]:
+            print(f"primary coverage missing: {compound_id}")
+    _err(
+        f"YouTube coverage: primary runs={report['primary_run_count']} "
+        f"compounds={report['primary_compound_count']}/{report['primary_query_count']} "
+        f"retained_out_of_scope={report['retained_out_of_scope_run_count']} "
+        f"missing_compounds={report['missing_primary_compound_count']} "
+        f"violations={report['violation_count']}"
+    )
+    return EXIT_DATA if report["failure_count"] else EXIT_OK
+
+
+def cmd_audit_distribution_scope(args) -> int:
+    """Report the release slice's COL-033 YouTube scope against the raw study."""
+    try:
+        report = build_distribution_scope(args.repo_root)
+    except (OSError, ValueError, json.JSONDecodeError) as error:
+        _err(
+            f"distribution scope audit failed: "
+            f"{error.__class__.__name__}: {error}"
+        )
+        return EXIT_CONFIG
+
+    if args.output:
+        try:
+            _write_output(args.output, report)
+        except OSError as error:
+            _err(
+                f"cannot write audit output: {args.output} "
+                f"({error.__class__.__name__})"
+            )
+            return EXIT_IO
+    elif args.format == "json":
+        print(dump_json(report), end="")
+    else:
+        for entry in report["by_compound"]:
+            if entry["scope_gap"]:
+                print(
+                    f"scope gap: {entry['compound']} distribution="
+                    f"{entry['distribution_status']} raw_study_runs="
+                    f"{entry['raw_study_run_count']}"
+                )
+        for finding in report["findings"]:
+            print(f"{finding['kind']}: {finding.get('run_id', '')}")
+    _err(
+        f"distribution scope: youtube_runs={report['distribution_youtube_run_count']} "
+        f"compounds={len(report['distribution_youtube_compounds'])} "
+        f"scope_gap_compounds={len(report['scope_gap_compounds'])} "
+        f"findings={report['finding_count']}"
+    )
+    return EXIT_DATA if args.strict and report["failure_count"] else EXIT_OK
 
 
 def cmd_audit_issues(args) -> int:
@@ -2163,6 +2365,113 @@ def build_parser() -> argparse.ArgumentParser:
         "AGENTS.md private data)",
     )
     audit_adoption.set_defaults(handler=cmd_audit_adoption)
+
+    audit_raw = sub.add_parser(
+        "audit-raw-completeness",
+        help=(
+            "every catalog/declaration run id resolves to raw run metadata in "
+            "this checkout (read-only; raw is machine-local)"
+        ),
+    )
+    audit_raw.add_argument("--repo-root", default=".")
+    audit_raw.add_argument("--datasets-root", default="datasets")
+    audit_raw.add_argument(
+        "--declarations-dir", default="metadata/provenance/declarations"
+    )
+    audit_raw.add_argument(
+        "--corrections-dir", default="metadata/provenance/corrections"
+    )
+    audit_raw.add_argument("--output", default=None)
+    audit_raw.add_argument("--format", choices=("text", "json"), default="text")
+    audit_raw.set_defaults(handler=cmd_audit_raw_completeness)
+
+    snapshot_guard = sub.add_parser(
+        "snapshot-guard",
+        help=(
+            "preflight/postflight guard for make audit-snapshots: refuse when "
+            "an expected adopted raw run is absent or an existing run id "
+            "would disappear"
+        ),
+    )
+    snapshot_guard.add_argument(
+        "--phase", choices=("preflight", "postflight"), required=True
+    )
+    snapshot_guard.add_argument("--datasets-root", default="datasets")
+    snapshot_guard.add_argument("--audits-dir", default="docs/audits")
+    snapshot_guard.add_argument(
+        "--declarations-dir", default="metadata/provenance/declarations"
+    )
+    snapshot_guard.add_argument(
+        "--expected-run-ids",
+        default=None,
+        help=(
+            "optional JSON array (or object with run_ids) naming runs the "
+            "owner expects but no committed claim names yet"
+        ),
+    )
+    snapshot_guard.add_argument(
+        "--state-file", default=".staging/audit-snapshot-guard.json"
+    )
+    snapshot_guard.add_argument("--output", default=None)
+    snapshot_guard.add_argument(
+        "--format", choices=("text", "json"), default="text"
+    )
+    snapshot_guard.set_defaults(handler=cmd_snapshot_guard)
+
+    audit_youtube = sub.add_parser(
+        "audit-youtube-coverage",
+        help=(
+            "primary liquid YouTube coverage inventory, with retained "
+            "out-of-scope compound-term runs reported separately"
+        ),
+    )
+    audit_youtube.add_argument(
+        "--study", default="cannabinoid-raw-collection"
+    )
+    audit_youtube.add_argument(
+        "--query-design",
+        default="datasets/cannabinoid-raw-collection/metadata/query-design.json",
+    )
+    audit_youtube.add_argument(
+        "--query-registry", default="metadata/queries/query-registry.json"
+    )
+    audit_youtube.add_argument(
+        "--declarations-dir", default="metadata/provenance/declarations"
+    )
+    audit_youtube.add_argument(
+        "--catalog",
+        default="datasets/cannabinoid-raw-collection/metadata/data-catalog.json",
+    )
+    audit_youtube.add_argument("--datasets-root", default="datasets")
+    audit_youtube.add_argument(
+        "--require-complete",
+        action="store_true",
+        help="fail when a compound with a primary-intent query has no run",
+    )
+    audit_youtube.add_argument("--output", default=None)
+    audit_youtube.add_argument(
+        "--format", choices=("text", "json"), default="text"
+    )
+    audit_youtube.set_defaults(handler=cmd_audit_youtube_coverage)
+
+    distribution_scope = sub.add_parser(
+        "audit-distribution-scope",
+        help=(
+            "report the release slice's COL-033 YouTube scope against the raw "
+            "study's adopted runs (read-only)"
+        ),
+    )
+    distribution_scope.add_argument("--repo-root", default=".")
+    distribution_scope.add_argument(
+        "--strict",
+        action="store_true",
+        help="exit 1 when the report contains drift findings",
+    )
+    distribution_scope.add_argument("--output", default=None)
+    distribution_scope.add_argument(
+        "--format", choices=("text", "json"), default="text"
+    )
+    distribution_scope.set_defaults(handler=cmd_audit_distribution_scope)
 
     audit_new = sub.add_parser(
         "audit-new-runs",

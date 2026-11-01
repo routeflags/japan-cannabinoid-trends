@@ -1,0 +1,100 @@
+{
+  "declaration_version": "staging-declaration-v1",
+  "description": "Corrected provenance copy of the HHC リキッド (product term) YouTube run. The handover document remains 20261101-youtube-hhc-liquid-cannabinoid-raw-collection.json and its bytes are unchanged; this copy records the current actor input vocabulary, a portable handover reference, and the evidence state without rewriting the original. It is not a re-staging document: the run id already exists and staging it again must fail closed. The HHC compound-term run is retained provenance outside this study's liquid-only primary coverage; it is not a required companion.",
+  "runs": [
+    {
+      "run_id": "20261101T091646Z-youtube-cannabinoid-raw-collection",
+      "study_id": "cannabinoid-raw-collection",
+      "source_id": "youtube",
+      "collector_id": "youtube-apify-scraper",
+      "purpose": "Owner-requested HHC リキッド YouTube collection for this study's liquid-only primary coverage.",
+      "query": {
+        "keyword": "HHC リキッド",
+        "query_id": "hhc-liquid-ja"
+      },
+      "window": {
+        "start": "2013-06-25T00:00:00Z",
+        "end_exclusive": "2026-09-20T00:00:00Z",
+        "granularity": "day",
+        "timezone": "UTC"
+      },
+      "collection_request": {
+        "date_filter": "all",
+        "reference_time": "2026-11-01T09:08:03Z",
+        "actor_input": {
+          "searchQueries": [
+            "HHC リキッド"
+          ],
+          "maxResults": 500,
+          "maxResultsShorts": 0,
+          "maxResultStreams": 0
+        },
+        "actor_input_basis": "Owner correction 2026-11-01 (exact actor input vocabulary and the 0 limits) plus the original declaration, which recorded the limit 500 under the previous actor's max_videos key. The export's input column is 'HHC リキッド' for all 412 records and its type column is 'video' for all 412; neither is proof of the input values, but both are consistent with them.",
+        "date_filter_basis": "No dateFilter was supplied to the actor. 'all' is the declaration vocabulary for the unbounded request (src/collection/adapters/youtube/apify_csv.py DATE_FILTERS); the actor itself has no 'all' value."
+      },
+      "temporal": {
+        "collector_window_type": "unbounded",
+        "boundary_semantics": "Observed video publish-date range in the payload, normalized to a half-open UTC day interval; not the API condition and not a request window.",
+        "exact_window_match": false,
+        "limitations": [
+          "The request had no dateFilter and therefore no absolute publish-date window; the search was unbounded as far as the actor input states.",
+          "window.start is the earliest observed video publish date at 00:00:00Z and window.end_exclusive is one day after the latest observed publish date; both are derived from returned items only.",
+          "The actor returns a search-result sample, not a census. The payload does not establish whether further matching videos existed.",
+          "The run is not country-limited by an API geo filter. The Japanese product term リキッド approximates a Japanese-market restriction through query language; this is not a geographic guarantee."
+        ]
+      },
+      "timestamps": {
+        "started_at": "2026-11-01T09:08:03Z",
+        "finished_at": "2026-11-01T09:16:46Z",
+        "basis": "Actor run 4Eaqb2cab6K10tpxL as reported in the original handover declaration; the Apify run status object itself is not in this checkout."
+      },
+      "execution": {
+        "status": "success",
+        "returned_count": 412,
+        "errors": [],
+        "pagination_exhausted": null
+      },
+      "artifacts": [
+        {
+          "source": "local-ref/youtube-20261101/youtube-dataset-hhc-liquid_1PdEz5cVc7FnUKtk1_2026-11-01.csv",
+          "path": "youtube-dataset-hhc-liquid_1PdEz5cVc7FnUKtk1_2026-11-01.csv",
+          "artifact_type": "raw_records",
+          "format": "csv",
+          "schema_id": "youtube-dataset-csv-v1",
+          "completeness": "complete",
+          "record_count": 412
+        }
+      ],
+      "environment": {
+        "actor_run_id": "4Eaqb2cab6K10tpxL",
+        "apify_dataset_id": "1PdEz5cVc7FnUKtk1",
+        "actor_build": null,
+        "actor_build_status": "not_recorded",
+        "actor_build_note": "Neither the original declaration nor the export records a build id. Do not infer it from the HHC compound run; retrieve it from the Apify run detail (ISS-20261015-PRV-013).",
+        "origin": "API",
+        "payload_sha256": "e146dad83e5963b51c05dbb26ac6037de1f1b264ea662743c0d41657ec457846",
+        "export_filename": "youtube-dataset-hhc-liquid_1PdEz5cVc7FnUKtk1_2026-11-01.csv",
+        "handover": {
+          "original_declaration": "metadata/provenance/declarations/20261101-youtube-hhc-liquid-cannabinoid-raw-collection.json",
+          "original_declaration_sha256": "eaa71bcc5cce89836e31b65d2e6bb960a65072da9aa01f5a9d1a4b1426c4b984",
+          "portable_source": "local-ref/youtube-20261101/youtube-dataset-hhc-liquid_1PdEz5cVc7FnUKtk1_2026-11-01.csv",
+          "raw_untouched": true
+        },
+        "execution_evidence": {
+          "reported_status": "success",
+          "reported_errors": [],
+          "source": "original handover declaration execution block",
+          "final_run_status_verified": false,
+          "final_run_status_note": "The Apify final run status object is not available offline. Corroborate it through ISS-20261015-PRV-013 before treating the status as verified.",
+          "search_completeness": "unknown",
+          "partial_result_note": "412 records returned against the recorded maxResults 500; the payload does not establish whether further matches existed."
+        },
+        "scope": {
+          "primary_design": "youtube-liquid-only-primary",
+          "primary_coverage": "yes",
+          "query_intent_id": "product_liquid"
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,66 @@
+{
+  "declaration_version": "staging-declaration-v1",
+  "description": "HHC リキッド (product term) YouTube search collected by the owner's request on 2026-11-01 and adopted into cannabinoid-raw-collection. Companion run to 20261101T085920Z (compound term HHC).",
+  "runs": [
+    {
+      "run_id": "20261101T091646Z-youtube-cannabinoid-raw-collection",
+      "study_id": "cannabinoid-raw-collection",
+      "source_id": "youtube",
+      "collector_id": "youtube-apify-scraper",
+      "purpose": "Owner-requested collection: HHC リキッド YouTube search results for this study.",
+      "query": {
+        "keyword": "HHC リキッド",
+        "query_id": "hhc-liquid-ja"
+      },
+      "window": {
+        "start": "2013-06-25T00:00:00Z",
+        "end_exclusive": "2026-09-20T00:00:00Z",
+        "granularity": "day",
+        "timezone": "UTC"
+      },
+      "collection_request": {
+        "date_filter": "all",
+        "reference_time": "2026-11-01T09:08:03Z",
+        "max_videos": 500
+      },
+      "temporal": {
+        "collector_window_type": "unbounded",
+        "boundary_semantics": "Observed video publish-date range in the payload; not the API condition.",
+        "exact_window_match": false,
+        "limitations": [
+          "No dateFilter parameter was supplied to the actor, so the search carried no publish-date restriction; date_filter \"all\" records that absence rather than an actor enum value.",
+          "window.start and window.end_exclusive describe the observed video publish-date range and are not the search condition.",
+          "The run returned 412 records against max_videos 500; the payload does not establish whether further results existed."
+        ]
+      },
+      "timestamps": {
+        "started_at": "2026-11-01T09:08:03Z",
+        "finished_at": "2026-11-01T09:16:46Z",
+        "basis": "Actor run 4Eaqb2cab6K10tpxL as reported by the Apify API through netloom; start and finish are the run's own UTC timestamps."
+      },
+      "execution": {
+        "status": "success",
+        "returned_count": 412,
+        "errors": []
+      },
+      "artifacts": [
+        {
+          "source": "/Users/bookair18/Desktop/youtube/youtube-dataset-hhc-liquid_1PdEz5cVc7FnUKtk1_2026-11-01.csv",
+          "path": "youtube-dataset-hhc-liquid_1PdEz5cVc7FnUKtk1_2026-11-01.csv",
+          "artifact_type": "raw_records",
+          "format": "csv",
+          "schema_id": "youtube-dataset-csv-v1",
+          "completeness": "complete",
+          "record_count": 412
+        }
+      ],
+      "environment": {
+        "actor_run_id": "4Eaqb2cab6K10tpxL",
+        "apify_dataset_id": "1PdEz5cVc7FnUKtk1",
+        "origin": "API",
+        "payload_sha256": "e146dad83e5963b51c05dbb26ac6037de1f1b264ea662743c0d41657ec457846",
+        "export_filename": "youtube-dataset-hhc-liquid_1PdEz5cVc7FnUKtk1_2026-11-01.csv"
+      }
+    }
+  ]
+}

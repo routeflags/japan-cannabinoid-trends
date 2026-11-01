@@ -1209,6 +1209,33 @@ run ディレクトリに入っていない payload ファイルは `loose_files
 - 違反（exit 1）は 2 種類だけ: `metadata_unreadable` と空の run ディレクトリ。採用待ちは違反ではなくバックログ項目。
 - 既定出力ファイルは無い。raw 層はマシンローカル（untracked）なので、追跡スナップショットはそのマシンの状態をリポジトリの状態として固定してしまう。`make audit-adoption` は実行した checkout について答える。
 
+### 22.7 監査スナップショットの前提と、catalog / declaration / raw の隙間
+
+2026-11-01 に 4 つの読み取り専用監査を追加した。raw が machine-local である以上、
+「この checkout が見せられる事実」と「committed な claim」を混同しないための分離である。
+
+| command | 問い | 出力 |
+|---|---|---|
+| `audit-raw-completeness` | catalog / declaration の run id はこの checkout の raw に存在するか | 標準出力（`--output` 可）。欠落は exit 1。checkout ローカル |
+| `snapshot-guard --phase preflight` | `make audit-snapshots` の 11 ファイルを書いてよいか | `.staging/audit-snapshot-guard.json` に期待状態を記録 |
+| `snapshot-guard --phase postflight` | 既存 run id が 1 つでも消えたか | 消失は exit 1。追加は報告のみ |
+| `audit-youtube-coverage` | primary の liquid 被覆と、保持した primary 外 run | 標準出力。`--require-complete` で被覆欠落を exit 1 |
+| `audit-distribution-scope` | 配布 slice（COL-033）と raw study の差、run id 対応、request のずれ | 標準出力。既定は report-only、`--strict` で drift を exit 1 |
+
+規則:
+
+- **期待状態は committed claim の和**: preflight は catalog ∪ declaration ∪ 既存スナップショット ∪
+  `--expected-run-ids` を「完全な raw 状態」とする。1 つでも `run_metadata.json` が無ければ
+  **最初の書き込み前に**停止する。
+- **study alias を解決する**: catalog の `study_id` は収集時の旧 ID のままの run があり、
+  raw directory は現在の study にある。`metadata/studies/study-registry.json` の
+  `previous_study_ids` で解決する。
+- **source の directory 表記差を吸収する**: `google-trends`（registry）と `google_trends`
+  （directory）を正規化して比較する。
+- **staging 後の訂正は宣言を書き換えない**: `metadata/provenance/corrections/` の
+  `declaration_correction` が元宣言 / 訂正版宣言の SHA-256 と run id 対応を固定する
+  （`docs/specs/collection-pipeline.md` §3.4）。
+
 ## 23. タクソノミーと文書の整合（2026-10-13）
 ### 23.1 見つかった欠陥（最大のものは当初の想定外）
 

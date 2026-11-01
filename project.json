@@ -246,8 +246,22 @@
       "youtube": {
         "languageFilter": null,
         "queryFormat": "{compound} リキッド",
-        "actor": "gJvjeCYNraSfhIaNd",
-        "note": "No language filter available. Japanese queries preferred to surface Japanese content."
+        "actor": "h7sDV53CddomktSi5",
+        "actorName": "streamers/youtube-scraper",
+        "inputKeys": [
+          "searchQueries",
+          "maxResults",
+          "maxResultsShorts",
+          "maxResultStreams",
+          "dateFilter",
+          "sortingOrder"
+        ],
+        "primaryIntentId": "product_liquid",
+        "oneQueryPerRun": true,
+        "geoFilter": "none",
+        "marketRestriction": "Japanese product term リキッド gives an approximate query-language market restriction; this is not a geographic guarantee.",
+        "limitParameter": "maxResults",
+        "note": "Liquid-only primary design is declared per study (datasets/<study>/metadata/query-design.json). The legacy max_videos parameter belongs to the previous actor and is not used for new collection."
       },
       "googleTrends": {
         "queryFormat": "{compound}",

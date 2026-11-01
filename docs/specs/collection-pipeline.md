@@ -232,6 +232,14 @@ L2 が `not_comparable` になることはある。
   reader・hash・registry 参照・欠測規則）まで。宣言の根拠は
   `timestamp_basis` と `limitations` に、rehearsal か実採用かは運用記録に残す
   （2026-10-15 の 7 件 rehearsal: `docs/reports/20261015b-youtube-csv-staging-driver.md`）。
+- **staging 後の訂正**: 宣言は handover 文書であり、`run_metadata.json` の
+  `environment.handover.declaration_sha256` がそのバイトを指す。staging 後に
+  request 語彙・actor build・実行状態の解釈を訂正する必要が出ても、**元の宣言
+  を書き換えない**。代わりに `metadata/provenance/corrections/<date>-<slug>.json`
+  （`record: "declaration_correction"`）へ、元宣言の path / SHA-256、訂正版
+  宣言の path / SHA-256、run ごとの訂正内容と根拠、raw を変更していない旨を
+  記録する。`validation.cli audit-raw-completeness` が元宣言・訂正版宣言の
+  SHA-256 と run id の対応を検証する。raw の `run_metadata.json` は書き換えない。
 
 ---
 

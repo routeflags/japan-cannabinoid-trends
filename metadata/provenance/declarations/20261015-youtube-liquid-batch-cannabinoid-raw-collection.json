@@ -1,0 +1,312 @@
+{
+  "declaration_version": "staging-declaration-v1",
+  "description": "Adopt five owner-approved YouTube (リキッド product-term) exports into cannabinoid-raw-collection. Each payload is the same Apify export identified in metadata/provenance/declarations/20261015-youtube-csv-adoption.json (ISS-20261015-COL-033, owner-approved 2026-10-15); this declaration records their use in this study. The 13-50-24 export is excluded from COL-033 and is not declared here.",
+  "runs": [
+    {
+      "run_id": "20261010T143430Z-youtube-cannabinoid-raw-collection",
+      "study_id": "cannabinoid-raw-collection",
+      "source_id": "youtube",
+      "collector_id": "youtube-apify-scraper",
+      "purpose": "Owner-approved adoption (ISS-20261015-COL-033, 2026-10-15) of the H4CBH リキッド YouTube dataset export into this study.",
+      "query": {
+        "keyword": "H4CBH リキッド",
+        "query_id": "h4cbh-liquid-ja"
+      },
+      "window": {
+        "start": "2020-10-01T00:00:00Z",
+        "end_exclusive": "2026-10-02T00:00:00Z",
+        "granularity": "day",
+        "timezone": "UTC"
+      },
+      "collection_request": {
+        "date_filter": "all",
+        "reference_time": "2026-10-10T14:34:30Z"
+      },
+      "temporal": {
+        "collector_window_type": "unbounded",
+        "boundary_semantics": "observed video publish-date range in payload; not the API condition",
+        "exact_window_match": false,
+        "limitations": [
+          "date_filter is the API request parameter (a relative rolling window resolved by the collector); window.start/end_exclusive is the observed video publish-date range in the payload and must not be treated as the API search condition (owner direction 2026-10-15)"
+        ]
+      },
+      "timestamps": {
+        "started_at": "2026-10-10T14:26:03Z",
+        "finished_at": "2026-10-10T14:34:30Z",
+        "basis": "Apify console Runs list provided by owner 2026-10-15 (JST display converted to UTC); filename stamp agrees within 2s"
+      },
+      "execution": {
+        "status": "success",
+        "returned_count": 395,
+        "errors": []
+      },
+      "artifacts": [
+        {
+          "source": "/Users/bookair18/Desktop/youtube/dataset_youtube-scraper_2026-10-10_14-34-29-080.csv",
+          "path": "dataset_youtube-scraper_2026-10-10_14-34-29-080.csv",
+          "artifact_type": "raw_records",
+          "format": "csv",
+          "schema_id": "youtube-dataset-csv-v1",
+          "completeness": "complete",
+          "record_count": 395
+        }
+      ],
+      "environment": {
+        "actor_run_id": "KfZADENLkkauQBlX5",
+        "apify_dataset_id": "qXUt9LbuJrH7esPUc",
+        "actor_build": "0.0.313",
+        "origin": "API",
+        "requests": 417,
+        "payload_sha256": "7eece62b331248cf1ae28b8db39453ef5c2f4b39b625542784d0fe793d4b7c27",
+        "export_filename": "dataset_youtube-scraper_2026-10-10_14-34-29-080.csv",
+        "previous_study_run_id": "20261010T143429Z-youtube-youtube-consistency",
+        "previous_study_id": "youtube-consistency"
+      }
+    },
+    {
+      "run_id": "20261010T144422Z-youtube-cannabinoid-raw-collection",
+      "study_id": "cannabinoid-raw-collection",
+      "source_id": "youtube",
+      "collector_id": "youtube-apify-scraper",
+      "purpose": "Owner-approved adoption (ISS-20261015-COL-033, 2026-10-15) of the CBD リキッド YouTube dataset export (date_filter=all) into this study.",
+      "query": {
+        "keyword": "CBD リキッド",
+        "query_id": "cbd-liquid-ja"
+      },
+      "window": {
+        "start": "2014-11-17T00:00:00Z",
+        "end_exclusive": "2026-10-10T00:00:00Z",
+        "granularity": "day",
+        "timezone": "UTC"
+      },
+      "collection_request": {
+        "date_filter": "all",
+        "reference_time": "2026-10-10T14:44:22Z"
+      },
+      "temporal": {
+        "collector_window_type": "unbounded",
+        "boundary_semantics": "observed video publish-date range in payload; not the API condition",
+        "exact_window_match": false,
+        "limitations": [
+          "date_filter is the API request parameter (a relative rolling window resolved by the collector); window.start/end_exclusive is the observed video publish-date range in the payload and must not be treated as the API search condition (owner direction 2026-10-15)"
+        ]
+      },
+      "timestamps": {
+        "started_at": "2026-10-10T14:35:13Z",
+        "finished_at": "2026-10-10T14:44:22Z",
+        "basis": "Apify console Runs list provided by owner 2026-10-15 (JST display converted to UTC); filename stamp agrees within 2s"
+      },
+      "execution": {
+        "status": "success",
+        "returned_count": 456,
+        "errors": []
+      },
+      "artifacts": [
+        {
+          "source": "/Users/bookair18/Desktop/youtube/dataset_youtube-scraper_2026-10-10_14-44-21-126.csv",
+          "path": "dataset_youtube-scraper_2026-10-10_14-44-21-126.csv",
+          "artifact_type": "raw_records",
+          "format": "csv",
+          "schema_id": "youtube-dataset-csv-v1",
+          "completeness": "complete",
+          "record_count": 456
+        }
+      ],
+      "environment": {
+        "actor_run_id": "4sp0DTonaTlGihAfc",
+        "apify_dataset_id": "1IU9x7a0fR6OcDaAa",
+        "actor_build": "0.0.313",
+        "origin": "API",
+        "requests": 482,
+        "payload_sha256": "cc2dfbf4f0249233b8e8fb188cae74670968708a33a9a24a9375e6d64aa199a1",
+        "export_filename": "dataset_youtube-scraper_2026-10-10_14-44-21-126.csv",
+        "previous_study_run_id": "20261010T144421Z-youtube-youtube-consistency",
+        "previous_study_id": "youtube-consistency"
+      }
+    },
+    {
+      "run_id": "20261010T145729Z-youtube-cannabinoid-raw-collection",
+      "study_id": "cannabinoid-raw-collection",
+      "source_id": "youtube",
+      "collector_id": "youtube-apify-scraper",
+      "purpose": "Owner-approved adoption (ISS-20261015-COL-033, 2026-10-15) of the CBN リキッド YouTube dataset export into this study.",
+      "query": {
+        "keyword": "CBN リキッド",
+        "query_id": "cbn-liquid-ja"
+      },
+      "window": {
+        "start": "2008-08-01T00:00:00Z",
+        "end_exclusive": "2026-09-24T00:00:00Z",
+        "granularity": "day",
+        "timezone": "UTC"
+      },
+      "collection_request": {
+        "date_filter": "all",
+        "reference_time": "2026-10-10T14:57:29Z"
+      },
+      "temporal": {
+        "collector_window_type": "unbounded",
+        "boundary_semantics": "observed video publish-date range in payload; not the API condition",
+        "exact_window_match": false,
+        "limitations": [
+          "date_filter is the API request parameter (a relative rolling window resolved by the collector); window.start/end_exclusive is the observed video publish-date range in the payload and must not be treated as the API search condition (owner direction 2026-10-15)"
+        ]
+      },
+      "timestamps": {
+        "started_at": "2026-10-10T14:47:52Z",
+        "finished_at": "2026-10-10T14:57:29Z",
+        "basis": "Apify console Runs list provided by owner 2026-10-15 (JST display converted to UTC); filename stamp agrees within 2s"
+      },
+      "execution": {
+        "status": "success",
+        "returned_count": 468,
+        "errors": []
+      },
+      "artifacts": [
+        {
+          "source": "/Users/bookair18/Desktop/youtube/dataset_youtube-scraper_2026-10-10_14-57-27-682.csv",
+          "path": "dataset_youtube-scraper_2026-10-10_14-57-27-682.csv",
+          "artifact_type": "raw_records",
+          "format": "csv",
+          "schema_id": "youtube-dataset-csv-v1",
+          "completeness": "complete",
+          "record_count": 468
+        }
+      ],
+      "environment": {
+        "actor_run_id": "rlwl2NvYNp1SJgbmW",
+        "apify_dataset_id": "CObrnRDoGsgFS41LY",
+        "actor_build": "0.0.313",
+        "origin": "API",
+        "requests": 494,
+        "payload_sha256": "f644cb0315930882aea82731a05a0919996838e3fc7f25f18527e875a231599e",
+        "export_filename": "dataset_youtube-scraper_2026-10-10_14-57-27-682.csv",
+        "previous_study_run_id": "20261010T145727Z-youtube-youtube-consistency",
+        "previous_study_id": "youtube-consistency"
+      }
+    },
+    {
+      "run_id": "20261010T164917Z-youtube-cannabinoid-raw-collection",
+      "study_id": "cannabinoid-raw-collection",
+      "source_id": "youtube",
+      "collector_id": "youtube-apify-scraper",
+      "purpose": "Owner-approved adoption (ISS-20261015-COL-033, 2026-10-15) of the CRDH リキッド YouTube dataset export into this study.",
+      "query": {
+        "keyword": "CRDH リキッド",
+        "query_id": "crdh-liquid-ja"
+      },
+      "window": {
+        "start": "2022-09-29T00:00:00Z",
+        "end_exclusive": "2026-09-12T00:00:00Z",
+        "granularity": "day",
+        "timezone": "UTC"
+      },
+      "collection_request": {
+        "date_filter": "all",
+        "reference_time": "2026-10-10T16:49:17Z"
+      },
+      "temporal": {
+        "collector_window_type": "unbounded",
+        "boundary_semantics": "observed video publish-date range in payload; not the API condition",
+        "exact_window_match": false,
+        "limitations": [
+          "date_filter is the API request parameter (a relative rolling window resolved by the collector); window.start/end_exclusive is the observed video publish-date range in the payload and must not be treated as the API search condition (owner direction 2026-10-15)"
+        ]
+      },
+      "timestamps": {
+        "started_at": "2026-10-10T16:40:25Z",
+        "finished_at": "2026-10-10T16:49:17Z",
+        "basis": "Apify console Runs list provided by owner 2026-10-15 (JST display converted to UTC); filename stamp agrees within 2s"
+      },
+      "execution": {
+        "status": "success",
+        "returned_count": 352,
+        "errors": []
+      },
+      "artifacts": [
+        {
+          "source": "/Users/bookair18/Desktop/youtube/dataset_youtube-scraper_2026-10-10_16-49-15-671.csv",
+          "path": "dataset_youtube-scraper_2026-10-10_16-49-15-671.csv",
+          "artifact_type": "raw_records",
+          "format": "csv",
+          "schema_id": "youtube-dataset-csv-v1",
+          "completeness": "complete",
+          "record_count": 352
+        }
+      ],
+      "environment": {
+        "actor_run_id": "p7OnoebbWpOpcJOZT",
+        "apify_dataset_id": "XvOYiyeyKBxBbYvwB",
+        "actor_build": "0.0.313",
+        "origin": "API",
+        "requests": 372,
+        "payload_sha256": "2d9f0b1cab94631cedaf6eab5f63b682e3c62058a855bb0125497ef7c389ffca",
+        "export_filename": "dataset_youtube-scraper_2026-10-10_16-49-15-671.csv",
+        "previous_study_run_id": "20261010T164915Z-youtube-youtube-consistency",
+        "previous_study_id": "youtube-consistency"
+      }
+    },
+    {
+      "run_id": "20261011T191902Z-youtube-cannabinoid-raw-collection",
+      "study_id": "cannabinoid-raw-collection",
+      "source_id": "youtube",
+      "collector_id": "youtube-apify-scraper",
+      "purpose": "Owner-approved adoption (ISS-20261015-COL-033, 2026-10-15) of the CBD リキッド YouTube dataset export (date_filter=year) into this study. Distinct observation from the date_filter=all CBD export: different request window and reference time.",
+      "query": {
+        "keyword": "CBD リキッド",
+        "query_id": "cbd-liquid-ja"
+      },
+      "window": {
+        "start": "2025-10-11T00:00:00Z",
+        "end_exclusive": "2026-10-10T00:00:00Z",
+        "granularity": "day",
+        "timezone": "UTC"
+      },
+      "collection_request": {
+        "date_filter": "year",
+        "reference_time": "2026-10-11T19:19:02Z"
+      },
+      "temporal": {
+        "collector_window_type": "relative_duration",
+        "boundary_semantics": "observed video publish-date range in payload; not the API condition",
+        "exact_window_match": false,
+        "limitations": [
+          "date_filter is the API request parameter (a relative rolling window resolved by the collector); window.start/end_exclusive is the observed video publish-date range in the payload and must not be treated as the API search condition (owner direction 2026-10-15)",
+          "date_filter 'year' resolves to the trailing ~365 days (skill measurement); the observed range 2025-10-11..2026-10-10 is consistent with it"
+        ]
+      },
+      "timestamps": {
+        "started_at": "2026-10-11T19:09:08Z",
+        "finished_at": "2026-10-11T19:19:02Z",
+        "basis": "Apify console Runs list provided by owner 2026-10-15 (JST display converted to UTC); filename stamp agrees within 2s"
+      },
+      "execution": {
+        "status": "success",
+        "returned_count": 393,
+        "errors": []
+      },
+      "artifacts": [
+        {
+          "source": "/Users/bookair18/Desktop/youtube/dataset_youtube-scraper_2026-10-11_19-19-00-950.csv",
+          "path": "dataset_youtube-scraper_2026-10-11_19-19-00-950.csv",
+          "artifact_type": "raw_records",
+          "format": "csv",
+          "schema_id": "youtube-dataset-csv-v1",
+          "completeness": "complete",
+          "record_count": 393
+        }
+      ],
+      "environment": {
+        "actor_run_id": "VwsJXaOmn3HMsiSxN",
+        "apify_dataset_id": "aDwsmXz6MTfT4Dh47",
+        "actor_build": "0.0.313",
+        "origin": "API",
+        "requests": 416,
+        "payload_sha256": "77aae4113ccbdb6de275315835a543a631cd44c16d32f1b77cbdbcd6433066e5",
+        "export_filename": "dataset_youtube-scraper_2026-10-11_19-19-00-950.csv",
+        "previous_study_run_id": "20261011T191900Z-youtube-youtube-consistency",
+        "previous_study_id": "youtube-consistency"
+      }
+    }
+  ]
+}
