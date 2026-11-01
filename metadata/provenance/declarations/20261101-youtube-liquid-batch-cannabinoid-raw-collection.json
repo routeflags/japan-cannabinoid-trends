@@ -1,0 +1,194 @@
+{
+  "declaration_version": "staging-declaration-v1",
+  "description": "Owner-requested live collection (2026-11-01) of the study's liquid-only primary YouTube queries (youtube-liquid-only-primary; one query per run; no dateFilter). This document declares the two runs of the eight-query batch that completed: HHCH リキッド and THCH リキッド. The other six queries of the same batch (CBG, CBX, CRDP, THC, THC-O, THCV) were aborted by the Apify account's billing-cycle usage cap; their partial payloads are preserved outside Git and are not declared here because an aborted pagination is not a complete observation (recorded in docs/issues/active/30-production-collection-expansion/20261101_p2_youtube-liquid-batch-usage-cap.md). CBX belongs to datasets/cbx-search-trends/ and is not declared for this study.",
+  "runs": [
+    {
+      "run_id": "20261101T105037Z-youtube-cannabinoid-raw-collection",
+      "study_id": "cannabinoid-raw-collection",
+      "source_id": "youtube",
+      "collector_id": "youtube-apify-scraper",
+      "purpose": "Owner-requested live collection of the liquid-only primary query HHCH リキッド (query registry canonical text) for this study.",
+      "query": {
+        "keyword": "HHCH リキッド",
+        "query_id": "hhch-liquid-ja"
+      },
+      "window": {
+        "start": "2012-04-09T00:00:00Z",
+        "end_exclusive": "2026-10-18T00:00:00Z",
+        "granularity": "day",
+        "timezone": "UTC"
+      },
+      "collection_request": {
+        "date_filter": "all",
+        "reference_time": "2026-11-01T10:50:37.394Z",
+        "actor_input": {
+          "searchQueries": [
+            "HHCH リキッド"
+          ],
+          "maxResults": 500,
+          "maxResultsShorts": 0,
+          "maxResultStreams": 0
+        },
+        "actor_input_basis": "Submitted verbatim through netloom apify run; the payload's input column is 'HHCH リキッド' for all 138 records and its type column is 'video' for all 138, which is consistent with but not proof of the input values.",
+        "date_filter_basis": "No dateFilter was supplied to the actor, so the request carried neither an absolute nor a rolling publish-date restriction. 'all' is the declaration vocabulary for that unbounded request (src/collection/adapters/youtube/apify_csv.py DATE_FILTERS); the actor has no 'all' enum value."
+      },
+      "temporal": {
+        "collector_window_type": "unbounded",
+        "boundary_semantics": "Observed video publish-date range in the payload, normalized to a half-open UTC day interval; not the API condition and not a request window.",
+        "exact_window_match": false,
+        "limitations": [
+          "The request had no dateFilter and therefore no absolute publish-date window; the search was unbounded as far as the actor input states.",
+          "window.start is the earliest observed video publish date at 00:00:00Z and window.end_exclusive is one day after the latest observed publish date; both are derived from the returned items only.",
+          "The run finished with status SUCCEEDED and returned 138 records against maxResults 500. The payload does not establish that every matching video existed or was returned; it is a search-result sample, not a census.",
+          "The run is not country-limited by an API geo filter. The Japanese product term リキッド approximates a Japanese-market restriction through query language; this is not a geographic guarantee."
+        ]
+      },
+      "timestamps": {
+        "started_at": "2026-11-01T10:50:37.394Z",
+        "finished_at": "2026-11-01T10:53:06.611Z",
+        "basis": "Apify actor run status object read through netloom apify run-status on 2026-11-01; startedAt and finishedAt are the run's own UTC timestamps."
+      },
+      "execution": {
+        "status": "success",
+        "returned_count": 138,
+        "errors": []
+      },
+      "artifacts": [
+        {
+          "source": "/Users/bookair18/Desktop/youtube/youtube-dataset-hhch-liquid_BQS0HYGiUg88m2Prc_2026-11-01.json",
+          "path": "youtube-dataset-hhch-liquid_BQS0HYGiUg88m2Prc_2026-11-01.json",
+          "artifact_type": "raw_records",
+          "format": "json",
+          "schema_id": "youtube-search-result-list-v1",
+          "completeness": "complete",
+          "record_count": 138,
+          "media_type": "application/json"
+        }
+      ],
+      "environment": {
+        "actor_run_id": "iELqrNBYV56RHppKI",
+        "apify_dataset_id": "BQS0HYGiUg88m2Prc",
+        "actor_build": "0.0.322",
+        "actor_build_id": "DNnMNbpTBkxkxiqx9",
+        "actor_build_basis": "buildNumber and buildId of the actor run status object (netloom apify run-status, 2026-11-01).",
+        "origin": "API",
+        "payload_sha256": "7c25952d5b78db7f58c43e9703cb49f32e713e6e8d09aa5c55e6457a43b489a4",
+        "payload_bytes": 603554,
+        "export_filename": "youtube-dataset-hhch-liquid_BQS0HYGiUg88m2Prc_2026-11-01.json",
+        "portable_source": "local-ref/youtube-20261101/youtube-dataset-hhch-liquid_BQS0HYGiUg88m2Prc_2026-11-01.json",
+        "handover_note": "The declared source is the owner's machine-local YouTube export directory. local-ref names the repository-relative handover convention; the payload itself stays outside Git (raw layer policy) and is copied byte-for-byte into the run directory by adoption.",
+        "observed_range": {
+          "min_date": "2012-04-09T09:24:06Z",
+          "max_date": "2026-10-17T11:26:17Z",
+          "derivation": "min/max of the payload's date column, converted to UTC; window.start/end_exclusive are the half-open day normalization of these bounds. Derived observation only."
+        },
+        "deduplication": {
+          "key": "flat id (video id)",
+          "raw_count": 138,
+          "deduplicated_count": 138,
+          "duplicates_removed": 0,
+          "note": "Checked within this run only. No de-duplication was applied to the raw payload; downstream analysis performs reproducible deduplication."
+        },
+        "scope": {
+          "primary_design": "youtube-liquid-only-primary",
+          "query_intent_id": "product_liquid",
+          "primary_coverage": "yes"
+        }
+      }
+    },
+    {
+      "run_id": "20261101T105058Z-youtube-cannabinoid-raw-collection",
+      "study_id": "cannabinoid-raw-collection",
+      "source_id": "youtube",
+      "collector_id": "youtube-apify-scraper",
+      "purpose": "Owner-requested live collection of the liquid-only primary query THCH リキッド (query registry canonical text) for this study.",
+      "query": {
+        "keyword": "THCH リキッド",
+        "query_id": "thch-liquid-ja"
+      },
+      "window": {
+        "start": "2011-06-07T00:00:00Z",
+        "end_exclusive": "2026-09-15T00:00:00Z",
+        "granularity": "day",
+        "timezone": "UTC"
+      },
+      "collection_request": {
+        "date_filter": "all",
+        "reference_time": "2026-11-01T10:50:58.303Z",
+        "actor_input": {
+          "searchQueries": [
+            "THCH リキッド"
+          ],
+          "maxResults": 500,
+          "maxResultsShorts": 0,
+          "maxResultStreams": 0
+        },
+        "actor_input_basis": "Submitted verbatim through netloom apify run; the payload's input column is 'THCH リキッド' for all 240 records and its type column is 'video' for all 240, which is consistent with but not proof of the input values.",
+        "date_filter_basis": "No dateFilter was supplied to the actor, so the request carried neither an absolute nor a rolling publish-date restriction. 'all' is the declaration vocabulary for that unbounded request (src/collection/adapters/youtube/apify_csv.py DATE_FILTERS); the actor has no 'all' enum value."
+      },
+      "temporal": {
+        "collector_window_type": "unbounded",
+        "boundary_semantics": "Observed video publish-date range in the payload, normalized to a half-open UTC day interval; not the API condition and not a request window.",
+        "exact_window_match": false,
+        "limitations": [
+          "The request had no dateFilter and therefore no absolute publish-date window; the search was unbounded as far as the actor input states.",
+          "window.start is the earliest observed video publish date at 00:00:00Z and window.end_exclusive is one day after the latest observed publish date; both are derived from the returned items only.",
+          "The run finished with status SUCCEEDED and returned 240 records against maxResults 500. The payload does not establish that every matching video existed or was returned; it is a search-result sample, not a census.",
+          "The run is not country-limited by an API geo filter. The Japanese product term リキッド approximates a Japanese-market restriction through query language; this is not a geographic guarantee."
+        ]
+      },
+      "timestamps": {
+        "started_at": "2026-11-01T10:50:58.303Z",
+        "finished_at": "2026-11-01T10:55:27.218Z",
+        "basis": "Apify actor run status object read through netloom apify run-status on 2026-11-01; startedAt and finishedAt are the run's own UTC timestamps."
+      },
+      "execution": {
+        "status": "success",
+        "returned_count": 240,
+        "errors": []
+      },
+      "artifacts": [
+        {
+          "source": "/Users/bookair18/Desktop/youtube/youtube-dataset-thch-liquid_ZibLDfrln2t5gIlzd_2026-11-01.json",
+          "path": "youtube-dataset-thch-liquid_ZibLDfrln2t5gIlzd_2026-11-01.json",
+          "artifact_type": "raw_records",
+          "format": "json",
+          "schema_id": "youtube-search-result-list-v1",
+          "completeness": "complete",
+          "record_count": 240,
+          "media_type": "application/json"
+        }
+      ],
+      "environment": {
+        "actor_run_id": "FYWXDQIgO1CLzB2Up",
+        "apify_dataset_id": "ZibLDfrln2t5gIlzd",
+        "actor_build": "0.0.322",
+        "actor_build_id": "DNnMNbpTBkxkxiqx9",
+        "actor_build_basis": "buildNumber and buildId of the actor run status object (netloom apify run-status, 2026-11-01).",
+        "origin": "API",
+        "payload_sha256": "530038ac665f7c0b0f75bdc579fcded64b5a956445009e2f7e9b7ba71db6ff9c",
+        "payload_bytes": 895528,
+        "export_filename": "youtube-dataset-thch-liquid_ZibLDfrln2t5gIlzd_2026-11-01.json",
+        "portable_source": "local-ref/youtube-20261101/youtube-dataset-thch-liquid_ZibLDfrln2t5gIlzd_2026-11-01.json",
+        "handover_note": "The declared source is the owner's machine-local YouTube export directory. local-ref names the repository-relative handover convention; the payload itself stays outside Git (raw layer policy) and is copied byte-for-byte into the run directory by adoption.",
+        "observed_range": {
+          "min_date": "2011-06-07T08:29:39Z",
+          "max_date": "2026-09-14T07:00:11Z",
+          "derivation": "min/max of the payload's date column, converted to UTC; window.start/end_exclusive are the half-open day normalization of these bounds. Derived observation only."
+        },
+        "deduplication": {
+          "key": "flat id (video id)",
+          "raw_count": 240,
+          "deduplicated_count": 240,
+          "duplicates_removed": 0,
+          "note": "Checked within this run only. No de-duplication was applied to the raw payload; downstream analysis performs reproducible deduplication."
+        },
+        "scope": {
+          "primary_design": "youtube-liquid-only-primary",
+          "query_intent_id": "product_liquid",
+          "primary_coverage": "yes"
+        }
+      }
+    }
+  ]
+}

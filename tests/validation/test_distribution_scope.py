@@ -2,7 +2,7 @@
 
 The dangerous reading is `HHC / youtube / not_collected` being taken as "HHC
 was never collected".  The report has to keep the distribution slice (COL-033,
-6 liquid runs) next to the raw study (8 adopted runs) and name the gap.
+6 liquid runs) next to the raw study (16 adopted runs) and name the gap.
 """
 
 from __future__ import annotations
@@ -24,10 +24,20 @@ def test_release_slice_is_the_six_col_033_liquid_runs() -> None:
     assert report["distribution_youtube_study_ids"] == ["youtube-consistency"]
 
 
-def test_hhc_is_a_scope_gap_not_an_absent_collection() -> None:
+def test_raw_study_runs_outside_the_release_slice_are_scope_gaps() -> None:
     report = build_distribution_scope(REPO_ROOT)
 
-    assert report["scope_gap_compounds"] == ["HHC"]
+    assert report["scope_gap_compounds"] == [
+        "CBG",
+        "CBX",
+        "CRDP",
+        "HHC",
+        "HHCH",
+        "THC",
+        "THC-O",
+        "THCH",
+        "THCV",
+    ]
     hhc = next(
         row for row in report["by_compound"] if row["compound_id"] == "compound_hhc"
     )
@@ -36,6 +46,25 @@ def test_hhc_is_a_scope_gap_not_an_absent_collection() -> None:
     assert hhc["raw_study_intents"] == ["compound_general", "product_liquid"]
     assert hhc["scope_gap"] is True
     assert hhc["release_slice_excluded"] is True
+
+    for compound_id in (
+        "compound_cbg",
+        "compound_cbx",
+        "compound_crdp",
+        "compound_hhch",
+        "compound_thc",
+        "compound_thc_o",
+        "compound_thch",
+        "compound_thcv",
+    ):
+        row = next(
+            entry for entry in report["by_compound"] if entry["compound_id"] == compound_id
+        )
+        assert row["distribution_status"] == "not_collected"
+        assert row["raw_study_run_count"] == 1
+        assert row["raw_study_intents"] == ["product_liquid"]
+        assert row["scope_gap"] is True
+        assert row["release_slice_excluded"] is True
 
 
 def test_every_distribution_run_maps_to_a_raw_study_run() -> None:

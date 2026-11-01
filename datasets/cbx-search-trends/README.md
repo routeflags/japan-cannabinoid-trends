@@ -19,6 +19,8 @@
 
 ## データソース
 
+本 study が持つ raw は Google Search Console と Google Trends のみ。**CBX の YouTube 観測（`CBX リキッド`）は 2026-11-01 の owner 決定により [`datasets/cannabinoid-raw-collection/`](../cannabinoid-raw-collection/) が所有する**。本 study の Google Trends / GSC raw は移動も複製もしない。
+
 | ソース | 期間 | 件数 | ステータス |
 |--------|------|------|-----------|
 | Google Search Console | 2026-07 (月次) | 200 クエリ（うち CBX 関連 6 件） | ✅ 取得済み |
@@ -118,6 +120,7 @@ datasets/cbx-search-trends/
 
 | Study ID | 内容 | 関係 |
 |----------|------|------|
+| `cannabinoid-raw-collection` | 成分横断の Google Trends / X / YouTube raw | CBX の YouTube（`CBX リキッド`）は同 study が所有。Google Trends は本 study が正本 |
 | `cbx-social-trends` | SNS トレンド | 補完 |
 | `cbx-product-coa` | COA 分析 | 補完 |
 | `cbx-liquid-online-trend` | X (Twitter) 言及 | 補完（別指標） |

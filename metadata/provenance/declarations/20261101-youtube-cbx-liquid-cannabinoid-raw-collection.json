@@ -1,0 +1,106 @@
+{
+  "declaration_version": "staging-declaration-v1",
+  "description": "Owner decision (2026-11-01): CBX YouTube belongs to cannabinoid-raw-collection under the liquid-only primary design (youtube-liquid-only-primary). This document declares the CBX リキッド run from the 2026-11-01 liquid retry, which completed with status SUCCEEDED. It is the 15th primary liquid run and completes primary coverage for the 14th compound (compound_cbx). The CBX Google Trends / Search Console raw stays in datasets/cbx-search-trends/ and is neither moved nor duplicated here; only the YouTube observation is adopted into this study. One query per run; no dateFilter; current Actor input names.",
+  "runs": [
+    {
+      "run_id": "20261101T112555Z-youtube-cannabinoid-raw-collection",
+      "study_id": "cannabinoid-raw-collection",
+      "source_id": "youtube",
+      "collector_id": "youtube-apify-scraper",
+      "purpose": "Owner-requested liquid-only primary query CBX リキッド (query registry canonical text), collected in the 2026-11-01 retry of the liquid batch. Adopted here under the owner's 2026-11-01 ownership decision: CBX YouTube is owned by cannabinoid-raw-collection, while CBX Google Trends / Search Console raw remains in cbx-search-trends. The run completed with status SUCCEEDED.",
+      "query": {
+        "keyword": "CBX リキッド",
+        "query_id": "cbx-liquid-ja"
+      },
+      "window": {
+        "start": "2010-03-19T00:00:00Z",
+        "end_exclusive": "2026-10-28T00:00:00Z",
+        "granularity": "day",
+        "timezone": "UTC"
+      },
+      "collection_request": {
+        "date_filter": "all",
+        "reference_time": "2026-11-01T11:25:55.215Z",
+        "actor_input": {
+          "searchQueries": [
+            "CBX リキッド"
+          ],
+          "maxResults": 500,
+          "maxResultsShorts": 0,
+          "maxResultStreams": 0
+        },
+        "actor_input_basis": "Submitted verbatim through netloom apify run; the payload's input column is 'CBX リキッド' for all 329 records and its type column is 'video' for all 329, which is consistent with but not proof of the input values.",
+        "date_filter_basis": "No dateFilter was supplied to the actor, so the request carried neither an absolute nor a rolling publish-date restriction. 'all' is the declaration vocabulary for that unbounded request (src/collection/adapters/youtube/apify_csv.py DATE_FILTERS); the actor has no 'all' enum value."
+      },
+      "temporal": {
+        "collector_window_type": "unbounded",
+        "boundary_semantics": "Observed video publish-date range in the payload, normalized to a half-open UTC day interval; not the API condition and not a request window.",
+        "exact_window_match": false,
+        "limitations": [
+          "The request had no dateFilter and therefore no absolute publish-date window; the search was unbounded as far as the actor input states.",
+          "window.start is the earliest observed video publish date at 00:00:00Z and window.end_exclusive is one day after the latest observed publish date; both are derived from the returned items only.",
+          "The run finished with status SUCCEEDED and returned 329 records against maxResults 500. The payload does not establish that every matching video existed or was returned; it is a search-result sample, not a census.",
+          "The run is not country-limited by an API geo filter. The Japanese product term リキッド approximates a Japanese-market restriction through query language; this is not a geographic guarantee."
+        ]
+      },
+      "timestamps": {
+        "started_at": "2026-11-01T11:25:55.215Z",
+        "finished_at": "2026-11-01T11:32:40.802Z",
+        "basis": "Apify actor run status object (startedAt / finishedAt) read through netloom apify run-status on 2026-11-01 and recorded verbatim in docs/issues/active/30-production-collection-expansion/20261101_p2_youtube-liquid-batch-usage-cap.md; transcribed from that record during adoption because the live run-status call needs APIFY_TOKEN, which is not set in this checkout. These are the run's own UTC timestamps, not values derived from the payload."
+      },
+      "execution": {
+        "status": "success",
+        "returned_count": 329,
+        "errors": []
+      },
+      "artifacts": [
+        {
+          "source": "/Users/bookair18/Desktop/youtube/youtube-dataset-cbx-liquid_ez0mgIizWolbKqlfW_2026-11-01.json",
+          "path": "youtube-dataset-cbx-liquid_ez0mgIizWolbKqlfW_2026-11-01.json",
+          "artifact_type": "raw_records",
+          "format": "json",
+          "schema_id": "youtube-search-result-list-v1",
+          "completeness": "complete",
+          "record_count": 329,
+          "media_type": "application/json"
+        }
+      ],
+      "environment": {
+        "actor_run_id": "rjEle2xXT3WNcg5Wl",
+        "apify_dataset_id": "ez0mgIizWolbKqlfW",
+        "actor_build": "0.0.322",
+        "actor_build_id": "DNnMNbpTBkxkxiqx9",
+        "actor_build_basis": "buildNumber and buildId of the actor run status object (netloom apify run-status, 2026-11-01), as recorded for the whole liquid batch in docs/issues/active/30-production-collection-expansion/20261101_p2_youtube-liquid-batch-usage-cap.md.",
+        "origin": "API",
+        "payload_sha256": "85fa05a32b557fc573261988c3eaa2b2a1faa55e72dd8538d1c28b59aa0471dc",
+        "payload_bytes": 1357251,
+        "export_filename": "youtube-dataset-cbx-liquid_ez0mgIizWolbKqlfW_2026-11-01.json",
+        "portable_source": "local-ref/youtube-20261101/youtube-dataset-cbx-liquid_ez0mgIizWolbKqlfW_2026-11-01.json",
+        "handover_note": "The declared source is the owner's machine-local YouTube export directory. local-ref names the repository-relative handover convention; the payload itself stays outside Git (raw layer policy) and is copied byte-for-byte into the run directory by adoption.",
+        "ownership": {
+          "youtube_primary_owner": "cannabinoid-raw-collection",
+          "google_trends_gsc_owner": "cbx-search-trends",
+          "basis": "Owner decision 2026-11-01: CBX YouTube is owned by cannabinoid-raw-collection for the liquid-only primary workflow; existing CBX Google Trends / Search Console raw stays in cbx-search-trends and is not moved or duplicated. Recorded in ISS-20261101-YT-019 and ISS-20261024-COL-016.",
+          "duplicate_of_other_study": false
+        },
+        "observed_range": {
+          "min_date": "2010-03-19T03:52:50Z",
+          "max_date": "2026-10-27T21:00:15Z",
+          "derivation": "min/max of the payload's date column, converted to UTC; window.start/end_exclusive are the half-open day normalization of these bounds. Derived observation only."
+        },
+        "deduplication": {
+          "key": "flat id (video id)",
+          "raw_count": 329,
+          "deduplicated_count": 329,
+          "duplicates_removed": 0,
+          "note": "Checked within this run only. No de-duplication was applied to the raw payload; downstream analysis performs reproducible deduplication."
+        },
+        "scope": {
+          "primary_design": "youtube-liquid-only-primary",
+          "query_intent_id": "product_liquid",
+          "primary_coverage": "yes"
+        }
+      }
+    }
+  ]
+}

@@ -38,6 +38,7 @@ CBX の既存観測（他 study の raw）:
   （`CBX リキッド` 12ヶ月 + CBX 比較）、`20261001T135424Z-google-trends-variance-check`（CBX / H4CBH / HHBD / CBD リキッドの比較）。
 - `cbx-social-trends` の SNS raw（X / Instagram / TikTok / YouTube）。YouTube の v3 由来 run は
   `ISS-20261024-PRV-005`（#1）の対象。
+- **2026-11-01 の追加観測**: `CBX リキッド` の YouTube payload（329 件、actor run `rjEle2xXT3WNcg5Wl`、dataset `ez0mgIizWolbKqlfW`、SHA-256 `85fa05a32b557fc573261988c3eaa2b2a1faa55e72dd8538d1c28b59aa0471dc`）を収集済み。ISO8601 の公開日を持つため [`ISS-20261029-PRV-016`](../40-provenance-storage-reproducibility/20261029_p2_cbx-youtube-adoption-window.md) の相対時刻問題は無い。**2026-11-01 の owner 決定で本 study が所有し、raw に採用済み**（run `20261101T112555Z-youtube-cannabinoid-raw-collection`、[`ISS-20261101-YT-019`](20261101_p2_youtube-liquid-batch-usage-cap.md)）。
 - **H4CBH と HHBD は既に両 study が収集している**（`20261001T121949Z-google-trends-h4cbh-hhbd`）。
   すなわち「1 化合物を 2 study が観測する」こと自体は前例がある。
 
@@ -73,11 +74,25 @@ CBX の既存観測（他 study の raw）:
 - **Q4**: 窓を揃えるか。揃えるなら CBX の 5年系列を取り直す（新規収集）か、揃わないことを limitations に書くか。
 - **Q5**: `cbx-search-trends` / `cbx-social-trends` との役割分担をどう書き換えるか（統合・併存・参照のどれか）。
 
+## 決定（2026-11-01、YouTube 部分）
+
+owner は **YouTube の所有だけを本 study に確定**した。Google Trends / GSC の参照関係は従来どおりで、Q2〜Q4 の Google Trends 部分は未決のまま残る。
+
+| 問い | YouTube についての決定 |
+|---|---|
+| Q1（対象に含めるか） | 含める（14 化合物目）。raw の所有者は `cannabinoid-raw-collection` |
+| Q2（取得元） | 選択肢 2（本 study で収集・所有）。`cbx-search-trends` の raw を参照するのは Google Trends / GSC だけ |
+| Q3（語彙） | 製品語 `CBX リキッド`（`cbx-liquid-ja`、`product_liquid`）を liquid-only primary に採用。化合物語 `CBX` は YouTube の primary に使わない |
+| Q4（窓） | YouTube は run ごとの観測窓で運用し、横並びの共通窓を要件にしない（§2.3 と同じ規則）。Google Trends の窓揃えは未決 |
+| Q5（役割分担） | **ソース単位で分担**: YouTube は本 study、Google Trends / GSC は `cbx-search-trends`。raw の移動・複製はしない |
+
+この決定により、YouTube の liquid-only primary は **15 run / 14 化合物**で完了した（`make audit-youtube-coverage`: `missing_compounds=0`、retained out-of-scope は裸語 `HHC` 1 run）。採用は `20261101-youtube-cbx-liquid-cannabinoid-raw-collection.json` → `make stage` → `make adopt-all`（L1: catalog）。
+
 ## 完了条件
 
-- [ ] Q1〜Q5 の回答
+- [ ] Q1〜Q5 の回答（YouTube 部分は 2026-11-01 に決済。Google Trends / GSC の参照関係・窓揃えは未決）
 - [ ] `README.md`（概要・対象化合物表・キーワード表）と `methodology.md`（§1.3・§5.1・§6）が 14 化合物として一貫している
-- [ ] CBX の観測がどの raw にあるかを文書から辿れる（参照方式ならパスを明記）
+- [x] CBX の観測がどの raw にあるかを文書から辿れる（YouTube は本 study の `data/raw/youtube/`、Google Trends / GSC は `cbx-search-trends` のパスを README・methodology に明記）
 - [ ] 窓・共通スケールの不一致が limitations に書かれている（または揃える run を収集した）
 - [ ] 配布物（`trend_observations.csv` / `platform_coverage.csv` / `gt-summary.json`）の CBX 行の出所が文書と一致している
 - [ ] 監査スナップショットの再生成
