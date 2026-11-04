@@ -7,10 +7,47 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-## [1.14.2] - 2026-11-04
+## [1.14.2] - 2026-11-05
+
+### Added
+- `cannabinoid-raw-collection`: THCNM common-scale runs for `today 12-m` and
+  `today 3-m` with `CBD` and `THC` in the same `compare_terms` request
+  (`geo=JP`), their plans, and the `2026-08-06_2026-11-04` window. Raw payloads,
+  comparison artifacts, run metadata and manifests are git-tracked.
+- `validation.comparison_scale` and `make audit-comparison-scale`: a page may
+  present a common-scale value only from a run whose request contains the study
+  anchors (`CBD`, `THC`).
+- `make gate-plan PLAN=<file>`: pre-collection gate (structure, registries,
+  anchors).
+- `make release-preflight`: version/DOI sync script plus the version
+  consistency test.
+
+### Changed
+- Every research page's Google Trends section states the current window, labels
+  an older window as a historical observation, and writes "not collected" when
+  no anchored run exists. Single-term series are never converted to the common
+  scale.
+- All publication pages present citation version 1.14.2; `methodology.md` and the
+  CBX rewrite guide are synchronized.
+- The query registry records `comparison-thcnm-anchored`; the retired
+  `comparison-5y-thcnm` id stays registered as `deprecated` with the same text,
+  so runs recorded before the rename still resolve.
+- CBX Google Trends raw ownership moved to `cannabinoid-raw-collection`;
+  collector evidence paths, the study registry, research views and the processed
+  run index follow.
+
+### Removed
+- Per-video rows and channel-name distribution tables from the X and YouTube
+  sections of the research pages (aggregates only, ISS-20261015-COL-030 §4.1).
 
 ### Fixed
-- Synchronized the preferred citation and datapackage citation versions with the release identity so the version-consistency CI check passes after v1.14.1.
+- `make gates` and `release-preflight` were indented as recipe lines of the
+  preceding target and could not run.
+- Preferred citation and datapackage citation versions now match the release
+  identity.
+- Publication review envelopes record the personal-data review, provenance,
+  schema, source-terms, redistribution, copyright and anonymization basis for
+  every page, and pin the owner approval to the current artifact hash.
 
 ---
 
