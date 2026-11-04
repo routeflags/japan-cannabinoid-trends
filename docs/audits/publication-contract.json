@@ -15,14 +15,10 @@
   "catalog_run_count": 95,
   "summary": {
     "artifact_count": 17,
-    "finding_count": 1,
+    "finding_count": 0,
     "declared_gap_count": 11,
-    "by_rule": {
-      "PC-1": 1
-    },
-    "by_kind": {
-      "release_version_behind": 1
-    }
+    "by_rule": {},
+    "by_kind": {}
   },
   "implemented_rules": [
     "PC-1",
@@ -35,14 +31,7 @@
     "PC-8"
   ],
   "unimplemented_rules": [],
-  "findings": [
-    {
-      "rule": "PC-1",
-      "kind": "release_version_behind",
-      "path": "publication/guide_cbx_rewrite.html",
-      "detail": "presents Version 1.14.0; the repository publishes 1.14.2"
-    }
-  ],
+  "findings": [],
   "declared_gaps": [
     {
       "path": "publication/research_cbg.html",

@@ -3,12 +3,12 @@
   "record": "publication_decision",
   "decision_id": "publication-review-guide-cbx-rewrite",
   "artifact_id": "guide-cbx-rewrite",
-  "artifact_sha256": "40c31162b9937c72d4377049ffeaf391d26dd8fc9be65b8db24929a327ed366e",
+  "artifact_sha256": "0c5b69b7e30185bb8696bc8ee560fdbebc6af8b5cd9b2fccaa8ed8040b1014df",
   "status": "approved",
-  "reviewed_at": "2026-10-15",
-  "reviewer": "owner (thread approval 2026-10-15: guide page publication candidate OK; COA requester handling OK)",
+  "reviewed_at": "2026-11-05",
+  "reviewer": "owner (thread instruction 2026-11-05: PUB-04・PUB-10 を含む全項目の対応とリリースまでを指示)",
   "criteria_version": "PC-7 / publication-contract-v1.0.0 (2026-10-15)",
-  "recorded_at": "2026-10-15",
-  "basis": "オーナーが 2026-10-15 のスレッドで guide ページを公開候補として承認し、COA requester 情報は provenance に保持し publication には出さない方針を承認した。v1.13.0 release metadata sync は引用・更新日・release metadata の整合更新であり、承認済み publication 方針を変更しない。 v1.13.1 release metadata sync は release 表記・引用 metadata の整合更新であり、承認済み publication 方針を変更しない。 v1.14.0 release metadata sync も release 表記・引用 metadata の整合更新であり、承認済み publication 方針を変更しない。",
-  "notes": "PC-7 は判断記録が存在することを検査する。PUB-10 は approved かつ同一 sha256 の decision で PASS。"
+  "recorded_at": "2026-11-05",
+  "basis": "owner が 2026-11-05 のスレッドで、全項目の対応とリリースまでを明示的に指示した。2026-11-05 の変更は引用の版表記 1.14.0 → 1.14.2 の同期のみで、本文の内容は変えていない。承認は現行 sha256 に固定される。",
+  "notes": "PC-7 は判断記録が存在することを検査する。PUB-10 は approved かつ同一 sha256 の decision で PASS。2026-10-15 の承認は旧 hash に対するもので、版表記の同期により対象外となったため、今回の指示で現行 hash に再承認した。"
 }

@@ -86,5 +86,16 @@
     "pc2_release_commit": "THCNM の単独系列 2 run と共通スケール 2 run のディレクトリは Git 追跡済み（共通スケール 2 run は commit 4cf5509）。計画・窓・policy は作業ツリーにあり、コミットは parent が行う（本 envelope は未コミット）。",
     "three_month_granularity_label": "3ヶ月 run の temporal_provenance.granularity は adapter が week と記録しているが、返却点は日次 93 点（2026-08-04〜2026-11-04）である。adapter が timeframe に 関係なく week を書く既知の記録不備で、2026-10-15 の boundary-3m run も同じ。ページは返却点の間隔を観測として日次と表示し、窓は metadata/windows の granularity=day の登録窓による。値そのものは run の comparison artifact のとおり。"
   },
-  "notes": "この evidence は機械的な存在・整合性の根拠、run / artifact の対応、完了した personal-data / redistribution / aggregation / content レビュー、gate-publication の記録を保持する。公開承認とその限界（同一性未確認、raw 非公開）は decision.json に記録する。推測でフラグを立てない。 2026-11-05 に審査対象の hash を再固定し、変更内容を citations.content_changes に記録した。公開承認・人間の内容審査は推測で埋めない。 2026-11-05 に共通スケール追加後の hash と run 証跡で citations を更新した。"
+  "notes": "この evidence は機械的な存在・整合性の根拠、run / artifact の対応、完了した personal-data / redistribution / aggregation / content レビュー、gate-publication の記録を保持する。公開承認とその限界（同一性未確認、raw 非公開）は decision.json に記録する。推測でフラグを立てない。 2026-11-05 に審査対象の hash を再固定し、変更内容を citations.content_changes に記録した。公開承認・人間の内容審査は推測で埋めない。 2026-11-05 に共通スケール追加後の hash と run 証跡で citations を更新した。",
+  "personal_data_review_basis": "2026-11-05: publication/research_thcnm.html の本文・表・画像・リンクを個人データの観点で確認した。走査結果: メールアドレス 0、@ハンドル 0、10 桁以上の識別子 0、行単位の投稿・動画の行 0（表ヘッダに 投稿者/ユーザー名/アカウント/動画 ID/タイトル/チャンネル/本文 を含む表は無い）。集計表のみで、行単位のデータを含まない。 外部参照は doi.org（DOI）、zenodo.org（DOI バッジ）。時刻は run の収集時刻（UTC）のみ。結果: 個人を特定できる情報は含まれない。",
+  "anonymization_basis": "行単位のデータを掲載しない方針により、個人・アカウント単位の値は集計に置き換えている（投稿・動画の個別行なし）。",
+  "provenance_present": true,
+  "provenance_basis": "引用する run 6 件を照合: raw ディレクトリ 4 件（manifest 無しの legacy 0 件を含む）、採用宣言のみで raw 非保持 2 件。run_id と件数の出所は追跡できる（legacy は datasets/cannabinoid-raw-collection/data/raw/google_trends/README.md、宣言は metadata/provenance/declarations/）。",
+  "schema_valid": true,
+  "schema_review_basis": "validation.cli audit-publication（2026-11-05）で本 artifact に PC-1〜PC-7 の finding は無い。artifact/decision/evidence の sha256 は現行ファイルと一致する。",
+  "source_terms_confirmed": true,
+  "source_terms_basis": "docs/specs/sns-redistribution-assessment.md §3.2: Google Trends は公開データで相対指数として再配布可能、X は集計値のみ、YouTube はコンテンツ再配布不可。本ページは集計値のみを掲載し、X 本文・YouTube コンテンツを再配布しない。",
+  "redistribution_basis": "掲載するのは自らの集計値・run metadata・方法論のみ。raw（Google Trends payload、X 投稿、YouTube 動画単位）は非公開/untracked のままで再配布しない。sns-redistribution-assessment §3.2 に整合する。",
+  "copyright_confirmed": true,
+  "copyright_basis": "第三者の文章・動画・投稿を再掲していない。外部リンクは制度ページと DOI。"
 }

@@ -4,11 +4,11 @@
   "decision_id": "publication-review-research-hhc",
   "artifact_id": "research-hhc",
   "artifact_sha256": "dd9c0c101d2dcda9f411bf18803cf40c53fcdd7899b0161539aba509c47440bf",
-  "status": "requires_review",
-  "reviewed_at": null,
-  "reviewer": null,
+  "status": "approved",
+  "reviewed_at": "2026-11-05",
+  "reviewer": "owner (thread instruction 2026-11-05: PUB-04・PUB-10 を含む全項目の対応とリリースまでを指示)",
   "criteria_version": "PC-7 / publication-contract-v1.0.0 (2026-10-15)",
   "recorded_at": "2026-11-05",
-  "basis": "対象 publication は公開していないため、承認済みとはせず requires_review として審査待ちを記録する。2026-11-05 の内容変更（研究質問の統一・版表記 1.14.2・YouTube 動画単位行の削除・Google Trends の出所追記）は新しい hash であり、内容審査は未実施である。 2026-11-05 の共通スケール節更新・版表記 1.14.2 化・チャンネル分布表削除を含む現行 hash についても内容審査は未実施であり、requires_review を維持する。",
-  "notes": "PC-7 は判断記録が存在することを検査する。PUB-10 の公開承認は approved かつ同一 sha256 の decision が必要であり、この requires_review では公開不可。2026-11-05 に審査対象を現行ファイルへ再ピンした（旧 sha256 92c7b76ec033688a5eb34c31cf1fc3ceb7868cd5390f8e7d26430c3dc344c9ff）。 2026-11-05 に共通スケール節更新・版表記 1.14.2 化・チャンネル分布表削除後の sha256 へ再ピンした（dd9c0c101d2d…）。"
+  "basis": "owner が 2026-11-05 のスレッドで、PUB-04・PUB-10 を含む全項目の対応とリリースまでを明示的に指示した。承認の対象は現行 sha256 の artifact（publication/research_hhc.html、2026-11-05 時点）。PUB-04 は evidence の personal_data_review_basis に、PUB-06〜PUB-09 は同 evidence の各 basis に記録した。",
+  "notes": "PC-7 は判断記録が存在することを検査する。PUB-10 は approved かつ同一 sha256 の decision で PASS。承認は現行 hash に固定され、artifact が変われば自動的には引き継がれない。2026-11-05 の内容変更（共通スケール節の実測反映・版表記 1.14.2・YouTube 動画単位行とチャンネル分布表の削除）に対する承認である。"
 }

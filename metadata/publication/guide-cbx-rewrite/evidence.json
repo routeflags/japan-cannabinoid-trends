@@ -2,7 +2,7 @@
   "schema_version": "1.0.0",
   "record": "publication_review_evidence",
   "artifact_id": "guide-cbx-rewrite",
-  "recorded_at": "2026-10-15",
+  "recorded_at": "2026-11-05",
   "provenance_present": true,
   "provenance_basis": "COA requester/client information is retained in provenance records and intentionally omitted from the publication COA section (ISS-20261002-011 owner decision, 2026-10-15).",
   "integrity": "verified",
@@ -20,11 +20,14 @@
   "anonymization_basis": "Requester/client identity is suppressed from the publication layer; no person-level dataset is published.",
   "citations": {
     "integrity": [
-      "sha256(publication/guide_cbx_rewrite.html, 2026-11-04 検算) = 40c31162b9937c72d4377049ffeaf391d26dd8fc9be65b8db24929a327ed366e"
+      "sha256(publication/guide_cbx_rewrite.html, 2026-11-05 検算) = 0c5b69b7e30185bb8696bc8ee560fdbebc6af8b5cd9b2fccaa8ed8040b1014df"
     ],
     "publication_contract": [
       "validation.cli audit-publication（2026-10-15）: PC-1〜PC-8 の機械検査対象。PC-7 は本 envelope の存在と hash 固定を検査する。"
+    ],
+    "content_changes": [
+      "2026-11-05: 引用の版表記を 1.14.0 から 1.14.2 へ同期した（CITATION.cff と一致、PC-1）。本文・表・COA 節の内容は変更していない。"
     ]
   },
-  "notes": "この evidence は機械的な存在・整合性と 2026-10-15 のオーナー確認を記録する。公開承認は decision.json (approved) を正とする。v1.13.0 release metadata sync 後の artifact hash を固定する。 v1.13.1 release metadata sync 後の artifact hash を固定する。 v1.14.0 release metadata sync 後の artifact hash を固定する。"
+  "notes": "この evidence は機械的な存在・整合性と 2026-10-15 のオーナー確認を記録する。公開承認は decision.json (approved) を正とする。v1.13.0 release metadata sync 後の artifact hash を固定する。 v1.13.1 release metadata sync 後の artifact hash を固定する。 v1.14.0 release metadata sync 後の artifact hash を固定する。 2026-11-05 に版表記のみを 1.14.2 へ同期し、審査対象 hash を再固定した。"
 }
