@@ -12,6 +12,7 @@ from validation.cli import EXIT_OK
 from validation.cli import main as validation_main
 from validation.coverage import build_temporal_inventory
 from validation.integrity import sha256_file
+from validation.snapshot_scope import non_retained_run_ids, retained_view
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 DATASETS_ROOT = REPO_ROOT / "datasets"
@@ -30,7 +31,8 @@ NODATA_METADATA = (
 def test_stored_inventory_matches_a_fresh_recomputation():
     stored = json.loads(AUDIT_PATH.read_text(encoding="utf-8"))
     fresh = build_temporal_inventory(DATASETS_ROOT)
-    assert fresh == stored
+    non_retained = non_retained_run_ids(REPO_ROOT)
+    assert retained_view(fresh, non_retained) == retained_view(stored, non_retained)
 
 
 def test_inventory_is_complete_and_non_destructive():

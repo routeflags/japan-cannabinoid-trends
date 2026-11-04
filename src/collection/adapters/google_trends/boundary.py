@@ -46,6 +46,8 @@ from pathlib import Path
 from collection.adapters.google_trends.adapter import (
     SUPPORTED_TIMEFRAMES,
     TOOL_INTEREST_OVER_TIME,
+    default_granularity,
+    series_granularity,
     term_slug,
 )
 from collection.core.pipeline import (
@@ -819,6 +821,18 @@ def stage_capture(
     nominal_start, nominal_end = resolve_relative_timeframe(
         timeframe, started, CAPTURE_TIMEZONE
     )
+    # The returned series decides its own bucket: ``today 1-m`` / ``today 3-m``
+    # come back daily, longer timeframes weekly.  A failed capture has no series
+    # to measure, so it keeps the timeframe's documented bucket.
+    granularity = (
+        series_granularity(
+            [point.date for point in capture.parsed.points],
+            default=default_granularity(timeframe),
+        )
+        if capture.parsed is not None
+        else default_granularity(timeframe)
+    )
+    week_start = "sunday" if granularity == "week" else None
 
     plan = {
         "plan_id": f"boundary-measurement-{_timeframe_slug(timeframe)}-{capture.run_id}",
@@ -839,8 +853,8 @@ def stage_capture(
             # registered window_id (it is not a study window).
             "start": format_datetime(nominal_start),
             "end_exclusive": format_datetime(nominal_end),
-            "granularity": "week",
-            "week_start": "sunday",
+            "granularity": granularity,
+            "week_start": week_start,
             "timezone": CAPTURE_TIMEZONE,
         },
         "purpose": (
@@ -933,13 +947,18 @@ def stage_capture(
                 "pagination_exhausted": True,
             }
             temporal = {
-                "granularity": "week",
-                "week_start": "sunday",
+                "granularity": granularity,
+                "week_start": week_start,
                 "collector_window_type": "relative_duration",
                 "exact_window_match": False,
                 "boundary_semantics": (
                     "relative timeframe resolved by the collector at request time; "
-                    f"weekly buckets (Sunday start); observed range "
+                    + (
+                        "weekly buckets (Sunday start)"
+                        if granularity == "week"
+                        else "daily points"
+                    )
+                    + f"; observed range "
                     f"{observed_first}..{observed_last}"
                 ),
                 "observed_min_timestamp": f"{dates[0]}T00:00:00Z",
@@ -955,8 +974,10 @@ def stage_capture(
                 "errors": [{"code": "COLLECTION_FAILED", "message": message}],
             }
             temporal = {
-                "granularity": "week",
-                "week_start": "sunday",
+                "granularity": default_granularity(timeframe),
+                "week_start": (
+                    "sunday" if default_granularity(timeframe) == "week" else None
+                ),
                 "collector_window_type": "relative_duration",
                 "exact_window_match": False,
                 "boundary_semantics": f"collection failed; no series observed ({message})",

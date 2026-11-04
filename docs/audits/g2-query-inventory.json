@@ -4,8 +4,8 @@
   "schema_id": "query-registry-v1",
   "registry_version": "1.0.0",
   "target_glob": "datasets/**/run_metadata.json",
-  "count": 74,
-  "query_count": 120,
+  "count": 76,
+  "query_count": 122,
   "raw_modified": false,
   "states": {
     "exact_match": "the collected text equals a registered canonical_text",
@@ -15,7 +15,7 @@
     "unmapped": "no registered correspondence and no compound token"
   },
   "summary": {
-    "exact_match": 114,
+    "exact_match": 116,
     "variant_match": 5,
     "semantic_match_candidate": 1,
     "ambiguous": 0,
@@ -2138,19 +2138,19 @@
       ]
     },
     {
-      "run_id": "20261101T085920Z-youtube-cannabinoid-raw-collection",
-      "path": "datasets/cannabinoid-raw-collection/data/raw/youtube/20261101T085920Z-youtube-cannabinoid-raw-collection/run_metadata.json",
+      "run_id": "20261104T195126Z-google-trends-cannabinoid-raw-collection",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261104T195126Z-google-trends-cannabinoid-raw-collection/run_metadata.json",
       "status": "read",
-      "sha256": "db342e90f39ab12ba1890a3465da257b718ce8417ddd4f278eb41734bf5df9b4",
-      "sha256_after": "db342e90f39ab12ba1890a3465da257b718ce8417ddd4f278eb41734bf5df9b4",
+      "sha256": "ea9090c226e34a16a53a91e51510165942e42adc4f48c99742bd96b5224d645b",
+      "sha256_after": "ea9090c226e34a16a53a91e51510165942e42adc4f48c99742bd96b5224d645b",
       "unchanged": true,
       "extracted_query_count": 1,
       "queries": [
         {
-          "text": "HHC",
+          "text": "CBD vs THC vs CBG vs HHC vs THCV",
           "state": "exact_match",
           "classification": "relevant",
-          "query_id": "hhc-general-ja",
+          "query_id": "comparison-5y-setA",
           "variant_id": null,
           "detail": "registered_canonical",
           "source_fields": [
@@ -2160,19 +2160,63 @@
       ]
     },
     {
-      "run_id": "20261101T091646Z-youtube-cannabinoid-raw-collection",
-      "path": "datasets/cannabinoid-raw-collection/data/raw/youtube/20261101T091646Z-youtube-cannabinoid-raw-collection/run_metadata.json",
+      "run_id": "20261104T195132Z-google-trends-cannabinoid-raw-collection",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261104T195132Z-google-trends-cannabinoid-raw-collection/run_metadata.json",
       "status": "read",
-      "sha256": "b14f08b16294243f394b4758757e43b5f7dbd7188ff7a1ae90def894eebc6e32",
-      "sha256_after": "b14f08b16294243f394b4758757e43b5f7dbd7188ff7a1ae90def894eebc6e32",
+      "sha256": "7bd6ef04d401d06873ac8b8daad3a1b5751bf4f869f194e402ff969b7e7131c8",
+      "sha256_after": "7bd6ef04d401d06873ac8b8daad3a1b5751bf4f869f194e402ff969b7e7131c8",
       "unchanged": true,
       "extracted_query_count": 1,
       "queries": [
         {
-          "text": "HHC リキッド",
+          "text": "CBD vs THC vs THCH vs CBN vs CRDH",
           "state": "exact_match",
           "classification": "relevant",
-          "query_id": "hhc-liquid-ja",
+          "query_id": "comparison-5y-setB",
+          "variant_id": null,
+          "detail": "registered_canonical",
+          "source_fields": [
+            "query_provenance.submitted_query"
+          ]
+        }
+      ]
+    },
+    {
+      "run_id": "20261104T195134Z-google-trends-cannabinoid-raw-collection",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261104T195134Z-google-trends-cannabinoid-raw-collection/run_metadata.json",
+      "status": "read",
+      "sha256": "e58b6cb4e3c94b90cd7d55c5f4cf1b54674060a25efc3271ce8eaaba387ccda6",
+      "sha256_after": "e58b6cb4e3c94b90cd7d55c5f4cf1b54674060a25efc3271ce8eaaba387ccda6",
+      "unchanged": true,
+      "extracted_query_count": 1,
+      "queries": [
+        {
+          "text": "CBD vs THC vs CRDP vs H4CBH vs HHBD",
+          "state": "exact_match",
+          "classification": "relevant",
+          "query_id": "comparison-5y-setC",
+          "variant_id": null,
+          "detail": "registered_canonical",
+          "source_fields": [
+            "query_provenance.submitted_query"
+          ]
+        }
+      ]
+    },
+    {
+      "run_id": "20261104T195136Z-google-trends-cannabinoid-raw-collection",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261104T195136Z-google-trends-cannabinoid-raw-collection/run_metadata.json",
+      "status": "read",
+      "sha256": "b23327abb48d503ae49d5ad4e300cc8d40e2dce34c0aef39e1ae5a3e232962a8",
+      "sha256_after": "b23327abb48d503ae49d5ad4e300cc8d40e2dce34c0aef39e1ae5a3e232962a8",
+      "unchanged": true,
+      "extracted_query_count": 1,
+      "queries": [
+        {
+          "text": "CBD vs THC vs HHCH vs THC-O vs THCNM",
+          "state": "exact_match",
+          "classification": "relevant",
+          "query_id": "comparison-5y-current-setD",
           "variant_id": null,
           "detail": "registered_canonical",
           "source_fields": [

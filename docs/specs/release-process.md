@@ -137,9 +137,18 @@ Zenodo assigns two types of DOIs:
 
 ## Current DOI
 
-| Version | DOI | Concept DOI |
-|---------|-----|-------------|
-| v1.14.0 | [10.5281/zenodo.23390594](https://doi.org/10.5281/zenodo.23390594) | [10.5281/zenodo.23390594](https://doi.org/10.5281/zenodo.23390594) |
+| Version | DOI (version) | Concept DOI |
+|---------|---------------|-------------|
+| v1.14.3 | [10.5281/zenodo.23961844](https://doi.org/10.5281/zenodo.23961844) | [10.5281/zenodo.23390594](https://doi.org/10.5281/zenodo.23390594) |
+| v1.14.2 | [10.5281/zenodo.23961329](https://doi.org/10.5281/zenodo.23961329) | [10.5281/zenodo.23390594](https://doi.org/10.5281/zenodo.23390594) |
+| v1.14.1 | [10.5281/zenodo.23955338](https://doi.org/10.5281/zenodo.23955338) | [10.5281/zenodo.23390594](https://doi.org/10.5281/zenodo.23390594) |
+
+The machine-readable record is `metadata/releases.json`
+(`release_registry`); `validation.release_registry` checks the DOI format, the
+concept/version distinction, the tag and the CHANGELOG entry, and
+`tests/validation/test_version_internal_consistency.py` runs it in
+`make release-preflight`.  A release is recorded there after its workflow
+returns the version DOI.
 
 ---
 

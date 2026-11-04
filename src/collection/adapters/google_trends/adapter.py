@@ -23,6 +23,7 @@ from __future__ import annotations
 
 import json
 import re
+from datetime import date
 from pathlib import Path
 
 from collection.core.contracts import CollectionResult, TransportError
@@ -261,6 +262,15 @@ class GoogleTrendsMcpAdapter:
                 },
             )
         observed_min, observed_max = _observed_bounds(observations)
+        granularity = series_granularity(
+            [point["date"] for point in observations],
+            default=default_granularity(params.get("timeframe")),
+        )
+        bucket_note = (
+            "weekly buckets (Sunday start) label the series"
+            if granularity == "week"
+            else "daily points label the series"
+        )
         return CollectionResult(
             raw=raw,
             payload_schema_id=self.payload_schema_id,
@@ -274,14 +284,15 @@ class GoogleTrendsMcpAdapter:
             observations=observations,
             submitted_parameters={"tool": self._tool, **params},
             temporal={
-                "granularity": "week",
-                "week_start": "sunday",
+                "granularity": granularity,
+                "week_start": "sunday" if granularity == "week" else None,
                 "collector_window_type": "relative_duration",
                 "exact_window_match": False,
                 "boundary_semantics": (
                     "relative timeframe resolved by the collector at request "
-                    "time; weekly buckets (Sunday start) label the series; "
-                    "observed range "
+                    "time; "
+                    + bucket_note
+                    + "; observed range "
                     + _observed_range_label(observations)
                 ),
                 # G3 P5: the observed bounds are the bucket labels present in
@@ -466,6 +477,49 @@ def _observed_bounds(observations) -> tuple:
     if not labels:
         return None, None
     return f"{labels[0]}T00:00:00Z", f"{labels[-1]}T00:00:00Z"
+
+
+#: Relative timeframes Google Trends resolves to daily points.  Used only when a
+#: response carries too few labels to show its own step (a failed capture).
+_DAILY_TIMEFRAMES = frozenset({"now 7-d", "today 1-m", "today 3-m"})
+
+
+def default_granularity(timeframe: str | None) -> str:
+    """The bucket Google Trends uses for a relative timeframe.
+
+    This is the fallback, not the rule: a returned series decides its own
+    granularity from the label spacing (``series_granularity``).  The fallback
+    exists for captures with no series to measure.
+    """
+
+    return "day" if timeframe in _DAILY_TIMEFRAMES else "week"
+
+
+def series_granularity(dates, *, default: str = "week") -> str:
+    """The bucket the returned labels actually use.
+
+    Google Trends resolves ``today 3-m`` to daily points and ``today 5-y`` to
+    weekly points; the request does not decide the bucket, the payload does.
+    Consecutive days are ``day``, seven-day steps are ``week``.  A series too
+    short to show a step (or one with irregular gaps) keeps ``default`` rather
+    than guessing.
+    """
+
+    ordered = sorted(label for label in dates if isinstance(label, str))
+    if len(ordered) < 2:
+        return default
+    try:
+        steps = {
+            (date.fromisoformat(later) - date.fromisoformat(earlier)).days
+            for earlier, later in zip(ordered, ordered[1:])
+        }
+    except ValueError:
+        return default
+    if steps == {1}:
+        return "day"
+    if steps == {7}:
+        return "week"
+    return default
 
 
 def build_adapter(fixture=None, capabilities=None, live=None) -> GoogleTrendsMcpAdapter:

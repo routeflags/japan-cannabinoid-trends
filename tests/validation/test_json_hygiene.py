@@ -28,14 +28,17 @@ REQUIRED_KEYS = (
 
 @pytest.fixture(scope="module")
 def tracked_json_files() -> list[str]:
+    # ``-z`` keeps non-ASCII paths literal: the default line output quotes and
+    # octal-escapes them (``"...records_thcv-\343\203\252..."``), which is not a
+    # path this process can open.
     listed = subprocess.run(
-        ["git", "ls-files", "*.json", "*.jsonld"],
+        ["git", "ls-files", "-z", "*.json", "*.jsonld"],
         cwd=REPO_ROOT,
         capture_output=True,
         text=True,
         check=True,
     )
-    return [line for line in listed.stdout.splitlines() if line]
+    return [path for path in listed.stdout.split("\0") if path]
 
 
 def test_repository_has_no_duplicate_keys(tracked_json_files: list[str]) -> None:

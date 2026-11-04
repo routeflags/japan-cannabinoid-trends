@@ -12,10 +12,14 @@ from pathlib import Path
 
 from storage.inventory import build_artifact_inventory
 from storage.registry import ArtifactRegistry
+from validation.snapshot_scope import non_retained_run_ids, retained_view
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 AUDIT_PATH = REPO_ROOT / "docs" / "audits" / "g4-storage-inventory.json"
 REGISTRY_PATH = REPO_ROOT / "metadata" / "artifacts" / "artifact-registry.json"
+
+
+NON_RETAINED = non_retained_run_ids(REPO_ROOT)
 
 
 def _committed() -> dict:
@@ -28,15 +32,23 @@ def _recompute() -> dict:
 
 
 def test_committed_inventory_is_reproducible():
-    assert _recompute() == _committed()
+    """Compare the repository-retained view (ISS-20261105-CI-032)."""
+
+    assert retained_view(_recompute(), NON_RETAINED) == retained_view(_committed(), NON_RETAINED)
 
 
 def test_inventory_covers_the_legacy_runs_and_is_non_destructive():
     inventory = _committed()
     # Derived: one entry per run on disk (the legacy 29 plus every run the
     # pipeline has collected since), so the count cannot rot.
-    assert inventory["run_count"] == len(
-        list((REPO_ROOT / "datasets").rglob("run_metadata.json"))
+    # One entry per run this checkout can see, minus the runs whose raw is not
+    # repository-retained (they are listed in the snapshot sidecar instead).
+    assert len(inventory["runs"]) == len(
+        [
+            path
+            for path in (REPO_ROOT / "datasets").rglob("run_metadata.json")
+            if path.parent.name not in NON_RETAINED
+        ]
     )
     assert inventory["raw_modified"] is False
     assert inventory["count"] > 0

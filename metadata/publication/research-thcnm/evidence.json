@@ -9,7 +9,7 @@
   "anonymization_applied": true,
   "citations": {
     "integrity": [
-      "sha256(publication/research_thcnm.html, 2026-11-05 検算) = b3218ba0e493f5c1c1ed174d6fb0a2e0348a1fcf231798988d00e005bfc12c17"
+      "sha256(publication/research_thcnm.html, 2026-11-05 検算) = 690ac9c8571952d03366154eb2d5525d78024e3f57c6b40a99ca6cb8df7caa1d"
     ],
     "publication_contract": [
       "validation.cli audit-publication --output docs/audits/publication-contract.json（2026-11-04）: 本 artifact に finding は無い（適用される PC-1〜PC-7 すべて）。PC-7 は本 envelope の存在と hash 固定を検査する。",

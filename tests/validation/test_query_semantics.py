@@ -35,6 +35,7 @@ from validation.query_semantics import (
     resolve_query_text,
 )
 from validation.schema_registry import get_schema
+from validation.snapshot_scope import non_retained_run_ids, retained_view
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 REGISTRY_PATH = REPO_ROOT / "metadata" / "queries" / "query-registry.json"
@@ -469,10 +470,15 @@ def test_audit_snapshot_matches_the_real_inventory():
         variant_registry=_variants(),
         vocabulary=_vocabulary(),
     )
-    assert recomputed == stored
+    non_retained = non_retained_run_ids(REPO_ROOT)
+    assert retained_view(recomputed, non_retained) == retained_view(stored, non_retained)
     assert stored["raw_modified"] is False
-    assert stored["count"] == len(
-        list((REPO_ROOT / "datasets").rglob("run_metadata.json"))
+    assert len(stored["runs"]) == len(
+        [
+            path
+            for path in (REPO_ROOT / "datasets").rglob("run_metadata.json")
+            if path.parent.name not in non_retained
+        ]
     )
 
 

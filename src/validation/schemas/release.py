@@ -75,6 +75,14 @@ RELEASE_MANIFEST_SCHEMA = {
                 "required": True,
                 "regex": DOI_PATTERN,
             },
+            # The DOI Zenodo mints for this exact version.  Optional because it
+            # only exists after the upload; when present it must differ from the
+            # concept DOI (a version DOI pins the release, the concept DOI
+            # follows the series).
+            "version_doi": {
+                "type": "string",
+                "regex": DOI_PATTERN,
+            },
         },
     },
     "archive": {
@@ -106,6 +114,62 @@ RELEASE_MANIFEST_SCHEMA = {
             },
             "disallowed_prefixes": _PATH_LIST,
             "disallowed_exact": _PATH_LIST,
+        },
+    },
+}
+
+
+#: Committed release history (``metadata/releases.json``).  The concept DOI is
+#: fixed for the series; every release pins the version DOI Zenodo minted for
+#: that exact upload, so a citation can choose between "latest" and "this
+#: version" without re-deriving it from a workflow log.
+RELEASE_REGISTRY_SCHEMA = {
+    "schema_version": {
+        "type": "string",
+        "required": True,
+        "empty": False,
+    },
+    "record": {
+        "type": "string",
+        "required": True,
+        "allowed": ["release_registry"],
+    },
+    "concept_doi": {
+        "type": "string",
+        "required": True,
+        "regex": DOI_PATTERN,
+    },
+    "releases": {
+        "type": "list",
+        "required": True,
+        "minlength": 1,
+        "schema": {
+            "type": "dict",
+            "schema": {
+                "version": {
+                    "type": "string",
+                    "required": True,
+                    "regex": VERSION_PATTERN,
+                },
+                "tag": {
+                    "type": "string",
+                    "required": True,
+                    "regex": TAG_PATTERN,
+                },
+                "version_doi": {
+                    "type": "string",
+                    "required": True,
+                    "regex": DOI_PATTERN,
+                },
+                "released_at": {
+                    "type": "string",
+                    "required": True,
+                    "iso_datetime": True,
+                },
+                "workflow_run": {
+                    "type": "string",
+                },
+            },
         },
     },
 }

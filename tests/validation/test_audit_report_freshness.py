@@ -37,6 +37,8 @@ from pathlib import Path
 
 import pytest
 
+from validation.snapshot_scope import non_retained_run_ids, retained_view
+
 REPO_ROOT = Path(__file__).resolve().parents[2]
 AUDITS_DIR = REPO_ROOT / "docs" / "audits"
 
@@ -67,6 +69,38 @@ def _identity(document: dict) -> dict:
     return document
 
 
+_NON_RETAINED_RUN_IDS = non_retained_run_ids(REPO_ROOT)
+
+
+def _repository_retained_only(document: dict) -> dict:
+    """Keep the facts every Git checkout can reproduce (ISS-20261105-CI-032).
+
+    The sidecar lists the runs whose raw is ``git_untracked``: they exist on the
+    machine that collected them and never in CI.  Their rows and the aggregates
+    that count local raw are dropped from both sides before comparing; the
+    committed file keeps them as the local record, and the sidecar keeps their
+    ids.  See ``validation.snapshot_scope``.
+    """
+
+    return retained_view(document, _NON_RETAINED_RUN_IDS)
+
+
+def _study_scope(document: dict) -> dict:
+    """g7 also derives per-study source / window / measurement lists from runs.
+
+    Those lists grow when a machine sees raw a checkout does not have, so the
+    comparison keeps the study records and their registration facts, not the
+    run-derived lists.
+    """
+
+    view = _repository_retained_only(document)
+    for study in view.get("studies", []):
+        if isinstance(study, dict):
+            for key in ("sources", "window_ids", "measurement_ids"):
+                study.pop(key, None)
+    return view
+
+
 def _tracked_only(document: dict) -> dict:
     """Keep only the repository-derived part of the git tracking inventory.
 
@@ -87,19 +121,22 @@ def _tracked_only(document: dict) -> dict:
 NORMALIZERS = {
     "identity": _identity,
     "tracked_only": _tracked_only,
+    "repository_retained_only": _repository_retained_only,
+    "study_scope": _study_scope,
 }
 
 REPORTS: tuple[Report, ...] = (
     Report("docs/audits/contract-ledger.json", ("validation.cli", "contract-ledger")),
-    Report("docs/audits/g2-query-inventory.json", ("validation.cli", "audit-queries")),
+    Report("docs/audits/g2-query-inventory.json", ("validation.cli", "audit-queries"), normalizer="repository_retained_only"),
     Report("docs/audits/gt-summary.json", ("processing.cli", "gt-summary")),
     Report("docs/audits/publication-contract.json", ("validation.cli", "audit-publication")),
-    Report("docs/audits/g3-temporal-inventory.json", ("validation.cli", "audit-temporal")),
-    Report("docs/audits/g4-storage-inventory.json", ("validation.cli", "audit-artifacts")),
-    Report("docs/audits/g5-legacy-runs.json", ("validation.cli", "audit-legacy")),
+    Report("docs/audits/g3-temporal-inventory.json", ("validation.cli", "audit-temporal"), normalizer="repository_retained_only"),
+    Report("docs/audits/g4-storage-inventory.json", ("validation.cli", "audit-artifacts"), normalizer="repository_retained_only"),
+    Report("docs/audits/g5-legacy-runs.json", ("validation.cli", "audit-legacy"), normalizer="repository_retained_only"),
     Report(
         "docs/audits/g5-provenance-assessment.json",
         ("validation.cli", "audit-provenance"),
+        normalizer="repository_retained_only",
     ),
     Report(
         "docs/audits/g6-git-tracking-inventory.json",
@@ -120,6 +157,7 @@ REPORTS: tuple[Report, ...] = (
             "datasets",
             "audit-studies",
         ),
+        normalizer="study_scope",
     ),
     Report(
         "docs/audits/snapshot-scope.json",
@@ -326,3 +364,37 @@ def test_report_kinds_are_known() -> None:
             # An invocation record must say what it judged; when its inputs are
             # committed it carries a generator too, and the re-run is checked.
             assert report.notes and report.artifact_path, report.path
+
+
+def test_the_retained_view_drops_local_raw_and_keeps_repository_facts() -> None:
+    """The scope rule in one place (ISS-20261105-CI-032).
+
+    A run whose raw is ``git_untracked`` may appear in a snapshot generated on
+    the collecting machine; CI never sees it.  Dropping it and the raw-counting
+    aggregates makes both sides comparable, while a change to a retained run
+    still fails.
+    """
+
+    retained = "20261014T204841Z-google-trends-cannabinoid-multi-trends"
+    local_only = next(iter(_NON_RETAINED_RUN_IDS))
+    document = {
+        "count": 2,
+        "raw_combined_sha256": "a" * 64,
+        "runs": [
+            {"run_id": retained, "path": "datasets/x", "classification": "verified"},
+            {"run_id": local_only, "path": "datasets/y", "classification": "verified"},
+        ],
+    }
+    from_local = {
+        "count": 1,
+        "raw_combined_sha256": "b" * 64,
+        "runs": [{"run_id": retained, "path": "datasets/x", "classification": "verified"}],
+    }
+
+    normalized = _repository_retained_only(document)
+    assert normalized == _repository_retained_only(from_local)
+    assert [run["run_id"] for run in normalized["runs"]] == [retained]
+
+    changed = json.loads(json.dumps(document))
+    changed["runs"][0]["path"] = "datasets/changed"
+    assert _repository_retained_only(changed) != normalized

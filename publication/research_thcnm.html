@@ -169,7 +169,7 @@
 <div>
   <h2 id="data-search">独自データ: THCNM の Google Trends 検索需要 <span>一次データ（観測 + 派生）</span></h2>
   <p>データソース: Google Trends via google-trends-mcp / 地域: 日本 (JP) / 取得日: 2026-11-04</p>
-  <p>THCNM の検索関心度（相対指数 0-100）を 4 本の run で取得した。<strong>単独系列</strong>は <code>THCNM</code> だけの 12ヶ月と5年、<strong>共通スケール</strong>は <code>CBD</code>・<code>THC</code>・<code>THCNM</code> を同じ要求に含めた 12ヶ月と3ヶ月である。4 本はそれぞれ別の観測で、値をまたいで計算しない。</p>
+  <p>THCNM の検索関心度（相対指数 0-100）を 5 本の run で取得した。<strong>単独系列</strong>は <code>THCNM</code> だけの 12ヶ月と5年、<strong>共通スケール</strong>は <code>CBD</code>・<code>THC</code>・<code>THCNM</code> を同じ要求に含めた 12ヶ月・3ヶ月・5年である。5 本はそれぞれ別の観測で、値をまたいで計算しない。</p>
 
   <div>
     <p><strong>用語の定義:</strong></p>
@@ -340,6 +340,25 @@
   <p><strong>THCNM の非ゼロ:</strong> 11 日。最大は 2026-08-13 の 12 で、2026-10-21 〜 2026-11-03 は 1〜2 が続く。</p>
   <p><strong>窓と返却点の差:</strong> 要求窓の開始は 2026-08-06 だが、返却点は 2026-08-04 から始まる（collector の解決が名目値より 2 日広い）。要求と観測は別の欄に記録し、境界は未検証（<code>exact_window_match: false</code>）。</p>
 
+  <h3>5年 共通スケール（長期比較の補助）</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>検索語</th>
+        <th>平均</th>
+        <th>非ゼロ点</th>
+        <th>区分</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>CBD（アンカー）</td><td>33.0916</td><td>262 週</td><td>派生</td></tr>
+      <tr><td>THC（アンカー）</td><td>5.0496</td><td>262 週</td><td>派生</td></tr>
+      <tr><td><strong>THCNM</strong></td><td>0.0000</td><td>0 週</td><td>派生</td></tr>
+    </tbody>
+  </table>
+  <p><strong>出所:</strong> run <code>20261104T195136Z-google-trends-cannabinoid-raw-collection</code>（JP / <code>today 5-y</code> / 窓 <code>2021-10-31_2026-11-08</code> / 観測 2021-10-31 〜 2026-11-01（262 週） / 2026-11-04T19:51:36Z 収集）。平均は週次 262 点の算術平均（小数第 4 位）。</p>
+  <p><strong>読み方:</strong> 5年の共通スケールでも THCNM は全 262 週が 0 である。これは丸め（相対指数の最小値未満）であり、需要ゼロの観測ではない。12ヶ月共通スケールと同じく、単独系列の初出 2026-10-18（47）とは換算しない。</p>
+
   <h3>5年データサマリー（単独系列）</h3>
   <table>
     <thead>
@@ -443,7 +462,7 @@
   <p><strong>共通スケールで観測されたこと:</strong> 12ヶ月は THCNM が全 53 週で 0 だった。同じ要求の最大値が CBD の 2026-05-03（100）なので、THCNM の検索量はその 0.5% 未満に丸められている。3ヶ月は THCNM が 11 日で非ゼロになり（最大 12、2026-08-13）、2026-10-21 以降は 1〜2 が続く。3ヶ月は窓内最大値が CBD の 2026-09-03（100）で、12ヶ月より分母が小さい。</p>
   <p><strong>混同しないこと:</strong> 単独系列の 2026-10-18（47）と、12ヶ月共通スケールの THCNM（0.0000）は別の物差しの値である。単独系列の 47 を共通スケールへ換算したり、共通スケールの 0 を「検索が無い」と読んだりしない。0 は閾値未満に丸められた値である。</p>
   <p><strong>比較しないこと:</strong> 単独系列どうし（12ヶ月平均 4.4906 と5年平均 0.9122）も、12ヶ月共通スケールと3ヶ月共通スケールも、窓と正規化が別なので比較できない。</p>
-  <p><strong>5年の扱い:</strong> 5年は長期比較の補助である。THCNM を含むアンカー付き（<code>CBD</code>・<code>THC</code> 同時取得）の5年共通スケール run はまだ採用されておらず、<strong>5年の共通スケール被覆は未完了</strong>である。既存の5年単独系列を共通スケールとして扱わない。</p>
+  <p><strong>5年の扱い:</strong> 5年は長期比較の補助である。THCNM を含むアンカー付き（<code>CBD</code>・<code>THC</code> 同時取得）の5年共通スケール run <code>20261104T195136Z-google-trends-cannabinoid-raw-collection</code> を取得した。5年の共通スケールでも THCNM は全 262 週が 0 で、12ヶ月と同じく丸めの限界を示す。既存の5年単独系列を共通スケールとして扱わない。</p>
   <p><strong>制約:</strong> Google Trends は相対指数であり、絶対検索数ではない。観測範囲は検索条件ではなく、返却点の範囲である。</p>
 </div>
 
@@ -648,7 +667,7 @@
       </tr>
       <tr>
         <td>5年の被覆</td>
-        <td>THCNM を含むアンカー付き5年共通スケール run は未採用。既存の5年単独系列を共通スケールとして扱わない</td>
+        <td>アンカー付き5年共通スケール run（<code>20261104T195136Z</code>）で取得済み。THCNM は全 262 週 0（丸め）。既存の5年単独系列を共通スケールとして扱わない</td>
       </tr>
       <tr>
         <td>0 の意味</td>
@@ -736,7 +755,7 @@
   <p>
     KATO, Kyoji（2026）.<br>
     「Japan Cannabinoid Platform Trends Dataset 2026: Google Trends and YouTube Evidence from Japan」.<br>
-    Version 1.14.3<br>
+    Version 1.14.4<br>
     Routeflags Co., Ltd.<br>
     [Dataset].<br>
     DOI: <a href="https://doi.org/10.5281/zenodo.23390594">10.5281/zenodo.23390594</a>

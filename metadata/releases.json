@@ -1,0 +1,21 @@
+{
+  "schema_version": "1.0.0",
+  "record": "release_registry",
+  "concept_doi": "10.5281/zenodo.23390594",
+  "releases": [
+    {
+      "version": "1.14.2",
+      "tag": "v1.14.2",
+      "version_doi": "10.5281/zenodo.23961329",
+      "released_at": "2026-11-04T19:16:00Z",
+      "workflow_run": "41895276432"
+    },
+    {
+      "version": "1.14.3",
+      "tag": "v1.14.3",
+      "version_doi": "10.5281/zenodo.23961844",
+      "released_at": "2026-11-04T19:33:01Z",
+      "workflow_run": "41898010625"
+    }
+  ]
+}

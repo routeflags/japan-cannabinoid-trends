@@ -7,6 +7,46 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.14.4] - 2026-11-05
+
+### Added
+- Current-window (5年 `2021-10-31_2026-11-08`) common-scale runs for the
+  compounds that had none, all with `CBD` and `THC` in the same
+  `compare_terms` request (`geo=JP`, `today 5-y`): setA `20261104T195126Z`,
+  setB `20261104T195132Z`, setC `20261104T195134Z`, setD `20261104T195136Z`.
+  The raw payloads, comparison artifacts, run metadata and manifests are
+  git-tracked and cataloged; the pages present only these values.
+- `metadata/releases.json` (`release_registry`) records the version DOI Zenodo
+  minted for each release (v1.14.2 `10.5281/zenodo.23961329`, v1.14.3
+  `10.5281/zenodo.23961844`) next to the concept DOI, and
+  `validation.release_registry` checks the DOI format, the concept/version
+  distinction, the tag and the CHANGELOG entry. It runs in
+  `make release-preflight`.
+
+### Changed
+- Every research page's common-scale section now shows the current 5-year
+  window from the new runs; the THCNM page adds a 5-year common-scale section
+  (all 262 weeks 0 - a rounding limit, not an observed zero) and no longer
+  describes 5-year coverage as incomplete.
+- Audit snapshots are compared as a repository-retained view
+  (`validation.snapshot_scope`): rows for `git_untracked` runs and the
+  aggregates that count local raw are dropped from both sides, so a CI
+  checkout and a collecting checkout agree. The committed snapshots were
+  regenerated from this Git checkout; the non-retained run ids stay in
+  `docs/audits/snapshot-scope.json`.
+
+### Fixed
+- The Google Trends adapter recorded `granularity: week` for every request,
+  including the daily `today 1-m` / `today 3-m` series. The bucket now follows
+  the returned labels (consecutive days = `day`, seven-day steps = `week`),
+  with the timeframe default only when there is no series; `week_start` is
+  null for daily. Existing raw payloads and their hashes are unchanged
+  (ISS-20261105-GT-031).
+- `tests/validation/test_json_hygiene.py` now reads `git ls-files -z`, so
+  non-ASCII paths are not octal-escaped before opening.
+
+---
+
 ## [1.14.3] - 2026-11-05
 
 ### Fixed

@@ -90,25 +90,26 @@
   <p><strong>出所:</strong> run <code>20261002T063852Z-google-trends-thc</code>（JP / <code>today 12-m</code> / 2026-10-02 収集）。観測範囲 2025-09-28 〜 2026-09-27（53週）。表示値 64.4 は週次 53 点の算術平均（小数第 1 位）。</p>
 
   <h3>共通スケール比較</h3>
-  <p><strong>現行窓のアンカー付き run:</strong> 現行窓（12ヶ月 <code>2025-11-02_2026-11-08</code> / 5年 <code>2021-10-31_2026-11-08</code>）の共通スケールは、CBX bridge（12ヶ月・5年）と THCNM（12ヶ月・3ヶ月）にあり、それぞれのページに記録している。THC はそのアンカーである。</p>
-  <p><strong>旧窓の歴史観測:</strong> 次の表は 12ヶ月（収集時点 2026-10-02）の run による共通スケールで、<strong>現行窓の値ではない</strong>。</p>
+  <p><strong>現行窓:</strong> 12ヶ月 <code>2025-11-02_2026-11-08</code> と 5年 <code>2021-10-31_2026-11-08</code> の両方で、<code>CBD</code>・<code>THC</code> はアンカーとして他の化合物と同じ <code>compare_terms</code> 要求に入っている。単独系列の値とは換算しない。</p>
   <table>
     <thead>
       <tr>
-        <th>化合物</th>
-        <th>共通スケール値</th>
+        <th>検索語</th>
+        <th>平均</th>
+        <th>非ゼロ点</th>
+        <th>区分</th>
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td><strong>THC</strong></td>
-        <td><strong>12.0189</strong></td>
-      </tr>
+      <tr><td>CBD（アンカー）</td><td>33.0916</td><td>262 週</td><td>派生</td></tr>
+      <tr><td>THC（アンカー）</td><td>5.0496</td><td>262 週</td><td>派生</td></tr>
     </tbody>
   </table>
-  <p><strong>出所:</strong> run <code>20261002T064236Z-google-trends-comparison-setA</code>（JP / <code>today 12-m</code> / 収集時点 2026-10-02 / 観測 2025-09-28 〜 2026-09-27 / 53 週。CBD 46.8113 / THC 12.0189 / CBG 2.6792 / HHC 0.5849 / THCH 0.0189）。平均は週次 53 点の算術平均（小数第 4 位）。</p>
-
+  <p><strong>出所（5年）:</strong> run <code>20261104T195126Z-google-trends-cannabinoid-raw-collection</code>（JP / <code>today 5-y</code> / 窓 <code>2021-10-31_2026-11-08</code> / 観測 2021-10-31 〜 2026-11-01（262 週） / 2026-11-04T19:51:26.401407Z 収集）。平均は週次 262 点の算術平均（小数第 4 位）。</p>
+  <p><strong>12ヶ月（現行窓）:</strong> run <code>20261104T175032Z-google-trends-cannabinoid-raw-collection</code>（<code>CBD</code>・<code>THC</code>・<code>THCNM</code>）で CBD 45.7925 / THC 11.9057 / THCNM 0.0000（53 週）。詳細は <a href="research_thcnm.html">THCNM</a> ページ。</p>
+  <p><strong>旧窓の値は現行窓の値ではない:</strong> 2026-10-02 の 12ヶ月比較 run（CBD 46.8113 / THC 12.0189）と 2026-10-23 の 5年 setA〜D は履歴として raw に残るが、本節は現行窓の run だけを示す。</p>
   <p><strong>制約:</strong> Google Trends は相対指数であり、絶対検索数ではない。0 は相対指数の最小値（閾値未満）であり、検索が存在しなかったことや欠測を意味しない。</p>
+
 </div>
 
 
@@ -358,7 +359,7 @@
   <p>
     KATO, Kyoji（2026）.<br>
     「Japan Cannabinoid Platform Trends Dataset 2026: Google Trends and YouTube Evidence from Japan」.<br>
-    Version 1.14.3<br>
+    Version 1.14.4<br>
     Routeflags Co., Ltd.<br>
     [Dataset].<br>
     DOI: <a href="https://doi.org/10.5281/zenodo.23390594">10.5281/zenodo.23390594</a>

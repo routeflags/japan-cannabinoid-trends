@@ -104,3 +104,31 @@ def test_datapackage_is_not_older_than_the_newest_changelog_entry(document: dict
     assert date.fromisoformat(document["modified"]) >= date.fromisoformat(
         document["changelog_date"]
     ), (document["modified"], document["changelog_date"])
+
+
+def test_release_registry_records_each_version_doi() -> None:
+    """Release-time: the committed DOI history must agree with the declaration.
+
+    The workflow returns the version DOI, and it is only useful if it is
+    committed (a CI log ages out).  This check runs in ``make release-preflight``
+    as well as the suite, so a release cannot be tagged with a registry that
+    contradicts CITATION / CHANGELOG / datapackage.
+    """
+
+    from validation.release_registry import check_release_registry
+
+    citation = CITATION.read_text(encoding="utf-8")
+    version = re.search(r'^version:\s*"?([^"\n]+)"?', citation, re.M).group(1)
+    datapackage = json.loads(DATAPACKAGE.read_text(encoding="utf-8"))
+    changelog_versions = set(re.findall(r"^## \[([^\]]+)\]", CHANGELOG.read_text(encoding="utf-8"), re.M))
+    registry = json.loads((REPO_ROOT / "metadata" / "releases.json").read_text(encoding="utf-8"))
+
+    issues = check_release_registry(
+        registry,
+        citation_version=version,
+        datapackage_version=datapackage["version"],
+        declared_concept_doi=datapackage["doi"],
+        changelog_versions=changelog_versions,
+    )
+
+    assert issues == []
