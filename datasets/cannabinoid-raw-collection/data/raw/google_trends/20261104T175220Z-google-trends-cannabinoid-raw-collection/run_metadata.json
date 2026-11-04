@@ -1,0 +1,89 @@
+{
+  "schema_version": "1.0.0",
+  "run_id": "20261104T175220Z-google-trends-cannabinoid-raw-collection",
+  "study_id": "cannabinoid-raw-collection",
+  "source_id": "google-trends",
+  "purpose": "THCNM の 3 ヶ月 common-scale 補足系列（日次）。12 ヶ月の共通スケールは窓内最大値（CBD の 2026-05 の週 = 100）を分母にするため、THCNM は全週 0 に丸められた。3 ヶ月は同じアンカー CBD・THC を同一 compare_terms 要求に含めたまま分母を窓内最大値に限るので、低容量語をより分解しやすい。値は 12 ヶ月 common-scale とも単独系列とも直接比較できない（別の共通スケール）。窓は収集時点の today 3-m の公称 90 日（2026-08-06_2026-11-04）で、collector が強制する境界ではない。",
+  "collector": {
+    "collector_id": "google-trends-mcp",
+    "adapter_id": "google-trends-mcp@1",
+    "version": "0.1.1",
+    "provider": "mcp",
+    "transport": "mcp",
+    "external_id": "google-trends-mcp"
+  },
+  "collection_started_at": "2026-11-04T17:52:20Z",
+  "collection_finished_at": "2026-11-04T17:52:21Z",
+  "query_provenance": {
+    "query_id": "comparison-thcnm-anchored",
+    "submitted_query": "CBD vs THC vs THCNM",
+    "compound_id": "compound_thcnm",
+    "query_registry_version": "1.0.0"
+  },
+  "temporal_provenance": {
+    "window_id": "2026-08-06_2026-11-04",
+    "requested_start": "2026-08-06T00:00:00Z",
+    "requested_end_exclusive": "2026-11-04T00:00:00Z",
+    "granularity": "week",
+    "timezone": "Asia/Tokyo",
+    "collector_window_type": "relative_duration",
+    "boundary_semantics": "relative timeframe resolved by the collector at request time; weekly buckets (Sunday start) label the series; observed range 2026-08-04..2026-11-04",
+    "exact_window_match": false,
+    "observed_min_timestamp": "2026-08-04T00:00:00Z",
+    "observed_max_timestamp": "2026-11-04T00:00:00Z",
+    "week_start": "sunday",
+    "reference_time": "2026-11-04T17:52:20.042769Z",
+    "limitations": [
+      "collector window type is relative_duration; the absolute requested window cannot be expressed exactly (boundary semantics unverified, c.md §6.2)",
+      "'today 3-m' is resolved nominally at the recorded reference time; Google Trends resolves it at request time and the actual boundaries are unverified (c.md §6.3)",
+      "coverage is recorded as partial/unknown until boundary verification (c.md §9)"
+    ],
+    "submitted_parameters": {
+      "tool": "compare_terms",
+      "terms": [
+        "CBD",
+        "THC",
+        "THCNM"
+      ],
+      "geo": "JP",
+      "timeframe": "today 3-m"
+    }
+  },
+  "execution": {
+    "status": "success",
+    "returned_count": 93,
+    "errors": [],
+    "pagination_exhausted": true
+  },
+  "artifact_manifest": "artifact-manifest.json",
+  "comparison": {
+    "comparison_scale": "common_scale",
+    "policy_id": "gt-3m-common-scale-cbd-thc",
+    "anchor_query_ids": [
+      "cbd-general-ja",
+      "thc-general-ja"
+    ],
+    "anchor_terms": [
+      "CBD",
+      "THC"
+    ],
+    "locale": "ja",
+    "geo": "JP",
+    "timeframe": "today 3-m",
+    "tool": "compare_terms",
+    "cross_compound_comparable": true
+  },
+  "environment": {
+    "collection_core_version": "1.0.0",
+    "adapter_contract_version": "1.0.0",
+    "runtime_version": "python-3.14.6",
+    "adapter": {
+      "tool": "compare_terms",
+      "package": "google-trends-mcp",
+      "version": "0.1.1",
+      "collection_mode": "live",
+      "transport": "mcp"
+    },
+    "code_commit": "f179c1678513a16e93807fdc931e6aa6cc06f1df"
+  }
+}

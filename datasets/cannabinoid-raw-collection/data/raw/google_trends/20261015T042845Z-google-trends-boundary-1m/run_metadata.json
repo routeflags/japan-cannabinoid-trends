@@ -1,0 +1,117 @@
+{
+  "schema_version": "1.0.0",
+  "run_id": "20261015T042845Z-google-trends-boundary-1m",
+  "study_id": "cannabinoid-raw-collection",
+  "source_id": "google-trends",
+  "purpose": "CBX の Google Trends raw の所有を cbx-search-trends から cannabinoid-raw-collection へ移す（owner 決定）。GT boundary measurement probe (today 1-m @ 2026-10-15T04:28:45Z; docs/specs/gt-boundary-verification.md)。新しい観測ではなく、同じ run id・同じ payload バイトの再採用。",
+  "collector": {
+    "collector_id": "google-trends-mcp",
+    "adapter_id": "google-trends-mcp@1",
+    "version": "0.1.1",
+    "provider": "mcp",
+    "transport": "mcp",
+    "external_id": "google-trends-mcp"
+  },
+  "collection_started_at": "2026-10-15T04:28:45Z",
+  "collection_finished_at": "2026-10-15T04:28:46Z",
+  "query_provenance": {
+    "query_id": "cbx-general-ja",
+    "submitted_query": "CBX",
+    "compound_id": "compound_cbx",
+    "intent_id": "compound_general",
+    "query_registry_version": "1.0.0"
+  },
+  "temporal_provenance": {
+    "window_id": "2026-09-15T04:28:45Z_2026-10-15T04:28:45Z",
+    "requested_start": "2026-09-15T04:28:45Z",
+    "requested_end_exclusive": "2026-10-15T04:28:45Z",
+    "granularity": "week",
+    "timezone": "Asia/Tokyo",
+    "collector_window_type": "relative_duration",
+    "boundary_semantics": "relative timeframe resolved by the collector at request time; weekly buckets (Sunday start); observed range 2026-09-15..2026-10-15",
+    "exact_window_match": false,
+    "observed_min_timestamp": "2026-09-15T00:00:00Z",
+    "observed_max_timestamp": "2026-10-15T00:00:00Z",
+    "week_start": "sunday",
+    "reference_time": "2026-10-15T04:28:45Z",
+    "limitations": [
+      "requested_start/end_exclusive record the nominal resolution of the relative request 'today 1-m' at the reference time; they are not a study-requested absolute window (P5)",
+      "the collector resolves the relative timeframe at request time; this run measures the observed boundaries (spec: gt-boundary-verification)",
+      "weekly buckets (Sunday start) quantize both boundaries to at most one bucket; exact calendar-day equality is not claimable"
+    ],
+    "submitted_parameters": {
+      "date_filter": "today 1-m",
+      "reference_time": "2026-10-15T04:28:45Z",
+      "timeframe": "today 1-m",
+      "tool": "interest_over_time",
+      "terms": [
+        "CBX"
+      ],
+      "geo": "JP",
+      "date_filter_basis": "Google Trends の相対 timeframe。この collector に dateFilter パラメータは無く、この欄は元 run の submitted_parameters.timeframe をそのまま記録する（要求された相対期間）。"
+    }
+  },
+  "execution": {
+    "status": "success",
+    "returned_count": 31,
+    "errors": [],
+    "pagination_exhausted": true
+  },
+  "artifact_manifest": "artifact-manifest.json",
+  "environment": {
+    "measurement": {
+      "protocol": "gt-boundary-verification@1",
+      "instrument": {
+        "kind": "mcp_session",
+        "server": "google-trends-mcp",
+        "server_version": "0.1.1"
+      },
+      "capture_manifest": "manifest.json",
+      "capture_index": 0
+    },
+    "ownership_migration": {
+      "record": "raw_ownership_migration",
+      "previous_study_id": "cbx-search-trends",
+      "previous_study_run_id": "20261015T042845Z-google-trends-boundary-1m",
+      "previous_run_path": "datasets/cbx-search-trends/data/raw/google_trends/20261015T042845Z-google-trends-boundary-1m",
+      "previous_run_metadata_sha256": "09f3e2b12a357a05813c68af73956a695d78c7ef98018f600600727a523be750",
+      "previous_artifact_manifest_sha256": "f541597e4b7af5bfa259992b084332ae55c1f90f97f2cf02bb14522528634630",
+      "previous_code_commit": "eb78853742ee98c67b1e3a2c9cc774cfa91ab239",
+      "is_new_observation": false,
+      "basis": "owner 決定: CBX の Google Trends raw の所有を cannabinoid-raw-collection に移す。raw は観測し直しておらず、payload は移行前と同一バイト。run id も変えない。"
+    },
+    "source_artifacts": [
+      {
+        "path": "mcp-tool-result.json",
+        "sha256": "50fd6ce9999ce403f28a0994c3fbe0e1f76919ec5aa45ae964399a130abee779",
+        "byte_length": 692
+      },
+      {
+        "path": "records_cbx.json",
+        "sha256": "166af5b6f518d1a797e9112a13fb9176d775cd3760c2160c31cb5a6beb87fb85",
+        "byte_length": 1950
+      }
+    ],
+    "artifact_lineage": "records_cbx.json は同じ run の mcp-tool-result.json から導出した系列。staging-declaration-v1 は derived_from を宣言できないため、再発行した artifact-manifest.json に派生辺は入らない（移行前の artifact-manifest.json は Git 履歴に残る）。",
+    "observed_range_basis": "移行前の run_metadata.json の temporal_provenance.observed_min_timestamp / observed_max_timestamp（週次バケットのラベル範囲）を引き継ぐ。宣言の temporal ブロックで宣言した値を temporal_provenance にそのまま記録する。",
+    "handover": {
+      "declaration_version": "staging-declaration-v1",
+      "declaration_name": "20261104-cbx-google-trends-ownership-cannabinoid-raw-collection.json",
+      "declaration_sha256": "8a30045b814626193a911bf003cd7d3da6f1a3ce1a992f198e2d3d283bb4cef3",
+      "timestamp_basis": "移行前の run_metadata.json（datasets/cbx-search-trends/data/raw/google_trends/20261015T042845Z-google-trends-boundary-1m/run_metadata.json）に記録された収集時刻をそのまま引き継ぐ。payload 自体は収集時刻列を持たない。",
+      "record_counts": {
+        "mcp-tool-result.json": "declared",
+        "records_cbx.json": "declared"
+      },
+      "returned_count": "declared"
+    },
+    "collection_core_version": "1.0.0",
+    "adapter_contract_version": "1.0.0",
+    "runtime_version": "python-3.14.6",
+    "adapter": {
+      "collection_mode": "external_staged",
+      "collector_version": "0.1.1"
+    },
+    "code_commit": "f179c1678513a16e93807fdc931e6aa6cc06f1df"
+  }
+}

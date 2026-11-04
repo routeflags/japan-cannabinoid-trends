@@ -11,7 +11,8 @@
       "byte_length": 7823,
       "sha256": "6e4573f717e0db7bdb94ade6f31190222bb8f8b51e057c7db9cabc29ca77d740",
       "layer": "raw",
-      "completeness": "complete"
+      "completeness": "complete",
+      "record_count": 262
     },
     {
       "artifact_id": "20261015T042857Z-google-trends-boundary-5y-records-cbx-json",
@@ -23,10 +24,7 @@
       "sha256": "6a571738d83495aa9630e3487b4642c679c2d8fac8fd410b2a3b2c33048244cc",
       "layer": "raw",
       "completeness": "complete",
-      "record_count": 262,
-      "derived_from": [
-        "20261015T042857Z-google-trends-boundary-5y-mcp-tool-result-json"
-      ]
+      "record_count": 262
     }
   ]
 }
