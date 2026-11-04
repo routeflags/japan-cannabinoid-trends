@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.14.1] - 2026-11-04
+
+### Fixed
+- Added the Python dependency setup required by the release workflow before release-manifest validation. This repairs the v1.14.0 workflow failure caused by the runner lacking `cerberus`; dataset contents and release scope are unchanged.
+
+---
+
 ## [1.14.0] - 2026-11-04
 
 ### Added
