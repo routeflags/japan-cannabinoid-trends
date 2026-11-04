@@ -9,7 +9,7 @@
   "anonymization_applied": true,
   "citations": {
     "integrity": [
-      "sha256(publication/research_thcnm.html, 2026-11-05 検算) = 88823200ccffcb78c0d7621d45a4d2ebf916254652c9bee7b75473e3066ba163"
+      "sha256(publication/research_thcnm.html, 2026-11-05 検算) = d7a0b7ee6e878bb95c42b08bf8f33e4fa1aa33464cc0ef813d40af8b6462509d"
     ],
     "publication_contract": [
       "validation.cli audit-publication --output docs/audits/publication-contract.json（2026-11-04）: 本 artifact に finding は無い（適用される PC-1〜PC-7 すべて）。PC-7 は本 envelope の存在と hash 固定を検査する。",
@@ -17,8 +17,9 @@
       "validation.cli audit-publication（2026-11-05、共通スケール追加後）: 本 artifact に PC-1〜PC-7 の finding は無い。"
     ],
     "catalog": [
-      "datasets/cannabinoid-raw-collection/metadata/data-catalog.json（sha256 b7b72e29f9720dffb9d28923e8789087cfaaa211d5d1149bce2f8c1fc414ae73）が THCNM の 6 run / 10 artifact を compound_thcnm として記録する。",
-      "cataloged artifact ids: 20261104T115425Z-google-trends-thcnm-12m-payload-json / -records-thcnm-json、20261104T115431Z-google-trends-thcnm-5y-payload-json / -records-thcnm-json、20261104T120627Z-youtube-cannabinoid-raw-collection-youtube-dataset-thcnm-liquid-nk6atppbtujz3bduc-2026-11-04-json、20261104T120805Z-youtube-cannabinoid-raw-collection-youtube-dataset-tha-liquid-zt6mahjpfsvwe1yla-2026-11-04-json、20261104T175032Z-google-trends-cannabinoid-raw-collection-payload-json / -comparison-cbd-thc-thcnm-json、20261104T175220Z-google-trends-cannabinoid-raw-collection-payload-json / -comparison-cbd-thc-thcnm-json。"
+      "datasets/cannabinoid-raw-collection/metadata/data-catalog.json が THCNM の 6 run / 10 artifact を compound_thcnm として記録する。このファイルの sha256 = b89704418339f011b364686d596164cbbd3e672f0ba0eb8675464ed47838e8e2（2026-11-05 の C3 レビュー時点。catalog は run 追加のたびに再生成される）。",
+      "cataloged artifact ids: 20261104T115425Z-google-trends-thcnm-12m-payload-json / -records-thcnm-json、20261104T115431Z-google-trends-thcnm-5y-payload-json / -records-thcnm-json、20261104T120627Z-youtube-cannabinoid-raw-collection-youtube-dataset-thcnm-liquid-nk6atppbtujz3bduc-2026-11-04-json、20261104T120805Z-youtube-cannabinoid-raw-collection-youtube-dataset-tha-liquid-zt6mahjpfsvwe1yla-2026-11-04-json、20261104T175032Z-google-trends-cannabinoid-raw-collection-payload-json / -comparison-cbd-thc-thcnm-json、20261104T175220Z-google-trends-cannabinoid-raw-collection-payload-json / -comparison-cbd-thc-thcnm-json。",
+      "5年共通スケール run 20261104T195136Z の 2 artifact（payload / comparison）は query_id comparison-5y-current-setD、compound_id compound_cbd として catalog に載る。THCNM を含む 5 語要求を compound_cbd 側の共通スケールとして記録しているためで、ページの 5年節がこの run と語の全体を明示する。"
     ],
     "retention": [
       "validation.cli audit-raw-retention（2026-11-04）: run 20261104T115425Z-google-trends-thcnm-12m と 20261104T115431Z-google-trends-thcnm-5y は policy raw-search-tracked の git_tracked。2 run ディレクトリは Git index に追加済みで violations=0。",
@@ -50,9 +51,10 @@
       "ページが載せるのは返却レコード数（30 / 311）と run 記録の状態だけで、動画単位の行・ID・タイトル・チャンネル・URL・再生数は載せない。"
     ],
     "publication_gate": [
-      "validation.cli gate-publication --artifact metadata/publication/research-thcnm/artifact.json --decision metadata/publication/research-thcnm/decision.json --evidence metadata/publication/research-thcnm/evidence.json --output /tmp/g6-thcnm-20261105.json（2026-11-05）: verdict BLOCKED。failed は PUB-10（承認が無い）。既定の --output は x-cbx の実行記録 docs/audits/g6-publication-eligibility.json のため、THCNM の出力は別パスに書いた。",
-      "PUB-02（hash）・PUB-04（personal-data review）・PUB-05（秘匿情報）・PUB-07（redistribution conditions）・PUB-09（aggregation）は PASS。warnings: PUB-01、PUB-03、PUB-06、PUB-08（いずれも未記録の確認項目）。",
-      "2026-11-04 の owner 承認（sha256 cc690452…）は旧 hash に対するもので、2026-11-05 の内容変更により対象外となった。新しい hash の承認が無いため PUB-10 は FAIL のままである。"
+      "validation.cli gate-publication --artifact metadata/publication/research-thcnm/artifact.json --decision ... --evidence ... --output /tmp/g6-thcnm.json（2026-11-05、PUB-01〜PUB-10 の時点）: verdict BLOCKED、failed は PUB-10（新しい hash の承認が無かった）。",
+      "2026-11-05 の owner 承認（PUB-10）以降、PUB-01〜PUB-10 は PASS（warnings なし）。",
+      "2026-11-05 に PUB-11（C3 内容レビュー）を追加し、C1〜C45 の 45 項目を記録した後の gate-publication は SUPPORTED（PUB-01〜PUB-11 PASS、warnings なし）。",
+      "既定の --output は x-cbx の実行記録 docs/audits/g6-publication-eligibility.json のため、THCNM の出力は別パスに書く。"
     ],
     "identity": [
       "metadata/taxonomy/compound-taxonomy.skos.jsonld（sha256 657a41633d47bb358b71118b2a4a89b24a11a9a0465b73636e8c095d1fcb107e）の jptr:compound-thcnm（skos:notation compound_thcnm、skos:broader compound-semisynthetic は暫定、THA は別名・商業名）。",
@@ -77,17 +79,25 @@
     "content_changes": [
       "2026-11-05: 変更内容 — 研究質問の表現を統一し、引用の版表記を 1.14.1（CITATION.cff）に更新し、公開状態の記述を 2026-11-05 の gate 結果（BLOCKED / failed PUB-10）に合わせた。データ節の数値は変更していない。",
       "2026-11-05: 変更内容 — 12ヶ月・3ヶ月の共通スケール（CBD + THC + THCNM）を主比較・補足として追加し、単独系列の初出 2026-10-18（値 47）が単独系列の値であること、5年の共通スケール被覆が未完了であること、引用版を 1.14.2 にすること、3ヶ月の孤立値（2026-08-13 = 12）を解釈しないことを明記した。",
-      "2026-11-05: 公開状態の記述を decision（approved）と公開適格ゲート（SUPPORTED）に合わせて訂正した。PC-9 の追加により、この不整合は audit-publication と gate-publication で検出される。"
+      "2026-11-05: 公開状態の記述を decision（approved）と公開適格ゲート（SUPPORTED）に合わせて訂正した。PC-9 の追加により、この不整合は audit-publication と gate-publication で検出される。",
+      "2026-11-05: C3 内容レビュー（C1〜C45）で次を検出して訂正した — 12ヶ月 THC の最大 18 は 3 週あること、3ヶ月 THCNM の非ゼロ 10 日は連続ではないこと、5年共通スケールの要求語 5 語と正規化分母、データソース表への 5年共通 run の追加、average_interest（整数丸め）との関係、3ヶ月 run_metadata の granularity 不備の開示、YouTube 実行状態の記録語彙（success / Apify SUCCEEDED）、再計算できない重複除去後の件数を派生列から外したこと、公開状態の PUB-11 と C3 記録への更新。",
+      "2026-11-05: C3 チェックリストを metadata/publication/content-review-checklist.json に置いた（metadata/publication/<id>/ は審査 envelope とみなされるため、サブディレクトリを作らない）。公開状態節の参照を同じ path に合わせた。"
+    ],
+    "google_trends_common_scale_5y": [
+      "run 20261104T195136Z-google-trends-cannabinoid-raw-collection（geo JP / today 5-y / 窓 2021-10-31_2026-11-08 / 262 週 / CBD 33.0916 / THC 5.0496 / THCNM 0.0000（非ゼロ 0））",
+      "run_metadata.json sha256 = b23327abb48d503ae49d5ad4e300cc8d40e2dce34c0aef39e1ae5a3e232962a8",
+      "payload.json sha256 = 458179187062ab34edecd714a500331223776a2fb64544009272f77292b48c4b。comparison_cbd-thc-hhch-thc-o-thcnm.json sha256 = 8880f59043dc38ba135045df25e722ac96f297926df927d8fbf27f9e4a161093。",
+      "要求語は CBD・THC・HHCH・THC-O・THCNM の 5 語。正規化は同一要求内の最大値 = 100（CBD の 2025-08-31）。ページはこのうち CBD・THC・THCNM だけを載せる。"
     ]
   },
   "unrecorded": {
     "chemical_identity_review": "THCNM の化学的同一性と THA の位置づけ（別名 / 混合物名）は未確認のまま（ISS-20261104-TAX-028 OPEN）。本承認は同一性を解消せず、THCNM と THA が化学的に同等であるとも別物質であるとも主張しない。ページは同一性を断定せず、識別子・分子式を載せていない。",
     "youtube_row_level_data": "動画単位の行（タイトル・チャンネル・ID・URL・再生数）はページにも envelope にも記録しない。raw payload は git_untracked で公開対象外。",
     "gate_warnings": "PUB-01（来歴の明示フラグ）、PUB-03（schema review）、PUB-06（取得元の利用条件）、PUB-08（著作権・契約）は未記録のため WARNING のまま。PUB-04 / PUB-07 / PUB-09 / PUB-10 は本 envelope の記録で PASS。警告は公開拒否ではないが、外部公開前にレビュアが確認する項目として残る。",
-    "pc2_release_commit": "THCNM の単独系列 2 run と共通スケール 2 run のディレクトリは Git 追跡済み（共通スケール 2 run は commit 4cf5509）。計画・窓・policy は作業ツリーにあり、コミットは parent が行う（本 envelope は未コミット）。",
-    "three_month_granularity_label": "3ヶ月 run の temporal_provenance.granularity は adapter が week と記録しているが、返却点は日次 93 点（2026-08-04〜2026-11-04）である。adapter が timeframe に 関係なく week を書く既知の記録不備で、2026-10-15 の boundary-3m run も同じ。ページは返却点の間隔を観測として日次と表示し、窓は metadata/windows の granularity=day の登録窓による。値そのものは run の comparison artifact のとおり。"
+    "pc2_release_commit": "THCNM の単独系列 2 run と共通スケール 3 run のディレクトリは Git 追跡済み（共通スケール 2 run は commit 4cf5509、5年 common-scale は v1.14.4）。計画・窓・policy も同じく追跡されている。",
+    "three_month_granularity_label": "3ヶ月 run の temporal_provenance.granularity は adapter が week と記録しているが、返却点は日次 93 点（2026-08-04〜2026-11-04）である。ISS-20261105-GT-031 で adapter を修正済みで、当該 run の記録は当時のまま残す。ページの 3ヶ月節「記録の不備」で開示した。"
   },
-  "notes": "この evidence は機械的な存在・整合性の根拠、run / artifact の対応、完了した personal-data / redistribution / aggregation / content レビュー、gate-publication の記録を保持する。公開承認とその限界（同一性未確認、raw 非公開）は decision.json に記録する。推測でフラグを立てない。 2026-11-05 に審査対象の hash を再固定し、変更内容を citations.content_changes に記録した。公開承認・人間の内容審査は推測で埋めない。 2026-11-05 に共通スケール追加後の hash と run 証跡で citations を更新した。",
+  "notes": "この evidence は機械的な存在・整合性の根拠、run / artifact の対応、完了した personal-data / redistribution / aggregation / content レビュー、gate-publication の記録を保持する。 content_review は C1〜C45（metadata/publication/content-review-checklist.json v1.0.0）の 45 項目を、本ページ・raw/comparison 成果物・methodology・taxonomy・evidence に照合した記録で、reviewer は owner の 2026-11-05 指示でレビューを実施した Delta agent、reviewed_at は 2026-11-05、artifact_sha256 はレビュー対象の現行 HTML。 公開承認とその限界（同一性未確認、raw 非公開）は decision.json に記録する。推測でフラグを立てない。",
   "personal_data_review_basis": "2026-11-05: publication/research_thcnm.html の本文・表・画像・リンクを個人データの観点で確認した。走査結果: メールアドレス 0、@ハンドル 0、10 桁以上の識別子 0、行単位の投稿・動画の行 0（表ヘッダに 投稿者/ユーザー名/アカウント/動画 ID/タイトル/チャンネル/本文 を含む表は無い）。集計表のみで、行単位のデータを含まない。 外部参照は doi.org（DOI）、zenodo.org（DOI バッジ）。時刻は run の収集時刻（UTC）のみ。結果: 個人を特定できる情報は含まれない。",
   "anonymization_basis": "行単位のデータを掲載しない方針により、個人・アカウント単位の値は集計に置き換えている（投稿・動画の個別行なし）。",
   "provenance_present": true,
@@ -98,5 +108,239 @@
   "source_terms_basis": "docs/specs/sns-redistribution-assessment.md §3.2: Google Trends は公開データで相対指数として再配布可能、X は集計値のみ、YouTube はコンテンツ再配布不可。本ページは集計値のみを掲載し、X 本文・YouTube コンテンツを再配布しない。",
   "redistribution_basis": "掲載するのは自らの集計値・run metadata・方法論のみ。raw（Google Trends payload、X 投稿、YouTube 動画単位）は非公開/untracked のままで再配布しない。sns-redistribution-assessment §3.2 に整合する。",
   "copyright_confirmed": true,
-  "copyright_basis": "第三者の文章・動画・投稿を再掲していない。外部リンクは制度ページと DOI。"
+  "copyright_basis": "第三者の文章・動画・投稿を再掲していない。外部リンクは制度ページと DOI。",
+  "content_review": {
+    "checklist_id": "publication-content-review-c1-c45",
+    "checklist_version": "1.0.0",
+    "artifact_sha256": "d7a0b7ee6e878bb95c42b08bf8f33e4fa1aa33464cc0ef813d40af8b6462509d",
+    "reviewer": "Delta agent (owner instruction 2026-11-05: THCNM の C1〜C45 内容レビューを実施)",
+    "reviewed_at": "2026-11-05",
+    "items": [
+      {
+        "id": "C1",
+        "verdict": "pass",
+        "basis": "12ヶ月共通スケール表の CBD 45.7925 / THC 11.9057 / THCNM 0.0000 は comparison_cbd-thc-thcnm.json（run 20261104T175032Z）の 53 点の算術平均と一致（再計算値 45.7925 / 11.9057 / 0.0000）。"
+      },
+      {
+        "id": "C2",
+        "verdict": "pass",
+        "basis": "同表 CBD 中央値 49・最大 100（2026-05-03）、THC 13・最大 18（2025-11-09・2025-12-14・2026-01-25 の 3 週）、THCNM 0・最大 0。53 点から再計算して一致。最大 18 が 3 週あることを表に反映した。"
+      },
+      {
+        "id": "C3",
+        "verdict": "pass",
+        "basis": "同表 非ゼロ点 CBD 53 週 / THC 53 週 / THCNM 0 週 = 53 点の非ゼロ集計と一致。"
+      },
+      {
+        "id": "C4",
+        "verdict": "pass",
+        "basis": "3ヶ月共通スケール表の 52.3011 / 8.9355 / 0.2473 は comparison_cbd-thc-thcnm.json（run 20261104T175220Z）の 93 点の算術平均と一致。"
+      },
+      {
+        "id": "C5",
+        "verdict": "pass",
+        "basis": "3ヶ月表 CBD 51・最大 100（2026-09-03）、THC 11・最大 22（2026-08-05）、THCNM 0・最大 12（2026-08-13）。93 点から再計算して一致（22 は単一日）。"
+      },
+      {
+        "id": "C6",
+        "verdict": "pass",
+        "basis": "3ヶ月表 THCNM 非ゼロ 11 日。内訳は 2026-08-13=12、2026-10-21/22/24/25/27/28/30・11-02/03=1（9 日）、10-26=2（1 日）。本文の「2026-10-21 〜 2026-11-03 に散在し（連続ではない）、値は 1 か 2」と一致。"
+      },
+      {
+        "id": "C7",
+        "verdict": "pass",
+        "basis": "5年共通スケール表 CBD 33.0916 / THC 5.0496 / THCNM 0.0000、非ゼロ 262/262/0 は comparison_cbd-thc-hhch-thc-o-thcnm.json（run 20261104T195136Z）の 262 点と一致。"
+      },
+      {
+        "id": "C8",
+        "verdict": "pass",
+        "basis": "12ヶ月単独系列表 平均 4.4906・ピーク 100（2026-11-01）・初出 2026-10-18（47）・非ゼロ 3 / ゼロ 50 は records_thcnm.json（run 20261104T115425Z）の 53 点と一致。"
+      },
+      {
+        "id": "C9",
+        "verdict": "pass",
+        "basis": "5年単独系列表 平均 0.9122・ピーク 100（2026-11-01）・初出 2026-10-18（47）・非ゼロ 3 / ゼロ 259 は records_thcnm.json（run 20261104T115431Z）の 262 点と一致。"
+      },
+      {
+        "id": "C10",
+        "verdict": "pass",
+        "basis": "YouTube 2 表の 30 件 / 311 件・success は採用宣言 runs[].execution（returned_count 30 / 311、status success）と catalog record_count 30 / 311 に一致。Apify の run status 語 SUCCEEDED を併記した。"
+      },
+      {
+        "id": "C11",
+        "verdict": "pass",
+        "basis": "公開日 2017-11-30 〜 2026-11-02 と [2017-11-30, 2026-11-03)、2012-01-17 〜 2026-11-04 と [2012-01-17, 2026-11-05) は宣言 runs[].window の start / end_exclusive と一致。"
+      },
+      {
+        "id": "C12",
+        "verdict": "pass",
+        "basis": "データソース表 7 run の語・query_id・timeframe・件数は各 run_metadata.json の query_provenance / comparison / temporal_provenance と一致。5年共通 run は query_id comparison-5y-current-setD、語 CBD/THC/HHCH/THC-O/THCNM（今回追加）。"
+      },
+      {
+        "id": "C13",
+        "verdict": "pass",
+        "basis": "「対象範囲」の単位行と用語の定義「興味度スコア」が、値を 0-100 の相対指数であり絶対検索数ではないと明記している。"
+      },
+      {
+        "id": "C14",
+        "verdict": "pass",
+        "basis": "「対象範囲」単位行・再現性チェックリスト・「初出の値について」・「混同しないこと」が、単独系列と共通スケールを換算しないと明記している。"
+      },
+      {
+        "id": "C15",
+        "verdict": "pass",
+        "basis": "「比較しないこと」と限界表「系列間比較」が、12ヶ月・3ヶ月・5年の平均を比較しないと明記している。"
+      },
+      {
+        "id": "C16",
+        "verdict": "pass",
+        "basis": "12ヶ月・3ヶ月の「正規化」行と 5年の「要求」段落が、同一要求内の最大値 = 100（CBD の 2026-05-03 / 2026-09-03 / 2025-08-31）を明記している。"
+      },
+      {
+        "id": "C17",
+        "verdict": "pass",
+        "basis": "5年の「要求」段落が要求語 5 語（CBD・THC・HHCH・THC-O・THCNM）を開示し、掲載は 3 語だけと明記。データソース表も 5 語で記載（今回追加）。"
+      },
+      {
+        "id": "C18",
+        "verdict": "pass",
+        "basis": "「対象範囲」単位行と THA 節「2 クエリの件数を合算しない」が、GT と YouTube、30 と 311 を合算しないと明記している。"
+      },
+      {
+        "id": "C19",
+        "verdict": "pass",
+        "basis": "用語の定義「0 の意味」と限界表「0 の意味」が、0 は閾値未満であり需要ゼロや欠測ではないと明記している。"
+      },
+      {
+        "id": "C20",
+        "verdict": "pass",
+        "basis": "限界表「共通スケールの解像度」と「共通スケールで観測されたこと」が、12ヶ月 THCNM 全 0 を CBD 100 に対する丸めとして説明している。"
+      },
+      {
+        "id": "C21",
+        "verdict": "pass",
+        "basis": "限界表「3ヶ月の孤立値」と 3ヶ月節が、2026-08-13 = 12 の理由を未確認とし解釈しないと明記している。"
+      },
+      {
+        "id": "C22",
+        "verdict": "pass",
+        "basis": "限界表「欠測の扱い」が、X 未収集を 0 観測として扱わないと明記している。"
+      },
+      {
+        "id": "C23",
+        "verdict": "pass",
+        "basis": "再現性チェックリスト末尾と限界表「反復の欠如」が、単発 run で安定性未測定と明記している。"
+      },
+      {
+        "id": "C24",
+        "verdict": "pass",
+        "basis": "「対象範囲」期間行・各節の「窓」「観測範囲」行・「窓と返却点の差」が、要求条件と観測範囲を別欄に区別している。"
+      },
+      {
+        "id": "C25",
+        "verdict": "pass",
+        "basis": "全数値に対応する run_id と query_id がある: データソース表 7 行と各節の出所。5年共通 run 20261104T195136Z を表に追加した。"
+      },
+      {
+        "id": "C26",
+        "verdict": "pass",
+        "basis": "再現性チェックリストが payload.json / records_thcnm.json / comparison_cbd-thc-thcnm.json / artifact-manifest.json を SHA-256 証跡として指定し、evidence.json citations が各 run の sha256 を記録している。本レビューで citations の sha256 を全件再計算し、catalog の pin が古かったため現行値に更新した（他の pin は一致）。"
+      },
+      {
+        "id": "C27",
+        "verdict": "pass",
+        "basis": "窓 3 件を metadata/windows/2025-11-02_2026-11-08.json・2026-08-06_2026-11-04.json・2021-10-31_2026-11-08.json として記載。granularity（week / day / week）と timezone（Asia/Tokyo）が一致。"
+      },
+      {
+        "id": "C28",
+        "verdict": "pass",
+        "basis": "12ヶ月・3ヶ月の「平均の定義」行が算術平均（小数第 4 位）を定義し、run 記録の average_interest（46 / 12 / 0、52 / 9 / 0）が同じ平均の整数丸めであることを併記した（今回追加）。"
+      },
+      {
+        "id": "C29",
+        "verdict": "pass",
+        "basis": "GT の派生値は追跡済み raw（payload / records / comparison）から再計算できる（本レビューで全件再計算）。YouTube の公開日範囲は宣言 window と catalog に記録。重複除去後の件数は保持データから再計算できないため派生列から外し、本文に処理と限界を記載した。"
+      },
+      {
+        "id": "C30",
+        "verdict": "pass",
+        "basis": "データソース表に google-trends-mcp 0.1.1 と Apify actor build 0.0.325、各節の出所に収集日時（UTC）を記載している。"
+      },
+      {
+        "id": "C31",
+        "verdict": "pass",
+        "basis": "再現性チェックリストが反復実行なしを明記。単一 run を選ぶ選択は行っておらず、掲載 run はすべて列挙している。"
+      },
+      {
+        "id": "C32",
+        "verdict": "pass",
+        "basis": "「THA の位置づけ」行・THA 節・限界表「同一性」が、化学的同一性は未確認（ISS-20261104-TAX-028）と明記している。"
+      },
+      {
+        "id": "C33",
+        "verdict": "pass",
+        "basis": "「識別子」行が CAS・ChEBI・PubChem・Wikidata・分子式を載せないと明記。本文に該当する値はない。"
+      },
+      {
+        "id": "C34",
+        "verdict": "pass",
+        "basis": "「混同しないもの」行が THAH・THC-O（THCO 変種を含む）との区別と THC-O run の除外を明記している。"
+      },
+      {
+        "id": "C35",
+        "verdict": "pass",
+        "basis": "限界表「法的地位」が、法的地位を判定しないと明記している。"
+      },
+      {
+        "id": "C36",
+        "verdict": "pass",
+        "basis": "本文に動画単位の行・ID・タイトル・チャンネル・URL・再生数はない（掲載は返却件数・実行状態・公開日範囲のみ）。"
+      },
+      {
+        "id": "C37",
+        "verdict": "pass",
+        "basis": "本文・表・画像・リンクにメールアドレス・@ハンドル・10 桁以上の識別子・行単位の投稿/動画の行はない（evidence.personal_data_review_basis と PC-4 の走査結果）。"
+      },
+      {
+        "id": "C38",
+        "verdict": "pass",
+        "basis": "各 YouTube 節と再現性チェックリストが、raw payload は Git 非追跡・公開対象外と明記している。"
+      },
+      {
+        "id": "C39",
+        "verdict": "pass",
+        "basis": "evidence.citations の redistribution 記録が、sns-redistribution-assessment §3.2 に基づき集計値のみを掲載すると記録している。"
+      },
+      {
+        "id": "C40",
+        "verdict": "pass",
+        "basis": "証拠レベル節末尾が「本ページは因果を主張しない」と明記している。"
+      },
+      {
+        "id": "C41",
+        "verdict": "pass",
+        "basis": "各表の「区分」列と証拠レベル表が、観測 / 派生 / 解釈を区分している。"
+      },
+      {
+        "id": "C42",
+        "verdict": "pass",
+        "basis": "限界表に 12 行（相対指数・窓の解決・系列間比較・共通スケールの解像度・3ヶ月の孤立値・5年の被覆・0 の意味・反復の欠如・YouTube の地域・YouTube の被覆・同一性・法的地位・欠測の扱い・配布物との関係）。"
+      },
+      {
+        "id": "C43",
+        "verdict": "pass",
+        "basis": "引用の Version 1.14.5 は CITATION.cff の version 1.14.5 と一致する。"
+      },
+      {
+        "id": "C44",
+        "verdict": "pass",
+        "basis": "公開状態節が decision approved・artifact_sha256 一致・ゲート SUPPORTED（PUB-01〜PUB-11 PASS、WARNING なし）・C3 記録を記載。本レビュー後の gate-publication 出力と一致する。"
+      },
+      {
+        "id": "C45",
+        "verdict": "pass",
+        "basis": "「最終更新 / 改訂」行が 2026-11-05 の共通スケール追加・公開状態の訂正・C3 レビューによる訂正を記載している。"
+      }
+    ]
+  }
 }

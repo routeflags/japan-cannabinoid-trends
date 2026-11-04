@@ -70,7 +70,7 @@
       "id": "PUB-11",
       "title": "content review recorded (C3)",
       "status": "FAIL",
-      "detail": "no publication content-review checklist is committed; the C3 review cannot be verified and the artifact cannot be SUPPORTED"
+      "detail": "evidence.json has no content_review record; the C3 review was not performed (a mechanical pass is not a content review)"
     }
   ],
   "failed": [

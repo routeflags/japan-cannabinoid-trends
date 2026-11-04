@@ -898,7 +898,7 @@ G6 仕様（`docs/plans/20261013f.md`）の垂直スライス。Git 運用全体
 - `src/validation/g6_inventory.py` + CLI `audit-git-tracking`（§15。read-only git のみ。`raw_modified` 前後 hash 証跡。`private/` は存在・除外状態のみ）:
   - 実測: dataset 134 件全件 tracked（google_trends 99 件含む）+ extras 33 件 → `tracked 147 / ignored 4 / absent 16 / untracked_unignored 0`。`accidental_add_risk: []`、`ignore_warnings: []`。（監査: `docs/audits/g6-git-tracking-inventory.json` / `.md`）
 - `src/validation/publication_eligibility.py` + CLI `gate-publication`（§10。§11 最小規則と secret scan を再利用。`cerberus` 非 import）:
-  - 実在 1 件（`x_cbx_202608_summary_anonymized.csv`、`processed-public-candidate`）に実行 → **`BLOCKED`**（`failed: PUB-01/04/10`、`warnings: PUB-06/07/08`。PUB-02/03/05/09 PASS）。BLOCKED は成果物の問題の記録でありゲートの失敗ではない。（監査: `docs/audits/g6-publication-eligibility.json` / `.md`）
+  - 実在 1 件（`x_cbx_202608_summary_anonymized.csv`、`processed-public-candidate`）に実行 → **`BLOCKED`**（`failed: PUB-10/11`、`warnings: PUB-06/07/08`。PUB-01/02/03/04/05/09 PASS）。BLOCKED は成果物の問題の記録でありゲートの失敗ではない。（監査: `docs/audits/g6-publication-eligibility.json` / `.md`）
 
 ### 19.2.1 機械検査と C3 内容レビューは別ゲート（2026-11-05、ISS-20261105-PUB-037）
 
@@ -910,13 +910,16 @@ G6 仕様（`docs/plans/20261013f.md`）の垂直スライス。Git 運用全体
 - 記録は `metadata/publication/<artifact_id>/evidence.json` の `content_review`
   （`checklist_id` / `checklist_version` / `artifact_sha256` / `reviewer` /
   `reviewed_at` / `items[]` = id・verdict・basis）。
-- チェックリスト定義は `metadata/publication/content-review/checklist.json`。
+- チェックリスト定義は `metadata/publication/content-review-checklist.json`。
   未定義なら `CONTENT_REVIEW_CHECKLIST_UNDEFINED` で **fail closed**。
 - `approved` 決定があっても C3 未完なら `BLOCKED`。`SUPPORTED` は両ゲートの
   PASS でのみ返る。機械検査の PASS を内容レビュー済みと読み替えない。
 
-本リポジトリにはまだ C1〜C45 の公開チェックリストが無い（`collection-pipeline.md`
-の C1〜C3 は比較可能性の別概念）。定義が入るまで全 artifact は `BLOCKED` である。
+チェックリストは `metadata/publication/content-review-checklist.json`（v1.0.0、
+C1〜C45）にある（`collection-pipeline.md` の C1〜C3 は比較可能性の別概念で、
+公開内容レビューとは別）。`research-thcnm` は 45 項目のレビューを記録して
+`SUPPORTED`。他の 16 artifact はレビュー未記録のため `BLOCKED` のままであり、
+それらのページは PUB-01〜PUB-10 の結果でゲートを記述したままである。
 
 - `src/validation/private_catalog.py` + CLI `audit-private-catalog`（§13。値は出さない）:
   - 実測: マーカー 9 件、`present 0 / absent 9`（worktree に `private/` なし）。全件 `restricted / private / not_approved`。（監査: `docs/audits/g6-private-catalog.json` / `.md`）

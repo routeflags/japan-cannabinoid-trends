@@ -201,7 +201,7 @@ def _report(
     declared_run_ids: tuple[str, ...] = (),
     decision_status: str = "requires_review",
 ) -> dict:
-    checklist = tmp_path / "metadata" / "publication" / "content-review" / "checklist.json"
+    checklist = tmp_path / "metadata" / "publication" / "content-review-checklist.json"
     checklist.parent.mkdir(parents=True, exist_ok=True)
     checklist.write_text(
         json.dumps(

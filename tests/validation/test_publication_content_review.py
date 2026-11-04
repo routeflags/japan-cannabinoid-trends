@@ -34,7 +34,7 @@ def _checklist(items=45) -> dict:
 
 
 def _write_checklist(root: Path, document: dict | None = None) -> None:
-    path = root / "metadata" / "publication" / "content-review" / "checklist.json"
+    path = root / "metadata" / "publication" / "content-review-checklist.json"
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(document or _checklist(), ensure_ascii=False), encoding="utf-8")
 

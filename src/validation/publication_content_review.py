@@ -18,7 +18,7 @@ with no C3 record is ``BLOCKED``, not approved-with-a-warning.
 
 Where the checklist comes from
 ------------------------------
-``metadata/publication/content-review/checklist.json`` declares the item ids and
+``metadata/publication/content-review-checklist.json`` declares the item ids and
 titles the repository requires.  The repository does not currently contain a
 C1..C45 publication checklist (the only C1/C2/C3 in the tree are the
 comparability checks in ``docs/specs/collection-pipeline.md``), so the file is
@@ -46,7 +46,7 @@ __all__ = [
 
 #: Committed checklist definition (ids + titles).  Absence is a finding, not a
 #: pass: without it nobody can say what "complete" means.
-CHECKLIST_PATH = Path("metadata") / "publication" / "content-review" / "checklist.json"
+CHECKLIST_PATH = Path("metadata") / "publication" / "content-review-checklist.json"
 
 
 def _issue(code: str, pointer: str, detail: str) -> dict:

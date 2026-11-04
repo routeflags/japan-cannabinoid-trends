@@ -14,7 +14,7 @@
 <h3>研究質問</h3>
 <p>「日本におけるTHCNM成分へのオンライン関心は、どのように推移しているか？」</p>
 <p><strong>最終更新:</strong> 2026-11-05。</p>
-<p><strong>改訂:</strong> 2026-11-05 に 12ヶ月・3ヶ月の共通スケール（<code>CBD</code>・<code>THC</code>・<code>THCNM</code>）を追加し、単独系列との区別と5年の被覆未完了を明記した。同日、研究質問の表現を統一し、引用の版表記を現行リリースに合わせた。公開状態の記述を decision（<code>approved</code>）と公開適格ゲート（<code>SUPPORTED</code>）に合わせて訂正した。</p>
+<p><strong>改訂:</strong> 2026-11-05 に 12ヶ月・3ヶ月の共通スケール（<code>CBD</code>・<code>THC</code>・<code>THCNM</code>）を追加し、単独系列との区別と5年の被覆未完了を明記した。同日、研究質問の表現を統一し、引用の版表記を現行リリースに合わせた。公開状態の記述を decision（<code>approved</code>）と公開適格ゲート（<code>SUPPORTED</code>）に合わせて訂正し、C3 内容レビュー（C1〜C45）で数値の一致・要求語の開示・値の区分を再確認して訂正した。</p>
 
 <h3>対象範囲</h3>
 <table>
@@ -99,6 +99,15 @@
       <td><code>20261104T175220Z-google-trends-cannabinoid-raw-collection</code></td>
     </tr>
     <tr>
+      <td>Google Trends（共通スケール）</td>
+      <td>google-trends-mcp 0.1.1（<code>collection.core.cli collect --live</code>）</td>
+      <td><code>CBD</code> / <code>THC</code> / <code>HHCH</code> / <code>THC-O</code> / <code>THCNM</code>（同じ <code>compare_terms</code> 要求）</td>
+      <td>comparison-5y-current-setD</td>
+      <td><code>today 5-y</code>（geo JP）</td>
+      <td>262 週</td>
+      <td><code>20261104T195136Z-google-trends-cannabinoid-raw-collection</code></td>
+    </tr>
+    <tr>
       <td>YouTube</td>
       <td>Apify <code>streamers/youtube-scraper</code>（actor build 0.0.325）</td>
       <td><code>THCNM リキッド</code></td>
@@ -169,7 +178,7 @@
 <div>
   <h2 id="data-search">独自データ: THCNM の Google Trends 検索需要 <span>一次データ（観測 + 派生）</span></h2>
   <p>データソース: Google Trends via google-trends-mcp / 地域: 日本 (JP) / 取得日: 2026-11-04</p>
-  <p>THCNM の検索関心度（相対指数 0-100）を 5 本の run で取得した。<strong>単独系列</strong>は <code>THCNM</code> だけの 12ヶ月と5年、<strong>共通スケール</strong>は <code>CBD</code>・<code>THC</code>・<code>THCNM</code> を同じ要求に含めた 12ヶ月・3ヶ月・5年である。5 本はそれぞれ別の観測で、値をまたいで計算しない。</p>
+  <p>THCNM の検索関心度（相対指数 0-100）を 5 本の run で取得した。<strong>単独系列</strong>は <code>THCNM</code> だけの 12ヶ月と5年、<strong>共通スケール</strong>は <code>CBD</code>・<code>THC</code>・<code>THCNM</code> を同じ要求に含めた 12ヶ月・3ヶ月と、同じ 2 語をアンカーに <code>THCNM</code> を含む 5 語要求の 5年である（5年の要求語は <code>CBD</code>・<code>THC</code>・<code>HHCH</code>・<code>THC-O</code>・<code>THCNM</code>）。5 本はそれぞれ別の観測で、値をまたいで計算しない。</p>
 
   <div>
     <p><strong>用語の定義:</strong></p>
@@ -208,7 +217,7 @@
         <td>THC</td>
         <td><strong>11.9057</strong></td>
         <td>13</td>
-        <td>18（2025-11-09）</td>
+        <td>18（2025-11-09・2025-12-14・2026-01-25 の 3 週）</td>
         <td>53 週</td>
         <td>派生</td>
       </tr>
@@ -253,7 +262,7 @@
       </tr>
       <tr>
         <td>平均の定義</td>
-        <td>週次 53 点の算術平均（小数第 4 位）</td>
+        <td>週次 53 点の算術平均（小数第 4 位）。run 記録の <code>average_interest</code> は同じ平均を整数に丸めた値（46 / 12 / 0）</td>
         <td>派生</td>
       </tr>
     </tbody>
@@ -331,14 +340,15 @@
       </tr>
       <tr>
         <td>平均の定義</td>
-        <td>日次 93 点の算術平均（小数第 4 位）</td>
+        <td>日次 93 点の算術平均（小数第 4 位）。run 記録の <code>average_interest</code> は同じ平均を整数に丸めた値（52 / 9 / 0）</td>
         <td>派生</td>
       </tr>
     </tbody>
   </table>
   <p><strong>出所:</strong> run <code>20261104T175220Z-google-trends-cannabinoid-raw-collection</code>（JP / <code>today 3-m</code> / 2026-11-04T17:52:20Z 収集）。</p>
-  <p><strong>THCNM の非ゼロ:</strong> 11 日。最大は 2026-08-13 の 12 で、2026-10-21 〜 2026-11-03 は 1〜2 が続く。</p>
+  <p><strong>THCNM の非ゼロ:</strong> 11 日。最大は 2026-08-13 の 12。残る 10 日は 2026-10-21 〜 2026-11-03 に散在し（連続ではない）、値は 1 か 2（2026-10-26 のみ 2）。</p>
   <p><strong>窓と返却点の差:</strong> 要求窓の開始は 2026-08-06 だが、返却点は 2026-08-04 から始まる（collector の解決が名目値より 2 日広い）。要求と観測は別の欄に記録し、境界は未検証（<code>exact_window_match: false</code>）。</p>
+  <p><strong>記録の不備:</strong> この run の <code>run_metadata.json</code> は <code>temporal_provenance.granularity</code> を <code>week</code> と記録しているが、返却点は日次 93 点である（ISS-20261105-GT-031。adapter は修正済みで、当該 run の記録はそのまま）。本ページは返却点の間隔を観測として日次と表示し、窓は <code>metadata/windows/2026-08-06_2026-11-04.json</code>（<code>granularity: day</code>）による。</p>
 
   <h3>5年 共通スケール（長期比較の補助）</h3>
   <table>
@@ -356,6 +366,7 @@
       <tr><td><strong>THCNM</strong></td><td>0.0000</td><td>0 週</td><td>派生</td></tr>
     </tbody>
   </table>
+  <p><strong>要求:</strong> <code>CBD</code>・<code>THC</code>・<code>HHCH</code>・<code>THC-O</code>・<code>THCNM</code> の 5 語を同じ <code>compare_terms</code> 要求で取得した（<code>query_id</code> <code>comparison-5y-current-setD</code>、catalog の <code>compound_id</code> は <code>compound_cbd</code>）。正規化は同じ要求内の最大値 = 100（CBD の 2025-08-31）。本ページはこのうち CBD・THC・THCNM の 3 語だけを載せ、HHCH・THC-O の値は載せない。</p>
   <p><strong>出所:</strong> run <code>20261104T195136Z-google-trends-cannabinoid-raw-collection</code>（JP / <code>today 5-y</code> / 窓 <code>2021-10-31_2026-11-08</code> / 観測 2021-10-31 〜 2026-11-01（262 週） / 2026-11-04T19:51:36Z 収集）。平均は週次 262 点の算術平均（小数第 4 位）。</p>
   <p><strong>読み方:</strong> 5年の共通スケールでも THCNM は全 262 週が 0 である。これは丸め（相対指数の最小値未満）であり、需要ゼロの観測ではない。12ヶ月共通スケールと同じく、単独系列の初出 2026-10-18（47）とは換算しない。</p>
 
@@ -524,13 +535,8 @@
         <td>観測（run 記録）</td>
       </tr>
       <tr>
-        <td>重複除去後</td>
-        <td>30 件（重複 0。キーは動画 ID、run 内のみで判定）</td>
-        <td>派生</td>
-      </tr>
-      <tr>
         <td>実行状態</td>
-        <td>SUCCEEDED</td>
+        <td>success（Apify の run status は SUCCEEDED）</td>
         <td>観測（run 記録）</td>
       </tr>
       <tr>
@@ -545,8 +551,9 @@
       </tr>
     </tbody>
   </table>
-  <p><strong>出所:</strong> run <code>20261104T120627Z-youtube-cannabinoid-raw-collection</code>。採用宣言は <code>metadata/provenance/declarations/20261104-youtube-thcnm-tha-liquid-cannabinoid-raw-collection.json</code>。返却レコード数と実行状態は run 記録の観測値、重複除去後・公開日範囲・半開区間は返却レコードから再計算した派生値。raw payload は Git 非追跡・公開対象外で、宣言と run 記録をリポジトリ側の証跡とする。</p>
+  <p><strong>出所:</strong> run <code>20261104T120627Z-youtube-cannabinoid-raw-collection</code>。採用宣言は <code>metadata/provenance/declarations/20261104-youtube-thcnm-tha-liquid-cannabinoid-raw-collection.json</code>。返却レコード数と実行状態は run 記録の観測値、公開日範囲・半開区間は返却レコードから再計算した派生値。raw payload は Git 非追跡・公開対象外で、宣言と run 記録をリポジトリ側の証跡とする。</p>
   <p><strong>制約:</strong> 返却件数は検索結果として返された動画の標本数であり、YouTube 全体の投稿数ではない。個別動画の行（タイトル・チャンネル・ID・URL）および再生数などの動画単位の指標は本ページに掲載しない。</p>
+  <p><strong>重複除去:</strong> 収集時に payload 上で行った（キーは動画 ID、run 内のみ）。重複は 0 だったが、payload は Git 非追跡のため、この処理結果はリポジトリ内で再計算できない。返却レコード数は run 記録と catalog の <code>record_count</code> で確認できる。</p>
 </div>
 
 
@@ -608,13 +615,8 @@
         <td>観測（run 記録）</td>
       </tr>
       <tr>
-        <td>重複除去後</td>
-        <td>311 件（重複 0。キーは動画 ID、run 内のみで判定）</td>
-        <td>派生</td>
-      </tr>
-      <tr>
         <td>実行状態</td>
-        <td>SUCCEEDED</td>
+        <td>success（Apify の run status は SUCCEEDED）</td>
         <td>観測（run 記録）</td>
       </tr>
       <tr>
@@ -629,8 +631,9 @@
       </tr>
     </tbody>
   </table>
-  <p><strong>出所:</strong> run <code>20261104T120805Z-youtube-cannabinoid-raw-collection</code>。採用宣言は <code>metadata/provenance/declarations/20261104-youtube-thcnm-tha-liquid-cannabinoid-raw-collection.json</code>。返却レコード数と実行状態は run 記録の観測値、重複除去後・公開日範囲・半開区間は返却レコードから再計算した派生値。raw payload は Git 非追跡・公開対象外で、宣言と run 記録をリポジトリ側の証跡とする。</p>
+  <p><strong>出所:</strong> run <code>20261104T120805Z-youtube-cannabinoid-raw-collection</code>。採用宣言は <code>metadata/provenance/declarations/20261104-youtube-thcnm-tha-liquid-cannabinoid-raw-collection.json</code>。返却レコード数と実行状態は run 記録の観測値、公開日範囲・半開区間は返却レコードから再計算した派生値。raw payload は Git 非追跡・公開対象外で、宣言と run 記録をリポジトリ側の証跡とする。</p>
   <p><strong>制約:</strong> 返却件数は検索結果として返された動画の標本数であり、YouTube 全体の投稿数ではない。2 クエリの件数を合算しない（30 + 311 は意味を持たない）。個別動画の行（タイトル・チャンネル・ID・URL）および再生数などの動画単位の指標は本ページに掲載しない。</p>
+  <p><strong>重複除去:</strong> 収集時に payload 上で行った（キーは動画 ID、run 内のみ）。重複は 0 だったが、payload は Git 非追跡のため、この処理結果はリポジトリ内で再計算できない。返却レコード数は run 記録と catalog の <code>record_count</code> で確認できる。</p>
 </div>
 
 
@@ -726,7 +729,7 @@
       <tr>
         <td><strong>派生</strong></td>
         <td>観測された週次値・レコードから再計算できる値</td>
-        <td>平均 4.4906 / 0.9122（単独系列）、45.7925 / 11.9057 / 0.0000 と 52.3011 / 8.9355 / 0.2473（共通スケール）、ピーク週 2026-11-01、非ゼロ週 3 / 非ゼロ日 11、観測範囲（返却点の最小・最大）、公開日の最小・最大と半開区間への正規化、重複除去後の件数</td>
+        <td>平均 4.4906 / 0.9122（単独系列）、45.7925 / 11.9057 / 0.0000 と 52.3011 / 8.9355 / 0.2473（共通スケール）、ピーク週 2026-11-01、非ゼロ週 3 / 非ゼロ日 11、観測範囲（返却点の最小・最大）、公開日の最小・最大と半開区間への正規化</td>
       </tr>
       <tr>
         <td><strong>解釈</strong></td>
@@ -743,8 +746,8 @@
 <div>
   <h2 id="publication-status">公開状態</h2>
   <p>本ページは<strong>公開承認済み（<code>approved</code>）</strong>である。公開契約 PC-7 の審査 envelope は <code>metadata/publication/research-thcnm/</code> にあり、<code>decision.json</code> の status は <code>approved</code>、<code>artifact_sha256</code> は現行 HTML の SHA-256 と一致する。</p>
-  <p>2026-11-05 に <code>validation.cli audit-publication</code> と <code>gate-publication</code> を現行 hash で実行した。公開契約の機械検査は本ページについて finding 0、公開適格ゲートは <code>SUPPORTED</code>（PUB-01〜PUB-10 がすべて PASS、WARNING なし）。PUB-04（個人データ審査）は本文・表・画像・リンクを走査し、メールアドレス・@ハンドル・10 桁以上の識別子・行単位の投稿/動画の行が無いことを確認して記録した。PUB-10（公開承認）は owner の 2026-11-05 指示を現行 hash に固定して記録した。根拠は envelope の <code>decision.json</code> / <code>evidence.json</code> にある。</p>
-  <p>公開承認を <strong>v1.14.2</strong> で固定し、本節の記述を現行の状態に合わせた版を <strong>v1.14.3</strong> としてリリースする。</p>
+  <p>2026-11-05 に <code>validation.cli audit-publication</code> と <code>gate-publication</code> を現行 hash で実行した。公開契約の機械検査は本ページについて finding 0、公開適格ゲートは <code>SUPPORTED</code>（PUB-01〜PUB-11 がすべて PASS、WARNING なし）。PUB-04（個人データ審査）は本文・表・画像・リンクを走査し、メールアドレス・@ハンドル・10 桁以上の識別子・行単位の投稿/動画の行が無いことを確認して記録した。PUB-10（公開承認）は owner の 2026-11-05 指示を現行 hash に固定して記録した。PUB-11（C3 内容レビュー）は 2026-11-05 に C1〜C45 の 45 項目を本ページ・raw/comparison 成果物・methodology・taxonomy・evidence に照合して記録した（<code>evidence.json</code> の <code>content_review</code>、チェックリスト <code>metadata/publication/content-review-checklist.json</code> v1.0.0）。根拠は envelope の <code>decision.json</code> / <code>evidence.json</code> にある。</p>
+  <p>公開承認は <strong>v1.14.2</strong> で固定し、公開状態の記述を decision とゲートの現状に合わせて <strong>v1.14.3</strong>・<strong>v1.14.5</strong> で更新した。C3 内容レビュー（PUB-11）の記録を含む本節の版を <strong>v1.14.5</strong> としてリリースする。</p>
   <p>平均・非ゼロ点・観測範囲の算出方法は、単独系列では <code>src/processing/gt_statistics.py</code> と同じ定義（週次値の算術平均、値が 0 でない週数、返却点の最小・最大）、共通スケールでは <code>comparison_cbd-thc-thcnm.json</code> の週次・日次値の算術平均（値が 0 でない点数、返却点の最小・最大）による。</p>
 </div>
 

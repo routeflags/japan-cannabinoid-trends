@@ -23,19 +23,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   gate and the audit.
 
 ### Changed
-- The committed audit and the two recorded gate invocations now report the C3
-  gap (17 PC-10 findings, `PUB-11` FAIL) instead of a clean result.
+- `research-thcnm` carries a recorded C1..C45 review (45 items with a verdict
+  and a basis, reviewer, `reviewed_at`, pinned to the current page). It is the
+  only artifact that passes `PUB-11`; the other 16 report `PC-10` / `PUB-11` and
+  stay `BLOCKED`.
 
 ### Fixed
+- The C3 review of `research_thcnm.html` found and corrected nine content
+  defects: the 12-month THC maximum occurs in three weeks, not one; the 3-month
+  THCNM non-zero days are not consecutive; the 5-year common-scale request has
+  five terms and its own normalisation denominator; the 5-year run was missing
+  from the data-source table; the `average_interest` integers were not
+  reconciled with the published means; the 3-month run metadata records `week`
+  for daily data and the page did not disclose it; the YouTube execution state
+  now uses the recorded `success` vocabulary; the deduplication count was
+  removed because no committed record can reproduce it; and the
+  publication-status section now states `PUB-11` and the review. Every
+  correction is listed in the envelope's `citations.content_changes`.
 - `research_thcnm.html` had been reported `SUPPORTED` on v1.14.4 although no
   content review existed. The v1.14.4 release is not rewritten; the correction
   is recorded as ISS-20261105-PUB-037 and in this release.
 
 ### Known gap
-- The repository has no formal C1..C45 publication checklist (the C1/C2/C3 in
-  `docs/specs/collection-pipeline.md` are comparability checks, not a content
-  review). Until `metadata/publication/content-review/checklist.json` is
-  committed, every artifact is `BLOCKED` and no content review is claimed.
+- The other 16 artifacts have no C1..C45 review and remain `BLOCKED` on
+  `PUB-11`; their pages still describe the gate by its `PUB-01..PUB-10` result.
+  ISS-20261105-PUB-037 stays open for them.
 
 ---
 
