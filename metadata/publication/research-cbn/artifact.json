@@ -6,8 +6,8 @@
   "layer": "publication",
   "source_kind": "html",
   "storage_policy_id": "publication-html-candidate",
-  "sha256": "b92f97d03f877790f5f44b7556f7198f7a2be1acb3e8efe0613737d0888089bb",
-  "byte_length": 14755,
+  "sha256": "1dc6679640aee8f21b044d56e93f8cf3668c44b22177ea5b1b13cb348800858e",
+  "byte_length": 17631,
   "recorded_at": "2026-11-05",
-  "notes": "未公開 publication HTML。PC-7 の審査 envelope として内容 hash を固定する。対象 publication はまだ公開していないため、decision は requires_review から開始する。 v1.13.0 release metadata sync 後の hash。 v1.13.1 release metadata sync 後の hash。 2026-11-05、研究質問の統一・版表記 1.14.1 化・YouTube 動画単位行の削除・Google Trends の要求条件/観測範囲の分離および出所追記の後の hash（内容承認ではなく審査対象の再ピン）。 2026-11-05: CBN の共通スケール節を、CBD・THC を含むアンカー付き run の実測に合わせて更新した後の hash（内容承認ではなく審査対象の再ピン）。"
+  "notes": "未公開 publication HTML。PC-7 の審査 envelope として内容 hash を固定する。対象 publication はまだ公開していないため、decision は requires_review から開始する。 v1.13.0 release metadata sync 後の hash。 v1.13.1 release metadata sync 後の hash。 2026-11-05、研究質問の統一・版表記 1.14.1 化・YouTube 動画単位行の削除・Google Trends の要求条件/観測範囲の分離および出所追記の後の hash（内容承認ではなく審査対象の再ピン）。 2026-11-05: CBN の共通スケール節を、CBD・THC を含むアンカー付き run の実測に合わせて更新した後の hash（内容承認ではなく審査対象の再ピン）。 2026-11-05: C3 内容レビュー（C1〜C45）後の hash に再ピン（公開状態の節追加とレビューによる訂正を含む）。"
 }

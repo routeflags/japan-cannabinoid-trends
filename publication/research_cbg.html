@@ -14,7 +14,7 @@
 <h3>研究質問</h3>
 <p>「日本におけるCBG成分へのオンライン関心は、どのように推移しているか？」</p>
 <p><strong>最終更新:</strong> 2026-11-05。</p>
-<p><strong>改訂:</strong> 2026-11-05 に研究質問の表現を統一し、引用の版表記を現行リリース 1.14.2 に合わせた。YouTube 節から動画単位の行（タイトル・チャンネル・URL）を削除し、あわせてチャンネル名を含む分布表（X・YouTube の上位5チャンネル）を削除した（集計のみ、ISS-20261015-COL-030 §4.1）。Google Trends 節は要求条件と観測範囲を分離し、表ごとの出所を明記し、共通スケール節を CBD・THC を同一要求に含むアンカー付き run の実測に合わせて更新した。</p>
+<p><strong>改訂:</strong> 2026-11-05 に研究質問の表現を統一し、引用の版表記をリリース 1.14.2 に合わせた。YouTube 節から動画単位の行（タイトル・チャンネル・URL）を削除し、あわせてチャンネル名を含む分布表（X・YouTube の上位5チャンネル）を削除した（集計のみ、ISS-20261015-COL-030 §4.1）。Google Trends 節は要求条件と観測範囲を分離し、表ごとの出所を明記し、共通スケール節を CBD・THC を同一要求に含むアンカー付き run の実測に合わせて更新した。2026-11-05 の C3 内容レビュー（C1〜C45）で数値・出所・区分を再確認し、公開状態の節を追加した（v1.14.5）。</p>
 
 <h3>データソース</h3>
 <ul>
@@ -25,7 +25,7 @@
 <!-- ===== 独自データ：Google Trends 検索需要 ===== -->
 <div>
   <h2 id="data-search">独自データ: CBG の Google Trends 検索需要 <span>一次データ</span></h2>
-  <p>データソース: Google Trends / 地域: 日本 (JP) / 要求: <code>today 12-m</code>・<code>today 5-y</code>（週次、単独系列） / 取得日: 表ごとの出所を参照</p>
+  <p>データソース: Google Trends / 地域: 日本 (JP) / 要求: <code>today 12-m</code>・<code>today 5-y</code>（週次、単独系列） / 収集方法: google-trends-mcp（現行 run は 0.1.1、2026-10-02 の legacy run は版の記録なし） / 取得日: 表ごとの出所を参照</p>
   <p>Google Trends から、CBG の日本国内検索興味度（相対指数 0-100）を取得しました。</p>
 
   <div>
@@ -90,7 +90,7 @@
   <p><strong>出所:</strong> run <code>20261002T063924Z-google-trends-cbg</code>（JP / <code>today 12-m</code> / 2026-10-02 収集）。観測範囲 2025-09-28 〜 2026-09-27（53週）。表示値 62.9 は週次 53 点の算術平均（小数第 1 位）。</p>
 
   <h3>共通スケール比較</h3>
-  <p><strong>現行窓:</strong> 5年 <code>2021-10-31_2026-11-08</code> を、<code>CBD</code>・<code>THC</code> と <code>CBG</code> を同一の <code>compare_terms</code> 要求に含む run で取得した。この化合物について現行窓の 12ヶ月アンカー付き run は未取得（単独系列の値で代用しない）。</p>
+  <p><strong>現行窓:</strong> 5年 <code>2021-10-31_2026-11-08</code> を、<code>CBD</code>・<code>THC</code> と <code>CBG</code> を同一の <code>compare_terms</code> 要求に含む run で取得した。この化合物について現行窓の 12ヶ月アンカー付き run は未取得（単独系列の値で代用しない）。単独系列の値とは換算しない。窓の登録ファイルは <code>metadata/windows/&lt;窓 id&gt;.json</code>。</p>
   <table>
     <thead>
       <tr>
@@ -107,8 +107,9 @@
     </tbody>
   </table>
   <p><strong>出所:</strong> run <code>20261104T195126Z-google-trends-cannabinoid-raw-collection</code>（JP / <code>today 5-y</code> / 窓 <code>2021-10-31_2026-11-08</code> / 観測 2021-10-31 〜 2026-11-01（262 週） / 2026-11-04T19:51:26.401407Z 収集）。平均は週次 262 点の算術平均（小数第 4 位）。</p>
+  <p><strong>要求語（5年）:</strong> この run の要求語は <code>CBD</code>・<code>THC</code>・<code>CBG</code>・<code>HHC</code>・<code>THCV</code> の 5 語で、正規化は同一要求内の最大値 = 100（CBD の 2025-08-31）。本表はこのうち CBD・THC・CBG を載せる。</p>
   <p><strong>旧窓の値は現行窓の値ではない:</strong> 2026-10-23 収集の setA〜D（窓 <code>2021-10-17_2026-10-18</code>）と 2026-10-02 の 12ヶ月比較 run は履歴として raw に残るが、本節は現行窓の run だけを示す。</p>
-  <p><strong>制約:</strong> Google Trends は相対指数であり、絶対検索数ではない。0 は相対指数の最小値（閾値未満）であり、検索が存在しなかったことや欠測を意味しない。</p>
+  <p><strong>制約:</strong> Google Trends は相対指数であり、絶対検索数ではない。0 は相対指数の最小値（閾値未満）であり、検索が存在しなかったことや欠測を意味しない。各系列は単発 run であり、反復実行による安定性は未測定。run 間・窓間の平均は比較しない。本ページは Google Trends・X・YouTube の値を合算しない。</p>
 
 </div>
 
@@ -182,6 +183,7 @@
   </table>
 
   <p><strong>方法:</strong> キーワードベースのルール分類。信頼区間は Wilson スコア法による95%信頼区間。</p>
+  <p><strong>出所:</strong> Apify による収集（2026-10-08）。分類は <code>research/x/20261008-x-classification-batch1.json</code> の CBG（n=100、除外 0 件）と一致する。raw は git_untracked でリポジトリに保持されていないため、分類の内訳は raw から再計算できない（分類記録から照合できる）。</p>
   <p><strong>制約:</strong> ルールベース分類のため、文脈による誤分類の可能性がある。X 検索結果のサンプルであり、全投稿を網羅するものではない。X の観測期間はリポジトリに保持した記録に無く、取得日のみを示す（期間の欠測であり、言及ゼロを意味しない）。</p>
 </div>
 
@@ -357,6 +359,7 @@
   </table>
 
 
+  <p><strong>出所:</strong> Apify の検索収集（2026-10-08、ユニーク 34 件）。raw は git_untracked でリポジトリに保持されておらず、本節の件数・統計はリポジトリから再計算できない（収集時の記録値）。</p>
   <p><strong>制約:</strong> YouTube 検索結果のサンプルであり、全動画を網羅するものではない。再生数は取得日時点の値であり、変動する可能性がある。動画単位の行（動画 ID・タイトル・チャンネル・URL・再生数）は公開しない（集計のみ、ISS-20261015-COL-030 §4.1）。</p>
 </div>
 
@@ -381,8 +384,8 @@
         <td>21</td>
       </tr>
       <tr>
-        <td>投稿日範囲</td>
-        <td>2021-01-22 〜 2026-03-30</td>
+        <td>投稿日範囲・半開区間</td>
+        <td>2021-01-22 〜 2026-03-30・[2021-01-22, 2026-03-31)</td>
       </tr>
       <tr>
         <td>取得日</td>
@@ -427,6 +430,14 @@
   <p><strong>制約:</strong> YouTube 検索結果は取得日時点のものであり、動画の追加・削除により変動する可能性がある。投稿日は YouTube Data API から取得した絶対日付。なお、投稿日の取得に用いた YouTube Data API v3 は 2026-10-12 の方針判断により使用を取り止め、当時の raw は削除済みである（本節の数値は削除前の取得結果であり、再取得は行わない）。動画単位の行（動画 ID・タイトル・チャンネル・URL・再生数）は公開しない（集計のみ、ISS-20261015-COL-030 §4.1）。</p>
 </div>
 
+
+<!-- ===== 公開状態 ===== -->
+<div>
+  <h2 id="publication-status">公開状態</h2>
+  <p>本ページは<strong>公開承認済み（<code>approved</code>）</strong>である。公開契約 PC-7 の審査 envelope は <code>metadata/publication/research-cbg/</code> にあり、<code>decision.json</code> の status は <code>approved</code>、<code>artifact_sha256</code> は現行 HTML の SHA-256 と一致する。</p>
+  <p>2026-11-05 に <code>validation.cli audit-publication</code> と <code>gate-publication</code> を現行 hash で実行した。公開契約の機械検査は本ページについて finding 0、公開適格ゲートは <code>SUPPORTED</code>（PUB-01〜PUB-11 がすべて PASS、WARNING なし）。PUB-11（C3 内容レビュー）は 2026-11-05 に C1〜C45 の 45 項目を本ページ・raw/comparison 成果物・methodology・taxonomy・evidence に照合して記録した（<code>evidence.json</code> の <code>content_review</code>、チェックリスト <code>metadata/publication/content-review-checklist.json</code> v1.0.0）。根拠は envelope の <code>decision.json</code> / <code>evidence.json</code> にある。</p>
+  <p>本節の版を <strong>v1.14.5</strong> としてリリースする。</p>
+</div>
 
 <!-- ===== 引用情報 ===== -->
 <div>
