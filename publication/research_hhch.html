@@ -14,11 +14,11 @@
 <h3>研究質問</h3>
 <p>「日本におけるHHCH成分へのオンライン関心は、どのように推移しているか？」</p>
 <p><strong>最終更新:</strong> 2026-11-05。</p>
-<p><strong>改訂:</strong> 2026-11-05 に研究質問の表現を統一し、引用の版表記を現行リリース 1.14.2 に合わせた。YouTube 節から動画単位の行（タイトル・チャンネル・URL）を削除し、あわせてチャンネル名を含む分布表（X・YouTube の上位5チャンネル）を削除した（集計のみ、ISS-20261015-COL-030 §4.1）。Google Trends 節は要求条件と観測範囲を分離し、表ごとの出所を明記し、共通スケール節を CBD・THC を同一要求に含むアンカー付き run の実測に合わせて更新した。</p>
+<p><strong>改訂:</strong> 2026-11-05 に研究質問の表現を統一し、引用の版表記をリリース 1.14.2 に合わせた。YouTube 節から動画単位の行（タイトル・チャンネル・URL）を削除し、あわせてチャンネル名を含む分布表（X・YouTube の上位5チャンネル）を削除した（集計のみ、ISS-20261015-COL-030 §4.1）。Google Trends 節は要求条件と観測範囲を分離し、表ごとの出所を明記し、共通スケール節を CBD・THC を同一要求に含むアンカー付き run の実測に合わせて更新した。2026-11-05 の C3 内容レビュー（C1〜C45）で数値・出所・区分を再確認し、公開状態の節を追加した（v1.14.5）。</p>
 
 <h3>データソース</h3>
 <ul>
-  <li><strong>検索データ:</strong> Google Trends（日本、過去12ヶ月・5年）</li>
+  <li><strong>検索データ:</strong> Google Trends（google-trends-mcp 0.1.1、日本、過去12ヶ月・5年）</li>
   <li><strong>規制資料:</strong> 厚生労働省</li>
 </ul>
 
@@ -60,7 +60,7 @@
       </tr>
       <tr>
         <td>ピーク</td>
-        <td>2023-11-12（値: 100）</td>
+        <td>2023-11-12・2023-11-19（値: 100）</td>
       </tr>
       <tr>
         <td>最新値</td>
@@ -68,7 +68,7 @@
       </tr>
     </tbody>
   </table>
-  <p><strong>出所:</strong> run <code>20261014T204859Z-google-trends-cannabinoid-multi-trends</code>（JP / today 5-y / 2026-10-14T20:48:59.522947Z 収集）。記録にある項目: 初出 2023-01-15（値 1）、非ゼロ 51 週 / ゼロ 211 週、データあり期間 2021-10-10 〜 2026-10-11。</p>
+  <p><strong>出所:</strong> run <code>20261014T204859Z-google-trends-cannabinoid-multi-trends</code>（query_id <code>hhch-general-ja</code> / JP / <code>today 5-y</code> / 窓 <code>2021-10-10_2026-10-12</code> / 2026-10-14T20:48:59.522947Z 収集）。記録にある項目: 初出 2023-01-15（値 1）、非ゼロ 51 週 / ゼロ 211 週、データあり期間 2021-10-10 〜 2026-10-11。平均 1.28 と非ゼロ 51 週は週次 262 点からの派生（算術平均、小数第 2 位）。</p>
 
   <h3>12ヶ月データサマリー（個別正規化値）</h3>
   <table>
@@ -87,7 +87,7 @@
       </tr>
     </tbody>
   </table>
-  <p><strong>出所:</strong> run <code>20261002T094657Z-google-trends-hhch-12m</code>（JP / <code>today 12-m</code> / 2026-10-02 収集）。観測範囲 2025-09-28 〜 2026-09-27（53週）。表示値 3.1 は週次 53 点の算術平均（小数第 1 位）。</p>
+  <p><strong>出所:</strong> run <code>20261002T094657Z-google-trends-hhch-12m</code>（query_id <code>hhch-general-ja</code>、<code>metadata/queries/query-registry.json</code> / JP / <code>today 12-m</code> / 2026-10-02 収集）。観測範囲 2025-09-28 〜 2026-09-27（53週）。表示値 3.1 は週次 53 点の算術平均（小数第 1 位）。初出 2026-09-20（値 100）、非ゼロ 2 週 / ゼロ 51 週。</p>
 
   <h3>共通スケール比較</h3>
   <p><strong>現行窓:</strong> 5年 <code>2021-10-31_2026-11-08</code> を、<code>CBD</code>・<code>THC</code> と <code>HHCH</code> を同一の <code>compare_terms</code> 要求に含む run で取得した。この化合物について現行窓の 12ヶ月アンカー付き run は未取得（単独系列の値で代用しない）。</p>
@@ -106,9 +106,9 @@
       <tr><td><strong>HHCH</strong></td><td>1.0344</td><td>44 週</td><td>派生</td></tr>
     </tbody>
   </table>
-  <p><strong>出所:</strong> run <code>20261104T195136Z-google-trends-cannabinoid-raw-collection</code>（JP / <code>today 5-y</code> / 窓 <code>2021-10-31_2026-11-08</code> / 観測 2021-10-31 〜 2026-11-01（262 週） / 2026-11-04T19:51:36.973389Z 収集）。平均は週次 262 点の算術平均（小数第 4 位）。</p>
+  <p><strong>出所:</strong> run <code>20261104T195136Z-google-trends-cannabinoid-raw-collection</code>（query_id <code>comparison-5y-current-setD</code> / JP / <code>today 5-y</code> / 窓 <code>2021-10-31_2026-11-08</code> / 観測 2021-10-31 〜 2026-11-01（262 週） / 2026-11-04T19:51:36.973389Z 収集）。平均は週次 262 点の算術平均（小数第 4 位）。要求語は CBD・THC・HHCH・THC-O・THCNM の 5 語で、正規化は同一要求内の最大値（CBD の 2025-08-31）= 100 であり、単独系列（各語のピーク = 100）とは換算できない（本表は 5 語のうち 3 語を載せる）。</p>
   <p><strong>旧窓の値は現行窓の値ではない:</strong> 2026-10-23 収集の setA〜D（窓 <code>2021-10-17_2026-10-18</code>）と 2026-10-02 の 12ヶ月比較 run は履歴として raw に残るが、本節は現行窓の run だけを示す。</p>
-  <p><strong>制約:</strong> Google Trends は相対指数であり、絶対検索数ではない。0 は相対指数の最小値（閾値未満）であり、検索が存在しなかったことや欠測を意味しない。</p>
+  <p><strong>制約:</strong> Google Trends は相対指数であり、絶対検索数ではない。0 は相対指数の最小値（閾値未満）であり、検索が存在しなかったことや欠測を意味しない。Google Trends の raw（payload・records・comparison）は <code>datasets/cannabinoid-raw-collection/data/raw/google_trends/</code> に追跡されている。各 run は単発で、同一要求の反復実行は無い（安定性は未測定）。掲載するのは各節の出所に示す run だけで、別 run からの選択は行っていない。run 間・窓間で平均を比較しない。Google Trends・YouTube・X は別々の観測であり、値を合算しない。</p>
 
 </div>
 
@@ -183,7 +183,7 @@
   </table>
 
 
-  <p><strong>制約:</strong> YouTube 検索結果のサンプルであり、全動画を網羅するものではない。再生数は取得日時点の値であり、変動する可能性がある。動画単位の行（動画 ID・タイトル・チャンネル・URL・再生数）は公開しない（集計のみ、ISS-20261015-COL-030 §4.1）。</p>
+  <p><strong>制約:</strong> YouTube 検索結果のサンプルであり、全動画を網羅するものではない。再生数は取得日時点の値であり、変動する可能性がある。この run の raw は Git 非追跡でリポジトリに保持しておらず、本節の件数・統計は保持データから再計算できない。動画単位の行（動画 ID・タイトル・チャンネル・URL・再生数）は公開しない（集計のみ、ISS-20261015-COL-030 §4.1）。</p>
 </div>
 
 
@@ -347,7 +347,16 @@
   </table>
 
 
-  <p><strong>制約:</strong> YouTube 検索結果は取得日時点のものであり、動画の追加・削除により変動する可能性がある。投稿日は YouTube Data API から取得した絶対日付。なお、投稿日の取得に用いた YouTube Data API v3 は 2026-10-12 の方針判断により使用を取り止め、当時の raw は削除済みである（本節の数値は削除前の取得結果であり、再取得は行わない）。動画単位の行（動画 ID・タイトル・チャンネル・URL・再生数）は公開しない（集計のみ、ISS-20261015-COL-030 §4.1）。</p>
+  <p><strong>制約:</strong> YouTube 検索結果は取得日時点のものであり、動画の追加・削除により変動する可能性がある。投稿日は YouTube Data API から取得した絶対日付。なお、投稿日の取得に用いた YouTube Data API v3 は 2026-10-12 の方針判断により使用を取り止め、当時の raw は削除済みである（本節の数値は削除前の取得結果であり、再取得は行わない）。本節の数値はリポジトリに保持した raw から再計算できない。動画単位の行（動画 ID・タイトル・チャンネル・URL・再生数）は公開しない（集計のみ、ISS-20261015-COL-030 §4.1）。</p>
+</div>
+
+
+<!-- ===== 公開状態 ===== -->
+<div>
+  <h2 id="publication-status">公開状態</h2>
+  <p>本ページは<strong>公開承認済み（<code>approved</code>）</strong>である。公開契約 PC-7 の審査 envelope は <code>metadata/publication/research-hhch/</code> にあり、<code>decision.json</code> の status は <code>approved</code>、<code>artifact_sha256</code> は現行 HTML の SHA-256 と一致する。</p>
+  <p>2026-11-05 に <code>validation.cli audit-publication</code> と <code>gate-publication</code> を現行 hash で実行した。公開契約の機械検査は本ページについて finding 0、公開適格ゲートは <code>SUPPORTED</code>（PUB-01〜PUB-11 がすべて PASS、WARNING なし）。PUB-11（C3 内容レビュー）は 2026-11-05 に C1〜C45 の 45 項目を本ページ・raw/comparison 成果物・methodology・taxonomy・evidence に照合して記録した（<code>evidence.json</code> の <code>content_review</code>、チェックリスト <code>metadata/publication/content-review-checklist.json</code> v1.0.0）。根拠は envelope の <code>decision.json</code> / <code>evidence.json</code> にある。</p>
+  <p>本節の版を <strong>v1.14.5</strong> としてリリースする。</p>
 </div>
 
 
