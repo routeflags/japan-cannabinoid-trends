@@ -10,8 +10,7 @@
   "state_summary": {
     "absent": 14,
     "ignored": 2,
-    "tracked": 385,
-    "untracked_unignored": 9
+    "tracked": 394
   },
   "entries": [
     {
@@ -2850,8 +2849,8 @@
       "state": "tracked",
       "tracked": true,
       "ignored": false,
-      "sha256": "1f247dd2eb9b105ade0144ed9c9e35040133b6b7a30bd1f2d2883de8f2c92483",
-      "sha256_after": "1f247dd2eb9b105ade0144ed9c9e35040133b6b7a30bd1f2d2883de8f2c92483",
+      "sha256": "77550d77c8b10b821fe59a9a921bdd0b679fb2bf6ebc9ce93e288ba60c64db45",
+      "sha256_after": "77550d77c8b10b821fe59a9a921bdd0b679fb2bf6ebc9ce93e288ba60c64db45",
       "unchanged": true
     },
     {
@@ -2867,8 +2866,8 @@
     {
       "path": "datasets/cannabinoid-raw-collection/metadata/plans/gt-12m-cbx-bridge.json",
       "exists": true,
-      "state": "untracked_unignored",
-      "tracked": false,
+      "state": "tracked",
+      "tracked": true,
       "ignored": false,
       "sha256": "d7da4cc3c69717dea8c360d2f771272eac5cea023b2af1f4fa2b46b2a66611a1",
       "sha256_after": "d7da4cc3c69717dea8c360d2f771272eac5cea023b2af1f4fa2b46b2a66611a1",
@@ -2877,8 +2876,8 @@
     {
       "path": "datasets/cannabinoid-raw-collection/metadata/plans/gt-12m-common-scale-thcnm.json",
       "exists": true,
-      "state": "untracked_unignored",
-      "tracked": false,
+      "state": "tracked",
+      "tracked": true,
       "ignored": false,
       "sha256": "6ff0b77acea8c708811a845db294d5fd7cadaeaec782e3569f1a066408faf549",
       "sha256_after": "6ff0b77acea8c708811a845db294d5fd7cadaeaec782e3569f1a066408faf549",
@@ -2967,8 +2966,8 @@
     {
       "path": "datasets/cannabinoid-raw-collection/metadata/plans/gt-3m-common-scale-thcnm.json",
       "exists": true,
-      "state": "untracked_unignored",
-      "tracked": false,
+      "state": "tracked",
+      "tracked": true,
       "ignored": false,
       "sha256": "621b1ba4473de7d9a4bd17ad0c71c9adaf93c81eb5e1f3f5b99ccd3dc88b2327",
       "sha256_after": "621b1ba4473de7d9a4bd17ad0c71c9adaf93c81eb5e1f3f5b99ccd3dc88b2327",
@@ -2977,8 +2976,8 @@
     {
       "path": "datasets/cannabinoid-raw-collection/metadata/plans/gt-5y-cbx-bridge.json",
       "exists": true,
-      "state": "untracked_unignored",
-      "tracked": false,
+      "state": "tracked",
+      "tracked": true,
       "ignored": false,
       "sha256": "a3acec39cc0d282af706209406367ca3270a4fc586662e4ee077c79678eaaefe",
       "sha256_after": "a3acec39cc0d282af706209406367ca3270a4fc586662e4ee077c79678eaaefe",
@@ -2987,8 +2986,8 @@
     {
       "path": "datasets/cannabinoid-raw-collection/metadata/plans/gt-5y-common-scale-current-setA.json",
       "exists": true,
-      "state": "untracked_unignored",
-      "tracked": false,
+      "state": "tracked",
+      "tracked": true,
       "ignored": false,
       "sha256": "29242dd9ad289e7c89f1e8320f3cf4c038262730393bf9390c2515084c64c1bb",
       "sha256_after": "29242dd9ad289e7c89f1e8320f3cf4c038262730393bf9390c2515084c64c1bb",
@@ -2997,8 +2996,8 @@
     {
       "path": "datasets/cannabinoid-raw-collection/metadata/plans/gt-5y-common-scale-current-setB.json",
       "exists": true,
-      "state": "untracked_unignored",
-      "tracked": false,
+      "state": "tracked",
+      "tracked": true,
       "ignored": false,
       "sha256": "ef52da93769480433c2d83cfb41fdf98c5bd2128c7d25ae89a6f8a04a290a4f3",
       "sha256_after": "ef52da93769480433c2d83cfb41fdf98c5bd2128c7d25ae89a6f8a04a290a4f3",
@@ -3007,8 +3006,8 @@
     {
       "path": "datasets/cannabinoid-raw-collection/metadata/plans/gt-5y-common-scale-current-setC.json",
       "exists": true,
-      "state": "untracked_unignored",
-      "tracked": false,
+      "state": "tracked",
+      "tracked": true,
       "ignored": false,
       "sha256": "c4eedbfa96d17ff362a3b9de9eba03a785f0cf20a333e12b2f018cdf84797396",
       "sha256_after": "c4eedbfa96d17ff362a3b9de9eba03a785f0cf20a333e12b2f018cdf84797396",
@@ -3017,8 +3016,8 @@
     {
       "path": "datasets/cannabinoid-raw-collection/metadata/plans/gt-5y-common-scale-current-setD.json",
       "exists": true,
-      "state": "untracked_unignored",
-      "tracked": false,
+      "state": "tracked",
+      "tracked": true,
       "ignored": false,
       "sha256": "67d90778a6fa4dfe70927665b9e9a494a95b49edcb0c1b6ca7e510beab810aa8",
       "sha256_after": "67d90778a6fa4dfe70927665b9e9a494a95b49edcb0c1b6ca7e510beab810aa8",
@@ -3067,8 +3066,8 @@
     {
       "path": "datasets/cannabinoid-raw-collection/metadata/plans/gt-5y-common-scale-thcnm.json",
       "exists": true,
-      "state": "untracked_unignored",
-      "tracked": false,
+      "state": "tracked",
+      "tracked": true,
       "ignored": false,
       "sha256": "f4731c332d2e2835214ea507ba2d184823ae339d1a27a60d6ffc6c7111b7bfcb",
       "sha256_after": "f4731c332d2e2835214ea507ba2d184823ae339d1a27a60d6ffc6c7111b7bfcb",
@@ -4029,17 +4028,7 @@
       "kind": "private_marker"
     }
   ],
-  "accidental_add_risk": [
-    "datasets/cannabinoid-raw-collection/metadata/plans/gt-12m-cbx-bridge.json",
-    "datasets/cannabinoid-raw-collection/metadata/plans/gt-12m-common-scale-thcnm.json",
-    "datasets/cannabinoid-raw-collection/metadata/plans/gt-3m-common-scale-thcnm.json",
-    "datasets/cannabinoid-raw-collection/metadata/plans/gt-5y-cbx-bridge.json",
-    "datasets/cannabinoid-raw-collection/metadata/plans/gt-5y-common-scale-current-setA.json",
-    "datasets/cannabinoid-raw-collection/metadata/plans/gt-5y-common-scale-current-setB.json",
-    "datasets/cannabinoid-raw-collection/metadata/plans/gt-5y-common-scale-current-setC.json",
-    "datasets/cannabinoid-raw-collection/metadata/plans/gt-5y-common-scale-current-setD.json",
-    "datasets/cannabinoid-raw-collection/metadata/plans/gt-5y-common-scale-thcnm.json"
-  ],
+  "accidental_add_risk": [],
   "ignore_warnings": [
     {
       "code": "GITIGNORE_BLANKET_PATTERN",
