@@ -6,7 +6,7 @@
   "integrity": "verified",
   "citations": {
     "integrity": [
-      "sha256(publication/research_crdp.html, 2026-11-05 検算) = 23d8a00d11b62d406b01628b84e125a3f8e3dd6c430d0bf67d7795f6da9c81e5"
+      "sha256(publication/research_crdp.html, 2026-11-05 検算) = 2f3da6006eff2eef3f11dfe294c46348022193607661c68db7df6deb7b58cf5d"
     ],
     "publication_contract": [
       "validation.cli audit-publication（2026-10-15）: PC-1〜PC-8 の機械検査対象。PC-7 は本 envelope の存在と hash 固定を検査する。",
@@ -55,7 +55,7 @@
   "content_review": {
     "checklist_id": "publication-content-review-c1-c45",
     "checklist_version": "1.0.0",
-    "artifact_sha256": "23d8a00d11b62d406b01628b84e125a3f8e3dd6c430d0bf67d7795f6da9c81e5",
+    "artifact_sha256": "2f3da6006eff2eef3f11dfe294c46348022193607661c68db7df6deb7b58cf5d",
     "reviewer": "Delta agent (owner instruction 2026-11-05: C1–C45 review of research-crdp)",
     "reviewed_at": "2026-11-05",
     "items": [

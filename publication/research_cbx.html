@@ -14,7 +14,7 @@
 <h3>研究質問</h3>
 <p>「日本におけるCBX成分へのオンライン関心は、どのように推移しているか？」</p>
 <p><strong>最終更新:</strong> 2026-11-05。</p>
-<p><strong>改訂:</strong> 2026-11-05 に研究質問の表現を統一し、引用の版表記を現行リリース 1.14.2 に合わせた。YouTube 節から動画単位の行（タイトル・チャンネル・URL）を削除し、あわせてチャンネル名を含む分布表（X・YouTube の上位5チャンネル）を削除した（集計のみ、ISS-20261015-COL-030 §4.1）。Google Trends 節は要求条件と観測範囲を分離し、表ごとの出所を明記し、共通スケール節を CBD・THC を同一要求に含むアンカー付き run の実測に合わせて更新した。</p>
+<p><strong>改訂:</strong> 2026-11-05 に研究質問の表現を統一し、引用の版表記をリリース 1.14.2 に合わせた。YouTube 節から動画単位の行（タイトル・チャンネル・URL）を削除し、あわせてチャンネル名を含む分布表（X・YouTube の上位5チャンネル）を削除した（集計のみ、ISS-20261015-COL-030 §4.1）。Google Trends 節は要求条件と観測範囲を分離し、表ごとの出所を明記し、共通スケール節を CBD・THC を同一要求に含むアンカー付き run の実測に合わせて更新した。2026-11-05 の C3 内容レビュー（C1〜C45）で数値・出所・区分を再確認し、公開状態の節を追加した（v1.14.5）。</p>
 
 <h3>データソース</h3>
 <ul>
@@ -27,7 +27,7 @@
 <!-- ===== 独自データ：Google Trends 検索需要 ===== -->
 <div>
   <h2 id="data-search">独自データ: CBX の Google Trends 検索需要 <span>一次データ</span></h2>
-  <p>データソース: Google Trends / 地域: 日本 (JP) / 要求: <code>today 12-m</code>・<code>today 5-y</code>（週次、単独系列と共通スケール） / 取得日: 表ごとの出所を参照</p>
+  <p>データソース: Google Trends / 地域: 日本 (JP) / 要求: <code>today 12-m</code>・<code>today 5-y</code>（週次、単独系列と共通スケール） / 収集方法: google-trends-mcp 0.1.1 / 取得日: 表ごとの出所を参照</p>
   <p>Google Trends から、CBX の日本国内検索興味度（相対指数 0-100）を取得しました。</p>
 
   <div>
@@ -71,6 +71,7 @@
     </tbody>
   </table>
   <p><strong>出所:</strong> run <code>20261015T042857Z-google-trends-boundary-5y</code>（JP / today 5-y / 2026-10-15T04:28:57Z 収集）。記録にある項目: 初出 2021-10-10（値 57）、非ゼロ 262 週 / ゼロ 0 週、データあり期間 2021-10-10 〜 2026-10-11。</p>
+  <p><strong>補足:</strong> この表の run は <code>20261015T042857Z-google-trends-boundary-5y</code>（<code>query_id</code> <code>cbx-general-ja</code>）、要求窓は <code>2021-10-15T04:28:57Z_2026-10-15T04:28:57Z</code>（登録窓ファイルなし）。5年平均は週次 262 点の算術平均（小数第 2 位）、非ゼロ週は値が 0 でない週である。</p>
 
   <h3>12ヶ月データサマリー（個別正規化値）</h3>
   <table>
@@ -89,7 +90,7 @@
       </tr>
     </tbody>
   </table>
-  <p><strong>出所:</strong> run <code>20261015T042853Z-google-trends-boundary-12m</code>（JP / <code>today 12-m</code> / 2026-10-15T04:28:54Z 収集）。観測範囲 2025-10-12 〜 2026-10-11（53週）。表示値 69.77 は週次 53 点の算術平均（小数第 1 位）。</p>
+  <p><strong>出所:</strong> run <code>20261015T042853Z-google-trends-boundary-12m</code>（JP / <code>today 12-m</code> / 2026-10-15T04:28:54Z 収集）。観測範囲 2025-10-12 〜 2026-10-11（53週）。表示値 69.77 は週次 53 点の算術平均（小数第 2 位）。</p>
 <!-- 12ヶ月表の値の導出: run 20261015T042853Z-google-trends-boundary-12m の records_cbx.json（53 週）から算出。平均 69.77、ピーク 2026-09-13（値 100）、最新値 78、期間 2025-10-12 〜 2026-10-11、全週非ゼロ。 -->
 
   <h3>共通スケール比較</h3>
@@ -118,9 +119,9 @@
     </tbody>
   </table>
   <p><strong>出所:</strong> run <code>20261104T165155Z-google-trends-cannabinoid-raw-collection</code>（JP / <code>today 5-y</code> / 窓 <code>2021-10-31_2026-11-08</code> / 観測 2021-10-31 〜 2026-11-01 / 262 週 / 2026-11-04T16:51:55Z 収集）。平均は週次 262 点の算術平均（小数第 4 位）。</p>
-  <p><strong>比較宣言:</strong> この 2 run の計画は <code>comparison</code> ブロックを宣言していないが、要求語は <code>CBX</code>・<code>CBD</code>・<code>THC</code> で、アンカー CBD・THC を同一要求に含む。</p>
+  <p><strong>比較宣言:</strong> この 2 run の計画は <code>comparison</code> ブロックを宣言していないが、要求語は <code>CBX</code>・<code>CBD</code>・<code>THC</code> で、アンカー CBD・THC を同一要求に含む。正規化は同一要求内の最大値 = 100（12ヶ月: CBD の 2026-05-03、5年: CBD の 2025-08-31）。窓の登録ファイルは <code>metadata/windows/&lt;窓 id&gt;.json</code>。</p>
 
-  <p><strong>制約:</strong> Google Trends は相対指数であり、絶対検索数ではない。0 は相対指数の最小値（閾値未満）であり、検索が存在しなかったことや欠測を意味しない。本節の 5 年・12 ヶ月系列は境界計測のために取得した run（<code>ISS-20261015-GT-001</code>）の観測値であり、研究用に別途再取得したものではない。出所の run_id を参照。</p>
+  <p><strong>制約:</strong> Google Trends は相対指数であり、絶対検索数ではない。0 は相対指数の最小値（閾値未満）であり、検索が存在しなかったことや欠測を意味しない。本節の 5 年・12 ヶ月系列は境界計測のために取得した run（<code>ISS-20261015-GT-001</code>）の観測値であり、研究用に別途再取得したものではない。各系列は単発 run であり、反復実行による安定性は未測定。run 間・窓間の平均は比較しない。本ページは Google Trends・X・YouTube の値を合算せず、YouTube の 6 runs 合計 2288 は採用宣言の <code>returned_count</code> の合計であって分析指標ではない。出所の run_id を参照。</p>
   <p><strong>多義語と出所:</strong> 登録した検索文字列 <code>CBX</code> は Honda の車種名と同名であり、本節の系列はカンナビノイド固有の検索関心を分離していない。判別クエリ（<code>CBX 大麻</code> / <code>CBX カンナビノイド</code>）を同時取得した run <code>20261001T132500Z-google-trends-disambiguated</code> の記録では、判別クエリの平均は 2〜5、裸語 <code>CBX</code> の平均は 68〜69 である。本節の値をカンナビノイド需要として読まない。</p>
   <p><strong>出所の所有:</strong> 本節の Google Trends raw は 2026-11-04 の owner 決定で <code>cannabinoid-raw-collection</code> が所有する（ISS-20261024-COL-016 Q5）。YouTube も同じ study が所有する。</p>
 </div>
@@ -157,7 +158,7 @@
   </table>
 
   <h3>コンテンツ分類結果（信頼区間付き）</h3>
-  <p>分類はキーワードベースのルール分類による。件数と比率は仕様に記録された分布（全 147 件の分類結果）から取る。信頼区間は Wilson スコア法による 95% 信頼区間。</p>
+  <p>分類はキーワードベースのルール分類による。件数と比率は 2026-10-08 時点の分類結果（全 147 件）から取る。信頼区間は Wilson スコア法による 95% 信頼区間。</p>
   <h3>トピック分類</h3>
   <table>
     <thead>
@@ -280,6 +281,7 @@
 
   <p><strong>方法:</strong> キーワードベースのルール分類。信頼区間は Wilson スコア法による95%信頼区間。</p>
   <p><strong>制約:</strong> ルールベース分類のため、文脈による誤分類の可能性がある。X 検索結果のサンプルであり、全投稿を網羅するものではない。投稿単位のデータは公開しない（集計のみ）。X の観測期間はリポジトリに保持した記録に無く、取得日のみを示す（期間の欠測であり、言及ゼロを意味しない）。</p>
+  <p><strong>出所:</strong> Apify による 2026-08 の収集（147 件。件数の記録は <code>datasets/cbx-social-trends/analysis/cbx_x_data_integrity.md</code>）。分類の内訳は 2026-10-08 時点の分類結果で、raw 非保持のためリポジトリ内で再計算できない。化合物別の分類記録 <code>research/x/20261008-x-classification-batch1.json</code> には CBX の項が無い。</p>
 </div>
 
 
@@ -396,21 +398,21 @@
         <th>キーワード</th>
         <th>件数</th>
         <th>dateFilter（API 要求）</th>
-        <th>観測範囲（payload の動画公開日）</th>
+        <th>観測窓（payload の動画公開日、半開区間）</th>
       </tr>
     </thead>
     <tbody>
-      <tr><td><code>20261010T141947Z-youtube-youtube-consistency</code></td><td>HHBD リキッド</td><td>224</td><td>all</td><td>2020-09-30 〜 2026-10-06</td></tr>
-      <tr><td><code>20261010T143429Z-youtube-youtube-consistency</code></td><td>H4CBH リキッド</td><td>395</td><td>all</td><td>2020-10-01 〜 2026-10-02</td></tr>
-      <tr><td><code>20261010T144421Z-youtube-youtube-consistency</code></td><td>CBD リキッド</td><td>456</td><td>all</td><td>2014-11-17 〜 2026-10-10</td></tr>
-      <tr><td><code>20261010T145727Z-youtube-youtube-consistency</code></td><td>CBN リキッド</td><td>468</td><td>all</td><td>2008-08-01 〜 2026-09-24</td></tr>
-      <tr><td><code>20261010T164915Z-youtube-youtube-consistency</code></td><td>CRDH リキッド</td><td>352</td><td>all</td><td>2022-09-29 〜 2026-09-12</td></tr>
-      <tr><td><code>20261011T191900Z-youtube-youtube-consistency</code></td><td>CBD リキッド</td><td>393</td><td>year</td><td>2025-10-11 〜 2026-10-10</td></tr>
+      <tr><td><code>20261010T141947Z-youtube-youtube-consistency</code></td><td>HHBD リキッド</td><td>224</td><td>all</td><td>[2020-09-30, 2026-10-06)</td></tr>
+      <tr><td><code>20261010T143429Z-youtube-youtube-consistency</code></td><td>H4CBH リキッド</td><td>395</td><td>all</td><td>[2020-10-01, 2026-10-02)</td></tr>
+      <tr><td><code>20261010T144421Z-youtube-youtube-consistency</code></td><td>CBD リキッド</td><td>456</td><td>all</td><td>[2014-11-17, 2026-10-10)</td></tr>
+      <tr><td><code>20261010T145727Z-youtube-youtube-consistency</code></td><td>CBN リキッド</td><td>468</td><td>all</td><td>[2008-08-01, 2026-09-24)</td></tr>
+      <tr><td><code>20261010T164915Z-youtube-youtube-consistency</code></td><td>CRDH リキッド</td><td>352</td><td>all</td><td>[2022-09-29, 2026-09-12)</td></tr>
+      <tr><td><code>20261011T191900Z-youtube-youtube-consistency</code></td><td>CBD リキッド</td><td>393</td><td>year</td><td>[2025-10-11, 2026-10-10)</td></tr>
       <tr><td>合計（6 runs）</td><td>—</td><td><strong>2288</strong></td><td>—</td><td>—</td></tr>
     </tbody>
   </table>
   <p><strong>照合:</strong> 内訳 224＋395＋456＋468＋352＋393＝2288 は宣言 <code>metadata/provenance/declarations/20261015-youtube-csv-adoption.json</code> の各 <code>returned_count</code> と一致する。正式記録は <code>docs/issues/closed/resolved/20261015_p1_unadopted-youtube-exports.md</code>（RESOLVED 2026-10-15）。raw は <code>datasets/youtube-consistency/data/raw/youtube/&lt;run-id&gt;/</code> の無追跡 private 保管であり、追跡層に per-post データを置かない（集計のみ）。</p>
-  <p><strong>時間の区別:</strong> <code>dateFilter</code> は API 要求パラメータ（相対ローリング窓）であり、<code>window.start/end_exclusive</code> は payload の動画公開日の観測範囲である。観測範囲を API 検索条件として扱わない（オーナー指示 2026-10-15、宣言の limitations に明記）。<code>year</code> は直近約365日のローリング窓であり、観測範囲 2025-10-11〜2026-10-10 と整合する。</p>
+  <p><strong>時間の区別:</strong> <code>dateFilter</code> は API 要求パラメータ（相対ローリング窓）であり、<code>window.start/end_exclusive</code> は payload の動画公開日の観測範囲（半開区間）である。観測範囲を API 検索条件として扱わない（オーナー指示 2026-10-15、宣言の limitations に明記）。<code>year</code> は直近約365日のローリング窓であり、観測窓 [2025-10-11, 2026-10-10) と整合する。</p>
   <p><strong>制約（置換証拠）:</strong> Apify 検索結果は取得時点のサンプルであり、全動画のセンサスではない。同一クエリの再実行は非決定的に変動しうる。異なるプラットフォーム・異なる収集手段の件数は直接比較できない。動画単位の記録は公開しない（集計のみ）。</p>
 </div>
 
@@ -507,6 +509,14 @@
   <p><strong>採用との関係（ISS-20261015-COL-033）:</strong> 上記 24 件フィルタは COL-033 の採用対象ではない。COL-033 の採用 6 runs（合計 2288、宣言 <code>metadata/provenance/declarations/20261015-youtube-csv-adoption.json</code>）に CBX リキッドは含まれない。CBD リキッドの採用 2 runs（<code>20261010T144421Z-youtube-youtube-consistency</code> 456 件・<code>dateFilter=all</code>・観測 2014-11-17〜2026-10-10、<code>20261011T191900Z-youtube-youtube-consistency</code> 393 件・<code>dateFilter=year</code>・観測 2025-10-11〜2026-10-10）も別キーワードの検索結果サンプルであり、CBX リキッドの証拠に流用しない。<code>dateFilter</code> は API 要求パラメータ（相対窓）であり、観測範囲を検索条件として扱わない。動画単位の記録は公開しない（集計のみ）。</p>
 </div>
 
+
+<!-- ===== 公開状態 ===== -->
+<div>
+  <h2 id="publication-status">公開状態</h2>
+  <p>本ページは<strong>公開承認済み（<code>approved</code>）</strong>である。公開契約 PC-7 の審査 envelope は <code>metadata/publication/research-cbx/</code> にあり、<code>decision.json</code> の status は <code>approved</code>、<code>artifact_sha256</code> は現行 HTML の SHA-256 と一致する。</p>
+  <p>2026-11-05 に <code>validation.cli audit-publication</code> と <code>gate-publication</code> を現行 hash で実行した。公開契約の機械検査は本ページについて finding 0、公開適格ゲートは <code>SUPPORTED</code>（PUB-01〜PUB-11 がすべて PASS、WARNING なし）。PUB-11（C3 内容レビュー）は 2026-11-05 に C1〜C45 の 45 項目を本ページ・raw/comparison 成果物・methodology・taxonomy・evidence に照合して記録した（<code>evidence.json</code> の <code>content_review</code>、チェックリスト <code>metadata/publication/content-review-checklist.json</code> v1.0.0）。根拠は envelope の <code>decision.json</code> / <code>evidence.json</code> にある。</p>
+  <p>本節の版を <strong>v1.14.5</strong> としてリリースする。</p>
+</div>
 
 <!-- ===== 引用情報 ===== -->
 <div>

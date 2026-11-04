@@ -6,8 +6,8 @@
   "layer": "publication",
   "source_kind": "html",
   "storage_policy_id": "publication-html-candidate",
-  "sha256": "23d8a00d11b62d406b01628b84e125a3f8e3dd6c430d0bf67d7795f6da9c81e5",
-  "byte_length": 17426,
+  "sha256": "2f3da6006eff2eef3f11dfe294c46348022193607661c68db7df6deb7b58cf5d",
+  "byte_length": 17600,
   "recorded_at": "2026-11-05",
   "notes": "未公開 publication HTML。PC-7 の審査 envelope として内容 hash を固定する。対象 publication はまだ公開していないため、decision は requires_review から開始する。 v1.13.0 release metadata sync 後の hash。 v1.13.1 release metadata sync 後の hash。 2026-11-05、研究質問の統一・版表記 1.14.1 化・YouTube 動画単位行の削除・Google Trends の要求条件/観測範囲の分離および出所追記の後の hash（内容承認ではなく審査対象の再ピン）。 2026-11-05: CRDP の共通スケール節を、CBD・THC を含むアンカー付き run の実測に合わせて更新した後の hash（内容承認ではなく審査対象の再ピン）。 2026-11-05: C3 内容レビュー（C1〜C45）の記録後の hash（内容承認ではなく審査対象の再ピン）。"
 }

@@ -68,7 +68,8 @@
       </tr>
     </tbody>
   </table>
-  <p><strong>出所:</strong> run <code>20261023T160428Z-google-trends-hhc-5y</code>（query_id <code>hhc-general-ja</code> / JP / <code>today 5-y</code> / 窓 <code>2021-10-17_2026-10-18</code> / 2026-10-23T16:04:30.102974Z 収集）。記録にある項目: 初出 2021-11-28（値 1）、非ゼロ 190 週 / ゼロ 72 週、データあり期間 2021-10-17 〜 2026-10-18。平均 2.49 と非ゼロ 190 週は週次 262 点からの派生（算術平均、小数第 2 位）。</p>
+  <p><strong>出所:</strong> run <code>20261023T160428Z-google-trends-hhc-5y</code>（JP / today 5-y / 2026-10-23T16:04:30.102974Z 収集）。記録にある項目: 初出 2021-11-28（値 1）、非ゼロ 190 週 / ゼロ 72 週、データあり期間 2021-10-17 〜 2026-10-18。</p>
+  <p><strong>補足:</strong> この表の run は <code>20261023T160428Z-google-trends-hhc-5y</code>（<code>query_id</code> <code>hhc-general-ja</code>）、要求窓は <code>metadata/windows/2021-10-17_2026-10-18.json</code>。5年平均は週次 262 点の算術平均（小数第 2 位）、非ゼロ週は値が 0 でない週である。</p>
 
   <h3>12ヶ月データサマリー（個別正規化値）</h3>
   <table>
@@ -223,7 +224,7 @@
 <!-- ===== 独自データ：YouTube トレンド ===== -->
 <div>
   <h2 id="data-youtube">独自データ: HHC の YouTube トレンド <span>一次データ</span></h2>
-  <p>データソース: YouTube Search via Apify / 取得日: 2026-10-08</p>
+  <p>データソース: YouTube Search via Apify / 取得日: 2026-10-02・2026-10-08（2 run の和集合）</p>
 
   <h3>収集結果サマリー</h3>
   <table>
@@ -240,6 +241,8 @@
       </tr>
     </tbody>
   </table>
+
+  <p><strong>48 件の内訳:</strong> 48 件は 2026-10-02 の収集 run（28 件）と 2026-10-08 の収集 run（27 件、うち 7 件は同一動画）の和集合（重複 7 件を除く）である。両 run は採用宣言・catalog 登録を持たないため、run_id は本文に載せず ISS-20261024-YT-013 に記録する。単一 run の返却件数ではない。owner の 2026-10-29 の判断で 2 run を反復観測として両方残し、run 間の重複は統合しない（<code>ISS-20261024-YT-013</code>）。本節の再生数統計もこの 48 件を母集団とする。raw は保持しない。</p>
 
   <h3>再生数統計</h3>
   <table>

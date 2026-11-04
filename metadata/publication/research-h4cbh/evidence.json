@@ -6,7 +6,7 @@
   "integrity": "verified",
   "citations": {
     "integrity": [
-      "sha256(publication/research_h4cbh.html, 2026-11-05 検算) = 0b48fc32758bed00f6e4a22d89697bf8d9c52884578345463366e3fa207a2cfb"
+      "sha256(publication/research_h4cbh.html, 2026-11-05 検算) = 90bed3da42dc612033ad7ad40593f956f6abc9e975ce6a023379072e021b3cf9"
     ],
     "publication_contract": [
       "validation.cli audit-publication（2026-10-15）: PC-1〜PC-8 の機械検査対象。PC-7 は本 envelope の存在と hash 固定を検査する。",
@@ -55,7 +55,7 @@
   "content_review": {
     "checklist_id": "publication-content-review-c1-c45",
     "checklist_version": "1.0.0",
-    "artifact_sha256": "0b48fc32758bed00f6e4a22d89697bf8d9c52884578345463366e3fa207a2cfb",
+    "artifact_sha256": "90bed3da42dc612033ad7ad40593f956f6abc9e975ce6a023379072e021b3cf9",
     "reviewer": "Delta agent (owner instruction 2026-11-05: C1–C45 review of research-h4cbh)",
     "reviewed_at": "2026-11-05",
     "items": [

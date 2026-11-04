@@ -28,7 +28,7 @@
   "headline": "CBX とは？成分・規制・安全性の現状（2026年版）",
   "description": "CBX（カンナビオキセバン）の化学的特徴、日本での規制状況、安全性データの現状を解説するガイド記事。",
   "datePublished": "2026-09-16",
-  "dateModified": "2026-10-15",
+  "dateModified": "2026-11-05",
   "author": {
     "@type": "Person",
     "name": "店長",
@@ -57,7 +57,7 @@
       "name": "CBXは合法ですか？",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "2026年10月時点で、日本国内でCBXを規制する法律は存在しません。多くの国と同様に、日本の薬物規制もブラックリスト方式です。指定された物質のみが規制対象となります。CBXは指定されていないため合法です。ただし、CBX製品にΔ9-THCが含まれる場合、THC残留限度値（油脂・粉末10ppm、水溶液0.1ppm、その他1ppm）が適用されます。"
+        "text": "2026年10月時点で、日本国内でCBXを直接規制する法律は確認できません。日本の薬物規制はブラックリスト方式で、指定された物質のみが規制対象です。CBXは指定薬物リストに含まれていませんが、これは規制の有無についての観測であり法的評価ではありません。CBX製品にΔ9-THCが含まれる場合、THC残留限度値（油脂・粉末10ppm、水溶液0.1ppm、その他1ppm）が適用されます。"
       }
     },
     {
@@ -206,8 +206,10 @@
     <strong>著者:</strong> 店長｜
     <strong>所属:</strong> リキッド通販ショップ｜
     <strong>ライセンス:</strong> CC-BY-4.0｜
-    <strong>最終更新:</strong> 2026-10-15
+    <strong>最終更新:</strong> 2026-11-05
   </div>
+
+  <p class="data-note" style="margin: -8px 0 24px 0;">2026-11-05 の C3 内容レビュー（C1〜C45）で、Google Trends の数値と出所、X・YouTube の公開範囲を再確認し、公開状態の節を追加した（v1.14.5）。</p>
 
   <!-- ===== 利益相反の開示 ===== -->
   <div class="caution-block" style="background: #f8f9fa; border-color: #dee2e6;">
@@ -312,7 +314,7 @@
 
   <h3>日本国内</h3>
 
-  <p>2026年10月時点で、<strong>日本国内で CBX を規制する法律は存在しません</strong>。多くの国と同様に、日本の薬物規制もブラックリスト方式です。指定された物質のみが規制対象となります。CBXは指定されていないため合法です。</p>
+  <p>2026年10月時点で、<strong>日本国内で CBX を規制する法律は存在しません</strong>。多くの国と同様に、日本の薬物規制もブラックリスト方式です。指定された物質のみが規制対象となります。CBX は指定薬物リストに含まれていません。これは規制の有無についての観測であり、法的評価ではありません（個別の判断は専門家に確認してください）。</p>
 
   <div class="regulation-box">
     <h3>2024年12月施行: 改正大麻取締法・麻薬及び向精神薬取締法</h3>
@@ -469,6 +471,7 @@
   <h3>研究質問</h3>
   <p>「過去12ヶ月（2025-09～2026-10）の日本国内検索データをもとに、2026年7月以降のCBX市場動向・規制状況を整理する」</p>
   <p class="data-note"><strong>最終更新:</strong> 2026-10-01。Google Trends データに差し替え、YouTube 24件データを反映（26件から2件除外）。</p>
+    <p class="data-note"><strong>保持と反復:</strong> Google Trends の raw は <code>datasets/cannabinoid-raw-collection/data/raw/google_trends/</code> に追跡し、その SHA-256 を envelope に記録する。Google Search Console・OpenSEO・X・TikTok・YouTube の生データはリポジトリに保持しない（収集時の処理結果だけを掲載し、リポジトリ内では再計算できない）。各検索語の取得は単発で、反復による安定性は未測定。</p>
 
   <h3>データソース</h3>
   <ul>
@@ -558,7 +561,7 @@
         </tr>
         <tr>
           <td><strong>HHBD</strong></td>
-          <td class="num">33</td>
+          <td class="num">30</td>
           <td class="num">7</td>
           <td class="num">100</td>
           <td>2025-12-07 週</td>
@@ -566,14 +569,17 @@
         </tr>
         <tr>
           <td><strong>CBX リキッド</strong></td>
-          <td class="num">44-92</td>
-          <td class="num">0</td>
+          <td class="num">4.5</td>
+          <td class="num">0.3</td>
           <td class="num">100</td>
           <td>2026-09-20 週</td>
           <td>2026-09</td>
         </tr>
       </tbody>
     </table>
+
+    <p class="data-note"><strong>出所:</strong> 単独系列は run <code>20261001T115959Z-google-trends-cbx-rikiddo</code>（<code>CBX</code>・<code>CBX リキッド</code>・<code>CBD リキッド</code>）と run <code>20261001T121949Z-google-trends-h4cbh-hhbd</code>（<code>H4CBH</code>・<code>HHBD</code>）、比較は run <code>20261001T121949Z-google-trends-h4cbh-hhbd</code> の同じ <code>compare_terms</code> 要求（<code>CBX</code>・<code>H4CBH</code>・<code>HHBD</code>・<code>CBX リキッド</code>）、判別クエリは run <code>20261001T132500Z-google-trends-disambiguated</code>（<code>CBX 大麻</code>・<code>CBX カンナビノイド</code>）。すべて geo JP / <code>today 12-m</code> / 2026-10-01 収集で、raw は <code>datasets/cannabinoid-raw-collection/data/raw/google_trends/</code> に追跡されている。</p>
+    <p class="data-note"><strong>値の再計算:</strong> HHBD の単独平均は返却点 53 週の算術平均 30.1 を丸めた 30（run 記録の summary は 33 と記録しており、返却点から再計算した値と一致しないため再計算値を示す）。<code>CBX リキッド</code> の単独平均 4.5 は 53 週の算術平均で、非ゼロは 2026-09 の 3 週（44・100・92）。比較平均 0.3 も同じ要求の返却点から再計算した値である。</p>
 
     <h3>CBX リキッドの推移（直近）</h3>
     <table class="data-table">
@@ -586,7 +592,7 @@
       <tbody>
         <tr>
           <td>2025-09 ～ 2026-09-12</td>
-          <td class="num">0（データなし）</td>
+          <td class="num">0（閾値未満。検索が無いことを意味しない）</td>
         </tr>
         <tr>
           <td>2026-09-13 ～ 09-19</td>
@@ -892,15 +898,15 @@
         </tr>
         <tr>
           <td><strong>HHBD</strong></td>
-          <td class="num">33</td>
+          <td class="num">30</td>
           <td class="num">7</td>
           <td class="num">100</td>
           <td>2025年12月に初出、以降断続的</td>
         </tr>
         <tr>
           <td><strong>CBX リキッド</strong></td>
-          <td class="num">44-92</td>
-          <td class="num">0</td>
+          <td class="num">4.5</td>
+          <td class="num">0.3</td>
           <td class="num">100</td>
           <td>2026年9月から急上昇</td>
         </tr>
@@ -909,10 +915,10 @@
 
     <p class="data-note">
       <div style="margin: 12px 0; padding: 12px; background: #fff3cd; border-left: 3px solid #ffc107;">
-        <p style="margin: 0; font-size: 13px;"><strong>⚠️ 単独平均と比較平均の違い:</strong> 単独平均は各キーワードのピークを100とする正規化であり、<strong>キーワード間の比較には使用できない</strong>。比較平均は複数キーワードを同時取得した際の相対値であり、<strong>キーワード間の検索需要の違いを示す</strong>。例: CBX の単独平均（68）と CBD の単独平均（46.8）を比較しても意味がないが、共通スケールでは CBD（47）> CBX（68）という結果は得られない（CBD が共通スケールで高い）。</p>
+        <p style="margin: 0; font-size: 13px;"><strong>⚠️ 単独平均と比較平均の違い:</strong> 単独平均は各キーワードのピークを100とする正規化であり、<strong>キーワード間の比較には使用できない</strong>。比較平均は複数キーワードを同時取得した際の相対値であり、<strong>キーワード間の検索需要の違いを示す</strong>。例: CBX の単独平均（68）と CBD の単独平均（46.8）を比べても意味がない。共通スケールの値は同じ要求に入れた語の間でしか比べられず、本ページの CBX の比較値は CBX・H4CBH・HHBD・CBX リキッドの要求の中の値である。</p>
       </div>
 
-      <strong>所見:</strong> 比較クエリでは「CBX」の相対興味度が最も高く（平均 68）、H4CBH（13）、HHBD（7）が続きます。ただし、「CBX」は多義語であり、カンナビノイド製品とは無関係な検索を含む可能性があります。H4CBH は通年でデータがある一方、HHBD は 2025年12月のピークのみ突出しています。CBX リキッドは比較クエリでは検出限界（0-7）ですが、単独クエリでは 2026年9月から検出されています（Google Trends の閾値効果の可能性）。Google Trends の値は相対指数であり、絶対検索数ではありません。
+      <strong>所見:</strong> 比較クエリでは「CBX」の相対興味度が最も高く（平均 68）、H4CBH（13）、HHBD（7）が続きます。ただし、「CBX」は多義語であり、カンナビノイド製品とは無関係な検索を含む可能性があります。H4CBH は通年でデータがある一方、HHBD は 2025年12月のピークのみ突出しています。CBX リキッドは比較クエリでは平均 0.3（最大 7）ですが、単独クエリでは 2026年9月から検出されています（Google Trends の閾値効果の可能性）。Google Trends の値は相対指数であり、絶対検索数ではありません。
     </p>
   </div>
 
@@ -973,7 +979,7 @@
     </table>
 
     <p class="data-note">
-      <strong>所見:</strong> 「cbx」は月間18,100件と、他のカンナビノイドリキッド系キーワードを大きく上回ります。KD（競合度）が0〜18と低く、SEO の參入障壁も低い状態です。ただし、「cbx」単体は多義性が高く（ホンダ CBX400F バイク等）、リキッド関連の需要は GSC データ（月間61クリック）と併せて確認が必要です。
+      <strong>所見:</strong> 「cbx」は月間18,100件と、他のカンナビノイドリキッド系キーワードを大きく上回ります。KD（競合度）が 0 と低く（表に表示した範囲）、SEO の參入障壁も低い状態です。ただし、「cbx」単体は多義性が高く（ホンダ CBX400F バイク等）、リキッド関連の需要は GSC データ（月間61クリック）と併せて確認が必要です。
     </p>
   </div>
 
@@ -984,102 +990,43 @@
 
     <p>X（旧Twitter）で「CBX リキッド」に関連する投稿を日別に取得し、重複排除後のトレンドを分析しました。全投稿が日本語です。</p>
 
-    <h3>週別推移</h3>
+    <h3>投稿数（月別）</h3>
     <table class="data-table">
       <thead>
-        <tr>
-          <th>週</th>
-          <th class="num">期間</th>
-          <th class="num">投稿数</th>
-          <th class="num">ユニーク著者数</th>
-        </tr>
+        <tr><th>月</th><th class="num">投稿数</th></tr>
       </thead>
       <tbody>
-        <tr><td>W1</td><td>8/3〜8/9</td><td class="num">12</td><td class="num">7</td></tr>
-        <tr><td>W2</td><td>8/10〜8/16</td><td class="num">10</td><td class="num">9</td></tr>
-        <tr><td>W3</td><td>8/17〜8/23</td><td class="num">48</td><td class="num">22</td></tr>
-        <tr><td>W4</td><td>8/24〜8/30</td><td class="num">28</td><td class="num">17</td></tr>
-        <tr><td>W5</td><td>8/31〜9/6</td><td class="num">33</td><td class="num">18</td></tr>
-        <tr><td>W6</td><td>9/7〜9/8</td><td class="num">13</td><td class="num">8</td></tr>
+        <tr><td>2026-08</td><td class="num">101</td></tr>
+        <tr><td>2026-09</td><td class="num">46</td></tr>
+        <tr><td>合計</td><td class="num"><strong>147</strong></td></tr>
       </tbody>
     </table>
 
-    <div class="caution-block" style="margin: 12px 0;">
-      <p style="margin: 0; font-size: 13px;">
-        <strong>⚠ 注意:</strong> 7月以前は投稿数がほぼゼロであり、8月以降の急増は
-        <strong>小基数効果（small-base effect）</strong> の可能性があります。
-        分母が小さい場合、パーセンテージ成長率は誇張されて表示されることがあります。
-      </p>
-      <p style="margin: 8px 0 0 0; font-size: 13px;">
-        <strong>⚠ 投稿者の特徴:</strong> 上位投稿者は販売系アカウントが中心です。
-        投稿数の増加が、広範な関心の高まりか、少数の販売アカウントの活動増加かは
-        区別できません。ユニーク著者数の推移（W1: 7人 → W3: 22人 → W6: 8人）を
-        参考にしてください。
-      </p>
-    </div>
-
-    <h3>上位投稿者</h3>
+    <h3>内容の内訳（粗い月次分類）</h3>
     <table class="data-table">
       <thead>
-        <tr><th>アカウント</th><th class="num">投稿数</th><th class="num">平均 views</th><th>種別</th></tr>
+        <tr><th>分類</th><th class="num">2026-08</th><th class="num">2026-09</th></tr>
       </thead>
       <tbody>
-        <tr><td>アカウントA</td><td class="num">20</td><td class="num">762</td><td>店舗・販売</td></tr>
-        <tr><td>アカウントB</td><td class="num">18</td><td class="num">2,087</td><td>個人レビュー中心</td></tr>
-        <tr><td>アカウントC</td><td class="num">13</td><td class="num">1,177</td><td>インフルエンサー</td></tr>
-        <tr><td>アカウントD</td><td class="num">8</td><td class="num">3,871</td><td>高エンゲージメント</td></tr>
-        <tr><td>アカウントE</td><td class="num">7</td><td class="num">597</td><td>店舗・販売</td></tr>
+        <tr><td>配合・成分</td><td class="num">65</td><td class="num">34</td></tr>
+        <tr><td>体感・効果</td><td class="num">9</td><td class="num">—</td></tr>
+        <tr><td>商品・販売</td><td class="num">9</td><td class="num">—</td></tr>
+        <tr><td>未分類</td><td class="num">11</td><td class="num">7</td></tr>
+        <tr><td>その他（5 件未満の分類）</td><td class="num">7</td><td class="num">5</td></tr>
       </tbody>
     </table>
-    <p class="data-note">
-      ※ アカウント名は疑似名化しています（本文書内の通し記号 A〜E）。実アカウント名は公開していません。
-      表の単位は<strong>アカウント</strong>（1 行 = 1 アカウント）であり、投稿単位（1 行 = 1 投稿）の表現ではありません。
-      投稿本文・投稿 ID・投稿 URL・投稿日時の列は掲載せず、投稿ごとのエンゲージメント値も出していません
-      （投稿単位データは格納も表現も禁止。`ISS-20261015-XID-034`）。
-    </p>
-
-    <h3>エンゲージメント</h3>
-    <table class="data-table">
-      <thead>
-        <tr><th>指標</th><th class="num">中央値</th><th class="num">P90</th><th class="num">最大値</th><th class="num">合計</th></tr>
-      </thead>
-      <tbody>
-        <tr><td>Views</td><td class="num">963</td><td class="num">4,904</td><td class="num">17,247</td><td class="num">282,478</td></tr>
-        <tr><td>Likes</td><td class="num">7</td><td class="num">23</td><td class="num">110</td><td class="num">1,715</td></tr>
-        <tr><td>Reposts</td><td class="num">2</td><td class="num">6</td><td class="num">127</td><td class="num">495</td></tr>
-      </tbody>
-    </table>
-
-    <p style="font-size: 13px; color: #666;">
-      <strong>データ完全率:</strong> 取得した全 147 件で、分析に用いる集計項目に欠損はない（100%）。
-    </p>
-
-    <h3>コンテンツ分類</h3>
-    <table class="data-table">
-      <thead>
-        <tr><th>カテゴリ</th><th class="num">件数</th><th class="num">割合</th></tr>
-      </thead>
-      <tbody>
-        <tr><td>配合/成分</td><td class="num">54</td><td class="num">36%</td></tr>
-        <tr><td>新商品/入荷</td><td class="num">30</td><td class="num">20%</td></tr>
-        <tr><td>体感/効果</td><td class="num">24</td><td class="num">16%</td></tr>
-        <tr><td>セール/キャンペーン</td><td class="num">16</td><td class="num">10%</td></tr>
-        <tr><td>レビュー</td><td class="num">15</td><td class="num">10%</td></tr>
-        <tr><td>店舗情報</td><td class="num">13</td><td class="num">8%</td></tr>
-      </tbody>
-    </table>
-
-    <h3>併記成分（147件中）</h3>
-    <p>CBD, H4CBH, CBG, HHBD, CRDB, THA が頻出。CBX 単体より他成分との併記が常態です。</p>
 
     <div class="caution-block">
-      <h3>⚠ データの制約</h3>
-      <p><strong>YouTube データは 2026-10-01 に再取得し、24件（フィルタ後）全て CBX 関連となりました。</strong>Instagram/TikTok は別リポジトリで定点観測中です。</p>
-      <p>X の 26 週間データ（2026年3月〜9月）も取得済みですが、3月〜6月は空週が多く、7月以降にデータが集中しています。</p>
+      <h3>⚠ 公開しない集計</h3>
+      <p>週別・アカウント別の投稿数、投稿者数、エンゲージメントの分布統計は公開しない。細かい交差集計は再識別可能性があるため、所有者の 2026-10-15 の判断（<code>ISS-20261014-PUB-029</code>）で粗い月次の周辺集計だけを公開する。投稿本文・投稿 ID・投稿 URL・投稿日時も保持・公開しない。</p>
     </div>
 
     <p class="data-note">
-      <strong>所見:</strong> 8月中旬以降に投稿数が急増し、9月に入っても維持されています。店舗告知が中心ですが、個人レビュー投稿者（アカウントB, アカウントD）が高いエンゲージメントを記録しています。配合/成分の議論が最多（36%）で、CBX/H4CBH/HHBD/CRD の配合比が頻出。9月に投稿数が増加傾向にあり、上昇トレンドの可能性があります。
+      <strong>所見:</strong> 投稿数は 2026-08 の 101 件から 2026-09 の 46 件へ減っている。内容は配合・成分への言及が最多（2026-08 で 65 件）で、CBX 単体より他成分との併記が常態である。この節の値は収集時の処理結果で、元の投稿単位データはリポジトリに保持していないため再計算できない。
+    </p>
+
+    <p class="data-note">
+      <strong>出所:</strong> <code>datasets/cbx-social-trends/data/processed/x_cbx_202608_monthly_coarse_aggregates.csv</code>（2026-08・2026-09 の周辺集計）。集計条件は <code>datasets/cbx-social-trends/analysis/x_cbx_202608_aggregation_conditions.json</code>。
     </p>
   </div>
 
@@ -1107,109 +1054,17 @@
 
     <p>YouTube で「CBX リキッド」を検索し、CBX 関連動画を取得しました。重複排除後 26件のうち、<strong>2026年7月より前の動画 2件を除外</strong>し、24件を分析対象としました。前回（2026-09-07）は 50件中 0件だったが、クエリを <code>CBX リキッド</code> に変更して再取得した結果、全件が CBX 関連となりました。</p>
 
-    <h3>上位動画（再生数順）</h3>
-    <table class="data-table">
-      <thead>
-        <tr>
-          <th>動画タイトル</th>
-          <th>チャンネル</th>
-          <th class="num">再生数</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>[CBX] "Melting like ice" - First Review (Part 1)</td>
-          <td>CBDチャンネルWEEDMAN</td>
-          <td class="num">61,241</td>
-        </tr>
-        <tr>
-          <td>Part 2: [CBX] 8-Hour Test – How long does it last?</td>
-          <td>CBDチャンネルWEEDMAN</td>
-          <td class="num">22,413</td>
-        </tr>
-        <tr>
-          <td>【CBX】話題の新成分を正直にレビューしてみた</td>
-          <td>宅録ラッパー BST</td>
-          <td class="num">21,346</td>
-        </tr>
-        <tr>
-          <td>CBXリキッドでキマるっ♪【VTuber】</td>
-          <td>いのうえ倶楽部</td>
-          <td class="num">10,314</td>
-        </tr>
-        <tr>
-          <td>[緊急] CBXとH4CBHについてガチで調べた</td>
-          <td>クソアホバカ太郎</td>
-          <td class="num">6,326</td>
-        </tr>
-        <tr>
-          <td>CBXは危険？【VTuber】</td>
-          <td>いのうえ倶楽部</td>
-          <td class="num">5,592</td>
-        </tr>
-        <tr>
-          <td>[CBX Raw Material] Tried Vaping with PUFFCO</td>
-          <td>にま CBD</td>
-          <td class="num">5,467</td>
-        </tr>
-        <tr>
-          <td>CBXでキマりたい方へ。【VTuber】</td>
-          <td>いのうえ倶楽部</td>
-          <td class="num">5,263</td>
-        </tr>
-        <tr>
-          <td>謎の成分、CBX入りのジョイントを吸います♪【VTuber】</td>
-          <td>いのうえ倶楽部</td>
-          <td class="num">4,885</td>
-        </tr>
-        <tr>
-          <td>現状最安値？のリキッドでキマるのか。【VTuber】</td>
-          <td>いのうえ倶楽部</td>
-          <td class="num">4,312</td>
-        </tr>
-      </tbody>
-    </table>
-
-    <h3>主要チャンネル分布</h3>
-    <table class="data-table">
-      <thead>
-        <tr>
-          <th>チャンネル</th>
-          <th class="num">動画数</th>
-          <th class="num">合計再生数</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>いのうえ倶楽部</td>
-          <td class="num">5</td>
-          <td class="num">30,388</td>
-        </tr>
-        <tr>
-          <td>合法草図鑑</td>
-          <td class="num">5</td>
-          <td class="num">4,819</td>
-        </tr>
-        <tr>
-          <td>にま CBD</td>
-          <td class="num">3</td>
-          <td class="num">11,922</td>
-        </tr>
-        <tr>
-          <td>たいん隊長CBD研究所</td>
-          <td class="num">5</td>
-          <td class="num">1,430</td>
-        </tr>
-        <tr>
-          <td>CBDチャンネルWEEDMAN</td>
-          <td class="num">2</td>
-          <td class="num">83,654</td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="caution-block">
+      <h3>⚠ 公開しないデータ</h3>
+      <p>動画単位の行（タイトル・チャンネル・URL・再生数）とチャンネル単位の分布は公開しない（再識別可能性。ISS-20261015-COL-030 §4.1）。掲載するのは返却件数・フィルタ条件・集計値だけである。</p>
+    </div>
 
     <p class="data-note">
-      <strong>所見:</strong> CBX の YouTube での存在感を確認できました。特に CBDチャンネルWEEDMAN のレビュー動画が 61,241 再生と大きく、VTuber チャンネル（いのうえ倶楽部）も複数動画を投稿しています。レビュー・実録系コンテンツが中心で、CBX リキッドの認知拡大に寄与している可能性があります。
+      <strong>所見:</strong> 24 件はレビュー・実録系の動画が中心で、上位 10 本の再生数は 4,312〜61,241 だった。再生は少数のレビュー動画に集中し、VTuber 系の複数投稿も含まれる。動画・チャンネル単位の行は掲載しない。
+    </p>
+
+    <p class="data-note">
+      <strong>出所:</strong> Apify <code>streamers/youtube-scraper</code>（2026-10-01 取得、クエリ <code>CBX リキッド</code>）。raw payload はリポジトリに保持しない（raw social 層は git 非追跡）。返却件数は収集時の記録による。
     </p>
   </div>
 
@@ -1381,6 +1236,14 @@
       </tr>
     </tbody>
   </table>
+
+  <!-- ===== 公開状態 ===== -->
+  <div>
+    <h2 id="publication-status">公開状態</h2>
+    <p>本ページは<strong>公開承認済み（<code>approved</code>）</strong>である。公開契約 PC-7 の審査 envelope は <code>metadata/publication/guide-cbx-rewrite/</code> にあり、<code>decision.json</code> の status は <code>approved</code>、<code>artifact_sha256</code> は現行 HTML の SHA-256 と一致する。</p>
+    <p>2026-11-05 に <code>validation.cli audit-publication</code> と <code>gate-publication</code> を現行 hash で実行した。公開契約の機械検査は本ページについて finding 0、公開適格ゲートは <code>SUPPORTED</code>（PUB-01〜PUB-11 がすべて PASS、WARNING なし）。PUB-11（C3 内容レビュー）は 2026-11-05 に C1〜C45 の 45 項目を本ページ・raw/comparison 成果物・methodology・taxonomy・evidence に照合して記録した（<code>evidence.json</code> の <code>content_review</code>、チェックリスト <code>metadata/publication/content-review-checklist.json</code> v1.0.0）。根拠は envelope の <code>decision.json</code> / <code>evidence.json</code> にある。</p>
+    <p>本節の版を <strong>v1.14.5</strong> としてリリースする。</p>
+  </div>
 
   <!-- ===== Citation ===== -->
   <h2 id="citation">この調査を引用する場合</h2>

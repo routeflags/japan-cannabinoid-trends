@@ -15,13 +15,13 @@
   "catalog_run_count": 100,
   "summary": {
     "artifact_count": 17,
-    "finding_count": 16,
+    "finding_count": 1,
     "declared_gap_count": 11,
     "by_rule": {
-      "PC-10": 16
+      "PC-10": 1
     },
     "by_kind": {
-      "content_review_missing": 16
+      "content_review_missing": 1
     }
   },
   "implemented_rules": [
@@ -38,96 +38,6 @@
   ],
   "unimplemented_rules": [],
   "findings": [
-    {
-      "rule": "PC-10",
-      "kind": "content_review_missing",
-      "path": "publication/guide_cbx_rewrite.html",
-      "detail": "evidence.json has no content_review record; the C3 review was not performed (a mechanical pass is not a content review)"
-    },
-    {
-      "rule": "PC-10",
-      "kind": "content_review_missing",
-      "path": "publication/research_cbd.html",
-      "detail": "evidence.json has no content_review record; the C3 review was not performed (a mechanical pass is not a content review)"
-    },
-    {
-      "rule": "PC-10",
-      "kind": "content_review_missing",
-      "path": "publication/research_cbg.html",
-      "detail": "evidence.json has no content_review record; the C3 review was not performed (a mechanical pass is not a content review)"
-    },
-    {
-      "rule": "PC-10",
-      "kind": "content_review_missing",
-      "path": "publication/research_cbn.html",
-      "detail": "evidence.json has no content_review record; the C3 review was not performed (a mechanical pass is not a content review)"
-    },
-    {
-      "rule": "PC-10",
-      "kind": "content_review_missing",
-      "path": "publication/research_cbx.html",
-      "detail": "evidence.json has no content_review record; the C3 review was not performed (a mechanical pass is not a content review)"
-    },
-    {
-      "rule": "PC-10",
-      "kind": "content_review_missing",
-      "path": "publication/research_crdh.html",
-      "detail": "evidence.json has no content_review record; the C3 review was not performed (a mechanical pass is not a content review)"
-    },
-    {
-      "rule": "PC-10",
-      "kind": "content_review_missing",
-      "path": "publication/research_crdp.html",
-      "detail": "evidence.json has no content_review record; the C3 review was not performed (a mechanical pass is not a content review)"
-    },
-    {
-      "rule": "PC-10",
-      "kind": "content_review_missing",
-      "path": "publication/research_h4cbh.html",
-      "detail": "evidence.json has no content_review record; the C3 review was not performed (a mechanical pass is not a content review)"
-    },
-    {
-      "rule": "PC-10",
-      "kind": "content_review_missing",
-      "path": "publication/research_hhbd.html",
-      "detail": "evidence.json has no content_review record; the C3 review was not performed (a mechanical pass is not a content review)"
-    },
-    {
-      "rule": "PC-10",
-      "kind": "content_review_missing",
-      "path": "publication/research_hhc.html",
-      "detail": "evidence.json has no content_review record; the C3 review was not performed (a mechanical pass is not a content review)"
-    },
-    {
-      "rule": "PC-10",
-      "kind": "content_review_missing",
-      "path": "publication/research_hhch.html",
-      "detail": "evidence.json has no content_review record; the C3 review was not performed (a mechanical pass is not a content review)"
-    },
-    {
-      "rule": "PC-10",
-      "kind": "content_review_missing",
-      "path": "publication/research_thc-o.html",
-      "detail": "evidence.json has no content_review record; the C3 review was not performed (a mechanical pass is not a content review)"
-    },
-    {
-      "rule": "PC-10",
-      "kind": "content_review_missing",
-      "path": "publication/research_thc.html",
-      "detail": "evidence.json has no content_review record; the C3 review was not performed (a mechanical pass is not a content review)"
-    },
-    {
-      "rule": "PC-10",
-      "kind": "content_review_missing",
-      "path": "publication/research_thch.html",
-      "detail": "evidence.json has no content_review record; the C3 review was not performed (a mechanical pass is not a content review)"
-    },
-    {
-      "rule": "PC-10",
-      "kind": "content_review_missing",
-      "path": "publication/research_thcv.html",
-      "detail": "evidence.json has no content_review record; the C3 review was not performed (a mechanical pass is not a content review)"
-    },
     {
       "rule": "PC-10",
       "kind": "content_review_missing",

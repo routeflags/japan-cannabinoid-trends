@@ -3,7 +3,7 @@
   "record": "publication_decision",
   "decision_id": "publication-review-research-crdp",
   "artifact_id": "research-crdp",
-  "artifact_sha256": "23d8a00d11b62d406b01628b84e125a3f8e3dd6c430d0bf67d7795f6da9c81e5",
+  "artifact_sha256": "2f3da6006eff2eef3f11dfe294c46348022193607661c68db7df6deb7b58cf5d",
   "status": "approved",
   "reviewed_at": "2026-11-05",
   "reviewer": "owner (thread instruction 2026-11-05: PUB-04・PUB-10 を含む全項目の対応とリリースまでを指示)",

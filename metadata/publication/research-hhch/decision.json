@@ -3,7 +3,7 @@
   "record": "publication_decision",
   "decision_id": "publication-review-research-hhch",
   "artifact_id": "research-hhch",
-  "artifact_sha256": "dc0c6f2e3a11b6977a16f34f06cf06705324adadc02287717eae5a57f30e619e",
+  "artifact_sha256": "7177443591508563d4cc7c32c872ba64dfab57d56d6821189cc0e6e1369d798d",
   "status": "approved",
   "reviewed_at": "2026-11-05",
   "reviewer": "owner (thread instruction 2026-11-05: PUB-04・PUB-10 を含む全項目の対応とリリースまでを指示)",

@@ -6,7 +6,7 @@
   "integrity": "verified",
   "citations": {
     "integrity": [
-      "sha256(publication/research_hhch.html, 2026-11-05 検算) = dc0c6f2e3a11b6977a16f34f06cf06705324adadc02287717eae5a57f30e619e"
+      "sha256(publication/research_hhch.html, 2026-11-05 検算) = 7177443591508563d4cc7c32c872ba64dfab57d56d6821189cc0e6e1369d798d"
     ],
     "publication_contract": [
       "validation.cli audit-publication（2026-10-15）: PC-1〜PC-8 の機械検査対象。PC-7 は本 envelope の存在と hash 固定を検査する。",
@@ -55,7 +55,7 @@
   "content_review": {
     "checklist_id": "publication-content-review-c1-c45",
     "checklist_version": "1.0.0",
-    "artifact_sha256": "dc0c6f2e3a11b6977a16f34f06cf06705324adadc02287717eae5a57f30e619e",
+    "artifact_sha256": "7177443591508563d4cc7c32c872ba64dfab57d56d6821189cc0e6e1369d798d",
     "reviewer": "Delta agent (owner instruction 2026-11-05: C1–C45 review of research-hhch)",
     "reviewed_at": "2026-11-05",
     "items": [
@@ -102,7 +102,7 @@
       {
         "id": "C9",
         "verdict": "pass",
-        "basis": "5年単独系列表 平均 1.28・ピーク 2023-11-12・2023-11-19（値 100）・初出 2023-01-15（値 1）・非ゼロ 51 週 / ゼロ 211 週・最新値 0 は records_hhch.json（run 20261014T204859Z-google-trends-cannabinoid-multi-trends、262 点）から再計算して一致。"
+        "basis": "5年単独系列表 平均 1.28・ピーク 2023-11-12（値 100）・初出 2023-01-15（値 1）・非ゼロ 51 週 / ゼロ 211 週・最新値 0 は records_hhch.json（run 20261014T204859Z-google-trends-cannabinoid-multi-trends、262 点）から再計算して一致。"
       },
       {
         "id": "C10",

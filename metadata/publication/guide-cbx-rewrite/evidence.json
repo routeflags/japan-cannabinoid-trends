@@ -20,14 +20,269 @@
   "anonymization_basis": "Requester/client identity is suppressed from the publication layer; no person-level dataset is published.",
   "citations": {
     "integrity": [
-      "sha256(publication/guide_cbx_rewrite.html, 2026-11-05 検算) = e60967a9bbcf32b17a98e944b381c94af2d4dd53431af6328c4d0d6f6dc9683b"
+      "sha256(publication/guide_cbx_rewrite.html, 2026-11-05 検算) = a4a109988122473e5b9d67a43bc8607d3537b64af7c942815329eb23ed188f9a"
     ],
     "publication_contract": [
       "validation.cli audit-publication（2026-10-15）: PC-1〜PC-8 の機械検査対象。PC-7 は本 envelope の存在と hash 固定を検査する。"
     ],
     "content_changes": [
-      "2026-11-05: 引用の版表記を 1.14.0 から 1.14.2 へ同期した（CITATION.cff と一致、PC-1）。本文・表・COA 節の内容は変更していない。"
+      "2026-11-05: 引用の版表記を 1.14.0 から 1.14.2 へ同期した（CITATION.cff と一致、PC-1）。本文・表・COA 節の内容は変更していない。",
+      "2026-11-05: C3 内容レビュー（C1〜C45）で次を訂正した — HHBD 単独平均 33→30、CBX リキッド単独平均 44-92→4.5・比較平均 0→0.3（返却点から再計算）、0 の意味を閾値未満と明記、3 run の run_id と raw の SHA-256 を追加、X の週別・アカウント別・エンゲージメント分布を公開しない集計に置換（ISS-20261014-PUB-029）、YouTube の動画単位行とチャンネル分布を削除（ISS-20261015-COL-030 §4.1）、法的評価の断定を観測表現に訂正、公開状態の節を追加。"
+    ],
+    "google_trends_cbx": [
+      "run 20261001T115959Z-google-trends-cbx-rikiddo（geo JP / today 12-m / 2026-10-01T11:59:59Z 収集 / google-trends-mcp 0.1.1）",
+      "comparison.json sha256 = df8c575f081e1931824aa1720d1af6104ad772b3378ddabc9a7d23c12038230d。records.json sha256 = b0776a746a8629fc4e63f2698d4c2514731d04a6204740461328a92c6b8e6355。run_metadata.json sha256 = afc96ef019e82814543239988fe2738fd26401edf172e1bbe54bd69c5d69682b。"
+    ],
+    "google_trends_h4cbh_hhbd": [
+      "run 20261001T121949Z-google-trends-h4cbh-hhbd（geo JP / today 12-m / 2026-10-01T12:19:49Z 収集）",
+      "comparison.json sha256 = 3e338031b692c0e5a5ee2f4c66e250835c962ced5ff56cfec3d31038ae1bd03d。records_h4cbh.json sha256 = 0cdbdf2d9fe1312c6846d5a683b0b01eb0939419e61bfb8c3c3d97e125e22130。records_hhbd.json sha256 = 3317099037a95712cf550a97dbc924ad77c7043b17ddf00cf0a7ed7ef6b98e32。run_metadata.json sha256 = 6389b71226ccdcee3fe3f288fcf5a259e885388547a4765851af69b166e958c6。"
+    ],
+    "google_trends_disambiguated": [
+      "run 20261001T132500Z-google-trends-disambiguated（geo JP / today 12-m / 2026-10-01T13:25:00Z 収集。CBX 大麻 平均 2・2 週、CBX カンナビノイド 平均 5・3 週）",
+      "records_disambiguated.json sha256 = eea1a58a1424a944853ab45cd3ac15b7c0bb69e69ce042191bd8e828ee6090bb。run_metadata.json sha256 = f5b2b719a8dff341665af72690ca309e5f457486943017cac4f9a0c9268c3a83。"
+    ],
+    "x_aggregates": [
+      "datasets/cbx-social-trends/data/processed/x_cbx_202608_monthly_coarse_aggregates.csv（2026-08 total 101、2026-09 total 46、合計 147。topic 周辺集計）",
+      "CSV sha256 = d4832bd21dda6069ff0aed2105ec95458370dc9b503d46a94d63704bfe475cc0。集計条件 JSON sha256 = 7b401175827a8af4d77c8160e3f7d6edf1d4ed3e81448a4d5bc9e95d8a8efc4e。",
+      "ISS-20261014-PUB-029（2026-10-15、option ii）により細かい交差集計は公開しない。投稿単位データは保持・公開しない。"
+    ],
+    "not_repository_retained": [
+      "Google Search Console（2026-07 月次）・OpenSEO（2026-09-17）・X の投稿単位データ・TikTok（2026-09-01、20 件）・YouTube（2026-10-01、24 件）の raw はリポジトリに保持しない（raw social 層は git 非追跡）。本ページの当該数値は収集時の処理結果で、リポジトリ内では再計算できない。"
     ]
   },
-  "notes": "この evidence は機械的な存在・整合性と 2026-10-15 のオーナー確認を記録する。公開承認は decision.json (approved) を正とする。v1.13.0 release metadata sync 後の artifact hash を固定する。 v1.13.1 release metadata sync 後の artifact hash を固定する。 v1.14.0 release metadata sync 後の artifact hash を固定する。 2026-11-05 に版表記のみを 1.14.2 へ同期し、審査対象 hash を再固定した。"
+  "notes": "この evidence は機械的な存在・整合性と 2026-10-15 のオーナー確認を記録する。公開承認は decision.json (approved) を正とする。v1.13.0 release metadata sync 後の artifact hash を固定する。 v1.13.1 release metadata sync 後の artifact hash を固定する。 v1.14.0 release metadata sync 後の artifact hash を固定する。 2026-11-05 に版表記のみを 1.14.2 へ同期し、審査対象 hash を再固定した。",
+  "content_review": {
+    "checklist_id": "publication-content-review-c1-c45",
+    "checklist_version": "1.0.0",
+    "artifact_sha256": "a4a109988122473e5b9d67a43bc8607d3537b64af7c942815329eb23ed188f9a",
+    "reviewer": "Delta agent (owner instruction 2026-11-05: C1–C45 review of guide-cbx-rewrite)",
+    "reviewed_at": "2026-11-05",
+    "items": [
+      {
+        "id": "C1",
+        "verdict": "pass",
+        "basis": "比較平均の CBX 68 / H4CBH 13 / HHBD 7 / CBX リキッド 0.3 は、run 20261001T121949Z-google-trends-h4cbh-hhbd の comparison.json（terms: CBX・H4CBH・HHBD・CBX リキッド）の averages（68/13/7/0）と、53 点の再計算平均（68.3396 / 12.5660 / 7.0000 / 0.3019）に一致する。"
+      },
+      {
+        "id": "C2",
+        "verdict": "pass",
+        "basis": "各語の最大 100 とその週（CBX 2026-09-13・H4CBH 2026-07-26・HHBD 2025-12-07・CBX リキッド 2026-09-20）は comparison.json の最大値と一致。中央値は本ページに表示しないため、表示された指標だけを照合した。"
+      },
+      {
+        "id": "C3",
+        "verdict": "not_applicable",
+        "basis": "本ページの比較表に非ゼロ点の列は無い（平均・ピーク・ピーク週・データ開始のみ）。"
+      },
+      {
+        "id": "C4",
+        "verdict": "not_applicable",
+        "basis": "3ヶ月共通スケールの節を持たない。"
+      },
+      {
+        "id": "C5",
+        "verdict": "not_applicable",
+        "basis": "3ヶ月共通スケールの節を持たない。"
+      },
+      {
+        "id": "C6",
+        "verdict": "not_applicable",
+        "basis": "3ヶ月共通スケールの節を持たない。"
+      },
+      {
+        "id": "C7",
+        "verdict": "not_applicable",
+        "basis": "5年の共通スケール節を持たない。"
+      },
+      {
+        "id": "C8",
+        "verdict": "pass",
+        "basis": "単独平均 CBX 68（68.3774）・H4CBH 56（55.5094）・HHBD 30（再計算 30.1132。run 記録の summary は 33 で不一致のため再計算値に訂正）・CBX リキッド 4.5（4.4528）を records_*.json から再計算して一致を確認。ピーク週（2026-09-13・2026-07-26・2025-12-07・2026-09-20）とデータ開始（HHBD 2025-12、CBX リキッド 2026-09）も一致。"
+      },
+      {
+        "id": "C9",
+        "verdict": "not_applicable",
+        "basis": "5年の単独系列を本ページでは扱わない。"
+      },
+      {
+        "id": "C10",
+        "verdict": "pass",
+        "basis": "YouTube の 26 件→フィルタ後 24 件は収集時の記録値で、raw payload を保持しないことを本文に明記した（再計算はできない）。"
+      },
+      {
+        "id": "C11",
+        "verdict": "not_applicable",
+        "basis": "公開日範囲の表を持たない。"
+      },
+      {
+        "id": "C12",
+        "verdict": "pass",
+        "basis": "geo JP / today 12-m / 検索語は run_metadata.json の queries（CBX リキッド・CBX・CBD リキッド、H4CBH・HHBD・CBX、CBX 大麻・CBX カンナビノイド）と一致。"
+      },
+      {
+        "id": "C13",
+        "verdict": "pass",
+        "basis": "「興味度スコア」の定義に、0-100 の相対指数であり絶対検索数ではないと明記している。"
+      },
+      {
+        "id": "C14",
+        "verdict": "pass",
+        "basis": "単独平均と比較平均を混ぜない旨の警告ブロックがあり、換算しないと明記している。"
+      },
+      {
+        "id": "C15",
+        "verdict": "pass",
+        "basis": "「共通スケールの値は同じ要求に入れた語の間でしか比べられない」と明記（2026-11-05 に文言を修正）。"
+      },
+      {
+        "id": "C16",
+        "verdict": "pass",
+        "basis": "単独平均はピークを 100、比較平均はセット内最大を 100 とする正規化であると定義に明記している。"
+      },
+      {
+        "id": "C17",
+        "verdict": "pass",
+        "basis": "比較要求の語（CBX・H4CBH・HHBD・CBX リキッド）を出所の段落に列挙した。"
+      },
+      {
+        "id": "C18",
+        "verdict": "pass",
+        "basis": "X の月別合計・YouTube 件数・TikTok 件数を合算していない（節と単位が別）。"
+      },
+      {
+        "id": "C19",
+        "verdict": "pass",
+        "basis": "CBX リキッドの 0 を「閾値未満。検索が無いことを意味しない」と訂正した（2026-11-05。旧表記は「0（データなし）」）。"
+      },
+      {
+        "id": "C20",
+        "verdict": "not_applicable",
+        "basis": "THCNM を扱わない。"
+      },
+      {
+        "id": "C21",
+        "verdict": "not_applicable",
+        "basis": "3ヶ月の系列を扱わない。"
+      },
+      {
+        "id": "C22",
+        "verdict": "pass",
+        "basis": "空週・未取得を 0 観測として扱っていない（X の 3〜6 月は空週が多いと明記、参考データはバッジで区別）。"
+      },
+      {
+        "id": "C23",
+        "verdict": "pass",
+        "basis": "「各検索語の取得は単発で、反復による安定性は未測定」を調査方法に追加した。"
+      },
+      {
+        "id": "C24",
+        "verdict": "pass",
+        "basis": "要求（today 12-m）と取得期間（2025-09-28〜2026-10-03）を別に記載している。"
+      },
+      {
+        "id": "C25",
+        "verdict": "pass",
+        "basis": "3 run の run_id を出所の段落に追加した（20261001T115959Z・20261001T121949Z・20261001T132500Z）。"
+      },
+      {
+        "id": "C26",
+        "verdict": "pass",
+        "basis": "GT raw の各行のファイルと SHA-256 を evidence.citations に記録した（2026-11-05 追加）。X 集計 CSV と集計条件 JSON も記録。"
+      },
+      {
+        "id": "C27",
+        "verdict": "not_applicable",
+        "basis": "本ページの run は metadata/windows に登録窓を持たない（timeframe と取得期間を run_metadata に記録）。"
+      },
+      {
+        "id": "C28",
+        "verdict": "pass",
+        "basis": "単独平均・比較平均の定義を記載し、HHBD 30 と CBX リキッド 4.5 の再計算根拠を注記した。"
+      },
+      {
+        "id": "C29",
+        "verdict": "pass",
+        "basis": "Google Trends は追跡 raw から再計算できる。GSC・OpenSEO・X・TikTok・YouTube は保持せず再計算できないことを「保持と反復」に明記した。"
+      },
+      {
+        "id": "C30",
+        "verdict": "pass",
+        "basis": "データソース表に取得日と手段（Google Trends MCP 0.1.1 / Apify 各 Actor）を記載。Actor の版は当時の記録に残らず、本文は版を主張しない。"
+      },
+      {
+        "id": "C31",
+        "verdict": "pass",
+        "basis": "単発 run であることを明記した（C23 と同じ段落）。"
+      },
+      {
+        "id": "C32",
+        "verdict": "not_applicable",
+        "basis": "THCNM / THA を扱わない。"
+      },
+      {
+        "id": "C33",
+        "verdict": "pass",
+        "basis": "学術的 CBX の化学式 C21H22O2 は一次文献（Chianese et al. 2011, DOI 10.1016/j.tet.2011.03.062）に基づく。市場 CBX の構造は不明と明記し、未検証の識別子を断定していない。"
+      },
+      {
+        "id": "C34",
+        "verdict": "not_applicable",
+        "basis": "THAH / THC-O との区別を扱わない。"
+      },
+      {
+        "id": "C35",
+        "verdict": "pass",
+        "basis": "直接規制が確認できないことを観測として述べ、「法的評価ではない」と明記した（2026-11-05 に「合法です」を訂正、FAQ の JSON-LD も同じ）。"
+      },
+      {
+        "id": "C36",
+        "verdict": "pass",
+        "basis": "動画単位の行（タイトル・チャンネル・URL・再生数）とチャンネル単位の分布を削除し、返却件数・フィルタ条件・集計値だけにした（2026-11-05）。"
+      },
+      {
+        "id": "C37",
+        "verdict": "pass",
+        "basis": "アカウント名・投稿 ID・投稿 URL・投稿日時を掲載しない。アカウント単位の表と週別の投稿者数も削除した（2026-11-05）。"
+      },
+      {
+        "id": "C38",
+        "verdict": "pass",
+        "basis": "「保持と反復」の段落と各節で、raw をリポジトリに保持しないと明記している。"
+      },
+      {
+        "id": "C39",
+        "verdict": "pass",
+        "basis": "ライセンス CC-BY-4.0 を記載し、evidence の redistribution_basis が集計値のみの掲載を記録する。"
+      },
+      {
+        "id": "C40",
+        "verdict": "pass",
+        "basis": "因果は「可能性」「寄与している可能性」の表現に留め、断定していない。年表の所見は解釈として節を分けている。"
+      },
+      {
+        "id": "C41",
+        "verdict": "pass",
+        "basis": "一次データ / 参考データのバッジで区分し、収集時の値と再計算値を注記で区別している。"
+      },
+      {
+        "id": "C42",
+        "verdict": "pass",
+        "basis": "注意ブロック（小基数、公開しない集計、保持しないデータ、COA の限界）を各節に配置している。"
+      },
+      {
+        "id": "C43",
+        "verdict": "pass",
+        "basis": "引用の Version 1.14.5 は CITATION.cff の version 1.14.5 と一致する。"
+      },
+      {
+        "id": "C44",
+        "verdict": "pass",
+        "basis": "公開状態の節を追加し、decision approved・artifact_sha256 一致・ゲート SUPPORTED（PUB-01〜PUB-11 PASS）・C3 記録を記載した。"
+      },
+      {
+        "id": "C45",
+        "verdict": "pass",
+        "basis": "最終更新を 2026-11-05 とし、C3 レビューによる再確認と公開状態の追加を改訂注記に記載した。"
+      }
+    ]
+  }
 }

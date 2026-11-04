@@ -23,10 +23,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   gate and the audit.
 
 ### Changed
-- `research-thcnm` carries a recorded C1..C45 review (45 items with a verdict
-  and a basis, reviewer, `reviewed_at`, pinned to the current page). It is the
-  only artifact that passes `PUB-11`; the other 16 report `PC-10` / `PUB-11` and
-  stay `BLOCKED`.
+- All 16 publication pages carry a recorded C1..C45 review (45 items with a
+  verdict and a basis each, reviewer, `reviewed_at`, pinned to the current page
+  hash): the 15 `research_*` pages and `guide_cbx_rewrite.html`. Each page now
+  states `PUB-01..PUB-11` in its 公開状態 section and the gate returns
+  `SUPPORTED`. The review corrected numbers, request-term and window
+  disclosures, and removed row-level social data that the coarse-aggregate
+  decisions exclude.
 
 ### Fixed
 - The C3 review of `research_thcnm.html` found and corrected nine content
@@ -45,9 +48,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   is recorded as ISS-20261105-PUB-037 and in this release.
 
 ### Known gap
-- The other 16 artifacts have no C1..C45 review and remain `BLOCKED` on
-  `PUB-11`; their pages still describe the gate by its `PUB-01..PUB-10` result.
-  ISS-20261105-PUB-037 stays open for them.
+- `publication/search-emergence-tracker/index.html` and the
+  `youtube-hhbd-liquid-monthly-counts` aggregate are outside the 16 pages and
+  have no C1..C45 review; both stay `BLOCKED` on `PUB-11` (the withdrawn
+  `x-cbx-202608-*` envelopes stay `BLOCKED` for their own reasons).
 
 ---
 

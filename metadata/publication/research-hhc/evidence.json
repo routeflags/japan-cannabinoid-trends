@@ -6,7 +6,7 @@
   "integrity": "verified",
   "citations": {
     "integrity": [
-      "sha256(publication/research_hhc.html, 2026-11-05 検算) = 9607bbe17202d44c1988f51712660e57356368608d63bc822d8de74b223864ca"
+      "sha256(publication/research_hhc.html, 2026-11-05 検算) = f6179269367aa6070f54a818f3531ed779f9282d584bd2a45856dd51938d983f"
     ],
     "publication_contract": [
       "validation.cli audit-publication（2026-10-15）: PC-1〜PC-8 の機械検査対象。PC-7 は本 envelope の存在と hash 固定を検査する。",
@@ -31,7 +31,8 @@
     "youtube": [
       "YouTube 2026-10-08 の Apify 検索（ページのユニーク動画数 48 件）は run_metadata も採用宣言も持たず、raw は Git 非追跡でリポジトリに無い。2026-10-08 バッチのユニーク videoId は commit 989ca22 の youtube_runs.csv と ISS-20261024-YT-013 に記録され、CRDP 27・H4CBH 24・HHBD 22・HHCH 20・HHC 27（2026-10-02 run は 28）。",
       "YouTube 2026-10-09 の Data API 検索（ページの 23 件、投稿日範囲 2021-04-03 〜 2026-08-02）は 2026-10-12 の方針判断で withdrawn（raw 削除）と記録され、返却件数・観測窓の run 記録は残っていない。",
-      "したがって YouTube 節の返却件数・実行状態・公開日範囲は run 記録と照合できず、C10・C11 は照合対象なしとして記録した。ページは raw 非保持・非再計算を明記している。"
+      "したがって YouTube 節の返却件数・実行状態・公開日範囲は run 記録と照合できず、C10・C11 は照合対象なしとして記録した。ページは raw 非保持・非再計算を明記している。",
+      "YouTube 48 件は run 20261002T064850Z-youtube-hhc（28 件）と run 20261008T122515Z-youtube-hhc（27 件、共通 videoId 7 件）の和集合。owner の 2026-10-29 判断で 2 run を反復観測として残す（ISS-20261024-YT-013）。raw は非保持。"
     ]
   },
   "unrecorded": {
@@ -56,7 +57,7 @@
   "content_review": {
     "checklist_id": "publication-content-review-c1-c45",
     "checklist_version": "1.0.0",
-    "artifact_sha256": "9607bbe17202d44c1988f51712660e57356368608d63bc822d8de74b223864ca",
+    "artifact_sha256": "f6179269367aa6070f54a818f3531ed779f9282d584bd2a45856dd51938d983f",
     "reviewer": "Delta agent (owner instruction 2026-11-05: C1–C45 review of research-hhc)",
     "reviewed_at": "2026-11-05",
     "items": [

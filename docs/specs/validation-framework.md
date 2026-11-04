@@ -917,9 +917,10 @@ G6 仕様（`docs/plans/20261013f.md`）の垂直スライス。Git 運用全体
 
 チェックリストは `metadata/publication/content-review-checklist.json`（v1.0.0、
 C1〜C45）にある（`collection-pipeline.md` の C1〜C3 は比較可能性の別概念で、
-公開内容レビューとは別）。`research-thcnm` は 45 項目のレビューを記録して
-`SUPPORTED`。他の 16 artifact はレビュー未記録のため `BLOCKED` のままであり、
-それらのページは PUB-01〜PUB-10 の結果でゲートを記述したままである。
+公開内容レビューとは別）。公開 16 ページ（15 の `research_*` と
+`guide_cbx_rewrite.html`）は 45 項目のレビューを記録して `SUPPORTED`。
+`search-emergence-tracker` と `youtube-hhbd-liquid-monthly-counts` 集計は
+未記録のため `BLOCKED` のままである。
 
 - `src/validation/private_catalog.py` + CLI `audit-private-catalog`（§13。値は出さない）:
   - 実測: マーカー 9 件、`present 0 / absent 9`（worktree に `private/` なし）。全件 `restricted / private / not_approved`。（監査: `docs/audits/g6-private-catalog.json` / `.md`）
