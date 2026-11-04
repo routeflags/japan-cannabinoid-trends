@@ -139,6 +139,7 @@ Zenodo assigns two types of DOIs:
 
 | Version | DOI (version) | Concept DOI |
 |---------|---------------|-------------|
+| v1.14.4 | [10.5281/zenodo.23962400](https://doi.org/10.5281/zenodo.23962400) | [10.5281/zenodo.23390594](https://doi.org/10.5281/zenodo.23390594) |
 | v1.14.3 | [10.5281/zenodo.23961844](https://doi.org/10.5281/zenodo.23961844) | [10.5281/zenodo.23390594](https://doi.org/10.5281/zenodo.23390594) |
 | v1.14.2 | [10.5281/zenodo.23961329](https://doi.org/10.5281/zenodo.23961329) | [10.5281/zenodo.23390594](https://doi.org/10.5281/zenodo.23390594) |
 | v1.14.1 | [10.5281/zenodo.23955338](https://doi.org/10.5281/zenodo.23955338) | [10.5281/zenodo.23390594](https://doi.org/10.5281/zenodo.23390594) |

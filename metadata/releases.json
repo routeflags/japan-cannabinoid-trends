@@ -16,6 +16,13 @@
       "version_doi": "10.5281/zenodo.23961844",
       "released_at": "2026-11-04T19:33:01Z",
       "workflow_run": "41898010625"
+    },
+    {
+      "version": "1.14.4",
+      "tag": "v1.14.4",
+      "version_doi": "10.5281/zenodo.23962400",
+      "released_at": "2026-11-04T19:58:08Z",
+      "workflow_run": "41902035893"
     }
   ]
 }
