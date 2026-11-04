@@ -235,7 +235,7 @@
     "maintainer": "ROUTE FLAGS Co., Ltd."
   },
   "queryDesign": {
-    "lastUpdated": "2026-10-09",
+    "lastUpdated": "2026-11-04",
     "principle": "MECE: Each compound has unique queries per media type, avoiding overlap",
     "mediaTypes": {
       "x": {
@@ -418,6 +418,20 @@
           "googleTrends": "CRDH"
         },
         "commonScaleSet": "Set D"
+      },
+      "THCNM": {
+        "japaneseName": "THCNM",
+        "aliases": [
+          "THA"
+        ],
+        "queries": {
+          "youtube": "THCNM リキッド / THA リキッド",
+          "googleTrends": "THCNM"
+        },
+        "commonScaleSet": null,
+        "coverageStatus": "collected_all_declared_sources_youtube_x_not_designed",
+        "identityNote": "化学的同一性は供給元・市場の記載によるもので未確認（Tetrahydrocannabinol-N-methyl / 1′-Dimethyl-Δ9-THCH の 2 説）。THA は別名・商業名であり、同一物質とも別物質とも断定しない。外部識別子（CAS / ChEBI / Wikidata）は記録しない。",
+        "note": "2026-11-04 に化合物集合へ追加し、同日 Google Trends の 12ヶ月・5年と YouTube の 2 本の required primary query（thcnm-liquid-ja = THCNM リキッド / tha-liquid-ja = THA リキッド）を各 1 run で採用した。YouTube は化合物 15/15・クエリ 16/16。2 run は別観測で件数を合算しない。X のクエリは設計していない。正本は metadata/queries/query-registry.json（thcnm-general-ja / thcnm-liquid-ja / tha-liquid-ja）と datasets/cannabinoid-raw-collection/metadata/query-design.json（compound_set）。ISS-20261104-TAX-028。"
       }
     }
   },

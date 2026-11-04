@@ -58,7 +58,8 @@
   </table>
   <p><strong>出所:</strong> run <code>20261014T204904Z-google-trends-cannabinoid-multi-trends</code>（JP / today 5-y / 2026-10-14T20:49:04.201643Z 収集）。記録にある項目: 初出 2022-03-13（値 65）、非ゼロ 19 週 / ゼロ 243 週、データあり期間 2021-10-10 〜 2026-10-11。</p>
 
-  <h3>12ヶ月データサマリー</h3>
+  <h3>12ヶ月データサマリー（データなし）</h3>
+  <p>Google Trends は日本（geo JP）で <code>THC-O</code> の 12ヶ月系列を返さなかった（no data）。これは取得の失敗ではなく、系列が返らないという記録であり、<strong>需要ゼロを意味しない</strong>（欠測として扱い、0 観測と混同しない）。</p>
   <table>
     <thead>
       <tr>
@@ -68,13 +69,121 @@
     </thead>
     <tbody>
       <tr>
-        <td>12ヶ月平均</td>
-        <td><strong>8.2</strong></td>
+        <td>系列</td>
+        <td><strong>データなし（no data）</strong></td>
+      </tr>
+      <tr>
+        <td>要求</td>
+        <td>geo JP / <code>today 12-m</code> / 単独系列</td>
+      </tr>
+      <tr>
+        <td>記録</td>
+        <td>no data として記録済み（THC-O を含む）</td>
       </tr>
     </tbody>
   </table>
+  <p><strong>出所:</strong> run <code>20261002T064135Z-google-trends-nodata</code>（2026-10-02 収集。THC-O・THCV の no data を記録）。
+  この状態は表記バリアントの系列が返ることによって変わらない（下の「表記バリアント」を参照）。</p>
 
   <p><strong>制約:</strong> Google Trends は相対指数であり、絶対検索数ではない。</p>
+</div>
+
+
+<!-- ===== 独自データ：Google Trends 表記バリアント ===== -->
+<div>
+  <h2 id="data-search-variants">独自データ: THC-O の表記バリアント（THCO）検索需要 <span>一次データ</span></h2>
+  <p>データソース: Google Trends / 地域: 日本 (JP) / 収集日: 2026-11-04</p>
+  <p>canonical の検索文字列（<code>THC-O</code> / <code>THC-O リキッド</code>）とは別に、ハイフンなし表記（<code>THCO</code> / <code>THCO リキッド</code>）を、登録済みの表記ゆれ（<code>metadata/queries/query-variants.json</code>）として観測した。1 表記 × 1 期間 = 1 run の<strong>別観測</strong>であり、canonical 系列と合算・平均・置換をしない。</p>
+
+  <h3>表記バリアントの収集結果</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>検索文字列</th>
+        <th>canonical query_id</th>
+        <th>variant_id</th>
+        <th>期間</th>
+        <th>観測範囲</th>
+        <th>週数</th>
+        <th>非ゼロ週</th>
+        <th>run</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>THCO</code></td>
+        <td>thc-o-general-ja</td>
+        <td>thc-o-general-no-hyphen</td>
+        <td>12ヶ月</td>
+        <td>2025-11-02 〜 2026-11-01</td>
+        <td>53</td>
+        <td>3</td>
+        <td><code>20261104T135330Z-google-trends-thc-o-general-thco-12m</code></td>
+      </tr>
+      <tr>
+        <td><code>THCO</code></td>
+        <td>thc-o-general-ja</td>
+        <td>thc-o-general-no-hyphen</td>
+        <td>5年</td>
+        <td>2021-10-31 〜 2026-11-01</td>
+        <td>262</td>
+        <td>90</td>
+        <td><code>20261104T135339Z-google-trends-thc-o-general-thco-5y</code></td>
+      </tr>
+      <tr>
+        <td><code>THCO リキッド</code></td>
+        <td>thc-o-liquid-ja</td>
+        <td>thc-o-liquid-no-hyphen</td>
+        <td>12ヶ月</td>
+        <td>2025-11-02 〜 2026-11-01</td>
+        <td>53</td>
+        <td>1</td>
+        <td><code>20261104T135345Z-google-trends-thc-o-liquid-thco-12m</code></td>
+      </tr>
+      <tr>
+        <td><code>THCO リキッド</code></td>
+        <td>thc-o-liquid-ja</td>
+        <td>thc-o-liquid-no-hyphen</td>
+        <td>5年</td>
+        <td>2021-10-31 〜 2026-11-01</td>
+        <td>262</td>
+        <td>23</td>
+        <td><code>20261104T135350Z-google-trends-thc-o-liquid-thco-5y</code></td>
+      </tr>
+    </tbody>
+  </table>
+  <p><strong>出所:</strong> 上表の 4 run（Google Trends / geo JP / <code>collect --live</code> / google-trends-mcp 0.1.1）。窓は 12ヶ月 <code>2025-11-02_2026-11-08</code>、5年 <code>2021-10-31_2026-11-08</code>。週数と非ゼロ週は study の <code>datasets/cannabinoid-raw-collection/methodology.md</code> §2.1.5 の run 表の記録による（各 run の単独正規化値、その run のピーク = 100）。</p>
+
+  <h3>canonical 系列との関係（不変）</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>系列</th>
+        <th>状態</th>
+        <th>出所</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>THC-O</code> 5年</td>
+        <td>系列あり（262 週・非ゼロ 19 週）</td>
+        <td>run <code>20261014T204904Z-google-trends-cannabinoid-multi-trends</code></td>
+      </tr>
+      <tr>
+        <td><code>THC-O</code> 12ヶ月</td>
+        <td>データなし（no data）</td>
+        <td>run <code>20261002T064135Z-google-trends-nodata</code></td>
+      </tr>
+      <tr>
+        <td><code>THC-O リキッド</code> 12ヶ月・5年</td>
+        <td>データなし（no data）</td>
+        <td>study の <code>methodology.md</code> §2.1.2・§2.1.3 の記録</td>
+      </tr>
+    </tbody>
+  </table>
+  <p>canonical の「12ヶ月はデータなし」は単独系列の事実として維持する。バリアントの系列が返ったことは、canonical の no data を否定も置換もしない。</p>
+  <p><strong>化学構造の扱い:</strong> 表記の違いは検索文字列の違いであり、本ページは <code>THC-O</code> と <code>THCO</code> を同一の検索需要として扱わない。Δ8-THC-O / Δ9-THC-O などの異性体・構造の帰属も断定しない。canonical とバリアントの値の差は、2 つの検索文字列の観測差であって、物質の違いの測定ではない。</p>
+  <p><strong>制約:</strong> 各 run は自分のピーク = 100 に正規化され、窓も canonical の 5年 run（2021-10-10 〜 2026-10-11）と異なるため、窓をまたいだ数値比較をしない。非ゼロ週の差（canonical 19 / バリアント 90）は、2 つの検索文字列の観測差であり、canonical 系列の修正ではない。バリアントの平均・ピークは本ページに載せない（本ページが載せるのは週数と非ゼロ週で、いずれも run の系列長の記録である）。</p>
 </div>
 
 

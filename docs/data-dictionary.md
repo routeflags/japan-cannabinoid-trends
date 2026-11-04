@@ -299,7 +299,7 @@
 | `compound_major` | 主要フィトカンナビノイド | `compound_cbd`, `compound_thc` |
 | `compound_minor` | 主要フィトカンナビノイド以外のフィトカンナビノイド | `compound_cbg`, `compound_cbn`, `compound_cbc`, `compound_thcv`, `compound_cbdv`, `compound_cbx`, `compound_thch` |
 | `compound_rare` | レアカンナビノイド | （なし。**意図的に空**。`skos:scopeNote` 参照） |
-| `compound_semisynthetic` | 半合成カンナビノイド | `compound_hhc`, `compound_thc_o`, `compound_h4cbh`, `compound_hhbd` |
+| `compound_semisynthetic` | 半合成カンナビノイド | `compound_hhc`, `compound_thc_o`, `compound_h4cbh`, `compound_hhbd`, `compound_thcnm` |
 | `compound_synthetic` | 合成カンナビノイド | `compound_hhch`, `compound_crdp`, `compound_crdh` |
 | `compound_endocannabinoid` | エンドカンナビノイド | `compound_anandamide`, `compound_2ag` |
 
@@ -307,6 +307,8 @@
 > 別物であり、`research/google-trends/20261004-google-trends-compound-summary.md` の「カテゴリ」列
 > は化学クラスを指すため本表とは一致しない。両者を混同しないこと。
 > 化学クラスの正式な所属は §6.5（第 2 次元）を参照。
+> `compound_thcnm` は化学的同一性が未確認のまま登録した概念であり（THA は別名・商業名）、
+> その `skos:broader` 配置は暫定である。識別子と未決事項は ISS-20261104-TAX-028 を参照。
 
 ### 6.5 化学クラス（第 2 次元）
 

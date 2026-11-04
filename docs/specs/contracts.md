@@ -1,6 +1,6 @@
 # 契約（Contract）のドメインモデル
 
-**版:** 1.2.3（2026-10-16）
+**版:** 1.2.4（2026-11-01）
 **目的:** リポジトリ内で多義的に使われてきた「契約」を、境界づけられたコンテキストごとの
 **版を持つ検証可能な合意**として定義し、宣言場所・所有者・検査手段を 1 つの台帳に集約する。
 併せて、**パイプライン**をドメイン上 **生産 (Production)** として定義し、契約に沿う
@@ -34,6 +34,8 @@
 | **契約 (Contract)** | 境界を越えて渡されるデータ／振る舞いについて、版を持ち機械検証可能な形で宣言した合意。検収条件・検証項目・保管条件を含む | 検証 | — | — | — |
 | **生産 (Production)** | **パイプライン**。上流の入力から契約準拠の**記録**（run / artifact / 加工成果物 / 生成値）を産出し、契約に含まれる検収条件・検証項目に沿って各項目を評価する側（収集・加工）。判定ルール・判定理由・可否の意味は契約／ゲート側に従い、生産側で独自に所有しない（§3.1） | 生産 | `src/collection/`、`src/processing/` | モジュール定数（`ADAPTER_CONTRACT_VERSION` 等） | 検証側の契約・ゲートと照合する（`gate-run` / `audit-new-runs` / `audit-processed`） |
 | **出荷 (Shipping)** | 契約の検収条件・検証項目・保管条件を満たした成果物を、指定された保管先（local / repository / remote）へ引き渡し、保管・公開・リリースへ進められる状態にする工程 | 生産 | `src/collection/`、`src/processing/`、保管先設定 | — | 検証側が保管条件・公開条件と照合する |
+| **保管先 (Storage Target)** | 成果物を置く具体的な場所・媒体。local / repository / remote。区別はファイルの所在ではなく帰属で決まる（同じ payload が Local と Repository の両方に属し得る） | 保管 | `config/storage-policies.json` の `storage`、`docs/specs/raw-data-policy.md` | — | `validate-registries`、`validation.cli audit-git-tracking` |
+| **追跡状態 (Tracking State)** | ある path を Repository Storage が保持しているか。`tracked` / `ignored` / `untracked_unignored` / `absent`。追跡方針の期待値は `tracked` / `ignored` / `conditional`（`config/storage-policies.json`）。**「保持」は追跡状態が `tracked` であることを指し、ローカルに payload が存在することではない**（owner決定 2026-11-01、§2.2） | 検証（報告）。追跡方針は保管、保持・公開の可否は契約／公開判断 | Git index（`git ls-files` / `git check-ignore`）、`config/storage-policies.json` の `git_tracking` | — | `validation.storage_policy.check_git_tracking`、`validation.cli audit-git-tracking` |
 | **スキーマ契約** | 文書形状の宣言（必須項目・型・列挙・余分なフィールド） | 検証 | `src/validation/schemas/*.py`、`schema_registry.SCHEMA_REGISTRY` | `SCHEMA_VERSIONS` | Cerberus（`validate-*`）、`test_schema_coverage.py` |
 | **レジストリ文書** | スキーマ契約が検証する実体一覧（source / query / window / study 等） | 産出したコンテキスト | `config/`、`metadata/` | 文書の `schema_version` | `validation.cli validate-registries` |
 | **研究 (Study)** | 研究質問・対象範囲・入力証拠・処理方法・成果物・制約を 1 つに束ねる研究単位。実装上の ID は `study_id`、配置は `datasets/<study-id>/`。HTML ページや release ではなく、dataset release の根拠になる研究集約 | 研究 | `datasets/<study-id>/README.md`、`methodology.md`、`metadata/studies/study-registry.json` | 文書の `schema_version` / release version | `research.cli audit-studies`、`validate-registries`、`audit-processed` |
@@ -51,11 +53,46 @@
 | 生産 Production（パイプライン） | plan（スキーマ・レジストリ）、query、temporal window、adapter インターフェース、staging 宣言。契約に含まれる検収条件・検証項目に沿って評価し、出荷可能な記録・成果物を作る |
 | 収集 Collection（生産の下位） | source / collector / 収集 run の記録 |
 | 加工 Processing（生産の下位） | 派生成果物の導出宣言と生成値 |
-| 保管 Storage | artifact manifest、artifact registry、storage policy、reader インターフェース |
+| 保管 Storage | artifact manifest、artifact registry、storage policy、reader インターフェース。追跡方針（`git_tracking`）を宣言するが、追跡状態の観測報告と公開可否の判定は行わない |
 | 検証 Validation | スキーマ契約全体（検査・行使）、監査。ゲート契約は検査・行使のみ（所有は契約） |
 | 研究 Research | **研究 (Study)**、transformation 来歴、evidence、measurement / research view |
 | 公開 Publication | publication decision（判断記録） |
 | 契約 Contract（統治基盤） | ゲート契約（所有。検査・行使は検証・研究が分担）。唯一の台帳の提供 |
+
+### 2.2 追跡状態と、ローカル存在・公開可否・リリースの区別
+
+owner決定（2026-11-01）: 「保持」は **Repository Storage（Git 追跡）** を指す。ローカルに raw
+payload が存在することは保持ではない。social / video の raw は、著作権・再配布条件により
+Repository Storage と公開から意図的に除外されたまま、Local Storage に存在し得る。
+
+保管先は 3 種に分かれる（採用ER: `docs/plan/20261016.md`）。**Local Storage** は checkout 上の
+実体（worktree、`.staging/`、`data/private/`、追跡外の raw payload）、**Repository Storage** は
+Git index に登録された実体、**Remote Storage** は GitHub / Zenodo 等のリポジトリ外。区別は
+ファイルの所在ではなく帰属で決まる（`tracked` な payload は Local と Repository の両方に属する）。
+
+| 状態 | 問い | 実装上の根拠 | この状態が意味しないこと |
+|---|---|---|---|
+| ローカル存在 (Local Existence) | この checkout に payload / run directory があるか | `validation.cli audit-raw-completeness`（`present` / `missing_directory` / `missing_run_metadata`）、`audit-adoption` | `tracked` / 公開適格 / リリース済み |
+| 追跡状態 (Tracking State) | Repository Storage（Git index）が保持しているか | `validation.storage_policy.check_git_tracking`、`validation.cli audit-git-tracking`、`config/storage-policies.json` の `git_tracking` | 公開適格 / リリース済み |
+| 公開可否 (Publication Eligibility) | 公開 gate と判断記録が承認したか | `validation.cli gate-publication`（PUB-10）、`metadata/publication/` | リリース済み |
+| リリース (Release) | 配布単位として公開されたか | `docs/specs/release-process.md`、git tag / Zenodo | 追跡状態・公開可否から自動で導かれること |
+
+規則:
+
+1. **保持 = `tracked`。** 追跡状態について「保持」と書くときは、Repository Storage に属する path
+   だけを指す。`ignored` / `untracked_unignored` は非保持であり、payload がローカルに存在しても
+   保持ではない。
+2. **ローカル不在は研究上の欠落ではない。** この checkout が payload を見せられないことは、
+   未収集・欠測・0 観測・非保持のいずれでもない（AGENTS.md: 欠測 ≠ ゼロ）。raw が machine-local
+   であることは可搬性の事実である。
+3. **追跡は公開適格ではない。** `tracked` はレビュー・再現の対象であることを意味するだけであり、
+   公開・再配布の可否は契約・Publication gate・owner 判断が決める。
+   `config/storage-policies.json` の全 policy は `publication: requires_review` を持つ。
+4. **保管は判定しない。** 検証はローカル存在・追跡状態の事実を報告し、保管は成果物の配置・
+   読み取りを支える。公開可否・再配布可否・法的判断の所有は契約／公開判断であり、
+   保管・検証はそれを発明しない（`docs/domain/context-map.md` §4 U3）。
+5. **リリースは別。** git tag / Zenodo による配布は `docs/specs/release-process.md` の手順であり、
+   追跡状態や公開可否から自動で生じない。
 
 ---
 
@@ -141,7 +178,7 @@ flowchart TD
 | DDD の語 | 本リポジトリでの実体 |
 |---|---|
 | 集約 (aggregate) | レジストリ文書（`metadata/queries/query-registry.json` など）と **研究 (Study)**。研究の集約ルートは `datasets/<study-id>/README.md` / `methodology.md` / `metadata/studies/study-registry.json` の組で、配下の processed artifact・schema・validation record を束ねる |
-| 値オブジェクト | `run_id`、`window_id`、`artifact_id`、`sha256`、capability の三値、契約の版 |
+| 値オブジェクト | `run_id`、`window_id`、`artifact_id`、`sha256`、capability の三値、契約の版、追跡状態（`tracked` / `ignored` / `untracked_unignored` / `absent`、§2.2） |
 | ドメインイベント | 収集実行の確定（`run_metadata.json`）、成果物の登録（artifact manifest）、証拠の記録（evidence registry）、公開判断（publication decision） |
 | 不変条件 | 付録 A の規則（raw 不変、欠測 ≠ ゼロ、記録の再生成一致） |
 | コンテキストマップ | §3（上流→下流の一方向） |
@@ -257,6 +294,7 @@ python -m validation.cli contract-ledger --output docs/audits/contract-ledger.js
 
 | 日付 | 版 | 内容 |
 |---|---|---|
+| 2026-11-01 | 1.2.4 | 追跡状態（tracking state）を §2 に追加し、§2.2 でローカル存在・追跡状態・公開可否・リリースを区別。「保持」＝Git 追跡（Repository Storage）とする owner 決定を反映 |
 | 2026-10-16 | 1.2.3 | 生産を「判定しない」から「契約に沿って検収するが、判定ルール・理由・可否意味を独自所有しない」に更新し、出荷（Shipping）を追加 |
 | 2026-10-16 | 1.2.2 | U4 案C（未宣言維持＋トリガー正式化）の owner 決定を §10 に同期。G1 は意図的に open のまま残し、再判断トリガー T1–T3 を記録 |
 | 2026-10-16 | 1.2.1 | ゲート契約の所有を契約に同期（§2・§2.1・§3.2・§4規則4）。U2 の正本同期を完了し、台帳 `GATE_CONTRACTS` の owner を `contract` に更新 |

@@ -70,6 +70,16 @@ datasets/
 - 不確実性を記載
 - 代替解釈を検討
 
+### 5.5 Repository Storage Retention
+
+- raw payload を Repository Storage（Git 追跡）として保持するかは
+  `git_tracked` / `git_untracked` の 2 状態で表す。
+- `git_untracked` はローカル raw の不在を意味しない。ローカルには保持し、
+  リポジトリには非 content の来歴（query / request / timestamps / 件数 /
+  SHA-256 / 集計・派生証拠 / 判断記録参照）のみを残す。
+- 保持状態は公開許可ではない。公開は別の判断・gate による。
+- 契約: `docs/specs/raw-data-policy.md` §5。
+
 ---
 
 ## 6. Data Collection
@@ -172,7 +182,7 @@ License: CC-BY-4.0
 | ファイル | 内容 |
 |---------|------|
 | `datasets/*/methodology.md` | 各研究の詳細な方法論 |
-| `docs/specs/raw-data-policy.md` | raw データ公開方針 |
+| `docs/specs/raw-data-policy.md` | raw データの保持（Git 追跡）・公開方針 |
 | `docs/specs/sns-redistribution-assessment.md` | SNS 再配布権評価 |
 | `CHANGELOG.md` | 変更履歴 |
 | `CITATION.cff` | 引用メタデータ |

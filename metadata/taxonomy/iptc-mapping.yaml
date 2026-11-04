@@ -25,10 +25,13 @@
 #               化合物 9 は deliberately_unmapped のまま 2 群に分け、群ごとに理由を記録。
 #               化合物単位の IPTC 主題はリポジトリ内の証拠になく、外部語彙の確認は
 #               未実施のため推測で対応付けない。version 1.1.0 → 1.2.0。
+#   2026-11-04: THCNM を compound_mapping に追加（mapping_type: none）。化学的同一性が
+#               未確認（THA は別名・商業名）であり、IPTC 主題も外部確認していないため
+#               対応付けない。version 1.2.0 → 1.3.0。
 # =============================================================================
 
-version: "1.2.0"
-last_updated: "2026-10-15"
+version: "1.3.0"
+last_updated: "2026-11-04"
 
 # IPTC Media Topics の URI スキーム
 iptc_uri_scheme: "http://cv.iptc.org/newscodes/mediatopic/"
@@ -191,6 +194,16 @@ compound_mapping:
     mapping_type: "none"
     confidence: "low"
 
+  - skos_id: "jptr:compound-thcnm"
+    skos_prefLabel_en: "THCNM"
+    notes: |
+      THCNM は ChEBI / Wikidata に直接対応するエントリが確認されていない。
+      化学的同一性自体が供給元・市場の記載によるもので未確認であり
+      （THA は別名・商業名）、検証済みの外部識別子が無い。
+      識別子と IPTC 主題のいずれも推測で割り当てない（ISS-20261104-TAX-028）。
+    mapping_type: "none"
+    confidence: "low"
+
 # =============================================================================
 # マッピングの限界
 # =============================================================================
@@ -206,11 +219,11 @@ compound_mapping:
 coverage:
   status: "partial"
   scope_note: |
-    対応対象は末端概念（化合物 18 + content 14 = 32）。
+    対応対象は末端概念（化合物 19 + content 14 = 33）。
     カテゴリノードは階層構造上の上位概念であり主題分類ではないため、対応対象外とする。
     化学クラス 2 概念（chemclass-hydrogenated / chemclass-acetate）は TAX-026 (a) で
     追加された第 2 次元の側面値であり、IPTC Media Topics に対応する主題が無いため
-    not_applicable として宣言する（下記）。概念総数は 40（compound 24 + content 14 + chemclass 2）。
+    not_applicable として宣言する（下記）。概念総数は 41（compound 25 + content 14 + chemclass 2）。
     TAX-025（2026-10-15）で 17 末端概念の区分を確定した: intent 4 と format 4 は
     主題以外の次元（投稿意図・表現形式）であり IPTC の主題語彙に対応する概念を持たないため
     not_applicable（TAX-026 の次元分離規則を適用）。化合物 9 は deliberately_unmapped のまま
@@ -260,7 +273,7 @@ coverage:
 limitations:
   - "IPTC Media Topics はニュース記事向けの語彙であり、SNS コンテンツ分類には完全に適用できない場合がある"
   - "closeMatch マッピングは概念的に近いが完全に同一ではない"
-  - "一部のカンナビノイド化合物（CBX, H4CBH, HHBD）は ChEBI / Wikidata に対応エントリがない"
+  - "一部のカンナビノイド化合物（CBX, H4CBH, HHBD, THCNM）は ChEBI / Wikidata に対応エントリがない"
   - "投稿意図（intent 4）・表現形式（format 4）に IPTC Media Topics の対応概念は無い。IPTC はニュース主題語彙であり、意図・形式は別次元のため対応付けない（TAX-025 記録 2026-10-15）"
   - "化合物 9 概念の IPTC 対応付けには IPTC 語彙の外部確認が必要であり未実施。リポジトリ内の証拠だけでは化合物単位の主題を特定できないため推測で対応付けない。化合物識別子の正本は ChEBI / Wikidata（taxonomy の exactMatch）である"
   - "化学クラス（水素化・アセテート体）に IPTC Media Topics の対応概念は無い。IPTC はニュース主題語彙であり化学構造クラスを持たないため、推測で対応付けない（TAX-026 記録 2026-10-15）"

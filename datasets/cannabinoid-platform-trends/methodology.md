@@ -25,7 +25,8 @@ Excluded sources:
 | Source | State | Reason |
 |--------|-------|--------|
 | X | Excluded | Owner decision on 2026-10-15. X aggregate outputs are separate and not part of this release slice. |
-| YouTube runs outside COL-033 | Excluded from this slice | The raw study `cannabinoid-raw-collection` has 8 adopted YouTube runs (7 liquid primary + 1 retained HHC compound-term run). They are not in this distribution. |
+| YouTube runs outside COL-033 | Excluded from this slice | The raw study `cannabinoid-raw-collection` has 16 adopted YouTube runs (15 liquid primary + 1 retained HHC compound-term run). They are not in this distribution. |
+| THCNM | Excluded — no observation | Declared in the raw study's liquid-primary design on 2026-11-04 (`thcnm-liquid-ja`) with no collected run, and absent from COL-033. No observation exists to include, and its identity is unconfirmed. |
 
 ### 2.1 YouTube scope and the `not_collected` meaning
 

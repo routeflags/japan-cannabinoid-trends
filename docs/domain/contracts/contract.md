@@ -1,7 +1,8 @@
 # 契約 Contract — Agent Contract
 
-**版:** 0.1.0（草案、2026-10-16）  
-**語彙:** `docs/domain/glossary.md`（契約・バージョン・リリース）。下位種別のゲート契約の所有も契約とする（owner決定 2026-10-16）。
+**版:** 0.1.1（草案、2026-11-01）
+
+**語彙:** `docs/domain/glossary.md`（契約・バージョン・リリース・追跡状態）。下位種別のゲート契約の所有も契約とする（owner決定 2026-10-16）。
 
 ## Purpose and domain vocabulary
 
@@ -18,6 +19,8 @@
 ## Invariants and acceptance criteria
 
 - 新規スキーマ登録時は owner / group を省略できない（§4規則3。`test_contract_ledger.py` が強制）。
+- 保持・公開・リリースの可否は契約／公開判断／owner が所有する。検証はローカル存在・追跡状態の事実を報告し、保管は配置・読み取りを支えるだけで、公開可否・再配布可否・法的判断を発明しない（`contracts.md` §2.2）。
+- 追跡状態（`tracked` / `ignored`）は公開適格ではない。`config/storage-policies.json` の全 policy は `publication: requires_review` を持ち、公開は `gate-publication`（PUB-10）と判断記録で決める。
 - 未宣言は推測で補わない。`version: None` はギャップ（G1/G2）として記録する（§10）。
 - 契約 ID は `<domain>-<object>-v<major>` 形式。CLI サブコマンド 1 つ＝判定 1 つ（ゲート契約、§6）。
 - 監査レポートと台帳は再生成一致する（付録A4・A5）。

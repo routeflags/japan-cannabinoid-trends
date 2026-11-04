@@ -122,6 +122,10 @@ REPORTS: tuple[Report, ...] = (
         ),
     ),
     Report(
+        "docs/audits/snapshot-scope.json",
+        ("validation.cli", "audit-snapshot-scope"),
+    ),
+    Report(
         "docs/audits/g6-publication-eligibility.json",
         (
             "validation.cli",
@@ -265,6 +269,27 @@ def test_invocation_record_reproduces_from_its_committed_inputs(
     assert regenerated == _load(report.path), (
         f"{report.path} no longer matches a re-run from its committed inputs: "
         f"`python -m {' '.join(report.generator)} --output {report.path}`"
+    )
+
+
+def test_snapshot_scope_declares_checkout_local_and_preserves_claims() -> None:
+    """The sidecar must say the snapshots are local, not the full research state."""
+
+    document = _load("docs/audits/snapshot-scope.json")
+
+    assert document["audit_scope"] == "checkout_local"
+    assert document["raw_visibility"] == "partial"
+    assert document["raw_rows_generated"] is False
+    assert document["raw_dependent_facts"] == "unavailable"
+    assert "not an uncollected or zero observation" in document[
+        "absence_interpretation"
+    ]
+    assert document["not_repository_retained_run_ids"]
+    assert document["not_repository_retained_run_ids"] == sorted(
+        document["not_repository_retained_run_ids"]
+    )
+    assert len(document["not_repository_retained_run_ids"]) == len(
+        set(document["not_repository_retained_run_ids"])
     )
 
 

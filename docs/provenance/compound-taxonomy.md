@@ -32,6 +32,10 @@
 - CAS 番号・IUPAC 名・自然存在性: 既存の化合物概念にこれらのキーが無いため、キー自体を追加していない。
 - 規制情報（scopeNote 等）: 根拠は `research/regulatory-status/*.md` にあるが、既存スタイルに前例が無く可変性が高いため見送り。
 
+> **2026-11-04 注記（THC-O）:** PubMed / PubChem / Cayman の外部記録を確認した（下記 2026-11-04 節）。
+> それでも `compound_thc_o` に `exactMatch` を付けない判断は変わらない。同じ略号 `THCO` が
+> アセテート体と tetrahydrocannabiorcol（Δ8 / Δ9）の双方に使われ、単一の CAS を持たないため。
+
 ---
 
 ## 修正した既知事項（2026-10-13）
@@ -110,21 +114,98 @@
 - **検査:** `tests/validation/test_compound_rare_membership.py` が空・説明付きの状態を固定する。
   将来メンバーを追加する際は本テストを更新し、上記 gate の同時更新を満たすこと。
 
+## 2026-11-04 — `compound_thcnm`（THCNM / 別名 THA）を追加（ISS-20261104-TAX-028）
+
+| 項目 | 記録した値 | 根拠 |
+|---|---|---|
+| notation | `compound_thcnm` | 既存規約（`THC-O → compound_thc_o`、`h4cbh` / `hhbd` / `crdh` の小文字化）の適用 |
+| `@id` | `jptr:compound-thcnm` | 同上 |
+| prefLabel | en `THCNM` / ja `THCNM` | H4CBH / HHBD と同じくコード名をそのままラベルにする（確定した化学名が無い） |
+| altLabel | `THA`, `Tetrahydrocannabinol-N-methyl`, `1′-Dimethyl-Δ9-THCH`, `THCNM リキッド`, `THA リキッド` | 2 つの名称形式は出所の記載をそのまま記録したもので、どちらが正しいかを決めていない |
+| `skos:broader` | `jptr:compound-semisynthetic`（暫定） | 下記「分類の根拠」 |
+| `skos:related` | `jptr:compound-thc`, `jptr:compound-thch` | 2 つの名称形式がそれぞれ THC の N-メチル体 / Δ9-THCH のジメチル体を示すため |
+| 外部識別子 | **なし**（`exactMatch` を書かない） | CAS / ChEBI / Wikidata / PubChem のいずれもこの同一性について検証された値が無い |
+| 化学クラス | **未形式化**（`chemclass` への `skos:related` を書かない） | N-メチル体・ジメチル体というクラスは taxonomy に無く、推測で第 2 次元を作らない |
+
+### 分類の根拠（semisynthetic か synthetic か）
+
+出所の記載は 2 通りに分かれるが、**どちらも「天然カンナビノイドを化学修飾した置換誘導体」**を記述している。
+
+- `Tetrahydrocannabinol-N-methyl`: THC の N-メチル体 → 天然物の修飾体。
+- `1′-Dimethyl-Δ9-THCH`: THCH（マイナーなフィトカンナビノイド）のジメチル体 → 天然物の修飾体。
+
+`compound_synthetic` の scopeNote は「天然に対応物を持たない」（HHCH / CRDP / CRDH）を基準にしており、
+上記のいずれの記載もこれに当たらない。したがって **route 次元では半合成**に置いた。
+ただしこれは同一性が未確認のままの**暫定配置**であり、構造の検証結果ではない。
+どちらの記載も誤っていた場合（例: 天然対応物を持たない新規骨格であった場合）は再配置が要る。
+この但し書きは concept の scopeNote（en / ja）と `compound_semisynthetic` の scopeNote に書いた。
+
+### 同一性が未確認であることの扱い
+
+- `THA` は**別名・商業名**として記録する。THCNM と同一の物質であるとも、別の物質であるとも書かない。
+  国内市場記事（2026-10-28）は供給元の発言として「THA は定義された単一物質の名称ではなく商業名・混合物名」
+  と伝えており、この記載は「別名」登録とは両立するが「同一物質の証明」にはならない。
+- `THAH`（別の独自ブレンド）との混同を scopeNote で明示的に禁止した。
+- 出所の衝突（化学名 2 説、分子式の概算値）と、それを解消する条件は issue に記録した。
+  本台帳は決定した値とその理由だけを持ち、未確定の化学データ（CAS・分子式）を値としては持たない。
+
+### 同時に更新した層
+
+`iptc-mapping.yaml`（`compound_mapping` に `mapping_type: none`、IPTC 主題は与えない）、
+`docs/data-dictionary.md` §6.4 の写し、`query-registry.json`（`thcnm-general-ja` / `thcnm-liquid-ja`）、
+`query-variants.json`（THA を別名 variant として）、`datasets/cannabinoid-raw-collection/metadata/query-design.json`
+（`compound_set` で未収集を宣言）、study README / methodology、`project.json` の `queryDesign`。
+
+## 2026-11-04 — `compound_thc_o` の同一性留保（`THCO` 表記の証拠を登録、ISS-20261104-TAX-029）
+
+`compound_thc_o` の `skos:scopeNote`（en / ja）に、**この概念が単一構造の同定ではない**ことを
+追記した。外部識別子（`exactMatch`）・CAS・分子式は taxonomy に追加していない。クエリ表記の証拠は
+「検索文字列が同じ意味を意図している」ことを支えるが、「単一の化学構造を指す」ことは支えないため。
+
+| 出所 | 記録されている内容 | 何を支えるか（何を支えないか） |
+|---|---|---|
+| PubMed 37466480（Cannabis Cannabinoid Res, 2024） | tetrahydrocannabinol-O-acetate が口語で `THCO` と呼ばれる | `THCO` を `THC-O` の表記ゆれとして登録する根拠。物質の同定ではない |
+| PubChem CID 198013 | Tetrahydrocannabinol acetate（`delta9-` 体）。別名 `THC-O-ACETATE`、CAS 23132-17-4、`C23H32O3` | `THC-O` がアセテート体を指す名称であること。単一構造の同定ではない |
+| PubMed 37381980 / 36508081 | 学術文献が `THC-O-Acetate` / `THC-O Acetate` の表記を用いる | 表記の実在 |
+| Cayman Chemical 33763（Δ9-THCO 標準品） | Δ9-THCO、CAS 22972-65-2、`C17H22O2` | 同じ `THCO` 表記が**別物質**（tetrahydrocannabiorcol）にも使われること |
+| Cayman Chemical 33762（Δ8-THCO 標準品） | Δ8-THCO、CAS 22972-64-1、`C17H22O2` | Δ8 / Δ9 の 2 異性体があり、`THCO` だけでは一意に決まらないこと |
+
+- **`THCO` は単一の CAS にも単一の構造にも対応しない。** アセテート体（`C23H32O3`）と
+  tetrahydrocannabiorcol（`C17H22O2`、Δ8 / Δ9）は別物質である。市場語では `THC-O` が
+  曖昧に使われ得る。したがって `compound_thc_o` に `exactMatch` を付けない
+  （PubChem CID 198013 は Δ9 アセテート体のレコードであり、総称概念そのものではない）。
+- クエリ層の扱いは変えない。`THCO` は `query-variants.json` の variant であり、
+  canonical の `query_id`（`thc-o-general-ja` / `thc-o-liquid-ja`）と canonical text は不変。
+  variant の run は canonical の run を置換・統合しない（`docs/provenance/query-inventory.md` §2、
+  `datasets/cannabinoid-raw-collection/methodology.md` §2.1.5）。
+- `Δ8-THC-O-acetate` / `Δ9-THC-O-acetate` や `Δ8-THCO` / `Δ9-THCO` を**別概念**として
+  登録するかは未決。決めるには異性体ごとの標準品・規制記載など、クエリ表記以外の根拠が要る
+  （ISS-20261104-TAX-029）。
+- 証拠の登録: `metadata/provenance/evidence-registry.json` の `ev-pubmed-37466480` /
+  `ev-pubmed-37381980` / `ev-pubmed-36508081` / `ev-pubchem-cid-198013` /
+  `ev-cayman-33763-delta9-thco` / `ev-cayman-33762-delta8-thco`。外部参照のため
+  `sha256` は `null`（`external_unverifiable`。`docs/provenance/evidence-hash-policy.md`）。
+- `metadata/taxonomy/iptc-mapping.yaml` は変更しない。`compound-thc-o` は既に
+  `deliberately_unmapped` で、理由に「立体異性体・Δ体の総称であり単一 exactMatch は混同を招く」
+  と記録済みであり、今回の留保はその理由の範囲内である（新しい識別子を足すわけではない）。
+- 派生物: `bash scripts/export/export-taxonomy.sh` と同じエクスポータで
+  `exports/taxonomy/compound-taxonomy.ttl` / `.schema.jsonld` を再生成した（概念・ラベルの数は不変）。
+
 ## 未修正の既知事項（本変更では触っていない）
 
-1. `docs/data-dictionary.md` §6.4 の化合物カテゴリ表が不完全（`synthetic` 行が無く、
-   `h4cbh` / `hhbd` / `crdh` / `crdp` / `hhch` が未掲載）。taxonomy を正本として表を
-   補完するか要判断。
-2. `exports/taxonomy/*.ttl` / `.schema.jsonld` は 2026-10-02 生成のままで、`compound-crdh`、
-   本追加分5概念、および今回のカテゴリ移動が未反映
-   （`bash scripts/export/export-taxonomy.sh` で再生成可能。release アーカイブの
-   `INCLUDE_PATHS` に `exports/` は含まれない）。
-3. `metadata/taxonomy/iptc-mapping.yaml` の `compound_mapping` は部分収載（`cbc`/`thcv`/`cbdv`/`crdh` も未収載）。
-4. `THCH` の日本語名は文書間で表記ゆれがある（`THCH.md` を標準として採用）。
-5. `compound_rare` は `skos:narrower` を持たない空カテゴリ（現状の登録化合物には該当なし）。
+1. `metadata/taxonomy/iptc-mapping.yaml` の `compound_mapping` は部分収載（`cbc`/`thcv`/`cbdv`/`crdh` も未収載）。
+2. `THCH` の日本語名は文書間で表記ゆれがある（`THCH.md` を標準として採用）。
+3. `compound_rare` は `skos:narrower` を持たない空カテゴリ（現状の登録化合物には該当なし）。
+
+## 派生物の同期
+
+- `exports/taxonomy/*.ttl` / `.schema.jsonld` / `iptc-mapping.yaml` は
+  `bash scripts/export/export-taxonomy.sh` で taxonomy から再生成する（手で編集しない）。
+  概念の件数は `tests/validation/test_taxonomy_consistency.py` が固定している。
 
 ## 次の作業
 
 - 追加した5化合物のクエリは 2026-10-13 に `metadata/queries/query-registry.json` へ登録済み
   （10件。証拠は `docs/provenance/query-inventory.md` §1）。
+- `compound_thcnm` の収集は 2026-11-04 に開始した（Google Trends の 12ヶ月・5年、YouTube の `THCNM リキッド` / `THA リキッド`）。収集は登録文字列への一致を測るものであり、同一性の確認ではない。同一性は未確認のままで、構造の確認は別作業（ISS-20261104-TAX-028）。
 - 上記「未修正の既知事項」の扱いを決める。

@@ -25,6 +25,12 @@ Use this skill when a YouTube payload is being considered for adoption into a st
    - Observed range is derived from payload fields only when their meaning is established.
 5. Do not convert relative labels such as “months ago” into exact publication dates without a documented, reproducible basis. If the owner accepts relative periods, preserve their source representation and record the limitation.
 
+## 2.1 Classify repository retention before staging
+
+1. Read `docs/specs/raw-data-policy.md` §5 and classify the run as `git_tracked` or `git_untracked`. This is Repository Storage (Git tracking), not whether a local raw copy exists.
+2. Use the `config/storage-policies.json` default for the source kind. If an owner, legal, or publication review decision changes it, record `metadata/provenance/retention/<date>-<slug>.json` (`record: "raw_retention_decision"`) with `retention_status`, `reason`, `decision_reference`, `decided_by`, `decided_at`, and a separate `publication_status`. Do not fabricate a legal decision.
+3. For `git_untracked`, stage and adopt the local payload only. Never add raw rows (or the run metadata inside `data/raw/`) to Git; the repository evidence is the declaration, the decision record, the catalog, and aggregates. For `git_tracked`, the payload must be committed and reproducible from a clone.
+
 ## 3. Establish provenance without guessing
 
 1. Create a `staging-declaration-v1` document using the repository schema and validation rules.
@@ -59,13 +65,14 @@ Use this skill when a YouTube payload is being considered for adoption into a st
 
 4. Update only the target study's README, methodology, and `data/README.md` as needed. State the request conditions, observed range, missing historical details, and reuse status without implying more than the evidence supports.
 5. Keep per-video YouTube records in the restricted raw layer. Do not copy them into processed or publication outputs without a separate, explicit publication review; anonymization does not make per-post social datasets publishable.
-6. Keep raw payloads out of Git unless the repository's privacy and redistribution review explicitly authorizes otherwise. A local source file may be needed to replay staging; document its expected location and digest without adding sensitive payloads to the repository.
+6. Keep raw payloads out of Git unless the run is explicitly `git_tracked` by the retention contract (`docs/specs/raw-data-policy.md` §5). A `git_untracked` local source file may be needed to replay staging; document its expected location and digest without adding it to the repository.
 
 ## 6. Run repository checks
 
 Use the repository's Makefile entry points:
 
 ```sh
+make audit-raw-retention
 make audit-adoption
 make audit-new-runs
 make audit-publication

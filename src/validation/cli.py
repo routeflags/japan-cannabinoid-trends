@@ -103,7 +103,13 @@ from validation.provenance import (
 )
 from validation.publication_contract import build_publication_contract_report
 from validation.distribution_scope import build_distribution_scope
-from validation.raw_completeness import build_raw_completeness
+from validation.raw_completeness import (
+    build_raw_completeness,
+    build_snapshot_scope,
+    catalog_run_claims,
+    declaration_run_claims,
+)
+from validation.raw_retention import build_retention_report
 from validation.snapshot_guard import postflight as snapshot_postflight
 from validation.snapshot_guard import preflight as snapshot_preflight
 from validation.youtube_scope import build_youtube_scope
@@ -1073,11 +1079,13 @@ def cmd_audit_adoption(args) -> int:
 
 
 def cmd_audit_raw_completeness(args) -> int:
-    """Every catalog/declaration run resolves to raw on this checkout.
+    """Every catalog/declaration/retention run resolves per its retention state.
 
     Read-only and checkout-local: an absent ``data/raw/`` root means this
-    checkout cannot show the claim, not that the claim is false.  Exit 1 is a
-    finding for the operator standing in front of this checkout.
+    checkout cannot show the claim.  A ``git_tracked`` claim must be
+    substantiated here; a ``git_untracked`` claim is reported as
+    ``not_repository_retained`` and is not a missing run.  Exit 1 is a finding
+    for the operator standing in front of this checkout.
     """
     try:
         report = build_raw_completeness(
@@ -1085,6 +1093,7 @@ def cmd_audit_raw_completeness(args) -> int:
             args.declarations_dir,
             args.corrections_dir,
             args.repo_root,
+            args.retention_dir,
         )
     except (OSError, ValueError) as error:
         _err(f"raw completeness audit failed: {error.__class__.__name__}: {error}")
@@ -1108,15 +1117,128 @@ def cmd_audit_raw_completeness(args) -> int:
                 f"{run['study_id']}/{run['source_id']}/{run['run_id']} "
                 f"{run['state']}"
             )
+        for run in report["not_repository_retained"]:
+            print(
+                f"{run['study_id']}/{run['source_id']}/{run['run_id']} "
+                "not_repository_retained"
+            )
+        for violation in report["retention_violations"]:
+            print(
+                f"{violation.get('path') or '-'} {violation['reason']} "
+                f"{violation.get('run_id') or ''}".rstrip()
+            )
     _err(
         f"raw completeness: claims={report['claim_count']} "
         f"present={report['present_count']} "
+        f"tracked_not_checked_out={report['tracked_not_checked_out_count']} "
         f"missing={report['missing_count']} "
         f"(directory={report['missing_directory_count']}, "
         f"run_metadata={report['missing_run_metadata_count']}) "
+        f"not_repository_retained={report['not_repository_retained_count']} "
+        f"local_only_present={report['local_only_present_count']} "
+        f"retention_violations={report['retention_violation_count']} "
         f"correction_violations={report['correction_violation_count']}"
     )
     return EXIT_DATA if report["failure_count"] else EXIT_OK
+
+
+def cmd_audit_raw_retention(args) -> int:
+    """Validate retention decisions and report the two-state status.
+
+    Raw payloads are never read, so this runs on a clone without ``data/raw/``.
+    The Git index is used when available to check that a declared status
+    matches the repository, not just the local disk.
+    """
+    try:
+        report = build_retention_report(
+            args.repo_root,
+            args.retention_dir,
+            datasets_root=args.datasets_root,
+            claims=catalog_run_claims(args.datasets_root)
+            + declaration_run_claims(args.declarations_dir),
+        )
+    except (OSError, ValueError) as error:
+        _err(f"raw retention audit failed: {error.__class__.__name__}: {error}")
+        return EXIT_CONFIG
+
+    if args.output:
+        try:
+            _write_output(args.output, report)
+        except OSError as error:
+            _err(
+                f"cannot write audit output: {args.output} "
+                f"({error.__class__.__name__})"
+            )
+            return EXIT_IO
+        _err(f"raw retention audit written: {args.output}")
+    elif args.format == "json":
+        print(dump_json(report), end="")
+    else:
+        for run in report["runs"]:
+            print(
+                f"{run['study_id']}/{run['source_id']}/{run['run_id']} "
+                f"{run['retention_status']} {run['retention_source']}"
+            )
+        for violation in report["violations"]:
+            print(
+                f"{violation.get('path') or '-'} {violation['reason']} "
+                f"{violation.get('run_id') or ''}".rstrip()
+            )
+    _err(
+        f"raw retention: records={report['record_count']} "
+        f"active={report['active_record_count']} runs={report['run_count']} "
+        f"git_tracked={report['git_tracked_count']} "
+        f"git_untracked={report['git_untracked_count']} "
+        f"policy_available={report['policy_available']} "
+        f"tracked_index_available={report['tracked_index_available']} "
+        f"violations={report['violation_count']}"
+    )
+    return EXIT_DATA if report["failure_count"] else EXIT_OK
+
+
+def cmd_audit_snapshot_scope(args) -> int:
+    """Write the deterministic checkout-local scope declaration for snapshots.
+
+    No raw payload is read.  The report preserves the committed catalog /
+    declaration run claims that are ``git_untracked`` and says plainly that an
+    absent snapshot row is not an uncollected or zero observation.
+    """
+    try:
+        report = build_snapshot_scope(
+            args.datasets_root,
+            args.declarations_dir,
+            args.repo_root,
+            args.retention_dir,
+        )
+    except (OSError, ValueError) as error:
+        _err(f"snapshot scope audit failed: {error.__class__.__name__}: {error}")
+        return EXIT_CONFIG
+
+    if args.output:
+        try:
+            _write_output(args.output, report)
+        except OSError as error:
+            _err(
+                f"cannot write audit output: {args.output} "
+                f"({error.__class__.__name__})"
+            )
+            return EXIT_IO
+        _err(f"snapshot scope written: {args.output}")
+    elif args.format == "json":
+        print(dump_json(report), end="")
+    else:
+        print(f"audit_scope: {report['audit_scope']}")
+        print(f"raw_visibility: {report['raw_visibility']}")
+        for run_id in report["not_repository_retained_run_ids"]:
+            print(f"not_repository_retained: {run_id}")
+    _err(
+        f"snapshot scope: claims={report['claim_count']} "
+        f"git_tracked={report['git_tracked_run_count']} "
+        f"not_repository_retained={report['git_untracked_run_count']} "
+        f"raw_rows_generated={report['raw_rows_generated']} "
+        f"violations={report['retention_violation_count']}"
+    )
+    return EXIT_DATA if report["retention_violation_count"] else EXIT_OK
 
 
 def cmd_snapshot_guard(args) -> int:
@@ -1129,6 +1251,8 @@ def cmd_snapshot_guard(args) -> int:
                 args.declarations_dir,
                 expected_run_ids=args.expected_run_ids,
                 state_file=args.state_file,
+                repo_root=args.repo_root,
+                retention_dir=args.retention_dir,
             )
         else:
             report = snapshot_postflight(args.state_file, args.audits_dir)
@@ -1150,22 +1274,42 @@ def cmd_snapshot_guard(args) -> int:
     else:
         for run_id in report.get("missing_run_ids", []):
             print(f"missing raw run: {run_id}")
+        for violation in report.get("retention_violations", []):
+            print(
+                f"retention violation: {violation['reason']} "
+                f"{violation.get('run_id') or ''}".rstrip()
+            )
+        for warning in report.get("retention_warnings", []):
+            print(
+                f"retention warning: {warning['reason']} "
+                f"{warning.get('run_id') or ''}".rstrip()
+            )
         for run_id in report.get("lost_run_ids", []):
             print(f"lost snapshot run id: {run_id}")
+        for run_id in report.get("intentionally_dropped_run_ids", []):
+            print(f"intentionally dropped (git_untracked): {run_id}")
     if args.phase == "preflight":
         _err(
-            f"snapshot preflight: expected={report['expected_run_id_count']} "
+            f"snapshot preflight: scope={report['audit_scope']} "
+            f"raw_visibility={report['raw_visibility']} "
+            f"expected={report['expected_run_id_count']} "
             f"present={report['present_raw_run_count']} "
+            f"not_repository_retained={report['not_repository_retained_run_count']} "
             f"adopted_missing={report['adopted_missing_raw_count']} "
             f"missing={report['missing_raw_run_count']} "
+            f"retention_violations={report['retention_violation_count']} "
+            f"retention_warnings={report['retention_warning_count']} "
             f"snapshot_ids={report['snapshot_run_id_count']} "
             f"refused={report['refused']}"
         )
     else:
         _err(
-            f"snapshot postflight: before={report['before_run_id_count']} "
+            f"snapshot postflight: scope={report['audit_scope']} "
+            f"raw_visibility={report['raw_visibility']} "
+            f"before={report['before_run_id_count']} "
             f"after={report['after_run_id_count']} "
             f"lost={report['lost_run_id_count']} "
+            f"intentionally_dropped={report['intentionally_dropped_run_id_count']} "
             f"added={report['added_run_id_count']} "
             f"refused={report['refused']}"
         )
@@ -1207,9 +1351,20 @@ def cmd_audit_youtube_coverage(args) -> int:
             )
         for compound_id in report["missing_compounds"]:
             print(f"primary coverage missing: {compound_id}")
+        for item in report["compound_coverage"]:
+            if item["required_query_count"] > 1:
+                print(
+                    f"primary coverage "
+                    f"{item['covered_query_count']}/{item['required_query_count']}: "
+                    f"{item['compound_id']} (adopted: "
+                    f"{', '.join(item['covered_query_ids']) or 'none'}; "
+                    f"required: {', '.join(item['required_query_ids'])})"
+                )
     _err(
         f"YouTube coverage: primary runs={report['primary_run_count']} "
-        f"compounds={report['primary_compound_count']}/{report['primary_query_count']} "
+        f"compounds={report['primary_compound_count']}/{len(report['compound_coverage'])} "
+        f"queries={report['primary_query_covered_count']}/{report['primary_query_count']} "
+        f"partial_compounds={report['partial_primary_compound_count']} "
         f"retained_out_of_scope={report['retained_out_of_scope_run_count']} "
         f"missing_compounds={report['missing_primary_compound_count']} "
         f"violations={report['violation_count']}"
@@ -2381,9 +2536,50 @@ def build_parser() -> argparse.ArgumentParser:
     audit_raw.add_argument(
         "--corrections-dir", default="metadata/provenance/corrections"
     )
+    audit_raw.add_argument(
+        "--retention-dir", default="metadata/provenance/retention"
+    )
     audit_raw.add_argument("--output", default=None)
     audit_raw.add_argument("--format", choices=("text", "json"), default="text")
     audit_raw.set_defaults(handler=cmd_audit_raw_completeness)
+
+    audit_retention = sub.add_parser(
+        "audit-raw-retention",
+        help=(
+            "validate raw retention decisions and report git_tracked / "
+            "git_untracked per run (read-only; no raw payloads required)"
+        ),
+    )
+    audit_retention.add_argument("--repo-root", default=".")
+    audit_retention.add_argument("--datasets-root", default="datasets")
+    audit_retention.add_argument(
+        "--declarations-dir", default="metadata/provenance/declarations"
+    )
+    audit_retention.add_argument(
+        "--retention-dir", default="metadata/provenance/retention"
+    )
+    audit_retention.add_argument("--output", default=None)
+    audit_retention.add_argument("--format", choices=("text", "json"), default="text")
+    audit_retention.set_defaults(handler=cmd_audit_raw_retention)
+
+    audit_scope = sub.add_parser(
+        "audit-snapshot-scope",
+        help=(
+            "write the deterministic checkout-local scope declaration for "
+            "docs/audits snapshots, preserving git_untracked claims"
+        ),
+    )
+    audit_scope.add_argument("--repo-root", default=".")
+    audit_scope.add_argument("--datasets-root", default="datasets")
+    audit_scope.add_argument(
+        "--declarations-dir", default="metadata/provenance/declarations"
+    )
+    audit_scope.add_argument(
+        "--retention-dir", default="metadata/provenance/retention"
+    )
+    audit_scope.add_argument("--output", default=None)
+    audit_scope.add_argument("--format", choices=("text", "json"), default="text")
+    audit_scope.set_defaults(handler=cmd_audit_snapshot_scope)
 
     snapshot_guard = sub.add_parser(
         "snapshot-guard",
@@ -2400,6 +2596,17 @@ def build_parser() -> argparse.ArgumentParser:
     snapshot_guard.add_argument("--audits-dir", default="docs/audits")
     snapshot_guard.add_argument(
         "--declarations-dir", default="metadata/provenance/declarations"
+    )
+    snapshot_guard.add_argument(
+        "--retention-dir", default="metadata/provenance/retention"
+    )
+    snapshot_guard.add_argument(
+        "--repo-root",
+        default=None,
+        help=(
+            "repository root for policy/decision resolution; defaults to the "
+            "parent of --datasets-root"
+        ),
     )
     snapshot_guard.add_argument(
         "--expected-run-ids",

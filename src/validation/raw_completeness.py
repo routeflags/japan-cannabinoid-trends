@@ -1,37 +1,53 @@
 """Committed claims about raw runs versus the raw layer on this checkout.
 
 Why this exists
-The catalog (``datasets/<study>/metadata/data-catalog.json``) and every
-committed ``staging-declaration-v1`` document name runs whose payloads live in
-``data/raw/``.  That directory is machine-local: ``.gitignore`` excludes
-``**/data/raw/*`` except Google Trends, so a clone or a partial worktree can
-carry the claims without the payloads.  Nothing reported that gap, and the two
-failure modes look identical from the committed files alone:
+The catalog (``datasets/<study>/metadata/data-catalog.json``), every committed
+``staging-declaration-v1`` document and every active raw-retention decision
+name runs that belong to the raw layer.  That directory is machine-local:
+``.gitignore`` excludes ``**/data/raw/*`` except Google Trends, so a clone or a
+partial worktree can carry the claims without the payloads.
+Nothing reported that gap, and two failure modes looked identical from the
+committed files alone:
 
 - the run was never adopted (a real backlog item);
 - the run was adopted somewhere else and this checkout cannot substantiate it
   (a portability fact, not a data error).
 
-This audit reports the second state explicitly.  It is read-only and
-checkout-local by design: a missing directory says "this checkout cannot show
-the raw run", never "the run does not exist".
+A third state was added by the raw-retention contract
+(``docs/specs/raw-data-policy.md`` §5): a run can be deliberately
+``git_untracked`` as Repository Storage because platform terms, copyright or
+redistribution constraints forbid committing the payload.  That run is not
+missing.  The repository keeps non-content provenance, and a machine-local
+copy may exist or not.  This audit separates the declared retention status
+from machine-local presence instead of collapsing both into ``missing``.
+
+This audit reports the second and third states explicitly.  It is read-only
+and checkout-local by design: a missing directory says "this checkout cannot
+show the raw run", never "the run does not exist".
 
 What is checked
 ---------------
-1. every catalog run id and every declared run id resolves to
-   ``datasets/<study>/data/raw/<source>/<run-id>/`` with a readable
-   ``run_metadata.json`` (or is reported as missing);
+1. every catalog run id, declared run id and retention-decision run id
+   resolves by its declared retention status:
+
+   - ``git_tracked``: the run must be present with ``run_metadata.json`` in
+     this checkout (or tracked in the Git index but not checked out), and it
+     must not be local-only;
+   - ``git_untracked``: absence is expected and reported as
+     ``not_repository_retained``; local presence is reported as
+     ``local_only_present``.  The payload must not be in the Git index.
+
 2. every declaration-correction record under
    ``metadata/provenance/corrections/`` pins the declaration bytes it claims to
    correct (SHA-256) and names runs that the referenced declaration contains.
-   A correction is how post-staging fixes are recorded without rewriting the
-   handover document (whose SHA-256 is stored in the raw run metadata);
-3. a declaration whose study has no catalog is reported, not failed: some
-   studies keep declarations only (for example ``youtube-consistency`` in a
-   checkout that does not carry its catalog).
+3. a declaration whose study has no catalog is reported, not failed.
+4. retention decisions are validated by ``validation.raw_retention``; an
+   invalid decision cannot excuse an absent run (the status falls back to the
+   storage policy, or fails closed to ``git_tracked``).
 
-Exit status is the CLI's decision: a missing raw run in the current checkout is
-a finding (exit 1); an absent ``data/raw/`` root is not an exception.
+Exit status is the CLI's decision: a missing ``git_tracked`` run and a
+retention violation are findings (exit 1); an absent ``data/raw/`` root is not
+an exception.
 
 Deterministic output: no timestamps, all collections sorted, no cost fields.
 """
@@ -42,47 +58,43 @@ import hashlib
 import json
 from pathlib import Path
 
+from validation.raw_retention import (
+    GIT_TRACKED,
+    GIT_UNTRACKED,
+    assess_retention,
+    load_retention,
+    retention_run_claims,
+    run_prefixes,
+    tracked_repo_paths,
+)
+
 __all__ = [
     "AUDIT_VERSION",
     "DECLARATION_VERSION",
     "CORRECTION_RECORD",
+    "MISSING_STATES",
+    "SCOPE_VERSION",
     "build_raw_completeness",
+    "build_snapshot_scope",
     "catalog_run_claims",
     "declaration_run_claims",
     "present_raw_runs",
 ]
 
-AUDIT_VERSION = "1.0.0"
+AUDIT_VERSION = "1.1.0"
+SCOPE_VERSION = "1.0.0"
 DECLARATION_VERSION = "staging-declaration-v1"
 CORRECTION_RECORD = "declaration_correction"
 RUN_METADATA_NAME = "run_metadata.json"
+
+#: States that mean a ``git_tracked`` run cannot be substantiated.
+MISSING_STATES = ("missing_directory", "missing_run_metadata")
 
 
 def _normalize_source(value: str) -> str:
     """Directory spelling differs from the registry id for Google Trends."""
 
     return value.replace("-", "_").lower()
-
-
-def _study_aliases(repo_root) -> dict[str, str]:
-    """Recorded study id -> the study directory name that holds its raw."""
-
-    document = _load_json(Path(repo_root) / "metadata" / "studies" / "study-registry.json")
-    aliases: dict[str, str] = {}
-    studies = document.get("studies") if isinstance(document, dict) else None
-    if not isinstance(studies, list):
-        return aliases
-    for study in studies:
-        if not isinstance(study, dict):
-            continue
-        current = study.get("study_id")
-        if not isinstance(current, str) or not current:
-            continue
-        aliases[current] = current
-        for previous in study.get("previous_study_ids") or []:
-            if isinstance(previous, str) and previous:
-                aliases[previous] = current
-    return aliases
 
 
 def _load_json(path: Path):
@@ -346,16 +358,24 @@ def build_raw_completeness(
     declarations_dir,
     corrections_dir=None,
     repo_root=".",
+    retention_dir=None,
 ) -> dict:
     """Report which committed raw-run claims this checkout can substantiate."""
 
     datasets = Path(datasets_root)
-    aliases = _study_aliases(repo_root)
-    claims = catalog_run_claims(datasets) + declaration_run_claims(declarations_dir)
+    retention = load_retention(repo_root, retention_dir)
+    aliases = retention["study_aliases"]
+    claims = (
+        catalog_run_claims(datasets)
+        + declaration_run_claims(declarations_dir)
+        + retention_run_claims(retention)
+    )
     merged = _merge_claims(claims)
     present = present_raw_runs(datasets)
+    tracked = tracked_repo_paths(repo_root)
 
     runs: list[dict] = []
+    retention_violations = list(retention["violations"])
     for claim in merged:
         resolved_study = aliases.get(claim["study_id"], claim["study_id"])
         locations = present.get(claim["run_id"], [])
@@ -366,22 +386,102 @@ def build_raw_completeness(
             and _normalize_source(location["source_id"])
             == _normalize_source(claim["source_id"])
         ]
-        if not matched:
-            state = "missing_directory"
-        elif any(location["run_metadata_present"] for location in matched):
-            state = "present"
+        metadata_present = any(
+            location["run_metadata_present"] for location in matched
+        )
+        assessment = assess_retention(
+            retention,
+            claim["study_id"],
+            claim["source_id"],
+            claim["run_id"],
+            prefixes=run_prefixes(
+                datasets,
+                resolved_study,
+                claim["source_id"],
+                claim["run_id"],
+                repo_root,
+            ),
+            tracked=tracked,
+        )
+
+        if assessment["retention_status"] == GIT_TRACKED:
+            if matched and metadata_present:
+                state = (
+                    "present_not_git_tracked"
+                    if assessment["tracking_mismatch"]
+                    else "present"
+                )
+            elif matched:
+                state = "missing_run_metadata"
+            elif assessment["git_tracking_state"] == "tracked":
+                state = "tracked_not_checked_out"
+            else:
+                state = "missing_directory"
         else:
-            state = "missing_run_metadata"
+            if assessment["git_tracking_state"] == "tracked":
+                state = "git_untracked_but_tracked"
+            elif matched:
+                state = "local_only_present"
+            else:
+                state = "not_repository_retained"
+
+        if state in ("present_not_git_tracked", "git_untracked_but_tracked"):
+            retention_violations.append(
+                {
+                    "study_id": claim["study_id"],
+                    "source_id": claim["source_id"],
+                    "run_id": claim["run_id"],
+                    "reason": assessment["tracking_mismatch"],
+                    "path": assessment["retention_decision_path"]
+                    or assessment["retention_reference"],
+                }
+            )
+
         runs.append(
             {
                 **claim,
                 "resolved_study_id": resolved_study,
                 "state": state,
                 "locations": matched,
+                "retention_status": assessment["retention_status"],
+                "retention_source": assessment["retention_source"],
+                "retention_policy_id": assessment["retention_policy_id"],
+                "retention_policy_git_tracking": assessment[
+                    "retention_policy_git_tracking"
+                ],
+                "retention_policy_status": assessment["retention_policy_status"],
+                "retention_reference": assessment["retention_reference"],
+                "retention_decision_id": assessment["retention_decision_id"],
+                "retention_decision_reference": assessment[
+                    "retention_decision_reference"
+                ],
+                "retention_decision_path": assessment["retention_decision_path"],
+                "publication_status": assessment["publication_status"],
+                "publication_source": assessment["publication_source"],
+                "publication_decision_reference": assessment[
+                    "publication_decision_reference"
+                ],
+                "git_tracking_state": assessment["git_tracking_state"],
+                "tracked_file_count": assessment["tracked_file_count"],
             }
         )
 
-    missing = [run for run in runs if run["state"] != "present"]
+    missing = [run for run in runs if run["state"] in MISSING_STATES]
+    not_repository_retained = [
+        run for run in runs if run["state"] == "not_repository_retained"
+    ]
+    local_only_present = [
+        run for run in runs if run["state"] == "local_only_present"
+    ]
+    retention_violations.sort(
+        key=lambda item: (
+            str(item.get("path") or ""),
+            str(item.get("reason") or ""),
+            str(item.get("study_id") or ""),
+            str(item.get("source_id") or ""),
+            str(item.get("run_id") or ""),
+        )
+    )
     catalog_studies = {
         aliases.get(claim["study_id"], claim["study_id"])
         for claim in catalog_run_claims(datasets)
@@ -395,17 +495,39 @@ def build_raw_completeness(
         if corrections_dir
         else ([], [])
     )
+    not_repository_retained_ids = sorted(
+        {run["run_id"] for run in runs if run["retention_status"] == GIT_UNTRACKED}
+    )
+    locally_visible_states = {
+        "present",
+        "local_only_present",
+        "present_not_git_tracked",
+        "git_untracked_but_tracked",
+    }
+    raw_visibility = (
+        "complete"
+        if all(run["state"] in locally_visible_states for run in runs)
+        else "partial"
+    )
 
     return {
         "audit_version": AUDIT_VERSION,
         "datasets_root": str(datasets),
         "declarations_dir": str(declarations_dir),
+        "retention_dir": retention["retention_dir"],
         "claim_count": len(runs),
         "catalog_run_count": sum(1 for claim in catalog_run_claims(datasets)),
         "declaration_run_count": sum(
             1 for claim in declaration_run_claims(declarations_dir)
         ),
+        "retention_record_count": len(retention["records"]),
+        "retention_decision_run_count": len(retention["run_entries"]),
+        "retention_policy_available": retention["policy_available"],
+        "tracked_index_available": tracked["available"],
         "present_count": sum(1 for run in runs if run["state"] == "present"),
+        "tracked_not_checked_out_count": sum(
+            1 for run in runs if run["state"] == "tracked_not_checked_out"
+        ),
         "missing_count": len(missing),
         "missing_directory_count": sum(
             1 for run in missing if run["state"] == "missing_directory"
@@ -413,6 +535,15 @@ def build_raw_completeness(
         "missing_run_metadata_count": sum(
             1 for run in missing if run["state"] == "missing_run_metadata"
         ),
+        "not_repository_retained_count": len(not_repository_retained),
+        "local_only_present_count": len(local_only_present),
+        "git_tracked_claim_count": sum(
+            1 for run in runs if run["retention_status"] == GIT_TRACKED
+        ),
+        "git_untracked_claim_count": sum(
+            1 for run in runs if run["retention_status"] == GIT_UNTRACKED
+        ),
+        "retention_violation_count": len(retention_violations),
         "declaration_studies_without_catalog": sorted(
             declaration_studies - catalog_studies
         ),
@@ -422,7 +553,113 @@ def build_raw_completeness(
         "corrections": corrections,
         "correction_violation_count": len(correction_violations),
         "correction_violations": correction_violations,
-        "failure_count": len(missing) + len(correction_violations),
+        "retention_violations": retention_violations,
+        "failure_count": len(missing)
+        + len(correction_violations)
+        + len(retention_violations),
         "runs": runs,
         "missing": missing,
+        "not_repository_retained": not_repository_retained,
+        "local_only_present": local_only_present,
+        "audit_scope": "checkout_local",
+        "raw_visibility": raw_visibility,
+        "raw_visibility_basis": "checkout-local raw payload visibility",
+        "not_repository_retained_run_ids": not_repository_retained_ids,
+    }
+
+
+def build_snapshot_scope(
+    datasets_root,
+    declarations_dir,
+    repo_root=".",
+    retention_dir=None,
+) -> dict:
+    """Deterministic scope declaration for ``docs/audits`` snapshots.
+
+    The snapshots are inventories of *this checkout*, not a reconstruction of
+    the complete research state.  This sidecar records that scope, preserves
+    the committed catalog/declaration claims whose raw is ``git_untracked``,
+    and states that a run absent from a snapshot is not an uncollected or zero
+    observation.  It never reads a raw payload and generates no raw rows.
+    """
+
+    retention = load_retention(repo_root, retention_dir)
+    merged = _merge_claims(
+        catalog_run_claims(datasets_root)
+        + declaration_run_claims(declarations_dir)
+        + retention_run_claims(retention)
+    )
+
+    runs: list[dict] = []
+    git_tracked_ids: set[str] = set()
+    git_untracked_ids: set[str] = set()
+    for claim in merged:
+        resolved_study = retention["study_aliases"].get(
+            claim["study_id"], claim["study_id"]
+        )
+        assessment = assess_retention(
+            retention,
+            claim["study_id"],
+            claim["source_id"],
+            claim["run_id"],
+        )
+        if assessment["retention_status"] == GIT_TRACKED:
+            git_tracked_ids.add(claim["run_id"])
+            availability = "git_tracked"
+            raw_dependent_facts = "not_recorded_in_scope"
+        else:
+            git_untracked_ids.add(claim["run_id"])
+            availability = "not_repository_retained"
+            raw_dependent_facts = "unavailable"
+        runs.append(
+            {
+                "run_id": claim["run_id"],
+                "study_id": claim["study_id"],
+                "resolved_study_id": resolved_study,
+                "source_id": claim["source_id"],
+                "claim_sources": claim["claimed_by"],
+                "references": claim["references"],
+                "retention_status": assessment["retention_status"],
+                "retention_source": assessment["retention_source"],
+                "retention_policy_id": assessment["retention_policy_id"],
+                "retention_decision_id": assessment["retention_decision_id"],
+                "availability": availability,
+                "raw_dependent_facts": raw_dependent_facts,
+                "record_count": None,
+                "sha256": None,
+            }
+        )
+    runs.sort(key=lambda item: (item["study_id"], item["source_id"], item["run_id"]))
+
+    return {
+        "schema_version": SCOPE_VERSION,
+        "generated_by": "validation.cli audit-snapshot-scope",
+        "audit_scope": "checkout_local",
+        "raw_visibility": "partial",
+        "raw_visibility_basis": (
+            "snapshots are inventories of this checkout; raw payloads are "
+            "machine-local and may be absent"
+        ),
+        "complete_provenance_claim": [
+            "datasets/*/metadata/data-catalog.json",
+            "metadata/provenance/declarations/*.json",
+        ],
+        "absence_interpretation": (
+            "a run absent from a snapshot is not an uncollected or zero "
+            "observation; the catalog and declarations are the complete "
+            "provenance claim"
+        ),
+        "raw_rows_generated": False,
+        "raw_dependent_facts": "unavailable",
+        "retention_policy_registry": "config/storage-policies.json",
+        "retention_policy_available": retention["policy_available"],
+        "retention_record_count": len(retention["records"]),
+        "retention_violation_count": len(retention["violations"]),
+        "retention_violations": retention["violations"],
+        "claim_count": len(merged),
+        "git_tracked_run_count": len(git_tracked_ids),
+        "git_untracked_run_count": len(git_untracked_ids),
+        "git_tracked_run_ids": sorted(git_tracked_ids),
+        "not_repository_retained_run_ids": sorted(git_untracked_ids),
+        "runs": runs,
     }

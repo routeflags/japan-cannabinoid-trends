@@ -1,6 +1,6 @@
 # Query Inventory（クエリ証拠台帳）
 
-**版:** 1.2.0（2026-10-13）
+**版:** 1.5.0（2026-11-04）
 **目的:** G2 垂直スライスで `metadata/queries/` に登録したクエリ・表記ゆれ・除外
 規則の**証拠台帳**（G1 §18 Phase 1 の collector-inventory.md のクエリ版）。登録は
 「実 run の記録」または「既存 keywords.yaml / taxonomy」に基づき、推測の語彙は
@@ -8,7 +8,7 @@
 
 ---
 
-## 1. 登録済みクエリ（`query-registry.json`、31 件）
+## 1. 登録済みクエリ（`query-registry.json`、38 件）
 
 compound_id は compound-taxonomy の `skos:notation`（例 `compound_cbx`）。
 
@@ -45,6 +45,9 @@ compound_id は compound-taxonomy の `skos:notation`（例 `compound_cbx`）。
 | `hhbd-liquid-ja` | `compound_hhbd` | product_liquid | HHBD リキッド | active | 20261012T061614Z / keywords.yaml keywords |
 | `thcv-general-ja` | `compound_thcv` | compound_general | THCV | active | 20261008T093228Z（5y-baseline） |
 | `thcv-liquid-ja` | `compound_thcv` | product_liquid | THCV リキッド | active | 20261012T061614Z |
+| `thcnm-general-ja` | `compound_thcnm` | compound_general | THCNM | active | Google Trends の 12ヶ月・5年（`20261104T115425Z-google-trends-thcnm-12m` / `20261104T115431Z-google-trends-thcnm-5y`）。taxonomy 概念 `compound_thcnm`（`THA` は別名・商業名。ISS-20261104-TAX-028） |
+| `thcnm-liquid-ja` | `compound_thcnm` | product_liquid | THCNM リキッド | active | YouTube 1 run（`20261104T120627Z-youtube-cannabinoid-raw-collection`、30 件。2026-11-04）。`datasets/cannabinoid-raw-collection/metadata/query-design.json` の required primary query |
+| `tha-liquid-ja` | `compound_thcnm` | product_liquid | THA リキッド | active | YouTube 1 run（`20261104T120805Z-youtube-cannabinoid-raw-collection`、311 件。2026-11-04）。`THA` は `compound_thcnm` の別名・商業名（ISS-20261104-TAX-028）であり、別化合物の集合ではない。同じ化合物の 2 本目の required primary query |
 
 注（2026-10-13 追加分・表の下 10 行）: 下の5化合物は taxonomy に概念が無かったため登録
 できずにいたものが、`compound_hhc` / `compound_hhch` / `compound_thch` / `compound_thc_o` /
@@ -56,7 +59,7 @@ compound_id は compound-taxonomy の `skos:notation`（例 `compound_cbx`）。
 （検索意図は CBX という成分の理解であり、判別語による修飾は platform 構文ではなく
 表記の一部）。
 
-## 2. 表記ゆれ（`query-variants.json`、3 sets）
+## 2. 表記ゆれ（`query-variants.json`、8 sets）
 
 | query_id | variant_id | text | status | 証拠 |
 |---|---|---|---|---|
@@ -67,6 +70,34 @@ compound_id は compound-taxonomy の `skos:notation`（例 `compound_cbx`）。
 | `cbd-liquid-ja` | cbd-liquid-nospace | CBDリキッド | alternative | 20261012T054920Z（notation-presurvey が両表記を比較） |
 | `cbx-liquid-ja` | cbx-liquid-primary | CBX リキッド | primary | registry canonical と一致（機械検証） |
 | `cbx-liquid-ja` | cbx-liquid-nospace | CBXリキッド | alternative | keywords.yaml search_queries.tiktok.primary.keyword |
+| `thcnm-general-ja` | thcnm-general-primary | THCNM | primary | registry canonical と一致（機械検証） |
+| `thcnm-general-ja` | thcnm-general-tha-commercial-alias | THA | alternative | 市場の別名・商業名（taxonomy altLabel / ISS-20261104-TAX-028）。**別物質の証拠ではない** |
+| `thcnm-liquid-ja` | thcnm-liquid-primary | THCNM リキッド | primary | registry canonical と一致（機械検証） |
+| `thcnm-liquid-ja` | thcnm-liquid-nospace | THCNMリキッド | alternative | 空白のみの差。収集証拠なし（`THCNM リキッド` で収集しており、こちらは未照会） |
+| `tha-liquid-ja` | tha-liquid-primary | THA リキッド | primary | registry canonical と一致（機械検証） |
+| `tha-liquid-ja` | tha-liquid-nospace | THAリキッド | alternative | 空白のみの差。収集証拠なし（`THA リキッド` で収集しており、こちらは未照会） |
+| `thc-o-general-ja` | thc-o-general-primary | THC-O | primary | registry canonical と一致（機械検証） |
+| `thc-o-general-ja` | thc-o-general-no-hyphen | THCO | alternative | compound-taxonomy の altLabel（en）`THCO` / PubMed 37466480（tetrahydrocannabinol-O-acetate の口語名としての `THCO`）/ PubChem CID 198013（別名 `THC-O-ACETATE`）/ owner 決定（2026-11-04）。2026-11-04 の run `20261104T135330Z-google-trends-thc-o-general-thco-12m` / `20261104T135339Z-google-trends-thc-o-general-thco-5y` がこの文字列を送信（`query_provenance.submitted_query`） |
+| `thc-o-liquid-ja` | thc-o-liquid-primary | THC-O リキッド | primary | registry canonical と一致（機械検証） |
+| `thc-o-liquid-ja` | thc-o-liquid-no-hyphen | THCO リキッド | alternative | 登録済み製品語 `THC-O リキッド` の化合物トークンをハイフンなし表記にしたもの（owner 決定、2026-11-04）。表記の根拠は `thc-o-general-ja` の `THCO` と同じ（PubMed 37466480 / PubChem CID 198013）。2026-11-04 の run `20261104T135345Z-google-trends-thc-o-liquid-thco-12m` / `20261104T135350Z-google-trends-thc-o-liquid-thco-5y` が送信 |
+
+THC-O の 2 つの variant は **canonical の query_id を変えない**。収集は
+`query_id` = `thc-o-general-ja` / `thc-o-liquid-ja` のまま、送信語だけを variant に
+する（run_metadata では `query_provenance.submitted_query` が variant 文字列）。
+1 variant × 1 timeframe を 1 run とし、異なる表記の系列を合算・置換しない。
+登録は「同じ意味を意図する表記候補」であり、**検索結果の同等性を主張しない**
+（実測値は別々の run に残る）。
+
+**`THCO` の証拠と同一性の留保（2026-11-04）**: `THCO` を `THC-O`（= `THC-O-acetate`）の表記ゆれとして扱う根拠は、
+PubMed 37466480 が tetrahydrocannabinol-O-acetate の口語名として `THCO` を記録していること、
+PubChem CID 198013 が Tetrahydrocannabinol acetate（別名 `THC-O-ACETATE`、CAS 23132-17-4、`C23H32O3`）の
+レコードであること、PubMed 37381980 / 36508081 が `THC-O-Acetate` 表記を用いることである
+（証拠 ID は `metadata/provenance/evidence-registry.json`）。一方、`THCO` は Δ8-THCO / Δ9-THCO
+（tetrahydrocannabiorcol、CAS 22972-64-1 / 22972-65-2、`C17H22O2`、Cayman Chemical 33762 / 33763）
+にも使われる**別物質の表記**であり、`THCO` は単一の CAS にも単一の構造にも対応しない。
+したがってこの登録は「同じ意味を意図する検索文字列」の対応であり、物質の同定ではない。
+canonical の `THC-O` の 12ヶ月 NO_DATA・5年系列は不変で、variant の観測値を合算・置換しない
+（ISS-20261104-TAX-029、`docs/provenance/compound-taxonomy.md`）。
 
 大文字小文字・全角/半角の差は variant として登録しない（正規化 NFKC + casefold で
 吸収。b.md §5.3「表記が似ているだけで等価とは限らない」に従い、正規化後に同一に
@@ -95,7 +126,20 @@ compound_id は compound-taxonomy の `skos:notation`（例 `compound_cbx`）。
   しない（状態 `unmapped` / `ambiguous` / `semantic_match_candidate`）。
 - 残る `semantic_match_candidate` 1 件（`THC-Oリキッド`）は空白なし表記の候補であり、
   variant への自動昇格はしない（人手レビューが必要）。taxonomy に概念がない成分は
-  現時点で存在しない（全 14 化合物が notation を持つ）。
+  現時点で存在しない（全 15 化合物が notation を持つ。THCNM を含む）。
+- `thcnm-general-ja` / `thcnm-liquid-ja` / `tha-liquid-ja` は**実 run と keywords.yaml のいずれも根拠にせず**登録し、後に収集で実測した語である。
+  登録時の根拠は taxonomy の `compound_thcnm` 概念（名称・同一性の根拠は ISS-20261104-TAX-028）と
+  研究設計上の化合物集合への追加であり、その時点では収集を行っていなかった。2026-11-04 に
+  `thcnm-general-ja`（Google Trends 12ヶ月・5年）と `thcnm-liquid-ja` / `tha-liquid-ja`（YouTube 各 1 run）を
+  収集し、登録した文字列がそのまま送られたことを payload の `input` 列（YouTube）と
+  `terms`（Google Trends）で確認している。語の実在を測ったのはこの収集であり、
+  THA は別名・商業名であって別物質の証拠にはしない。
+- `THA リキッド` は以前 `thcnm-liquid-ja` の alternative variant だった。owner 指示で
+  `tha-liquid-ja` の canonical text として独立させたため、同じ文字列を 2 つのクエリに属させず、
+  `thcnm-liquid-ja` 側の alternative からは除いた（1 テキスト 1 所有。canonical と alternative の
+  重複は `VARIANT_TEXT_CONFLICTS_CANONICAL`）。`compound_thcnm` の `product_liquid` は
+  **2 本の required primary query** を持ち、同一性についての主張は変わらない。
 - `keywords.yaml` のみに存在し run 実績がない語（例 `CBX オイル` / `CBD ペン`）は
   候補として保留（推測で intent を確定しない）。
+- **variant は note を持てない**: `query-variants.json` の variant 項目は `variant_id` / `text` / `status` の 3 フィールドのみで、未知フィールドを拒否する schema（`src/validation/schemas/query.py`）のため根拠を書き込む場所がない。表記の根拠と同一性の留保は本ファイル §2 と `docs/provenance/compound-taxonomy.md` に記録する（`THCO` の証拠は ISS-20261104-TAX-029）。
 - 除外規則は本表に載るフレーズのみ。根拠のない語は追加しない。

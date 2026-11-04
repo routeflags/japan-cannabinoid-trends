@@ -87,3 +87,8 @@ payload を committed な事実として記録する。一方 `data/raw/` は ma
       追加しない理由を記録する。
 - [ ] 2026-11-01 HHC 宣言・訂正版宣言・correction record が追跡され、catalog と同時に
       コミットされている。
+
+## 関連
+
+- `ISS-20261102-PRV-019`: `audit-raw-completeness` が追跡状態とローカル raw の存在を
+  分離し、`git_untracked` の不在を `not_repository_retained` として報告する。

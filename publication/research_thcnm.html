@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>THCNM 調査データ</title>
+</head>
+<body>
+
+<!-- ===== 調査方法 ===== -->
+<h2 id="methodology">調査方法</h2>
+<p>このセクションでは、本ページの情報がどのように収集・分析されたかを公開しています。</p>
+
+<h3>研究質問</h3>
+<p>「日本国内において、検索語 THCNM（別名・商業名 THA）の検索関心と製品語の検索結果はどの程度観測されるか。その観測は何を意味し、何を意味しないか？」</p>
+<p><strong>最終更新:</strong> 2026-11-04。</p>
+
+<h3>対象範囲</h3>
+<table>
+  <thead>
+    <tr>
+      <th>項目</th>
+      <th>内容</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>地域</td>
+      <td>Google Trends は日本（<code>geo=JP</code>）。YouTube は API の地域フィルタを持たず、日本語の製品語「リキッド」による近似的な日本市場限定であり、地域の保証ではない</td>
+    </tr>
+    <tr>
+      <td>期間</td>
+      <td>Google Trends は各 run の登録窓（データソース表）。窓は要求条件として宣言され、reference time で名目解決された値。YouTube は <code>dateFilter</code> なしの unbounded 要求で、表の観測範囲は返却レコードから導出した値</td>
+    </tr>
+    <tr>
+      <td>対象ソース</td>
+      <td>Google Trends（単独系列・週次）、YouTube（検索結果）</td>
+    </tr>
+    <tr>
+      <td>単位</td>
+      <td>Google Trends は相対指数（0-100、run ごとの単独正規化）、YouTube は検索結果として返却されたレコード数。両者を合算・比較しない</td>
+    </tr>
+    <tr>
+      <td>対象外</td>
+      <td>X、規制資料、COA、物質の同定・構造、市場価格。本ページはこれらを扱わない</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>データソース</h3>
+<table>
+  <thead>
+    <tr>
+      <th>ソース</th>
+      <th>収集手段</th>
+      <th>検索文字列</th>
+      <th>query_id</th>
+      <th>期間・要求</th>
+      <th>記録</th>
+      <th>run</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Google Trends</td>
+      <td>google-trends-mcp 0.1.1（<code>collection.core.cli collect --live</code>）</td>
+      <td><code>THCNM</code></td>
+      <td>thcnm-general-ja</td>
+      <td><code>today 12-m</code>（geo JP）</td>
+      <td>53 週</td>
+      <td><code>20261104T115425Z-google-trends-thcnm-12m</code></td>
+    </tr>
+    <tr>
+      <td>Google Trends</td>
+      <td>google-trends-mcp 0.1.1（<code>collection.core.cli collect --live</code>）</td>
+      <td><code>THCNM</code></td>
+      <td>thcnm-general-ja</td>
+      <td><code>today 5-y</code>（geo JP）</td>
+      <td>262 週</td>
+      <td><code>20261104T115431Z-google-trends-thcnm-5y</code></td>
+    </tr>
+    <tr>
+      <td>YouTube</td>
+      <td>Apify <code>streamers/youtube-scraper</code>（actor build 0.0.325）</td>
+      <td><code>THCNM リキッド</code></td>
+      <td>thcnm-liquid-ja</td>
+      <td><code>dateFilter</code> なし（unbounded）</td>
+      <td>30 件</td>
+      <td><code>20261104T120627Z-youtube-cannabinoid-raw-collection</code></td>
+    </tr>
+    <tr>
+      <td>YouTube</td>
+      <td>Apify <code>streamers/youtube-scraper</code>（actor build 0.0.325）</td>
+      <td><code>THA リキッド</code></td>
+      <td>tha-liquid-ja</td>
+      <td><code>dateFilter</code> なし（unbounded）</td>
+      <td>311 件</td>
+      <td><code>20261104T120805Z-youtube-cannabinoid-raw-collection</code></td>
+    </tr>
+  </tbody>
+</table>
+<p>データ表の「区分」列は、run が記録した値を<strong>観測</strong>、観測値から再計算した値を<strong>派生</strong>として区別する。「収集条件」は採用宣言に記録された要求条件であり、観測値ではない。解釈は記載せず、扱いは末尾の「証拠レベル」にまとめる。</p>
+
+<h3>検索クエリと化学的同一性（区別）</h3>
+<p>本ページの数値は、<strong>登録された検索文字列に一致する検索需要と検索結果の観測</strong>であり、物質の検出・存在・同一性の証拠ではない。次の区別を保つ。</p>
+<table>
+  <thead>
+    <tr>
+      <th>項目</th>
+      <th>内容</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>登録</td>
+      <td><code>THCNM</code> は taxonomy に <code>compound_thcnm</code> として登録され、暫定的に半合成（<code>compound_semisynthetic</code>）に配置されている</td>
+    </tr>
+    <tr>
+      <td>THA の位置づけ</td>
+      <td>別名・商業名として登録されている。<strong>化学的同一性は未確認</strong>であり、THCNM と同一の物質であるとも別の物質であるとも断定しない（ISS-20261104-TAX-028）</td>
+    </tr>
+    <tr>
+      <td>識別子</td>
+      <td>CAS 番号・ChEBI / PubChem / Wikidata ID・分子式は、この同一性について検証済みの値が無いため記載しない</td>
+    </tr>
+    <tr>
+      <td>混同しないもの</td>
+      <td><code>THAH</code>（別の独自ブレンド）および <code>THC-O</code>（別化合物。表記バリアント <code>THCO</code> の run を含む）とは別概念。THC-O の run は本ページの観測に含めない</td>
+    </tr>
+    <tr>
+      <td>観測の意味</td>
+      <td>検索語の一致は、その名称で検索・言及された内容の観測であり、表示された製品の成分や物質の流通量ではない</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>再現性チェックリスト</h3>
+<ul>
+  <li>run ごとに run 識別子と <code>query_id</code> を併記する（本ページの全数値の出所）。</li>
+  <li>Google Trends の窓は <code>metadata/windows/</code> の登録窓（12ヶ月 <code>2025-11-02_2026-11-08</code>、5年 <code>2021-10-31_2026-11-08</code>）で、観測範囲は返却点の範囲として別に記録する。</li>
+  <li>Google Trends は raw の <code>payload.json</code>・<code>records_thcnm.json</code>・<code>artifact-manifest.json</code>（SHA-256）を証跡とする。</li>
+  <li>YouTube は採用宣言（<code>staging-declaration-v1</code>）と run 記録をリポジトリ側の証跡とし、payload は Git 非追跡。</li>
+  <li>平均は週次値の算術平均、非ゼロ週は値が 0 でない週数。集計は run をまたがない。</li>
+  <li>各検索語は単発 run で、反復実行による安定性は未測定。</li>
+</ul>
+
+
+<!-- ===== 独自データ：Google Trends 検索需要 ===== -->
+<div>
+  <h2 id="data-search">独自データ: THCNM の Google Trends 検索需要 <span>一次データ（観測 + 派生）</span></h2>
+  <p>データソース: Google Trends via google-trends-mcp / 地域: 日本 (JP) / 検索文字列: <code>THCNM</code> / 取得日: 2026-11-04</p>
+  <p>登録文字列 <code>THCNM</code> の日本国内の検索関心度（相対指数 0-100）を、12ヶ月と5年の 2 本の単独系列として取得した。2 系列は別 run の別観測である。</p>
+
+  <div>
+    <p><strong>用語の定義:</strong></p>
+    <ul>
+      <li><strong>単独系列（個別正規化値）</strong>: 各キーワードを個別に取得した系列。その run の最大値を 100 とする正規化であり、<strong>キーワード間・run 間の比較には使用できない</strong>。</li>
+      <li><strong>興味度スコア</strong>: Google Trends が返す相対指数（0-100）。絶対検索数ではなく、期間内の最大検索量を 100 とした相対値。</li>
+      <li><strong>0 の意味</strong>: 系列の最小値（閾値未満）を表す観測値であり、検索が存在しなかったことや欠測を意味しない。</li>
+      <li><strong>窓</strong>: <code>today 12-m</code> / <code>today 5-y</code> という相対指定を、記録した reference time で登録窓に名目解決したもの。実際の境界は未検証（<code>exact_window_match: false</code>）。表の観測範囲は検索条件ではなく、返却された週次点の範囲である。</li>
+    </ul>
+  </div>
+
+  <h3>5年データサマリー（単独系列）</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>指標</th>
+        <th>値</th>
+        <th>区分</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>週次値（系列）</td>
+        <td>262 点（各 0-100）</td>
+        <td>観測</td>
+      </tr>
+      <tr>
+        <td>観測範囲</td>
+        <td>2021-10-31 〜 2026-11-01（262週）</td>
+        <td>派生</td>
+      </tr>
+      <tr>
+        <td>5年平均</td>
+        <td><strong>0.9122</strong></td>
+        <td>派生</td>
+      </tr>
+      <tr>
+        <td>ピーク</td>
+        <td>2026-11-01（値: 100）</td>
+        <td>派生</td>
+      </tr>
+      <tr>
+        <td>最新値</td>
+        <td>100</td>
+        <td>観測</td>
+      </tr>
+      <tr>
+        <td>初出（非ゼロ）</td>
+        <td>2026-10-18（値: 47）</td>
+        <td>派生</td>
+      </tr>
+      <tr>
+        <td>非ゼロ週 / ゼロ週</td>
+        <td>3 週 / 259 週</td>
+        <td>派生</td>
+      </tr>
+    </tbody>
+  </table>
+  <p><strong>出所:</strong> run <code>20261104T115431Z-google-trends-thcnm-5y</code>（JP / <code>today 5-y</code> / 2026-11-04T11:54:32Z 収集）。窓 <code>2021-10-31_2026-11-08</code>（週次・日曜始まり・Asia/Tokyo）。平均は週次 262 点の算術平均（小数第 4 位）。</p>
+
+  <h3>12ヶ月データサマリー（単独系列）</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>指標</th>
+        <th>値</th>
+        <th>区分</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>週次値（系列）</td>
+        <td>53 点（各 0-100）</td>
+        <td>観測</td>
+      </tr>
+      <tr>
+        <td>観測範囲</td>
+        <td>2025-11-02 〜 2026-11-01（53週）</td>
+        <td>派生</td>
+      </tr>
+      <tr>
+        <td>12ヶ月平均</td>
+        <td><strong>4.4906</strong></td>
+        <td>派生</td>
+      </tr>
+      <tr>
+        <td>ピーク</td>
+        <td>2026-11-01（値: 100）</td>
+        <td>派生</td>
+      </tr>
+      <tr>
+        <td>最新値</td>
+        <td>100</td>
+        <td>観測</td>
+      </tr>
+      <tr>
+        <td>初出（非ゼロ）</td>
+        <td>2026-10-18（値: 47）</td>
+        <td>派生</td>
+      </tr>
+      <tr>
+        <td>非ゼロ週 / ゼロ週</td>
+        <td>3 週 / 50 週</td>
+        <td>派生</td>
+      </tr>
+    </tbody>
+  </table>
+  <p><strong>出所:</strong> run <code>20261104T115425Z-google-trends-thcnm-12m</code>（JP / <code>today 12-m</code> / 2026-11-04T11:54:26Z 収集）。窓 <code>2025-11-02_2026-11-08</code>（週次・日曜始まり・Asia/Tokyo）。平均は週次 53 点の算術平均（小数第 4 位）。</p>
+
+  <p><strong>観測されたこと:</strong> 2 系列とも、非ゼロの週は末尾の 3 週（2026-10-18・2026-10-25・2026-11-01）に限られ、ピークは同じ週（2026-11-01、値 100）である。12ヶ月系列は残り 50 週、5年系列は残り 259 週が 0（相対指数の最小値）である。</p>
+  <p><strong>比較しないこと:</strong> 12ヶ月平均（4.4906）と5年平均（0.9122）は、窓の長さも正規化の基準も別であるため比較できない。単独系列の値を他の化合物や他の run の値と比べない。</p>
+  <p><strong>制約:</strong> Google Trends は相対指数であり、絶対検索数ではない。観測範囲は検索条件ではなく、返却点の範囲である。</p>
+</div>
+
+
+<!-- ===== 独自データ：YouTube 検索結果（THCNM リキッド） ===== -->
+<div>
+  <h2 id="data-youtube-thcnm">独自データ: YouTube 検索結果 — 「THCNM リキッド」 <span>一次データ（観測 + 派生）</span></h2>
+  <p>データソース: YouTube Search via Apify <code>streamers/youtube-scraper</code> / <code>query_id</code>: thcnm-liquid-ja / 取得日: 2026-11-04</p>
+
+  <h3>収集条件</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>項目</th>
+        <th>内容</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>検索文字列（登録）</td>
+        <td><code>THCNM リキッド</code></td>
+      </tr>
+      <tr>
+        <td>クエリの意図</td>
+        <td><code>product_liquid</code>（liquid-only primary）</td>
+      </tr>
+      <tr>
+        <td>地域</td>
+        <td>API の地域フィルタなし。日本語の製品語「リキッド」による近似であり、地域の保証ではない</td>
+      </tr>
+      <tr>
+        <td><code>dateFilter</code></td>
+        <td>なし（unbounded。絶対・相対の公開日制限を要求していない）</td>
+      </tr>
+      <tr>
+        <td>取得上限</td>
+        <td><code>maxResults</code> 500 / <code>maxResultsShorts</code> 0 / <code>maxResultStreams</code> 0</td>
+      </tr>
+      <tr>
+        <td>取得日</td>
+        <td>2026-11-04</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>収集結果</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>指標</th>
+        <th>値</th>
+        <th>区分</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>返却レコード数</td>
+        <td><strong>30 件</strong></td>
+        <td>観測（run 記録）</td>
+      </tr>
+      <tr>
+        <td>重複除去後</td>
+        <td>30 件（重複 0。キーは動画 ID、run 内のみで判定）</td>
+        <td>派生</td>
+      </tr>
+      <tr>
+        <td>実行状態</td>
+        <td>SUCCEEDED</td>
+        <td>観測（run 記録）</td>
+      </tr>
+      <tr>
+        <td>観測した公開日</td>
+        <td>2017-11-30 〜 2026-11-02（UTC）</td>
+        <td>派生</td>
+      </tr>
+      <tr>
+        <td>観測窓（半開区間）</td>
+        <td>[2017-11-30, 2026-11-03)</td>
+        <td>派生</td>
+      </tr>
+    </tbody>
+  </table>
+  <p><strong>出所:</strong> run <code>20261104T120627Z-youtube-cannabinoid-raw-collection</code>。採用宣言は <code>metadata/provenance/declarations/20261104-youtube-thcnm-tha-liquid-cannabinoid-raw-collection.json</code>。返却レコード数と実行状態は run 記録の観測値、重複除去後・公開日範囲・半開区間は返却レコードから再計算した派生値。raw payload は Git 非追跡・公開対象外で、宣言と run 記録をリポジトリ側の証跡とする。</p>
+  <p><strong>制約:</strong> 返却件数は検索結果として返された動画の標本数であり、YouTube 全体の投稿数ではない。個別動画の行（タイトル・チャンネル・ID・URL）および再生数などの動画単位の指標は本ページに掲載しない。</p>
+</div>
+
+
+<!-- ===== 独自データ：YouTube 検索結果（THA リキッド） ===== -->
+<div>
+  <h2 id="data-youtube-tha">独自データ: YouTube 検索結果 — 「THA リキッド」 <span>一次データ（観測 + 派生）</span></h2>
+  <p>データソース: YouTube Search via Apify <code>streamers/youtube-scraper</code> / <code>query_id</code>: tha-liquid-ja / 取得日: 2026-11-04</p>
+  <p><code>THA</code> は <code>compound_thcnm</code> の別名・商業名として登録された検索文字列である（化学的同一性は未確認）。<code>THCNM リキッド</code> とは<strong>別の観測</strong>であり、片方を他方の代替にせず、件数を合算しない。</p>
+
+  <h3>収集条件</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>項目</th>
+        <th>内容</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>検索文字列（登録）</td>
+        <td><code>THA リキッド</code></td>
+      </tr>
+      <tr>
+        <td>クエリの意図</td>
+        <td><code>product_liquid</code>（liquid-only primary）</td>
+      </tr>
+      <tr>
+        <td>地域</td>
+        <td>API の地域フィルタなし。日本語の製品語「リキッド」による近似であり、地域の保証ではない</td>
+      </tr>
+      <tr>
+        <td><code>dateFilter</code></td>
+        <td>なし（unbounded。絶対・相対の公開日制限を要求していない）</td>
+      </tr>
+      <tr>
+        <td>取得上限</td>
+        <td><code>maxResults</code> 500 / <code>maxResultsShorts</code> 0 / <code>maxResultStreams</code> 0</td>
+      </tr>
+      <tr>
+        <td>取得日</td>
+        <td>2026-11-04</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>収集結果</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>指標</th>
+        <th>値</th>
+        <th>区分</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>返却レコード数</td>
+        <td><strong>311 件</strong></td>
+        <td>観測（run 記録）</td>
+      </tr>
+      <tr>
+        <td>重複除去後</td>
+        <td>311 件（重複 0。キーは動画 ID、run 内のみで判定）</td>
+        <td>派生</td>
+      </tr>
+      <tr>
+        <td>実行状態</td>
+        <td>SUCCEEDED</td>
+        <td>観測（run 記録）</td>
+      </tr>
+      <tr>
+        <td>観測した公開日</td>
+        <td>2012-01-17 〜 2026-11-04（UTC）</td>
+        <td>派生</td>
+      </tr>
+      <tr>
+        <td>観測窓（半開区間）</td>
+        <td>[2012-01-17, 2026-11-05)</td>
+        <td>派生</td>
+      </tr>
+    </tbody>
+  </table>
+  <p><strong>出所:</strong> run <code>20261104T120805Z-youtube-cannabinoid-raw-collection</code>。採用宣言は <code>metadata/provenance/declarations/20261104-youtube-thcnm-tha-liquid-cannabinoid-raw-collection.json</code>。返却レコード数と実行状態は run 記録の観測値、重複除去後・公開日範囲・半開区間は返却レコードから再計算した派生値。raw payload は Git 非追跡・公開対象外で、宣言と run 記録をリポジトリ側の証跡とする。</p>
+  <p><strong>制約:</strong> 返却件数は検索結果として返された動画の標本数であり、YouTube 全体の投稿数ではない。2 クエリの件数を合算しない（30 + 311 は意味を持たない）。個別動画の行（タイトル・チャンネル・ID・URL）および再生数などの動画単位の指標は本ページに掲載しない。</p>
+</div>
+
+
+<!-- ===== 限界 ===== -->
+<div>
+  <h2 id="limitations">限界と注意</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>制約</th>
+        <th>内容</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>相対指数</td>
+        <td>Google Trends の値は 0-100 の相対指数であり、絶対検索数ではない</td>
+      </tr>
+      <tr>
+        <td>窓の解決</td>
+        <td><code>today 12-m</code> / <code>today 5-y</code> は reference time で名目解決された要求であり、実際の境界は未検証（<code>exact_window_match: false</code>）。観測範囲を検索条件として読まない</td>
+      </tr>
+      <tr>
+        <td>系列間比較</td>
+        <td>12ヶ月と5年は窓の長さも正規化も別で、平均を比較できない。単独系列の値を化合物間・run 間で比べない</td>
+      </tr>
+      <tr>
+        <td>0 の意味</td>
+        <td>0 は相対指数の最小値（閾値未満）であり、需要ゼロや欠測を意味しない</td>
+      </tr>
+      <tr>
+        <td>反復の欠如</td>
+        <td>各検索語は単発 run。同一条件の反復が無く、API の非決定性による系列の安定性は未測定</td>
+      </tr>
+      <tr>
+        <td>YouTube の地域</td>
+        <td>API の地域フィルタが無く、「リキッド」という日本語製品語による近似。日本国内に限定された観測ではない</td>
+      </tr>
+      <tr>
+        <td>YouTube の被覆</td>
+        <td>返却された検索結果の標本であり全数ではない（<code>maxResults</code> 500 に対し 30 件 / 311 件）。動画単位の指標は掲載しない</td>
+      </tr>
+      <tr>
+        <td>同一性</td>
+        <td>THCNM の化学的同一性は未確認。<code>THA</code> は別名・商業名であり、本ページは同一物質とも別物質とも断定しない</td>
+      </tr>
+      <tr>
+        <td>法的地位</td>
+        <td>THCNM の法的地位は物質の同一性に依存するため、本ページでは判定しない。規制資料は対象外であり、本ページを法的評価として読まない</td>
+      </tr>
+      <tr>
+        <td>欠測の扱い</td>
+        <td>X は未収集。規制資料・COA・価格は本ページの対象外。未収集を 0 観測として扱わない</td>
+      </tr>
+      <tr>
+        <td>配布物との関係</td>
+        <td>本ページの THCNM 系列は、配布物 <code>datasets/cannabinoid-platform-trends/</code> の公開化合物集合に含まれない</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+<!-- ===== 証拠レベル ===== -->
+<div>
+  <h2 id="evidence-levels">証拠レベル（観測 / 派生 / 解釈）</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>レベル</th>
+        <th>本ページでの扱い</th>
+        <th>例</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>観測</strong></td>
+        <td>run が記録した値。そのまま読む</td>
+        <td>週次の相対指数値（0-100）、返却件数 30 / 311、実行状態 SUCCEEDED</td>
+      </tr>
+      <tr>
+        <td><strong>派生</strong></td>
+        <td>観測された週次値・レコードから再計算できる値</td>
+        <td>平均 4.4906 / 0.9122、ピーク週 2026-11-01、非ゼロ週 3、観測範囲（返却点の最小・最大）、公開日の最小・最大と半開区間への正規化、重複除去後の件数</td>
+      </tr>
+      <tr>
+        <td><strong>解釈</strong></td>
+        <td>本ページでは主張しない。読む側の解釈に委ねる</td>
+        <td>検索関心が観測され始めた理由、需要の実体、THCNM と THA の同一性、物質の流通量、規制や事件との因果</td>
+      </tr>
+    </tbody>
+  </table>
+  <p>本ページは因果を主張しない。検索関心の週次変化は、製品流通・使用・規制の変化をそれ自体では示さない。</p>
+</div>
+
+
+<!-- ===== 公開状態 ===== -->
+<div>
+  <h2 id="publication-status">公開状態</h2>
+  <p>本ページは<strong>公開審査待ち（<code>requires_review</code>）</strong>である。公開契約 PC-7 の審査 envelope は <code>metadata/publication/research-thcnm/</code> にあり、判断状態は <code>approved</code> ではない。したがって<strong>外部公開・リリースは行っていない</strong>。</p>
+  <p>2026-11-04 に <code>validation.cli audit-publication</code> と <code>gate-publication</code> を実行した。公開契約の機械検査は本ページについて finding 0、公開適格ゲートは <code>BLOCKED</code>（PUB-04 個人データ審査、PUB-10 公開承認）であり、未承認のままである。審査の詳細と次の作業は envelope の <code>decision.json</code> / <code>evidence.json</code> に記録する。</p>
+  <p>平均・非ゼロ週・観測範囲の算出方法は <code>src/processing/gt_statistics.py</code> と同じ定義（週次値の算術平均、値が 0 でない週数、返却点の最小・最大）による。</p>
+</div>
+
+
+<!-- ===== 引用情報 ===== -->
+<div>
+  <h2 id="citation">引用 (How to Cite)</h2>
+  <p>
+    KATO, Kyoji（2026）.<br>
+    「Japan Cannabinoid Platform Trends Dataset 2026: Google Trends and YouTube Evidence from Japan」.<br>
+    Version 1.13.2<br>
+    Routeflags Co., Ltd.<br>
+    [Dataset].<br>
+    DOI: <a href="https://doi.org/10.5281/zenodo.23390594">10.5281/zenodo.23390594</a>
+  </p>
+  <p>
+    <a href="https://doi.org/10.5281/zenodo.23390594">
+      <img src="https://zenodo.org/badge/1375618430.svg" alt="DOI">
+    </a>
+  </p>
+</div>
+
+</body>
+</html>

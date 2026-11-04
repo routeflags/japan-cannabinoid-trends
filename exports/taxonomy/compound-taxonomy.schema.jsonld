@@ -55,7 +55,7 @@
         "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-semisynthetic-scheme"
       },
       "schema:alternateName": "半合成カンナビノイド",
-      "schema:description": "Cannabinoids obtained by chemically modifying a natural cannabinoid: HHC, THC-O, H4CBH and HHBD. Classified by production route, which is why HHC sits here although it is also a hydrogenated cannabinoid. Chemical class is a separate dimension (jptr:chemical-class-taxonomy): HHC, H4CBH and HHBD are chemclass_hydrogenated, THC-O is chemclass_acetate.",
+      "schema:description": "Cannabinoids obtained by chemically modifying a natural cannabinoid: HHC, THC-O, H4CBH, HHBD and THCNM. Classified by production route, which is why HHC sits here although it is also a hydrogenated cannabinoid. Chemical class is a separate dimension (jptr:chemical-class-taxonomy): HHC, H4CBH and HHBD are chemclass_hydrogenated, THC-O is chemclass_acetate, and THCNM has no formalized chemical class. THCNM's placement is provisional: both market-reported identities describe a substituted derivative of a phytocannabinoid, but the identity itself is unconfirmed (see its scopeNote).",
       "schema:termCode": "compound_semisynthetic"
     },
     {
@@ -289,6 +289,23 @@
     },
     {
       "@type": "schema:DefinedTerm",
+      "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound_thcnm",
+      "schema:name": "THCNM",
+      "schema:inDefinedTermSet": {
+        "@type": "schema:DefinedTermSet",
+        "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-thcnm-scheme"
+      },
+      "schema:alternateName": [
+        "THA",
+        "THCNM",
+        "Tetrahydrocannabinol-N-methyl",
+        "1′-Dimethyl-Δ9-THCH"
+      ],
+      "schema:description": "A compound sold in the Japanese market as THCNM and as THA. Its chemical identity is supplier/market-reported and UNCONFIRMED. A Japanese cannabis-market article (2026-10-28) reports a supplier statement that the chemical name is 1′-Dimethyl-Δ9-THCH, that products sold as 'THA' contained THCNM as the principal psychoactive ingredient, and that THA was a commercial or mixture name rather than a defined single substance. Market/retail sources instead describe THCNM as Tetrahydrocannabinol-N-methyl. THA is therefore recorded as an alias / commercial name: it is neither declared identical to THCNM nor treated as a separate substance. No CAS number, ChEBI ID, Wikidata ID or PubChem ID is recorded, because none is verified for this identity; do not invent one. THCNM is not to be confused with THAH, a separate proprietary blend. The semi-synthetic placement follows both reported descriptions (a substituted derivative of a phytocannabinoid, produced by chemical modification); it is provisional and is not a verified structural classification. Evidence and open questions: ISS-20261104-TAX-028.",
+      "schema:termCode": "compound_thcnm"
+    },
+    {
+      "@type": "schema:DefinedTerm",
       "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound_thc_o",
       "schema:name": "Tetrahydrocannabinol-O-acetate (THC-O)",
       "schema:inDefinedTermSet": {
@@ -301,7 +318,7 @@
         "THCO",
         "THC-O-Acetate"
       ],
-      "schema:description": "A semi-synthetic cannabinoid acetate marketed in Japan. Chemical class (second dimension): chemclass_acetate.",
+      "schema:description": "A semi-synthetic cannabinoid acetate marketed in Japan. Chemical class (second dimension): chemclass_acetate. The concept is a market/family name, not one verified structure: no CAS number, ChEBI ID, Wikidata ID or PubChem ID is asserted for it, and none may be inferred from the registered query-variant evidence. The query spelling 'THCO' is also used for Δ8-THCO and Δ9-THCO (tetrahydrocannabiorcol), which are different substances. Query observations measure the submitted text, not what a product contains. Identity caveat and evidence: docs/provenance/compound-taxonomy.md, metadata/provenance/evidence-registry.json, ISS-20261104-TAX-029.",
       "schema:termCode": "compound_thc_o"
     },
     {

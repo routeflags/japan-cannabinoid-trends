@@ -1,0 +1,26 @@
+{
+  "plan_id": "gt-5y-thcnm",
+  "study_id": "cannabinoid-raw-collection",
+  "source_id": "google-trends",
+  "collector_id": "google-trends-mcp",
+  "query_id": "thcnm-general-ja",
+  "query": {
+    "text": "THCNM",
+    "geo": "JP",
+    "timeframe": "today 5-y",
+    "compound_id": "compound_thcnm"
+  },
+  "required_capabilities": [
+    "geo_filter",
+    "relative_date_range"
+  ],
+  "window": {
+    "window_id": "2021-10-31_2026-11-08",
+    "start": "2021-10-31T00:00:00Z",
+    "end_exclusive": "2026-11-08T00:00:00Z",
+    "granularity": "week",
+    "week_start": "sunday",
+    "timezone": "Asia/Tokyo"
+  },
+  "purpose": "THCNM \u306e 5 \u5e74\u7cfb\u5217\u306e\u521d\u56de\u53ce\u96c6\u3002declared compound set \u3078 2026-11-04 \u306b\u8ffd\u52a0\u3057\u305f\u5316\u5408\u7269\u3067\u3001run \u306f 0 \u3060\u3063\u305f\u3002today 5-y / geo JP \u306e\u5358\u72ec\u7cfb\u5217\u3092 1 run \u3067\u53ce\u96c6\u3059\u308b\u3002\u7a93\u306f reference time \u3067 nominal \u306b\u89e3\u6c7a\u3055\u308c\u308b 5 \u5e74\u3092\u9031\u30d0\u30b1\u30c3\u30c8\u30b0\u30ea\u30c3\u30c9\uff08sunday start\uff09\u306b\u91cf\u5b50\u5316\u3057\u305f\u3082\u306e\u3067\u3001collector \u304c\u5b9f\u65bd\u3059\u308b\u7a93\u3067\u306f\u306a\u304f\u5ba3\u8a00\u5024\u3067\u3042\u308b\u3002\u5316\u5b66\u7684\u540c\u4e00\u6027\u306f\u672a\u78ba\u8a8d\uff08ISS-20261104-TAX-028\uff09\u306e\u305f\u3081\u3001\u672c\u7cfb\u5217\u306f\u767b\u9332\u6587\u5b57\u5217 THCNM \u306b\u4e00\u81f4\u3059\u308b\u691c\u7d22\u9700\u8981\u3092\u6e2c\u308b\u3002"
+}

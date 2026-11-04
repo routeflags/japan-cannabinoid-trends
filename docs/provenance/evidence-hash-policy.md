@@ -29,15 +29,17 @@ Google Trends fixture).
 |---|---|---|
 | `regenerated_output` | Bytes change on every regeneration (`make audit-snapshots`); a pinned hash would go stale by design. Cited by reference + observation time, never by hash. | `docs/audits/g5-legacy-runs.json` |
 | `needs_witnessed_observation` | Pinnable, but only by a witnessed registrar observation (hash + time + identity). An offline edit is not an observation, so the field stays `null` until the owner performs it. | none currently; resolved for the registry/taxonomy entries below on 2026-10-15 |
-| `external_unverifiable` | Outside this repository (cloud actor-run URLs, dataset handles, URNs). Cannot be re-checked locally; recorded but never hashed. | future cloud-evidence entries (ISS-20261015-PRV-013) |
+| `external_unverifiable` | Outside this repository (cloud actor-run URLs, dataset handles, URNs). Cannot be re-checked locally; recorded but never hashed. | cloud-evidence entries (ISS-20261015-PRV-013) and the PubMed / PubChem / Cayman records for the THC-O / THCO evidence (ISS-20261104-TAX-029) |
 | `reference_unresolvable` | The local reference does not resolve. Fix the reference first (owned as `EVIDENCE_REFERENCE_MISSING` by `check_evidence_registry`); hashing is not applicable. | — (none currently) |
 
-## Current registry disposition (2026-10-15, verified offline)
+## Current registry disposition (2026-11-04, verified offline)
 
-Of 8 entries in `metadata/provenance/evidence-registry.json`, 7 are pinned and
-1 carries info-level `EVIDENCE_HASH_UNRECORDED`.  The remaining unpinned entry is
-the regenerated audit output and is intentionally cited by reference instead of
-hash:
+Of 14 entries in `metadata/provenance/evidence-registry.json`, 7 are pinned, 6 are
+external references that are cited by URL and observation time and never hashed, and
+1 carries info-level `EVIDENCE_HASH_UNRECORDED`.  The unpinned local entry is the
+regenerated audit output and is intentionally cited by reference instead of
+hash.  The six external entries are the PubMed / PubChem / Cayman records for the
+THC-O / THCO query-variant evidence (ISS-20261104-TAX-029):
 
 | `evidence_id` | Reference | Status | Owner action |
 |---|---|---|---|
@@ -49,10 +51,16 @@ hash:
 | `ev-window-2025-2026` | `metadata/windows/2025-10-12_2026-10-12.json` | `pinned` | update hash only when the file changes |
 | `ev-artifact-registry` | `metadata/artifacts/artifact-registry.json` | `pinned` | update hash only when the file changes |
 | `ev-replay-fixture-12m` | `tests/.../interest_over_time_cbx_rikiddo_12m.json` | `pinned` | none; the worked example |
+| `ev-pubmed-37466480` / `ev-pubmed-37381980` / `ev-pubmed-36508081` | external PubMed URLs | `external_unverifiable` — never hash | none; re-check the URL when citing |
+| `ev-pubchem-cid-198013` | external PubChem URL | `external_unverifiable` — never hash | none; re-check the URL when citing |
+| `ev-cayman-33763-delta9-thco` / `ev-cayman-33762-delta8-thco` | external vendor product URLs | `external_unverifiable` — never hash | none; re-check the URL when citing |
 
 The 6 registry/taxonomy/window/artifact entries were observed and pinned on
 2026-10-15 under owner instruction for ISS-20261015-PRV-011.  They use a new
 `observed_at` value for that observation event rather than back-filling the
 older 2026-10-13 timestamp.  If any referenced file changes, the evidence entry
 must be updated as a new witnessed observation (new hash + observation time +
-registrar note), not patched silently.
+registrar note), not patched silently.  The compound taxonomy was re-observed on
+2026-11-04 (the THCNM change, then the `compound_thc_o` identity caveat); each
+re-observation updated `sha256`, `observed_at` and the note together, as this rule
+requires.

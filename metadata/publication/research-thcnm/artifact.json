@@ -1,0 +1,13 @@
+{
+  "schema_version": "1.0.0",
+  "record": "publication_artifact_descriptor",
+  "artifact_id": "research-thcnm",
+  "path": "publication/research_thcnm.html",
+  "layer": "publication",
+  "source_kind": "html",
+  "storage_policy_id": "publication-html-candidate",
+  "sha256": "cc6904527a91aa0de020a9efa48eccbd5f17ee439b4a8b18945e08e577d53b1b",
+  "byte_length": 24070,
+  "recorded_at": "2026-11-04",
+  "notes": "未公開 publication HTML（THCNM / 別名 THA）。PC-7 の審査 envelope として内容 hash を固定する。対象 publication はまだ公開していないため、decision は requires_review から開始する。2026-11-04: 各データ表に観測 / 派生の区分列を追加し、source-specific 単位（Google Trends は相対指数、YouTube は返却レコード数）と THA の同一性未確認、THC-O / THCO variant run の除外、法的地位を判定しないことを明記した後の hash。"
+}

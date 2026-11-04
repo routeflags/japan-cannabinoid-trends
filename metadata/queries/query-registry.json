@@ -250,6 +250,30 @@
       "status": "active"
     },
     {
+      "query_id": "thcnm-general-ja",
+      "compound_id": "compound_thcnm",
+      "intent_id": "compound_general",
+      "language": "ja",
+      "canonical_text": "THCNM",
+      "status": "active"
+    },
+    {
+      "query_id": "thcnm-liquid-ja",
+      "compound_id": "compound_thcnm",
+      "intent_id": "product_liquid",
+      "language": "ja",
+      "canonical_text": "THCNM リキッド",
+      "status": "active"
+    },
+    {
+      "query_id": "tha-liquid-ja",
+      "compound_id": "compound_thcnm",
+      "intent_id": "product_liquid",
+      "language": "ja",
+      "canonical_text": "THA リキッド",
+      "status": "active"
+    },
+    {
       "query_id": "comparison-5y-setA",
       "compound_id": "compound_cbd",
       "intent_id": "other",

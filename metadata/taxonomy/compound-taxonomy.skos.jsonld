@@ -28,7 +28,7 @@
       },
       "dct:creator": "Routeflags Co., Ltd.",
       "dct:created": "2026-10-02",
-      "dct:modified": "2026-10-15",
+      "dct:modified": "2026-11-04",
       "dct:license": "https://creativecommons.org/licenses/by/4.0/",
       "skos:hasTopConcept": [
         "jptr:compound-major",
@@ -131,13 +131,14 @@
       ],
       "skos:notation": "compound_semisynthetic",
       "skos:scopeNote": {
-        "@value": "Cannabinoids obtained by chemically modifying a natural cannabinoid: HHC, THC-O, H4CBH and HHBD. Classified by production route, which is why HHC sits here although it is also a hydrogenated cannabinoid. Chemical class is a separate dimension (jptr:chemical-class-taxonomy): HHC, H4CBH and HHBD are chemclass_hydrogenated, THC-O is chemclass_acetate.",
+        "@value": "Cannabinoids obtained by chemically modifying a natural cannabinoid: HHC, THC-O, H4CBH, HHBD and THCNM. Classified by production route, which is why HHC sits here although it is also a hydrogenated cannabinoid. Chemical class is a separate dimension (jptr:chemical-class-taxonomy): HHC, H4CBH and HHBD are chemclass_hydrogenated, THC-O is chemclass_acetate, and THCNM has no formalized chemical class. THCNM's placement is provisional: both market-reported identities describe a substituted derivative of a phytocannabinoid, but the identity itself is unconfirmed (see its scopeNote).",
         "@language": "en"
       },
       "skos:narrower": [        "jptr:compound-hhc",
         "jptr:compound-thc-o",
         "jptr:compound-h4cbh",
-        "jptr:compound-hhbd"
+        "jptr:compound-hhbd",
+        "jptr:compound-thcnm"
       ]
     },
     {
@@ -671,6 +672,63 @@
       }
     },
     {
+      "@id": "jptr:compound-thcnm",
+      "@type": "skos:Concept",
+      "skos:inScheme": "jptr:compound-taxonomy",
+      "skos:broader": "jptr:compound-semisynthetic",
+      "skos:prefLabel": [
+        {
+          "@value": "THCNM",
+          "@language": "en"
+        },
+        {
+          "@value": "THCNM",
+          "@language": "ja"
+        }
+      ],
+      "skos:altLabel": [
+        {
+          "@value": "THA",
+          "@language": "en"
+        },
+        {
+          "@value": "THCNM",
+          "@language": "en"
+        },
+        {
+          "@value": "Tetrahydrocannabinol-N-methyl",
+          "@language": "en"
+        },
+        {
+          "@value": "1′-Dimethyl-Δ9-THCH",
+          "@language": "en"
+        },
+        {
+          "@value": "THCNM リキッド",
+          "@language": "ja"
+        },
+        {
+          "@value": "THA リキッド",
+          "@language": "ja"
+        }
+      ],
+      "skos:notation": "compound_thcnm",
+      "skos:scopeNote": [
+        {
+          "@value": "A compound sold in the Japanese market as THCNM and as THA. Its chemical identity is supplier/market-reported and UNCONFIRMED. A Japanese cannabis-market article (2026-10-28) reports a supplier statement that the chemical name is 1′-Dimethyl-Δ9-THCH, that products sold as 'THA' contained THCNM as the principal psychoactive ingredient, and that THA was a commercial or mixture name rather than a defined single substance. Market/retail sources instead describe THCNM as Tetrahydrocannabinol-N-methyl. THA is therefore recorded as an alias / commercial name: it is neither declared identical to THCNM nor treated as a separate substance. No CAS number, ChEBI ID, Wikidata ID or PubChem ID is recorded, because none is verified for this identity; do not invent one. THCNM is not to be confused with THAH, a separate proprietary blend. The semi-synthetic placement follows both reported descriptions (a substituted derivative of a phytocannabinoid, produced by chemical modification); it is provisional and is not a verified structural classification. Evidence and open questions: ISS-20261104-TAX-028.",
+          "@language": "en"
+        },
+        {
+          "@value": "国内市場で THCNM および THA の名で流通する化合物。化学的同一性は供給元・市場の記載によるもので未確認である。国内カンナビス市場記事（2026-10-28）は供給元の発言として化学名 1′-Dimethyl-Δ9-THCH を伝え、THA 名で販売された製品の主精神活性成分が THCNM であったこと、THA は定義された単一物質の名称ではなく商業名・混合物名であったことを記録している。一方、市場・小売情報は THCNM を Tetrahydrocannabinol-N-methyl とする。したがって THA は別名・商業名として記録し、THCNM と同一の物質であるとも、別の物質であるとも断定しない。CAS 番号・ChEBI / Wikidata / PubChem の識別子は、この同一性について検証済みの値が無いため記載しない（推測で補わない）。THAH（別の独自ブレンド）とは混同しない。半合成への配置は上記 2 つの記載（化学修飾によるフィトカンナビノイドの置換誘導体）のいずれを採っても成り立つが、恒久的な構造分類ではなく暫定である。根拠と未決事項は ISS-20261104-TAX-028。",
+          "@language": "ja"
+        }
+      ],
+      "skos:related": [
+        "jptr:compound-thc",
+        "jptr:compound-thch"
+      ]
+    },
+    {
       "@id": "jptr:compound-thc-o",
       "@type": "skos:Concept",
       "skos:inScheme": "jptr:compound-taxonomy",
@@ -712,10 +770,16 @@
         }
       ],
       "skos:notation": "compound_thc_o",
-      "skos:scopeNote": {
-        "@value": "A semi-synthetic cannabinoid acetate marketed in Japan. Chemical class (second dimension): chemclass_acetate.",
-        "@language": "en"
-      },
+      "skos:scopeNote": [
+        {
+          "@value": "A semi-synthetic cannabinoid acetate marketed in Japan. Chemical class (second dimension): chemclass_acetate. The concept is a market/family name, not one verified structure: no CAS number, ChEBI ID, Wikidata ID or PubChem ID is asserted for it, and none may be inferred from the registered query-variant evidence. The query spelling 'THCO' is also used for Δ8-THCO and Δ9-THCO (tetrahydrocannabiorcol), which are different substances. Query observations measure the submitted text, not what a product contains. Identity caveat and evidence: docs/provenance/compound-taxonomy.md, metadata/provenance/evidence-registry.json, ISS-20261104-TAX-029.",
+          "@language": "en"
+        },
+        {
+          "@value": "日本で流通する半合成カンナビノイドのアセテート体。化学クラス（第 2 次元）は chemclass_acetate。本概念は市場・総称としての名称であり、検証済みの単一構造ではない。CAS 番号・ChEBI / Wikidata / PubChem の識別子は本概念に対して記載せず、登録済みクエリ表記の証拠から補わない。検索表記 `THCO` は Δ8-THCO / Δ9-THCO（テトラヒドロカンナビオルコール）という別物質にも使われる。クエリの観測値は送信文字列の観測であり、製品の含有物質の同定ではない。同一性の留保と根拠: docs/provenance/compound-taxonomy.md、metadata/provenance/evidence-registry.json、ISS-20261104-TAX-029。",
+          "@language": "ja"
+        }
+      ],
       "skos:related": [
         "jptr:chemclass-acetate"
       ]

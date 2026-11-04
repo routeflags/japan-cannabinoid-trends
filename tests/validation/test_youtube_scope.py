@@ -217,3 +217,154 @@ def test_unregistered_query_and_intent_outside_design_are_violations(tmp_path: P
     reasons = {entry["reason"] for entry in report["violations"]}
     assert "unregistered_query_id" in reasons
     assert "intent_outside_declared_design" in reasons
+
+
+def _two_query_registry(path: Path) -> None:
+    """One compound with two required liquid queries (THCNM / THA shape)."""
+
+    _write_json(
+        path,
+        {
+            "schema_version": "1.0.0",
+            "queries": [
+                {
+                    "query_id": "cbd-liquid-ja",
+                    "compound_id": "compound_cbd",
+                    "intent_id": "product_liquid",
+                    "language": "ja",
+                    "canonical_text": "CBD リキッド",
+                    "status": "active",
+                },
+                {
+                    "query_id": "thcnm-liquid-ja",
+                    "compound_id": "compound_thcnm",
+                    "intent_id": "product_liquid",
+                    "language": "ja",
+                    "canonical_text": "THCNM リキッド",
+                    "status": "active",
+                },
+                {
+                    "query_id": "tha-liquid-ja",
+                    "compound_id": "compound_thcnm",
+                    "intent_id": "product_liquid",
+                    "language": "ja",
+                    "canonical_text": "THA リキッド",
+                    "status": "active",
+                },
+            ],
+        },
+    )
+
+
+def _two_query_base(root: Path, runs: list[tuple[str, str]]) -> None:
+    _two_query_registry(root / "query-registry.json")
+    _design(root / "query-design.json")
+    _write_json(root / "data-catalog.json", {"catalog_version": "1.0.0", "entries": []})
+    _declaration(root / "declarations" / "d.json", runs)
+
+
+def _compound(report: dict, compound_id: str) -> dict:
+    return next(
+        item for item in report["compound_coverage"] if item["compound_id"] == compound_id
+    )
+
+
+def test_two_query_compound_with_no_run_is_missing(tmp_path: Path) -> None:
+    root = tmp_path
+    _two_query_base(root, [("20260101T000000Z-probe-cbd", "cbd-liquid-ja")])
+
+    report = _scope(root)
+
+    thcnm = _compound(report, "compound_thcnm")
+    assert thcnm["state"] == "missing"
+    assert thcnm["covered_query_count"] == 0
+    assert thcnm["required_query_count"] == 2
+    assert thcnm["missing_query_ids"] == ["tha-liquid-ja", "thcnm-liquid-ja"]
+    assert report["missing_compounds"] == ["compound_thcnm"]
+    assert report["partial_compounds"] == []
+
+
+def test_one_of_two_queries_is_partial_not_complete(tmp_path: Path) -> None:
+    root = tmp_path
+    _two_query_base(
+        root,
+        [
+            ("20260101T000000Z-probe-cbd", "cbd-liquid-ja"),
+            ("20260101T000000Z-probe-thcnm", "thcnm-liquid-ja"),
+        ],
+    )
+
+    report = _scope(root)
+
+    thcnm = _compound(report, "compound_thcnm")
+    assert thcnm["state"] == "partial"
+    assert thcnm["covered_query_count"] == 1
+    assert thcnm["missing_query_ids"] == ["tha-liquid-ja"]
+    # a half-covered compound is not counted as complete, and the single-query
+    # compound is unaffected
+    assert report["covered_compounds"] == ["compound_cbd"]
+    assert report["partial_compounds"] == ["compound_thcnm"]
+    assert report["missing_compounds"] == []
+    assert report["primary_compound_count"] == 1
+    assert report["primary_query_count"] == 3
+    assert report["primary_query_covered_count"] == 2
+    assert report["failure_count"] == 0
+
+
+def test_a_run_never_covers_its_sibling_query(tmp_path: Path) -> None:
+    root = tmp_path
+    _two_query_base(root, [("20260101T000000Z-probe-tha", "tha-liquid-ja")])
+
+    report = _scope(root)
+
+    coverage = {item["query_id"]: item for item in report["coverage"]}
+    assert coverage["tha-liquid-ja"]["covered"] is True
+    assert coverage["thcnm-liquid-ja"]["covered"] is False
+    assert _compound(report, "compound_thcnm")["state"] == "partial"
+
+
+def test_two_queries_both_adopted_complete_the_compound(tmp_path: Path) -> None:
+    root = tmp_path
+    _two_query_base(
+        root,
+        [
+            ("20260101T000000Z-probe-tha", "tha-liquid-ja"),
+            ("20260101T000000Z-probe-thcnm", "thcnm-liquid-ja"),
+        ],
+    )
+
+    report = _scope(root)
+
+    thcnm = _compound(report, "compound_thcnm")
+    assert thcnm["state"] == "complete"
+    assert thcnm["run_ids"] == [
+        "20260101T000000Z-probe-tha",
+        "20260101T000000Z-probe-thcnm",
+    ]
+    assert report["covered_compounds"] == ["compound_thcnm"]
+    assert report["primary_run_count"] == 2
+
+
+def test_require_complete_distinguishes_partial_from_missing(tmp_path: Path) -> None:
+    root = tmp_path
+    _two_query_base(
+        root,
+        [
+            ("20260101T000000Z-probe-cbd", "cbd-liquid-ja"),
+            ("20260101T000000Z-probe-thcnm", "thcnm-liquid-ja"),
+        ],
+    )
+
+    report = _scope(root, require_complete=True)
+
+    partial = [
+        entry for entry in report["violations"] if entry["reason"] == "primary_coverage_partial"
+    ]
+    assert partial == [
+        {
+            "reason": "primary_coverage_partial",
+            "compound_id": "compound_thcnm",
+            "missing_query_ids": ["tha-liquid-ja"],
+        }
+    ]
+    assert report["failure_count"] == 1

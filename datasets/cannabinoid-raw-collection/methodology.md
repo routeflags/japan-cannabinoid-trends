@@ -12,19 +12,19 @@ cannabinoid-raw-collection
 
 | データソース | 観測期間 | 根拠 |
 |-------------|---------|------|
-| Google Trends（12ヶ月） | 2025-09-28 〜 2026-09-27（8 化合物）/ 2025-10-19 〜 2026-10-18（THCV・H4CBH・HHBD・CRDH） | §2.1.3 |
-| Google Trends（5年） | 2021-10-10 〜 2026-10-11（9 化合物）/ 2021-10-17 〜 2026-10-18（THC・CBG・HHC・THCV、および共通スケール setA〜D）。リキッドは main5 の 5 語が 2021-10-10 〜 2026-10-11、新規 7 語が 2021-10-17 〜 2026-10-18（THC-O は系列なし） | §2.1.2、§2.1.4 |
+| Google Trends（12ヶ月） | 2025-09-28 〜 2026-09-27（8 化合物）/ 2025-10-19 〜 2026-10-18（THCV・H4CBH・HHBD・CRDH）/ 2025-11-02 〜 2026-11-01（THCNM） | §2.1.3 |
+| Google Trends（5年） | 2021-10-10 〜 2026-10-11（9 化合物）/ 2021-10-17 〜 2026-10-18（THC・CBG・HHC・THCV、および共通スケール setA〜D）/ 2021-10-31 〜 2026-11-01（THCNM）。リキッドは main5 の 5 語が 2021-10-10 〜 2026-10-11、新規 7 語が 2021-10-17 〜 2026-10-18（THC-O は系列なし） | §2.1.2、§2.1.4 |
 | X (Twitter) | 2026-09-01 〜 2026-10-01（主系列、7 語）。CBD は追加で 1 年 / 1ヶ月 / latest10 の 3 run（2026-10-08）もある（§2.2） | §2.2 |
-| YouTube | 2026-10-10 / 10-11 / 11-01。primary のリキッド 15 run（14 化合物、観測窓は run ごとに異なる。primary の全体の包絡は 2008-08-01 〜 2026-11-01）+ primary 外の裸語 `HHC` 1 run（2006-09-05 〜 2026-11-02） | §2.3 |
+| YouTube | 2026-10-10 / 10-11 / 11-01 / 11-04。primary のリキッド 17 run（15 化合物、観測窓は run ごとに異なる。primary の全体の包絡は 2008-08-01 〜 2026-11-04）+ primary 外の裸語 `HHC` 1 run（2006-09-05 〜 2026-11-02） | §2.3 |
 
 ### 1.3 対象化合物
 
-Google Trends は **CBX を除く 13 化合物**がこの study 自身の raw で、CBX は [`datasets/cbx-search-trends/`](../cbx-search-trends/) の正本 raw を **参照**する（raw は複製しない）。YouTube は 2026-11-01 の owner 決定により **14 化合物すべて**がこの study の own raw（liquid-only primary）である。Google Trends の被覆は範囲ごとに分ける:
+Google Trends は **CBX を除く 14 化合物**がこの study 自身の raw で、CBX は [`datasets/cbx-search-trends/`](../cbx-search-trends/) の正本 raw を **参照**する（raw は複製しない）。YouTube は 2026-11-01 の owner 決定により **15 化合物すべて**がこの study の own raw（liquid-only primary）である。2026-11-04 に **THCNM（別名 THA）を 15 番目の化合物**として宣言に加え、同日 **Google Trends の初回 run（12ヶ月・5年）と YouTube の 2 本の required primary query（`THCNM リキッド` / `THA リキッド`）を採用した**。YouTube primary は化合物 15/15・クエリ 16/16。Google Trends の被覆は範囲ごとに分ける:
 
 | 範囲 | 5年 | 12ヶ月 |
 |---|---:|---:|
-| own raw（13 化合物） | 13/13 | 12/13（THC-O は no data） |
-| CBX 参照込み（14 化合物） | 14/14 | 13/14 |
+| own raw（14 化合物） | 14/14 | 13/14（THC-O は no data） |
+| CBX 参照込み（15 化合物） | 15/15 | 14/15 |
 
 CBX の Google Trends を対象集合に含めるかは [`ISS-20261024-COL-016`](../../docs/issues/active/30-production-collection-expansion/20261024_p2_cbx-in-scope.md) の決定事項である。本節は現時点の参照関係を記録する。YouTube の所有は [`ISS-20261101-YT-019`](../../docs/issues/active/30-production-collection-expansion/20261101_p2_youtube-liquid-batch-usage-cap.md) が記録する。
 
@@ -44,14 +44,19 @@ CBX の Google Trends を対象集合に含めるかは [`ISS-20261024-COL-016`]
 | 12 | H4CBH | `compound_h4cbh` | semisynthetic | ✅ | ✅ |
 | 13 | HHBD | `compound_hhbd` | semisynthetic | ✅ | ✅ |
 | 14 | HHCH | `compound_hhch` | synthetic | ✅ | ✅ |
+| 15 | THCNM（別名 THA） | `compound_thcnm` | semisynthetic（暫定） | ✅ | ✅ |
 
 - **「データなし」**: 取得はしたが Google Trends が閾値未満として系列を返さなかった。欠測であって 0 観測ではない。
-- **5年系列は own raw 13 化合物すべてが週次 raw を持つ**（§2.1.2）。CBX の正本 raw は `cbx-search-trends` にあり、参照込みで 14/14。summary-only だった旧 baseline run（§2.1.1）は raw に残るが、どの化合物の引用元でもない。
-- **12ヶ月系列は own raw 12 化合物が週次 raw を持ち、THC-O は no data**（§2.1.3）。CBX の既存 12ヶ月 series を参照に加えると 13/14。CRDH の旧 summary（`records_crdh_12m.json`）は証跡として残るが、正本は週次系列の run。
+- **「未収集」**: その化合物をそのソースで収集していない（run 0）。0 観測でも欠測でもない。現在この状態の YouTube primary query はない（宣言済み 16 本すべてに adopted run がある）。
+- **THCNM の系列が測っているもの**: 登録 `canonical_text`（Google Trends は `THCNM`）に一致する検索需要であり、同定された物質の存在ではない。同一性が未確認の間、本系列の解釈はこの限界に拘束される（下の同じ identity 注記）。
+- **THCNM の同一性と分類**: `skos:broader` は `compound_semisynthetic`（暫定）。供給元・市場の記載は 2 通りあり（`Tetrahydrocannabinol-N-methyl` / `1′-Dimethyl-Δ9-THCH`）、いずれも「フィトカンナビノイドを化学修飾した置換誘導体」を記述しているため、`compound_synthetic`（天然対応物を持たない）ではなく半合成に置いた。**構造の検証結果ではなく、未確認の同一性に基づく暫定配置**である（[`ISS-20261104-TAX-028`](../../docs/issues/active/50-taxonomy-standards/20261104_p2_thcnm-identity-unconfirmed.md)）。`THA` は同じ化合物の別名・商業名として登録し、別物質とも同一物質とも断定しない。外部識別子（CAS / ChEBI / Wikidata）は記録していない。
+- **5年系列は own raw 14 化合物すべてが週次 raw を持つ**（§2.1.2）。CBX の正本 raw は `cbx-search-trends` にあり、参照込みで 15/15。summary-only だった旧 baseline run（§2.1.1）は raw に残るが、どの化合物の引用元でもない。
+- **12ヶ月系列は own raw 13 化合物が週次 raw を持ち、THC-O は no data**（§2.1.3）。CBX の既存 12ヶ月 series を参照に加えると 14/15。CRDH の旧 summary（`records_crdh_12m.json`）は証跡として残るが、正本は週次系列の run。
 - 分類は [`metadata/taxonomy/compound-taxonomy.skos.jsonld`](../../metadata/taxonomy/compound-taxonomy.skos.jsonld) の `skos:broader`（major / minor / semisynthetic / synthetic）に従う。
 - **CBX の Google Trends は own raw ではない**: 12ヶ月・5年の正本 raw は [`datasets/cbx-search-trends/`](../cbx-search-trends/) に保存されている。`gt-summary` の CBX エントリの `run_id` / `path` を参照し、raw をこの study に複製しない。YouTube の CBX リキッド run はこの study の own raw である。
 - 上の Google Trends 表の `*` は、対象集合には含めるが raw の物理的保存先が `cbx-search-trends` であり、この study の Google Trends own raw ではないことを示す。CBX リキッドは製品語であり、CBX 化合物語の系列とは別観測である。
 - 12ヶ月・5年以外に、比較セット（12ヶ月 `common-scale-*` / 5年 `5y-common-scale-set*`）と「リキッド」系クエリの run もある（`data/raw/google_trends/`）。
+- THC-O の**表記ゆれ** `THCO` / `THCO リキッド` は canonical の被覆数に含めない別観測である（§2.1.5）。canonical `THC-O` の 12ヶ月 no data・5年系列はそのまま正本。
 
 ### 1.4 地理スコープ（ソース別）
 
@@ -79,7 +84,9 @@ CBX の Google Trends を対象集合に含めるかは [`ISS-20261024-COL-016`]
 - timeframe: 計画書ごとに `today 12-m` または `today 5-y`（**相対表記**。相対窓は収集時刻で解決されるため、
   絶対窓を [`metadata/windows/`](../../metadata/windows/) に登録して計画書から参照する。§2.1.2 の「窓」を参照）
 - 収集語: `metadata/queries/query-registry.json` の `query_id`（例 `cbd-general-ja` = `CBD`）。
-  表記は**登録された `canonical_text` のまま送る**（例: THC-O は `THC-O`。`THCO` のような別表記は未検証）。
+  通常は**登録された `canonical_text` のまま送る**（例: THC-O は `THC-O`）。
+  表記ゆれは `metadata/queries/query-variants.json` に登録した variant だけを、
+  canonical の `query_id` を変えずに `query.text` として送る別 run にする（§2.1.5）。
   プラットフォーム別の収集語一覧（化合物語 13・リキッド 13・オイル 2・アンカー 1）は
   [README の「収集したキーワード」](README.md#収集したキーワード)を正本とする。
 
@@ -129,7 +136,7 @@ CBX の Google Trends を対象集合に含めるかは [`ISS-20261024-COL-016`]
 
 ### 2.1.2 5年系列（週次 raw）
 
-5年系列は own raw 13 化合物すべてが週次 raw を持つ（`ISS-20261012-CBD-004`）。CBX の正本 run は `datasets/cbx-search-trends/data/raw/google_trends/20261015T042857Z-google-trends-boundary-5y/` にあり、参照込みで 14/14。2026-10-14 以降に追加した 5 化合物の run:
+5年系列は own raw 14 化合物すべてが週次 raw を持つ（`ISS-20261012-CBD-004`）。CBX の正本 run は `datasets/cbx-search-trends/data/raw/google_trends/20261015T042857Z-google-trends-boundary-5y/` にあり、参照込みで 15/15。2026-10-14 以降に追加した 5 化合物の run:
 
 | 化合物 | run（`data/raw/google_trends/`） | `window_id` | 週数 | 平均 | ゼロ週 |
 |---|---|---|---:|---:|---:|
@@ -155,10 +162,16 @@ CBX の Google Trends を対象集合に含めるかは [`ISS-20261024-COL-016`]
 - 5年リキッド系列は `data/raw/google_trends/` の main5 run（`20261012T064246Z-google-trends-ja-rikiddo-5y-main5`、5 語）と新規 8 run（7 語が系列、THC-O リキッドは系列なしで quarantine）に収蔵する。`docs/audits/gt-summary.json` は bare 化合物 13 + CBX のみを扱いリキッドを含まないため、リキッド run の特定は `docs/audits/g2-query-inventory.json`（クエリ照合）と `g4-storage-inventory.json`（成果物）、数値は各 run の `records_*.json` を正本とする。
 - 残り 8 化合物（CBN・CRDH・CRDP・H4CBH・HHBD・HHCH・THCH・THC-O）の5年 run は本表には載せず、
   `docs/audits/gt-summary.json` の各エントリの `run_id` / `path` を正本とする。
+- **THCNM（初回収集、2026-11-04）**: `20261104T115431Z-google-trends-thcnm-5y`（窓 `2021-10-31_2026-11-08`、262 週、
+  観測範囲 2021-10-31 〜 2026-11-01、平均 0.9122、非ゼロ 3 週）。計画書は `metadata/plans/gt-5y-thcnm.json`。
+  窓は reference time（2026-11-04T11:54:32Z）で nominal に解決される 5 年を週バケットグリッド（sunday start）に
+  量子化した**宣言値**であり、collector が実施する窓ではない。非ゼロの 3 週はいずれも最終 3 週に集中する。
+  **この系列は `docs/audits/gt-summary.json` に含まれない**（同レポートの化合物集合は公開ページを持つ 14 化合物で、
+  THCNM は配布 slice 外）。数値の正本は run の `records_thcnm.json`。
 
 ### 2.1.3 12ヶ月系列（週次 raw）
 
-12ヶ月系列は 12 化合物が週次 raw を持ち、THC-O は Google Trends が系列を返さない。
+12ヶ月系列は 13 化合物が週次 raw を持ち、THC-O は Google Trends が系列を返さない。
 収集は `today 12-m` / geo JP、1 化合物 1 run、窓 [`metadata/windows/`](../../metadata/windows/)、
 計画書 `metadata/plans/gt-12m-recollect-*.json`。値は各 run の `records_<term>.json` から算出:
 
@@ -176,9 +189,10 @@ CBX の Google Trends を対象集合に含めるかは [`ISS-20261024-COL-016`]
 | H4CBH | `20261023T162128Z-google-trends-h4cbh-12m-r2` | 同 | 53 | 57.8868 | 51 |
 | HHBD | `20261023T161921Z-google-trends-hhbd-12m` | 同 | 53 | 52.8491 | 37 |
 | CRDH | `20261024T000000Z-google-trends-crdh-12m` | 2025-10-19 〜 2026-10-18 | 53 | 1.8868 | 1 |
+| THCNM | `20261104T115425Z-google-trends-thcnm-12m` | 2025-11-02 〜 2026-11-01 | 53 | 4.4906 | 3 |
 | THC-O | （catalog せず）`20261023T162326Z-google-trends-thc-o-12m-r3` | — | — | — | — |
 
-- 上の 12 行が**週次系列**（`data` 配列あり）。
+- 上の 13 行が**週次系列**（`data` 配列あり）。
 - **CRDH の 12ヶ月系列**: `20261024T000000Z-google-trends-crdh-12m` の `records_crdh.json` に 53 週の週次系列がある
   （窓 2025-10-19 〜 2026-10-18。THCV・H4CBH・HHBD の 2026-10-23 再取得と同一窓）。旧 `20261008T102022Z-google-trends-crdh` の
   `records_crdh_12m.json`（`data_points` 53・`avg_12m` 1.9・`nonzero_weeks` 2 の記録値、週次系列なし）は証跡として残すが、
@@ -201,7 +215,11 @@ CBX の Google Trends を対象集合に含めるかは [`ISS-20261024-COL-016`]
 
   12ヶ月ブロックは手書きで、`gt-summary --write` は 5年ブロックしか置換しない。数値の訂正と生成器追加は
   `ISS-20261023-GT-006`（本 doc はページを書き換えない。公開内容の変更は審査対象）。
-- 2 つの収集バッチで**窓が違う**（2025-09-28〜 vs 2025-10-19〜）。窓をまたいだ 12ヶ月同士の比較はしないこと。
+- 3 つの収集バッチで**窓が違う**（2025-09-28〜 / 2025-10-19〜 / 2025-11-02〜）。窓をまたいだ 12ヶ月同士の比較はしないこと。
+- **THCNM（初回収集、2026-11-04）**: `20261104T115425Z-google-trends-thcnm-12m`（窓 `2025-11-02_2026-11-08`、
+  観測範囲 2025-11-02 〜 2026-11-01、53 週、平均 4.4906、非ゼロ 3 週）。計画書は `metadata/plans/gt-12m-thcnm.json`。
+  窓は reference time（2026-11-04T11:54:26Z）で nominal に解決される 12 ヶ月を週バケットグリッドに量子化した宣言値。
+  非ゼロの 3 週はいずれも最終 3 週に集中する（この化合物の検索需要は観測期間の末尾で立ち上がっている）。
 - 12ヶ月側には 5年側の [`docs/audits/gt-summary.json`](../../docs/audits/gt-summary.json) に相当する機械可読レポートが無い
   （`gt-summary --timeframe 12m` はレポートを出せるが `--write` は 5年のみ。`ISS-20261023-GT-006` §2）。
 
@@ -222,6 +240,58 @@ CBX の Google Trends を対象集合に含めるかは [`ISS-20261024-COL-016`]
 - 成果物は verbatim `payload.json` + 共通スケール文書 `comparison_<terms>.json`（schema `google-trends-comparison-v1`）。
 - **単独系列の平均とは比較しない**（別の正規化）。化合物間比較はこの共通スケール内でのみ行う。
 - 平均が 0 の語（THCV・CRDH・CRDP・H4CBH・HHBD・THC-O）は、262 週のうち非ゼロがごく少ない語である。0 観測ではない。
+
+### 2.1.5 表記ゆれ（THCO / THCO リキッド）の別観測
+
+THC-O の canonical text は変えず、表記ゆれを `metadata/queries/query-variants.json`
+に登録する。2026-11-04（owner 決定）に次の 4 run を、canonical の `query_id` の
+まま variant text を送って収集した。
+
+| variant text | query_id（canonical） | variant_id | run（`data/raw/google_trends/`） | モード | 窓 | 観測範囲 | 週数 | 非ゼロ週 |
+|---|---|---|---|---|---|---|---:|---:|
+| `THCO` | `thc-o-general-ja` | `thc-o-general-no-hyphen` | `20261104T135330Z-google-trends-thc-o-general-thco-12m` | 12ヶ月 | `2025-11-02_2026-11-08` | 2025-11-02 〜 2026-11-01 | 53 | 3 |
+| `THCO` | `thc-o-general-ja` | `thc-o-general-no-hyphen` | `20261104T135339Z-google-trends-thc-o-general-thco-5y` | 5年 | `2021-10-31_2026-11-08` | 2021-10-31 〜 2026-11-01 | 262 | 90 |
+| `THCO リキッド` | `thc-o-liquid-ja` | `thc-o-liquid-no-hyphen` | `20261104T135345Z-google-trends-thc-o-liquid-thco-12m` | 12ヶ月 | `2025-11-02_2026-11-08` | 2025-11-02 〜 2026-11-01 | 53 | 1 |
+| `THCO リキッド` | `thc-o-liquid-ja` | `thc-o-liquid-no-hyphen` | `20261104T135350Z-google-trends-thc-o-liquid-thco-5y` | 5年 | `2021-10-31_2026-11-08` | 2021-10-31 〜 2026-11-01 | 262 | 23 |
+
+- 経路は §2.1 と同じ `make collect`（`collect --live`、google-trends-mcp 0.1.1、
+  geo `JP`）。計画書は `metadata/plans/gt-{12m,5y}-thc-o-{general,liquid}-thco-spelling.json`。
+- **1 variant × 1 timeframe = 1 run**。run の `query_provenance` は canonical の
+  `query_id` と variant の `submitted_query` を別フィールドで保持する
+  （例 `{"query_id": "thc-o-general-ja", "submitted_query": "THCO"}`）。
+  異なる表記の系列を合算・平均・置換しない。値は各 run の単独正規化（その run の
+  ピーク = 100）である。
+- **canonical は不変**: `THC-O` の 12ヶ月は Google Trends が no data を返した状態
+  （`ISS-20261023-GT-006`）、5年は `20261014T204904Z-google-trends-cannabinoid-multi-trends`
+  （262 週・非ゼロ 19 週）が正本。variant の run はどちらの代用でもない。
+- **処理層での分離**: `processing.gt_statistics.find_run` は record の `keyword` が
+  化合物名と**完全一致**するものだけを選び、`リキッド` を含む製品語は除外する。
+  `THCO` / `THCO リキッド` の record は `THC-O` の候補にならない。本変更では
+  `docs/audits/gt-summary.json` も公開ページも再生成していない。したがって
+  canonical の 5年サマリ・12ヶ月の no data 記載・被覆数（§1.3）は従来のまま。
+- 登録は「同じ意味を意図する表記候補」であり、検索結果の同等性を主張しない。
+  例えば 5年の非ゼロ週が canonical 19・variant 90 と異なるのは、2 つの異なる
+  検索文字列の観測値であり、canonical 系列の修正ではない。`THCO` は後述のとおり
+  別物質（tetrahydrocannabiorcol）の話題も拾い得るので、差を「表記だけの違い」と
+  解釈しない。
+- 窓は canonical の 5年 run（`2021-10-10 〜 2026-10-11` 等）と異なる。窓をまたいだ
+  数値比較はしない（§4.2）。
+- 12ヶ月・5年の variant run はいずれも raw のみで、`docs/audits/gt-summary.json`
+  の化合物集合（公開ページの 14 化合物）には入らない。
+
+**証拠（2026-11-04）**: `THCO` を `THC-O` の表記ゆれとして登録する根拠は、PubMed 37466480 が
+tetrahydrocannabinol-O-acetate の口語名として `THCO` を記録していること、PubChem CID 198013 が
+Tetrahydrocannabinol acetate（別名 `THC-O-ACETATE`、CAS 23132-17-4、`C23H32O3`）のレコードで
+あること、PubMed 37381980 / 36508081 が `THC-O-Acetate` 表記を用いることである。証拠 ID は
+`metadata/provenance/evidence-registry.json`。
+
+**同一性の留保（重要）**: `THCO` は Δ8-THCO / Δ9-THCO（tetrahydrocannabiorcol、CAS 22972-64-1 /
+22972-65-2、`C17H22O2`、Cayman Chemical 33762 / 33763）にも使われる**別物質の表記**である。
+アセテート体（`C23H32O3`）と tetrahydrocannabiorcol（`C17H22O2`）は別物質で、Δ8 / Δ9 の 2 異性体も
+ある。したがって `THCO` という検索文字列は単一の CAS にも単一の構造にも対応せず、variant run の
+観測値は「送信した文字列の検索需要」であって含有物質の同定ではない。taxonomy の `compound_thc_o`
+に CAS / ChEBI / Wikidata / PubChem の exactMatch を追加しない（ISS-20261104-TAX-029、
+`docs/provenance/compound-taxonomy.md`）。
 
 ### 2.2 X (Twitter)
 
@@ -271,7 +341,12 @@ CBX の Google Trends を対象集合に含めるかは [`ISS-20261024-COL-016`]
 - 理由: (a) Actor input に geo filter はない、(b) 日本語の製品語「リキッド」が検索語ベースで日本市場向け製品コンテンツを近似的に絞り込む、(c) これは geo 保証ではない。裸の化合物語は (b) を持たず、日本語製品コンテンツに限定されないため primary 外。
 - **「化合物語と製品語を必ず対で取る」規則はこの study にはない。** 裸の `HHC` run は保持された out-of-scope 証跡であり、`HHC リキッド` の必須 companion ではない。
 
-採用済み YouTube raw は 16 run。primary のリキッドが 15 run / 14 化合物、primary 外の裸語 `HHC` が 1 run。
+採用済み YouTube raw は 18 run。primary のリキッドが 17 run / 15 化合物、primary 外の裸語 `HHC` が 1 run。required primary query は 16 本で、そのうち `compound_thcnm` が 2 本（`thcnm-liquid-ja` = `THCNM リキッド`、`tha-liquid-ja` = `THA リキッド`）を持ち、**2 本とも adopted run がある**（2026-11-04、各 1 run）。
+
+- **2 本の required primary query を持つ化合物がある**（現状は THCNM だけ）。被覆は**クエリ単位と化合物単位**の両方で報告する: クエリは自身の `query_id` の adopted run が 1 本以上あれば被覆、化合物は自身の required primary query が**全部**揃って初めて完了、一部だけなら `partial`、零本なら `missing`。run は自分の `query_id` しか被覆せず、兄弟クエリの代替にならない（件数も合算しない）。`make audit-youtube-coverage` はこの規約で `compound_coverage` を出し、THCNM は `primary coverage 2/2` と表示する。
+  THA は `compound_thcnm` の**別名・商業名**（別物質ではない）であり、2 本のクエリは 2 つの検索文字列を測るもので、2 物質を測るものではない（`ISS-20261104-TAX-028`）。
+
+- **THCNM の 2 クエリは 2026-11-04 に各 1 run で実行した**（同一 Actor・同一入力条件）。`THCNM リキッド` は 30 件（`20261104T120627Z-youtube-cannabinoid-raw-collection`）、`THA リキッド` は 311 件（`20261104T120805Z-youtube-cannabinoid-raw-collection`）で、両方 SUCCEEDED。件数差はクエリ文字列の違いに由来し、統合・合算しない。宣言は [`20261104-youtube-thcnm-tha-liquid-cannabinoid-raw-collection.json`](../../metadata/provenance/declarations/20261104-youtube-thcnm-tha-liquid-cannabinoid-raw-collection.json)。
 
 | 区分 | 検索語 | `query_id` | `intent_id` | `date_filter` | 件数 | 観測窓（UTC、`end_exclusive`） | run |
 |---|---|---|---|---|---:|---|---|
@@ -290,6 +365,8 @@ CBX の Google Trends を対象集合に含めるかは [`ISS-20261024-COL-016`]
 | primary | `THC-O リキッド` | `thc-o-liquid-ja` | `product_liquid` | `all` | 388 | 2015-10-30 〜 2026-11-01 | `20261101T112513Z-youtube-cannabinoid-raw-collection` |
 | primary | `THCV リキッド` | `thcv-liquid-ja` | `product_liquid` | `all` | 435 | 2011-08-15 〜 2026-10-15 | `20261101T112534Z-youtube-cannabinoid-raw-collection` |
 | primary | `CBX リキッド` | `cbx-liquid-ja` | `product_liquid` | `all` | 329 | 2010-03-19 〜 2026-10-28 | `20261101T112555Z-youtube-cannabinoid-raw-collection` |
+| primary | `THCNM リキッド` | `thcnm-liquid-ja` | `product_liquid` | `all` | 30 | 2017-11-30 〜 2026-11-03 | `20261104T120627Z-youtube-cannabinoid-raw-collection` |
+| primary | `THA リキッド` | `tha-liquid-ja` | `product_liquid` | `all` | 311 | 2012-01-17 〜 2026-11-05 | `20261104T120805Z-youtube-cannabinoid-raw-collection` |
 | **retained / out-of-scope** | `HHC`（裸語） | `hhc-general-ja` | `compound_general` | `all` | 482 | 2006-09-05 〜 2026-11-02 | `20261101T085920Z-youtube-cannabinoid-raw-collection` |
 
 - **request と観測窓は別物**。Actor 入力に `dateFilter` を渡していない run は、絶対日付窓もローリング窓も持たない。`date_filter: "all"` は宣言語彙であり、Actor の enum 値ではない（`src/collection/adapters/youtube/request.py` は `all` を「`dateFilter` を省略」に写す）。
@@ -303,10 +380,10 @@ CBX の Google Trends を対象集合に含めるかは [`ISS-20261024-COL-016`]
 - 2026-10-02 の YouTube run は API 疎通検証であり、本研究の観測としては扱わない。
 
 **注意事項:**
-- raw は **byte 単位**で保持し、Git 管理外とする（公開対象外）。列は `id` / `title` / `date` / `input` / `type` などを含む。raw を書き換えない。2026-10-10/11 の 6 run と 2026-11-01 の HHC 2 run は flat CSV（`youtube-dataset-csv-v1`）、2026-11-01 の liquid 8 run（HHCH・THCH・CBG・CRDP・THC・THC-O・THCV・CBX）は Apify dataset JSON（`youtube-search-result-list-v1`）で保存している。
+- raw は **byte 単位**で保持し、Git 管理外とする（公開対象外）。列は `id` / `title` / `date` / `input` / `type` などを含む。raw を書き換えない。2026-10-10/11 の 6 run と 2026-11-01 の HHC 2 run は flat CSV（`youtube-dataset-csv-v1`）、2026-11-01 の liquid 8 run（HHCH・THCH・CBG・CRDP・THC・THC-O・THCV・CBX）と 2026-11-04 の THCNM 2 run（`THCNM リキッド`・`THA リキッド`）は Apify dataset JSON（`youtube-search-result-list-v1`）で保存している。
 - 保存先は `datasets/<study-id>/data/raw/youtube/<run-id>/`。`run_metadata.json`（`collection-run-v1`）と `artifact-manifest.json`（`artifact-manifest-v1`）は `make stage` / `make adopt-all` が生成する。手書きしない。
 - 重複排除は run 内の `id` で確認し、件数だけを宣言の `environment` に記録する。raw は変更せず、分析用 dedup は下流の再現可能な処理で行う。
-- 採用宣言は [`20261010-youtube-hhbd-liquid-cannabinoid-raw-collection.json`](../../metadata/provenance/declarations/20261010-youtube-hhbd-liquid-cannabinoid-raw-collection.json)（HHBD）、[`20261015-youtube-liquid-batch-cannabinoid-raw-collection.json`](../../metadata/provenance/declarations/20261015-youtube-liquid-batch-cannabinoid-raw-collection.json)（リキッド 5 run）、[`20261101-youtube-hhc-cannabinoid-raw-collection.json`](../../metadata/provenance/declarations/20261101-youtube-hhc-cannabinoid-raw-collection.json) / [`20261101-youtube-hhc-liquid-cannabinoid-raw-collection.json`](../../metadata/provenance/declarations/20261101-youtube-hhc-liquid-cannabinoid-raw-collection.json)（HHC 2 run）、2026-11-01 の HHCH・THCH 2 run は [`20261101-youtube-liquid-batch-cannabinoid-raw-collection.json`](../../metadata/provenance/declarations/20261101-youtube-liquid-batch-cannabinoid-raw-collection.json)、再実行の CBG・CRDP・THC・THC-O・THCV 5 run は [`20261101-youtube-liquid-batch2-cannabinoid-raw-collection.json`](../../metadata/provenance/declarations/20261101-youtube-liquid-batch2-cannabinoid-raw-collection.json)、CBX は [`20261101-youtube-cbx-liquid-cannabinoid-raw-collection.json`](../../metadata/provenance/declarations/20261101-youtube-cbx-liquid-cannabinoid-raw-collection.json)。
+- 採用宣言は [`20261010-youtube-hhbd-liquid-cannabinoid-raw-collection.json`](../../metadata/provenance/declarations/20261010-youtube-hhbd-liquid-cannabinoid-raw-collection.json)（HHBD）、[`20261015-youtube-liquid-batch-cannabinoid-raw-collection.json`](../../metadata/provenance/declarations/20261015-youtube-liquid-batch-cannabinoid-raw-collection.json)（リキッド 5 run）、[`20261101-youtube-hhc-cannabinoid-raw-collection.json`](../../metadata/provenance/declarations/20261101-youtube-hhc-cannabinoid-raw-collection.json) / [`20261101-youtube-hhc-liquid-cannabinoid-raw-collection.json`](../../metadata/provenance/declarations/20261101-youtube-hhc-liquid-cannabinoid-raw-collection.json)（HHC 2 run）、2026-11-01 の HHCH・THCH 2 run は [`20261101-youtube-liquid-batch-cannabinoid-raw-collection.json`](../../metadata/provenance/declarations/20261101-youtube-liquid-batch-cannabinoid-raw-collection.json)、再実行の CBG・CRDP・THC・THC-O・THCV 5 run は [`20261101-youtube-liquid-batch2-cannabinoid-raw-collection.json`](../../metadata/provenance/declarations/20261101-youtube-liquid-batch2-cannabinoid-raw-collection.json)、CBX は [`20261101-youtube-cbx-liquid-cannabinoid-raw-collection.json`](../../metadata/provenance/declarations/20261101-youtube-cbx-liquid-cannabinoid-raw-collection.json)、THCNM 2 run は [`20261104-youtube-thcnm-tha-liquid-cannabinoid-raw-collection.json`](../../metadata/provenance/declarations/20261104-youtube-thcnm-tha-liquid-cannabinoid-raw-collection.json)。
 - HHC 2 run の request 語彙・actor build・実行状態は [`20261101-youtube-hhc-request-parameters.json`](../../metadata/provenance/corrections/20261101-youtube-hhc-request-parameters.json) が訂正する。元の宣言は handover hash を保つため書き換えず、訂正版 declaration を併置する。
 - 結果上限の正規名は現行 Actor の **`maxResults`**。旧宣言の `max_videos`（HHBD の 999999、HHC 2 run の 500）は**歴史的記録**であり、新規入力には使わない。リキッド 5 run の宣言には上限の記録がない（記録がないことを 0 や無制限と読み替えない）。
 - この study の YouTube raw は配布物 [`cannabinoid-platform-trends`](../cannabinoid-platform-trends/) の COL-033 slice に含まれない。配布物の `not_collected` は「slice に無い」であり、この study の未収集ではない。
@@ -346,7 +423,7 @@ SKOS Concept ID を使用して化合物カテゴリを分類。
 
 ### 3.4 YouTube 月別集計
 
-`make youtube-aggregate` が採用済み 16 run（primary 15 + retained 1）のうち HHBD リキッド run だけを読み、`date` を UTC の暦月に変換して `id` のユニーク件数を集計する。run 内の重複 ID は1件に数え、同じ ID が異なる月に現れた場合は処理を停止する。出力には動画 ID、タイトル、チャンネル、説明文、個別の反応数を含めない。他の primary run と retained run はまだ集計していない。
+`make youtube-aggregate` が採用済み 18 run（primary 17 + retained 1）のうち HHBD リキッド run だけを読み、`date` を UTC の暦月に変換して `id` のユニーク件数を集計する。run 内の重複 ID は1件に数え、同じ ID が異なる月に現れた場合は処理を停止する。出力には動画 ID、タイトル、チャンネル、説明文、個別の反応数を含めない。他の primary run と retained run はまだ集計していない。
 
 出力は [`data/processed/youtube_monthly_counts.csv`](data/processed/youtube_monthly_counts.csv)。月に結果がない場合は行を作らず、0件とは記録しない。件数は `HHBD リキッド` の YouTube 検索結果に含まれた動画の標本数であり、その月にYouTube全体で公開された動画数を表さない。raw の SHA-256 と件数を run metadata / artifact manifest と照合し、raw は変更しない。月別集計は公開審査済みで、承認は当該 CSV の SHA-256 に限定される（[審査記録](../../metadata/publication/youtube-hhbd-liquid-monthly-counts/decision.json)）。raw は公開対象外。外部公開・リリースは別途実施していない。
 
@@ -369,8 +446,8 @@ SKOS Concept ID を使用して化合物カテゴリを分類。
 | 公開契約（PC-1〜PC-8） | `validation.cli audit-publication` | `docs/audits/publication-contract.json` |
 | 研究カタログ（study / run の可発見性） | `research.cli audit-studies` | `docs/audits/g7-study-inventory.json` |
 | catalog / declaration の run が raw に存在するか | `make audit-raw-completeness` | 標準出力（checkout ローカル） |
-| YouTube の liquid-only primary 被覆 | `make audit-youtube-coverage` | 標準出力（primary と retained を分離） |
-| 配布 slice と raw study のスコープ差 | `make audit-distribution-scope` | 標準出力（COL-033 の 6 run と raw の 16 run） |
+| YouTube の liquid-only primary 被覆 | `make audit-youtube-coverage` | 標準出力（クエリ単位・化合物単位。primary と retained を分離） |
+| 配布 slice と raw study のスコープ差 | `make audit-distribution-scope` | 標準出力（COL-033 の 6 run と raw の 18 run） |
 | 監査スナップショットの前提（raw の完全性） | `make audit-snapshots` の前後の `snapshot-guard` | `.staging/audit-snapshot-guard.json` |
 | スナップショットの鮮度 | `pytest tests/validation/test_audit_report_freshness.py` | — |
 | 全体 | `pytest -q` | — |
@@ -388,6 +465,7 @@ X raw は Git 管理外のため、run の件数はローカル証跡でしか�
 | X シャドウバン | 0 件でも observed_zero として記録 |
 | 多義語（CBD, THC） | コンテキスト分析で誤検知を排除 |
 | ソース間の比較 | 単位が異なるため直接比較不可 |
+| THCNM の化学的同一性が未確認 | 系列は登録 `canonical_text` に一致する検索需要であり、物質の検出・存在の証拠ではない。同一性・`skos:broader` の確定は `ISS-20261104-TAX-028` の解消条件で扱う（本 doc は taxonomy を変更しない） |
 
 ---
 
@@ -397,7 +475,7 @@ X raw は Git 管理外のため、run の件数はローカル証跡でしか�
 
 | Study ID | 関係 |
 |----------|------|
-| cannabinoid-platform-trends | **配布物**。YouTube は COL-033 の 6 liquid run に限定され、本 study の YouTube raw 16 run（primary 15 + retained 1）は含まれない。Google Trends は `gt-summary` 経由 |
+| cannabinoid-platform-trends | **配布物**。YouTube は COL-033 の 6 liquid run に限定され、本 study の YouTube raw 18 run（primary 17 + retained 1）は含まれない。THCNM はこの配布 slice に入らない（COL-033 に YouTube run は無く、Google Trends 系列は `gt-summary` の公開化合物集合外） |
 | cbx-search-trends | CBX/H4CBH/HHBD の検索需要（CBX の Google Trends / GSC raw の正本を保持。本 study は CBX の Google Trends を**参照**し、own raw には数えない。CBX YouTube は本 study が所有する） |
 | cbx-social-trends | CBX の SNS 言及（規制前後の比較） |
 | cbx-liquid-online-trend | CBX リキッドの週次データ |

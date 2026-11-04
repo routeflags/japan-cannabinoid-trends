@@ -178,6 +178,8 @@ Raw data exists primarily for reproducibility and internal verification.
 
 It may be excluded from public releases when redistribution is restricted or inappropriate.
 
+Raw retention is a Repository Storage (Git tracking) state, not a statement about a local copy: `git_tracked` means the payload is committed and a clone can substantiate it; `git_untracked` means it is not committed, a local copy may exist in an ignored directory, and the repository keeps only non-content provenance (query, request conditions, timestamps, counts, hashes when available, aggregates, and the decision reference). The vocabulary and the decision record are defined in `docs/specs/raw-data-policy.md` §5. This is a storage/reproducibility status, not permission to publish; publication review is a separate decision.
+
 ### Interim
 
 Intermediate outputs generated during cleaning, normalization, deduplication, or transformation.

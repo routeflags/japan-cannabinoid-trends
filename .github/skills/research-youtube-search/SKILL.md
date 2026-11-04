@@ -16,8 +16,9 @@ description: |
 - **1 実行 = 1 クエリ**。複数クエリを 1 run にまとめない。
 - **クエリ設計は study が宣言する**。このスキルは「化合物研究なら必ず 2 語」のような普遍規則を持たない。
 - 現在の collector は Apify Actor `h7sDV53CddomktSi5`（`streamers/youtube-scraper`）。
-- 取得した payload は **byte 単位で保持**し、`staging-declaration-v1` → `make stage` → `make adopt-all` で採用する。
+- 取得した payload は **byte 単位でローカルに保存**し、`staging-declaration-v1` → `make stage` → `make adopt-all` で採用する。
 - raw は不変。重複排除は下流の再現可能な処理で行う。
+- raw を Repository Storage（Git 追跡）として保持するかは、収集前に `git_tracked` / `git_untracked` で分類する（後述）。
 - 課金は発生するため owner 承認を前提とする。**金額は追跡成果物に記録しない**（AGENTS.md Scope Exclusion）。
 
 ---
@@ -54,7 +55,7 @@ description: |
 
 - どの `intent_id` を primary とするか
 - 1 run 1 クエリか
-- primary 外の語をどう扱うか（保持する / 収集しない）
+- primary 外の語をどう扱うか（残す / 収集しない）
 - どの配布物に含めるか
 
 ### この collection の宣言（`cannabinoid-raw-collection`）
@@ -65,7 +66,7 @@ design: `youtube-liquid-only-primary`
 | 区分 | 語 | `intent_id` | 扱い |
 |---|---|---|---|
 | **primary** | `<compound> リキッド` | `product_liquid` | 1 化合物 1 クエリ（1 run）。一次被覆に数える |
-| **primary 外** | `HHC` などの裸の化合物語 | `compound_general` | 収集しても **保持する証跡**。一次被覆に数えない。必須の対でもない |
+| **primary 外** | `HHC` などの裸の化合物語 | `compound_general` | 収集しても **残す証跡**。一次被覆に数えない。必須の対でもない |
 
 理由:
 
@@ -78,8 +79,33 @@ design: `youtube-liquid-only-primary`
 **重要:**
 
 - 裸の化合物語 run は削除しない（raw は不変）。ただし primary coverage の件数・化合物数に加えない。
-- 「HHC と HHC リキッドを必ず対で取る」という規則は**この study にはない**。HHC の裸語 run は保持された out-of-scope 証跡であり、liquid coverage を完成させない。
+- 「HHC と HHC リキッドを必ず対で取る」という規則は**この study にはない**。HHC の裸語 run は残された out-of-scope 証跡であり、liquid coverage を完成させない。
 - 別の study は別の設計を宣言できる。この liquid-only 規則を他のキーワード収集へコピーしない。
+
+---
+
+## 保持（Repository Storage / Git 追跡）の分類
+
+収集・staging の前に、raw payload を Repository Storage として保持するかを分類する。
+語彙は `docs/specs/raw-data-policy.md` §5 の 2 状態だけを使う。
+
+| `retention_status` | 意味 | このスキルでの扱い |
+|---|---|---|
+| `git_tracked` | payload を Git 追跡下の Repository Storage として保持する | run ディレクトリを commit し、clone で再現できる状態にする。明示判断がある場合のみ |
+| `git_untracked` | payload を Repository Storage として保持しない | payload を Git に追加しない。`datasets/<study>/data/raw/youtube/<run-id>/` のローカル raw は存在してよい（gitignore 済み） |
+
+- **既定:** `config/storage-policies.json` の `raw-social-default`（`source_kind: social` →
+  `git_tracking: ignored`）により `git_untracked`。
+- **明示判断:** owner / legal / publication review が状態を決める場合のみ
+  `metadata/provenance/retention/<date>-<slug>.json`（`record: "raw_retention_decision"`）
+  を追加する。`reason` / `decision_reference` / `decided_by` / `decided_at` と、
+  保持とは独立した `publication_status` を記録する。法的結論を推測しない。
+- **ローカル raw の存在は保持ではない。** `git add -f` をしない。`git ls-files` に
+  payload が出ないことを確認する。
+- **保持は公開許可ではない。** 行単位の動画データは `git_tracked` でも
+  `git_untracked` でも公開しない。集計・派生は別の公開審査による。
+- 既存の YouTube run は判断記録が無い限り policy 既定の `git_untracked`。推測で
+  判断記録を追加しない。
 
 ---
 
@@ -192,11 +218,14 @@ PY
 
 ```
 datasets/<study-id>/data/raw/youtube/<run-id>/
-├── <export>.csv              ← Actor の flat CSV（byte 単位で保持）
+├── <export>.csv              ← Actor の flat CSV（byte 単位でローカル保存）
 ├── run_metadata.json         ← collection-run-v1（stage / adopt が生成）
 └── artifact-manifest.json    ← artifact-manifest-v1（stage / adopt が生成）
 ```
 
+- 既定は `git_untracked`。この 3 ファイルは gitignore され、ローカルに留まる。
+  リポジトリに残すのは、staging 宣言・catalog・集計・保持判断記録。
+- `git_tracked` の場合だけ、`.gitignore` の例外と追跡を明示判断に従って行う。
 - raw は Git 管理外（`.gitignore` の `**/data/raw/*`、例外は `google_trends` のみ）。
 - 採用宣言は `metadata/provenance/declarations/<date>-youtube-<slug>.json`（`staging-declaration-v1`）。
 - 宣言には `query` / `window` / `collection_request` / `temporal` / `timestamps` / `execution` /
@@ -273,6 +302,8 @@ print('first', d[0], 'last', d[-1])
 | 取得上限 | `maxResults`（件数）。`max_videos` を新規入力に使わない |
 | 課金 | owner 承認。金額は追記しない |
 | raw の不変性 | 編集・削除・列変更をしない。修正は下流で行う |
+| 保持とローカル存在の混同 | `git_tracked` / `git_untracked` で表す。ローカル raw の有無を「保持」と呼ばない |
+| 保持を公開許可と誤認 | 保持は Repository Storage の状態。公開は別の公開審査・gate による |
 
 ---
 
@@ -281,7 +312,7 @@ print('first', d[0], 'last', d[-1])
 | 症状 | 原因 | 対処 |
 |------|------|------|
 | 0 件 | クエリがニッチ / フィルタが強すぎる | クエリ設計を見直す。0 は `observed_zero` であって収集不要ではない |
-| 重複が多い | YouTube 検索のページング | `id` で run 内 dedup を確認。raw は保持 |
+| 重複が多い | YouTube 検索のページング | `id` で run 内 dedup を確認。raw は変更しない |
 | `dateFilter` エラー | 絶対日付を渡した | 相対値のみ使う。絶対窓は観測として記録する |
 | `maxResults` が効かない | 旧 `max_videos` を送っている | 現行キー `maxResults` に直す |
 | 401 Unauthorized | `APIFY_TOKEN` 無効 | `.env.d/apify.env` を確認（値は表示・コミットしない） |
@@ -292,9 +323,10 @@ print('first', d[0], 'last', d[-1])
 
 実行のたびに、次を記録する（金額は記録しない）:
 
-- `datasets/<study-id>/data/raw/youtube/<run-id>/run_metadata.json` … 実行単位（pipeline が生成）
-- `datasets/<study-id>/data/raw/youtube/<run-id>/artifact-manifest.json` … payload の SHA-256 / 件数
-- `metadata/provenance/declarations/<date>-youtube-<slug>.json` … 宣言（query / request / window / 実行状態）
+- `datasets/<study-id>/data/raw/youtube/<run-id>/run_metadata.json` … 実行単位（pipeline が生成。`git_untracked` ではローカルのみ）
+- `datasets/<study-id>/data/raw/youtube/<run-id>/artifact-manifest.json` … payload の SHA-256 / 件数（`git_untracked` ではローカルのみ）
+- `metadata/provenance/declarations/<date>-youtube-<slug>.json` … 宣言（query / request / window / 実行状態。追跡対象）
+- `metadata/provenance/retention/<date>-<slug>.json` … 明示判断がある場合のみ（`git_tracked` / `git_untracked`、理由、判断参照、公開状態。追跡対象）
 - 研究全体の履歴は study の methodology / issue に残す。
 
 スキル内に特定研究の実績値を固定で書き込まない（別キーワード・別期間での再利用を妨げないため）。
@@ -304,6 +336,7 @@ print('first', d[0], 'last', d[-1])
 ## 関連
 
 - **研究計画書:** `docs/plans/` 配下（研究ごとに作成）
+- **raw 保持方針:** `docs/specs/raw-data-policy.md` §5（`git_tracked` / `git_untracked`）
 - **クエリ設計:** `datasets/<study>/metadata/query-design.json`（study が宣言）
 - **methodology:** `datasets/<study>/methodology.md`
 - **Actor 仕様:** `apify-youtube-scraper` スキル（入力スキーマ・日付フィルタの実測）

@@ -295,6 +295,7 @@ Cerberus は**構造検証のみ**を担当する。
 | ファイルハッシュ | Integrity Validator（実装済み: `integrity`） |
 | Artifact 参照関係 | Lineage Validator（実装済み: `integrity.check_*_lineage`） |
 | Git 追跡状態 | Git Policy Validator（実装済み: `storage_policy.check_git_tracking`、read-only） |
+| Local Storage の存在（raw run directory / `run_metadata.json`） | raw 完全性・採用監査（実装済み: `audit-raw-completeness` / `audit-adoption`。checkout ローカル。追跡状態とは別の事実） |
 | 公開承認・研究上の比較可能性 | Publication / Comparability Gate（実装済み: `storage_policy.check_publication` / `comparability`） |
 
 - Cerberus は JSON Schema Draft 2020-12 の実装ではない。既存の JSON Schema を
@@ -468,10 +469,10 @@ Phase 1 監査のとおり、リポジトリには**実在する JSON Schema フ
   - ライブ収集（レート制限・資格情報）の実行と実レスポンスでの契約照合。
   - 既存 shell（`apify_run.sh` 等）・skill（`research-google-trends` 等）の
     G1 フローへの移行（移行パスは `collection.core.cli adopt`）。
-  - Quarantine の正式な運用（保持期間・アクセス制御・レビュー手順）。
+  - Quarantine の正式な運用（ローカル保存期間・アクセス制御・レビュー手順）。
     暫定規約は `docs/specs/collection-pipeline.md` §6。
 - 暫定運用: 収集実行時は `run-gates.sh run <run_metadata.json>`（= `gate-run`）の
-  exit 0 を確認してから採用し、非 0 の場合は既存 raw をそのまま保持して隔離扱いとする。
+  exit 0 を確認してから採用し、非 0 の場合は既存 raw を変更せず隔離扱いとする。
 
 ## 14. ローカル検証の再現手順
 
@@ -1217,9 +1218,9 @@ run ディレクトリに入っていない payload ファイルは `loose_files
 | command | 問い | 出力 |
 |---|---|---|
 | `audit-raw-completeness` | catalog / declaration の run id はこの checkout の raw に存在するか | 標準出力（`--output` 可）。欠落は exit 1。checkout ローカル |
-| `snapshot-guard --phase preflight` | `make audit-snapshots` の 11 ファイルを書いてよいか | `.staging/audit-snapshot-guard.json` に期待状態を記録 |
+| `snapshot-guard --phase preflight` | `make audit-snapshots` の 11 スナップショット + scope sidecar を書いてよいか | `.staging/audit-snapshot-guard.json` に期待状態を記録 |
 | `snapshot-guard --phase postflight` | 既存 run id が 1 つでも消えたか | 消失は exit 1。追加は報告のみ |
-| `audit-youtube-coverage` | primary の liquid 被覆と、保持した primary 外 run | 標準出力。`--require-complete` で被覆欠落を exit 1 |
+| `audit-youtube-coverage` | primary の liquid 被覆と、primary 外の採用 run（scope 除外） | 標準出力。`--require-complete` で被覆欠落を exit 1 |
 | `audit-distribution-scope` | 配布 slice（COL-033）と raw study の差、run id 対応、request のずれ | 標準出力。既定は report-only、`--strict` で drift を exit 1 |
 
 規則:
@@ -1227,6 +1228,18 @@ run ディレクトリに入っていない payload ファイルは `loose_files
 - **期待状態は committed claim の和**: preflight は catalog ∪ declaration ∪ 既存スナップショット ∪
   `--expected-run-ids` を「完全な raw 状態」とする。1 つでも `run_metadata.json` が無ければ
   **最初の書き込み前に**停止する。
+- **保持とローカル存在を混同しない**（owner決定 2026-11-01）: 保持 = `tracked`（Repository
+  Storage）、非保持 = `ignored`（Local Storage のみ）。`audit-raw-completeness` の `present` /
+  `missing_directory` / `missing_run_metadata` は **Local Storage の存在状態**であり、
+  保持・非保持の判定ではない。追跡状態は `audit-git-tracking` の `tracked` / `ignored` /
+  `untracked_unignored` / `absent` と `config/storage-policies.json` の `git_tracking`
+  （`tracked` / `ignored` / `conditional`）が持つ。正本は `docs/specs/contracts.md` §2.2。
+  この区別は、スナップショットの run 集合をこの checkout の raw から作る場合も同じである（§25.1）。
+- **公開可否・リリースを追跡状態から導かない**: 全 storage policy は `publication: requires_review`。
+  公開は `gate-publication`（PUB-10）と判断記録、リリースは `docs/specs/release-process.md` が決める。
+  保管・検証はローカル存在・追跡状態の事実を報告し、法的・再配布可否の判定を所有しない。
+- **語の衝突**: `audit-youtube-coverage` の `retained_out_of_scope_runs` / `retained_reason` は
+  primary クエリ設計の外に採用した run（scope 除外）であり、追跡状態の「保持」（`tracked`）ではない。
 - **study alias を解決する**: catalog の `study_id` は収集時の旧 ID のままの run があり、
   raw directory は現在の study にある。`metadata/studies/study-registry.json` の
   `previous_study_ids` で解決する。
@@ -1316,7 +1329,7 @@ run ディレクトリに入っていない payload ファイルは `loose_files
   理由を記録する）。P1 以下は報告のみ（研究バックログは正常状態であり欠陥ではない）。
 - 検査結果: 23 issue、OPEN 9、**OPEN P0 0**、OPEN P1 6、malformed 0、failures 0。
 - **却下した検査**: issue が参照するパスの実在確認。実測で 60 参照中 24 が設計上存在しない
-  （削除済み成果物、保持していない raw、裸のファイル名）ため、ノイズにしかならない。
+  （削除済み成果物、手元に無い raw、裸のファイル名）ため、ノイズにしかならない。
 
 ### 24.2 ディレクトリの意味の修復
 
@@ -1375,6 +1388,12 @@ run ディレクトリに入っていない payload ファイルは `loose_files
 再生成できなければならない。** ローカルのディスク状態に依存する事実は、次のどちらかに
 寄せる。
 
+この規則は**同一 checkout 内の再生成**を問う。`docs/audits/*.json` は
+checkout-local inventory であり、完全な研究状態の再構成は要求しない（owner 決定
+2026-11-02、§26.3）。`git_untracked` の raw は machine-local なので、snapshot に
+現れない run は未収集・0 観測ではない。完全な provenance claim の正本は
+catalog と declaration である。
+
 | 扱い | 適用先 | 実装 |
 |---|---|---|
 | (a) **追跡対象の事実に置き換える** | g7 study inventory の `data_file_count` | `private` を**名前で除外**（`src/research/audit.py`）。gitignored な `data/private/` の中身はチェックアウトごとに違い、公開レポートに現れる理由も無い。境界の存在は `audit-private-catalog` が扱う（**内容は数えない**） |
@@ -1399,3 +1418,131 @@ run ディレクトリに入っていない payload ファイルは `loose_files
   CI（`38587265312` / `38628877292`）も同じ 3 件で停止していた。
 - 修正後は clean checkout でも**スキップのみ**（private 入力に依存する検証は実行される
   環境で走る）。「ローカルで green でも CI は落ちる」状態は解消。
+
+---
+
+## 26. Raw retention（`git_tracked` / `git_untracked`）— 2026-11-02
+
+### 26.1 規則
+
+raw の「保持」は **Repository Storage（Git 追跡）** の状態であり、ローカルに
+raw が存在するかとは別である。契約は `docs/specs/raw-data-policy.md` §5。
+語彙は 2 値だけとする。
+
+| `retention_status` | 意味 | 検査 |
+|---|---|---|
+| `git_tracked` | payload を Repository Storage として保持する | run ディレクトリがこの checkout に存在し `run_metadata.json` を持つ（または Git index に載っていて未チェックアウト）。Git index に追跡ファイルが無ければ違反 |
+| `git_untracked` | payload を Repository Storage として保持しない。ローカル raw は存在してよい | Git index に追跡ファイルがあってはならない。ローカル不在は `not_repository_retained` であり missing ではない |
+
+状態の解決順は、①`metadata/provenance/retention/<date>-<slug>.json`
+（`record: "raw_retention_decision"`）の明示判断、②`config/storage-policies.json`
+の `artifact_layer: raw` × `config/sources.json` の `kind` による既定値、
+③registry 不在時は `git_tracked` への fail closed。`reason` と
+`decision_reference` は明示判断に必須で、参照先が実在しなければならない。
+保持状態と `publication_status` は独立であり、保持は公開許可ではない。
+
+### 26.2 `audit-raw-completeness` の状態
+
+| state | 条件 | 失敗か |
+|---|---|---|
+| `present` | `git_tracked`、ローカル raw + `run_metadata.json` あり、追跡と矛盾しない | いいえ |
+| `tracked_not_checked_out` | `git_tracked`、ローカルに無いが Git index に追跡ファイルがある（sparse checkout 等） | いいえ |
+| `missing_directory` / `missing_run_metadata` | `git_tracked` で実体を確認できない | **はい** |
+| `present_not_git_tracked` | `git_tracked` なのに追跡ファイルが無い（ローカルのみ） | **はい** |
+| `not_repository_retained` | `git_untracked`、ローカルにも無い | いいえ |
+| `local_only_present` | `git_untracked`、ローカル raw はある | いいえ |
+| `git_untracked_but_tracked` | `git_untracked` なのに追跡ファイルがある | **はい** |
+
+`missing` は `missing_directory` / `missing_run_metadata` のみ。
+`not_repository_retained` / `local_only_present` は別リストで報告する。
+
+`data-catalog.json` の `layer: raw` entry は artifact の metadata であり、Git
+追跡の主張ではない。追跡の有無は Git index で検査する。catalog が名指す raw
+path が clone に存在しないことは、`git_untracked` の run では
+`not_repository_retained` / `local_only_present` として扱い、missing にしない。
+
+### 26.3 スナップショット guard と checkout-local scope
+
+owner 決定（2026-11-02）: `make audit-snapshots` は raw の完全な再構成を目指さない。
+snapshot は **checkout-local inventory** であり、`git_untracked` の raw がこの
+checkout に無いことは正常である。
+
+- preflight が拒否するのは、①`git_tracked` の run を実体（Git index の追跡
+  ファイル、またはローカル raw + `run_metadata.json`）で確認できない場合、
+  ②保持判断が不正な場合（reason / decision_reference / 一意性 / conflict）。
+- `git_untracked` の raw 不在では拒否しない。`not_repository_retained_run_ids` に
+  記録する。
+- `git_untracked` の run が Git index に載っている場合は
+  `retention_git_untracked_but_tracked` を **warning** として報告する（この
+  ハード失敗は `audit-raw-retention` が所有する）。
+- postflight が失敗するのは、preflight が `git_tracked` と記録した run id が
+  スナップショットから消えた場合だけ。`git_untracked` の raw-derived row の
+  欠落は `intentionally_dropped_run_ids` として報告し、失敗にしない。
+- 監査ファイルは raw rows を生成しない。
+
+scope は deterministic な sidecar `docs/audits/snapshot-scope.json` に記録する
+（既存 11 snapshot の schema は変えない）。このファイルは raw を読まず、
+committed な catalog / declaration / retention decision から次を固定する。
+
+| フィールド | 値 | 意味 |
+|---|---|---|
+| `audit_scope` | `checkout_local` | snapshot はこの checkout の inventory |
+| `raw_visibility` | `partial` | raw は machine-local で、全 run が見えるとは限らない |
+| `raw_rows_generated` | `false` | raw 行を生成しない |
+| `raw_dependent_facts` | `unavailable` | raw 依存の件数・hash は unavailable。0 ではない |
+| `not_repository_retained_run_ids` | sorted ids | catalog/declaration が名指す `git_untracked` run |
+| `git_tracked_run_ids` | sorted ids | Repository Storage として保持する run |
+| `complete_provenance_claim` | catalog + declarations | 完全な claim の正本 |
+| `absence_interpretation` | text | snapshot 不在は未収集・0 観測ではない |
+
+`make audit-snapshots` は preflight の後にこの sidecar を書き、続けて 11 snapshot を
+書き、最後に postflight を実行する。sidecar は `snapshot-guard` の
+`SNAPSHOT_FILES` に含まれ、`tests/validation/test_audit_report_freshness.py` が
+再生成一致と `audit_scope == checkout_local` を検査する。
+
+`runs[]` の各要素は `availability`（`not_repository_retained` / `git_tracked`）と
+`raw_dependent_facts`（untracked は `unavailable`、tracked は
+`not_recorded_in_scope`）を持ち、`record_count` / `sha256` は `null` とする。
+null は 0 ではなく、sidecar が raw を読まないことを表す。
+
+### 26.4 実測（2026-11-02、この checkout）
+
+この checkout は `datasets/cannabinoid-raw-collection/data/raw/youtube/` を持たない
+（partial checkout）。Makefile と同じ CLI を直接実行した結果:
+
+- `audit-raw-retention`: records 0 / runs 50 / `git_tracked` 28 /
+  `git_untracked` 22 / policy available true / Git index available true /
+  violations 0。
+- `audit-raw-completeness`: claims 50 / present 28 / `not_repository_retained` 22 /
+  missing 0 / retention violations 0 / correction violations 0。
+- `audit-snapshot-scope`: claims 50 / `git_tracked` 28 /
+  `not_repository_retained` 22 / `raw_rows_generated` false / violations 0。
+- `snapshot-guard --phase preflight`（state file は `/tmp`）: expected 80 /
+  present 64 / `not_repository_retained` 22 / missing 0 / warnings 0 /
+  refused false。
+- `make audit-snapshots`（partial checkout、旧 11 スナップショットから 11
+  スナップショット + scope sidecar を再生成）: preflight refused false、postflight
+  `before` 59 / `after` 58 / `lost` 0 / `intentionally_dropped` 1
+  （`20261010T141947Z-youtube-cannabinoid-raw-collection`）/ refused false。
+  失われた raw-derived row は sidecar の `not_repository_retained_run_ids` に残り、
+  0 観測には変換しない。
+- `tests/validation/test_audit_report_freshness.py` は 20 passed、
+  `test_query_semantics` / `test_storage_inventory_audit` / `test_temporal_inventory`
+  は 47 passed。`PYTHONPATH=src python3 -m pytest tests/validation -q` は
+  928 passed（この checkout でスナップショットを再生成した後）。
+
+変更前の実装は `present` / `missing_directory` / `missing_run_metadata` の 3 状態
+しか持たず、この checkout の YouTube run はすべて `missing_directory` として
+失敗していた。判断記録は追加していない（既存 run を推測で `git_untracked` に
+しない）。
+
+### 26.5 制限
+
+- Git index の検査は Git checkout でのみ行う。Git が無い場合
+  `tracked_index_available: false` となり、追跡の一致は検査しない（存在検査は
+  続く）。
+- `retention_status` も `publication_status` も法的判断ではない。validator は
+  記録・参照・index の整合だけを検査する。
+- この検査は checkout-local であり CI の必須ゲートではない。判断記録と policy の
+  部分は repo 事実だけで検査できるため、必要なら CI に `audit-raw-retention` を
+  追加できる（未追加）。

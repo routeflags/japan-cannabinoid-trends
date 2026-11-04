@@ -11,7 +11,11 @@ from __future__ import annotations
 
 import hashlib
 import json
+import shutil
+import subprocess
 from pathlib import Path
+
+import pytest
 
 from validation.raw_completeness import build_raw_completeness
 
@@ -261,3 +265,242 @@ def test_correction_sha_mismatch_and_unknown_run_are_violations(tmp_path: Path) 
     reasons = {entry["reason"] for entry in report["correction_violations"]}
     assert "original_declarations_sha256_mismatch" in reasons
     assert "corrected_run_id_not_in_original_declaration" in reasons
+
+
+# ---------------------------------------------------------------------------
+# Raw retention: Repository Storage (Git tracking), not local raw existence
+# ---------------------------------------------------------------------------
+
+
+def _policy(root: Path, *, kind: str = "social", git_tracking: str = "ignored") -> None:
+    _write_json(
+        root / "config" / "sources.json",
+        {"schema_version": "1.0.0", "sources": [{"source_id": "probe", "kind": kind}]},
+    )
+    _write_json(
+        root / "config" / "storage-policies.json",
+        {
+            "schema_version": "1.0.0",
+            "policies": [
+                {
+                    "policy_id": f"raw-probe-{kind}",
+                    "artifact_layer": "raw",
+                    "source_kind": kind,
+                    "classification": "restricted",
+                    "storage": "private",
+                    "git_tracking": git_tracking,
+                    "publication": "requires_review",
+                }
+            ],
+        },
+    )
+
+
+def _retention_decision(
+    root: Path,
+    *,
+    status: str = "git_untracked",
+    reason: str | None = "copyright and redistribution constraints",
+    reference: str | None = "docs/decisions/retention.md",
+) -> None:
+    if reference:
+        target = root / reference
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_text("recorded decision\n", encoding="utf-8")
+    document = {
+        "schema_version": "1.0.0",
+        "record": "raw_retention_decision",
+        "retention_decision_id": "20260101-probe",
+        "decided_at": "2026-01-01",
+        "decided_by": "owner",
+        "retention_status": status,
+        "publication_status": "requires_review",
+        "runs": [
+            {
+                "study_id": "probe",
+                "source_id": "probe",
+                "run_id": "20260101T000000Z-probe-a",
+            }
+        ],
+    }
+    if reason is not None:
+        document["reason"] = reason
+    if reference is not None:
+        document["decision_reference"] = reference
+    _write_json(
+        root / "metadata" / "provenance" / "retention" / "20260101-probe.json",
+        document,
+    )
+
+
+def _completeness(root: Path) -> dict:
+    return build_raw_completeness(
+        root / "datasets",
+        root / "metadata" / "provenance" / "declarations",
+        None,
+        repo_root=root,
+        retention_dir=root / "metadata" / "provenance" / "retention",
+    )
+
+
+def _catalog_claim(root: Path, source: str = "probe") -> None:
+    _catalog(
+        root,
+        "probe",
+        [
+            {
+                "run_id": "20260101T000000Z-probe-a",
+                "study_id": "probe",
+                "source_id": source,
+                "path": f"data/raw/{source}/20260101T000000Z-probe-a/x.csv",
+            }
+        ],
+    )
+
+
+def test_a_git_tracked_claim_without_raw_is_still_a_failure(tmp_path: Path) -> None:
+    root = tmp_path
+    _study_registry(root, "probe", [])
+    _policy(root, kind="search", git_tracking="tracked")
+    _catalog_claim(root)
+
+    report = _completeness(root)
+
+    run = report["runs"][0]
+    assert run["retention_status"] == "git_tracked"
+    assert run["state"] == "missing_directory"
+    assert report["missing_count"] == 1
+    assert report["failure_count"] == 1
+
+
+def test_a_git_untracked_run_with_a_valid_decision_is_not_missing(
+    tmp_path: Path,
+) -> None:
+    root = tmp_path
+    _study_registry(root, "probe", [])
+    # The policy says tracked; the explicit decision overrides it.
+    _policy(root, kind="social", git_tracking="tracked")
+    _catalog_claim(root)
+    _retention_decision(root)
+
+    report = _completeness(root)
+
+    run = report["runs"][0]
+    assert run["retention_status"] == "git_untracked"
+    assert run["retention_source"] == "decision"
+    assert run["state"] == "not_repository_retained"
+    assert report["missing_count"] == 0
+    assert report["not_repository_retained_count"] == 1
+    assert report["failure_count"] == 0
+
+
+def test_a_git_untracked_decision_without_a_basis_fails(tmp_path: Path) -> None:
+    root = tmp_path
+    _study_registry(root, "probe", [])
+    _policy(root, kind="social", git_tracking="ignored")
+    _catalog_claim(root)
+    _retention_decision(root, reason=None, reference=None)
+
+    report = _completeness(root)
+
+    reasons = {entry["reason"] for entry in report["retention_violations"]}
+    assert "retention_reason_missing" in reasons
+    assert "retention_decision_reference_missing" in reasons
+    assert report["failure_count"] >= 2
+
+
+def test_policy_default_for_an_untracked_source_is_not_missing(
+    tmp_path: Path,
+) -> None:
+    root = tmp_path
+    _study_registry(root, "probe", [])
+    _policy(root, kind="social", git_tracking="ignored")
+    _catalog_claim(root)
+
+    report = _completeness(root)
+
+    run = report["runs"][0]
+    assert run["retention_status"] == "git_untracked"
+    assert run["retention_source"] == "storage_policy"
+    assert run["state"] == "not_repository_retained"
+    assert report["failure_count"] == 0
+
+
+def test_local_raw_of_an_untracked_run_is_reported_separately(
+    tmp_path: Path,
+) -> None:
+    root = tmp_path
+    _study_registry(root, "probe", [])
+    _policy(root, kind="social", git_tracking="ignored")
+    _catalog_claim(root)
+    _run(root, "probe", "probe", "20260101T000000Z-probe-a")
+
+    report = _completeness(root)
+
+    run = report["runs"][0]
+    assert run["state"] == "local_only_present"
+    assert report["present_count"] == 0
+    assert report["local_only_present_count"] == 1
+    assert report["failure_count"] == 0
+
+
+def _git(root: Path, *args: str) -> None:
+    subprocess.run(
+        ["git", *args], cwd=root, check=True, capture_output=True, text=True
+    )
+
+
+@pytest.mark.skipif(shutil.which("git") is None, reason="git is not installed")
+def test_untracked_run_with_tracked_raw_is_a_violation(tmp_path: Path) -> None:
+    root = tmp_path
+    _study_registry(root, "probe", [])
+    _policy(root, kind="social", git_tracking="ignored")
+    _catalog_claim(root)
+    directory = _run(root, "probe", "probe", "20260101T000000Z-probe-a")
+    _git(root, "init", "-q")
+    _git(root, "add", "-f", str(directory.relative_to(root)))
+
+    report = _completeness(root)
+
+    run = report["runs"][0]
+    assert run["state"] == "git_untracked_but_tracked"
+    assert report["retention_violation_count"] == 1
+    assert report["failure_count"] == 1
+
+
+@pytest.mark.skipif(shutil.which("git") is None, reason="git is not installed")
+def test_git_tracked_run_present_only_locally_is_a_failure(
+    tmp_path: Path,
+) -> None:
+    root = tmp_path
+    _study_registry(root, "probe", [])
+    _policy(root, kind="search", git_tracking="tracked")
+    _catalog_claim(root)
+    _run(root, "probe", "probe", "20260101T000000Z-probe-a")
+    _git(root, "init", "-q")
+
+    report = _completeness(root)
+
+    run = report["runs"][0]
+    assert run["state"] == "present_not_git_tracked"
+    assert report["retention_violation_count"] == 1
+    assert report["failure_count"] == 1
+
+
+@pytest.mark.skipif(shutil.which("git") is None, reason="git is not installed")
+def test_a_tracked_run_not_checked_out_is_not_missing(tmp_path: Path) -> None:
+    root = tmp_path
+    _study_registry(root, "probe", [])
+    _policy(root, kind="search", git_tracking="tracked")
+    _catalog_claim(root)
+    directory = _run(root, "probe", "probe", "20260101T000000Z-probe-a")
+    _git(root, "init", "-q")
+    _git(root, "add", "-f", str(directory.relative_to(root)))
+    shutil.rmtree(directory)
+
+    report = _completeness(root)
+
+    run = report["runs"][0]
+    assert run["state"] == "tracked_not_checked_out"
+    assert report["missing_count"] == 0
+    assert report["failure_count"] == 0

@@ -6,15 +6,26 @@
   "integrity": "verified",
   "citations": {
     "integrity": [
-      "sha256(publication/research_thc-o.html, 2026-10-15 検算) = 05495ac8fbedc03f2ca9b81b8bb7e70d8aaddf1759b392a32b11cfcf6624f1ba"
+      "sha256(publication/research_thc-o.html, 2026-11-04 検算) = 08c501e3e51061244efec7ac59632c18265ce85bd93e8a74b5b6d319016ab67e"
     ],
     "publication_contract": [
-      "validation.cli audit-publication（2026-10-15）: PC-1〜PC-8 の機械検査対象。PC-7 は本 envelope の存在と hash 固定を検査する。"
+      "validation.cli audit-publication（2026-11-04）: PC-1〜PC-8 の機械検査対象。PC-7 は本 envelope の存在と hash 固定を検査する。"
+    ],
+    "google_trends_canonical_5y": [
+      "run 20261014T204904Z-google-trends-cannabinoid-multi-trends の records_thc-o.json（262 週 / 平均 4.958 / ピーク 2022-04-10 / 非ゼロ 19）。ページの 4.96 は同じ系列の 2 桁丸め。"
+    ],
+    "google_trends_canonical_12m_no_data": [
+      "run 20261002T064135Z-google-trends-nodata の records_nodata.json が THC-O の today 12-m no data を記録する。旧記載の 12ヶ月平均 8.2 はどの run からも再現できず、no data に置き換えた。"
+    ],
+    "google_trends_variants": [
+      "20261104T135330Z-google-trends-thc-o-general-thco-12m / 20261104T135339Z-google-trends-thc-o-general-thco-5y / 20261104T135345Z-google-trends-thc-o-liquid-thco-12m / 20261104T135350Z-google-trends-thc-o-liquid-thco-5y（各 variant text THCO / THCO リキッド、窓 2025-11-02_2026-11-08 / 2021-10-31_2026-11-08）",
+      "週数と非ゼロ週の記録: datasets/cannabinoid-raw-collection/methodology.md §2.1.5 と docs/audits/g2-query-inventory.json（variant_match として 4 run を記録）。"
     ]
   },
   "unrecorded": {
     "publication_approval": "対象 publication はまだ公開していない。承認判断は未実施のため decision.status は requires_review。",
-    "human_content_review": "効能表現・法務・再配布条件などの人間による最終審査は未記録。"
+    "human_content_review": "効能表現・法務・再配布条件などの人間による最終審査は未記録。",
+    "variant_run_resolution": "THCO variant の 4 run は、この checkout に raw run ディレクトリが無く、committed な staging declaration にも無い。したがって validation.cli audit-publication の PC-2 は 4 run の参照を解決できず finding を記録する。run の存在と値は study の methodology.md §2.1.5 と committed な g2-query-inventory.json が記録する。公開前に raw を復元するか採用宣言を追加するまで公開不可。"
   },
   "notes": "この evidence は機械的な存在・整合性の根拠だけを記録する。公開承認・人間の内容審査は推測で埋めない。"
 }

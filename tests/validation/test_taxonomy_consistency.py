@@ -176,7 +176,7 @@ def test_unmapped_concepts_each_carry_a_reason() -> None:
 def test_exports_carry_both_languages() -> None:
     """The regression that mattered: English labels reached no published export."""
 
-    for stem, expected in (("compound-taxonomy", 24), ("content-taxonomy", 14), ("chemical-class-taxonomy", 2)):
+    for stem, expected in (("compound-taxonomy", 25), ("content-taxonomy", 14), ("chemical-class-taxonomy", 2)):
         turtle = (EXPORTS / f"{stem}.ttl").read_text(encoding="utf-8")
         english = len(re.findall(r'prefLabel> "[^"]*"@en', turtle))
         japanese = len(re.findall(r'prefLabel> "[^"]*"@ja', turtle))

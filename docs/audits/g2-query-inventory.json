@@ -4,8 +4,8 @@
   "schema_id": "query-registry-v1",
   "registry_version": "1.0.0",
   "target_glob": "datasets/**/run_metadata.json",
-  "count": 62,
-  "query_count": 108,
+  "count": 67,
+  "query_count": 113,
   "raw_modified": false,
   "states": {
     "exact_match": "the collected text equals a registered canonical_text",
@@ -15,8 +15,8 @@
     "unmapped": "no registered correspondence and no compound token"
   },
   "summary": {
-    "exact_match": 106,
-    "variant_match": 1,
+    "exact_match": 107,
+    "variant_match": 5,
     "semantic_match_candidate": 1,
     "ambiguous": 0,
     "unmapped": 0
@@ -1604,21 +1604,131 @@
       ]
     },
     {
-      "run_id": "20261010T141947Z-youtube-cannabinoid-raw-collection",
-      "path": "datasets/cannabinoid-raw-collection/data/raw/youtube/20261010T141947Z-youtube-cannabinoid-raw-collection/run_metadata.json",
+      "run_id": "20261104T115425Z-google-trends-thcnm-12m",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261104T115425Z-google-trends-thcnm-12m/run_metadata.json",
       "status": "read",
-      "sha256": "6d5f2ede5d59ec96a9264eb569b5f26e8c0218dd2eabe25e895a47ad84f72248",
-      "sha256_after": "6d5f2ede5d59ec96a9264eb569b5f26e8c0218dd2eabe25e895a47ad84f72248",
+      "sha256": "a530e1f235e370a95efc0da9227143354799e8406994d93d0f985c26a8d462af",
+      "sha256_after": "a530e1f235e370a95efc0da9227143354799e8406994d93d0f985c26a8d462af",
       "unchanged": true,
       "extracted_query_count": 1,
       "queries": [
         {
-          "text": "HHBD リキッド",
+          "text": "THCNM",
           "state": "exact_match",
           "classification": "relevant",
-          "query_id": "hhbd-liquid-ja",
+          "query_id": "thcnm-general-ja",
           "variant_id": null,
           "detail": "registered_canonical",
+          "source_fields": [
+            "query_provenance.submitted_query"
+          ]
+        }
+      ]
+    },
+    {
+      "run_id": "20261104T115431Z-google-trends-thcnm-5y",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261104T115431Z-google-trends-thcnm-5y/run_metadata.json",
+      "status": "read",
+      "sha256": "b6bf1a78798b9cc9619f3b981549110ba4a36d98f7bad651e12464a3e03da239",
+      "sha256_after": "b6bf1a78798b9cc9619f3b981549110ba4a36d98f7bad651e12464a3e03da239",
+      "unchanged": true,
+      "extracted_query_count": 1,
+      "queries": [
+        {
+          "text": "THCNM",
+          "state": "exact_match",
+          "classification": "relevant",
+          "query_id": "thcnm-general-ja",
+          "variant_id": null,
+          "detail": "registered_canonical",
+          "source_fields": [
+            "query_provenance.submitted_query"
+          ]
+        }
+      ]
+    },
+    {
+      "run_id": "20261104T135330Z-google-trends-thc-o-general-thco-12m",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261104T135330Z-google-trends-thc-o-general-thco-12m/run_metadata.json",
+      "status": "read",
+      "sha256": "33df550b2f3375ce6a76a35901ca71f1c6d17e28eee38ee042a3de3662a7ee04",
+      "sha256_after": "33df550b2f3375ce6a76a35901ca71f1c6d17e28eee38ee042a3de3662a7ee04",
+      "unchanged": true,
+      "extracted_query_count": 1,
+      "queries": [
+        {
+          "text": "THCO",
+          "state": "variant_match",
+          "classification": "relevant",
+          "query_id": "thc-o-general-ja",
+          "variant_id": "thc-o-general-no-hyphen",
+          "detail": "registered_variant:thc-o-general-no-hyphen",
+          "source_fields": [
+            "query_provenance.submitted_query"
+          ]
+        }
+      ]
+    },
+    {
+      "run_id": "20261104T135339Z-google-trends-thc-o-general-thco-5y",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261104T135339Z-google-trends-thc-o-general-thco-5y/run_metadata.json",
+      "status": "read",
+      "sha256": "9e9ecc6f95148754190fe0f089cc52816379c29fbf94ca2a111f9ad5d5b52378",
+      "sha256_after": "9e9ecc6f95148754190fe0f089cc52816379c29fbf94ca2a111f9ad5d5b52378",
+      "unchanged": true,
+      "extracted_query_count": 1,
+      "queries": [
+        {
+          "text": "THCO",
+          "state": "variant_match",
+          "classification": "relevant",
+          "query_id": "thc-o-general-ja",
+          "variant_id": "thc-o-general-no-hyphen",
+          "detail": "registered_variant:thc-o-general-no-hyphen",
+          "source_fields": [
+            "query_provenance.submitted_query"
+          ]
+        }
+      ]
+    },
+    {
+      "run_id": "20261104T135345Z-google-trends-thc-o-liquid-thco-12m",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261104T135345Z-google-trends-thc-o-liquid-thco-12m/run_metadata.json",
+      "status": "read",
+      "sha256": "c2266dbab81284c7939632990e8af1eb06597c8e43250b81dd97beec0c27f881",
+      "sha256_after": "c2266dbab81284c7939632990e8af1eb06597c8e43250b81dd97beec0c27f881",
+      "unchanged": true,
+      "extracted_query_count": 1,
+      "queries": [
+        {
+          "text": "THCO リキッド",
+          "state": "variant_match",
+          "classification": "relevant",
+          "query_id": "thc-o-liquid-ja",
+          "variant_id": "thc-o-liquid-no-hyphen",
+          "detail": "registered_variant:thc-o-liquid-no-hyphen",
+          "source_fields": [
+            "query_provenance.submitted_query"
+          ]
+        }
+      ]
+    },
+    {
+      "run_id": "20261104T135350Z-google-trends-thc-o-liquid-thco-5y",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261104T135350Z-google-trends-thc-o-liquid-thco-5y/run_metadata.json",
+      "status": "read",
+      "sha256": "4d406032b03ef4a2f0d109783ad2ef500a181e5bc378c8ff5e16a0d8ce314bbf",
+      "sha256_after": "4d406032b03ef4a2f0d109783ad2ef500a181e5bc378c8ff5e16a0d8ce314bbf",
+      "unchanged": true,
+      "extracted_query_count": 1,
+      "queries": [
+        {
+          "text": "THCO リキッド",
+          "state": "variant_match",
+          "classification": "relevant",
+          "query_id": "thc-o-liquid-ja",
+          "variant_id": "thc-o-liquid-no-hyphen",
+          "detail": "registered_variant:thc-o-liquid-no-hyphen",
           "source_fields": [
             "query_provenance.submitted_query"
           ]

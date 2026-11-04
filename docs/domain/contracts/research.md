@@ -1,7 +1,8 @@
 # 研究 Research — Agent Contract
 
-**版:** 0.1.0（草案、2026-10-16）  
-**語彙:** `docs/domain/glossary.md`（研究）。
+**版:** 0.1.1（草案、2026-11-01）
+
+**語彙:** `docs/domain/glossary.md`（研究・追跡状態）。
 
 ## Purpose and domain vocabulary
 
@@ -18,6 +19,8 @@
 - Study 集約ルート（README / methodology / study-registry の組）が揃うこと。
 - 凍結 legacy run 以外は現行契約を満たす（`contracts.md` 付録A3）。
 - 観測・導出・解釈を区別する（Observed / Derived / Interpretation。解釈を観測として提示しない）。
+- **raw のローカル不在を未収集・欠測・0 観測として扱わない。** この checkout に payload が無いことは Local Storage の事実であり、研究上の欠落の証拠ではない（`contracts.md` §2.2）。
+- **Git 追跡外（`ignored`）の raw artifact を公開済み・再配布可能として扱わない。** 保持（`tracked`）も公開適格を意味せず、公開可否は `gate-publication` と判断記録が決める。
 - 時間相関から因果を推論しない（限定的言語を用いる。AGENTS.md Research Claims）。
 
 ## Public interfaces / integration events
@@ -30,6 +33,7 @@
 
 - 検証の監査・比較可能性判定（`audit-studies`、`comparability` C1 ゲート）。
 - 保管からの証拠読み取り（artifact descriptor / evidence registry）。
+- 検証が報告するローカル存在・追跡状態の事実（読み取りのみ。公開可否・再配布可否の判定には使わない）。
 
 ## Forbidden dependencies
 

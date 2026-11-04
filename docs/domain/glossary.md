@@ -1,8 +1,10 @@
 # ドメイン用語集（Glossary）
 
-**版:** 0.1.0（草案、2026-10-16）  
-**正本:** 定義は `docs/specs/contracts.md` §2・§2.1・§3.1 と `docs/specs/validation-framework.md` §17 の引用。本ファイルは DDD 導入のための写しであり、定義の変更は各正本側で行う。
-**選定:** owner 選定キーワード 4 件（生産・研究・加工・契約、2026-10-16）。バージョン・リリースは owner 決定（2026-10-16）で追加。U3 判断補助のため保管・目録（インベントリー）を追加。生産とリリースの間の工程として出荷を追加。基幹9件。採用ER（`docs/plan/20261016.md`）を読むための補助語29件を別表で整理する。合計38件。
+**版:** 0.1.1（草案、2026-11-01）
+
+**正本:** 定義は `docs/specs/contracts.md` §2・§2.1・§2.2・§3.1 と `docs/specs/validation-framework.md` §17 の引用。本ファイルは DDD 導入のための写しであり、定義の変更は各正本側で行う。
+
+**選定:** owner 選定キーワード 4 件（生産・研究・加工・契約、2026-10-16）。バージョン・リリースは owner 決定（2026-10-16）で追加。U3 判断補助のため保管・目録（インベントリー）を追加。生産とリリースの間の工程として出荷を追加。保持（retention）の語義を固定するため追跡状態を追加（owner決定 2026-11-01）。基幹10件。採用ER（`docs/plan/20261016.md`）を読むための補助語29件を別表で整理する。合計39件。
 
 | 用語 | 定義 | コンテキスト | 出典 | 曖昧さ |
 |---|---|---|---|---|
@@ -10,10 +12,11 @@
 | 出荷 Shipping | 契約の検収条件・検証項目・保管条件を満たした成果物を、指定された保管先（local / repository / remote）へ引き渡し、保管・公開・リリースへ進められる状態にする工程 | 生産と公開の間の工程（保管と隣接） | `contracts.md` §3.1、`context-map.md` §4 U3 | リリース（配布単位・配布行為）とは異なる。出荷は成果物を契約どおり保管先へ渡す工程であり、GitHub / Zenodo で配布単位を成立させるリリースそのものではない |
 | 研究 Study | 研究質問・対象範囲・入力証拠・処理方法・成果物・制約を 1 つに束ねる研究単位。`study_id` で識別し `datasets/<study-id>/` に配置する。HTML ページや release ではなく dataset release の根拠になる研究集約 | 研究 | `contracts.md` §2、§2.1 | 日常語の「研究活動」一般との混同。transformation 来歴・evidence・measurement / research view を含む（§2.1） |
 | 加工 Processing | 派生成果物の導出宣言と生成値。生産の下位コンテキスト（owner決定 2026-10-16、§4 U1） | 加工（生産の下位） | `contracts.md` §2.1、§3.1 | 上位の生産との包含関係は確定（独立させない）。実装は `src/processing/` |
-| 保管 Storage | artifact manifest、artifact registry、storage policy、reader インターフェースを扱い、成果物の配置・読み取り・追跡可能性を支えるコンテキスト | 保管 | `contracts.md` §2.1、§3.2、`src/storage/` | 採用・公開可否の判定 owner ではない。検証は保管契約を検査してよいが、保管が検証 gate / verdict / judgment を所有するわけではない。U3 では validation との隣接関係として扱う |
+| 保管 Storage | artifact manifest、artifact registry、storage policy、reader インターフェースを扱い、成果物の配置・読み取り・追跡可能性を支えるコンテキスト。追跡方針（`git_tracking`）を宣言する | 保管 | `contracts.md` §2.1、§3.2、`src/storage/` | 採用・公開可否の判定 owner ではない。追跡状態の観測報告は検証が行う（`contracts.md` §2.2）。検証は保管契約を検査してよいが、保管が検証 gate / verdict / judgment を所有するわけではない。U3 では validation との隣接関係として扱う |
 | 目録 Inventory（インベントリー） | 保管対象や既存成果物を非破壊に棚卸しし、path・size・sha256・format・追跡状態などの監査用事実を列挙する記録またはその生成処理 | 保管（監査・検証が再計算して照合する） | `validation-framework.md` §17、`docs/audits/g4-storage-inventory.md`、`src/storage/inventory.py` | 目録は観測・記録であり、採用・公開・研究解釈の判定ではない。内容を正規化・修正する処理ではなく、raw を改変しない。`inventory` は「棚卸し」の意味で、商品在庫の増減管理ではない |
+| 追跡状態 Tracking State | ある path を Repository Storage（Git index）が保持しているか。`tracked` / `ignored` / `untracked_unignored` / `absent`（追跡方針の期待値は `tracked` / `ignored` / `conditional`）。**「保持」は `tracked` を指し、ローカルに payload が存在することではない**（owner決定 2026-11-01） | 検証（報告）・保管（追跡方針）。保持・公開の可否は契約／公開判断 | `contracts.md` §2・§2.2、`validation.storage_policy.check_git_tracking`、`config/storage-policies.json` | 公開可否・リリースとは別の事実（`contracts.md` §2.2）。`audit-youtube-coverage` の `retained_out_of_scope_runs` は primary クエリ設計の外に採用した run（scope 除外）であり、追跡状態の「保持」ではない |
 | 契約 Contract | 境界を越えて渡されるデータ／振る舞いについて、版を持ち機械検証可能な形で宣言した合意。検収条件・検証項目・保管条件を含む。下位にスキーマ契約・レジストリ文書・インターフェース契約・ゲート契約・判断記録を含む総称 | 検証（総称の所有）。下位種別のゲート契約の所有も契約とする（owner決定 2026-10-16、§4 U2） | `contracts.md` §2 | 総称としてのみ使う（個別文書名には使わない。例：`collection-run-v1` であって `collection-run契約` ではない）。1つの契約が複数の保管対象・保管先を束ねることがある。版・宣言場所・検査は下位種別ごとに異なる（§2表）。ゲート契約はその一種（段階遷移の可否判定。検査・行使は検証・研究が分担するが所有は契約。版は未宣言＝既知ギャップG1、§10→U4。版はバージョンと同義（次項）。配布単位のリリース（次々項）とは区別する） |
-| バージョン Version | 契約の意味的同一性を識別する版表示。「版」は同義語（`contracts.md` の用語）。「バージョンを持つ」とは次の3点が揃うこと：①値が宣言場所に存在 ②台帳 `version` 列に記録 ③検査が一致を検証 | 契約（種別ごとに形が異なる。詳細は `context-map.md` §5） | 本ファイル、`context-map.md` §5（定義）。未宣言方針は `contracts.md` §10 | 文書版（本ファイル冒頭の「版: 0.1.0」等、仕様書の版付け慣行）もバージョンの一種。コード・正本の識別子（`schema_version`、`SCHEMA_VERSIONS`、`ADAPTER_CONTRACT_VERSION` 等）はこの語に対応する。複数バージョンの併存を許す（§5方針）。配布単位のリリース（次項）とは区別する |
+| バージョン Version | 契約の意味的同一性を識別する版表示。「版」は同義語（`contracts.md` の用語）。「バージョンを持つ」とは次の3点が揃うこと：①値が宣言場所に存在 ②台帳 `version` 列に記録 ③検査が一致を検証 | 契約（種別ごとに形が異なる。詳細は `context-map.md` §5） | 本ファイル、`context-map.md` §5（定義）。未宣言方針は `contracts.md` §10 | 文書版（本ファイル冒頭の版表示等、仕様書の版付け慣行）もバージョンの一種。コード・正本の識別子（`schema_version`、`SCHEMA_VERSIONS`、`ADAPTER_CONTRACT_VERSION` 等）はこの語に対応する。複数バージョンの併存を許す（§5方針）。配布単位のリリース（次項）とは区別する |
 | リリース Release | バージョン（版）の配布単位・配布行為。git tag / Zenodo による公開配布（例 v1.13.x、`docs/specs/release-process.md`） | 公開（配布工程。契約の版管理とは別の関心事） | `docs/specs/release-process.md`、git tag | バージョン（版、前項）と区別する。「契約リリース」という言い方はしない |
 
 ## 採用ER補助語（2026-10-16）
@@ -40,10 +43,10 @@
 | 検証項目 Validation Item | 契約に含まれる、検証が確認すべき項目。schema、hash、manifest、registry、privacy、publication review など | 契約・検証・生産 | `docs/plan/20261016.md`、`contracts.md` §2・§3.1 | 検証項目は検証結果ではない。手動/自動の実施形態と分ける |
 | 保管条件 Storage Condition | 契約に含まれる、何をどこにどう保管し、どう読める・追跡できる必要があるかを定める条件 | 契約・保管・検証 | `docs/plan/20261016.md`、`context-map.md` §4 U3 | 保管条件は契約の一部であり、契約そのものではない。1契約が複数の保管条件を持ち得る |
 | 検収評価 Acceptance Evaluation | 生産が契約の検収条件・検証項目に沿って各項目を評価する行為または記録 | 生産・契約 | `docs/plan/20261016.md`、`contracts.md` §3.1 | 判定ルール・判定理由・可否の意味を生産側が独自所有することではない |
-| 保管先 Storage Target | 成果物を置く具体的な場所・媒体・サービス。local / repository / remote を含む | 保管・出荷 | `docs/plan/20261016.md`、`context-map.md` §4 U3 | 保管先に存在することは公開・リリース済みを意味しない |
-| ローカル保管 Local Storage | worktree、checkout、`.staging/`、local-only private directory など、ローカル環境上の保管先 | 保管・生産 | `docs/plan/20261016.md` | ローカルに存在するだけでは commit / publish / release 可能ではない |
-| リポジトリ保管 Repository Storage | Git 管理下の repository 内に置かれ、レビュー・再現可能性の対象になる保管先 | 保管 | `docs/plan/20261016.md` | Git管理下でも公開適格とは限らない。private / sensitive data は commit しない |
-| リモート保管 Remote Storage | GitHub、Zenodo、外部アーカイブ等、ローカル外の保管先 | 保管・公開 | `docs/plan/20261016.md` | remote に置くことは release 完了を意味しない。公開・配布には別途 gate / review が必要 |
+| 保管先 Storage Target | 成果物を置く具体的な場所・媒体・サービス。local / repository / remote を含む。区別はファイルの所在ではなく帰属で決まる（同じ payload が Local と Repository の両方に属し得る） | 保管・出荷 | `docs/plan/20261016.md`、`context-map.md` §4 U3、`contracts.md` §2・§2.2 | 保管先に存在することは公開・リリース済みを意味しない。Local に存在することは保持（`tracked`）を意味しない |
+| ローカル保管 Local Storage | worktree、checkout、`.staging/`、`data/private/`、Git 追跡外の raw payload など、ローカル環境上の保管先 | 保管・生産 | `docs/plan/20261016.md`、`contracts.md` §2.2 | ローカルに存在するだけでは commit（保持）/ publish / release 可能ではない。存在と追跡状態は別の事実 |
+| リポジトリ保管 Repository Storage | Git index に登録され、レビュー・再現可能性の対象になる保管先。worktree 上の実体を含む | 保管 | `docs/plan/20261016.md`、`contracts.md` §2.2 | Git 管理下（`tracked`）でも公開適格とは限らない（全 storage policy は `publication: requires_review`）。private / sensitive data は commit しない |
+| リモート保管 Remote Storage | GitHub、Zenodo、外部アーカイブ等、ローカル外の保管先 | 保管・公開 | `docs/plan/20261016.md`、`contracts.md` §2.2 | remote に置くことは release 完了を意味しない。公開・配布には別途 gate / review が必要 |
 | GitHub | リモート保管先の具体例。repository、release、release asset を含み得る | 保管・公開 | `docs/plan/20261016.md`、`docs/specs/release-process.md` | GitHub repository と GitHub release は区別する |
 | Zenodo | DOI archive になり得るリモート保管先の具体例 | 保管・公開 | `docs/plan/20261016.md`、AGENTS.md Citation and DOI | DOI が実際に割り当てられるまで metadata に DOI を書かない |
 | 検証 Validation | 契約・検証項目・保管条件に対して検査・監査を行い、検証結果を産出する側 | 検証 | `contracts.md` §2.1、`docs/plan/20261016.md` | 収集記録・加工成果物を産出しない。保管物を生成・変更しない |
@@ -55,3 +58,4 @@
 ## 備考（確立済み規則の引用）
 
 - 生産は契約に含まれる検収条件・検証項目を評価するが、判定ルール・判定理由・可否の意味を独自所有しない。検証は検査・監査を行うが、収集記録・加工成果物を産出しない。生産の出力は記録であって解釈ではない（`contracts.md` §3.1 規則 1–3）。
+- ローカル存在・追跡状態・公開可否・リリースは別の事実である。保持は追跡状態が `tracked` であることを指し、ローカルに payload が存在することでも、公開適格であることでもない（`contracts.md` §2.2、owner決定 2026-11-01）。検証はローカル存在・追跡状態の事実を報告し、保管は配置・読み取りを支えるが、公開可否・再配布可否・法的判断を発明しない。

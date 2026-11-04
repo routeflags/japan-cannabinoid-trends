@@ -50,6 +50,81 @@
           "status": "alternative"
         }
       ]
+    },
+    {
+      "query_id": "thcnm-general-ja",
+      "variants": [
+        {
+          "variant_id": "thcnm-general-primary",
+          "text": "THCNM",
+          "status": "primary"
+        },
+        {
+          "variant_id": "thcnm-general-tha-commercial-alias",
+          "text": "THA",
+          "status": "alternative"
+        }
+      ]
+    },
+    {
+      "query_id": "thcnm-liquid-ja",
+      "variants": [
+        {
+          "variant_id": "thcnm-liquid-primary",
+          "text": "THCNM リキッド",
+          "status": "primary"
+        },
+        {
+          "variant_id": "thcnm-liquid-nospace",
+          "text": "THCNMリキッド",
+          "status": "alternative"
+        }
+      ]
+    },
+    {
+      "query_id": "tha-liquid-ja",
+      "variants": [
+        {
+          "variant_id": "tha-liquid-primary",
+          "text": "THA リキッド",
+          "status": "primary"
+        },
+        {
+          "variant_id": "tha-liquid-nospace",
+          "text": "THAリキッド",
+          "status": "alternative"
+        }
+      ]
+    },
+    {
+      "query_id": "thc-o-general-ja",
+      "variants": [
+        {
+          "variant_id": "thc-o-general-primary",
+          "text": "THC-O",
+          "status": "primary"
+        },
+        {
+          "variant_id": "thc-o-general-no-hyphen",
+          "text": "THCO",
+          "status": "alternative"
+        }
+      ]
+    },
+    {
+      "query_id": "thc-o-liquid-ja",
+      "variants": [
+        {
+          "variant_id": "thc-o-liquid-primary",
+          "text": "THC-O リキッド",
+          "status": "primary"
+        },
+        {
+          "variant_id": "thc-o-liquid-no-hyphen",
+          "text": "THCO リキッド",
+          "status": "alternative"
+        }
+      ]
     }
   ]
 }

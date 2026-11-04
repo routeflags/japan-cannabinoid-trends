@@ -1,0 +1,198 @@
+{
+  "declaration_version": "staging-declaration-v1",
+  "description": "First collection (2026-11-04) of the two required primary YouTube queries for compound_thcnm, collected as two independent runs: THCNM リキッド (thcnm-liquid-ja) and THA リキッド (tha-liquid-ja). THA is the alias / commercial name of THCNM, not a second substance, so the two runs measure two query strings and their counts are never merged. One query per run, no dateFilter, current Actor input names. Raw stays git_untracked; the repository keeps this declaration, the catalog entries and the run metadata.",
+  "runs": [
+    {
+      "run_id": "20261104T120627Z-youtube-cannabinoid-raw-collection",
+      "study_id": "cannabinoid-raw-collection",
+      "source_id": "youtube",
+      "collector_id": "youtube-apify-scraper",
+      "purpose": "First collection run for the declared primary query `THCNM リキッド` (query registry canonical text) of compound_thcnm, added to the compound set on 2026-11-04. One query per run, no dateFilter, current Actor input names. It covers only its own query_id; it is not a substitute for `tha-liquid-ja`, and the study counts its records separately from that run. The run finished with status SUCCEEDED.",
+      "query": {
+        "keyword": "THCNM リキッド",
+        "query_id": "thcnm-liquid-ja"
+      },
+      "window": {
+        "start": "2017-11-30T00:00:00Z",
+        "end_exclusive": "2026-11-03T00:00:00Z",
+        "granularity": "day",
+        "timezone": "UTC"
+      },
+      "collection_request": {
+        "date_filter": "all",
+        "reference_time": "2026-11-04T12:06:27.499Z",
+        "actor_input": {
+          "searchQueries": [
+            "THCNM リキッド"
+          ],
+          "maxResults": 500,
+          "maxResultsShorts": 0,
+          "maxResultStreams": 0
+        },
+        "actor_input_basis": "Submitted verbatim through netloom apify run. The payload's input column is ['THCNM リキッド'] for all 30 records and its type column is ['video'] for all 30, which is consistent with but not proof of the submitted input values.",
+        "date_filter_basis": "No dateFilter was supplied to the actor, so the request carried neither an absolute nor a rolling publish-date restriction. 'all' is the declaration vocabulary for that unbounded request (src/collection/adapters/youtube/apify_csv.py DATE_FILTERS); the actor has no 'all' enum value."
+      },
+      "temporal": {
+        "collector_window_type": "unbounded",
+        "boundary_semantics": "Observed video publish-date range in the payload, normalized to a half-open UTC day interval; not the API condition and not a request window.",
+        "exact_window_match": false,
+        "limitations": [
+          "The request had no dateFilter and therefore no absolute publish-date window; the search was unbounded as far as the actor input states.",
+          "window.start is the earliest observed video publish date at 00:00:00Z and window.end_exclusive is one day after the latest observed publish date; both are derived from the returned items only.",
+          "The run finished with status SUCCEEDED and returned 30 records against maxResults 500. The payload does not establish that every matching video existed or was returned; it is a search-result sample, not a census.",
+          "The run is not country-limited by an API geo filter. The Japanese product term リキッド approximates a Japanese-market restriction through query language; this is not a geographic guarantee.",
+          "The records measure content matching the query string only. compound_thcnm's chemical identity is unconfirmed (THA is an alias / commercial name), so a match is not evidence that a verified substance appeared (ISS-20261104-TAX-028)."
+        ]
+      },
+      "timestamps": {
+        "started_at": "2026-11-04T12:06:27.499Z",
+        "finished_at": "2026-11-04T12:07:44.279Z",
+        "basis": "Apify actor run status object read through netloom apify run-status on 2026-11-04; startedAt and finishedAt are the run's own UTC timestamps."
+      },
+      "execution": {
+        "status": "success",
+        "returned_count": 30,
+        "errors": []
+      },
+      "artifacts": [
+        {
+          "source": "/private/var/folders/7t/xt8rcl791xzb8qnjnrhbx1tr0000gn/T/delta-scratch-.delta-fs-vEcLS4/yt-export/youtube-dataset-thcnm-liquid_nK6aTpPbtujz3bduC_2026-11-04.json",
+          "path": "youtube-dataset-thcnm-liquid_nK6aTpPbtujz3bduC_2026-11-04.json",
+          "artifact_type": "raw_records",
+          "format": "json",
+          "schema_id": "youtube-search-result-list-v1",
+          "completeness": "complete",
+          "record_count": 30,
+          "media_type": "application/json"
+        }
+      ],
+      "environment": {
+        "actor_run_id": "QL8aSQSesCde490oy",
+        "apify_dataset_id": "nK6aTpPbtujz3bduC",
+        "actor_build": "0.0.325",
+        "actor_build_id": "Sfw2VmHmmc6YAcahs",
+        "actor_build_basis": "buildNumber and buildId of the actor run status object (netloom apify run-status, 2026-11-04).",
+        "origin": "API",
+        "payload_sha256": "51a425e1e5e64e83cc8c40155863972f2bfef2cafc38676de7043c13c1b9f9c2",
+        "payload_bytes": 104010,
+        "export_filename": "youtube-dataset-thcnm-liquid_nK6aTpPbtujz3bduC_2026-11-04.json",
+        "portable_source": "local-ref/youtube-20261104/youtube-dataset-thcnm-liquid_nK6aTpPbtujz3bduC_2026-11-04.json",
+        "handover_note": "source is this collection session's export directory, where netloom apify dataset wrote the actor's dataset export. The durable copy is the adopted run directory data/raw/youtube/<run-id>/<file> (git_untracked per raw-data-policy), and payload_sha256/payload_bytes are the values verified for it at adoption.",
+        "payload_shape": "The actor's dataset export: a JSON array of flat records with 33 keys (id, date, input, type, title, channelId, viewCount, ...). It carries no 'kind' discriminator, so 'youtube-search-result-list-v1' is this study's schema label for this actor's dataset JSON, not a nested youtube#searchResult shape.",
+        "observed_range": {
+          "min_date": "2017-11-30T15:20:53Z",
+          "max_date": "2026-11-02T08:30:04Z",
+          "derivation": "min/max of the payload's date column, converted to UTC; window.start/end_exclusive are the half-open day normalization of these bounds. Derived observation only."
+        },
+        "deduplication": {
+          "key": "flat id (video id)",
+          "raw_count": 30,
+          "deduplicated_count": 30,
+          "duplicates_removed": 0,
+          "note": "Checked within this run only. No de-duplication was applied to the raw payload; downstream analysis performs reproducible deduplication. Records are not summed across runs or queries."
+        },
+        "scope": {
+          "primary_design": "youtube-liquid-only-primary",
+          "query_intent_id": "product_liquid",
+          "primary_coverage": "one of two required primary queries for compound_thcnm"
+        }
+      }
+    },
+    {
+      "run_id": "20261104T120805Z-youtube-cannabinoid-raw-collection",
+      "study_id": "cannabinoid-raw-collection",
+      "source_id": "youtube",
+      "collector_id": "youtube-apify-scraper",
+      "purpose": "First collection run for the second declared primary query `THA リキッド` (query registry canonical text) of the same compound_thcnm. THA is the alias / commercial name of THCNM, not a second substance, so this run measures a second query string, not another compound. One query per run, no dateFilter. It covers only its own query_id; the compound is complete only when both required primary queries have an adopted run. The run finished with status SUCCEEDED.",
+      "query": {
+        "keyword": "THA リキッド",
+        "query_id": "tha-liquid-ja"
+      },
+      "window": {
+        "start": "2012-01-17T00:00:00Z",
+        "end_exclusive": "2026-11-05T00:00:00Z",
+        "granularity": "day",
+        "timezone": "UTC"
+      },
+      "collection_request": {
+        "date_filter": "all",
+        "reference_time": "2026-11-04T12:08:05.060Z",
+        "actor_input": {
+          "searchQueries": [
+            "THA リキッド"
+          ],
+          "maxResults": 500,
+          "maxResultsShorts": 0,
+          "maxResultStreams": 0
+        },
+        "actor_input_basis": "Submitted verbatim through netloom apify run. The payload's input column is ['THA リキッド'] for all 311 records and its type column is ['video'] for all 311, which is consistent with but not proof of the submitted input values.",
+        "date_filter_basis": "No dateFilter was supplied to the actor, so the request carried neither an absolute nor a rolling publish-date restriction. 'all' is the declaration vocabulary for that unbounded request (src/collection/adapters/youtube/apify_csv.py DATE_FILTERS); the actor has no 'all' enum value."
+      },
+      "temporal": {
+        "collector_window_type": "unbounded",
+        "boundary_semantics": "Observed video publish-date range in the payload, normalized to a half-open UTC day interval; not the API condition and not a request window.",
+        "exact_window_match": false,
+        "limitations": [
+          "The request had no dateFilter and therefore no absolute publish-date window; the search was unbounded as far as the actor input states.",
+          "window.start is the earliest observed video publish date at 00:00:00Z and window.end_exclusive is one day after the latest observed publish date; both are derived from the returned items only.",
+          "The run finished with status SUCCEEDED and returned 311 records against maxResults 500. The payload does not establish that every matching video existed or was returned; it is a search-result sample, not a census.",
+          "The run is not country-limited by an API geo filter. The Japanese product term リキッド approximates a Japanese-market restriction through query language; this is not a geographic guarantee.",
+          "The records measure content matching the query string only. compound_thcnm's chemical identity is unconfirmed (THA is an alias / commercial name), so a match is not evidence that a verified substance appeared (ISS-20261104-TAX-028)."
+        ]
+      },
+      "timestamps": {
+        "started_at": "2026-11-04T12:08:05.060Z",
+        "finished_at": "2026-11-04T12:15:37.260Z",
+        "basis": "Apify actor run status object read through netloom apify run-status on 2026-11-04; startedAt and finishedAt are the run's own UTC timestamps."
+      },
+      "execution": {
+        "status": "success",
+        "returned_count": 311,
+        "errors": []
+      },
+      "artifacts": [
+        {
+          "source": "/private/var/folders/7t/xt8rcl791xzb8qnjnrhbx1tr0000gn/T/delta-scratch-.delta-fs-vEcLS4/yt-export/youtube-dataset-tha-liquid_ZT6MahJPfsVwE1yLA_2026-11-04.json",
+          "path": "youtube-dataset-tha-liquid_ZT6MahJPfsVwE1yLA_2026-11-04.json",
+          "artifact_type": "raw_records",
+          "format": "json",
+          "schema_id": "youtube-search-result-list-v1",
+          "completeness": "complete",
+          "record_count": 311,
+          "media_type": "application/json"
+        }
+      ],
+      "environment": {
+        "actor_run_id": "jHveciJbayJwCcnGJ",
+        "apify_dataset_id": "ZT6MahJPfsVwE1yLA",
+        "actor_build": "0.0.325",
+        "actor_build_id": "Sfw2VmHmmc6YAcahs",
+        "actor_build_basis": "buildNumber and buildId of the actor run status object (netloom apify run-status, 2026-11-04).",
+        "origin": "API",
+        "payload_sha256": "1052b7286c04b845ea23a9e4ad8db99353a4e40b75ce546595d8d789dfa445ed",
+        "payload_bytes": 1597544,
+        "export_filename": "youtube-dataset-tha-liquid_ZT6MahJPfsVwE1yLA_2026-11-04.json",
+        "portable_source": "local-ref/youtube-20261104/youtube-dataset-tha-liquid_ZT6MahJPfsVwE1yLA_2026-11-04.json",
+        "handover_note": "source is this collection session's export directory, where netloom apify dataset wrote the actor's dataset export. The durable copy is the adopted run directory data/raw/youtube/<run-id>/<file> (git_untracked per raw-data-policy), and payload_sha256/payload_bytes are the values verified for it at adoption.",
+        "payload_shape": "The actor's dataset export: a JSON array of flat records with 33 keys (id, date, input, type, title, channelId, viewCount, ...). It carries no 'kind' discriminator, so 'youtube-search-result-list-v1' is this study's schema label for this actor's dataset JSON, not a nested youtube#searchResult shape.",
+        "observed_range": {
+          "min_date": "2012-01-17T07:21:59Z",
+          "max_date": "2026-11-04T10:00:05Z",
+          "derivation": "min/max of the payload's date column, converted to UTC; window.start/end_exclusive are the half-open day normalization of these bounds. Derived observation only."
+        },
+        "deduplication": {
+          "key": "flat id (video id)",
+          "raw_count": 311,
+          "deduplicated_count": 311,
+          "duplicates_removed": 0,
+          "note": "Checked within this run only. No de-duplication was applied to the raw payload; downstream analysis performs reproducible deduplication. Records are not summed across runs or queries."
+        },
+        "scope": {
+          "primary_design": "youtube-liquid-only-primary",
+          "query_intent_id": "product_liquid",
+          "primary_coverage": "one of two required primary queries for compound_thcnm"
+        }
+      }
+    }
+  ]
+}

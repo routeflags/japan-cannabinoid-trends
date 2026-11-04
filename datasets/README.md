@@ -29,16 +29,20 @@ datasets/<study-id>/
 | PROCESSED | `data/processed/` | 管理 | コミット済み入力から再生成できること（`audit-processed` が検査） |
 | ANALYSIS | `analysis/` | 管理 | 解釈。観測事実として扱わない |
 
-追跡方針は [`.gitignore`](../.gitignore) の次の規則で決まる（公開対象の根拠は [`docs/specs/raw-data-policy.md`](../docs/specs/raw-data-policy.md)）。
+追跡方針は [`.gitignore`](../.gitignore) の次の規則で決まる（追跡方針の根拠は [`docs/specs/raw-data-policy.md`](../docs/specs/raw-data-policy.md)）。
 
 ```text
 **/data/raw/*                    # raw は既定で管理外
 !**/data/raw/.gitkeep           # 空ディレクトリだけは管理
-!**/data/raw/google_trends/     # 例外: Google Trends の raw は公開可
+!**/data/raw/google_trends/     # 例外: Google Trends の raw は追跡対象
 !**/data/raw/google_trends/**   #        （raw-data-policy.md §4.1 の表）
 ```
 
 **帰結（重要）**: raw は多くが Git 管理外なので、**clone しただけでは raw が存在しない**。研究側の `.gitignore` が `data/` 以下を全除外する研究もある（`x-consistency` / `youtube-consistency`）。raw が手元にしか無い状態は正常だが、「どの run を採取したか」は `run_metadata.json` と宣言・監査で追う（[`docs/audits/g7-study-inventory.json`](../docs/audits/g7-study-inventory.json) が研究ごとの棚卸し）。
+
+この追跡状態は `git_tracked` / `git_untracked` の 2 状態で表す（[`docs/specs/raw-data-policy.md`](../docs/specs/raw-data-policy.md) §5）。`git_untracked` は「raw を収集していない」ではなく、Repository Storage として保持しないという保存状態である。`make audit-raw-retention` が判断記録・storage policy・Git index を照合し、`make audit-raw-completeness` が追跡状態とローカル raw の存在を分離して報告する。
+
+`make audit-snapshots` の 11 スナップショットは **checkout-local inventory** であり、完全な研究状態の再構成ではない。`docs/audits/snapshot-scope.json` が `audit_scope: checkout_local` / `raw_visibility: partial` / `not_repository_retained_run_ids` を記録する。snapshot に現れない `git_untracked` run は未収集・0 観測ではなく、catalog / declaration が完全な provenance claim の正本である。
 
 ## 研究一覧
 
@@ -47,7 +51,7 @@ raw 列は**そのマシンのローカル checkout に存在する source**（G
 | study | 何を扱うか | ローカル raw source | 追跡されている成果物 | release |
 |---|---|---|---|---|
 | [`cannabinoid-platform-trends`](cannabinoid-platform-trends/README.md) | **横断集計（配布用）**: 化合物 × プラットフォームの観測表（Google Trends 5年 + YouTube 採用分。X は owner 判断で除外） | 無し（コミット済み証拠から生成） | `data/processed/` 5 ファイル、`metadata/schema/` 4 | ✓ |
-| [`cannabinoid-raw-collection`](cannabinoid-raw-collection/README.md) | **原データ収集**: カンナビノイド各化合物の Google Trends 5年/12ヶ月、X、YouTube の生記録 | `google_trends`（追跡）, `x`（ローカルのみ）, `youtube`（ローカルのみ） | `data/raw/google_trends/`、`data/interim/` 1、`data/processed/` 1（`youtube_monthly_counts.csv`）、`metadata/`（data-catalog + 収集計画 30 + クエリ設計 1） | ✓ |
+| [`cannabinoid-raw-collection`](cannabinoid-raw-collection/README.md) | **原データ収集**: カンナビノイド各化合物の Google Trends 5年/12ヶ月、X、YouTube の生記録 | `google_trends`（追跡）, `x`（ローカルのみ）, `youtube`（ローカルのみ） | `data/raw/google_trends/`、`data/interim/` 1、`data/processed/` 1（`youtube_monthly_counts.csv`）、`metadata/`（data-catalog + 収集計画 32 + クエリ設計 1） | ✓ |
 | [`cbx-search-trends`](cbx-search-trends/README.md) | CBX / H4CBH / HHBD の検索需要（Google Trends + Search Console） | `google_trends`（追跡）, `gsc` | `data/raw/google_trends/`、`analysis/` 2 | ✓ |
 | [`cbx-social-trends`](cbx-social-trends/README.md) | CBX の SNS 言及（X / YouTube / Instagram / TikTok） | `x`, `youtube`, `instagram`, `tiktok` | `analysis/` 8、`data/processed/` 4（YouTube 24 件フィルタ、X 月次粗集計） | ✓ |
 | [`cannabinoid-social-trends`](cannabinoid-social-trends/README.md) | 規制前後の X 言及 | `x` | `README.md` / `methodology.md` のみ | — |
@@ -74,6 +78,8 @@ raw 列は**そのマシンのローカル checkout に存在する source**（G
 
 ```bash
 make platform-trends     # 横断集計（datasets/cannabinoid-platform-trends/data/processed/）を再生成
+make audit-raw-retention # git_tracked / git_untracked の判断と Git index の照合（raw 不要）
+make audit-raw-completeness # 追跡状態とローカル raw の存在を分離して報告
 make audit-snapshots     # 監査スナップショット一式（gt-summary / study inventory / 各 inventory）
 make audit-publication   # 公開契約 PC-1〜PC-8 の判定を記録
 make audit-new-runs      # 未 catalog の raw run の検出

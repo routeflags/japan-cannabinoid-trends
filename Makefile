@@ -14,6 +14,9 @@
 #                                     declaration needs (run where the raw layer is)
 #   make audit-publication            publication contract audit (read-only)
 #   make audit-raw-completeness       every catalog/declaration run has raw here
+#                                     (git_tracked) or is intentionally untracked
+#   make audit-raw-retention          validate the git_tracked / git_untracked
+#                                     decisions and the Git index (no raw needed)
 #   make audit-youtube-coverage       primary liquid coverage inventory
 #   make audit-distribution-scope     release slice vs raw study scope
 #   make audit-snapshots              regenerate tracked docs/audits snapshots
@@ -24,13 +27,14 @@ WORKSPACE ?= .
 DATASETS ?= datasets
 CONFIG ?= config
 METADATA ?= metadata
+RETENTION ?= metadata/provenance/retention
 GATE ?= registries
 GATE_ARGS ?=
 
-.PHONY: help test collect stage adopt-all platform-trends youtube-aggregate audit-new-runs audit-adoption audit-publication audit-raw-completeness audit-youtube-coverage audit-distribution-scope audit-snapshots gates check-venv
+.PHONY: help test collect stage adopt-all platform-trends youtube-aggregate audit-new-runs audit-adoption audit-publication audit-raw-completeness audit-raw-retention audit-youtube-coverage audit-distribution-scope audit-snapshots gates check-venv
 
 help:
-	@echo "Targets: test | stage DECLARATION=<file> | adopt-all | platform-trends | youtube-aggregate | audit-new-runs | audit-adoption | audit-publication | audit-raw-completeness | audit-youtube-coverage | audit-distribution-scope | audit-snapshots | gates"
+	@echo "Targets: test | stage DECLARATION=<file> | adopt-all | platform-trends | youtube-aggregate | audit-new-runs | audit-adoption | audit-publication | audit-raw-completeness | audit-raw-retention | audit-youtube-coverage | audit-distribution-scope | audit-snapshots | gates"
 
 # Local development runs through .venv (see docs/specs/validation-framework.md
 # §2).  Fail fast with setup guidance when the interpreter is absent instead of
@@ -73,11 +77,19 @@ audit-adoption: check-venv
 audit-publication: check-venv
 	$(PYTHON) -m validation.cli audit-publication
 
-# Catalog/declaration claims versus the raw layer of this checkout.  Raw is
-# machine-local, so this target answers about the checkout it runs in; it is a
-# local pre-commit/production check, not a CI check.
+# Catalog/declaration/retention claims versus the raw layer of this checkout.
+# Raw is machine-local, so this target answers about the checkout it runs in; it
+# is a local pre-commit/production check, not a CI check.  A git_untracked run
+# is reported as not_repository_retained, not missing; a git_tracked run stays
+# strict.
 audit-raw-completeness: check-venv
-	$(PYTHON) -m validation.cli audit-raw-completeness --datasets-root $(DATASETS) $(ARGS)
+	$(PYTHON) -m validation.cli audit-raw-completeness --datasets-root $(DATASETS) --retention-dir $(RETENTION) $(ARGS)
+
+# Raw retention is a Repository Storage (Git tracking) decision, not local raw
+# existence.  This audit reads committed decisions, storage policies and the Git
+# index only, so it runs on a clone without data/raw/.
+audit-raw-retention: check-venv
+	$(PYTHON) -m validation.cli audit-raw-retention --datasets-root $(DATASETS) --retention-dir $(RETENTION) $(ARGS)
 
 # The declared query design is study metadata (liquid-only primary for this
 # collection); --require-complete is opt-in because an inventory is not a gate.
@@ -89,12 +101,15 @@ audit-youtube-coverage: check-venv
 audit-distribution-scope: check-venv
 	$(PYTHON) -m validation.cli audit-distribution-scope $(ARGS)
 
-# The guard runs before the first write and refuses when a committed claim or
-# an existing snapshot names a run this checkout cannot show.  It also runs
-# after the writes and fails if an existing run id disappeared.  Never run this
-# target against a partial raw checkout.
+# The guard runs before the first write.  It refuses only when a git_tracked
+# run cannot be substantiated or a retention decision is invalid; a
+# git_untracked run may be absent from this checkout.  The deterministic scope
+# sidecar is written first so the following snapshots are generated under a
+# declared scope, then the eleven checkout-local snapshots, then the postflight.
+# It is safe in a partial checkout, but it never fabricates raw rows.
 audit-snapshots: check-venv
-	$(PYTHON) -m validation.cli snapshot-guard --phase preflight --datasets-root $(DATASETS) --state-file .staging/audit-snapshot-guard.json
+	$(PYTHON) -m validation.cli snapshot-guard --phase preflight --datasets-root $(DATASETS) --retention-dir $(RETENTION) --state-file .staging/audit-snapshot-guard.json
+	$(PYTHON) -m validation.cli audit-snapshot-scope --datasets-root $(DATASETS) --retention-dir $(RETENTION) --output docs/audits/snapshot-scope.json
 	$(PYTHON) -m validation.cli contract-ledger --output docs/audits/contract-ledger.json
 	$(PYTHON) -m validation.cli audit-queries --output docs/audits/g2-query-inventory.json
 	$(PYTHON) -m processing.cli gt-summary --output docs/audits/gt-summary.json

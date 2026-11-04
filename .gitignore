@@ -2,7 +2,7 @@
 **/data/raw/*
 !**/data/raw/.gitkeep
 
-# Exception: Google Trends raw data is public (see raw-data-policy.md §4.1)
+# Exception: Google Trends raw data is tracked (see raw-data-policy.md §4.1)
 !**/data/raw/google_trends/
 !**/data/raw/google_trends/**
 

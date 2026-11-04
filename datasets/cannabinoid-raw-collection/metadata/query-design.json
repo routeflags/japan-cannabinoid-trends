@@ -12,6 +12,13 @@
       "query_pattern": "<compound> リキッド",
       "one_query_per_run": true,
       "coverage_unit": "compound_id",
+      "compound_set": {
+        "authority": "metadata/queries/query-registry.json: every query with intent_id == product_liquid is one required primary query, and its compound_id is a compound the design covers. This block does not restate that list.",
+        "declared_not_yet_collected": [],
+        "coverage_state_note": "compound_thcnm's two required primary queries (`thcnm-liquid-ja` = THCNM リキッド and `tha-liquid-ja` = THA リキッド) each have an adopted run collected on 2026-11-04: declaration metadata/provenance/declarations/20261104-youtube-thcnm-tha-liquid-cannabinoid-raw-collection.json, runs and counts in data-catalog.json. They are two independent runs; their counts are not merged and neither substitutes for the other. `make audit-youtube-coverage` reports the compound as 2/2.",
+        "coverage_rule": "Two levels, both reported. Query level: a required primary query is covered when at least one adopted run carries that query_id. Compound level: a compound is complete only when all of its required primary queries are covered; some-but-not-all is `partial`, none is `missing`. One run covers only its own query_id and is never substituted for another query, and counts are never summed across queries or runs.",
+        "identity_caveat": "compound_thcnm's chemical identity is supplier/market-reported and unconfirmed. THA is an alias / commercial name of the same compound, not a second substance: both required primary queries resolve to compound_thcnm, and the two runs measure two query strings, not two substances. The query terms are the registry's canonical_text, so a run measures content matching that string, not a verified substance (ISS-20261104-TAX-028)."
+      },
       "out_of_primary_intent_ids": [
         "compound_general",
         "product_oil",
@@ -28,7 +35,7 @@
       "distribution": {
         "study_id": "cannabinoid-platform-trends",
         "included": false,
-        "reason": "The distribution slice uses the COL-033 YouTube declaration only; the raw study's YouTube runs are outside that slice."
+        "reason": "The distribution slice uses the COL-033 YouTube declaration only; the raw study's YouTube runs are outside that slice. THCNM is outside the slice in every case: it has no YouTube run in this study and none in COL-033."
       }
     }
   ]

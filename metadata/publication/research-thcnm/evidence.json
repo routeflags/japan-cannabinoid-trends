@@ -1,0 +1,74 @@
+{
+  "schema_version": "1.0.0",
+  "record": "publication_review_evidence",
+  "artifact_id": "research-thcnm",
+  "recorded_at": "2026-11-04",
+  "integrity": "verified",
+  "personal_data_reviewed": true,
+  "redistribution_confirmed": true,
+  "anonymization_applied": true,
+  "citations": {
+    "integrity": [
+      "sha256(publication/research_thcnm.html, 2026-11-04 検算) = cc6904527a91aa0de020a9efa48eccbd5f17ee439b4a8b18945e08e577d53b1b"
+    ],
+    "publication_contract": [
+      "validation.cli audit-publication --output docs/audits/publication-contract.json（2026-11-04）: 本 artifact に finding は無い（適用される PC-1〜PC-7 すべて）。PC-7 は本 envelope の存在と hash 固定を検査する。",
+      "同じ audit の PC-2 finding 4 件は publication/research_thc-o.html の THCO 表記バリアント run に対するもので、本 artifact の run ではない。"
+    ],
+    "catalog": [
+      "datasets/cannabinoid-raw-collection/metadata/data-catalog.json（sha256 dbfcafbafe957fb353c4b58a94c7e29bff605410fce601245d3ddb5bb7f038d1）が THCNM の 4 run / 6 artifact を compound_thcnm として記録する。",
+      "cataloged artifact ids: 20261104T115425Z-google-trends-thcnm-12m-payload-json / -records-thcnm-json、20261104T115431Z-google-trends-thcnm-5y-payload-json / -records-thcnm-json、20261104T120627Z-youtube-cannabinoid-raw-collection-youtube-dataset-thcnm-liquid-nk6atppbtujz3bduc-2026-11-04-json、20261104T120805Z-youtube-cannabinoid-raw-collection-youtube-dataset-tha-liquid-zt6mahjpfsvwe1yla-2026-11-04-json。"
+    ],
+    "retention": [
+      "validation.cli audit-raw-retention（2026-11-04）: run 20261104T115425Z-google-trends-thcnm-12m と 20261104T115431Z-google-trends-thcnm-5y は policy raw-search-tracked の git_tracked。2 run ディレクトリは Git index に追加済みで violations=0。",
+      "validation.cli audit-raw-completeness（2026-11-04）: YouTube の 2 run は not_repository_retained（raw は git_untracked）、missing=0、retention_violation=0。"
+    ],
+    "google_trends_12m": [
+      "run 20261104T115425Z-google-trends-thcnm-12m（geo JP / today 12-m / 窓 2025-11-02_2026-11-08 / 53 週 / 平均 4.4906 / 非ゼロ 3）",
+      "run_metadata.json sha256 = a530e1f235e370a95efc0da9227143354799e8406994d93d0f985c26a8d462af（datasets/cannabinoid-raw-collection/data/raw/google_trends/20261104T115425Z-google-trends-thcnm-12m/run_metadata.json）",
+      "artifact-manifest.json sha256 = 12955507dfede045f04ce2f3562694508fcd876a972c8042e446122a5ec3db1e。payload.json sha256 = 332e452fb54b91a5c14970c248d07f23cf6da9697b863d6ef21a34bc0147422d。records_thcnm.json sha256 = d43c5cca05e6e70faac7214a2b046d1c18a194c06f5d4a80204755ada2143601。"
+    ],
+    "google_trends_5y": [
+      "run 20261104T115431Z-google-trends-thcnm-5y（geo JP / today 5-y / 窓 2021-10-31_2026-11-08 / 262 週 / 平均 0.9122 / 非ゼロ 3）",
+      "run_metadata.json sha256 = b6bf1a78798b9cc9619f3b981549110ba4a36d98f7bad651e12464a3e03da239（datasets/cannabinoid-raw-collection/data/raw/google_trends/20261104T115431Z-google-trends-thcnm-5y/run_metadata.json）",
+      "artifact-manifest.json sha256 = c2ee66f81ac4b34b6cb7a3368aa18ed2ba7beaaded6362f320fbb71e1917410f。payload.json sha256 = a7e5262c8116c1f5fdd5e183708e33c25c28cfec187492c694398224df8c6dcc。records_thcnm.json sha256 = 21a92265fe2ec965c6ce63f0fdb0c39d4c15179e06b8cf32180d5a084bb524a6。"
+    ],
+    "youtube": [
+      "run 20261104T120627Z-youtube-cannabinoid-raw-collection（query_id thcnm-liquid-ja / 30 件 / payload sha256 51a425e1e5e64e83cc8c40155863972f2bfef2cafc38676de7043c13c1b9f9c2）",
+      "run 20261104T120805Z-youtube-cannabinoid-raw-collection（query_id tha-liquid-ja / 311 件 / payload sha256 1052b7286c04b845ea23a9e4ad8db99353a4e40b75ce546595d8d789dfa445ed）",
+      "raw payload は git_untracked。採用宣言 metadata/provenance/declarations/20261104-youtube-thcnm-tha-liquid-cannabinoid-raw-collection.json（staging-declaration-v1、sha256 eda436484c49d2df5d3fd5f3fd59f2db3006139a2aedfbce56c6a4d35d14739e）をリポジトリ側の証跡とし、PC-2 はこの宣言から 2 run を解決する（宣言は Git index に追加済み）。",
+      "ページが載せるのは返却レコード数（30 / 311）と run 記録の状態だけで、動画単位の行・ID・タイトル・チャンネル・URL・再生数は載せない。"
+    ],
+    "publication_gate": [
+      "validation.cli gate-publication --artifact metadata/publication/research-thcnm/artifact.json --decision metadata/publication/research-thcnm/decision.json --evidence metadata/publication/research-thcnm/evidence.json --output /tmp/g6-thcnm-publication-eligibility.json（2026-11-04）: verdict CONDITIONAL。failed は無し。既定の --output は x-cbx の実行記録 docs/audits/g6-publication-eligibility.json のため、THCNM の出力は別パスに書いた。",
+      "PUB-04（personal-data review）、PUB-07（redistribution conditions）、PUB-09（aggregation）、PUB-10（approval）は PASS。warnings: PUB-01、PUB-03、PUB-06、PUB-08（いずれも未記録の確認項目）。"
+    ],
+    "identity": [
+      "metadata/taxonomy/compound-taxonomy.skos.jsonld（sha256 657a41633d47bb358b71118b2a4a89b24a11a9a0465b73636e8c095d1fcb107e）の jptr:compound-thcnm（skos:notation compound_thcnm、skos:broader compound-semisynthetic は暫定、THA は別名・商業名）。",
+      "THCNM の化学的同一性と THA の位置づけは未確認（ISS-20261104-TAX-028 OPEN）。ページは同一性を断定せず、識別子・分子式を載せていない。"
+    ],
+    "personal_data_reviewed": [
+      "owner/reviewer smapira completed the personal-data review on 2026-11-04 (owner approval in the current request). Confirmed: publication/research_thcnm.html contains no video rows, video IDs, titles, channels, URLs, view counts, or personal data.",
+      "The page publishes only returned record counts (30 / 311), deduplicated counts, execution state, and derived date ranges; raw YouTube payloads remain git_untracked and are not part of the publication."
+    ],
+    "redistribution_confirmed": [
+      "owner/reviewer smapira checked the redistribution conditions for this page's aggregate counts on 2026-11-04 (owner approval in the current request). Scope: aggregate returned-record counts only; no row-level YouTube content, raw payload, or per-video metric is published.",
+      "This records that the review was performed; it does not assert a legal conclusion about redistribution rights. Raw YouTube remains git_untracked and outside the publication."
+    ],
+    "anonymization_applied": [
+      "The page applies aggregation: it publishes returned record counts (30 / 311), deduplicated counts, execution state, and derived date ranges; it contains no video-level rows or identifiers.",
+      "owner/reviewer smapira checked the aggregation on 2026-11-04 (owner approval in the current request)."
+    ],
+    "content_review": [
+      "owner/reviewer smapira reviewed the page content on 2026-11-04 (owner approval in the current request): the aggregate-only scope, the observed/derived distinction, the identity-uncertainty statements, and the raw-exclusion statements were checked.",
+      "The review confirms the page does not assert THCNM–THA chemical equivalence and does not present the search series as evidence of substance identity."
+    ]
+  },
+  "unrecorded": {
+    "chemical_identity_review": "THCNM の化学的同一性と THA の位置づけ（別名 / 混合物名）は未確認のまま（ISS-20261104-TAX-028 OPEN）。本承認は同一性を解消せず、THCNM と THA が化学的に同等であるとも別物質であるとも主張しない。ページは同一性を断定せず、識別子・分子式を載せていない。",
+    "youtube_row_level_data": "動画単位の行（タイトル・チャンネル・ID・URL・再生数）はページにも envelope にも記録しない。raw payload は git_untracked で公開対象外。",
+    "gate_warnings": "PUB-01（来歴の明示フラグ）、PUB-03（schema review）、PUB-06（取得元の利用条件）、PUB-08（著作権・契約）は未記録のため WARNING のまま。PUB-04 / PUB-07 / PUB-09 / PUB-10 は本 envelope の記録で PASS。警告は公開拒否ではないが、外部公開前にレビュアが確認する項目として残る。",
+    "pc2_release_commit": "Google Trends の 2 run ディレクトリ・計画・窓・採用宣言は Git index に追加済み（git_tracked）。PC-2 はこの checkout で 4 run を解決し、クリーン clone でも追跡対象から解決できる。コミットは parent が行う（本 envelope は未コミット）。"
+  },
+  "notes": "この evidence は機械的な存在・整合性の根拠、run / artifact の対応、完了した personal-data / redistribution / aggregation / content レビュー、gate-publication の記録を保持する。公開承認とその限界（同一性未確認、raw 非公開）は decision.json に記録する。推測でフラグを立てない。"
+}

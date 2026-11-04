@@ -15,6 +15,17 @@ Inputs are committed facts (query design, query registry, declarations, catalog)
 plus two checkout-local booleans per run (raw directory and run metadata
 present).  Missing raw is reported, not raised: the raw layer is machine-local.
 
+Coverage is reported at two levels and never collapsed into one number:
+
+- **query**: a required primary query (a registry query with the design's
+  primary intent) is covered when at least one adopted run carries its
+  ``query_id``;
+- **compound**: complete only when *all* of that compound's required primary
+  queries are covered; some-but-not-all is ``partial``, none is ``missing``.
+
+A compound can therefore be declared with more than one required primary query
+(the registry is the authority), and one run never stands in for another query.
+
 Output is deterministic (sorted ids, no timestamps) and carries no cost field.
 """
 
@@ -267,14 +278,59 @@ def build_youtube_scope(
             }
         )
 
-    covered_compounds = sorted({item["compound_id"] for item in coverage if item["covered"]})
-    missing_compounds = sorted(
-        {item["compound_id"] for item in coverage if not item["covered"]}
-    )
+    # Compound level: a compound is complete only when every one of its required
+    # primary queries is covered.  Some-but-not-all is ``partial``, none is
+    # ``missing``.  A run covers only its own query_id, so the second query of a
+    # two-query compound never stands in for the first.
+    required_by_compound: dict[str, list[dict]] = {}
+    for item in coverage:
+        required_by_compound.setdefault(item["compound_id"], []).append(item)
+    compound_coverage: list[dict] = []
+    for compound_id in sorted(required_by_compound, key=lambda value: str(value)):
+        queries = sorted(required_by_compound[compound_id], key=lambda item: item["query_id"])
+        adopted = [item for item in queries if item["covered"]]
+        pending = [item for item in queries if not item["covered"]]
+        if not pending:
+            state = "complete"
+        elif adopted:
+            state = "partial"
+        else:
+            state = "missing"
+        compound_coverage.append(
+            {
+                "compound_id": compound_id,
+                "state": state,
+                "required_query_count": len(queries),
+                "covered_query_count": len(adopted),
+                "required_query_ids": [item["query_id"] for item in queries],
+                "covered_query_ids": [item["query_id"] for item in adopted],
+                "missing_query_ids": [item["query_id"] for item in pending],
+                "run_ids": [run_id for item in adopted for run_id in item["run_ids"]],
+            }
+        )
+
+    covered_compounds = [
+        item["compound_id"] for item in compound_coverage if item["state"] == "complete"
+    ]
+    partial_compounds = [
+        item["compound_id"] for item in compound_coverage if item["state"] == "partial"
+    ]
+    missing_compounds = [
+        item["compound_id"] for item in compound_coverage if item["state"] == "missing"
+    ]
     if require_complete:
         violations.extend(
             {"reason": "primary_coverage_missing", "compound_id": compound_id}
             for compound_id in missing_compounds
+        )
+        violations.extend(
+            {
+                "reason": "primary_coverage_partial",
+                "compound_id": item["compound_id"],
+                "missing_query_ids": item["missing_query_ids"],
+            }
+            for item in compound_coverage
+            if item["state"] == "partial"
         )
 
     return {
@@ -289,12 +345,16 @@ def build_youtube_scope(
         "retained_out_of_scope_run_count": len(retained_runs),
         "total_adopted_run_count": len(runs),
         "primary_query_count": len(coverage),
+        "primary_query_covered_count": sum(1 for item in coverage if item["covered"]),
+        "partial_primary_compound_count": len(partial_compounds),
         "missing_primary_compound_count": len(missing_compounds),
         "covered_compounds": covered_compounds,
+        "partial_compounds": partial_compounds,
         "missing_compounds": missing_compounds,
         "primary_runs": primary_runs,
         "retained_out_of_scope_runs": retained_runs,
         "coverage": coverage,
+        "compound_coverage": compound_coverage,
         "violation_count": len(violations),
         "violations": violations,
         "require_complete": bool(require_complete),

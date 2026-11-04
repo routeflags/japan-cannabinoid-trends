@@ -12,13 +12,17 @@
       "metadata/datapackage.json"
     ]
   },
-  "catalog_run_count": 82,
+  "catalog_run_count": 87,
   "summary": {
-    "artifact_count": 16,
-    "finding_count": 0,
+    "artifact_count": 17,
+    "finding_count": 4,
     "declared_gap_count": 0,
-    "by_rule": {},
-    "by_kind": {}
+    "by_rule": {
+      "PC-2": 4
+    },
+    "by_kind": {
+      "run_reference_unresolved": 4
+    }
   },
   "implemented_rules": [
     "PC-1",
@@ -31,6 +35,31 @@
     "PC-8"
   ],
   "unimplemented_rules": [],
-  "findings": [],
+  "findings": [
+    {
+      "rule": "PC-2",
+      "kind": "run_reference_unresolved",
+      "path": "publication/research_thc-o.html",
+      "detail": "cites run 20261104T135330Z-google-trends-thc-o-general-thco-12m, which is not in the catalog"
+    },
+    {
+      "rule": "PC-2",
+      "kind": "run_reference_unresolved",
+      "path": "publication/research_thc-o.html",
+      "detail": "cites run 20261104T135339Z-google-trends-thc-o-general-thco-5y, which is not in the catalog"
+    },
+    {
+      "rule": "PC-2",
+      "kind": "run_reference_unresolved",
+      "path": "publication/research_thc-o.html",
+      "detail": "cites run 20261104T135345Z-google-trends-thc-o-liquid-thco-12m, which is not in the catalog"
+    },
+    {
+      "rule": "PC-2",
+      "kind": "run_reference_unresolved",
+      "path": "publication/research_thc-o.html",
+      "detail": "cites run 20261104T135350Z-google-trends-thc-o-liquid-thco-5y, which is not in the catalog"
+    }
+  ],
   "declared_gaps": []
 }
