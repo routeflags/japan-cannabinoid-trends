@@ -3,12 +3,12 @@
   "record": "publication_decision",
   "decision_id": "publication-review-research-thcnm",
   "artifact_id": "research-thcnm",
-  "artifact_sha256": "cc6904527a91aa0de020a9efa48eccbd5f17ee439b4a8b18945e08e577d53b1b",
-  "status": "approved",
-  "reviewed_at": "2026-11-04",
-  "reviewer": "smapira",
+  "artifact_sha256": "184179a78abbd8eb062546e9bfdfa871ffd12e8c928ef542eb6c2268b76633f3",
+  "status": "requires_review",
+  "reviewed_at": null,
+  "reviewer": null,
   "criteria_version": "G6 §10.2 / §11 (publication eligibility and hash-pinned approval); PC-7 / publication-contract-v1.0.0 (2026-10-15)",
-  "recorded_at": "2026-11-04",
-  "basis": "Owner approval in the current request (2026-11-04) after the gate explanation, together with the completed content, identity, and raw-data review by owner/reviewer smapira. The review confirmed the page contains no video rows, video IDs, titles, channels, URLs, views, or personal data, and that raw YouTube remains git_untracked and unpublished. THCNM identity remains unconfirmed; this approval does not assert chemical equivalence between THCNM and THA.",
-  "notes": "Approval is limited to publication/research_thcnm.html at the exact SHA-256 recorded here. It approves the page's aggregate counts and its stated limitations; it does not approve publication of raw YouTube records, video-level rows, or any other artifact. THCNM chemical identity remains unconfirmed (ISS-20261104-TAX-028); this approval does not assert that THCNM and THA are chemically equivalent. The page's 公開状態 section still describes the pre-approval state (requires_review / gate BLOCKED) because that text is part of the pinned artifact hash; refreshing it changes the hash and requires a new review before external publication. No external publication, release upload, or DOI registration is performed by this decision."
+  "recorded_at": "2026-11-05",
+  "basis": "対象 publication は公開していないため、承認済みとはせず requires_review として審査待ちを記録する。2026-11-05 の内容変更（研究質問の表現統一・版表記 1.14.1・公開状態の記述を 2026-11-05 の gate 結果に合わせる）は新しい hash であり、内容審査は未実施である。 2026-11-04 の owner 承認（sha256 cc6904527a91aa0de020a9efa48eccbd5f17ee439b4a8b18945e08e577d53b1b）は旧 hash に対するものであり、2026-11-05 の内容変更により対象外となった。 2026-11-05 の共通スケール追加後の hash についても内容審査は未実施であり、requires_review を維持する（公開承認は記録しない）。",
+  "notes": "PC-7 は判断記録が存在することを検査する。PUB-10 の公開承認は approved かつ同一 sha256 の decision が必要であり、この requires_review では公開不可。2026-11-05 に審査対象を現行ファイルへ再ピンした（旧 sha256 cc6904527a91aa0de020a9efa48eccbd5f17ee439b4a8b18945e08e577d53b1b）。 2026-11-05 に共通スケール追加後の sha256 へ再ピンした（5e0a77107314…）。"
 }

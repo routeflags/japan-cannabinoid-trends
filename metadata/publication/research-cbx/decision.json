@@ -3,12 +3,12 @@
   "record": "publication_decision",
   "decision_id": "publication-review-research-cbx",
   "artifact_id": "research-cbx",
-  "artifact_sha256": "7bec3b1ab3ba42d7e89a2e46b63eca28bc73ae0f5763468e58acca279b2c0dc6",
-  "status": "approved",
-  "reviewed_at": "2026-10-15",
-  "reviewer": "owner (thread approval 2026-10-15: ok, go)",
+  "artifact_sha256": "a5a7b955152c75d82fc81ce13c68b43698637c92fbd872344f42cbf95e4283af",
+  "status": "requires_review",
+  "reviewed_at": null,
+  "reviewer": null,
   "criteria_version": "PC-7 / publication-contract-v1.0.0 (2026-10-15)",
-  "recorded_at": "2026-10-15",
-  "basis": "オーナーが 2026-10-15 のスレッドで人間審査・承認した (ISS-20261015-PUB-CBX-YT-033)。対象は research_cbx.html の YouTube 節への COL-033 採用反映のみ。 v1.13.0 release metadata sync は release 表記・引用 metadata の整合更新であり、承認済み publication 方針を変更しない。 v1.13.1 release metadata sync は release 表記・引用 metadata の整合更新であり、承認済み publication 方針を変更しない。",
-  "notes": "PC-7 は判断記録が存在することを検査する。PUB-10 は approved かつ同一 sha256 の decision で PASS。"
+  "recorded_at": "2026-11-05",
+  "basis": "対象 publication は公開していないため、承認済みとはせず requires_review として審査待ちを記録する。2026-11-05 の内容変更（研究質問の統一・版表記 1.14.2・YouTube 動画単位行の削除・Google Trends の出所追記）は新しい hash であり、内容審査は未実施である。 2026-10-15 の owner 承認（sha256 7bec3b1ab3ba42d7e89a2e46b63eca28bc73ae0f5763468e58acca279b2c0dc6、research_cbx.html の YouTube 節への COL-033 採用反映）は旧 hash に対するものであり、2026-11-05 の内容変更により対象外となった。 2026-11-05 の共通スケール節更新・版表記 1.14.2 化・チャンネル分布表削除を含む現行 hash についても内容審査は未実施であり、requires_review を維持する。",
+  "notes": "PC-7 は判断記録が存在することを検査する。PUB-10 の公開承認は approved かつ同一 sha256 の decision が必要であり、この requires_review では公開不可。2026-11-05 に審査対象を現行ファイルへ再ピンした（旧 sha256 7bec3b1ab3ba42d7e89a2e46b63eca28bc73ae0f5763468e58acca279b2c0dc6）。 2026-11-05 に共通スケール節更新・版表記 1.14.2 化・チャンネル分布表削除後の sha256 へ再ピンした（a5a7b955152c…）。"
 }

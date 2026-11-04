@@ -12,25 +12,26 @@
 <p>このセクションでは、本ページの情報がどのように収集・分析されたかを公開しています。</p>
 
 <h3>研究質問</h3>
-<p>「日本国内におけるCBNのオンライン上の検索需要・規制状況は何か？」</p>
-<p><strong>最終更新:</strong> 2026-10-08。</p>
+<p>「日本におけるCBN成分へのオンライン関心は、どのように推移しているか？」</p>
+<p><strong>最終更新:</strong> 2026-11-05。</p>
+<p><strong>改訂:</strong> 2026-11-05 に研究質問の表現を統一し、引用の版表記を現行リリース 1.14.2 に合わせた。YouTube 節から動画単位の行（タイトル・チャンネル・URL）を削除し、あわせてチャンネル名を含む分布表（X・YouTube の上位5チャンネル）を削除した（集計のみ、ISS-20261015-COL-030 §4.1）。Google Trends 節は要求条件と観測範囲を分離し、表ごとの出所を明記し、共通スケール節を CBD・THC を同一要求に含むアンカー付き run の実測に合わせて更新した。</p>
 
 <h3>データソース</h3>
 <ul>
-  <li><strong>検索データ:</strong> Google Trends（日本、過去12ヶ月）</li>
+  <li><strong>検索データ:</strong> Google Trends（日本、過去12ヶ月・5年）</li>
   <li><strong>規制資料:</strong> 厚生労働省</li>
 </ul>
 
 <!-- ===== 独自データ：Google Trends 検索需要 ===== -->
 <div>
   <h2 id="data-search">独自データ: CBN の Google Trends 検索需要 <span>一次データ</span></h2>
-  <p>データソース: Google Trends / 地域: 日本 (JP) / 期間: 過去12ヶ月（週次）/ 取得日: 2026-10-08</p>
+  <p>データソース: Google Trends / 地域: 日本 (JP) / 要求: <code>today 12-m</code>・<code>today 5-y</code>（週次、単独系列） / 取得日: 表ごとの出所を参照</p>
   <p>Google Trends から、CBN の日本国内検索興味度（相対指数 0-100）を取得しました。</p>
 
   <div>
     <p><strong>用語の定義:</strong></p>
     <ul>
-      <li><strong>単独平均（個別正規化値）</strong>: 各キーワードを個別に取得した際の12ヶ月平均値。各キーワードのピークを100とする正規化であり、<strong>キーワード間の比較には使用できない</strong>。</li>
+      <li><strong>単独平均（個別正規化値）</strong>: 各キーワードを個別に取得した際の平均値（12ヶ月と5年は別系列）。各キーワードのピークを100とする正規化であり、<strong>キーワード間の比較には使用できない</strong>。</li>
       <li><strong>比較平均（共通スケール値）</strong>: 複数キーワードを同時取得した際の12ヶ月平均値。比較セット内の最大値を100とする正規化であり、<strong>キーワード間の相対的な検索需要を示す</strong>。</li>
       <li><strong>興味度スコア</strong>: Google Trends が返す相対指数（0-100）。絶対検索数ではなく、期間内の最大検索量を100とした相対値。</li>
     </ul>
@@ -46,7 +47,11 @@
     </thead>
     <tbody>
       <tr>
-        <td>収集期間</td>
+        <td>要求条件</td>
+        <td>JP / today 5-y</td>
+      </tr>
+      <tr>
+        <td>観測範囲（返却点の範囲）</td>
         <td>2021-10-10 〜 2026-10-11（262週）</td>
       </tr>
       <tr>
@@ -82,25 +87,28 @@
       </tr>
     </tbody>
   </table>
+  <p><strong>出所:</strong> run <code>20261002T081839Z-google-trends-cbn-12m</code>（JP / <code>today 12-m</code> / 2026-10-02 収集）。観測範囲 2025-09-28 〜 2026-09-27（53週）。表示値 55.6 は週次 53 点の算術平均（小数第 1 位）。</p>
 
   <h3>共通スケール比較</h3>
-  <p>CBD = 100 基準の相対値</p>
+  <p><strong>現行窓の共通スケール:</strong> 未取得。現行窓（12ヶ月 <code>2025-11-02_2026-11-08</code> / 5年 <code>2021-10-31_2026-11-08</code>）で <code>CBD</code>・<code>THC</code> と同時に取得した run はない。単独系列の値で代用しない。</p>
+  <p><strong>5年（旧窓 2021-10-17_2026-10-18・歴史観測）</strong></p>
   <table>
     <thead>
       <tr>
-        <th>化合物</th>
-        <th>共通スケール値</th>
+        <th>検索語</th>
+        <th>平均</th>
+        <th>非ゼロ点</th>
+        <th>区分</th>
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td><strong>CBN</strong></td>
-        <td><strong>11.0</strong></td>
-      </tr>
+      <tr><td>CBD（アンカー）</td><td>33.0763</td><td>262 週</td><td>派生</td></tr>
+      <tr><td>THC（アンカー）</td><td>4.9809</td><td>262 週</td><td>派生</td></tr>
+      <tr><td><strong>CBN</strong></td><td>4.5458</td><td>262 週</td><td>派生</td></tr>
     </tbody>
   </table>
-
-  <p><strong>制約:</strong> Google Trends は相対指数であり、絶対検索数ではない。</p>
+  <p><strong>出所:</strong> run <code>20261023T171709Z-google-trends-5y-common-scale-setB</code>（JP / <code>today 5-y</code> / 窓 <code>2021-10-17_2026-10-18</code> / 観測 2021-10-17 〜 2026-10-18（262 週） / 2026-10-23T17:17:10Z 収集）。平均は週次 262 点の算術平均（小数第 4 位）。</p>
+  <p><strong>制約:</strong> Google Trends は相対指数であり、絶対検索数ではない。0 は相対指数の最小値（閾値未満）であり、検索が存在しなかったことや欠測を意味しない。</p>
 </div>
 
 
@@ -173,7 +181,7 @@
   </table>
 
   <p><strong>方法:</strong> キーワードベースのルール分類。信頼区間は Wilson スコア法による95%信頼区間。</p>
-  <p><strong>制約:</strong> ルールベース分類のため、文脈による誤分類の可能性がある。X 検索結果のサンプルであり、全投稿を網羅するものではない。</p>
+  <p><strong>制約:</strong> ルールベース分類のため、文脈による誤分類の可能性がある。X 検索結果のサンプルであり、全投稿を網羅するものではない。X の観測期間はリポジトリに保持した記録に無く、取得日のみを示す（期間の欠測であり、言及ゼロを意味しない）。</p>
 </div>
 
 
@@ -325,95 +333,8 @@
     </tbody>
   </table>
 
-  <h3>チャンネル分布（上位5）</h3>
-  <table>
-    <thead>
-      <tr>
-        <th>チャンネル</th>
-        <th>件数</th>
-        <th>比率</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>Green Zone Japan</td>
-        <td>3</td>
-        <td>12.5%</td>
-      </tr>
-      <tr>
-        <td>FOUR20</td>
-        <td>2</td>
-        <td>8.3%</td>
-      </tr>
-      <tr>
-        <td>CBD Oracle</td>
-        <td>1</td>
-        <td>4.2%</td>
-      </tr>
-      <tr>
-        <td>The Cannabis Doc</td>
-        <td>1</td>
-        <td>4.2%</td>
-      </tr>
-      <tr>
-        <td>自然療法大学</td>
-        <td>1</td>
-        <td>4.2%</td>
-      </tr>
-    </tbody>
-  </table>
 
-  <h3>上位動画（再生数順）</h3>
-  <table>
-    <thead>
-      <tr>
-        <th>#</th>
-        <th>タイトル</th>
-        <th>チャンネル</th>
-        <th>再生数</th>
-        <th>長さ</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>1</td>
-        <td>Marijuana THC vs CBD, CBG, CBN: What's the difference?</td>
-        <td>syracuse.com</td>
-        <td><strong>788,651</strong></td>
-        <td>8:04</td>
-      </tr>
-      <tr>
-        <td>2</td>
-        <td>24分で解説する、あらゆるカンナビノイドとその効果</td>
-        <td>PathoHub</td>
-        <td>178,595</td>
-        <td>24:47</td>
-      </tr>
-      <tr>
-        <td>3</td>
-        <td>【大麻成分】THCとCBDの違い／法規制・医療の最新動向</td>
-        <td>PIVOT 公式チャンネル</td>
-        <td>64,666</td>
-        <td>22:43</td>
-      </tr>
-      <tr>
-        <td>4</td>
-        <td>About CBN, the cannabinoid produced from THC</td>
-        <td>POLINKEY MOVIE</td>
-        <td>62,877</td>
-        <td>10:44</td>
-      </tr>
-      <tr>
-        <td>5</td>
-        <td>睡眠のための大麻 - CBD、CBN、THC</td>
-        <td>Sleep Doctor</td>
-        <td>58,462</td>
-        <td>4:25</td>
-      </tr>
-    </tbody>
-  </table>
-
-  <p><strong>制約:</strong> YouTube 検索結果のサンプルであり、全動画を網羅するものではない。再生数は取得日時点の値であり、変動する可能性がある。</p>
+  <p><strong>制約:</strong> YouTube 検索結果のサンプルであり、全動画を網羅するものではない。再生数は取得日時点の値であり、変動する可能性がある。動画単位の行（動画 ID・タイトル・チャンネル・URL・再生数）は公開しない（集計のみ、ISS-20261015-COL-030 §4.1）。</p>
 </div>
 
 
@@ -479,83 +400,8 @@
     </tbody>
   </table>
 
-  <h3>チャンネル分布（上位5）</h3>
-  <table>
-    <thead>
-      <tr>
-        <th>チャンネル</th>
-        <th>動画数</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>CBDチャンネルWEEDMAN</td>
-        <td>4</td>
-      </tr>
-      <tr>
-        <td>POLINKEY MOVIE</td>
-        <td>3</td>
-      </tr>
-      <tr>
-        <td>Cannabi-Lab</td>
-        <td>2</td>
-      </tr>
-      <tr>
-        <td>Naturecan ネイチャーカン</td>
-        <td>2</td>
-      </tr>
-      <tr>
-        <td>プロダクトの鏡</td>
-        <td>1</td>
-      </tr>
-    </tbody>
-  </table>
 
-  <h3>上位動画（再生数順）</h3>
-  <table>
-    <thead>
-      <tr>
-        <th>投稿日</th>
-        <th>タイトル</th>
-        <th>チャンネル</th>
-        <th>再生数</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>2022-09-20</td>
-        <td>[DaiGo] The unknown harmful effects of the popular</td>
-        <td>ふぉいの極上トーク【公認切り抜き】</td>
-        <td>366,209</td>
-      </tr>
-      <tr>
-        <td>2022-05-05</td>
-        <td>A comparative test of CBD, CBG, and CBN</td>
-        <td>POLINKEY MOVIE</td>
-        <td>140,094</td>
-      </tr>
-      <tr>
-        <td>2021-09-04</td>
-        <td>CBNとDelta8 THCのワックス吸ってみた</td>
-        <td>ブルドリチャンネル by Blue Dreamz</td>
-        <td>85,467</td>
-      </tr>
-      <tr>
-        <td>2021-02-14</td>
-        <td>How to smoke CBD liquid | VAPEN CBD electronic cig</td>
-        <td>にしくん / KOHEY NISHI CHANNEL</td>
-        <td>58,763</td>
-      </tr>
-      <tr>
-        <td>2021-12-26</td>
-        <td>【CBN】使ってみた！CBDとの違いは？AZTECを徹底レビュー！</td>
-        <td>CBDチャンネルWEEDMAN</td>
-        <td>47,734</td>
-      </tr>
-    </tbody>
-  </table>
-
-  <p><strong>制約:</strong> YouTube 検索結果は取得日時点のものであり、動画の追加・削除により変動する可能性がある。投稿日は YouTube Data API から取得した絶対日付。なお、投稿日の取得に用いた YouTube Data API v3 は 2026-10-12 の方針判断により使用を取り止め、当時の raw は削除済みである（本節の数値は削除前の取得結果であり、再取得は行わない）。</p>
+  <p><strong>制約:</strong> YouTube 検索結果は取得日時点のものであり、動画の追加・削除により変動する可能性がある。投稿日は YouTube Data API から取得した絶対日付。なお、投稿日の取得に用いた YouTube Data API v3 は 2026-10-12 の方針判断により使用を取り止め、当時の raw は削除済みである（本節の数値は削除前の取得結果であり、再取得は行わない）。動画単位の行（動画 ID・タイトル・チャンネル・URL・再生数）は公開しない（集計のみ、ISS-20261015-COL-030 §4.1）。</p>
 </div>
 
 
@@ -565,7 +411,7 @@
   <p>
     KATO, Kyoji（2026）.<br>
     「Japan Cannabinoid Platform Trends Dataset 2026: Google Trends and YouTube Evidence from Japan」.<br>
-    Version 1.13.2<br>
+    Version 1.14.2<br>
     Routeflags Co., Ltd.<br>
     [Dataset].<br>
     DOI: <a href="https://doi.org/10.5281/zenodo.23390594">10.5281/zenodo.23390594</a>

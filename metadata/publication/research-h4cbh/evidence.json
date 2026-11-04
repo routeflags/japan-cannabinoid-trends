@@ -2,19 +2,24 @@
   "schema_version": "1.0.0",
   "record": "publication_review_evidence",
   "artifact_id": "research-h4cbh",
-  "recorded_at": "2026-10-15",
+  "recorded_at": "2026-11-05",
   "integrity": "verified",
   "citations": {
     "integrity": [
-      "sha256(publication/research_h4cbh.html, 2026-10-15 検算) = 280050bf56c5ab4ae38c66bfaedffbd438f6a6a49bbdde9e3be22b46f7a53068"
+      "sha256(publication/research_h4cbh.html, 2026-11-05 検算) = 85af21930db800753ea657dabf14ff7fbdd437cdfe58cb07b053848cce3f68b1"
     ],
     "publication_contract": [
-      "validation.cli audit-publication（2026-10-15）: PC-1〜PC-8 の機械検査対象。PC-7 は本 envelope の存在と hash 固定を検査する。"
+      "validation.cli audit-publication（2026-10-15）: PC-1〜PC-8 の機械検査対象。PC-7 は本 envelope の存在と hash 固定を検査する。",
+      "validation.cli audit-publication（2026-11-05）: 本 artifact に PC-1〜PC-7 の finding は無い。PC-7 は本 envelope の存在と hash 固定を検査する。"
+    ],
+    "content_changes": [
+      "2026-11-05: 変更内容 — 研究質問を「日本におけるH4CBH成分へのオンライン関心は、どのように推移しているか？」に統一し、引用の版表記を 1.14.2（CITATION.cff）に更新した。 / YouTube 節から動画単位の行（動画 ID・タイトル・チャンネル・URL・再生数）を削除し、あわせてチャンネル名を含む分布表（X・YouTube の上位5チャンネル）を削除した（集計のみ、ISS-20261015-COL-030 §4.1、docs/domain/contracts/processing.md）。 / Google Trends 節に要求条件（geo / timeframe）と観測範囲の区別、表ごとの出所 run、0 の意味（相対指数の最小値であり欠測ではない）を追記した。",
+      "2026-11-05: 変更内容 — Google Trends の共通スケール節を、CBD・THC を同一 compare_terms 要求に含むアンカー付き run の実測に合わせて更新した。現行窓の run がある場合は現行窓、無い場合は旧窓の歴史観測と明記し、現行窓は未取得と記載した。単独系列の値は代用していない。"
     ]
   },
   "unrecorded": {
     "publication_approval": "対象 publication はまだ公開していない。承認判断は未実施のため decision.status は requires_review。",
     "human_content_review": "効能表現・法務・再配布条件などの人間による最終審査は未記録。"
   },
-  "notes": "この evidence は機械的な存在・整合性の根拠だけを記録する。公開承認・人間の内容審査は推測で埋めない。"
+  "notes": "この evidence は機械的な存在・整合性の根拠だけを記録する。公開承認・人間の内容審査は推測で埋めない。 2026-11-05 に審査対象の hash を再固定し、変更内容を citations.content_changes に記録した。公開承認・人間の内容審査は推測で埋めない。"
 }

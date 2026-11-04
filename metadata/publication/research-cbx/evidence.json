@@ -2,14 +2,14 @@
   "schema_version": "1.0.0",
   "record": "publication_review_evidence",
   "artifact_id": "research-cbx",
-  "recorded_at": "2026-10-15",
+  "recorded_at": "2026-11-05",
   "provenance_present": true,
   "provenance_basis": "COL-033 YouTube adoption declaration and resolved issue are cited below; the research page reports only declared returned_count aggregates and keeps API dateFilter separate from observed publication-date ranges.",
   "integrity": "verified",
   "schema_valid": true,
   "schema_review_basis": "publication/research_cbx.html is covered by PC-1..PC-8 audit rules; this envelope pins the current artifact hash and decision.",
   "personal_data_reviewed": true,
-  "personal_data_review_basis": "2026-10-15: added YouTube adoption content holds aggregates only (6-run table: run_id/keyword/count/dateFilter/observed range, total 2288). No per-post rows, IDs, text, URLs, usernames, or precise timestamps. Pre-existing http links are institutional (MHLW PDF, DOI badge).",
+  "personal_data_review_basis": "2026-10-15: added YouTube adoption content holds aggregates only (6-run table: run_id/keyword/count/dateFilter/observed range, total 2288). No per-post rows, IDs, text, URLs, usernames, or precise timestamps. Pre-existing http links are institutional (MHLW PDF, DOI badge). 2026-11-05: per-video rows and channel-name distribution tables were removed, so this condition still holds and is narrower (aggregates only).",
   "source_terms_confirmed": true,
   "source_terms_basis": "Owner confirmed PUB-06 on 2026-10-15. The page publishes aggregate/method evidence only and does not redistribute YouTube per-video records.",
   "redistribution_confirmed": true,
@@ -20,19 +20,24 @@
   "anonymization_basis": "The page applies aggregation-only publication: 6-run counts and total 2288, with no per-video or person-level rows.",
   "citations": {
     "integrity": [
-      "sha256(publication/research_cbx.html, 2026-10-15 検算) = 7bec3b1ab3ba42d7e89a2e46b63eca28bc73ae0f5763468e58acca279b2c0dc6"
+      "sha256(publication/research_cbx.html, 2026-11-05 検算) = a5a7b955152c75d82fc81ce13c68b43698637c92fbd872344f42cbf95e4283af"
     ],
     "publication_contract": [
-      "validation.cli audit-publication（2026-10-15）: PC-1〜PC-8 の機械検査対象。PC-7 は本 envelope の存在と hash 固定を検査する。"
+      "validation.cli audit-publication（2026-10-15）: PC-1〜PC-8 の機械検査対象。PC-7 は本 envelope の存在と hash 固定を検査する。",
+      "validation.cli audit-publication（2026-11-05）: 本 artifact に PC-1〜PC-7 の finding は無い。PC-7 は本 envelope の存在と hash 固定を検査する。"
     ],
     "youtube_adoption": [
       "metadata/provenance/declarations/20261015-youtube-csv-adoption.json (sha256 423e8c15f18ce4ae685ab5b405edb0262375576f1785cad9df3f64b65c11e3c1): 6 runs, 合計 2288 (224/395/456/468/352/393)",
       "docs/issues/closed/resolved/20261015_p1_unadopted-youtube-exports.md (ISS-20261015-COL-033, RESOLVED 2026-10-15): dateFilter 割当て・観測窓・検証/監査証拠の正本",
       "publication/research_cbx.html data-youtube の採用表は上記宣言の returned_count と一致 (224+395+456+468+352+393=2288)。CBX キーワードの採用 run は無い旨を明示し、他化合物の run を CBX 証拠に流用しない。dateFilter と観測範囲の区別を derived text に保持。"
+    ],
+    "content_changes": [
+      "2026-11-05: 変更内容 — 研究質問を「日本におけるCBX成分へのオンライン関心は、どのように推移しているか？」に統一し、引用の版表記を 1.14.2（CITATION.cff）に更新した。 / YouTube 節から動画単位の行（動画 ID・タイトル・チャンネル・URL・再生数）を削除し、あわせてチャンネル名を含む分布表（X・YouTube の上位5チャンネル）を削除した（集計のみ、ISS-20261015-COL-030 §4.1、docs/domain/contracts/processing.md）。 / Google Trends 節に要求条件（geo / timeframe）と観測範囲の区別、表ごとの出所 run、0 の意味（相対指数の最小値であり欠測ではない）を追記した。 / 多義語（Honda の車種名）と Google Trends raw の所有（cbx-search-trends）を Google Trends 節の制約に追記した。",
+      "2026-11-05: 変更内容 — Google Trends の共通スケール節を、CBD・THC を同一 compare_terms 要求に含むアンカー付き run の実測に合わせて更新した。現行窓の run がある場合は現行窓、無い場合は旧窓の歴史観測と明記し、現行窓は未取得と記載した。単独系列の値は代用していない。"
     ]
   },
   "unrecorded": {
     "human_content_review": "効能表現・法務などの人間による内容審査は本 evidence の範囲外。公開可否の最終判定は decision.status に従う。"
   },
-  "notes": "この evidence は機械的な存在・整合性の根拠だけを記録する。公開承認は decision.json (approved, owner 2026-10-15) を正とする。"
+  "notes": "この evidence は機械的な存在・整合性の根拠だけを記録する。2026-10-15 の owner 承認は decision.json に approved として記録されていたが、その対象は旧 hash である。2026-11-05 の内容変更（研究質問の統一・版表記 1.14.2 化・YouTube 動画単位行とチャンネル分布表の削除・共通スケール節の更新）により対象外となったため、decision.json は requires_review に戻した。 2026-11-05 に審査対象の hash を再固定し、変更内容を citations.content_changes に記録した。公開承認・人間の内容審査は推測で埋めない。"
 }

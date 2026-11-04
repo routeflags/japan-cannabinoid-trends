@@ -12,20 +12,21 @@
 <p>このセクションでは、本ページの情報がどのように収集・分析されたかを公開しています。</p>
 
 <h3>研究質問</h3>
-<p>「日本国内におけるCBDのオンライン上の検索需要・規制状況は何か？」</p>
-<p><strong>最終更新:</strong> 2026-10-15。</p>
+<p>「日本におけるCBD成分へのオンライン関心は、どのように推移しているか？」</p>
+<p><strong>最終更新:</strong> 2026-11-05。</p>
+<p><strong>改訂:</strong> 2026-11-05 に研究質問の表現を統一し、引用の版表記を現行リリース 1.14.2 に合わせた。YouTube 節から動画単位の行（タイトル・チャンネル・URL）を削除し、あわせてチャンネル名を含む分布表（X・YouTube の上位5チャンネル）を削除した（集計のみ、ISS-20261015-COL-030 §4.1）。Google Trends 節は要求条件と観測範囲を分離し、表ごとの出所を明記し、共通スケール節を CBD・THC を同一要求に含むアンカー付き run の実測に合わせて更新した。</p>
 <p><strong>改訂:</strong> 2026-10-15 に X 節・YouTube 節の数値を run と照合し、収集期間・出所・母集団を訂正した（<code>ISS-20261012-CBD-002</code> / <code>ISS-20261012-CBD-006</code>）。照合の記録は <code>docs/reports/20261015d-cbd-page-provenance-reconciliation.md</code>。</p>
 
 <h3>データソース</h3>
 <ul>
-  <li><strong>検索データ:</strong> Google Trends（日本、過去12ヶ月）</li>
+  <li><strong>検索データ:</strong> Google Trends（日本、過去12ヶ月・5年）</li>
   <li><strong>規制資料:</strong> 厚生労働省</li>
 </ul>
 
 <!-- ===== 独自データ：Google Trends 検索需要 ===== -->
 <div>
   <h2 id="data-search">独自データ: CBD の Google Trends 検索需要 <span>一次データ</span></h2>
-  <p>データソース: Google Trends / 地域: 日本 (JP) / 取得日: 2026-10-08</p>
+  <p>データソース: Google Trends / 地域: 日本 (JP) / 要求: <code>today 12-m</code>・<code>today 5-y</code>（週次、単独系列） / 取得日: 表ごとの出所を参照</p>
   <p>Google Trends から、CBD の日本国内検索興味度（相対指数 0-100）を取得しました。</p>
 
   <div>
@@ -47,7 +48,11 @@
     </thead>
     <tbody>
       <tr>
-        <td>収集期間</td>
+        <td>要求条件</td>
+        <td>JP / today 5-y</td>
+      </tr>
+      <tr>
+        <td>観測範囲（返却点の範囲）</td>
         <td>2021-10-10 〜 2026-10-11（262週）</td>
       </tr>
       <tr>
@@ -85,9 +90,11 @@
       </tr>
     </tbody>
   </table>
+  <p><strong>出所:</strong> run <code>20261002T063821Z-google-trends-cbd</code>（JP / <code>today 12-m</code> / 2026-10-02 収集）。観測範囲 2025-09-28 〜 2026-09-27（53週）。表示値 46.8 は週次 53 点の算術平均（小数第 1 位）。</p>
 
   <h3>共通スケール比較</h3>
-  <p>CBD = 100 基準の相対値</p>
+  <p><strong>現行窓のアンカー付き run:</strong> 現行窓（12ヶ月 <code>2025-11-02_2026-11-08</code> / 5年 <code>2021-10-31_2026-11-08</code>）の共通スケールは、CBX bridge（12ヶ月・5年）と THCNM（12ヶ月・3ヶ月）にあり、それぞれのページに記録している。CBD はそのアンカーである。</p>
+  <p><strong>旧窓の歴史観測:</strong> 次の表は 12ヶ月（収集時点 2026-10-02）の run による共通スケールで、<strong>現行窓の値ではない</strong>。</p>
   <table>
     <thead>
       <tr>
@@ -98,12 +105,13 @@
     <tbody>
       <tr>
         <td><strong>CBD</strong></td>
-        <td><strong>47.0</strong></td>
+        <td><strong>46.8113</strong></td>
       </tr>
     </tbody>
   </table>
+  <p><strong>出所:</strong> run <code>20261002T064236Z-google-trends-comparison-setA</code>（JP / <code>today 12-m</code> / 収集時点 2026-10-02 / 観測 2025-09-28 〜 2026-09-27 / 53 週。CBD 46.8113 / THC 12.0189 / CBG 2.6792 / HHC 0.5849 / THCH 0.0189）。平均は週次 53 点の算術平均（小数第 4 位）。</p>
 
-  <p><strong>制約:</strong> Google Trends は相対指数であり、絶対検索数ではない。</p>
+  <p><strong>制約:</strong> Google Trends は相対指数であり、絶対検索数ではない。0 は相対指数の最小値（閾値未満）であり、検索が存在しなかったことや欠測を意味しない。</p>
 </div>
 
 
@@ -379,95 +387,8 @@
     </tbody>
   </table>
 
-  <h3>チャンネル分布（上位5）</h3>
-  <table>
-    <thead>
-      <tr>
-        <th>チャンネル</th>
-        <th>件数</th>
-        <th>比率</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>キヨキヨの美容チャンネル</td>
-        <td><strong>8</strong></td>
-        <td>28.6%</td>
-      </tr>
-      <tr>
-        <td>Kazuya Sakoda</td>
-        <td>3</td>
-        <td>10.7%</td>
-      </tr>
-      <tr>
-        <td>Dr Ishiguro / 切り抜き</td>
-        <td>3</td>
-        <td>10.7%</td>
-      </tr>
-      <tr>
-        <td>高須幹弥（高須クリニック）</td>
-        <td>1</td>
-        <td>3.6%</td>
-      </tr>
-      <tr>
-        <td>イタリアの食卓 Miho's kitchen</td>
-        <td>1</td>
-        <td>3.6%</td>
-      </tr>
-    </tbody>
-  </table>
 
-  <h3>上位動画（再生数順）</h3>
-  <table>
-    <thead>
-      <tr>
-        <th>#</th>
-        <th>タイトル</th>
-        <th>チャンネル</th>
-        <th>再生数</th>
-        <th>長さ</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>1</td>
-        <td>[Cannabis?] A medical explanation of CBD [Is it legal?]</td>
-        <td>高須幹弥（高須クリニック）</td>
-        <td><strong>596,956</strong></td>
-        <td>21:55</td>
-      </tr>
-      <tr>
-        <td>2</td>
-        <td>CBDオイルの光と影 知識があなたを守る鍵 精神科医 対談</td>
-        <td>吉野敏明チャンネル〜日本の病を治す〜</td>
-        <td><strong>244,308</strong></td>
-        <td>23:30</td>
-      </tr>
-      <tr>
-        <td>3</td>
-        <td>40% CBD oil is too strong—don't bother. A comparative review</td>
-        <td>キヨキヨの美容チャンネル</td>
-        <td>60,051</td>
-        <td>10:20</td>
-      </tr>
-      <tr>
-        <td>4</td>
-        <td>【 CBDオイル 】私が健康維持のために愛用している、自然由来の製品</td>
-        <td>イタリアの食卓 Miho's kitchen</td>
-        <td>49,897</td>
-        <td>16:15</td>
-      </tr>
-      <tr>
-        <td>5</td>
-        <td>【医師解説】CBDって本当に安全？健康に与える影響とは</td>
-        <td>【南雲吉則】Dr.ナグモの命の食事</td>
-        <td>47,091</td>
-        <td>12:53</td>
-      </tr>
-    </tbody>
-  </table>
-
-  <p><strong>制約:</strong> YouTube 検索結果のサンプルであり、全動画を網羅するものではない。再生数は取得日時点の値であり、変動する可能性がある。</p>
+  <p><strong>制約:</strong> YouTube 検索結果のサンプルであり、全動画を網羅するものではない。再生数は取得日時点の値であり、変動する可能性がある。動画単位の行（動画 ID・タイトル・チャンネル・URL・再生数）は公開しない（集計のみ、ISS-20261015-COL-030 §4.1）。</p>
   <p><strong>出所:</strong> <code>datasets/cannabinoid-multi-trends/data/raw/youtube/</code> の「CBD オイル」日本語収集 run（<code>youtube-japanese-apify</code>、2026-10-05 収集）の <code>cbd-oil_raw.json</code>。run_id は <code>docs/reports/20261015d-cbd-page-provenance-reconciliation.md</code> を参照。</p>
   <p><strong>照合:</strong> 本節の件数と統計は、同ファイルの 60 件を重複排除したユニーク 28 件を母集団とする（再生数中央値は中央 2 値の平均 14,227.5）。2026-10-02 収集の同一クエリ別 run（23 件）は本節の出所ではない（<code>ISS-20261012-CBD-006</code>）。</p>
 </div>
@@ -534,83 +455,8 @@
     </tbody>
   </table>
 
-  <h3>チャンネル分布（上位5）</h3>
-  <table>
-    <thead>
-      <tr>
-        <th>チャンネル</th>
-        <th>動画数</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>POLINKEY MOVIE</td>
-        <td>2</td>
-      </tr>
-      <tr>
-        <td>Kazuya Sakoda</td>
-        <td>2</td>
-      </tr>
-      <tr>
-        <td>CBDチャンネルWEEDMAN</td>
-        <td>2</td>
-      </tr>
-      <tr>
-        <td>K.style-CBDチャンネル</td>
-        <td>2</td>
-      </tr>
-      <tr>
-        <td>PLUS WEED CHANNEL【Official】</td>
-        <td>2</td>
-      </tr>
-    </tbody>
-  </table>
 
-  <h3>上位動画（再生数順）</h3>
-  <table>
-    <thead>
-      <tr>
-        <th>投稿日</th>
-        <th>タイトル</th>
-        <th>チャンネル</th>
-        <th>再生数</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>2023-08-02</td>
-        <td>[Cannabis?] A medical explanation of CBD [Is it le</td>
-        <td>高須幹弥（高須クリニック）</td>
-        <td>598,005</td>
-      </tr>
-      <tr>
-        <td>2021-09-30</td>
-        <td>5 CBD Products You Shouldn't Buy</td>
-        <td>Green Zone Japan</td>
-        <td>128,421</td>
-      </tr>
-      <tr>
-        <td>2020-10-07</td>
-        <td>【公式】CBDリキッドタイプの使い方 ｜ +WEED（プラスウィード）</td>
-        <td>PLUS WEED CHANNEL【Official】</td>
-        <td>123,373</td>
-      </tr>
-      <tr>
-        <td>2020-10-07</td>
-        <td>【公式】CBDカートリッジタイプの使い方 ｜ +WEED（プラスウィード）</td>
-        <td>PLUS WEED CHANNEL【Official】</td>
-        <td>112,907</td>
-      </tr>
-      <tr>
-        <td>2021-07-22</td>
-        <td>即効！３秒でリラックスできる！CBD“VAPE”吸ってみた！</td>
-        <td>Kazuya Sakoda</td>
-        <td>106,919</td>
-      </tr>
-    </tbody>
-  </table>
-
-  <p><strong>制約:</strong> YouTube 検索結果は取得日時点のものであり、動画の追加・削除により変動する可能性がある。投稿日は YouTube Data API から取得した絶対日付。なお、投稿日の取得に用いた YouTube Data API v3 は 2026-10-12 の方針判断により使用を取り止め、当時の raw は削除済みである（本節の数値は削除前の取得結果であり、再取得は行わない）。</p>
+  <p><strong>制約:</strong> YouTube 検索結果は取得日時点のものであり、動画の追加・削除により変動する可能性がある。投稿日は YouTube Data API から取得した絶対日付。なお、投稿日の取得に用いた YouTube Data API v3 は 2026-10-12 の方針判断により使用を取り止め、当時の raw は削除済みである（本節の数値は削除前の取得結果であり、再取得は行わない）。動画単位の行（動画 ID・タイトル・チャンネル・URL・再生数）は公開しない（集計のみ、ISS-20261015-COL-030 §4.1）。</p>
   <p><strong>出所:</strong> <code>datasets/cannabinoid-multi-trends/data/raw/youtube/</code> の「CBD リキッド」dated 収集 run（2026-10-09 収集）の <code>records.json</code> 24 件。同日 16:07 の同一クエリ再取得（30 件）とは別 run であり、本節は 24 件側を出所とする。run_id は <code>docs/reports/20261015d-cbd-page-provenance-reconciliation.md</code> を参照。</p>
   <p><strong>照合:</strong> 再生数統計は同 run の 24 件を母集団とする（中央値は中央 2 値の平均 21,826）。</p>
 </div>
@@ -622,7 +468,7 @@
   <p>
     KATO, Kyoji（2026）.<br>
     「Japan Cannabinoid Platform Trends Dataset 2026: Google Trends and YouTube Evidence from Japan」.<br>
-    Version 1.13.2<br>
+    Version 1.14.2<br>
     Routeflags Co., Ltd.<br>
     [Dataset].<br>
     DOI: <a href="https://doi.org/10.5281/zenodo.23390594">10.5281/zenodo.23390594</a>

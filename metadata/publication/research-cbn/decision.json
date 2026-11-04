@@ -3,12 +3,12 @@
   "record": "publication_decision",
   "decision_id": "publication-review-research-cbn",
   "artifact_id": "research-cbn",
-  "artifact_sha256": "cf0a1f86a632e7b613d5f867e32c4a15e595d956651d80951782eac58bf049a6",
+  "artifact_sha256": "66cbc5f782b40ca34be561bbbec505a7fd3a507bde9454ad5ce463e3663fa4f0",
   "status": "requires_review",
   "reviewed_at": null,
   "reviewer": null,
   "criteria_version": "PC-7 / publication-contract-v1.0.0 (2026-10-15)",
-  "recorded_at": "2026-10-15",
-  "basis": "対象 publication はまだ公開していないため、承認済みとはせず requires_review として審査待ちを記録する。",
-  "notes": "PC-7 は判断記録が存在することを検査する。PUB-10 の公開承認は approved かつ同一 sha256 の decision が必要であり、この requires_review では公開不可。"
+  "recorded_at": "2026-11-05",
+  "basis": "対象 publication は公開していないため、承認済みとはせず requires_review として審査待ちを記録する。2026-11-05 の内容変更（研究質問の統一・版表記 1.14.2・YouTube 動画単位行の削除・Google Trends の出所追記）は新しい hash であり、内容審査は未実施である。 2026-11-05 の共通スケール節更新・版表記 1.14.2 化・チャンネル分布表削除を含む現行 hash についても内容審査は未実施であり、requires_review を維持する。",
+  "notes": "PC-7 は判断記録が存在することを検査する。PUB-10 の公開承認は approved かつ同一 sha256 の decision が必要であり、この requires_review では公開不可。2026-11-05 に審査対象を現行ファイルへ再ピンした（旧 sha256 cf0a1f86a632e7b613d5f867e32c4a15e595d956651d80951782eac58bf049a6）。 2026-11-05 に共通スケール節更新・版表記 1.14.2 化・チャンネル分布表削除後の sha256 へ再ピンした（66cbc5f782b4…）。"
 }

@@ -12,8 +12,9 @@
 <p>このセクションでは、本ページの情報がどのように収集・分析されたかを公開しています。</p>
 
 <h3>研究質問</h3>
-<p>「日本国内において、検索語 THCNM（別名・商業名 THA）の検索関心と製品語の検索結果はどの程度観測されるか。その観測は何を意味し、何を意味しないか？」</p>
-<p><strong>最終更新:</strong> 2026-11-04。</p>
+<p>「日本におけるTHCNM成分へのオンライン関心は、どのように推移しているか？」</p>
+<p><strong>最終更新:</strong> 2026-11-05。</p>
+<p><strong>改訂:</strong> 2026-11-05 に 12ヶ月・3ヶ月の共通スケール（<code>CBD</code>・<code>THC</code>・<code>THCNM</code>）を追加し、単独系列との区別と5年の被覆未完了を明記した。同日、研究質問の表現を統一し、引用の版表記を現行リリース 1.14.2 に合わせた。</p>
 
 <h3>対象範囲</h3>
 <table>
@@ -34,11 +35,11 @@
     </tr>
     <tr>
       <td>対象ソース</td>
-      <td>Google Trends（単独系列・週次）、YouTube（検索結果）</td>
+      <td>Google Trends（単独系列と共通スケール）、YouTube（検索結果）</td>
     </tr>
     <tr>
       <td>単位</td>
-      <td>Google Trends は相対指数（0-100、run ごとの単独正規化）、YouTube は検索結果として返却されたレコード数。両者を合算・比較しない</td>
+      <td>Google Trends は相対指数（0-100）。単独系列は run ごとの最大値を 100 とし、共通スケールは同じ要求内の最大値を 100 とする。どちらも絶対検索数ではなく、<strong>単独系列と共通スケールは換算できない</strong>。YouTube は検索結果として返却されたレコード数。3 つを合算・比較しない</td>
     </tr>
     <tr>
       <td>対象外</td>
@@ -78,6 +79,24 @@
       <td><code>today 5-y</code>（geo JP）</td>
       <td>262 週</td>
       <td><code>20261104T115431Z-google-trends-thcnm-5y</code></td>
+    </tr>
+    <tr>
+      <td>Google Trends（共通スケール）</td>
+      <td>google-trends-mcp 0.1.1（<code>collection.core.cli collect --live</code>）</td>
+      <td><code>CBD</code> / <code>THC</code> / <code>THCNM</code>（同じ <code>compare_terms</code> 要求）</td>
+      <td>comparison-thcnm-anchored</td>
+      <td><code>today 12-m</code>（geo JP）</td>
+      <td>53 週</td>
+      <td><code>20261104T175032Z-google-trends-cannabinoid-raw-collection</code></td>
+    </tr>
+    <tr>
+      <td>Google Trends（共通スケール）</td>
+      <td>google-trends-mcp 0.1.1（<code>collection.core.cli collect --live</code>）</td>
+      <td><code>CBD</code> / <code>THC</code> / <code>THCNM</code>（同じ <code>compare_terms</code> 要求）</td>
+      <td>comparison-thcnm-anchored</td>
+      <td><code>today 3-m</code>（geo JP）</td>
+      <td>93 日</td>
+      <td><code>20261104T175220Z-google-trends-cannabinoid-raw-collection</code></td>
     </tr>
     <tr>
       <td>YouTube</td>
@@ -137,10 +156,11 @@
 <h3>再現性チェックリスト</h3>
 <ul>
   <li>run ごとに run 識別子と <code>query_id</code> を併記する（本ページの全数値の出所）。</li>
-  <li>Google Trends の窓は <code>metadata/windows/</code> の登録窓（12ヶ月 <code>2025-11-02_2026-11-08</code>、5年 <code>2021-10-31_2026-11-08</code>）で、観測範囲は返却点の範囲として別に記録する。</li>
-  <li>Google Trends は raw の <code>payload.json</code>・<code>records_thcnm.json</code>・<code>artifact-manifest.json</code>（SHA-256）を証跡とする。</li>
+  <li>Google Trends の窓は <code>metadata/windows/</code> の登録窓（12ヶ月 <code>2025-11-02_2026-11-08</code>、3ヶ月 <code>2026-08-06_2026-11-04</code>、5年 <code>2021-10-31_2026-11-08</code>）で、観測範囲は返却点の範囲として別に記録する。</li>
+  <li>Google Trends の単独系列は raw の <code>payload.json</code>・<code>records_thcnm.json</code>・<code>artifact-manifest.json</code>（SHA-256）を証跡とする。共通スケールは <code>payload.json</code>・<code>comparison_cbd-thc-thcnm.json</code>・<code>artifact-manifest.json</code>。</li>
+  <li>単独系列と共通スケールは別 run・別の正規化である。片方の値をもう片方へ換算しない。</li>
   <li>YouTube は採用宣言（<code>staging-declaration-v1</code>）と run 記録をリポジトリ側の証跡とし、payload は Git 非追跡。</li>
-  <li>平均は週次値の算術平均、非ゼロ週は値が 0 でない週数。集計は run をまたがない。</li>
+  <li>平均は週次・日次値の算術平均、非ゼロ点は値が 0 でない週数・日数。集計は run をまたがない。</li>
   <li>各検索語は単発 run で、反復実行による安定性は未測定。</li>
 </ul>
 
@@ -148,18 +168,177 @@
 <!-- ===== 独自データ：Google Trends 検索需要 ===== -->
 <div>
   <h2 id="data-search">独自データ: THCNM の Google Trends 検索需要 <span>一次データ（観測 + 派生）</span></h2>
-  <p>データソース: Google Trends via google-trends-mcp / 地域: 日本 (JP) / 検索文字列: <code>THCNM</code> / 取得日: 2026-11-04</p>
-  <p>登録文字列 <code>THCNM</code> の日本国内の検索関心度（相対指数 0-100）を、12ヶ月と5年の 2 本の単独系列として取得した。2 系列は別 run の別観測である。</p>
+  <p>データソース: Google Trends via google-trends-mcp / 地域: 日本 (JP) / 取得日: 2026-11-04</p>
+  <p>THCNM の検索関心度（相対指数 0-100）を 4 本の run で取得した。<strong>単独系列</strong>は <code>THCNM</code> だけの 12ヶ月と5年、<strong>共通スケール</strong>は <code>CBD</code>・<code>THC</code>・<code>THCNM</code> を同じ要求に含めた 12ヶ月と3ヶ月である。4 本はそれぞれ別の観測で、値をまたいで計算しない。</p>
 
   <div>
     <p><strong>用語の定義:</strong></p>
     <ul>
       <li><strong>単独系列（個別正規化値）</strong>: 各キーワードを個別に取得した系列。その run の最大値を 100 とする正規化であり、<strong>キーワード間・run 間の比較には使用できない</strong>。</li>
+      <li><strong>共通スケール</strong>: 複数語を同じ <code>compare_terms</code> 要求で取得した系列。その要求の最大値を 100 とする正規化で、<strong>同じ要求の中だけで比較できる</strong>。単独系列とは別の物差しであり、換算できない。</li>
       <li><strong>興味度スコア</strong>: Google Trends が返す相対指数（0-100）。絶対検索数ではなく、期間内の最大検索量を 100 とした相対値。</li>
       <li><strong>0 の意味</strong>: 系列の最小値（閾値未満）を表す観測値であり、検索が存在しなかったことや欠測を意味しない。</li>
-      <li><strong>窓</strong>: <code>today 12-m</code> / <code>today 5-y</code> という相対指定を、記録した reference time で登録窓に名目解決したもの。実際の境界は未検証（<code>exact_window_match: false</code>）。表の観測範囲は検索条件ではなく、返却された週次点の範囲である。</li>
+      <li><strong>窓</strong>: <code>today 12-m</code> / <code>today 3-m</code> / <code>today 5-y</code> という相対指定を、記録した reference time で登録窓に名目解決したもの。実際の境界は未検証（<code>exact_window_match: false</code>）。表の観測範囲は検索条件ではなく、返却された点の範囲である。</li>
     </ul>
   </div>
+
+  <h3>12ヶ月 共通スケール（主比較）</h3>
+  <p><code>CBD</code>・<code>THC</code>・<code>THCNM</code> を同じ <code>compare_terms</code> 要求で取得した。値は<strong>この要求の中だけで</strong>比較できる。</p>
+  <table>
+    <thead>
+      <tr>
+        <th>検索語</th>
+        <th>平均</th>
+        <th>中央値</th>
+        <th>最大</th>
+        <th>非ゼロ点</th>
+        <th>区分</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>CBD</td>
+        <td><strong>45.7925</strong></td>
+        <td>49</td>
+        <td>100（2026-05-03）</td>
+        <td>53 週</td>
+        <td>派生</td>
+      </tr>
+      <tr>
+        <td>THC</td>
+        <td><strong>11.9057</strong></td>
+        <td>13</td>
+        <td>18（2025-11-09）</td>
+        <td>53 週</td>
+        <td>派生</td>
+      </tr>
+      <tr>
+        <td>THCNM</td>
+        <td><strong>0.0000</strong></td>
+        <td>0</td>
+        <td>0</td>
+        <td>0 週</td>
+        <td>派生</td>
+      </tr>
+    </tbody>
+  </table>
+  <table>
+    <thead>
+      <tr>
+        <th>指標</th>
+        <th>値</th>
+        <th>区分</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>要求条件</td>
+        <td>geo JP / <code>today 12-m</code> / 同じ要求の語 <code>CBD</code>・<code>THC</code>・<code>THCNM</code></td>
+        <td>観測（run 記録）</td>
+      </tr>
+      <tr>
+        <td>窓</td>
+        <td><code>2025-11-02_2026-11-08</code>（週次・日曜始まり・Asia/Tokyo）</td>
+        <td>要求条件</td>
+      </tr>
+      <tr>
+        <td>観測範囲</td>
+        <td>2025-11-02 〜 2026-11-01（53 週）</td>
+        <td>派生</td>
+      </tr>
+      <tr>
+        <td>正規化</td>
+        <td>同じ要求内の最大値 = 100（CBD の 2026-05-03）</td>
+        <td>派生</td>
+      </tr>
+      <tr>
+        <td>平均の定義</td>
+        <td>週次 53 点の算術平均（小数第 4 位）</td>
+        <td>派生</td>
+      </tr>
+    </tbody>
+  </table>
+  <p><strong>出所:</strong> run <code>20261104T175032Z-google-trends-cannabinoid-raw-collection</code>（JP / <code>today 12-m</code> / 2026-11-04T17:50:32Z 収集）。</p>
+
+  <h3>3ヶ月 共通スケール（補足）</h3>
+  <p>同じ 3 語を <code>today 3-m</code> で取得した日次系列。12ヶ月とは別 run・別の正規化である。</p>
+  <table>
+    <thead>
+      <tr>
+        <th>検索語</th>
+        <th>平均</th>
+        <th>中央値</th>
+        <th>最大</th>
+        <th>非ゼロ点</th>
+        <th>区分</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>CBD</td>
+        <td><strong>52.3011</strong></td>
+        <td>51</td>
+        <td>100（2026-09-03）</td>
+        <td>93 日</td>
+        <td>派生</td>
+      </tr>
+      <tr>
+        <td>THC</td>
+        <td><strong>8.9355</strong></td>
+        <td>11</td>
+        <td>22（2026-08-05）</td>
+        <td>60 日</td>
+        <td>派生</td>
+      </tr>
+      <tr>
+        <td>THCNM</td>
+        <td><strong>0.2473</strong></td>
+        <td>0</td>
+        <td>12（2026-08-13）</td>
+        <td>11 日</td>
+        <td>派生</td>
+      </tr>
+    </tbody>
+  </table>
+  <table>
+    <thead>
+      <tr>
+        <th>指標</th>
+        <th>値</th>
+        <th>区分</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>要求条件</td>
+        <td>geo JP / <code>today 3-m</code> / 同じ要求の語 <code>CBD</code>・<code>THC</code>・<code>THCNM</code></td>
+        <td>観測（run 記録）</td>
+      </tr>
+      <tr>
+        <td>窓</td>
+        <td><code>2026-08-06_2026-11-04</code>（日次・Asia/Tokyo）</td>
+        <td>要求条件</td>
+      </tr>
+      <tr>
+        <td>観測範囲</td>
+        <td>2026-08-04 〜 2026-11-04（93 日）</td>
+        <td>派生</td>
+      </tr>
+      <tr>
+        <td>正規化</td>
+        <td>同じ要求内の最大値 = 100（CBD の 2026-09-03）</td>
+        <td>派生</td>
+      </tr>
+      <tr>
+        <td>平均の定義</td>
+        <td>日次 93 点の算術平均（小数第 4 位）</td>
+        <td>派生</td>
+      </tr>
+    </tbody>
+  </table>
+  <p><strong>出所:</strong> run <code>20261104T175220Z-google-trends-cannabinoid-raw-collection</code>（JP / <code>today 3-m</code> / 2026-11-04T17:52:20Z 収集）。</p>
+  <p><strong>THCNM の非ゼロ:</strong> 11 日。最大は 2026-08-13 の 12 で、2026-10-21 〜 2026-11-03 は 1〜2 が続く。</p>
+  <p><strong>窓と返却点の差:</strong> 要求窓の開始は 2026-08-06 だが、返却点は 2026-08-04 から始まる（collector の解決が名目値より 2 日広い）。要求と観測は別の欄に記録し、境界は未検証（<code>exact_window_match: false</code>）。</p>
 
   <h3>5年データサマリー（単独系列）</h3>
   <table>
@@ -258,9 +437,13 @@
     </tbody>
   </table>
   <p><strong>出所:</strong> run <code>20261104T115425Z-google-trends-thcnm-12m</code>（JP / <code>today 12-m</code> / 2026-11-04T11:54:26Z 収集）。窓 <code>2025-11-02_2026-11-08</code>（週次・日曜始まり・Asia/Tokyo）。平均は週次 53 点の算術平均（小数第 4 位）。</p>
+  <p><strong>初出の値について:</strong> 2026-10-18（値 47）は<strong>単独系列</strong>の値である。同じ週の 12ヶ月共通スケールでは THCNM は 0.0000 であり、別の物差しの値なので換算しない。</p>
 
-  <p><strong>観測されたこと:</strong> 2 系列とも、非ゼロの週は末尾の 3 週（2026-10-18・2026-10-25・2026-11-01）に限られ、ピークは同じ週（2026-11-01、値 100）である。12ヶ月系列は残り 50 週、5年系列は残り 259 週が 0（相対指数の最小値）である。</p>
-  <p><strong>比較しないこと:</strong> 12ヶ月平均（4.4906）と5年平均（0.9122）は、窓の長さも正規化の基準も別であるため比較できない。単独系列の値を他の化合物や他の run の値と比べない。</p>
+  <p><strong>単独系列で観測されたこと:</strong> 12ヶ月と5年のどちらも、非ゼロの週は末尾の 3 週（2026-10-18・2026-10-25・2026-11-01）だけで、ピークは同じ週（2026-11-01、値 100）である。12ヶ月は残り 50 週、5年は残り 259 週が 0（相対指数の最小値）。初出は 2026-10-18（値 47）で、これは単独系列の値である。</p>
+  <p><strong>共通スケールで観測されたこと:</strong> 12ヶ月は THCNM が全 53 週で 0 だった。同じ要求の最大値が CBD の 2026-05-03（100）なので、THCNM の検索量はその 0.5% 未満に丸められている。3ヶ月は THCNM が 11 日で非ゼロになり（最大 12、2026-08-13）、2026-10-21 以降は 1〜2 が続く。3ヶ月は窓内最大値が CBD の 2026-09-03（100）で、12ヶ月より分母が小さい。</p>
+  <p><strong>混同しないこと:</strong> 単独系列の 2026-10-18（47）と、12ヶ月共通スケールの THCNM（0.0000）は別の物差しの値である。単独系列の 47 を共通スケールへ換算したり、共通スケールの 0 を「検索が無い」と読んだりしない。0 は閾値未満に丸められた値である。</p>
+  <p><strong>比較しないこと:</strong> 単独系列どうし（12ヶ月平均 4.4906 と5年平均 0.9122）も、12ヶ月共通スケールと3ヶ月共通スケールも、窓と正規化が別なので比較できない。</p>
+  <p><strong>5年の扱い:</strong> 5年は長期比較の補助である。THCNM を含むアンカー付き（<code>CBD</code>・<code>THC</code> 同時取得）の5年共通スケール run はまだ採用されておらず、<strong>5年の共通スケール被覆は未完了</strong>である。既存の5年単独系列を共通スケールとして扱わない。</p>
   <p><strong>制約:</strong> Google Trends は相対指数であり、絶対検索数ではない。観測範囲は検索条件ではなく、返却点の範囲である。</p>
 </div>
 
@@ -449,11 +632,23 @@
       </tr>
       <tr>
         <td>窓の解決</td>
-        <td><code>today 12-m</code> / <code>today 5-y</code> は reference time で名目解決された要求であり、実際の境界は未検証（<code>exact_window_match: false</code>）。観測範囲を検索条件として読まない</td>
+        <td><code>today 12-m</code> / <code>today 3-m</code> / <code>today 5-y</code> は reference time で名目解決された要求であり、実際の境界は未検証（<code>exact_window_match: false</code>）。観測範囲を検索条件として読まない</td>
       </tr>
       <tr>
         <td>系列間比較</td>
-        <td>12ヶ月と5年は窓の長さも正規化も別で、平均を比較できない。単独系列の値を化合物間・run 間で比べない</td>
+        <td>単独系列と共通スケールは正規化が別で、換算できない。12ヶ月・3ヶ月・5年は窓も別なので、平均を比較できない。単独系列の値を化合物間・run 間で比べない</td>
+      </tr>
+      <tr>
+        <td>共通スケールの解像度</td>
+        <td>12ヶ月共通スケールの THCNM が全週 0 なのは、窓内最大値（CBD の 2026-05-03 = 100）に対して小さく、相対指数の整数に丸められたため。需要ゼロや欠測ではない</td>
+      </tr>
+      <tr>
+        <td>3ヶ月の孤立値</td>
+        <td>3ヶ月共通スケールの THCNM は 2026-08-13 だけ 12 で、前後は 0。同時期の12ヶ月単独系列（2026-08-09 の週）は 0 であり、2 つの測定は一致しない。理由は未確認で、本ページでは解釈しない</td>
+      </tr>
+      <tr>
+        <td>5年の被覆</td>
+        <td>THCNM を含むアンカー付き5年共通スケール run は未採用。既存の5年単独系列を共通スケールとして扱わない</td>
       </tr>
       <tr>
         <td>0 の意味</td>
@@ -507,12 +702,12 @@
       <tr>
         <td><strong>観測</strong></td>
         <td>run が記録した値。そのまま読む</td>
-        <td>週次の相対指数値（0-100）、返却件数 30 / 311、実行状態 SUCCEEDED</td>
+        <td>週次の相対指数値（0-100）、共通スケールの週次・日次値、返却件数 30 / 311、実行状態 SUCCEEDED</td>
       </tr>
       <tr>
         <td><strong>派生</strong></td>
         <td>観測された週次値・レコードから再計算できる値</td>
-        <td>平均 4.4906 / 0.9122、ピーク週 2026-11-01、非ゼロ週 3、観測範囲（返却点の最小・最大）、公開日の最小・最大と半開区間への正規化、重複除去後の件数</td>
+        <td>平均 4.4906 / 0.9122（単独系列）、45.7925 / 11.9057 / 0.0000 と 52.3011 / 8.9355 / 0.2473（共通スケール）、ピーク週 2026-11-01、非ゼロ週 3 / 非ゼロ日 11、観測範囲（返却点の最小・最大）、公開日の最小・最大と半開区間への正規化、重複除去後の件数</td>
       </tr>
       <tr>
         <td><strong>解釈</strong></td>
@@ -529,8 +724,8 @@
 <div>
   <h2 id="publication-status">公開状態</h2>
   <p>本ページは<strong>公開審査待ち（<code>requires_review</code>）</strong>である。公開契約 PC-7 の審査 envelope は <code>metadata/publication/research-thcnm/</code> にあり、判断状態は <code>approved</code> ではない。したがって<strong>外部公開・リリースは行っていない</strong>。</p>
-  <p>2026-11-04 に <code>validation.cli audit-publication</code> と <code>gate-publication</code> を実行した。公開契約の機械検査は本ページについて finding 0、公開適格ゲートは <code>BLOCKED</code>（PUB-04 個人データ審査、PUB-10 公開承認）であり、未承認のままである。審査の詳細と次の作業は envelope の <code>decision.json</code> / <code>evidence.json</code> に記録する。</p>
-  <p>平均・非ゼロ週・観測範囲の算出方法は <code>src/processing/gt_statistics.py</code> と同じ定義（週次値の算術平均、値が 0 でない週数、返却点の最小・最大）による。</p>
+  <p>2026-11-05 に <code>validation.cli audit-publication</code> と <code>gate-publication</code> を、共通スケール追加後の hash で実行した。公開契約の機械検査は本ページについて finding 0、公開適格ゲートは <code>BLOCKED</code>（PUB-10 公開承認が未記録）であり、未承認のままである。PUB-04（個人データ審査）・PUB-07（再配布条件）・PUB-09（集計）は PASS、PUB-01・PUB-03・PUB-06・PUB-08 は未記録の確認項目として WARNING で残る。審査の詳細と次の作業は envelope の <code>decision.json</code> / <code>evidence.json</code> に記録する。</p>
+  <p>平均・非ゼロ点・観測範囲の算出方法は、単独系列では <code>src/processing/gt_statistics.py</code> と同じ定義（週次値の算術平均、値が 0 でない週数、返却点の最小・最大）、共通スケールでは <code>comparison_cbd-thc-thcnm.json</code> の週次・日次値の算術平均（値が 0 でない点数、返却点の最小・最大）による。</p>
 </div>
 
 
@@ -540,7 +735,7 @@
   <p>
     KATO, Kyoji（2026）.<br>
     「Japan Cannabinoid Platform Trends Dataset 2026: Google Trends and YouTube Evidence from Japan」.<br>
-    Version 1.13.2<br>
+    Version 1.14.2<br>
     Routeflags Co., Ltd.<br>
     [Dataset].<br>
     DOI: <a href="https://doi.org/10.5281/zenodo.23390594">10.5281/zenodo.23390594</a>
