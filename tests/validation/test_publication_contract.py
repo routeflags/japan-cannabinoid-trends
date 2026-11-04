@@ -120,7 +120,12 @@ def _sha256(path: Path) -> str:
 
 
 def _write_envelope(
-    tmp_path: Path, path: Path, *, artifact_id: str | None = None, sha256: str | None = None
+    tmp_path: Path,
+    path: Path,
+    *,
+    artifact_id: str | None = None,
+    sha256: str | None = None,
+    decision_status: str = "requires_review",
 ) -> None:
     relative = path.relative_to(tmp_path).as_posix()
     artifact_id = artifact_id or _artifact_id(path.relative_to(tmp_path / "publication").as_posix())
@@ -164,7 +169,7 @@ def _write_envelope(
                 "decision_id": f"publication-review-{artifact_id}",
                 "artifact_id": artifact_id,
                 "artifact_sha256": sha256,
-                "status": "requires_review",
+                "status": decision_status,
                 "reviewed_at": None,
                 "reviewer": None,
                 "criteria_version": "PC-7 fixture",
@@ -183,6 +188,7 @@ def _report(
     name: str = "research_page.html",
     envelope: bool = True,
     declared_run_ids: tuple[str, ...] = (),
+    decision_status: str = "requires_review",
 ) -> dict:
     (tmp_path / "CITATION.cff").write_text(cff, encoding="utf-8")
     _catalog(tmp_path, RUN_ID)
@@ -196,7 +202,7 @@ def _report(
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(html, encoding="utf-8")
     if envelope:
-        _write_envelope(tmp_path, path)
+        _write_envelope(tmp_path, path, decision_status=decision_status)
     return build_publication_contract_report(tmp_path)
 
 
@@ -354,7 +360,7 @@ def test_all_publication_contract_rules_are_implemented(tmp_path: Path) -> None:
     report = _report(tmp_path, CONFORMING)
 
     assert report["unimplemented_rules"] == []
-    assert set(report["implemented_rules"]) == {f"PC-{index}" for index in range(1, 9)}
+    assert set(report["implemented_rules"]) == {f"PC-{index}" for index in range(1, 10)}
 
 
 def test_google_trends_section_must_name_its_run(tmp_path: Path) -> None:
@@ -450,3 +456,81 @@ def test_guide_coa_section_must_not_name_the_requester(tmp_path: Path) -> None:
     findings = _report(tmp_path, named, name="guide_cbx_rewrite.html")["findings"]
 
     assert [finding["kind"] for finding in findings] == ["guide_coa_requester_mention"]
+
+
+#: The 公開状態 statement a page makes about itself.  PC-9 compares it with the
+#: review decision: the release shipped a page that said ``requires_review``
+#: after the decision had been approved, and nothing caught it.
+STATUS_APPROVED = (
+    '<h2 id="publication-status">公開状態</h2>'
+    "<p>本ページは公開承認済み（<code>approved</code>）である。"
+    "公開適格ゲートは <code>SUPPORTED</code>。</p>"
+)
+STATUS_REQUIRES_REVIEW = (
+    '<h2 id="publication-status">公開状態</h2>'
+    "<p>本ページは公開審査待ち（<code>requires_review</code>）である。"
+    "判断状態は <code>approved</code> ではない。"
+    "したがって外部公開・リリースは行っていない。</p>"
+)
+
+
+def _with_status(section: str) -> str:
+    return CONFORMING.replace("</body>", f"{section}</body>")
+
+
+def test_approved_decision_accepts_an_approved_status_statement(tmp_path: Path) -> None:
+    """PC-9: approved decision + approved wording is the consistent pair."""
+
+    report = _report(
+        tmp_path, _with_status(STATUS_APPROVED), decision_status="approved"
+    )
+
+    assert "publication_status_contradicts_decision" not in _kinds(report)
+
+
+def test_approved_decision_rejects_a_requires_review_statement(tmp_path: Path) -> None:
+    """PC-9: the shipped bug - approved envelope, page still says waiting."""
+
+    report = _report(
+        tmp_path, _with_status(STATUS_REQUIRES_REVIEW), decision_status="approved"
+    )
+
+    assert "publication_status_contradicts_decision" in _kinds(report)
+    finding = next(
+        item for item in report["findings"]
+        if item["kind"] == "publication_status_contradicts_decision"
+    )
+    assert finding["rule"] == "PC-9"
+    assert "requires_review" in finding["detail"]
+
+
+def test_requires_review_decision_accepts_a_requires_review_statement(
+    tmp_path: Path,
+) -> None:
+    """PC-9: a negated ``approved`` is not a claim of approval."""
+
+    report = _report(
+        tmp_path, _with_status(STATUS_REQUIRES_REVIEW), decision_status="requires_review"
+    )
+
+    assert "publication_status_contradicts_decision" not in _kinds(report)
+
+
+def test_requires_review_decision_rejects_an_approved_statement(tmp_path: Path) -> None:
+    """PC-9: the other direction - page claims approval the decision lacks."""
+
+    report = _report(
+        tmp_path, _with_status(STATUS_APPROVED), decision_status="requires_review"
+    )
+
+    assert "publication_status_contradicts_decision" in _kinds(report)
+
+
+def test_a_page_without_a_publication_status_section_makes_no_claim(
+    tmp_path: Path,
+) -> None:
+    """PC-9: absence is not a contradiction; the envelope still governs."""
+
+    report = _report(tmp_path, CONFORMING, decision_status="approved")
+
+    assert "publication_status_contradicts_decision" not in _kinds(report)

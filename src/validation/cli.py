@@ -1703,6 +1703,25 @@ def cmd_audit_private_catalog(args) -> int:
     return EXIT_OK
 
 
+def _artifact_page_text(artifact) -> str | None:
+    """The artifact's own HTML, for the PC-9 status comparison.
+
+    The descriptor records the path relative to the repository root; a missing
+    file is not an error here (the audit owns the file check, and an envelope
+    copied elsewhere must still be gateable).
+    """
+
+    if not isinstance(artifact, dict):
+        return None
+    path = artifact.get("path")
+    if not isinstance(path, str) or not path:
+        return None
+    try:
+        return Path(path).read_text(encoding="utf-8")
+    except OSError:
+        return None
+
+
 def cmd_gate_publication(args) -> int:
     """Record-only G6 §10 publication eligibility gate (never publishes)."""
     try:
@@ -1726,7 +1745,7 @@ def cmd_gate_publication(args) -> int:
             return EXIT_IO
         if isinstance(loaded, dict):
             evidence = loaded
-    result = evaluate_eligibility(artifact, decision, evidence=evidence)
+    result = evaluate_eligibility(artifact, decision, evidence=evidence, page_text=_artifact_page_text(artifact))
     if args.output:
         try:
             _write_output(args.output, result)

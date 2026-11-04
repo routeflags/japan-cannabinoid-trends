@@ -9,7 +9,7 @@
   "anonymization_applied": true,
   "citations": {
     "integrity": [
-      "sha256(publication/research_thcnm.html, 2026-11-05 検算) = 184179a78abbd8eb062546e9bfdfa871ffd12e8c928ef542eb6c2268b76633f3"
+      "sha256(publication/research_thcnm.html, 2026-11-05 検算) = b3218ba0e493f5c1c1ed174d6fb0a2e0348a1fcf231798988d00e005bfc12c17"
     ],
     "publication_contract": [
       "validation.cli audit-publication --output docs/audits/publication-contract.json（2026-11-04）: 本 artifact に finding は無い（適用される PC-1〜PC-7 すべて）。PC-7 は本 envelope の存在と hash 固定を検査する。",
@@ -76,7 +76,8 @@
     ],
     "content_changes": [
       "2026-11-05: 変更内容 — 研究質問の表現を統一し、引用の版表記を 1.14.1（CITATION.cff）に更新し、公開状態の記述を 2026-11-05 の gate 結果（BLOCKED / failed PUB-10）に合わせた。データ節の数値は変更していない。",
-      "2026-11-05: 変更内容 — 12ヶ月・3ヶ月の共通スケール（CBD + THC + THCNM）を主比較・補足として追加し、単独系列の初出 2026-10-18（値 47）が単独系列の値であること、5年の共通スケール被覆が未完了であること、引用版を 1.14.2 にすること、3ヶ月の孤立値（2026-08-13 = 12）を解釈しないことを明記した。"
+      "2026-11-05: 変更内容 — 12ヶ月・3ヶ月の共通スケール（CBD + THC + THCNM）を主比較・補足として追加し、単独系列の初出 2026-10-18（値 47）が単独系列の値であること、5年の共通スケール被覆が未完了であること、引用版を 1.14.2 にすること、3ヶ月の孤立値（2026-08-13 = 12）を解釈しないことを明記した。",
+      "2026-11-05: 公開状態の記述を decision（approved）と公開適格ゲート（SUPPORTED）に合わせて訂正した。PC-9 の追加により、この不整合は audit-publication と gate-publication で検出される。"
     ]
   },
   "unrecorded": {

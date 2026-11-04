@@ -6,8 +6,8 @@
   "layer": "publication",
   "source_kind": "html",
   "storage_policy_id": "publication-html-candidate",
-  "sha256": "184179a78abbd8eb062546e9bfdfa871ffd12e8c928ef542eb6c2268b76633f3",
-  "byte_length": 34102,
+  "sha256": "b3218ba0e493f5c1c1ed174d6fb0a2e0348a1fcf231798988d00e005bfc12c17",
+  "byte_length": 34475,
   "recorded_at": "2026-11-05",
   "notes": "未公開 publication HTML（THCNM / 別名 THA）。PC-7 の審査 envelope として内容 hash を固定する。対象 publication はまだ公開していないため、decision は requires_review から開始する。2026-11-04: 各データ表に観測 / 派生の区分列を追加し、source-specific 単位（Google Trends は相対指数、YouTube は返却レコード数）と THA の同一性未確認、THC-O / THCO variant run の除外、法的地位を判定しないことを明記した後の hash。 2026-11-05、研究質問の統一・版表記 1.14.1 化・YouTube 動画単位行の削除・Google Trends の要求条件/観測範囲の分離および出所追記の後の hash（内容承認ではなく審査対象の再ピン）。 2026-11-05: 12ヶ月・3ヶ月の共通スケール（CBD + THC + THCNM）を追加し、単独系列との区別・5年の共通スケール被覆未完了・引用版 1.14.2 を反映した後の hash（内容承認ではなく審査対象の再ピン）。"
 }

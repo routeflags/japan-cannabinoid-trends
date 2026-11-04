@@ -1,7 +1,7 @@
 {
   "name": "japan-cannabinoid-trends",
   "title": "Japan Cannabinoid Platform Trends Dataset 2026: Google Trends and YouTube Evidence from Japan",
-  "version": "1.14.2",
+  "version": "1.14.3",
   "description": "日本国内における各カンナビノイド成分の国内トレンドと、Google Trends / YouTube で観測できる差異を記録するデータセット。Google Trends 5年サマリーと採用済み YouTube 検索結果集計を source-specific units のまま収録する cannabinoid-platform-trends study に加え、v1.14.1 は THCNM の Google Trends 12ヶ月・5年 raw と採用済み YouTube 集計、THCO 表記バリアントの観測記録を追加する（THCNM は THA 表記でも流通する名称で、両者の化学的同一性は未確認）。git_tracked の Google Trends raw はクリーンアーカイブに収録し、行単位の YouTube / X raw は非公開のままとする。X はこのリリーススコープから除外する。",
   "homepage": "https://github.com/routeflags/japan-cannabinoid-trends",
   "license": "CC-BY-4.0",
@@ -359,5 +359,5 @@
     }
   ],
   "doi": "10.5281/zenodo.23390594",
-  "citation": "KATO, Kyoji. (2026). Japan Cannabinoid Platform Trends Dataset 2026: Google Trends and YouTube Evidence from Japan. Version 1.14.2. Routeflags Co., Ltd. [Dataset]. DOI: 10.5281/zenodo.23390594"
+  "citation": "KATO, Kyoji. (2026). Japan Cannabinoid Platform Trends Dataset 2026: Google Trends and YouTube Evidence from Japan. Version 1.14.3. Routeflags Co., Ltd. [Dataset]. DOI: 10.5281/zenodo.23390594"
 }

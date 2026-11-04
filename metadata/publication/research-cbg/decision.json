@@ -3,12 +3,12 @@
   "record": "publication_decision",
   "decision_id": "publication-review-research-cbg",
   "artifact_id": "research-cbg",
-  "artifact_sha256": "32dd2769119726a2fbc60c2656b9b3e9cb2d90036fc00b029f489da650906bee",
+  "artifact_sha256": "052e0b117e1c5edd99b18ddab64130850d2ed8ceef59f02656fccf3799f9ac99",
   "status": "approved",
   "reviewed_at": "2026-11-05",
   "reviewer": "owner (thread instruction 2026-11-05: PUB-04・PUB-10 を含む全項目の対応とリリースまでを指示)",
   "criteria_version": "PC-7 / publication-contract-v1.0.0 (2026-10-15)",
   "recorded_at": "2026-11-05",
   "basis": "owner が 2026-11-05 のスレッドで、PUB-04・PUB-10 を含む全項目の対応とリリースまでを明示的に指示した。承認の対象は現行 sha256 の artifact（publication/research_cbg.html、2026-11-05 時点）。PUB-04 は evidence の personal_data_review_basis に、PUB-06〜PUB-09 は同 evidence の各 basis に記録した。",
-  "notes": "PC-7 は判断記録が存在することを検査する。PUB-10 は approved かつ同一 sha256 の decision で PASS。承認は現行 hash に固定され、artifact が変われば自動的には引き継がれない。2026-11-05 の内容変更（共通スケール節の実測反映・版表記 1.14.2・YouTube 動画単位行とチャンネル分布表の削除）に対する承認である。"
+  "notes": "PC-7 は判断記録が存在することを検査する。PUB-10 は approved かつ同一 sha256 の decision で PASS。承認は現行 hash に固定され、artifact が変われば自動的には引き継がれない。2026-11-05 の内容変更（共通スケール節の実測反映・版表記 1.14.2・YouTube 動画単位行とチャンネル分布表の削除）に対する承認である。 2026-11-05 の v1.14.3 準備（版表記 1.14.3・THCNM 公開状態の訂正）後の hash に再固定した。"
 }

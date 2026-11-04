@@ -14,7 +14,7 @@
 <h3>研究質問</h3>
 <p>「日本におけるTHCNM成分へのオンライン関心は、どのように推移しているか？」</p>
 <p><strong>最終更新:</strong> 2026-11-05。</p>
-<p><strong>改訂:</strong> 2026-11-05 に 12ヶ月・3ヶ月の共通スケール（<code>CBD</code>・<code>THC</code>・<code>THCNM</code>）を追加し、単独系列との区別と5年の被覆未完了を明記した。同日、研究質問の表現を統一し、引用の版表記を現行リリース 1.14.2 に合わせた。</p>
+<p><strong>改訂:</strong> 2026-11-05 に 12ヶ月・3ヶ月の共通スケール（<code>CBD</code>・<code>THC</code>・<code>THCNM</code>）を追加し、単独系列との区別と5年の被覆未完了を明記した。同日、研究質問の表現を統一し、引用の版表記を現行リリースに合わせた。公開状態の記述を decision（<code>approved</code>）と公開適格ゲート（<code>SUPPORTED</code>）に合わせて訂正した。</p>
 
 <h3>対象範囲</h3>
 <table>
@@ -723,8 +723,9 @@
 <!-- ===== 公開状態 ===== -->
 <div>
   <h2 id="publication-status">公開状態</h2>
-  <p>本ページは<strong>公開審査待ち（<code>requires_review</code>）</strong>である。公開契約 PC-7 の審査 envelope は <code>metadata/publication/research-thcnm/</code> にあり、判断状態は <code>approved</code> ではない。したがって<strong>外部公開・リリースは行っていない</strong>。</p>
-  <p>2026-11-05 に <code>validation.cli audit-publication</code> と <code>gate-publication</code> を、共通スケール追加後の hash で実行した。公開契約の機械検査は本ページについて finding 0、公開適格ゲートは <code>BLOCKED</code>（PUB-10 公開承認が未記録）であり、未承認のままである。PUB-04（個人データ審査）・PUB-07（再配布条件）・PUB-09（集計）は PASS、PUB-01・PUB-03・PUB-06・PUB-08 は未記録の確認項目として WARNING で残る。審査の詳細と次の作業は envelope の <code>decision.json</code> / <code>evidence.json</code> に記録する。</p>
+  <p>本ページは<strong>公開承認済み（<code>approved</code>）</strong>である。公開契約 PC-7 の審査 envelope は <code>metadata/publication/research-thcnm/</code> にあり、<code>decision.json</code> の status は <code>approved</code>、<code>artifact_sha256</code> は現行 HTML の SHA-256 と一致する。</p>
+  <p>2026-11-05 に <code>validation.cli audit-publication</code> と <code>gate-publication</code> を現行 hash で実行した。公開契約の機械検査は本ページについて finding 0、公開適格ゲートは <code>SUPPORTED</code>（PUB-01〜PUB-10 がすべて PASS、WARNING なし）。PUB-04（個人データ審査）は本文・表・画像・リンクを走査し、メールアドレス・@ハンドル・10 桁以上の識別子・行単位の投稿/動画の行が無いことを確認して記録した。PUB-10（公開承認）は owner の 2026-11-05 指示を現行 hash に固定して記録した。根拠は envelope の <code>decision.json</code> / <code>evidence.json</code> にある。</p>
+  <p>公開承認を <strong>v1.14.2</strong> で固定し、本節の記述を現行の状態に合わせた版を <strong>v1.14.3</strong> としてリリースする。</p>
   <p>平均・非ゼロ点・観測範囲の算出方法は、単独系列では <code>src/processing/gt_statistics.py</code> と同じ定義（週次値の算術平均、値が 0 でない週数、返却点の最小・最大）、共通スケールでは <code>comparison_cbd-thc-thcnm.json</code> の週次・日次値の算術平均（値が 0 でない点数、返却点の最小・最大）による。</p>
 </div>
 
@@ -735,7 +736,7 @@
   <p>
     KATO, Kyoji（2026）.<br>
     「Japan Cannabinoid Platform Trends Dataset 2026: Google Trends and YouTube Evidence from Japan」.<br>
-    Version 1.14.2<br>
+    Version 1.14.3<br>
     Routeflags Co., Ltd.<br>
     [Dataset].<br>
     DOI: <a href="https://doi.org/10.5281/zenodo.23390594">10.5281/zenodo.23390594</a>

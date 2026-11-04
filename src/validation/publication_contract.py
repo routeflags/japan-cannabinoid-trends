@@ -56,6 +56,13 @@ Implemented (mechanical only, no judgement)
   parts of ``generate-compound-guide`` (JSON-LD blocks, H1, guide sections,
   required disclosure / limitation markers, FAQ length).  Tone, judgement and
   scientific adequacy remain human review items.
+- PC-9 publication-status statement: a page that carries a 公開状態 section must
+  not tell its readers a review state the decision contradicts.  An ``approved``
+  artifact may not say ``requires_review`` / ``BLOCKED`` / unpublished, and a
+  ``requires_review`` artifact may not say approved / ``SUPPORTED``.  The same
+  comparison is what ``gate-publication`` applies to PUB-10, so the page and the
+  envelope cannot drift apart silently.  A page without the section makes no
+  claim and is not checked here.
 
 Deliberately not implemented: none.  If a publication rule cannot be checked
 mechanically, it must appear as human review evidence in the PC-7 envelope, not
@@ -75,6 +82,28 @@ REPORT_SCHEMA_VERSION = "1.0.0"
 
 #: The note a page must carry when it cites the retired YouTube Data API v3.
 V3_POLICY_MARKER = "方針判断により使用を取り止め"
+
+#: Section id a page uses to state its own publication status (PC-9).
+PUBLICATION_STATUS_SECTION_ID = "publication-status"
+
+#: Wording that asserts a review state inside that section.  The two groups must
+#: not contradict the decision; a page that asserts both is telling its readers
+#: two different things and is reported either way.
+APPROVED_STATUS_MARKERS = ("approved", "SUPPORTED", "公開承認済み")
+UNAPPROVED_STATUS_MARKERS = (
+    "requires_review",
+    "BLOCKED",
+    "公開審査待ち",
+    "未公開",
+    "リリースは行っていない",
+)
+
+#: A negated approval is not an approval: the old 公開状態 wording read
+#: "判断状態は approved ではない", which names the token while asserting the
+#: opposite.  Strip the negated span before reading the markers.
+_NEGATED_APPROVAL_RE = re.compile(
+    r"(?:approved|SUPPORTED|公開承認済み)\s*(?:ではない|ではありません|でない|ではない。)"
+)
 
 #: Post-record field names from the now banned per-post X dataset.  Naming three or
 #: more of them in one paragraph describes the post-record shape, which the
@@ -202,6 +231,93 @@ def _sections(html: str) -> list[tuple[str, str]]:
 
 def _reading(path: Path) -> str:
     return path.read_text(encoding="utf-8")
+
+
+def publication_status_claim(html: str) -> dict | None:
+    """What a page's 公開状態 section tells its readers (PC-9).
+
+    Takes the raw page: the status tokens usually sit inside ``<code>``, and
+    ``_strip_non_content`` (used by the post-handle rule) removes those blocks.
+    The audit and the gate must read the same text, so the tag stripping here is
+    the only normalisation.
+
+    Returns ``None`` when the page has no such section: absence is not a claim,
+    and the review state then lives only in the envelope.  ``state`` is one of
+    ``approved``, ``requires_review``, ``mixed`` (the section asserts both) or
+    ``unstated``.
+    """
+
+    section = next(
+        (content for identifier, content in _sections(html)
+         if identifier == PUBLICATION_STATUS_SECTION_ID),
+        None,
+    )
+    if section is None:
+        return None
+    text = re.sub(r"<[^>]+>", " ", section)
+    text = _NEGATED_APPROVAL_RE.sub(" ", text)
+    approved = [marker for marker in APPROVED_STATUS_MARKERS if marker in text]
+    unapproved = [marker for marker in UNAPPROVED_STATUS_MARKERS if marker in text]
+    if approved and unapproved:
+        state = "mixed"
+    elif approved:
+        state = "approved"
+    elif unapproved:
+        state = "requires_review"
+    else:
+        state = "unstated"
+    return {"state": state, "approved_markers": approved, "unapproved_markers": unapproved}
+
+
+def publication_status_contradiction(
+    page_text: str | None, decision: dict | None
+) -> str | None:
+    """The one comparison PC-9 (audit) and PUB-10 (gate) both apply.
+
+    A page cannot be approved in its envelope while telling readers it is waiting
+    for review, and cannot claim approval while the decision still requires
+    review.  Returns a detail string when the two disagree, otherwise ``None``.
+    """
+
+    if not page_text or not isinstance(decision, dict):
+        return None
+    claim = publication_status_claim(page_text)
+    if claim is None or claim["state"] == "unstated":
+        return None
+    status = decision.get("status")
+    if status == "approved" and claim["state"] in ("requires_review", "mixed"):
+        return (
+            "decision is approved but the 公開状態 section says "
+            + ", ".join(claim["unapproved_markers"])
+        )
+    if status == "requires_review" and claim["state"] in ("approved", "mixed"):
+        return (
+            "decision is requires_review but the 公開状態 section says "
+            + ", ".join(claim["approved_markers"])
+        )
+    return None
+
+
+def _publication_status_findings(
+    path: Path, repo_root: Path, html: str, relative: str
+) -> list[dict]:
+    """PC-9: the page's own review statement must agree with its decision."""
+
+    artifact_id = _publication_artifact_id(path, repo_root)
+    decision, _ = _load_json_document(
+        repo_root / "metadata" / "publication" / artifact_id / "decision.json"
+    )
+    detail = publication_status_contradiction(html, decision)
+    if detail is None:
+        return []
+    return [
+        {
+            "rule": "PC-9",
+            "kind": "publication_status_contradicts_decision",
+            "path": relative,
+            "detail": detail,
+        }
+    ]
 
 
 def _sha256(path: Path) -> str:
@@ -419,6 +535,7 @@ def _artifact_findings(
         findings.append({"rule": rule, "kind": kind, "path": relative, "detail": detail})
 
     findings.extend(_review_envelope_findings(path, repo_root))
+    findings.extend(_publication_status_findings(path, repo_root, raw, relative))
     findings.extend(_guide_structure_findings(path, repo_root, raw, html))
 
     # PC-1 - the release this artifact presents.
@@ -660,7 +777,7 @@ def build_publication_contract_report(repo_root: Path) -> dict:
             "by_rule": count("rule"),
             "by_kind": count("kind"),
         },
-        "implemented_rules": ["PC-1", "PC-2", "PC-3", "PC-4", "PC-5", "PC-6", "PC-7", "PC-8"],
+        "implemented_rules": ["PC-1", "PC-2", "PC-3", "PC-4", "PC-5", "PC-6", "PC-7", "PC-8", "PC-9"],
         "unimplemented_rules": list(UNIMPLEMENTED),
         "findings": findings,
         "declared_gaps": declared_gaps,

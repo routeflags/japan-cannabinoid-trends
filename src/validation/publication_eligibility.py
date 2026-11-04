@@ -31,6 +31,7 @@ from __future__ import annotations
 from copy import deepcopy
 from pathlib import Path
 
+from validation.publication_contract import publication_status_contradiction
 from validation.semantic import scan_for_secrets
 from validation.storage_policy import can_publish, check_publication
 
@@ -62,8 +63,15 @@ def evaluate_eligibility(
     decision: dict | None,
     *,
     evidence: dict | None = None,
+    page_text: str | None = None,
 ) -> dict:
-    """Evaluate §10.2 for one artifact (no writes, no publication)."""
+    """Evaluate §10.2 for one artifact (no writes, no publication).
+
+    ``page_text`` is optional: when the artifact file is available the gate also
+    applies the PC-9 comparison (the page's own 公開状態 statement must agree
+    with the decision).  The audit always has the file; the gate gets it from
+    the CLI, so an envelope moved away from its page is not failed on absence.
+    """
     evidence = deepcopy(evidence) if isinstance(evidence, dict) else {}
     artifact = deepcopy(artifact) if isinstance(artifact, dict) else artifact
     decision = deepcopy(decision) if isinstance(decision, dict) else decision
@@ -125,9 +133,14 @@ def evaluate_eligibility(
         checks.append(_result("PUB-09", PUB_CHECKS[8][1], status="FAIL", detail="required anonymization missing; publication refused"))
     else:
         checks.append(_result("PUB-09", PUB_CHECKS[8][1], status="WARNING", detail="anonymization state unknown; reviewer must confirm"))
-    # PUB-10: approval recorded and pinned to this exact artifact (§11).
+    # PUB-10: approval recorded and pinned to this exact artifact (§11).  The
+    # artifact's own 公開状態 statement must agree with the decision: an
+    # approved envelope cannot ship a page that still says requires_review.
     pub_issues = check_publication(artifact if isinstance(artifact, dict) else {}, decision)
-    if isinstance(artifact, dict) and can_publish(artifact, decision):
+    contradiction = publication_status_contradiction(page_text, decision)
+    if contradiction is not None:
+        checks.append(_result("PUB-10", PUB_CHECKS[9][1], status="FAIL", detail=contradiction))
+    elif isinstance(artifact, dict) and can_publish(artifact, decision):
         checks.append(_result("PUB-10", PUB_CHECKS[9][1], status="PASS", detail="approved decision pins this artifact hash"))
     elif decision is None:
         checks.append(_result("PUB-10", PUB_CHECKS[9][1], status="FAIL", detail="no publication decision; publication refused (G6-T07)"))

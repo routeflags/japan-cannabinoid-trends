@@ -20,7 +20,7 @@
   "anonymization_basis": "Requester/client identity is suppressed from the publication layer; no person-level dataset is published.",
   "citations": {
     "integrity": [
-      "sha256(publication/guide_cbx_rewrite.html, 2026-11-05 検算) = 0c5b69b7e30185bb8696bc8ee560fdbebc6af8b5cd9b2fccaa8ed8040b1014df"
+      "sha256(publication/guide_cbx_rewrite.html, 2026-11-05 検算) = 9c86b7c6a8d9a3f60b59380642a18ac6b088f56fe4563f4fd297bbd926f2ef88"
     ],
     "publication_contract": [
       "validation.cli audit-publication（2026-10-15）: PC-1〜PC-8 の機械検査対象。PC-7 は本 envelope の存在と hash 固定を検査する。"

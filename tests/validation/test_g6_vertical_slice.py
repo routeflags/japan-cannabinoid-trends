@@ -322,3 +322,57 @@ def test_backend_rejects_escaping_ids(tmp_path):
     backend = LocalFilesystemBackend(tmp_path)
     with pytest.raises(ValueError):
         backend.put_immutable("../escape", b"x")
+
+
+# ---------------------------------------------------------------------------
+# PUB-10 / PC-9: the artifact's own 公開状態 statement must agree with the
+# decision.  An approved envelope cannot ship a page that still says
+# requires_review (this shipped once in v1.14.2 and is what PC-9 now catches).
+# ---------------------------------------------------------------------------
+
+_STATUS_APPROVED = (
+    '<h2 id="publication-status">公開状態</h2>'
+    "<p>公開承認済み（<code>approved</code>）。ゲートは <code>SUPPORTED</code>。</p>"
+)
+_STATUS_REQUIRES_REVIEW = (
+    '<h2 id="publication-status">公開状態</h2>'
+    "<p>公開審査待ち（<code>requires_review</code>）。判断状態は <code>approved</code> ではない。</p>"
+)
+
+
+def test_approved_decision_rejects_a_page_that_says_requires_review():
+    result = evaluate_eligibility(
+        _artifact(), _approved(), evidence=_full_evidence(), page_text=_STATUS_REQUIRES_REVIEW
+    )
+
+    assert result["verdict"] == "BLOCKED"
+    assert result["failed"] == ["PUB-10"]
+    detail = next(check for check in result["checks"] if check["id"] == "PUB-10")["detail"]
+    assert "公開状態" in detail
+
+
+def test_approved_decision_accepts_a_page_that_says_approved():
+    result = evaluate_eligibility(
+        _artifact(), _approved(), evidence=_full_evidence(), page_text=_STATUS_APPROVED
+    )
+
+    assert result["verdict"] == "SUPPORTED"
+
+
+def test_requires_review_decision_rejects_a_page_that_claims_approval():
+    decision = _approved()
+    decision["status"] = "requires_review"
+    result = evaluate_eligibility(
+        _artifact(), decision, evidence=_full_evidence(), page_text=_STATUS_APPROVED
+    )
+
+    assert result["verdict"] == "BLOCKED"
+    assert result["failed"] == ["PUB-10"]
+
+
+def test_page_without_a_status_section_is_judged_by_the_envelope_only():
+    result = evaluate_eligibility(
+        _artifact(), _approved(), evidence=_full_evidence(), page_text="<html><body></body></html>"
+    )
+
+    assert result["verdict"] == "SUPPORTED"

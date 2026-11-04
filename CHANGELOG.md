@@ -7,6 +7,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.14.3] - 2026-11-05
+
+### Fixed
+- `research_thcnm.html` still said `requires_review` / `BLOCKED` / unpublished
+  after its decision had been approved. The 公開状態 section now states the
+  actual state: decision `approved`, gate `SUPPORTED` (PUB-01..PUB-10 pass),
+  PUB-04 personal-data review and PUB-10 approval recorded, released as v1.14.2
+  and this patch.
+
+### Added
+- PC-9 publication-status consistency: a page's 公開状態 section must not
+  contradict its `decision.json`. `audit-publication` reports the
+  contradiction, and `gate-publication` fails PUB-10, when an approved artifact
+  says `requires_review` / `BLOCKED` / unpublished, or a `requires_review`
+  artifact says approved / `SUPPORTED`. One implementation
+  (`validation.publication_contract.publication_status_contradiction`) backs
+  both surfaces; a page without the section makes no claim and is not checked.
+
+### Changed
+- All 16 publication artifacts, `CITATION.cff`, `metadata/datapackage.json` and
+  `methodology.md` present version 1.14.3; every review envelope is re-pinned to
+  the new artifact hash with the decision still `approved`.
+
+---
+
 ## [1.14.2] - 2026-11-05
 
 ### Added
