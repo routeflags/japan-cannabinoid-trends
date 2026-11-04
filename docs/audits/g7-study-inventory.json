@@ -41,20 +41,21 @@
       "research_questions_quoted": [
         "日本におけるカンナビノイド成分へのオンライン関心は、どのように推移しているか？"
       ],
-      "run_count": 71,
-      "catalog_entry_count": 106,
+      "run_count": 74,
+      "catalog_entry_count": 110,
       "layout": [
         "README.md",
         "data",
         "metadata",
         "methodology.md"
       ],
-      "data_file_count": 271,
+      "data_file_count": 281,
       "has_data_raw": true,
-      "data_raw_file_count": 268,
+      "data_raw_file_count": 278,
       "sources": [
         "google-trends",
-        "google-trends-mcp"
+        "google-trends-mcp",
+        "youtube"
       ],
       "compound_ids": [
         "compound_cbd",
@@ -87,6 +88,7 @@
         "comparison-5y-setB",
         "comparison-5y-setC",
         "comparison-5y-setD",
+        "comparison-5y-thcnm",
         "comparison-cbx-bridge",
         "comparison-thcnm-anchored",
         "crdh-general-ja",
@@ -116,9 +118,12 @@
         "today 5-y"
       ],
       "measurement_ids": [
-        "search_interest_index"
+        "search_interest_index",
+        "video_publication_count"
       ],
       "window_ids": [
+        "2006-09-05T00:00:00Z_2026-11-02T00:00:00Z",
+        "2013-06-25T00:00:00Z_2026-09-20T00:00:00Z",
         "2021-10-10_2026-10-12",
         "2021-10-15T04:28:57Z_2026-10-15T04:28:57Z",
         "2021-10-17_2026-10-18",
@@ -455,7 +460,7 @@
       ]
     }
   ],
-  "raw_file_count": 270,
+  "raw_file_count": 280,
   "raw_modified": false,
   "raw_combined_sha256": "87d9ebe28808e8d630571dd1e694c3e7996b64025a20452b69c54b5f2bd20fb6",
   "note": "non-destructive: study boundaries intact, raw and old metadata only read"

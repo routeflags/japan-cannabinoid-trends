@@ -3,7 +3,7 @@
   "profile": "legacy_audit",
   "schema_id": "collection-run-v1",
   "target_glob": "datasets/**/run_metadata.json",
-  "count": 71,
+  "count": 74,
   "raw_modified": false,
   "runs": [
     {
@@ -952,6 +952,16 @@
     },
     {
       "profile": "legacy_audit",
+      "run_id": "20261104T174040Z-google-trends-cannabinoid-raw-collection",
+      "status": "complete",
+      "missing_fields": [],
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261104T174040Z-google-trends-cannabinoid-raw-collection/run_metadata.json",
+      "sha256": "ae7a8a1456d8fbeb98551f048782b01c25893249812cd8405ceac93891d07661",
+      "sha256_after": "ae7a8a1456d8fbeb98551f048782b01c25893249812cd8405ceac93891d07661",
+      "unchanged": true
+    },
+    {
+      "profile": "legacy_audit",
       "run_id": "20261104T175032Z-google-trends-cannabinoid-raw-collection",
       "status": "complete",
       "missing_fields": [],
@@ -968,6 +978,26 @@
       "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261104T175220Z-google-trends-cannabinoid-raw-collection/run_metadata.json",
       "sha256": "d554560ea5d23539f14fc3e5673b70217e7107b21f6bcddc5a59f6861d9f2c3f",
       "sha256_after": "d554560ea5d23539f14fc3e5673b70217e7107b21f6bcddc5a59f6861d9f2c3f",
+      "unchanged": true
+    },
+    {
+      "profile": "legacy_audit",
+      "run_id": "20261101T085920Z-youtube-cannabinoid-raw-collection",
+      "status": "complete",
+      "missing_fields": [],
+      "path": "datasets/cannabinoid-raw-collection/data/raw/youtube/20261101T085920Z-youtube-cannabinoid-raw-collection/run_metadata.json",
+      "sha256": "db342e90f39ab12ba1890a3465da257b718ce8417ddd4f278eb41734bf5df9b4",
+      "sha256_after": "db342e90f39ab12ba1890a3465da257b718ce8417ddd4f278eb41734bf5df9b4",
+      "unchanged": true
+    },
+    {
+      "profile": "legacy_audit",
+      "run_id": "20261101T091646Z-youtube-cannabinoid-raw-collection",
+      "status": "complete",
+      "missing_fields": [],
+      "path": "datasets/cannabinoid-raw-collection/data/raw/youtube/20261101T091646Z-youtube-cannabinoid-raw-collection/run_metadata.json",
+      "sha256": "b14f08b16294243f394b4758757e43b5f7dbd7188ff7a1ae90def894eebc6e32",
+      "sha256_after": "b14f08b16294243f394b4758757e43b5f7dbd7188ff7a1ae90def894eebc6e32",
       "unchanged": true
     }
   ]

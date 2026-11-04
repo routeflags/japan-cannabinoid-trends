@@ -4,8 +4,8 @@
   "schema_id": "query-registry-v1",
   "registry_version": "1.0.0",
   "target_glob": "datasets/**/run_metadata.json",
-  "count": 71,
-  "query_count": 117,
+  "count": 74,
+  "query_count": 120,
   "raw_modified": false,
   "states": {
     "exact_match": "the collected text equals a registered canonical_text",
@@ -15,7 +15,7 @@
     "unmapped": "no registered correspondence and no compound token"
   },
   "summary": {
-    "exact_match": 111,
+    "exact_match": 114,
     "variant_match": 5,
     "semantic_match_candidate": 1,
     "ambiguous": 0,
@@ -2072,6 +2072,28 @@
       ]
     },
     {
+      "run_id": "20261104T174040Z-google-trends-cannabinoid-raw-collection",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261104T174040Z-google-trends-cannabinoid-raw-collection/run_metadata.json",
+      "status": "read",
+      "sha256": "ae7a8a1456d8fbeb98551f048782b01c25893249812cd8405ceac93891d07661",
+      "sha256_after": "ae7a8a1456d8fbeb98551f048782b01c25893249812cd8405ceac93891d07661",
+      "unchanged": true,
+      "extracted_query_count": 1,
+      "queries": [
+        {
+          "text": "CBD vs THC vs THCNM",
+          "state": "exact_match",
+          "classification": "relevant",
+          "query_id": "comparison-thcnm-anchored",
+          "variant_id": null,
+          "detail": "registered_canonical",
+          "source_fields": [
+            "query_provenance.submitted_query"
+          ]
+        }
+      ]
+    },
+    {
       "run_id": "20261104T175032Z-google-trends-cannabinoid-raw-collection",
       "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261104T175032Z-google-trends-cannabinoid-raw-collection/run_metadata.json",
       "status": "read",
@@ -2107,6 +2129,50 @@
           "state": "exact_match",
           "classification": "relevant",
           "query_id": "comparison-thcnm-anchored",
+          "variant_id": null,
+          "detail": "registered_canonical",
+          "source_fields": [
+            "query_provenance.submitted_query"
+          ]
+        }
+      ]
+    },
+    {
+      "run_id": "20261101T085920Z-youtube-cannabinoid-raw-collection",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/youtube/20261101T085920Z-youtube-cannabinoid-raw-collection/run_metadata.json",
+      "status": "read",
+      "sha256": "db342e90f39ab12ba1890a3465da257b718ce8417ddd4f278eb41734bf5df9b4",
+      "sha256_after": "db342e90f39ab12ba1890a3465da257b718ce8417ddd4f278eb41734bf5df9b4",
+      "unchanged": true,
+      "extracted_query_count": 1,
+      "queries": [
+        {
+          "text": "HHC",
+          "state": "exact_match",
+          "classification": "relevant",
+          "query_id": "hhc-general-ja",
+          "variant_id": null,
+          "detail": "registered_canonical",
+          "source_fields": [
+            "query_provenance.submitted_query"
+          ]
+        }
+      ]
+    },
+    {
+      "run_id": "20261101T091646Z-youtube-cannabinoid-raw-collection",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/youtube/20261101T091646Z-youtube-cannabinoid-raw-collection/run_metadata.json",
+      "status": "read",
+      "sha256": "b14f08b16294243f394b4758757e43b5f7dbd7188ff7a1ae90def894eebc6e32",
+      "sha256_after": "b14f08b16294243f394b4758757e43b5f7dbd7188ff7a1ae90def894eebc6e32",
+      "unchanged": true,
+      "extracted_query_count": 1,
+      "queries": [
+        {
+          "text": "HHC リキッド",
+          "state": "exact_match",
+          "classification": "relevant",
+          "query_id": "hhc-liquid-ja",
           "variant_id": null,
           "detail": "registered_canonical",
           "source_fields": [

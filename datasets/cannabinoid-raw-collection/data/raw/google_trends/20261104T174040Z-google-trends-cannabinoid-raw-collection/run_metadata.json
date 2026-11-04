@@ -1,0 +1,88 @@
+{
+  "schema_version": "1.0.0",
+  "run_id": "20261104T174040Z-google-trends-cannabinoid-raw-collection",
+  "study_id": "cannabinoid-raw-collection",
+  "source_id": "google-trends",
+  "purpose": "THCNM（別名 THA）を5年の共通スケール被覆に加える compare_terms 計画（ISS-20261105-GT-030、owner 決定 B）。単独系列は各語のピーク=100 に正規化されるため化合物間比較ができない。アンカー CBD・THC を同一リクエストに含め、ポリシー窓 2021-10-31_2026-11-08・geo JP・locale ja で測る。現行窓の setD も THCNM を含むが、この 3 語要求は THCNM 専用の独立した共通スケール系列を与える（同じアンカー・窓なので setD と橋渡しできる）。この run が採用されるまで、監査は THCNM を common-scale 被覆 missing として報告する。",
+  "collector": {
+    "collector_id": "google-trends-mcp",
+    "adapter_id": "google-trends-mcp@1",
+    "version": "0.1.1",
+    "provider": "mcp",
+    "transport": "mcp",
+    "external_id": "google-trends-mcp"
+  },
+  "collection_started_at": "2026-11-04T17:40:40Z",
+  "collection_finished_at": "2026-11-04T17:40:41Z",
+  "query_provenance": {
+    "query_id": "comparison-5y-thcnm",
+    "submitted_query": "CBD vs THC vs THCNM",
+    "compound_id": "compound_thcnm",
+    "query_registry_version": "1.0.0"
+  },
+  "temporal_provenance": {
+    "window_id": "2021-10-31_2026-11-08",
+    "requested_start": "2021-10-31T00:00:00Z",
+    "requested_end_exclusive": "2026-11-08T00:00:00Z",
+    "granularity": "week",
+    "timezone": "Asia/Tokyo",
+    "week_start": "sunday",
+    "collector_window_type": "relative_duration",
+    "boundary_semantics": "relative timeframe resolved by the collector at request time; weekly buckets (Sunday start) label the series; observed range 2021-10-31..2026-11-01",
+    "exact_window_match": false,
+    "observed_min_timestamp": "2021-10-31T00:00:00Z",
+    "observed_max_timestamp": "2026-11-01T00:00:00Z",
+    "reference_time": "2026-11-04T17:40:40.028879Z",
+    "limitations": [
+      "collector window type is relative_duration; the absolute requested window cannot be expressed exactly (boundary semantics unverified, c.md §6.2)",
+      "'today 5-y' is resolved nominally at the recorded reference time; Google Trends resolves it at request time and the actual boundaries are unverified (c.md §6.3)",
+      "coverage is recorded as partial/unknown until boundary verification (c.md §9)"
+    ],
+    "submitted_parameters": {
+      "tool": "compare_terms",
+      "terms": [
+        "CBD",
+        "THC",
+        "THCNM"
+      ],
+      "geo": "JP",
+      "timeframe": "today 5-y"
+    }
+  },
+  "execution": {
+    "status": "success",
+    "returned_count": 262,
+    "errors": [],
+    "pagination_exhausted": true
+  },
+  "artifact_manifest": "artifact-manifest.json",
+  "comparison": {
+    "comparison_scale": "common_scale",
+    "policy_id": "gt-5y-common-scale-cbd-thc",
+    "anchor_query_ids": [
+      "cbd-general-ja",
+      "thc-general-ja"
+    ],
+    "anchor_terms": [
+      "CBD",
+      "THC"
+    ],
+    "locale": "ja",
+    "cross_compound_comparable": true,
+    "geo": "JP",
+    "timeframe": "today 5-y"
+  },
+  "environment": {
+    "collection_core_version": "1.0.0",
+    "adapter_contract_version": "1.0.0",
+    "runtime_version": "python-3.14.6",
+    "adapter": {
+      "tool": "compare_terms",
+      "package": "google-trends-mcp",
+      "version": "0.1.1",
+      "collection_mode": "live",
+      "transport": "mcp"
+    },
+    "code_commit": "f179c1678513a16e93807fdc931e6aa6cc06f1df"
+  }
+}
