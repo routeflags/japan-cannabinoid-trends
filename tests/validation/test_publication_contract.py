@@ -151,9 +151,20 @@ def _write_envelope(
                 "schema_version": "1.0.0",
                 "record": "publication_review_evidence",
                 "artifact_id": artifact_id,
+                "content_review": {
+                    "checklist_id": "fixture-checklist",
+                    "checklist_version": "1.0.0",
+                    "artifact_sha256": sha256,
+                    "reviewer": "fixture-reviewer",
+                    "reviewed_at": "2026-11-05",
+                    "items": [
+                        {"id": "C1", "verdict": "pass", "basis": "fixture item 1"},
+                        {"id": "C2", "verdict": "pass", "basis": "fixture item 2"},
+                    ],
+                },
                 "citations": {
                     "publication_contract": [
-                        "validation.cli audit-publication（fixture）: PC-1..PC-8"
+                        "validation.cli audit-publication（fixture）: PC-1..PC-10"
                     ]
                 },
             },
@@ -190,6 +201,24 @@ def _report(
     declared_run_ids: tuple[str, ...] = (),
     decision_status: str = "requires_review",
 ) -> dict:
+    checklist = tmp_path / "metadata" / "publication" / "content-review" / "checklist.json"
+    checklist.parent.mkdir(parents=True, exist_ok=True)
+    checklist.write_text(
+        json.dumps(
+            {
+                "schema_version": "1.0.0",
+                "record": "publication_content_review_checklist",
+                "checklist_id": "fixture-checklist",
+                "version": "1.0.0",
+                "items": [
+                    {"id": "C1", "title": "fixture item 1"},
+                    {"id": "C2", "title": "fixture item 2"},
+                ],
+            },
+            ensure_ascii=False,
+        ),
+        encoding="utf-8",
+    )
     (tmp_path / "CITATION.cff").write_text(cff, encoding="utf-8")
     _catalog(tmp_path, RUN_ID)
     if declared_run_ids:
@@ -360,7 +389,7 @@ def test_all_publication_contract_rules_are_implemented(tmp_path: Path) -> None:
     report = _report(tmp_path, CONFORMING)
 
     assert report["unimplemented_rules"] == []
-    assert set(report["implemented_rules"]) == {f"PC-{index}" for index in range(1, 10)}
+    assert set(report["implemented_rules"]) == {f"PC-{index}" for index in range(1, 11)}
 
 
 def test_google_trends_section_must_name_its_run(tmp_path: Path) -> None:

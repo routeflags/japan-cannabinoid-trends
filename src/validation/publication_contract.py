@@ -63,6 +63,9 @@ Implemented (mechanical only, no judgement)
   comparison is what ``gate-publication`` applies to PUB-10, so the page and the
   envelope cannot drift apart silently.  A page without the section makes no
   claim and is not checked here.
+- PC-10 content review (C3): a page needs a recorded C1..C45 review against the
+  committed checklist.  Absence is a finding, not a pass: the mechanical rules
+  (PC-1..PC-9) cannot tell whether anyone read the page (ISS-20261105-PUB-037).
 
 Deliberately not implemented: none.  If a publication rule cannot be checked
 mechanically, it must appear as human review evidence in the PC-7 envelope, not
@@ -76,6 +79,7 @@ import json
 import re
 from pathlib import Path
 
+from validation.publication_content_review import check_content_review
 from validation.x_identity import POST_RECORD_FIELDS
 
 REPORT_SCHEMA_VERSION = "1.0.0"
@@ -536,6 +540,7 @@ def _artifact_findings(
 
     findings.extend(_review_envelope_findings(path, repo_root))
     findings.extend(_publication_status_findings(path, repo_root, raw, relative))
+    findings.extend(_content_review_findings(path, repo_root, relative))
     findings.extend(_guide_structure_findings(path, repo_root, raw, html))
 
     # PC-1 - the release this artifact presents.
@@ -649,6 +654,30 @@ def _artifact_findings(
                     f"{section_id} has {tables} table(s), 2 required",
                 )
     return findings
+
+
+def _content_review_findings(
+    path: Path, repo_root: Path, relative: str
+) -> list[dict]:
+    """PC-10: C3 content review must be recorded for this exact artifact."""
+
+    artifact_id = _publication_artifact_id(path, repo_root)
+    evidence_path = repo_root / "metadata" / "publication" / artifact_id / "evidence.json"
+    if not evidence_path.is_file():
+        # PC-7 already reports the missing envelope; do not report the same
+        # absence twice.
+        return []
+    evidence, _ = _load_json_document(evidence_path)
+    issues = check_content_review(repo_root, evidence, artifact_sha256=_sha256(path))
+    return [
+        {
+            "rule": "PC-10",
+            "kind": issue["code"].lower(),
+            "path": relative,
+            "detail": issue["detail"],
+        }
+        for issue in issues
+    ]
 
 
 def _declared_gaps(path: Path, html: str, relative: str) -> list[dict]:
@@ -777,7 +806,7 @@ def build_publication_contract_report(repo_root: Path) -> dict:
             "by_rule": count("rule"),
             "by_kind": count("kind"),
         },
-        "implemented_rules": ["PC-1", "PC-2", "PC-3", "PC-4", "PC-5", "PC-6", "PC-7", "PC-8", "PC-9"],
+        "implemented_rules": ["PC-1", "PC-2", "PC-3", "PC-4", "PC-5", "PC-6", "PC-7", "PC-8", "PC-9", "PC-10"],
         "unimplemented_rules": list(UNIMPLEMENTED),
         "findings": findings,
         "declared_gaps": declared_gaps,

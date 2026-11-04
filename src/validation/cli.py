@@ -96,6 +96,7 @@ from validation.integrity import IO_ISSUE_CODES, sha256_file
 from validation.issues import audit_issues
 from validation.new_runs import audit_new_runs
 from validation.private_catalog import build_private_catalog
+from validation.publication_content_review import check_content_review
 from validation.publication_eligibility import evaluate_eligibility
 from validation.x_identity import audit_x_identity
 from validation.legacy import LegacyProfileNotAllowed, audit_record
@@ -1745,7 +1746,17 @@ def cmd_gate_publication(args) -> int:
             return EXIT_IO
         if isinstance(loaded, dict):
             evidence = loaded
-    result = evaluate_eligibility(artifact, decision, evidence=evidence, page_text=_artifact_page_text(artifact))
+    artifact_sha = artifact.get("sha256") if isinstance(artifact, dict) else None
+    content_review = check_content_review(
+        Path.cwd(), evidence, artifact_sha256=artifact_sha or ""
+    )
+    result = evaluate_eligibility(
+        artifact,
+        decision,
+        evidence=evidence,
+        page_text=_artifact_page_text(artifact),
+        content_review=content_review,
+    )
     if args.output:
         try:
             _write_output(args.output, result)

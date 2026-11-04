@@ -48,6 +48,7 @@ PUB_CHECKS = (
     ("PUB-08", "copyright / contract constraints confirmed"),
     ("PUB-09", "anonymization / aggregation applied"),
     ("PUB-10", "publication approval recorded"),
+    ("PUB-11", "content review recorded (C3)"),
 )
 
 _VERDICTS = ("SUPPORTED", "CONDITIONAL", "BLOCKED")
@@ -64,6 +65,7 @@ def evaluate_eligibility(
     *,
     evidence: dict | None = None,
     page_text: str | None = None,
+    content_review: list[dict] | None = None,
 ) -> dict:
     """Evaluate §10.2 for one artifact (no writes, no publication).
 
@@ -71,6 +73,12 @@ def evaluate_eligibility(
     applies the PC-9 comparison (the page's own 公開状態 statement must agree
     with the decision).  The audit always has the file; the gate gets it from
     the CLI, so an envelope moved away from its page is not failed on absence.
+
+    ``content_review`` is the C3 result from
+    :func:`validation.publication_content_review.check_content_review`.  It is
+    a separate gate from PUB-01..PUB-10: a mechanical pass with no recorded
+    content review is ``BLOCKED``, never ``SUPPORTED``.  ``None`` (no check was
+    run) fails closed.
     """
     evidence = deepcopy(evidence) if isinstance(evidence, dict) else {}
     artifact = deepcopy(artifact) if isinstance(artifact, dict) else artifact
@@ -147,6 +155,25 @@ def evaluate_eligibility(
     else:
         codes = sorted({issue.code for issue in pub_issues})
         checks.append(_result("PUB-10", PUB_CHECKS[9][1], status="FAIL", detail=f"approval missing or invalid ({', '.join(codes) if codes else 'not approved'}); publication refused"))
+    # PUB-11: C3 content review.  Separate from the mechanical checks by
+    # design: an approved, well-formed artifact whose content nobody read is
+    # still not releasable.
+    if content_review is None:
+        checks.append(_result(
+            "PUB-11", PUB_CHECKS[10][1], status="FAIL",
+            detail="content review was not checked; the gate cannot claim SUPPORTED",
+        ))
+    elif content_review:
+        codes = sorted({issue["code"] for issue in content_review})
+        detail = content_review[0]["detail"]
+        if len(content_review) > 1:
+            detail += f" (+{len(content_review) - 1} more; {', '.join(codes)})"
+        checks.append(_result("PUB-11", PUB_CHECKS[10][1], status="FAIL", detail=detail))
+    else:
+        checks.append(_result(
+            "PUB-11", PUB_CHECKS[10][1], status="PASS",
+            detail="C3 content review recorded for every checklist item",
+        ))
     failed = [check for check in checks if check["status"] == "FAIL"]
     warned = [check for check in checks if check["status"] == "WARNING"]
     verdict = "BLOCKED" if failed else ("CONDITIONAL" if warned else "SUPPORTED")
@@ -156,7 +183,7 @@ def evaluate_eligibility(
     decision_id = decision.get("decision_id") if isinstance(decision, dict) else None
     return {
         "gate": "publication_eligibility",
-        "criteria": "G6 §10.2 (PUB-01..PUB-10)",
+        "criteria": "G6 §10.2 (PUB-01..PUB-10); PUB-11 = C3 content review",
         "artifact_id": artifact_id,
         "artifact_sha256": artifact_sha,
         "decision_id": decision_id,

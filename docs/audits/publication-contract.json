@@ -3,7 +3,7 @@
   "generated_by": "validation.cli audit-publication",
   "publication_root": "publication",
   "release": {
-    "version": "1.14.4",
+    "version": "1.14.5",
     "declared_dois": [
       "10.5281/zenodo.23390594"
     ],
@@ -15,10 +15,14 @@
   "catalog_run_count": 100,
   "summary": {
     "artifact_count": 17,
-    "finding_count": 0,
+    "finding_count": 17,
     "declared_gap_count": 11,
-    "by_rule": {},
-    "by_kind": {}
+    "by_rule": {
+      "PC-10": 17
+    },
+    "by_kind": {
+      "content_review_checklist_undefined": 17
+    }
   },
   "implemented_rules": [
     "PC-1",
@@ -29,10 +33,114 @@
     "PC-6",
     "PC-7",
     "PC-8",
-    "PC-9"
+    "PC-9",
+    "PC-10"
   ],
   "unimplemented_rules": [],
-  "findings": [],
+  "findings": [
+    {
+      "rule": "PC-10",
+      "kind": "content_review_checklist_undefined",
+      "path": "publication/guide_cbx_rewrite.html",
+      "detail": "no publication content-review checklist is committed; the C3 review cannot be verified and the artifact cannot be SUPPORTED"
+    },
+    {
+      "rule": "PC-10",
+      "kind": "content_review_checklist_undefined",
+      "path": "publication/research_cbd.html",
+      "detail": "no publication content-review checklist is committed; the C3 review cannot be verified and the artifact cannot be SUPPORTED"
+    },
+    {
+      "rule": "PC-10",
+      "kind": "content_review_checklist_undefined",
+      "path": "publication/research_cbg.html",
+      "detail": "no publication content-review checklist is committed; the C3 review cannot be verified and the artifact cannot be SUPPORTED"
+    },
+    {
+      "rule": "PC-10",
+      "kind": "content_review_checklist_undefined",
+      "path": "publication/research_cbn.html",
+      "detail": "no publication content-review checklist is committed; the C3 review cannot be verified and the artifact cannot be SUPPORTED"
+    },
+    {
+      "rule": "PC-10",
+      "kind": "content_review_checklist_undefined",
+      "path": "publication/research_cbx.html",
+      "detail": "no publication content-review checklist is committed; the C3 review cannot be verified and the artifact cannot be SUPPORTED"
+    },
+    {
+      "rule": "PC-10",
+      "kind": "content_review_checklist_undefined",
+      "path": "publication/research_crdh.html",
+      "detail": "no publication content-review checklist is committed; the C3 review cannot be verified and the artifact cannot be SUPPORTED"
+    },
+    {
+      "rule": "PC-10",
+      "kind": "content_review_checklist_undefined",
+      "path": "publication/research_crdp.html",
+      "detail": "no publication content-review checklist is committed; the C3 review cannot be verified and the artifact cannot be SUPPORTED"
+    },
+    {
+      "rule": "PC-10",
+      "kind": "content_review_checklist_undefined",
+      "path": "publication/research_h4cbh.html",
+      "detail": "no publication content-review checklist is committed; the C3 review cannot be verified and the artifact cannot be SUPPORTED"
+    },
+    {
+      "rule": "PC-10",
+      "kind": "content_review_checklist_undefined",
+      "path": "publication/research_hhbd.html",
+      "detail": "no publication content-review checklist is committed; the C3 review cannot be verified and the artifact cannot be SUPPORTED"
+    },
+    {
+      "rule": "PC-10",
+      "kind": "content_review_checklist_undefined",
+      "path": "publication/research_hhc.html",
+      "detail": "no publication content-review checklist is committed; the C3 review cannot be verified and the artifact cannot be SUPPORTED"
+    },
+    {
+      "rule": "PC-10",
+      "kind": "content_review_checklist_undefined",
+      "path": "publication/research_hhch.html",
+      "detail": "no publication content-review checklist is committed; the C3 review cannot be verified and the artifact cannot be SUPPORTED"
+    },
+    {
+      "rule": "PC-10",
+      "kind": "content_review_checklist_undefined",
+      "path": "publication/research_thc-o.html",
+      "detail": "no publication content-review checklist is committed; the C3 review cannot be verified and the artifact cannot be SUPPORTED"
+    },
+    {
+      "rule": "PC-10",
+      "kind": "content_review_checklist_undefined",
+      "path": "publication/research_thc.html",
+      "detail": "no publication content-review checklist is committed; the C3 review cannot be verified and the artifact cannot be SUPPORTED"
+    },
+    {
+      "rule": "PC-10",
+      "kind": "content_review_checklist_undefined",
+      "path": "publication/research_thch.html",
+      "detail": "no publication content-review checklist is committed; the C3 review cannot be verified and the artifact cannot be SUPPORTED"
+    },
+    {
+      "rule": "PC-10",
+      "kind": "content_review_checklist_undefined",
+      "path": "publication/research_thcnm.html",
+      "detail": "no publication content-review checklist is committed; the C3 review cannot be verified and the artifact cannot be SUPPORTED"
+    },
+    {
+      "rule": "PC-10",
+      "kind": "content_review_checklist_undefined",
+      "path": "publication/research_thcv.html",
+      "detail": "no publication content-review checklist is committed; the C3 review cannot be verified and the artifact cannot be SUPPORTED"
+    },
+    {
+      "rule": "PC-10",
+      "kind": "content_review_checklist_undefined",
+      "path": "publication/search-emergence-tracker/index.html",
+      "detail": "no publication content-review checklist is committed; the C3 review cannot be verified and the artifact cannot be SUPPORTED"
+    }
+  ],
   "declared_gaps": [
     {
       "path": "publication/research_cbg.html",

@@ -7,6 +7,38 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.14.5] - 2026-11-05
+
+### Added
+- The publication gate now separates the mechanical checks from the C3 content
+  review. `PUB-11` (gate) and `PC-10` (audit) require a recorded C1..C45 review
+  per artifact: checklist id/version, the reviewed artifact hash, reviewer,
+  reviewed_at, and an item list with a verdict and a basis for every checklist
+  item. Missing records, missing items, unjudged or failed items, empty bases,
+  a hash mismatch or a missing checklist all fail closed.
+  `SUPPORTED` now requires both gates; an `approved` decision with no C3 record
+  is `BLOCKED`.
+- `validation.schemas.publication` defines the checklist and review documents;
+  `validation.publication_content_review` is the one implementation used by the
+  gate and the audit.
+
+### Changed
+- The committed audit and the two recorded gate invocations now report the C3
+  gap (17 PC-10 findings, `PUB-11` FAIL) instead of a clean result.
+
+### Fixed
+- `research_thcnm.html` had been reported `SUPPORTED` on v1.14.4 although no
+  content review existed. The v1.14.4 release is not rewritten; the correction
+  is recorded as ISS-20261105-PUB-037 and in this release.
+
+### Known gap
+- The repository has no formal C1..C45 publication checklist (the C1/C2/C3 in
+  `docs/specs/collection-pipeline.md` are comparability checks, not a content
+  review). Until `metadata/publication/content-review/checklist.json` is
+  committed, every artifact is `BLOCKED` and no content review is claimed.
+
+---
+
 ## [1.14.4] - 2026-11-05
 
 ### Added

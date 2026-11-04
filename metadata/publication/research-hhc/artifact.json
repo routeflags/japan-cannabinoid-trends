@@ -6,7 +6,7 @@
   "layer": "publication",
   "source_kind": "html",
   "storage_policy_id": "publication-html-candidate",
-  "sha256": "c6c7d4f74de1f5a1c3f1924fc75f7f38b8281daf36cf951bf15355e71fc28bdb",
+  "sha256": "4ebe979173e97c4428c50fb7275b8e065fe1607de608c588171e6e6b20dc43cd",
   "byte_length": 13075,
   "recorded_at": "2026-11-05",
   "notes": "未公開 publication HTML。PC-7 の審査 envelope として内容 hash を固定する。対象 publication はまだ公開していないため、decision は requires_review から開始する。 v1.13.0 release metadata sync 後の hash。 v1.13.1 release metadata sync 後の hash。 2026-10-23、HHC の 5 年系列を週次 raw から再取得（run 20261023T160428Z-google-trends-hhc-5y）し、`processing.cli gt-summary --write` で 5 年ブロックを再生成した後の hash。summary-only だった旧 baseline の記録値は使っていない。内容審査は requires_review のまま。 2026-11-05、研究質問の統一・版表記 1.14.1 化・YouTube 動画単位行の削除・Google Trends の要求条件/観測範囲の分離および出所追記の後の hash（内容承認ではなく審査対象の再ピン）。 2026-11-05: HHC の共通スケール節を、CBD・THC を含むアンカー付き run の実測に合わせて更新した後の hash（内容承認ではなく審査対象の再ピン）。"

@@ -20,7 +20,7 @@
   "anonymization_basis": "The page applies aggregation-only publication: 6-run counts and total 2288, with no per-video or person-level rows.",
   "citations": {
     "integrity": [
-      "sha256(publication/research_cbx.html, 2026-11-05 検算) = 442248099958ff7aaa11aed7ccb86bc84cd427e1b5897c39776f8f8f176ed070"
+      "sha256(publication/research_cbx.html, 2026-11-05 検算) = 587a736b4d75caff794468c3557434846f6352da1aae51b17174dbb8f8c44aeb"
     ],
     "publication_contract": [
       "validation.cli audit-publication（2026-10-15）: PC-1〜PC-8 の機械検査対象。PC-7 は本 envelope の存在と hash 固定を検査する。",

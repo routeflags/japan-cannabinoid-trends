@@ -183,15 +183,31 @@ def _full_evidence() -> dict:
     }
 
 
+def _evaluate(artifact, decision, *, evidence=None, page_text=None, content_review=()):
+    """The gate with a complete C3 review recorded (the mechanical slice).
+
+    ``content_review=()`` means "no findings"; the C3 behaviour itself is
+    tested in ``test_publication_content_review.py``.
+    """
+
+    return evaluate_eligibility(
+        artifact,
+        decision,
+        evidence=evidence,
+        page_text=page_text,
+        content_review=list(content_review),
+    )
+
+
 def test_unknown_publication_is_refused_g6_t03():
-    result = evaluate_eligibility(_artifact(), None, evidence=_full_evidence())
+    result = _evaluate(_artifact(), None, evidence=_full_evidence())
     assert result["verdict"] == "BLOCKED"
     assert "PUB-10" in result["failed"]
     assert can_publish(_artifact(), None) is False
 
 
 def test_missing_decision_is_blocked_g6_t07():
-    result = evaluate_eligibility(_artifact(), None, evidence={})
+    result = _evaluate(_artifact(), None, evidence={})
     assert result["verdict"] == "BLOCKED"
     assert check_publication(_artifact(), None)[0].code == "PUBLICATION_DECISION_MISSING"
 
@@ -199,14 +215,14 @@ def test_missing_decision_is_blocked_g6_t07():
 def test_unapproved_decision_is_blocked_g6_t08():
     decision = _approved()
     decision["status"] = "requires_review"
-    result = evaluate_eligibility(_artifact(), decision, evidence=_full_evidence())
+    result = _evaluate(_artifact(), decision, evidence=_full_evidence())
     assert result["verdict"] == "BLOCKED"
     assert "PUB-10" in result["failed"]
 
 
 def test_changed_hash_invalidates_approval_g6_t09():
     artifact = _artifact("b" * 64)
-    result = evaluate_eligibility(artifact, _approved("a" * 64), evidence=_full_evidence())
+    result = _evaluate(artifact, _approved("a" * 64), evidence=_full_evidence())
     assert result["verdict"] == "BLOCKED"
     assert "PUB-10" in result["failed"]
 
@@ -214,7 +230,7 @@ def test_changed_hash_invalidates_approval_g6_t09():
 def test_unreviewed_personal_data_blocks_g6_t11():
     evidence = _full_evidence()
     evidence["personal_data_reviewed"] = False
-    result = evaluate_eligibility(_artifact(), _approved(), evidence=evidence)
+    result = _evaluate(_artifact(), _approved(), evidence=evidence)
     assert result["verdict"] == "BLOCKED"
     assert "PUB-04" in result["failed"]
 
@@ -222,14 +238,14 @@ def test_unreviewed_personal_data_blocks_g6_t11():
 def test_warnings_only_yield_conditional():
     evidence = _full_evidence()
     evidence.update({"source_terms_confirmed": None, "redistribution_confirmed": None, "copyright_confirmed": None})
-    result = evaluate_eligibility(_artifact(), _approved(), evidence=evidence)
+    result = _evaluate(_artifact(), _approved(), evidence=evidence)
     assert result["verdict"] == "CONDITIONAL"
     assert result["failed"] == []
     assert set(result["warnings"]) == {"PUB-06", "PUB-07", "PUB-08"}
 
 
 def test_full_approval_yields_supported():
-    result = evaluate_eligibility(_artifact(), _approved(), evidence=_full_evidence())
+    result = _evaluate(_artifact(), _approved(), evidence=_full_evidence())
     assert result["verdict"] == "SUPPORTED"
     assert result["failed"] == [] and result["warnings"] == []
 
@@ -237,7 +253,7 @@ def test_full_approval_yields_supported():
 def test_secret_values_are_never_emitted_g6_t10():
     evidence = _full_evidence()
     evidence["notes"] = "token ghp_ABCDEFGHIJKLMNOPQRSTUVWXYZ123456"
-    result = evaluate_eligibility(_artifact(), _approved(), evidence=evidence)
+    result = _evaluate(_artifact(), _approved(), evidence=evidence)
     assert result["verdict"] == "BLOCKED"
     assert "PUB-05" in result["failed"]
     assert "ghp_" not in json.dumps(result)
@@ -246,7 +262,7 @@ def test_secret_values_are_never_emitted_g6_t10():
 def test_eligibility_is_non_destructive():
     artifact, decision, evidence = _artifact(), _approved(), _full_evidence()
     before = (deepcopy(artifact), deepcopy(decision), deepcopy(evidence))
-    evaluate_eligibility(artifact, decision, evidence=evidence)
+    _evaluate(artifact, decision, evidence=evidence)
     assert (artifact, decision, evidence) == before
 
 
@@ -341,7 +357,7 @@ _STATUS_REQUIRES_REVIEW = (
 
 
 def test_approved_decision_rejects_a_page_that_says_requires_review():
-    result = evaluate_eligibility(
+    result = _evaluate(
         _artifact(), _approved(), evidence=_full_evidence(), page_text=_STATUS_REQUIRES_REVIEW
     )
 
@@ -352,7 +368,7 @@ def test_approved_decision_rejects_a_page_that_says_requires_review():
 
 
 def test_approved_decision_accepts_a_page_that_says_approved():
-    result = evaluate_eligibility(
+    result = _evaluate(
         _artifact(), _approved(), evidence=_full_evidence(), page_text=_STATUS_APPROVED
     )
 
@@ -362,7 +378,7 @@ def test_approved_decision_accepts_a_page_that_says_approved():
 def test_requires_review_decision_rejects_a_page_that_claims_approval():
     decision = _approved()
     decision["status"] = "requires_review"
-    result = evaluate_eligibility(
+    result = _evaluate(
         _artifact(), decision, evidence=_full_evidence(), page_text=_STATUS_APPROVED
     )
 
@@ -371,7 +387,7 @@ def test_requires_review_decision_rejects_a_page_that_claims_approval():
 
 
 def test_page_without_a_status_section_is_judged_by_the_envelope_only():
-    result = evaluate_eligibility(
+    result = _evaluate(
         _artifact(), _approved(), evidence=_full_evidence(), page_text="<html><body></body></html>"
     )
 
