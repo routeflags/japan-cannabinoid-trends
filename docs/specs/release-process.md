@@ -75,7 +75,7 @@ When uploading manually, use:
 | Title | Japan Cannabinoid Platform Trends Dataset 2026: Google Trends and YouTube Evidence from Japan |
 | Creators | Routeflags Co., Ltd. |
 | Affiliation | Routeflags Co., Ltd. |
-| Description | 日本国内における各カンナビノイド成分の国内トレンドと、Google Trends / YouTube で観測できる差異を記録するデータセット。v1.13.0 は cannabinoid-platform-trends study を追加し、Google Trends 5年サマリーと採用済み YouTube 検索結果集計を source-specific units のまま収録する。X はこのリリーススコープから除外する。 |
+| Description | 日本国内における各カンナビノイド成分の国内トレンドと、Google Trends / YouTube で観測できる差異を記録するデータセット。Google Trends 5年サマリーと採用済み YouTube 検索結果集計を source-specific units のまま収録する cannabinoid-platform-trends study に加え、v1.14.0 は THCNM の Google Trends 12ヶ月・5年 raw と採用済み YouTube 集計、THCO 表記バリアントの観測記録を追加する（THCNM は THA 表記でも流通する名称で、両者の化学的同一性は未確認）。git_tracked の Google Trends raw はクリーンアーカイブに収録し、行単位の YouTube / X raw は非公開のままとする。X はこのリリーススコープから除外する。 |
 | Keywords | cannabinoid, CBD, CBG, CBN, CBX, CRDH, CRDP, H4CBH, HHBD, Google Trends, YouTube, Japan, platform trends |
 | License | CC BY 4.0 |
 | Version | (match git tag) |
@@ -90,7 +90,7 @@ When uploading manually, use:
 - [ ] Update `CHANGELOG.md`
 - [ ] Update version in `CITATION.cff`
 - [ ] Update version in `metadata/datapackage.json`
-- [ ] Update `publication/guide_cbx_rewrite.html` (dateModified, version)
+- [ ] Update `publication/guide_cbx_rewrite.html` citation version (`dateModified` only when the page content changes; it must stay equal to `最終更新`)
 - [ ] Commit all changes
 - [ ] Run `./scripts/release/create-clean-archive.sh` to verify
 - [ ] Run `gate-publication` 手動ゲートを実行し判定と証拠を記録する（公開は人の判断。現行方針: 機械は公開を止めない。例: `python -m validation.cli gate-publication --artifact <artifact.json> --decision <decision.json> --evidence <evidence.json> --output docs/audits/g6-publication-eligibility.json`。判定が BLOCKED の場合は理由を記録し公開しない。詳細は `docs/specs/validation-framework.md` §19）
@@ -99,6 +99,7 @@ When uploading manually, use:
 
 - [ ] Create git tag: `git tag -a vX.Y.Z -m "Release vX.Y.Z"`
 - [ ] Push tag: `git push origin vX.Y.Z`
+- [ ] Run `bash scripts/validation/validate-version-sync.sh`（基準は新しいタグ。タグ作成前は FAIL が正常）
 - [ ] Create GitHub Release（release notes に Zenodo concept DOI を記載する）
 - [ ] Release workflow が以下を自動実行する:
   - clean archive の作成（`metadata/artifacts/` 等の正規パスを除外判定に含めない）
@@ -138,7 +139,7 @@ Zenodo assigns two types of DOIs:
 
 | Version | DOI | Concept DOI |
 |---------|-----|-------------|
-| v1.13.2 | [10.5281/zenodo.23390594](https://doi.org/10.5281/zenodo.23390594) | [10.5281/zenodo.23390594](https://doi.org/10.5281/zenodo.23390594) |
+| v1.14.0 | [10.5281/zenodo.23390594](https://doi.org/10.5281/zenodo.23390594) | [10.5281/zenodo.23390594](https://doi.org/10.5281/zenodo.23390594) |
 
 ---
 
@@ -155,23 +156,25 @@ Zenodo assigns two types of DOIs:
 
 ## Files in Clean Archive
 
-A clean archive includes:
+A clean archive includes the release-scoped studies and the metadata needed to
+reproduce and cite them:
 
 ```
 japan-cannabinoid-trends-vX.Y.Z-clean.zip
 ├── datasets/
-│   ├── cbx-search-trends/
-│   ├── cbx-social-trends/
-│   ├── cbx-liquid-online-trend/
-│   └── cbx-product-coa/
+│   ├── cannabinoid-platform-trends/
+│   └── cannabinoid-raw-collection/   # tracked Google Trends raw + study metadata
 ├── docs/
-│   └── specs/
+│   ├── audits/gt-summary.json
+│   ├── specs/
+│   ├── acceptance-criteria.md
+│   └── migration-plan.md
 ├── publication/
 ├── src/
-│   ├── collection/
-│   └── processing/
-├── metadata/
-│   └── datapackage.json
+├── tests/
+├── pyproject.toml
+├── metadata/                         # datapackage, provenance, taxonomy, windows,
+│                                     # queries, publication envelopes, artifacts
 ├── LICENSE
 ├── CITATION.cff
 ├── CHANGELOG.md
@@ -179,4 +182,10 @@ japan-cannabinoid-trends-vX.Y.Z-clean.zip
 └── methodology.md
 ```
 
-**Excluded:** `.github/`, `.serena/`, `artifacts/`, `.opencode`, credentials, raw social media data
+The copy is built from the Git index (`git ls-files`), not from the working
+tree, so a release archive can only contain repository-retained content:
+`git_untracked` raw payloads that happen to exist in a checkout cannot ship.
+
+**Excluded:** `.github/`, `.serena/`, `artifacts/`, `.opencode`, credentials,
+`data/raw/` outside `data/raw/google_trends/`, and every raw social / video
+payload (YouTube, X).

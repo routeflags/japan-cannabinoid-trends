@@ -89,3 +89,33 @@ def test_metadata_artifacts_path_is_legitimate(tmp_path: Path) -> None:
         tmp_path, extra={"metadata/artifacts/artifact-registry.json": "{}"}
     )
     assert check_archive(str(archive), "1.13.2", CONCEPT_DOI) == []
+
+
+def test_tracked_google_trends_raw_is_allowed(tmp_path: Path) -> None:
+    """The release ships tracked Google Trends raw (raw-data-policy §7.1)."""
+    run = (
+        "datasets/cannabinoid-raw-collection/data/raw/google_trends/"
+        "20261104T115425Z-google-trends-thcnm-12m"
+    )
+    archive = _archive(
+        tmp_path,
+        extra={f"{run}/payload.json": "{}", f"{run}/run_metadata.json": "{}"},
+    )
+    assert check_archive(str(archive), "1.13.2", CONCEPT_DOI) == []
+
+
+def test_untracked_social_raw_is_rejected(tmp_path: Path) -> None:
+    """git_untracked YouTube / X payloads must not ride along in a release."""
+    archive = _archive(
+        tmp_path,
+        extra={
+            "datasets/cannabinoid-raw-collection/data/raw/youtube/"
+            "20261104T120627Z-youtube-cannabinoid-raw-collection/payload.json": "{}",
+            "datasets/cbx-social-trends/data/raw/x/records.json": "[]",
+        },
+    )
+    problems = check_archive(str(archive), "1.13.2", CONCEPT_DOI)
+    assert any(
+        "raw payload outside the tracked Google Trends exception" in problem
+        for problem in problems
+    )

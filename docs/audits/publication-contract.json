@@ -3,7 +3,7 @@
   "generated_by": "validation.cli audit-publication",
   "publication_root": "publication",
   "release": {
-    "version": "1.13.2",
+    "version": "1.14.0",
     "declared_dois": [
       "10.5281/zenodo.23390594"
     ],
@@ -12,16 +12,16 @@
       "metadata/datapackage.json"
     ]
   },
-  "catalog_run_count": 87,
+  "catalog_run_count": 91,
   "summary": {
     "artifact_count": 17,
-    "finding_count": 4,
+    "finding_count": 15,
     "declared_gap_count": 0,
     "by_rule": {
-      "PC-2": 4
+      "PC-1": 15
     },
     "by_kind": {
-      "run_reference_unresolved": 4
+      "release_version_behind": 15
     }
   },
   "implemented_rules": [
@@ -37,28 +37,94 @@
   "unimplemented_rules": [],
   "findings": [
     {
-      "rule": "PC-2",
-      "kind": "run_reference_unresolved",
-      "path": "publication/research_thc-o.html",
-      "detail": "cites run 20261104T135330Z-google-trends-thc-o-general-thco-12m, which is not in the catalog"
+      "rule": "PC-1",
+      "kind": "release_version_behind",
+      "path": "publication/research_cbd.html",
+      "detail": "presents Version 1.13.2; the repository publishes 1.14.0"
     },
     {
-      "rule": "PC-2",
-      "kind": "run_reference_unresolved",
-      "path": "publication/research_thc-o.html",
-      "detail": "cites run 20261104T135339Z-google-trends-thc-o-general-thco-5y, which is not in the catalog"
+      "rule": "PC-1",
+      "kind": "release_version_behind",
+      "path": "publication/research_cbg.html",
+      "detail": "presents Version 1.13.2; the repository publishes 1.14.0"
     },
     {
-      "rule": "PC-2",
-      "kind": "run_reference_unresolved",
-      "path": "publication/research_thc-o.html",
-      "detail": "cites run 20261104T135345Z-google-trends-thc-o-liquid-thco-12m, which is not in the catalog"
+      "rule": "PC-1",
+      "kind": "release_version_behind",
+      "path": "publication/research_cbn.html",
+      "detail": "presents Version 1.13.2; the repository publishes 1.14.0"
     },
     {
-      "rule": "PC-2",
-      "kind": "run_reference_unresolved",
+      "rule": "PC-1",
+      "kind": "release_version_behind",
+      "path": "publication/research_cbx.html",
+      "detail": "presents Version 1.13.2; the repository publishes 1.14.0"
+    },
+    {
+      "rule": "PC-1",
+      "kind": "release_version_behind",
+      "path": "publication/research_crdh.html",
+      "detail": "presents Version 1.13.2; the repository publishes 1.14.0"
+    },
+    {
+      "rule": "PC-1",
+      "kind": "release_version_behind",
+      "path": "publication/research_crdp.html",
+      "detail": "presents Version 1.13.2; the repository publishes 1.14.0"
+    },
+    {
+      "rule": "PC-1",
+      "kind": "release_version_behind",
+      "path": "publication/research_h4cbh.html",
+      "detail": "presents Version 1.13.2; the repository publishes 1.14.0"
+    },
+    {
+      "rule": "PC-1",
+      "kind": "release_version_behind",
+      "path": "publication/research_hhbd.html",
+      "detail": "presents Version 1.13.2; the repository publishes 1.14.0"
+    },
+    {
+      "rule": "PC-1",
+      "kind": "release_version_behind",
+      "path": "publication/research_hhc.html",
+      "detail": "presents Version 1.13.2; the repository publishes 1.14.0"
+    },
+    {
+      "rule": "PC-1",
+      "kind": "release_version_behind",
+      "path": "publication/research_hhch.html",
+      "detail": "presents Version 1.13.2; the repository publishes 1.14.0"
+    },
+    {
+      "rule": "PC-1",
+      "kind": "release_version_behind",
       "path": "publication/research_thc-o.html",
-      "detail": "cites run 20261104T135350Z-google-trends-thc-o-liquid-thco-5y, which is not in the catalog"
+      "detail": "presents Version 1.13.2; the repository publishes 1.14.0"
+    },
+    {
+      "rule": "PC-1",
+      "kind": "release_version_behind",
+      "path": "publication/research_thc.html",
+      "detail": "presents Version 1.13.2; the repository publishes 1.14.0"
+    },
+    {
+      "rule": "PC-1",
+      "kind": "release_version_behind",
+      "path": "publication/research_thch.html",
+      "detail": "presents Version 1.13.2; the repository publishes 1.14.0"
+    },
+    {
+      "rule": "PC-1",
+      "kind": "release_version_behind",
+      "path": "publication/research_thcnm.html",
+      "detail": "presents Version 1.13.2; the repository publishes 1.14.0"
+    },
+    {
+      "rule": "PC-1",
+      "kind": "release_version_behind",
+      "path": "publication/research_thcv.html",
+      "detail": "presents Version 1.13.2; the repository publishes 1.14.0"
     }
   ],
   "declared_gaps": []

@@ -52,14 +52,16 @@ SCHEMA_ID = "release-manifest-v1"
 DEFAULT_REQUIRED_PATHS = ("CITATION.cff", "README.md", "metadata/datapackage.json")
 
 #: Mirror of ``INCLUDE_PATHS`` in ``scripts/release/create-clean-archive.sh``
-#: and ``.github/workflows/release-zenodo.yml`` (v1.13 Study-scoped release:
-#: ``cannabinoid-platform-trends`` only; legacy X studies stay out).  The
-#: workflow owns the copy list; this tuple is the validation-side default used
-#: by :func:`default_manifest`.  If the workflow ever widens its copy list,
-#: validation fails closed (unexpected content) until the manifest default is
-#: extended alongside it.
+#: and ``.github/workflows/release-zenodo.yml`` (v1.14 Study-scoped release:
+#: ``cannabinoid-platform-trends`` processed tables plus
+#: ``cannabinoid-raw-collection`` with its tracked Google Trends raw; legacy X
+#: studies stay out).  The workflow owns the copy list; this tuple is the
+#: validation-side default used by :func:`default_manifest`.  If the workflow
+#: ever widens its copy list, validation fails closed (unexpected content) until
+#: the manifest default is extended alongside it.
 DEFAULT_INCLUDE_ROOTS = (
     "datasets/cannabinoid-platform-trends",
+    "datasets/cannabinoid-raw-collection",
     "docs/audits/gt-summary.json",
     "docs/specs",
     "docs/acceptance-criteria.md",

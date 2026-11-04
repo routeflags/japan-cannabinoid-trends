@@ -5,8 +5,8 @@
     "collection-run-v1"
   ],
   "datasets_root": "data",
-  "manifest_count": 48,
-  "count": 78,
+  "manifest_count": 52,
+  "count": 86,
   "errors": [],
   "entries": [
     {
@@ -1346,6 +1346,146 @@
       "record_count": 311,
       "completeness": "complete",
       "path": "data/raw/youtube/20261104T120805Z-youtube-cannabinoid-raw-collection/youtube-dataset-tha-liquid_ZT6MahJPfsVwE1yLA_2026-11-04.json"
+    },
+    {
+      "artifact_id": "20261104T135330Z-google-trends-thc-o-general-thco-12m-payload-json",
+      "study_id": "cannabinoid-raw-collection",
+      "run_id": "20261104T135330Z-google-trends-thc-o-general-thco-12m",
+      "source_id": "google-trends",
+      "compound_id": "compound_thc_o",
+      "query_id": "thc-o-general-ja",
+      "window_id": "2025-11-02_2026-11-08",
+      "artifact_type": "raw_response",
+      "format": "json",
+      "schema_id": "google-trends-mcp-tool-result-v1",
+      "layer": "raw",
+      "record_count": 53,
+      "completeness": "complete",
+      "path": "data/raw/google_trends/20261104T135330Z-google-trends-thc-o-general-thco-12m/payload.json"
+    },
+    {
+      "artifact_id": "20261104T135330Z-google-trends-thc-o-general-thco-12m-records-thco-json",
+      "study_id": "cannabinoid-raw-collection",
+      "run_id": "20261104T135330Z-google-trends-thc-o-general-thco-12m",
+      "source_id": "google-trends",
+      "compound_id": "compound_thc_o",
+      "query_id": "thc-o-general-ja",
+      "window_id": "2025-11-02_2026-11-08",
+      "artifact_type": "timeseries",
+      "format": "json",
+      "schema_id": "google-trends-interest-over-time-v1",
+      "layer": "raw",
+      "record_count": 53,
+      "completeness": "complete",
+      "path": "data/raw/google_trends/20261104T135330Z-google-trends-thc-o-general-thco-12m/records_thco.json",
+      "derived_from": [
+        "20261104T135330Z-google-trends-thc-o-general-thco-12m-payload-json"
+      ]
+    },
+    {
+      "artifact_id": "20261104T135339Z-google-trends-thc-o-general-thco-5y-payload-json",
+      "study_id": "cannabinoid-raw-collection",
+      "run_id": "20261104T135339Z-google-trends-thc-o-general-thco-5y",
+      "source_id": "google-trends",
+      "compound_id": "compound_thc_o",
+      "query_id": "thc-o-general-ja",
+      "window_id": "2021-10-31_2026-11-08",
+      "artifact_type": "raw_response",
+      "format": "json",
+      "schema_id": "google-trends-mcp-tool-result-v1",
+      "layer": "raw",
+      "record_count": 262,
+      "completeness": "complete",
+      "path": "data/raw/google_trends/20261104T135339Z-google-trends-thc-o-general-thco-5y/payload.json"
+    },
+    {
+      "artifact_id": "20261104T135339Z-google-trends-thc-o-general-thco-5y-records-thco-json",
+      "study_id": "cannabinoid-raw-collection",
+      "run_id": "20261104T135339Z-google-trends-thc-o-general-thco-5y",
+      "source_id": "google-trends",
+      "compound_id": "compound_thc_o",
+      "query_id": "thc-o-general-ja",
+      "window_id": "2021-10-31_2026-11-08",
+      "artifact_type": "timeseries",
+      "format": "json",
+      "schema_id": "google-trends-interest-over-time-v1",
+      "layer": "raw",
+      "record_count": 262,
+      "completeness": "complete",
+      "path": "data/raw/google_trends/20261104T135339Z-google-trends-thc-o-general-thco-5y/records_thco.json",
+      "derived_from": [
+        "20261104T135339Z-google-trends-thc-o-general-thco-5y-payload-json"
+      ]
+    },
+    {
+      "artifact_id": "20261104T135345Z-google-trends-thc-o-liquid-thco-12m-payload-json",
+      "study_id": "cannabinoid-raw-collection",
+      "run_id": "20261104T135345Z-google-trends-thc-o-liquid-thco-12m",
+      "source_id": "google-trends",
+      "compound_id": "compound_thc_o",
+      "query_id": "thc-o-liquid-ja",
+      "window_id": "2025-11-02_2026-11-08",
+      "artifact_type": "raw_response",
+      "format": "json",
+      "schema_id": "google-trends-mcp-tool-result-v1",
+      "layer": "raw",
+      "record_count": 53,
+      "completeness": "complete",
+      "path": "data/raw/google_trends/20261104T135345Z-google-trends-thc-o-liquid-thco-12m/payload.json"
+    },
+    {
+      "artifact_id": "20261104T135345Z-google-trends-thc-o-liquid-thco-12m-records-thco-リキッド-json",
+      "study_id": "cannabinoid-raw-collection",
+      "run_id": "20261104T135345Z-google-trends-thc-o-liquid-thco-12m",
+      "source_id": "google-trends",
+      "compound_id": "compound_thc_o",
+      "query_id": "thc-o-liquid-ja",
+      "window_id": "2025-11-02_2026-11-08",
+      "artifact_type": "timeseries",
+      "format": "json",
+      "schema_id": "google-trends-interest-over-time-v1",
+      "layer": "raw",
+      "record_count": 53,
+      "completeness": "complete",
+      "path": "data/raw/google_trends/20261104T135345Z-google-trends-thc-o-liquid-thco-12m/records_thco-リキッド.json",
+      "derived_from": [
+        "20261104T135345Z-google-trends-thc-o-liquid-thco-12m-payload-json"
+      ]
+    },
+    {
+      "artifact_id": "20261104T135350Z-google-trends-thc-o-liquid-thco-5y-payload-json",
+      "study_id": "cannabinoid-raw-collection",
+      "run_id": "20261104T135350Z-google-trends-thc-o-liquid-thco-5y",
+      "source_id": "google-trends",
+      "compound_id": "compound_thc_o",
+      "query_id": "thc-o-liquid-ja",
+      "window_id": "2021-10-31_2026-11-08",
+      "artifact_type": "raw_response",
+      "format": "json",
+      "schema_id": "google-trends-mcp-tool-result-v1",
+      "layer": "raw",
+      "record_count": 262,
+      "completeness": "complete",
+      "path": "data/raw/google_trends/20261104T135350Z-google-trends-thc-o-liquid-thco-5y/payload.json"
+    },
+    {
+      "artifact_id": "20261104T135350Z-google-trends-thc-o-liquid-thco-5y-records-thco-リキッド-json",
+      "study_id": "cannabinoid-raw-collection",
+      "run_id": "20261104T135350Z-google-trends-thc-o-liquid-thco-5y",
+      "source_id": "google-trends",
+      "compound_id": "compound_thc_o",
+      "query_id": "thc-o-liquid-ja",
+      "window_id": "2021-10-31_2026-11-08",
+      "artifact_type": "timeseries",
+      "format": "json",
+      "schema_id": "google-trends-interest-over-time-v1",
+      "layer": "raw",
+      "record_count": 262,
+      "completeness": "complete",
+      "path": "data/raw/google_trends/20261104T135350Z-google-trends-thc-o-liquid-thco-5y/records_thco-リキッド.json",
+      "derived_from": [
+        "20261104T135350Z-google-trends-thc-o-liquid-thco-5y-payload-json"
+      ]
     }
   ]
 }

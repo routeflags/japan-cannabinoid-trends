@@ -8,6 +8,7 @@ several tests assert the inputs are byte-identical after the run.
 from __future__ import annotations
 
 import json
+import re
 import subprocess
 import sys
 import zipfile
@@ -17,6 +18,7 @@ from validation.cli import EXIT_CONFIG, EXIT_DATA, EXIT_IO, EXIT_OK, main
 from validation.core import validate_document
 from validation.release_archive_check import check_archive
 from validation.release_manifest import (
+    DEFAULT_INCLUDE_ROOTS,
     SCHEMA_ID,
     check_release_manifest,
     default_manifest,
@@ -27,6 +29,8 @@ from validation.schemas.release import RELEASE_MANIFEST_SCHEMA
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 MAKE_MANIFEST = REPO_ROOT / "scripts" / "release" / "make-release-manifest.py"
+ARCHIVE_SCRIPT = REPO_ROOT / "scripts" / "release" / "create-clean-archive.sh"
+RELEASE_WORKFLOW = REPO_ROOT / ".github" / "workflows" / "release-zenodo.yml"
 
 VERSION = "1.13.2"
 CONCEPT_DOI = "10.5281/zenodo.23390594"
@@ -186,6 +190,25 @@ def test_metadata_artifacts_path_is_not_falsely_rejected(tmp_path: Path):
     """``metadata/artifacts/`` is legitimate; only top-level ``artifacts/`` is banned."""
     archive = _zip(tmp_path, {**_identity_files(), **IN_SCOPE_EXTRA})
     assert check_release_manifest(_manifest_for(archive)) == []
+
+
+def _declared_include_paths(path: Path) -> tuple[str, ...]:
+    """Read the quoted entries of an ``INCLUDE_PATHS=( ... )`` declaration."""
+    text = path.read_text(encoding="utf-8")
+    block = text.split("INCLUDE_PATHS=(", 1)[1].split(")", 1)[0]
+    return tuple(re.findall(r'"([^"]+)"', block))
+
+
+def test_archive_copy_lists_match_the_manifest_scope():
+    """The three declarations of the release scope must not drift.
+
+    The copy list lives in the shell script and in the workflow; the validator's
+    default lives in ``validation.release_manifest``.  Drift either ships a path
+    the manifest rejects (fail closed) or silently drops a path the release
+    needs, so the copies are pinned to one list here.
+    """
+    assert _declared_include_paths(ARCHIVE_SCRIPT) == DEFAULT_INCLUDE_ROOTS
+    assert _declared_include_paths(RELEASE_WORKFLOW) == DEFAULT_INCLUDE_ROOTS
 
 
 def test_manifest_omitting_canonical_disallowed_prefix_is_structural(tmp_path: Path):

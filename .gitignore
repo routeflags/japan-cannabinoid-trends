@@ -43,8 +43,9 @@ __pycache__/
 /artifacts
 /.opencode
 /opencode.json
-# Release archives
+# Release archives (create-clean-archive.sh writes release-archives/)
 .release-archives/
+release-archives/
 
 # Local SQLite databases (research-local scratch stores such as trends.db).
 # Reviewed 2026-10-13: zero *.db files are tracked (verified with git

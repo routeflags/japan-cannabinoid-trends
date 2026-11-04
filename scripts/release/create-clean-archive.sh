@@ -21,11 +21,17 @@ echo ""
 # included so the released dataset can reproduce the validation framework
 # described in docs/specs/validation-framework.md, see P7-4).
 #
-# v1.13.0 is a Study-scoped release for cannabinoid-platform-trends.  Include
-# that release study and its committed source summary; do not ship legacy X
-# study outputs in the Zenodo archive when X is outside the release scope.
+# The release is Study-scoped: it carries cannabinoid-platform-trends (the
+# processed release tables) and cannabinoid-raw-collection (tracked Google
+# Trends raw plus the study metadata a reader needs to trace it).  Legacy X
+# study outputs stay out because X is outside the release scope.
+#
+# The copy is built from the Git index, not the working tree: a checkout may
+# hold git_untracked raw payloads (YouTube / social), and those must never
+# reach a release archive (docs/specs/raw-data-policy.md §7.1).
 INCLUDE_PATHS=(
   "datasets/cannabinoid-platform-trends"
+  "datasets/cannabinoid-raw-collection"
   "docs/audits/gt-summary.json"
   "docs/specs"
   "docs/acceptance-criteria.md"
@@ -50,18 +56,36 @@ mkdir -p "${OUTPUT_DIR}"
 CLEAN_DIR=$(mktemp -d)
 trap 'rm -rf "${CLEAN_DIR}"' EXIT
 
-echo "Cleaning..."
+echo "Cleaning (Git index only)..."
+# git ls-files is the source of truth: tracked files are repository-retained,
+# untracked raw is local-only, and the index cannot contain a secret that was
+# never added.  This is what keeps a developer checkout with local YouTube raw
+# from producing an archive that redistributes it.
+TRACKED_COUNT=0
+while IFS= read -r -d '' file; do
+  mkdir -p "${CLEAN_DIR}/$(dirname "${file}")"
+  cp "${file}" "${CLEAN_DIR}/${file}"
+  TRACKED_COUNT=$((TRACKED_COUNT + 1))
+done < <(git ls-files -z -- "${INCLUDE_PATHS[@]}")
+
+echo "  ✓ ${TRACKED_COUNT} tracked file(s)"
 for path in "${INCLUDE_PATHS[@]}"; do
-  if [ -e "${path}" ]; then
-    mkdir -p "${CLEAN_DIR}/$(dirname "${path}")"
-    cp -r "${path}" "${CLEAN_DIR}/${path}"
-    echo "  ✓ ${path}"
-  else
-    echo "  - ${path} (not found, skipping)"
+  if [ -z "$(git ls-files -- "${path}")" ]; then
+    echo "  - ${path} (no tracked files, skipping)"
   fi
 done
 
+# Verify the include roots contributed something and that no raw payload
+# outside the tracked Google Trends exception came along.
+if [ "${TRACKED_COUNT}" -eq 0 ]; then
+  echo "❌ ERROR: no tracked files matched INCLUDE_PATHS"
+  exit 1
+fi
+
 # Remove unwanted files
+# Tracked-only copying already keeps .github / .env / raw social payloads out;
+# these removals stay as a second line of defence for tracked-but-unwanted
+# paths (e.g. a project.yml that was added by mistake).
 echo ""
 echo "Removing unwanted files..."
 rm -rf "${CLEAN_DIR}/.github" \
@@ -89,6 +113,9 @@ ZIP_PATH="${OUTPUT_DIR}/${ZIP_NAME}"
 
 echo ""
 echo "Creating zip: ${ZIP_PATH}"
+# Start from a clean file: `zip -r` updates an existing archive in place, so a
+# stale entry from an earlier run would survive a removed include path.
+rm -f "${ZIP_PATH}"
 (
   cd "${CLEAN_DIR}"
   zip -r "${OLDPWD}/${ZIP_PATH}" . -x "*.DS_Store"
@@ -101,6 +128,13 @@ echo "=== Verification ==="
 # metadata/artifacts/ or tests/*artifact*.py.
 if unzip -Z1 "${ZIP_PATH}" | grep -qE '^(\.github|\.serena|artifacts|\.opencode|\.env|\.env\.local|opencode\.json|project\.json|project\.yml)(/|$)|(^|/)agent\.md$'; then
   echo "❌ ERROR: Unwanted files found in archive!"
+  exit 1
+fi
+# Raw payloads may only ship from the tracked Google Trends exception
+# (docs/specs/raw-data-policy.md §4.1 / §7.1).  Directory entries end with "/"
+# and carry no payload.
+if unzip -Z1 "${ZIP_PATH}" | grep -vE '/$' | grep -E '(^|/)data/raw/' | grep -vE '(^|/)data/raw/(google_trends/|\.gitkeep$)'; then
+  echo "❌ ERROR: raw payload outside the tracked Google Trends exception!"
   exit 1
 fi
 echo "✅ Archive is clean"

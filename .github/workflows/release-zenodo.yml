@@ -45,10 +45,13 @@ jobs:
           CLEAN_DIR="clean-archive"
           mkdir -p "${CLEAN_DIR}"
 
-          # Research-relevant only.  v1.13+ is a Study-scoped release for
-          # cannabinoid-platform-trends; X is outside this release scope.
+          # Research-relevant only.  The release is Study-scoped:
+          # cannabinoid-platform-trends (processed tables) plus
+          # cannabinoid-raw-collection (tracked Google Trends raw and its study
+          # metadata).  X is outside this release scope.
           INCLUDE_PATHS=(
             "datasets/cannabinoid-platform-trends"
+            "datasets/cannabinoid-raw-collection"
             "docs/audits/gt-summary.json"
             "docs/specs"
             "docs/acceptance-criteria.md"
@@ -65,13 +68,27 @@ jobs:
             "methodology.md"
           )
 
-          # Copy files, preserving repository-relative paths.
-          for path in "${INCLUDE_PATHS[@]}"; do
-            if [ -e "${path}" ]; then
-              mkdir -p "${CLEAN_DIR}/$(dirname "${path}")"
-              cp -r "${path}" "${CLEAN_DIR}/${path}"
-            fi
-          done
+          # Copy from the Git index, never the working tree: tracked files are
+          # repository-retained, git_untracked raw payloads are not, and the
+          # index cannot contain a secret that was never added.
+          TRACKED_COUNT=0
+          while IFS= read -r -d '' file; do
+            mkdir -p "${CLEAN_DIR}/$(dirname "${file}")"
+            cp "${file}" "${CLEAN_DIR}/${file}"
+            TRACKED_COUNT=$((TRACKED_COUNT + 1))
+          done < <(git ls-files -z -- "${INCLUDE_PATHS[@]}")
+          echo "Copied ${TRACKED_COUNT} tracked file(s)"
+          if [ "${TRACKED_COUNT}" -eq 0 ]; then
+            echo "ERROR: no tracked files matched INCLUDE_PATHS"
+            exit 1
+          fi
+
+          # Refuse raw payloads outside the tracked Google Trends exception.
+          if find "${CLEAN_DIR}" -path '*/data/raw/*' -type f \
+              | grep -vE '(^|/)data/raw/(google_trends/|\.gitkeep$)'; then
+            echo "ERROR: raw payload outside the tracked Google Trends exception"
+            exit 1
+          fi
 
           # Remove unwanted files.
           rm -rf "${CLEAN_DIR}/.github" \

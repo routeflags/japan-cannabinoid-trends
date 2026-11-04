@@ -20,11 +20,11 @@
   "anonymization_basis": "Requester/client identity is suppressed from the publication layer; no person-level dataset is published.",
   "citations": {
     "integrity": [
-      "sha256(publication/guide_cbx_rewrite.html, 2026-10-15 検算) = 6f942edb9fb69d162ff8257beeb22c513390d95b47600a5b8678812bef8b2e1f"
+      "sha256(publication/guide_cbx_rewrite.html, 2026-11-04 検算) = 40c31162b9937c72d4377049ffeaf391d26dd8fc9be65b8db24929a327ed366e"
     ],
     "publication_contract": [
       "validation.cli audit-publication（2026-10-15）: PC-1〜PC-8 の機械検査対象。PC-7 は本 envelope の存在と hash 固定を検査する。"
     ]
   },
-  "notes": "この evidence は機械的な存在・整合性と 2026-10-15 のオーナー確認を記録する。公開承認は decision.json (approved) を正とする。v1.13.0 release metadata sync 後の artifact hash を固定する。 v1.13.1 release metadata sync 後の artifact hash を固定する。"
+  "notes": "この evidence は機械的な存在・整合性と 2026-10-15 のオーナー確認を記録する。公開承認は decision.json (approved) を正とする。v1.13.0 release metadata sync 後の artifact hash を固定する。 v1.13.1 release metadata sync 後の artifact hash を固定する。 v1.14.0 release metadata sync 後の artifact hash を固定する。"
 }

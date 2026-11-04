@@ -16,7 +16,8 @@ Record-only, exit 1 on any mismatch:
   preferred-citation) and by datapackage.json (.doi and citation);
 - README's DOI badge is the expected concept DOI;
 - the archive carries no disallowed path (.github, credentials, legacy
-  per-post X study directories, private data).
+  per-post X study directories, private data) and no raw payload outside the
+  tracked Google Trends exception (``docs/specs/raw-data-policy.md`` §7.1).
 
 Usage:
   python scripts/validation/check-release-archive.py \
@@ -52,6 +53,35 @@ DISALLOWED_EXACT = {
     ".gitignore",
 }
 
+#: Raw payloads may ship only from the tracked Google Trends exception
+#: (``docs/specs/raw-data-policy.md`` §4.1): Google Trends is the only source
+#: whose raw is repository-retained.  Every other ``data/raw/`` payload is
+#: git_untracked social/video content and must never be redistributed, even if
+#: someone widens the archive's copy list by mistake.
+ALLOWED_RAW_SOURCE = "google_trends"
+
+#: Placeholder files carry no observations.
+RAW_PLACEHOLDER = ".gitkeep"
+
+
+def _raw_relative(name: str) -> str | None:
+    """Return the path below the nearest ``data/raw/`` segment, if any."""
+    marker = "data/raw/"
+    if name.startswith(marker):
+        return name[len(marker):]
+    index = name.find("/" + marker)
+    if index == -1:
+        return None
+    return name[index + len(marker) + 1:]
+
+
+def _is_disallowed_raw(name: str) -> bool:
+    """True when ``name`` is a raw payload outside the Google Trends exception."""
+    relative = _raw_relative(name)
+    if relative is None or relative in ("", RAW_PLACEHOLDER):
+        return False
+    return not relative.startswith(ALLOWED_RAW_SOURCE + "/")
+
 
 def _fail(message: str) -> "list[str]":
     return [message]
@@ -69,6 +99,11 @@ def check_archive(archive: str, version: str, concept_doi: str) -> list[str]:
                 problems.append(f"disallowed path in archive: {name}")
             if name.endswith("/agent.md") or name == "agent.md":
                 problems.append(f"agent file in archive: {name}")
+            if _is_disallowed_raw(name):
+                problems.append(
+                    "raw payload outside the tracked Google Trends exception: "
+                    f"{name}"
+                )
 
         def read(path: str) -> str:
             return zf.read(path).decode("utf-8")

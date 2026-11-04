@@ -7,6 +7,55 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.14.0] - 2026-11-04
+
+### Added
+- `cannabinoid-raw-collection`: THCNM Google Trends 12-month and 5-year runs
+  (`payload.json`, `records_thcnm.json`, `run_metadata.json`,
+  `artifact-manifest.json`; `git_tracked`), the matching query plans and
+  observation windows, and the adopted THCNM / THA liquid YouTube aggregates.
+- `publication/research_thcnm.html` and its hash-pinned review envelope. The
+  publication gate verdict is CONDITIONAL with no failed checks; PUB-01,
+  PUB-03, PUB-06, and PUB-08 remain unrecorded confirmations and stay as
+  warnings.
+- THCO spelling-variant evidence: variant ids in
+  `metadata/queries/query-variants.json`, the observed THCO series in the study
+  methodology, and the variant section in `publication/research_thc-o.html`.
+- Raw retention workflow: `git_tracked` / `git_untracked` decisions derived from
+  `config/storage-policies.json`, `make audit-raw-retention`,
+  `make audit-raw-completeness`, `make audit-youtube-coverage`,
+  `make audit-distribution-scope`, and the checkout-local snapshot guard behind
+  `make audit-snapshots`.
+
+### Changed
+- The clean release archive ships the `cannabinoid-raw-collection` study,
+  including tracked Google Trends raw and its study metadata. The copy is built
+  from the Git index, so `git_untracked` YouTube / social payloads cannot enter a
+  release archive.
+- `docs/specs/raw-data-policy.md` §7.1 records the archive-scope decision
+  (tracked Google Trends raw ships; YouTube / X raw does not).
+- Release identity synced to 1.14.0 in `CITATION.cff`,
+  `metadata/datapackage.json`, `methodology.md`, and the guide citation block.
+
+### Known limitations
+- THCNM chemical identity against THA is unconfirmed (ISS-20261104-TAX-028);
+  neither the research page nor this release metadata asserts equivalence.
+- `publication/research_thc-o.html` cites four THCO spelling-variant runs that
+  are not in the catalog (PC-2 findings), and its publication decision remains
+  `requires_review`.
+- Research-page citation blocks other than `guide_cbx_rewrite.html` keep their
+  previous version label; PC-1 records the difference. The THCNM page is pinned
+  by its approval hash, so refreshing its label needs a new review.
+
+### Validation
+- `bash scripts/validation/validate-version-sync.sh`
+- `python -m validation.cli validate-release-manifest` on the clean archive
+- `python scripts/validation/check-release-archive.py`
+- `python -m validation.cli audit-publication`
+- `pytest -q`
+
+---
+
 ## [1.13.2] - 2026-10-15
 
 ### Fixed

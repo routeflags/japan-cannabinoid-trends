@@ -294,6 +294,8 @@ Raw payload が追跡されない場合、再現性は以下の要素に依存�
 ✅ **含める（既定）:**
 - processed データ（集計統計、フィルタ済みメタデータ）
 - run metadata（Repository Storage にあるもの）
+- `git_tracked` の Google Trends raw（run_metadata を含む）
+- study metadata（catalog / 計画 / 窓 / 採用宣言）
 - methodology.md
 - LICENSE
 - CITATION.cff
@@ -303,8 +305,12 @@ Raw payload が追跡されない場合、再現性は以下の要素に依存�
 - raw payload（X ツイート本文、YouTube 動画・検索結果等）
 - 認証情報（.env、API キー等）
 
-`tracked` であることはリリース対象であることを意味しない（Google Trends raw は追跡されるが、
-リリース内容は別途決める）。
+アーカイブは Git index（`git ls-files`）から構築する。`git_untracked` の raw は
+checkout に存在していても含まれない（`scripts/release/create-clean-archive.sh`）。
+
+`tracked` であることはリリース対象であることを意味しない。Google Trends raw を
+アーカイブに含めることは 2026-11-04 のリリース判断であり、YouTube / X raw は
+引き続き含めない。
 
 ### 7.2 Citation
 
