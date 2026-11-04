@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.14.2] - 2026-11-04
+
+### Fixed
+- Synchronized the preferred citation and datapackage citation versions with the release identity so the version-consistency CI check passes after v1.14.1.
+
+---
+
 ## [1.14.1] - 2026-11-04
 
 ### Fixed

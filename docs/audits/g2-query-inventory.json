@@ -4,8 +4,8 @@
   "schema_id": "query-registry-v1",
   "registry_version": "1.0.0",
   "target_glob": "datasets/**/run_metadata.json",
-  "count": 67,
-  "query_count": 113,
+  "count": 71,
+  "query_count": 117,
   "raw_modified": false,
   "states": {
     "exact_match": "the collected text equals a registered canonical_text",
@@ -15,13 +15,217 @@
     "unmapped": "no registered correspondence and no compound token"
   },
   "summary": {
-    "exact_match": 107,
+    "exact_match": 111,
     "variant_match": 5,
     "semantic_match_candidate": 1,
     "ambiguous": 0,
     "unmapped": 0
   },
   "runs": [
+    {
+      "run_id": "20261001T115959Z-google-trends-cbx-rikiddo",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261001T115959Z-google-trends-cbx-rikiddo/run_metadata.json",
+      "status": "read",
+      "sha256": "afc96ef019e82814543239988fe2738fd26401edf172e1bbe54bd69c5d69682b",
+      "sha256_after": "afc96ef019e82814543239988fe2738fd26401edf172e1bbe54bd69c5d69682b",
+      "unchanged": true,
+      "extracted_query_count": 3,
+      "queries": [
+        {
+          "text": "CBX リキッド",
+          "state": "exact_match",
+          "classification": "relevant",
+          "query_id": "cbx-liquid-ja",
+          "variant_id": null,
+          "detail": "registered_canonical",
+          "source_fields": [
+            "queries[0].term",
+            "queries[1].terms[1]"
+          ]
+        },
+        {
+          "text": "CBX",
+          "state": "exact_match",
+          "classification": "relevant",
+          "query_id": "cbx-general-ja",
+          "variant_id": null,
+          "detail": "registered_canonical",
+          "source_fields": [
+            "queries[1].terms[0]",
+            "queries[2].term"
+          ]
+        },
+        {
+          "text": "CBD リキッド",
+          "state": "exact_match",
+          "classification": "relevant",
+          "query_id": "cbd-liquid-ja",
+          "variant_id": null,
+          "detail": "registered_canonical",
+          "source_fields": [
+            "queries[1].terms[2]"
+          ]
+        }
+      ]
+    },
+    {
+      "run_id": "20261001T121949Z-google-trends-h4cbh-hhbd",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261001T121949Z-google-trends-h4cbh-hhbd/run_metadata.json",
+      "status": "read",
+      "sha256": "6389b71226ccdcee3fe3f288fcf5a259e885388547a4765851af69b166e958c6",
+      "sha256_after": "6389b71226ccdcee3fe3f288fcf5a259e885388547a4765851af69b166e958c6",
+      "unchanged": true,
+      "extracted_query_count": 4,
+      "queries": [
+        {
+          "text": "H4CBH",
+          "state": "exact_match",
+          "classification": "relevant",
+          "query_id": "h4cbh-general-ja",
+          "variant_id": null,
+          "detail": "registered_canonical",
+          "source_fields": [
+            "queries[0].term",
+            "queries[2].terms[1]",
+            "queries[3].term"
+          ]
+        },
+        {
+          "text": "HHBD",
+          "state": "exact_match",
+          "classification": "relevant",
+          "query_id": "hhbd-general-ja",
+          "variant_id": null,
+          "detail": "registered_canonical",
+          "source_fields": [
+            "queries[1].term",
+            "queries[2].terms[2]",
+            "queries[4].term"
+          ]
+        },
+        {
+          "text": "CBX",
+          "state": "exact_match",
+          "classification": "relevant",
+          "query_id": "cbx-general-ja",
+          "variant_id": null,
+          "detail": "registered_canonical",
+          "source_fields": [
+            "queries[2].terms[0]"
+          ]
+        },
+        {
+          "text": "CBX リキッド",
+          "state": "exact_match",
+          "classification": "relevant",
+          "query_id": "cbx-liquid-ja",
+          "variant_id": null,
+          "detail": "registered_canonical",
+          "source_fields": [
+            "queries[2].terms[3]"
+          ]
+        }
+      ]
+    },
+    {
+      "run_id": "disambiguated_queries",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261001T132500Z-google-trends-disambiguated/run_metadata.json",
+      "status": "read",
+      "sha256": "f5b2b719a8dff341665af72690ca309e5f457486943017cac4f9a0c9268c3a83",
+      "sha256_after": "f5b2b719a8dff341665af72690ca309e5f457486943017cac4f9a0c9268c3a83",
+      "unchanged": true,
+      "extracted_query_count": 2,
+      "queries": [
+        {
+          "text": "CBX 大麻",
+          "state": "exact_match",
+          "classification": "relevant",
+          "query_id": "cbx-cannabis-ja",
+          "variant_id": null,
+          "detail": "registered_canonical",
+          "source_fields": [
+            "queries[0].terms[0]"
+          ]
+        },
+        {
+          "text": "CBX カンナビノイド",
+          "state": "exact_match",
+          "classification": "relevant",
+          "query_id": "cbx-cannabinoid-ja",
+          "variant_id": null,
+          "detail": "registered_canonical",
+          "source_fields": [
+            "queries[0].terms[1]"
+          ]
+        }
+      ]
+    },
+    {
+      "run_id": "variance_check",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261001T135424Z-google-trends-variance-check/run_metadata.json",
+      "status": "read",
+      "sha256": "65f3d8489cd55d12c2c07767f8498e2416ce48104472f377c389b9c25227fe35",
+      "sha256_after": "65f3d8489cd55d12c2c07767f8498e2416ce48104472f377c389b9c25227fe35",
+      "unchanged": true,
+      "extracted_query_count": 5,
+      "queries": [
+        {
+          "text": "CBX",
+          "state": "exact_match",
+          "classification": "relevant",
+          "query_id": "cbx-general-ja",
+          "variant_id": null,
+          "detail": "registered_canonical",
+          "source_fields": [
+            "queries[0].terms[0]"
+          ]
+        },
+        {
+          "text": "H4CBH",
+          "state": "exact_match",
+          "classification": "relevant",
+          "query_id": "h4cbh-general-ja",
+          "variant_id": null,
+          "detail": "registered_canonical",
+          "source_fields": [
+            "queries[0].terms[1]"
+          ]
+        },
+        {
+          "text": "HHBD",
+          "state": "exact_match",
+          "classification": "relevant",
+          "query_id": "hhbd-general-ja",
+          "variant_id": null,
+          "detail": "registered_canonical",
+          "source_fields": [
+            "queries[0].terms[2]"
+          ]
+        },
+        {
+          "text": "CBD リキッド",
+          "state": "exact_match",
+          "classification": "relevant",
+          "query_id": "cbd-liquid-ja",
+          "variant_id": null,
+          "detail": "registered_canonical",
+          "source_fields": [
+            "queries[0].terms[3]"
+          ]
+        },
+        {
+          "text": "CBX リキッド",
+          "state": "exact_match",
+          "classification": "relevant",
+          "query_id": "cbx-liquid-ja",
+          "variant_id": null,
+          "detail": "registered_canonical",
+          "source_fields": [
+            "queries[1].terms[0]"
+          ]
+        }
+      ]
+    },
     {
       "run_id": "20261002T063821Z-google-trends-cbd",
       "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261002T063821Z-google-trends-cbd/run_metadata.json",
@@ -1164,6 +1368,94 @@
       ]
     },
     {
+      "run_id": "20261015T042845Z-google-trends-boundary-1m",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261015T042845Z-google-trends-boundary-1m/run_metadata.json",
+      "status": "read",
+      "sha256": "d309166deeeb5125638b23fbce07f530d3123fb246f5f40c0ac1855bb859f0f4",
+      "sha256_after": "d309166deeeb5125638b23fbce07f530d3123fb246f5f40c0ac1855bb859f0f4",
+      "unchanged": true,
+      "extracted_query_count": 1,
+      "queries": [
+        {
+          "text": "CBX",
+          "state": "exact_match",
+          "classification": "relevant",
+          "query_id": "cbx-general-ja",
+          "variant_id": null,
+          "detail": "registered_canonical",
+          "source_fields": [
+            "query_provenance.submitted_query"
+          ]
+        }
+      ]
+    },
+    {
+      "run_id": "20261015T042849Z-google-trends-boundary-3m",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261015T042849Z-google-trends-boundary-3m/run_metadata.json",
+      "status": "read",
+      "sha256": "caa3e85a0f6f0695ad7077f51b1af8690372c769880efd2ae25542fedd37d103",
+      "sha256_after": "caa3e85a0f6f0695ad7077f51b1af8690372c769880efd2ae25542fedd37d103",
+      "unchanged": true,
+      "extracted_query_count": 1,
+      "queries": [
+        {
+          "text": "CBX",
+          "state": "exact_match",
+          "classification": "relevant",
+          "query_id": "cbx-general-ja",
+          "variant_id": null,
+          "detail": "registered_canonical",
+          "source_fields": [
+            "query_provenance.submitted_query"
+          ]
+        }
+      ]
+    },
+    {
+      "run_id": "20261015T042853Z-google-trends-boundary-12m",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261015T042853Z-google-trends-boundary-12m/run_metadata.json",
+      "status": "read",
+      "sha256": "e5d8b8a29517d5722fc69bd8be411c5618a849d6ded842de7f95c3f8c9a2df4b",
+      "sha256_after": "e5d8b8a29517d5722fc69bd8be411c5618a849d6ded842de7f95c3f8c9a2df4b",
+      "unchanged": true,
+      "extracted_query_count": 1,
+      "queries": [
+        {
+          "text": "CBX",
+          "state": "exact_match",
+          "classification": "relevant",
+          "query_id": "cbx-general-ja",
+          "variant_id": null,
+          "detail": "registered_canonical",
+          "source_fields": [
+            "query_provenance.submitted_query"
+          ]
+        }
+      ]
+    },
+    {
+      "run_id": "20261015T042857Z-google-trends-boundary-5y",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261015T042857Z-google-trends-boundary-5y/run_metadata.json",
+      "status": "read",
+      "sha256": "31c344c6f764f4ce4730b6f3a569b44722ce81421a5c4a2d767fd81828baba7d",
+      "sha256_after": "31c344c6f764f4ce4730b6f3a569b44722ce81421a5c4a2d767fd81828baba7d",
+      "unchanged": true,
+      "extracted_query_count": 1,
+      "queries": [
+        {
+          "text": "CBX",
+          "state": "exact_match",
+          "classification": "relevant",
+          "query_id": "cbx-general-ja",
+          "variant_id": null,
+          "detail": "registered_canonical",
+          "source_fields": [
+            "query_provenance.submitted_query"
+          ]
+        }
+      ]
+    },
+    {
       "run_id": "20261015T205048Z-google-trends-cannabinoid-multi-trends",
       "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261015T205048Z-google-trends-cannabinoid-multi-trends/run_metadata.json",
       "status": "read",
@@ -1736,223 +2028,19 @@
       ]
     },
     {
-      "run_id": "20261001T115959Z-google-trends-cbx-rikiddo",
-      "path": "datasets/cbx-search-trends/data/raw/google_trends/20261001T115959Z-google-trends-cbx-rikiddo/run_metadata.json",
+      "run_id": "20261104T165149Z-google-trends-cannabinoid-raw-collection",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261104T165149Z-google-trends-cannabinoid-raw-collection/run_metadata.json",
       "status": "read",
-      "sha256": "afc96ef019e82814543239988fe2738fd26401edf172e1bbe54bd69c5d69682b",
-      "sha256_after": "afc96ef019e82814543239988fe2738fd26401edf172e1bbe54bd69c5d69682b",
-      "unchanged": true,
-      "extracted_query_count": 3,
-      "queries": [
-        {
-          "text": "CBX リキッド",
-          "state": "exact_match",
-          "classification": "relevant",
-          "query_id": "cbx-liquid-ja",
-          "variant_id": null,
-          "detail": "registered_canonical",
-          "source_fields": [
-            "queries[0].term",
-            "queries[1].terms[1]"
-          ]
-        },
-        {
-          "text": "CBX",
-          "state": "exact_match",
-          "classification": "relevant",
-          "query_id": "cbx-general-ja",
-          "variant_id": null,
-          "detail": "registered_canonical",
-          "source_fields": [
-            "queries[1].terms[0]",
-            "queries[2].term"
-          ]
-        },
-        {
-          "text": "CBD リキッド",
-          "state": "exact_match",
-          "classification": "relevant",
-          "query_id": "cbd-liquid-ja",
-          "variant_id": null,
-          "detail": "registered_canonical",
-          "source_fields": [
-            "queries[1].terms[2]"
-          ]
-        }
-      ]
-    },
-    {
-      "run_id": "20261001T121949Z-google-trends-h4cbh-hhbd",
-      "path": "datasets/cbx-search-trends/data/raw/google_trends/20261001T121949Z-google-trends-h4cbh-hhbd/run_metadata.json",
-      "status": "read",
-      "sha256": "6389b71226ccdcee3fe3f288fcf5a259e885388547a4765851af69b166e958c6",
-      "sha256_after": "6389b71226ccdcee3fe3f288fcf5a259e885388547a4765851af69b166e958c6",
-      "unchanged": true,
-      "extracted_query_count": 4,
-      "queries": [
-        {
-          "text": "H4CBH",
-          "state": "exact_match",
-          "classification": "relevant",
-          "query_id": "h4cbh-general-ja",
-          "variant_id": null,
-          "detail": "registered_canonical",
-          "source_fields": [
-            "queries[0].term",
-            "queries[2].terms[1]",
-            "queries[3].term"
-          ]
-        },
-        {
-          "text": "HHBD",
-          "state": "exact_match",
-          "classification": "relevant",
-          "query_id": "hhbd-general-ja",
-          "variant_id": null,
-          "detail": "registered_canonical",
-          "source_fields": [
-            "queries[1].term",
-            "queries[2].terms[2]",
-            "queries[4].term"
-          ]
-        },
-        {
-          "text": "CBX",
-          "state": "exact_match",
-          "classification": "relevant",
-          "query_id": "cbx-general-ja",
-          "variant_id": null,
-          "detail": "registered_canonical",
-          "source_fields": [
-            "queries[2].terms[0]"
-          ]
-        },
-        {
-          "text": "CBX リキッド",
-          "state": "exact_match",
-          "classification": "relevant",
-          "query_id": "cbx-liquid-ja",
-          "variant_id": null,
-          "detail": "registered_canonical",
-          "source_fields": [
-            "queries[2].terms[3]"
-          ]
-        }
-      ]
-    },
-    {
-      "run_id": "disambiguated_queries",
-      "path": "datasets/cbx-search-trends/data/raw/google_trends/20261001T132500Z-google-trends-disambiguated/run_metadata.json",
-      "status": "read",
-      "sha256": "f5b2b719a8dff341665af72690ca309e5f457486943017cac4f9a0c9268c3a83",
-      "sha256_after": "f5b2b719a8dff341665af72690ca309e5f457486943017cac4f9a0c9268c3a83",
-      "unchanged": true,
-      "extracted_query_count": 2,
-      "queries": [
-        {
-          "text": "CBX 大麻",
-          "state": "exact_match",
-          "classification": "relevant",
-          "query_id": "cbx-cannabis-ja",
-          "variant_id": null,
-          "detail": "registered_canonical",
-          "source_fields": [
-            "queries[0].terms[0]"
-          ]
-        },
-        {
-          "text": "CBX カンナビノイド",
-          "state": "exact_match",
-          "classification": "relevant",
-          "query_id": "cbx-cannabinoid-ja",
-          "variant_id": null,
-          "detail": "registered_canonical",
-          "source_fields": [
-            "queries[0].terms[1]"
-          ]
-        }
-      ]
-    },
-    {
-      "run_id": "variance_check",
-      "path": "datasets/cbx-search-trends/data/raw/google_trends/20261001T135424Z-google-trends-variance-check/run_metadata.json",
-      "status": "read",
-      "sha256": "65f3d8489cd55d12c2c07767f8498e2416ce48104472f377c389b9c25227fe35",
-      "sha256_after": "65f3d8489cd55d12c2c07767f8498e2416ce48104472f377c389b9c25227fe35",
-      "unchanged": true,
-      "extracted_query_count": 5,
-      "queries": [
-        {
-          "text": "CBX",
-          "state": "exact_match",
-          "classification": "relevant",
-          "query_id": "cbx-general-ja",
-          "variant_id": null,
-          "detail": "registered_canonical",
-          "source_fields": [
-            "queries[0].terms[0]"
-          ]
-        },
-        {
-          "text": "H4CBH",
-          "state": "exact_match",
-          "classification": "relevant",
-          "query_id": "h4cbh-general-ja",
-          "variant_id": null,
-          "detail": "registered_canonical",
-          "source_fields": [
-            "queries[0].terms[1]"
-          ]
-        },
-        {
-          "text": "HHBD",
-          "state": "exact_match",
-          "classification": "relevant",
-          "query_id": "hhbd-general-ja",
-          "variant_id": null,
-          "detail": "registered_canonical",
-          "source_fields": [
-            "queries[0].terms[2]"
-          ]
-        },
-        {
-          "text": "CBD リキッド",
-          "state": "exact_match",
-          "classification": "relevant",
-          "query_id": "cbd-liquid-ja",
-          "variant_id": null,
-          "detail": "registered_canonical",
-          "source_fields": [
-            "queries[0].terms[3]"
-          ]
-        },
-        {
-          "text": "CBX リキッド",
-          "state": "exact_match",
-          "classification": "relevant",
-          "query_id": "cbx-liquid-ja",
-          "variant_id": null,
-          "detail": "registered_canonical",
-          "source_fields": [
-            "queries[1].terms[0]"
-          ]
-        }
-      ]
-    },
-    {
-      "run_id": "20261015T042845Z-google-trends-boundary-1m",
-      "path": "datasets/cbx-search-trends/data/raw/google_trends/20261015T042845Z-google-trends-boundary-1m/run_metadata.json",
-      "status": "read",
-      "sha256": "09f3e2b12a357a05813c68af73956a695d78c7ef98018f600600727a523be750",
-      "sha256_after": "09f3e2b12a357a05813c68af73956a695d78c7ef98018f600600727a523be750",
+      "sha256": "e5107f023ec211a04bd4f22fc6a77ebfd90f30d5d85e4fd212a0900d5ee5f379",
+      "sha256_after": "e5107f023ec211a04bd4f22fc6a77ebfd90f30d5d85e4fd212a0900d5ee5f379",
       "unchanged": true,
       "extracted_query_count": 1,
       "queries": [
         {
-          "text": "CBX",
+          "text": "CBX vs CBD vs THC",
           "state": "exact_match",
           "classification": "relevant",
-          "query_id": "cbx-general-ja",
+          "query_id": "comparison-cbx-bridge",
           "variant_id": null,
           "detail": "registered_canonical",
           "source_fields": [
@@ -1962,19 +2050,19 @@
       ]
     },
     {
-      "run_id": "20261015T042849Z-google-trends-boundary-3m",
-      "path": "datasets/cbx-search-trends/data/raw/google_trends/20261015T042849Z-google-trends-boundary-3m/run_metadata.json",
+      "run_id": "20261104T165155Z-google-trends-cannabinoid-raw-collection",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261104T165155Z-google-trends-cannabinoid-raw-collection/run_metadata.json",
       "status": "read",
-      "sha256": "9754b238384521db5dfbce94bbbc7e1a3de974e51526e6672d396815db3d7d68",
-      "sha256_after": "9754b238384521db5dfbce94bbbc7e1a3de974e51526e6672d396815db3d7d68",
+      "sha256": "d7e5f583f824db00af70e9336c6612b5a42bf2b0be2b6eaca269af2dd6fd5f0b",
+      "sha256_after": "d7e5f583f824db00af70e9336c6612b5a42bf2b0be2b6eaca269af2dd6fd5f0b",
       "unchanged": true,
       "extracted_query_count": 1,
       "queries": [
         {
-          "text": "CBX",
+          "text": "CBX vs CBD vs THC",
           "state": "exact_match",
           "classification": "relevant",
-          "query_id": "cbx-general-ja",
+          "query_id": "comparison-cbx-bridge",
           "variant_id": null,
           "detail": "registered_canonical",
           "source_fields": [
@@ -1984,19 +2072,19 @@
       ]
     },
     {
-      "run_id": "20261015T042853Z-google-trends-boundary-12m",
-      "path": "datasets/cbx-search-trends/data/raw/google_trends/20261015T042853Z-google-trends-boundary-12m/run_metadata.json",
+      "run_id": "20261104T175032Z-google-trends-cannabinoid-raw-collection",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261104T175032Z-google-trends-cannabinoid-raw-collection/run_metadata.json",
       "status": "read",
-      "sha256": "ef949859719ae324483bcf09e08623655a982defada86d1d0610ca512e1d6817",
-      "sha256_after": "ef949859719ae324483bcf09e08623655a982defada86d1d0610ca512e1d6817",
+      "sha256": "34919985d68227e620fc1e6cf70212e97d547d224921fb5634bab922d3367857",
+      "sha256_after": "34919985d68227e620fc1e6cf70212e97d547d224921fb5634bab922d3367857",
       "unchanged": true,
       "extracted_query_count": 1,
       "queries": [
         {
-          "text": "CBX",
+          "text": "CBD vs THC vs THCNM",
           "state": "exact_match",
           "classification": "relevant",
-          "query_id": "cbx-general-ja",
+          "query_id": "comparison-thcnm-anchored",
           "variant_id": null,
           "detail": "registered_canonical",
           "source_fields": [
@@ -2006,19 +2094,19 @@
       ]
     },
     {
-      "run_id": "20261015T042857Z-google-trends-boundary-5y",
-      "path": "datasets/cbx-search-trends/data/raw/google_trends/20261015T042857Z-google-trends-boundary-5y/run_metadata.json",
+      "run_id": "20261104T175220Z-google-trends-cannabinoid-raw-collection",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261104T175220Z-google-trends-cannabinoid-raw-collection/run_metadata.json",
       "status": "read",
-      "sha256": "2014e033d1862ae9cb123ca86b22fe47e93f5e3a75b1c870e7bf0954771a1672",
-      "sha256_after": "2014e033d1862ae9cb123ca86b22fe47e93f5e3a75b1c870e7bf0954771a1672",
+      "sha256": "d554560ea5d23539f14fc3e5673b70217e7107b21f6bcddc5a59f6861d9f2c3f",
+      "sha256_after": "d554560ea5d23539f14fc3e5673b70217e7107b21f6bcddc5a59f6861d9f2c3f",
       "unchanged": true,
       "extracted_query_count": 1,
       "queries": [
         {
-          "text": "CBX",
+          "text": "CBD vs THC vs THCNM",
           "state": "exact_match",
           "classification": "relevant",
-          "query_id": "cbx-general-ja",
+          "query_id": "comparison-thcnm-anchored",
           "variant_id": null,
           "detail": "registered_canonical",
           "source_fields": [

@@ -45,6 +45,7 @@ from validation.schemas.artifact import (
     COMPLETENESS_VALUES,
 )
 from validation.schemas.collection_run import EXECUTION_STATUSES
+from validation.schemas.comparison import COMPARISON_BLOCK_SCHEMA, COMMON_SCALE
 from validation.schemas.temporal import COLLECTOR_WINDOW_TYPES, GRANULARITIES
 from validation.semantic import Registries
 
@@ -97,7 +98,22 @@ _RUN_SCHEMA = {
         "schema": {
             "keyword": {"type": "string", "required": True, "empty": False},
             "query_id": {"type": "string", "required": True, "empty": False},
+            # Multi-term request terms.  Declared, never split from the keyword:
+            # a comparison run's terms are the columns of its shared-scale
+            # measurement, and the post-collection gate verifies the anchors
+            # against them.
+            "terms": {
+                "type": "list",
+                "schema": {"type": "string", "empty": False},
+            },
         },
+    },
+    # Cross-compound comparison declaration (ISS-20261105-GT-030).  Optional:
+    # a handover that predates the rule stays stageable, and the post-collection
+    # gate reports it as legacy rather than rewriting it.
+    "comparison": {
+        "type": "dict",
+        "schema": COMPARISON_BLOCK_SCHEMA,
     },
     # The absolute window recorded as the requested period (the pipeline
     # requires one); ``window_id`` is passed through when registered.
@@ -144,6 +160,11 @@ _RUN_SCHEMA = {
     },
     # What only the collector can know about its period handling.  Declared,
     # because the driver has no source knowledge and no compiler runs here.
+    # ``week_start`` and the observed bounds are optional because they belong
+    # to weekly series and to collectors that report them; a declaration that
+    # re-adopts an existing weekly run needs ``week_start`` (L1 requires it for
+    # week granularity) and records the observed labels the original run
+    # carried (ISS-20261104-COL-016).
     "temporal": {
         "type": "dict",
         "required": True,
@@ -155,6 +176,17 @@ _RUN_SCHEMA = {
             },
             "boundary_semantics": {"type": "string", "required": True},
             "exact_window_match": {"type": "boolean", "required": True},
+            "week_start": {"type": "string", "nullable": True},
+            "observed_min_timestamp": {
+                "type": "string",
+                "nullable": True,
+                "iso_datetime": True,
+            },
+            "observed_max_timestamp": {
+                "type": "string",
+                "nullable": True,
+                "iso_datetime": True,
+            },
             "limitations": {
                 "type": "list",
                 "nullable": True,
@@ -366,6 +398,19 @@ def _prepare_run(run: dict, index: int, registries: Registries, declaration: Dec
     }
     if query_entry.get("intent_id"):
         query["intent_id"] = query_entry["intent_id"]
+    if run["query"].get("terms") is not None:
+        query["terms"] = list(run["query"]["terms"])
+    comparison = run.get("comparison")
+    if (
+        isinstance(comparison, dict)
+        and comparison.get("comparison_scale") == COMMON_SCALE
+        and not query.get("terms")
+    ):
+        raise DeclarationError(
+            f"{prefix}.query.terms: a common_scale declaration needs the "
+            "compare_terms request terms; the declaration never derives them "
+            "from the keyword"
+        )
     plan = {
         "study_id": run["study_id"],
         "source_id": run["source_id"],
@@ -378,6 +423,8 @@ def _prepare_run(run: dict, index: int, registries: Registries, declaration: Dec
         "window": dict(run["window"]),
         "purpose": run["purpose"],
     }
+    if isinstance(comparison, dict):
+        plan["comparison"] = dict(comparison)
 
     artifacts, count_basis = _prepare_artifacts(run, prefix, registries)
 

@@ -79,7 +79,7 @@
 | geo | `JP` |
 | timeframe | `today 1-m`, `today 3-m`, `today 12-m`, `today 5-y` |
 | 反復 | 各 timeframe 2 回。パス 1 とパス 2 の参照時刻は 7 日以上離す（合計 8 call） |
-| 保存先 study | `cbx-search-trends`（`data/raw/google_trends/`） |
+| 保存先 study | `cannabinoid-raw-collection`（`data/raw/google_trends/`）。2026-11-04 の所有移管で `cbx-search-trends` から移した（`ISS-20261024-COL-016`） |
 | run_id | `<YYYYMMDDTHHMMSSZ>-google-trends-boundary-<timeframe-slug>`（例: `20261101T030000Z-google-trends-boundary-12m`） |
 
 - 429 応答は 2〜5 分の backoff 後に再試行し、その事実を capture manifest の `notes` に残す
@@ -231,3 +231,63 @@ Date	<term>
 - オフライン部分: parser / stager / report 実装・テスト済み。recorded_legacy 行（5y,
   2026-10-12）は `consistent` だが cohort 外（昇格不能）。
 - `exact=false` / `boundary_semantics=unverified` は継続（全 compile）。
+
+## 8. 共通スケール比較のアンカー規則（ISS-20261105-GT-030）
+
+### 8.1 単独系列を化合物間で比較できない理由
+
+単独 `interest_over_time` の値は**その語自身のピーク=100** に正規化される。したがって
+別 run の単独系列を並べても、値の大小は需要の大小を意味しない。複数語を 1 回の
+`compare_terms` で測った系列だけが共通スケールを持ち、化合物間比較の唯一の計測で
+ある。
+
+### 8.2 宣言（正本）
+
+study の `datasets/<study>/metadata/query-design.json` の `comparison_scales` が正本。
+この study の 5年ポリシーは `gt-5y-common-scale-cbd-thc` で、次を固定する:
+
+| 項目 | 値 |
+|---|---|
+| anchor query | `cbd-general-ja` / `thc-general-ja` |
+| anchor term | `CBD` / `THC` |
+| request | `compare_terms` / `geo=JP` / `locale=ja` / `today 5-y` |
+| window | `2021-10-31_2026-11-08`（`metadata/windows/` の登録窓。旧窓 `2021-10-17_2026-10-18` の setA〜D は legacy） |
+| compound set | query registry の active `compound_general` を権威とする。除外は `excluded_compound_ids` に理由付きで記録（CBX は ISS-20261024-COL-016 の決定まで除外） |
+
+plan は `comparison` ブロックで `policy_id` / anchor query ids / anchor terms / locale を
+宣言する。宣言のない複数語 plan は共通スケール比較として扱わない。
+
+### 8.3 ゲートと監査
+
+| 段階 | コマンド | 規則 |
+|---|---|---|
+| 収集前 | `gate-plan`（`make gate-plan PLAN=<file>`） | `common_scale` は両 anchor を**同一** `compare_terms` 要求に含むこと。geo / timeframe / window / locale がポリシーと一致すること。欠落・不一致・宣言なしの複数語 plan は **stop**（fail closed） |
+| 収集後 / 採用 | `gate-run`（L1） | 宣言済み run は request と comparison artifact の**両方**に anchor を含み、window / request metadata が一致すること。宣言のない comparison-shaped run は warning（legacy。raw は変更しない） |
+| 監査 | `audit-comparison-scale` | ポリシーごとに missing anchor sets / compound coverage を報告。比較に使えない run は `not_comparable_runs`、要求条件がポリシーの外にある run は `out_of_scope_runs`、宣言前だがアンカーが揃う run は `legacy_undeclared_runs` に分ける。`--require-complete` で missing compound を exit 1。`make gates GATE=comparison` は宣言だけを検証する |
+
+単独系列 plan は引き続き許可するが、run_metadata の `comparison` に
+`comparison_scale: single_series` / `cross_compound_comparable: false` を記録し、
+比較可能とは扱わない。
+
+### 8.4 現状と legacy の扱い（2026-11-05）
+
+- 5年 common-scale setA〜D（旧窓 `2021-10-17_2026-10-18`）は CBD/THC を含むが、
+  ポリシーの現行窓の外にあるため `legacy_out_of_scope` として報告する（共通スケール
+  としては有効だが、現行窓の比較・被覆には使えない）。新規準拠とは扱わず、raw も
+  書き換えない。`not_comparable_runs` には入れず `out_of_scope_runs` に出す。
+  ポリシーの現行窓 `2021-10-31_2026-11-08` の再収集は
+  `metadata/plans/gt-5y-common-scale-current-set{A..D}.json` で宣言済み（未収集）。
+- 現行窓の common-scale run がまだ無いため、監査は必須 14 化合物を **missing** と
+  報告する（旧窓の被覆では代替しない）。
+- THCNM は 5年単独系列のみで、アンカー付き common-scale run が無い。したがって
+  `thcnm-general-ja` は **missing**。計画は現行窓の
+  `datasets/cannabinoid-raw-collection/metadata/plans/gt-5y-common-scale-thcnm.json`
+  （CBD + THC + THCNM）と、THCNM を含む `gt-5y-common-scale-current-setD.json` の
+  2 つで、どちらかを採用すれば THCNM の被覆は `complete` になる（他 13 化合物は
+  別 run の採用が必要）。
+- 12ヶ月の legacy comparison sets（`common-scale-expansion` の setB/setD、
+  `common-scale-missing`、製品語セット）は 5年ポリシーの範囲外
+  (`legacy_out_of_scope`) だが、anchor 欠落は `legacy_missing_anchor_sets` に残る。
+  12ヶ月を同じ規則で扱うには別の `comparison_scales` ポリシーが必要である。
+- この規則は §1 の `exact` と独立である。共通スケールであることは、境界が暦日一致
+  したことを主張しない（`exact_window_match=false` は limitations に残る）。

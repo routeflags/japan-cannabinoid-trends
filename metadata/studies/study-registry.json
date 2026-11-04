@@ -7,14 +7,14 @@
       "research_questions": [
         "日本国内において、CBX / H4CBH / HHBD 関連クエリの検索需要はどう推移しているか？"
       ],
-      "sources": ["google-trends", "google-search-console"],
+      "sources": ["google-search-console"],
       "status": "active"
     },
     {
       "study_id": "cannabinoid-raw-collection",
       "title": "Cannabinoid Raw Collection",
       "research_questions": [
-        "日本国内の検索需要（Google Trends、`geo=JP`）と、国単位のフィルタを持たない X / YouTube 上の言及・動画コンテンツはどう推移しているか？"
+        "日本におけるカンナビノイド成分へのオンライン関心は、どのように推移しているか？"
       ],
       "sources": ["google-trends", "x", "youtube"],
       "status": "active",

@@ -44,11 +44,14 @@ def evaluate_l1(
     *,
     registries: Registries | None = None,
     base_dir,
+    comparison_policies=(),
 ) -> L1Decision:
     """Evaluate L1 for a staged run document (read-only).
 
     ``base_dir`` is the run directory holding ``artifact_manifest.json``,
     the payload files and (for the target string only) the metadata file.
+    ``comparison_policies`` are the study's declared common-scale policies;
+    they are passed to the post-collection gate, which owns the verdict.
     """
     outcome = validate_full(
         document,
@@ -66,5 +69,6 @@ def evaluate_l1(
         document,
         registries=registries,
         base_dir=base_dir,
+        comparison_policies=comparison_policies,
     )
     return L1Decision(gate.action, gate.passed, gate.issues)

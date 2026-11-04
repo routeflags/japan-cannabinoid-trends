@@ -205,6 +205,22 @@ def test_duplicate_query_text_fails():
     assert "QUERY_DUPLICATE_TEXT" in _codes(check_query_registry(document))
 
 
+def test_deprecated_query_may_keep_the_text_of_its_replacement():
+    """A retired id stays resolvable for runs recorded before the rename.
+
+    Raw provenance is never rewritten, so a run collected under the old id
+    must still resolve after the registry points new plans at the new id.  The
+    duplicate-text rule therefore applies to live queries only.
+    """
+
+    document = _registry()
+    clone = dict(document["queries"][0])
+    clone["query_id"] = "cbx-general-ja-retired"
+    clone["status"] = "deprecated"
+    document["queries"].append(clone)
+    assert "QUERY_DUPLICATE_TEXT" not in _codes(check_query_registry(document))
+
+
 def test_unregistered_compound_fails_when_the_taxonomy_is_loaded_g2_t01():
     document = _registry()
     document["queries"][0]["compound_id"] = "compound_unknown"

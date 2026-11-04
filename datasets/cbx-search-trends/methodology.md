@@ -17,7 +17,17 @@
 
 ## 2. Data Sources
 
-### 2.1 Google Trends (Primary)
+> **所有の変更（2026-11-04）:** CBX の Google Trends raw は owner 決定により
+> [`datasets/cannabinoid-raw-collection/`](../cannabinoid-raw-collection/) へ**所有を移管**した
+> （run id と payload バイトは不変。[`ISS-20261024-COL-016`](../../docs/issues/active/30-production-collection-expansion/20261024_p2_cbx-in-scope.md)、
+> 移管の記録は `metadata/provenance/declarations/20261104-cbx-google-trends-ownership-cannabinoid-raw-collection.json`）。
+> **本 study が今もつ raw は Google Search Console だけ**である。以下の §2.1〜§9 は
+> 2026-10-01 に収集したときの条件と結果の記録であり、raw の現在の所在は
+> [`cannabinoid-raw-collection/data/raw/google_trends/`](../cannabinoid-raw-collection/data/raw/google_trends/README.md)
+> である。CBX の Google Trends を引用するときは同 study の `data-catalog.json` と
+> その `methodology.md` §2.1.6 を参照する（本 study は二重の正本を持たない）。
+
+### 2.1 Google Trends (Primary、2026-11-04 に所有移管)
 
 | 項目 | 値 |
 |------|-----|
@@ -67,6 +77,8 @@
 
 ## 4. Run History
 
+Google Trends の run は 2026-11-04 に [`datasets/cannabinoid-raw-collection/`](../cannabinoid-raw-collection/) へ移管した（run id は不変）。以下の表は収集時の記録である。
+
 | Run ID | 取得日 | データ | 結果 |
 |--------|--------|--------|------|
 | `20261001T115959Z-google-trends-cbx-rikiddo` | 2026-10-01 | CBX リキッド単独 + 3キーワード比較 | 成功 |
@@ -79,8 +91,8 @@
 
 ### 5.1 Raw Data
 
-- Google Trends: JSON 形式で `data/raw/google_trends/<run-id>/` に保存
-- GSC: CSV 形式で `data/raw/gsc/` に保存
+- Google Trends: 2026-11-04 に [`datasets/cannabinoid-raw-collection/data/raw/google_trends/`](../cannabinoid-raw-collection/data/raw/google_trends/README.md) へ移管済み（run id とバイトは不変。本 study には置かない）。
+- GSC: CSV 形式で `data/raw/gsc/` に保存（machine-local、Git 非追跡）
 
 ### 5.2 Derived Data
 
@@ -206,7 +218,7 @@ Google Trends の 2026年9月出現は、市場全体での検索需要が閾値
    - `terms=["CBX リキッド"], geo="JP", timeframe="today 12-m"`
 3. `compare_terms` を呼び出し:
    - `terms=["CBX", "H4CBH", "HHBD", "CBX リキッド"], geo="JP", timeframe="today 12-m"`
-4. 結果を `data/raw/google_trends/<run-id>/` に JSON で保存
+4. 結果を `data/raw/google_trends/<run-id>/` に JSON で保存（2026-11-04 以降は移管先の `datasets/cannabinoid-raw-collection/data/raw/google_trends/`。新規収集は同 study の `make collect` で行う）
 
 ### 9.2 再現性の制約
 
@@ -226,8 +238,8 @@ Google Trends の 2026年9月出現は、市場全体での検索需要が閾値
 
 | ファイル | 内容 |
 |---------|------|
-| `data/raw/google_trends/` | Google Trends 生データ |
-| `data/raw/gsc/` | GSC 生データ |
+| `data/raw/gsc/` | GSC 生データ（本 study が保持する唯一の raw） |
+| `../cannabinoid-raw-collection/data/raw/google_trends/` | 移管先（Google Trends 生データの現在の所在） |
 | `README.md` | 研究概要と結果サマリー |
 | `../../publication/guide_cbx_rewrite.html` | 公開用ガイドページ |
 

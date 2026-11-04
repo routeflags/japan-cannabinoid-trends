@@ -304,6 +304,38 @@
       "language": "ja",
       "canonical_text": "CBD vs THC vs HHCH vs THC-O",
       "status": "active"
+    },
+    {
+      "query_id": "comparison-thcnm-anchored",
+      "compound_id": "compound_thcnm",
+      "intent_id": "other",
+      "language": "ja",
+      "canonical_text": "CBD vs THC vs THCNM",
+      "status": "active"
+    },
+    {
+      "query_id": "comparison-5y-thcnm",
+      "compound_id": "compound_thcnm",
+      "intent_id": "other",
+      "language": "ja",
+      "canonical_text": "CBD vs THC vs THCNM",
+      "status": "deprecated"
+    },
+    {
+      "query_id": "comparison-cbx-bridge",
+      "compound_id": "compound_cbx",
+      "intent_id": "other",
+      "language": "ja",
+      "canonical_text": "CBX vs CBD vs THC",
+      "status": "active"
+    },
+    {
+      "query_id": "comparison-5y-current-setD",
+      "compound_id": "compound_cbd",
+      "intent_id": "other",
+      "language": "ja",
+      "canonical_text": "CBD vs THC vs HHCH vs THC-O vs THCNM",
+      "status": "active"
     }
   ]
 }

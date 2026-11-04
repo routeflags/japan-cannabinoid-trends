@@ -39,19 +39,19 @@
       "has_readme": true,
       "has_methodology": true,
       "research_questions_quoted": [
-        "日本国内の検索需要（Google Trends、`geo=JP`）と、国単位のフィルタを持たない X / YouTube 上の言及・動画コンテンツはどう推移しているか？"
+        "日本におけるカンナビノイド成分へのオンライン関心は、どのように推移しているか？"
       ],
-      "run_count": 53,
-      "catalog_entry_count": 78,
+      "run_count": 71,
+      "catalog_entry_count": 106,
       "layout": [
         "README.md",
         "data",
         "metadata",
         "methodology.md"
       ],
-      "data_file_count": 200,
+      "data_file_count": 271,
       "has_data_raw": true,
-      "data_raw_file_count": 197,
+      "data_raw_file_count": 268,
       "sources": [
         "google-trends",
         "google-trends-mcp"
@@ -70,6 +70,7 @@
         "compound_thc",
         "compound_thc_o",
         "compound_thch",
+        "compound_thcnm",
         "compound_thcv"
       ],
       "query_ids": [
@@ -80,11 +81,14 @@
         "cbg-liquid-ja",
         "cbn-general-ja",
         "cbn-liquid-ja",
+        "cbx-general-ja",
         "cbx-liquid-ja",
         "comparison-5y-setA",
         "comparison-5y-setB",
         "comparison-5y-setC",
         "comparison-5y-setD",
+        "comparison-cbx-bridge",
+        "comparison-thcnm-anchored",
         "crdh-general-ja",
         "crdh-liquid-ja",
         "crdp-general-ja",
@@ -103,6 +107,7 @@
         "thc-o-liquid-ja",
         "thch-general-ja",
         "thch-liquid-ja",
+        "thcnm-general-ja",
         "thcv-general-ja",
         "thcv-liquid-ja"
       ],
@@ -115,8 +120,15 @@
       ],
       "window_ids": [
         "2021-10-10_2026-10-12",
+        "2021-10-15T04:28:57Z_2026-10-15T04:28:57Z",
         "2021-10-17_2026-10-18",
-        "2025-10-19_2026-10-18"
+        "2021-10-31_2026-11-08",
+        "2025-10-15T04:28:53Z_2026-10-15T04:28:53Z",
+        "2025-10-19_2026-10-18",
+        "2025-11-02_2026-11-08",
+        "2026-07-17T04:28:49Z_2026-10-15T04:28:49Z",
+        "2026-08-06_2026-11-04",
+        "2026-09-15T04:28:45Z_2026-10-15T04:28:45Z"
       ],
       "has_artifact_manifest": true,
       "coverage": "unevidenced",
@@ -214,17 +226,16 @@
       "research_questions_quoted": [
         "日本国内において、CBX / H4CBH / HHBD 関連クエリの検索需要はどう推移しているか？"
       ],
-      "run_count": 8,
-      "catalog_entry_count": 12,
+      "run_count": 0,
+      "catalog_entry_count": 4,
       "layout": [
         "README.md",
         "analysis",
-        "data",
         "methodology.md"
       ],
-      "data_file_count": 31,
-      "has_data_raw": true,
-      "data_raw_file_count": 31,
+      "data_file_count": 0,
+      "has_data_raw": false,
+      "data_raw_file_count": 0,
       "sources": [
         "google-trends"
       ],
@@ -249,13 +260,8 @@
       "measurement_ids": [
         "search_interest_index"
       ],
-      "window_ids": [
-        "2021-10-15T04:28:57Z_2026-10-15T04:28:57Z",
-        "2025-10-15T04:28:53Z_2026-10-15T04:28:53Z",
-        "2026-07-17T04:28:49Z_2026-10-15T04:28:49Z",
-        "2026-09-15T04:28:45Z_2026-10-15T04:28:45Z"
-      ],
-      "has_artifact_manifest": true,
+      "window_ids": [],
+      "has_artifact_manifest": false,
       "coverage": "unevidenced",
       "publication_status": "private_by_default"
     },
@@ -449,9 +455,9 @@
       ]
     }
   ],
-  "raw_file_count": 230,
+  "raw_file_count": 270,
   "raw_modified": false,
-  "raw_combined_sha256": "915bdb9b63d04ebe0c8b6721b6ec1c904619dc19a2f862b18d01e03b06336f26",
+  "raw_combined_sha256": "585ef41e8b514d0045d71ac457cefb959c57dc5d09f15c868c4f687b04dee871",
   "note": "non-destructive: study boundaries intact, raw and old metadata only read"
 }
 

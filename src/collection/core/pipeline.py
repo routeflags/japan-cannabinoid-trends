@@ -54,6 +54,7 @@ from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from pathlib import Path
 
+from validation.comparison_scale import load_study_comparison_policies
 from validation.gates import pre_collection_gate
 from validation.pipeline import validate_full
 from validation.reporting import Issue
@@ -312,9 +313,15 @@ def _finalize(
     datasets_root,
     workspace_root,
     registries: Registries | None,
+    comparison_policies=(),
 ) -> PipelineResult:
     """L1 evaluation + catalog/quarantine move (shared by collect / adopt)."""
-    decision = evaluate_l1(document, registries=registries, base_dir=staged_dir)
+    decision = evaluate_l1(
+        document,
+        registries=registries,
+        base_dir=staged_dir,
+        comparison_policies=comparison_policies,
+    )
     if decision.action == "catalog":
         study_id = document.get("study_id")
         target = _catalog_dir(
@@ -390,10 +397,39 @@ def run_collection(
     if selection_issues:
         return PipelineResult(action="stopped", issues=selection_issues)
 
-    # 3. pre-collection gate (registry / query / window semantics)
+    # 2b. the study's declared comparison policies (empty for a study that
+    # declares none).  A malformed declaration stops the run (fail closed);
+    # the raw layer is never consulted here.
+    try:
+        comparison_policies, comparison_issues = load_study_comparison_policies(
+            datasets_root,
+            plan.get("study_id"),
+            queries=registries.queries,
+            query_variants=registries.query_variants,
+            windows=registries.windows,
+        )
+    except ValueError as error:
+        return PipelineResult(
+            action="stopped",
+            issues=[
+                _issue(
+                    "COMPARISON_DESIGN_INVALID",
+                    "",
+                    f"study comparison declaration cannot be read: {error}",
+                )
+            ],
+        )
+    if any(issue.severity == "error" for issue in comparison_issues):
+        return PipelineResult(action="stopped", issues=comparison_issues)
+
+    # 3. pre-collection gate (registry / query / window / comparison semantics)
     plan_document = dict(plan)
     plan_document.setdefault("collector_id", collector_entry.get("collector_id"))
-    pre_gate = pre_collection_gate(plan_document, registries=registries)
+    pre_gate = pre_collection_gate(
+        plan_document,
+        registries=registries,
+        comparison_policies=comparison_policies,
+    )
     if not pre_gate.passed:
         return PipelineResult(action="stopped", issues=pre_gate.issues)
 
@@ -655,6 +691,7 @@ def run_collection(
         datasets_root=datasets_root,
         workspace_root=workspace_root,
         registries=registries,
+        comparison_policies=comparison_policies,
     )
 
 
@@ -726,6 +763,31 @@ def adopt_staged(
     if study_issues:
         return PipelineResult(action="stopped", run_id=run_id, issues=study_issues)
 
+    try:
+        comparison_policies, comparison_issues = load_study_comparison_policies(
+            datasets_root,
+            document.get("study_id"),
+            queries=registries.queries,
+            query_variants=registries.query_variants,
+            windows=registries.windows,
+        )
+    except ValueError as error:
+        return PipelineResult(
+            action="stopped",
+            run_id=run_id,
+            issues=[
+                _issue(
+                    "COMPARISON_DESIGN_INVALID",
+                    "",
+                    f"study comparison declaration cannot be read: {error}",
+                )
+            ],
+        )
+    if any(issue.severity == "error" for issue in comparison_issues):
+        return PipelineResult(
+            action="stopped", run_id=run_id, issues=comparison_issues
+        )
+
     existing = [
         path
         for path in (
@@ -760,6 +822,7 @@ def adopt_staged(
         datasets_root=datasets_root,
         workspace_root=workspace_root,
         registries=registries,
+        comparison_policies=comparison_policies,
     )
 
 

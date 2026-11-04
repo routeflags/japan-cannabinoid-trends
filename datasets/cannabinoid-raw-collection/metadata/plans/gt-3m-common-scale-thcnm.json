@@ -1,0 +1,46 @@
+{
+  "plan_id": "gt-3m-common-scale-thcnm",
+  "study_id": "cannabinoid-raw-collection",
+  "source_id": "google-trends",
+  "collector_id": "google-trends-mcp",
+  "query_id": "comparison-thcnm-anchored",
+  "query": {
+    "terms": [
+      "CBD",
+      "THC",
+      "THCNM"
+    ],
+    "geo": "JP",
+    "timeframe": "today 3-m",
+    "compound_id": "compound_thcnm",
+    "text": "CBD vs THC vs THCNM"
+  },
+  "comparison": {
+    "comparison_scale": "common_scale",
+    "policy_id": "gt-3m-common-scale-cbd-thc",
+    "anchor_query_ids": [
+      "cbd-general-ja",
+      "thc-general-ja"
+    ],
+    "anchor_terms": [
+      "CBD",
+      "THC"
+    ],
+    "locale": "ja",
+    "geo": "JP",
+    "timeframe": "today 3-m",
+    "tool": "compare_terms"
+  },
+  "required_capabilities": [
+    "geo_filter",
+    "relative_date_range"
+  ],
+  "window": {
+    "window_id": "2026-08-06_2026-11-04",
+    "start": "2026-08-06T00:00:00Z",
+    "end_exclusive": "2026-11-04T00:00:00Z",
+    "granularity": "day",
+    "timezone": "Asia/Tokyo"
+  },
+  "purpose": "THCNM の 3 ヶ月 common-scale 補足系列（日次）。12 ヶ月の共通スケールは窓内最大値（CBD の 2026-05 の週 = 100）を分母にするため、THCNM は全週 0 に丸められた。3 ヶ月は同じアンカー CBD・THC を同一 compare_terms 要求に含めたまま分母を窓内最大値に限るので、低容量語をより分解しやすい。値は 12 ヶ月 common-scale とも単独系列とも直接比較できない（別の共通スケール）。窓は収集時点の today 3-m の公称 90 日（2026-08-06_2026-11-04）で、collector が強制する境界ではない。"
+}

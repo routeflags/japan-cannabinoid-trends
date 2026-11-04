@@ -3,7 +3,7 @@
   "generated_by": "validation.cli contract-ledger",
   "summary": {
     "contract_count": 30,
-    "document_count": 35,
+    "document_count": 36,
     "by_kind": {
       "gate_contract": 7,
       "interface_contract": 3,
@@ -418,6 +418,12 @@
     },
     {
       "path": "metadata/windows/2025-11-02_2026-11-08.json",
+      "kind": "registry_document",
+      "schema_contract": "temporal-window-v1",
+      "exists": true
+    },
+    {
+      "path": "metadata/windows/2026-08-06_2026-11-04.json",
       "kind": "registry_document",
       "schema_contract": "temporal-window-v1",
       "exists": true

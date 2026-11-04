@@ -28,6 +28,7 @@ capability support and temporal ordering are semantic checks in
 
 from __future__ import annotations
 
+from validation.schemas.comparison import COMPARISON_BLOCK_SCHEMA
 from validation.schemas.temporal import GRANULARITIES
 
 COLLECTION_PLAN_SCHEMA = {
@@ -125,5 +126,13 @@ COLLECTION_PLAN_SCHEMA = {
     },
     "purpose": {
         "type": "string",
+    },
+    # Cross-compound comparison declaration (ISS-20261105-GT-030).  Optional:
+    # legacy plans carry none and stay valid.  A multi-term plan without this
+    # block is refused by the pre-collection gate (comparison_scale), because
+    # separate single-term series are not comparable.
+    "comparison": {
+        "type": "dict",
+        "schema": COMPARISON_BLOCK_SCHEMA,
     },
 }

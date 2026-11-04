@@ -21,17 +21,17 @@
       "evidence_id": "ev-collector-registry",
       "evidence_type": "registry_definition",
       "reference": "config/collectors.json",
-      "sha256": "185636cb7ee94049baa864325402f643cae589dbe007d96df1ad06c9bc1e8bb2",
-      "observed_at": "2026-10-24T00:00:00Z",
-      "note": "Collector registry used for P04/P05 reference checks. Re-pinned 2026-10-24: the youtube-apify-search evidence list dropped scripts/collect-youtube-japanese-keywords.sh, which used the YouTube Data API v3 this repository no longer collects with. Originally pinned by a Delta agent under owner instruction from smapira for ISS-20261015-PRV-011."
+      "sha256": "f2941b309b6b54f4f1df03a3e55c8b8e1f4e52196ff79135123e3e9eeeff0bba",
+      "observed_at": "2026-11-04T17:00:00Z",
+      "note": "Collector registry used for P04/P05 reference checks. Re-pinned 2026-10-24: the youtube-apify-search evidence list dropped scripts/collect-youtube-japanese-keywords.sh, which used the YouTube Data API v3 this repository no longer collects with. Originally pinned by a Delta agent under owner instruction from smapira for ISS-20261015-PRV-011. Re-pinned 2026-11-04 (same day as the CBX Google Trends ownership migration, ISS-20261024-COL-016): the google-trends-mcp evidence path for the CBX 12-month run now names its location under datasets/cannabinoid-raw-collection/ after the owner moved the raw there. The previous hash was not patched silently; this is a new witnessed observation."
     },
     {
       "evidence_id": "ev-query-registry",
       "evidence_type": "registry_definition",
       "reference": "metadata/queries/query-registry.json",
-      "sha256": "7e1ddf57aa977b4a5fa2d7d2919483d48c2ef85c3682e9a26588c01ad234aa8d",
-      "observed_at": "2026-11-04T12:00:00Z",
-      "note": "Query registry (schema_version 1.0.0) used for P06/P17 checks. Re-observed 2026-11-04 by a Delta agent in the japan-cannabinoid-trends worktree under the owner request recorded as ISS-20261104-TAX-028 (THCNM added to the compound taxonomy and query registry), then again after the owner added `tha-liquid-ja` (`THA リキッド`) as a second required primary query for `compound_thcnm`; the current hash observes the bytes after both changes. The earlier hashes were not patched silently: this entry records a new witnessed observation with its own time and note."
+      "sha256": "adeb6aa1e4326d7203a9ac301854098b1c9a4a27d2b5973c77ed2524fe3fd95c",
+      "observed_at": "2026-11-04T18:14:35Z",
+      "note": "Query registry (schema_version 1.0.0) used for P06/P17 checks. Re-observed 2026-11-04 by a Delta agent in the japan-cannabinoid-trends worktree under the owner request recorded as ISS-20261104-TAX-028 (THCNM added to the compound taxonomy and query registry), then again after the owner added `tha-liquid-ja` (`THA リキッド`) as a second required primary query for `compound_thcnm`, again for ISS-20261105-GT-030 (`comparison-5y-thcnm` = `CBD vs THC vs THCNM`, the declared 5-year common-scale query), and again for the owner's decision B to recollect the current-window 5-year sets (new `comparison-5y-current-setD` for the CBD+THC+HHCH+THC-O+THCNM request; sets A-C reuse the existing term-set queries `comparison-5y-setA`..`setC`); the current hash observes the bytes after all of these changes. The earlier hashes were not patched silently: this entry records a new witnessed observation with its own time and note. Re-observed again after renaming the THCNM common-scale query id from `comparison-5y-thcnm` to `comparison-thcnm-anchored` (the registry names a term set and intent, not a timeframe, so the same registered query serves the 5-year and the new 12-month/3-month anchored plans; no run in this worktree referenced it at the time; a concurrently collected 5-year run (2026-11-04T17:40:40Z) already used the old id and stays resolvable through the deprecated entry below). Re-observed after keeping `comparison-5y-thcnm` as a deprecated identifier for the 5-year run collected at 2026-11-04T17:40:40Z (that run predates the rename and raw provenance is never rewritten). The duplicate-text rule now applies to live queries only, so a retired id can keep the text of its replacement; the run resolves with an informational QUERY_DEPRECATED_REFERENCE."
     },
     {
       "evidence_id": "ev-compound-taxonomy",

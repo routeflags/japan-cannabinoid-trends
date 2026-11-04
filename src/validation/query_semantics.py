@@ -381,8 +381,10 @@ def check_query_registry(document, *, vocabulary=None) -> list:
     """Semantic checks for one query-registry document.
 
     - duplicate ``query_id`` (G2-T02: query ID uniqueness);
-    - duplicate normalized ``canonical_text`` (two concepts must not claim
-      the same search string);
+    - duplicate normalized ``canonical_text`` (two *active* concepts must not
+      claim the same search string; a ``deprecated`` identifier may keep the
+      text of the query that replaced it, so a run recorded before a rename
+      still resolves — raw provenance is never rewritten);
     - ``compound_id`` must be a compound concept of the taxonomy when a
       vocabulary is available (G2-T01 / b.md §11 "Taxonomy参照整合性");
     - a registered text must not match an exclusion rule (the registry would
@@ -417,7 +419,11 @@ def check_query_registry(document, *, vocabulary=None) -> list:
                 seen_ids.add(query_id)
         normalized = normalize_query_text(query.get("canonical_text"))
         if normalized:
-            if normalized in seen_texts:
+            # A retired identifier keeps the text of its replacement so runs
+            # recorded before the rename still resolve.  Only live queries are
+            # checked against each other.
+            deprecated = query.get("status") == "deprecated"
+            if not deprecated and normalized in seen_texts:
                 issues.append(
                     _issue(
                         "QUERY_DUPLICATE_TEXT",
@@ -427,7 +433,7 @@ def check_query_registry(document, *, vocabulary=None) -> list:
                         "query_uniqueness",
                     )
                 )
-            else:
+            elif not deprecated:
                 seen_texts.add(normalized)
             rule = _matching_exclusion_rule(normalized)
             if rule is not None:

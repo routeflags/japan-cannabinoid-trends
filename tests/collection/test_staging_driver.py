@@ -237,6 +237,72 @@ def test_metadata_records_declared_and_derived_facts(tmp_path, registries):
     assert handover["returned_count"] == "derived:sum(artifacts)"
 
 
+def test_declared_week_start_and_observed_bounds_reach_the_run_metadata(
+    tmp_path, registries
+):
+    """A weekly series re-adopted from an existing run keeps its period facts.
+
+    L1 refuses week granularity without ``week_start``, so a declaration that
+    re-adopts a weekly run must be able to state it (ISS-20261104-COL-016).
+    The observed bounds are recorded beside the requested window, never in
+    its place (P5: request and observation stay separate).
+    """
+
+    run = _run()
+    run["window"]["granularity"] = "week"
+    run["temporal"]["week_start"] = "sunday"
+    run["temporal"]["observed_min_timestamp"] = "2026-01-04T00:00:00Z"
+    run["temporal"]["observed_max_timestamp"] = "2026-01-10T00:00:00Z"
+    workspace, _, report = _stage(tmp_path, registries, _declaration(run))
+    staged = Path(report["results"][0]["staging_dir"])
+
+    temporal = load_json(staged / RUN_METADATA_NAME)["temporal_provenance"]
+    assert temporal["granularity"] == "week"
+    assert temporal["week_start"] == "sunday"
+    assert temporal["observed_min_timestamp"] == "2026-01-04T00:00:00Z"
+    assert temporal["observed_max_timestamp"] == "2026-01-10T00:00:00Z"
+    assert temporal["requested_start"] == "2026-01-01T00:00:00Z"
+    assert temporal["requested_end_exclusive"] == "2026-01-10T00:00:00Z"
+
+    adopted = adopt_staged(
+        staged,
+        workspace_root=workspace,
+        datasets_root=workspace / "datasets",
+        registries=registries,
+    )
+    assert adopted.action == "adopted", [issue.code for issue in adopted.issues]
+
+
+def test_weekly_granularity_without_week_start_is_refused_by_l1(tmp_path, registries):
+    """The opposite direction: the driver must not invent ``week_start``."""
+
+    run = _run()
+    run["window"]["granularity"] = "week"
+    workspace, _, report = _stage(tmp_path, registries, _declaration(run))
+    staged = Path(report["results"][0]["staging_dir"])
+    assert "week_start" not in load_json(staged / RUN_METADATA_NAME)["temporal_provenance"]
+
+    adopted = adopt_staged(
+        staged,
+        workspace_root=workspace,
+        datasets_root=workspace / "datasets",
+        registries=registries,
+    )
+    assert adopted.action == "quarantined"
+    assert "WEEK_START_REQUIRED" in [issue.code for issue in adopted.l1.issues]
+
+
+def test_unknown_temporal_key_is_still_refused(tmp_path):
+    run = _run()
+    run["temporal"]["weeks_start"] = "sunday"  # typo
+    with pytest.raises(DeclarationError) as excinfo:
+        load_declaration(_write(tmp_path, _declaration(run)))
+    assert any(
+        "weeks_start" in issue.path or "weeks_start" in issue.message
+        for issue in excinfo.value.issues
+    )
+
+
 def test_declared_keyword_is_never_inferred_from_the_payload(tmp_path, registries):
     """A declaration whose keyword disagrees with the CSV's own `input`
     column is staged with the declared keyword - proof that the driver does

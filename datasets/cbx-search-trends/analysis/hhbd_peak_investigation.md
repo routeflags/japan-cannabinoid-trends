@@ -50,5 +50,5 @@
 
 ## データ出典
 
-- Google Trends: `datasets/cbx-search-trends/data/raw/google_trends/20261001T121949Z-google-trends-h4cbh-hhbd/records_hhbd.json`
+- Google Trends: `datasets/cannabinoid-raw-collection/data/raw/google_trends/20261001T121949Z-google-trends-h4cbh-hhbd/records_hhbd.json`（2026-11-04 に `datasets/cbx-search-trends/data/raw/google_trends/` から所有移管。run id とバイトは不変）
 - Web 検索: 2026-10-01 実施

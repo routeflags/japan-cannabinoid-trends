@@ -6,7 +6,7 @@
   "inputs_read_only": true,
   "lineage": [
     {
-      "artifact_ref": "datasets/cbx-search-trends/data/raw/google_trends/20261001T115959Z-google-trends-cbx-rikiddo/comparison.json",
+      "artifact_ref": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261001T115959Z-google-trends-cbx-rikiddo/comparison.json",
       "artifact_sha256": "df8c575f081e1931824aa1720d1af6104ad772b3378ddabc9a7d23c12038230d",
       "collected_at": "2026-10-01T11:59:59Z",
       "geo": "JP",

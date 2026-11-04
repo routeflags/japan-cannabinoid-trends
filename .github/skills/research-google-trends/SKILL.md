@@ -242,7 +242,7 @@ datasets/<study-id>/data/raw/google_trends/
 期間: today 12-m
 
 → `netloom google-trends interest-over-time` を実行
-→ 結果を datasets/cbx-search-trends/data/raw/google_trends/<run-id>/records.json に保存
+→ 結果を datasets/cannabinoid-raw-collection/data/raw/google_trends/<run-id>/records.json に保存
 ```
 
 ### 例2: CBX リキッド vs CBD リキッド 比較

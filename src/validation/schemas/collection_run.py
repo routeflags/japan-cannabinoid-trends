@@ -66,6 +66,7 @@ from __future__ import annotations
 
 from copy import deepcopy
 
+from validation.schemas.comparison import run_comparison_schema
 from validation.schemas.temporal import COLLECTOR_WINDOW_TYPES, GRANULARITIES
 
 __all__ = [
@@ -278,6 +279,15 @@ COLLECTION_RUN_SCHEMA = {
     "artifact_manifest": {
         "type": "string",
         "empty": False,
+    },
+    # Comparison declaration copied from the plan plus the derived
+    # cross_compound_comparable marker (ISS-20261105-GT-030).  Optional: legacy
+    # runs carry none; a declared common_scale run is checked at adoption by
+    # validation.comparison_scale.  Strict sub-fields so a typo cannot silently
+    # weaken the declaration.
+    "comparison": {
+        "type": "dict",
+        "schema": run_comparison_schema(),
     },
     # Collection-side comparability evidence (ISS-20261015-CMP-005, CS08/CS11
     # carriers).  Optional and strict: absent means "no evidence recorded"

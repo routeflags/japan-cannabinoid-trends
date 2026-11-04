@@ -488,7 +488,7 @@ publication_decision: N/A (strategy document, not dataset)
 
 1. YouTube Data API v3 collections — `datasets/cannabinoid-raw-collection/data/raw/youtube/` and `datasets/cbx-social-trends/data/raw/youtube/`
 2. X (Twitter) collections via Apify — `datasets/cbx-social-trends/data/raw/x/`, `datasets/cannabinoid-raw-collection/data/raw/x/`, `datasets/cannabinoid-social-trends/data/raw/x/`
-3. Google Trends collections — `datasets/cannabinoid-raw-collection/data/raw/google_trends/`, `datasets/cbx-search-trends/data/raw/google_trends/`
+3. Google Trends collections — `datasets/cannabinoid-raw-collection/data/raw/google_trends/`（CBX の run は 2026-11-04 に `datasets/cbx-search-trends/data/raw/google_trends/` からここへ移管）
 
 ### Methodological Frameworks
 

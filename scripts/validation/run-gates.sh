@@ -7,8 +7,13 @@
 #
 # Usage:
 #   scripts/validation/run-gates.sh registries [--config-dir DIR --metadata-dir DIR]
+#   scripts/validation/run-gates.sh comparison [--query-design FILE]
 #   scripts/validation/run-gates.sh plan <plan.json> [extra validate args]
 #   scripts/validation/run-gates.sh run <run_metadata.json> [extra validate args]
+#
+# "comparison" validates the study's comparison_scales declaration and its
+# anchor query references without reading the raw layer (the design gate).
+# "plan" includes the comparison checks through validation.cli gate-plan.
 #
 # Exit codes (as defined for the CLI, h.md §13):
 #   0 = pass / proceed / catalog    1 = fail -> do not adopt / do not start
@@ -45,6 +50,9 @@ case "${command}" in
   registries)
     exec "${PYTHON}" -m validation.cli validate-registries "$@"
     ;;
+  comparison)
+    exec "${PYTHON}" -m validation.cli audit-comparison-scale --design-only "$@"
+    ;;
   plan)
     plan_file="${1:?usage: run-gates.sh plan <plan.json> [extra args]}"
     shift
@@ -56,7 +64,7 @@ case "${command}" in
     exec "${PYTHON}" -m validation.cli gate-run --file "${run_file}" "$@"
     ;;
   *)
-    echo "usage: run-gates.sh {registries|plan <plan.json>|run <run_metadata.json>}" >&2
+    echo "usage: run-gates.sh {registries|comparison|plan <plan.json>|run <run_metadata.json>}" >&2
     exit 2
     ;;
 esac

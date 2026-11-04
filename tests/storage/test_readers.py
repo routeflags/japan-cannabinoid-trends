@@ -34,7 +34,7 @@ COMPARISON = (
 )
 RELATED_QUERIES = (
     REPO_ROOT
-    / "datasets/cbx-search-trends/data/raw/google_trends"
+    / "datasets/cannabinoid-raw-collection/data/raw/google_trends"
     / "20261001T115959Z-google-trends-cbx-rikiddo/related_queries.json"
 )
 NO_DATA = (
@@ -59,12 +59,12 @@ AVERAGES_WITH_PEAK = (
 )
 QUERY_BATCH_OBJECTS = (
     REPO_ROOT
-    / "datasets/cbx-search-trends/data/raw/google_trends"
+    / "datasets/cannabinoid-raw-collection/data/raw/google_trends"
     / "20261001T121949Z-google-trends-h4cbh-hhbd/related_queries.json"
 )
 QUERY_BATCH_DATA_OBJECT = (
     REPO_ROOT
-    / "datasets/cbx-search-trends/data/raw/google_trends"
+    / "datasets/cannabinoid-raw-collection/data/raw/google_trends"
     / "20261001T132500Z-google-trends-disambiguated/records_disambiguated.json"
 )
 ENVELOPE_PAYLOAD = (
@@ -74,7 +74,7 @@ ENVELOPE_PAYLOAD = (
 )
 ENVELOPE_TOOL_RESULT = (
     REPO_ROOT
-    / "datasets/cbx-search-trends/data/raw/google_trends"
+    / "datasets/cannabinoid-raw-collection/data/raw/google_trends"
     / "20261015T042845Z-google-trends-boundary-1m/mcp-tool-result.json"
 )
 

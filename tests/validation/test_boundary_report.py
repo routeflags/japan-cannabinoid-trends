@@ -217,7 +217,16 @@ def test_row_for_the_tracked_recorded_5y_run(tmp_path):
     assert row["last_end_offset_days"] == 5.72
     assert row["verdict"] == "consistent"
     # ... and it is not part of the promotion cohort.
-    assert report["rule"]["cohort_run_count"] == 0
+    # The cohort holds the four CBX boundary probes (1m / 3m / 12m / 5y) that
+    # moved into this study from cbx-search-trends on 2026-11-04: one consistent
+    # run per timeframe is below the protocol minimum (2), so nothing promotes.
+    assert report["rule"]["cohort_run_count"] == 4
+    assert report["rule"]["cohort_run_ids"] == [
+        "20261015T042845Z-google-trends-boundary-1m",
+        "20261015T042849Z-google-trends-boundary-3m",
+        "20261015T042853Z-google-trends-boundary-12m",
+        "20261015T042857Z-google-trends-boundary-5y",
+    ]
     assert report["rule"]["eligible"] is False
 
 

@@ -18,6 +18,8 @@
 #   make audit-raw-retention          validate the git_tracked / git_untracked
 #                                     decisions and the Git index (no raw needed)
 #   make audit-youtube-coverage       primary liquid coverage inventory
+#   make audit-comparison-scale       common-scale anchor coverage (read-only)
+#   make gate-plan PLAN=<file>        pre-collection plan gate (anchors included)
 #   make audit-distribution-scope     release slice vs raw study scope
 #   make audit-snapshots              regenerate tracked docs/audits snapshots
 #   make gates                        validation gate scripts
@@ -30,11 +32,12 @@ METADATA ?= metadata
 RETENTION ?= metadata/provenance/retention
 GATE ?= registries
 GATE_ARGS ?=
+PLAN ?=
 
-.PHONY: help test collect stage adopt-all platform-trends youtube-aggregate audit-new-runs audit-adoption audit-publication audit-raw-completeness audit-raw-retention audit-youtube-coverage audit-distribution-scope audit-snapshots gates check-venv
+.PHONY: help test collect stage adopt-all platform-trends youtube-aggregate audit-new-runs audit-adoption audit-publication audit-raw-completeness audit-raw-retention audit-youtube-coverage audit-comparison-scale gate-plan audit-distribution-scope audit-snapshots release-preflight gates check-venv
 
 help:
-	@echo "Targets: test | stage DECLARATION=<file> | adopt-all | platform-trends | youtube-aggregate | audit-new-runs | audit-adoption | audit-publication | audit-raw-completeness | audit-raw-retention | audit-youtube-coverage | audit-distribution-scope | audit-snapshots | gates"
+        @echo "Targets: test | stage DECLARATION=<file> | adopt-all | platform-trends | youtube-aggregate | audit-new-runs | audit-adoption | audit-publication | audit-raw-completeness | audit-raw-retention | audit-youtube-coverage | audit-comparison-scale | gate-plan PLAN=<file> | audit-distribution-scope | audit-snapshots | release-preflight | gates"
 
 # Local development runs through .venv (see docs/specs/validation-framework.md
 # §2).  Fail fast with setup guidance when the interpreter is absent instead of
@@ -96,6 +99,19 @@ audit-raw-retention: check-venv
 audit-youtube-coverage: check-venv
 	$(PYTHON) -m validation.cli audit-youtube-coverage $(ARGS)
 
+# Common-scale comparison coverage: declared anchors (CBD/THC), missing anchor
+# sets and legacy not-comparable runs.  Read-only and checkout-local (the raw
+# layer is machine-local); --require-complete makes a missing compound run
+# exit 1.  It never regenerates a committed audit snapshot.
+audit-comparison-scale: check-venv
+	$(PYTHON) -m validation.cli audit-comparison-scale $(ARGS)
+
+# Pre-collection plan gate: structure + registry + the study's comparison
+# anchors.  Same implementation as `make gates GATE=plan GATE_ARGS=<plan>`.
+gate-plan: check-venv
+	@test -n "$(PLAN)" || (echo "usage: make gate-plan PLAN=<plan.json>" && exit 2)
+	bash scripts/validation/run-gates.sh plan $(PLAN) --datasets-root $(DATASETS)
+
 # Report-only: changing the release slice is a release decision, not an audit
 # side effect.  --strict makes drift findings exit non-zero.
 audit-distribution-scope: check-venv
@@ -122,6 +138,12 @@ audit-snapshots: check-venv
 	$(PYTHON) -m validation.cli audit-private-catalog --output docs/audits/g6-private-catalog.json
 	$(PYTHON) -m research.cli --repo-root . --datasets-root datasets audit-studies --output docs/audits/g7-study-inventory.json
 	$(PYTHON) -m validation.cli snapshot-guard --phase postflight --audits-dir docs/audits --state-file .staging/audit-snapshot-guard.json
+
+# Release preflight reuses the existing version-sync script and the version
+# consistency test. It must pass before creating a release tag.
+release-preflight: check-venv
+	bash scripts/validation/validate-version-sync.sh
+	$(PYTHON) -m pytest -q tests/validation/test_version_internal_consistency.py
 
 gates: check-venv
 	bash scripts/validation/run-gates.sh $(GATE) $(GATE_ARGS)

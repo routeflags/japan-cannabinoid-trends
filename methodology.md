@@ -36,7 +36,7 @@ This repository maintains reproducible longitudinal datasets concerning cannabin
 
 ```
 datasets/
-├── cbx-search-trends/     # Google Trends + GSC
+├── cbx-search-trends/     # GSC（Google Trends raw は cannabinoid-raw-collection が所有）
 ├── cbx-social-trends/     # X + YouTube
 ├── cbx-liquid-online-trend/ # X 週次（PLANNED）
 └── cbx-product-coa/       # COA 分析（PLANNED）
@@ -171,7 +171,7 @@ Google Trends は非決定的なため、同一日内で複数回収集してば
 Citation format is defined in `CITATION.cff`.
 
 Dataset: Japan Cannabinoid Trends Dataset 2026
-Version: 1.14.0
+Version: 1.14.2
 DOI: 10.5281/zenodo.23390594
 License: CC-BY-4.0
 

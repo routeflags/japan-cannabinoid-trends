@@ -85,6 +85,10 @@ from validation.coverage import (
     evaluate_coverage,
     write_coverage_manifest,
 )
+from validation.comparison_scale import (
+    build_comparison_scale_audit,
+    load_study_comparison_policies,
+)
 from validation.contract_ledger import build_contract_ledger
 from validation.gates import post_collection_gate, pre_collection_gate
 from validation.g6_inventory import build_git_tracking_inventory
@@ -1372,6 +1376,110 @@ def cmd_audit_youtube_coverage(args) -> int:
     return EXIT_DATA if report["failure_count"] else EXIT_OK
 
 
+def cmd_audit_comparison_scale(args) -> int:
+    """Common-scale comparison coverage and legacy status (read-only).
+
+    Reports, per declared policy, the comparison-shaped runs, the missing
+    anchor sets and the per-compound coverage.  ``--design-only`` validates
+    the study declaration without reading the raw layer (used by the design
+    gate); ``--require-complete`` exits 1 when a declared compound has no
+    anchor-bridged common-scale run or a declared run is incomplete.  The
+    command never writes raw data and never regenerates an audit snapshot.
+    """
+    if args.design_only and args.require_complete:
+        _err("--design-only cannot be combined with --require-complete")
+        return EXIT_CONFIG
+    try:
+        report = build_comparison_scale_audit(
+            args.study,
+            query_design_path=args.query_design,
+            query_registry_path=args.query_registry,
+            query_variants_path=args.query_variants,
+            windows_dir=args.windows_dir,
+            datasets_root=args.datasets_root,
+            policy_id=args.policy,
+            require_complete=args.require_complete,
+            design_only=args.design_only,
+        )
+    except (OSError, ValueError, json.JSONDecodeError) as error:
+        _err(f"comparison scale audit failed: {error.__class__.__name__}: {error}")
+        return EXIT_CONFIG
+
+    lines: list[str] = []
+    if report["design_only"]:
+        verdict = "OK" if report["valid"] else "FAIL"
+        lines.append(
+            f"{verdict} comparison-design study={report['study_id']} "
+            f"policies={report['policy_count']}"
+        )
+    else:
+        for policy in report["policies"]:
+            lines.append(
+                f"policy {policy['scale_id']} anchors="
+                f"{','.join(policy['anchor_terms']) or 'none'} "
+                f"runs={policy['run_count']} compliant={policy['compliant_run_count']} "
+                f"incomplete={policy['incomplete_run_count']} "
+                f"legacy={policy['legacy_comparison_run_count']} "
+                f"missing_anchor_sets={len(policy['missing_anchor_sets'])}"
+            )
+            for compound in policy["missing_compounds"]:
+                lines.append(
+                    f"  missing compound: {compound['query_id']} "
+                    f"({compound['compound_id']}, {compound['canonical_text']})"
+                )
+            for item in policy["missing_anchor_sets"]:
+                lines.append(
+                    f"  missing anchor set: {item['run_id']} "
+                    f"({item['anchor_state']})"
+                )
+            for item in policy["legacy_missing_anchor_sets"]:
+                lines.append(
+                    f"  legacy missing anchor set: {item['run_id']} "
+                    f"({item['in_scope']}; missing "
+                    f"{','.join(item['missing_anchor_terms']) or 'unknown'})"
+                )
+            for item in policy["not_comparable_runs"]:
+                lines.append(
+                    f"  not comparable: {item['run_id']} ({item['status']})"
+                )
+            for item in policy["legacy_undeclared_runs"]:
+                lines.append(
+                    f"  legacy undeclared (comparable within its own request): "
+                    f"{item['run_id']} ({item['status']})"
+                )
+            for item in policy["out_of_scope_runs"]:
+                lines.append(
+                    f"  out of scope: {item['run_id']} ({item['status']}; "
+                    f"window={item['window_id'] or 'unknown'}, "
+                    f"timeframe={item['timeframe'] or 'unknown'})"
+                )
+    for issue in report["design_issues"]:
+        lines.append(
+            f"  [{issue['code']}] {issue['path']}: {issue['message']}"
+        )
+    _emit(report, fmt=args.format, output=args.output, human_lines=lines)
+    _err(
+        f"comparison scale: policies={report['policy_count']} "
+        f"runs={report['run_count']} compliant={report['compliant_run_count']} "
+        f"incomplete={report['incomplete_run_count']} "
+        f"legacy_comparison={report['legacy_comparison_run_count']} "
+        f"missing_anchor_sets={report['missing_anchor_set_count']} "
+        f"legacy_missing_anchor_sets={report['legacy_missing_anchor_set_count']} "
+        f"missing_compounds={report['missing_compound_count']} "
+        f"not_comparable={report['not_comparable_run_count']} "
+        f"out_of_scope={report['out_of_scope_run_count']} "
+        f"legacy_undeclared={report['legacy_undeclared_run_count']} "
+        f"failures={report['failure_count']}"
+    )
+    if not report["valid"]:
+        return EXIT_CONFIG
+    return (
+        EXIT_DATA
+        if args.require_complete and report["failure_count"]
+        else EXIT_OK
+    )
+
+
 def cmd_audit_distribution_scope(args) -> int:
     """Report the release slice's COL-033 YouTube scope against the raw study."""
     try:
@@ -1743,6 +1851,26 @@ def cmd_gate_plan(args) -> int:
         _err(str(error))
         return EXIT_CONFIG
 
+    try:
+        comparison_policies, comparison_issues = load_study_comparison_policies(
+            Path(args.datasets_root),
+            document.get("study_id") if isinstance(document, dict) else None,
+            queries=registries.queries,
+            query_variants=registries.query_variants,
+            windows=registries.windows,
+        )
+    except ValueError as error:
+        _err(f"comparison design cannot be read: {error}")
+        return EXIT_CONFIG
+    design_errors = [
+        issue for issue in comparison_issues if issue.severity == "error"
+    ]
+    if design_errors:
+        for issue in design_errors:
+            _err(f"  [{issue.code}] {issue.path}: {issue.message}")
+        _err("comparison design is invalid; the plan gate cannot proceed")
+        return EXIT_CONFIG
+
     outcome = validate_full(
         document,
         schema_id="collection-plan-v1",
@@ -1751,7 +1879,11 @@ def cmd_gate_plan(args) -> int:
     )
     issues = list(outcome.issues)
     if outcome.valid:
-        gate = pre_collection_gate(document, registries=registries)
+        gate = pre_collection_gate(
+            document,
+            registries=registries,
+            comparison_policies=comparison_policies,
+        )
         issues.extend(gate.issues)
         action = gate.action
     else:
@@ -1800,6 +1932,26 @@ def cmd_gate_run(args) -> int:
         return EXIT_CONFIG
 
     try:
+        comparison_policies, comparison_issues = load_study_comparison_policies(
+            Path(args.datasets_root),
+            document.get("study_id") if isinstance(document, dict) else None,
+            queries=registries.queries,
+            query_variants=registries.query_variants,
+            windows=registries.windows,
+        )
+    except ValueError as error:
+        _err(f"comparison design cannot be read: {error}")
+        return EXIT_CONFIG
+    design_errors = [
+        issue for issue in comparison_issues if issue.severity == "error"
+    ]
+    if design_errors:
+        for issue in design_errors:
+            _err(f"  [{issue.code}] {issue.path}: {issue.message}")
+        _err("comparison design is invalid; the run gate cannot proceed")
+        return EXIT_CONFIG
+
+    try:
         outcome = validate_full(
             document,
             schema_id="collection-run-v1",
@@ -1818,6 +1970,7 @@ def cmd_gate_run(args) -> int:
             document,
             registries=registries if registries.any() else None,
             base_dir=target.parent,
+            comparison_policies=comparison_policies,
         )
         issues.extend(gate.issues)
         action = gate.action
@@ -2314,6 +2467,11 @@ def build_parser() -> argparse.ArgumentParser:
         "gate-plan", help="pre-collection gate for a collection plan (P6-1)"
     )
     gate.add_argument("--file", required=True)
+    gate.add_argument(
+        "--datasets-root",
+        default="datasets",
+        help="root that holds the study's metadata/query-design.json",
+    )
     _add_common(gate, with_profile=False)
     gate.set_defaults(handler=cmd_gate_plan)
 
@@ -2322,6 +2480,11 @@ def build_parser() -> argparse.ArgumentParser:
         help="post-collection L1 gate: catalog vs quarantine (P6-2)",
     )
     gate_run.add_argument("--file", required=True)
+    gate_run.add_argument(
+        "--datasets-root",
+        default="datasets",
+        help="root that holds the study's metadata/query-design.json",
+    )
     _add_common(gate_run, with_profile=False)
     gate_run.set_defaults(handler=cmd_gate_run)
 
@@ -2660,6 +2823,55 @@ def build_parser() -> argparse.ArgumentParser:
         "--format", choices=("text", "json"), default="text"
     )
     audit_youtube.set_defaults(handler=cmd_audit_youtube_coverage)
+
+    comparison_scale = sub.add_parser(
+        "audit-comparison-scale",
+        help=(
+            "common-scale comparison coverage: declared anchors, missing "
+            "anchor sets, not-comparable/legacy runs and per-compound "
+            "coverage (read-only)"
+        ),
+    )
+    comparison_scale.add_argument(
+        "--study", default="cannabinoid-raw-collection"
+    )
+    comparison_scale.add_argument(
+        "--query-design",
+        default="datasets/cannabinoid-raw-collection/metadata/query-design.json",
+    )
+    comparison_scale.add_argument(
+        "--query-registry", default="metadata/queries/query-registry.json"
+    )
+    comparison_scale.add_argument(
+        "--query-variants", default="metadata/queries/query-variants.json"
+    )
+    comparison_scale.add_argument(
+        "--windows-dir", default="metadata/windows"
+    )
+    comparison_scale.add_argument("--datasets-root", default="datasets")
+    comparison_scale.add_argument(
+        "--policy",
+        default=None,
+        help="restrict the report to one declared scale_id",
+    )
+    comparison_scale.add_argument(
+        "--require-complete",
+        action="store_true",
+        help=(
+            "exit 1 when a declared compound has no anchor-bridged "
+            "common-scale run or a declared run is incomplete"
+        ),
+    )
+    comparison_scale.add_argument(
+        "--design-only",
+        action="store_true",
+        help="validate the study comparison declaration only (no raw scan)",
+    )
+    comparison_scale.add_argument("--output", default=None)
+    comparison_scale.add_argument(
+        "--format", choices=("text", "json"), default="text"
+    )
+    comparison_scale.set_defaults(handler=cmd_audit_comparison_scale)
 
     distribution_scope = sub.add_parser(
         "audit-distribution-scope",

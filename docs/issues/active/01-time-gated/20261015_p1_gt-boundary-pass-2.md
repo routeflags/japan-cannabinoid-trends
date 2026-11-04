@@ -25,7 +25,8 @@
   `measurement` クラス / `consistent`。
 - `rule.eligible` は false: コホートが 4 run（timeframe あたり 1）で規則の最小数（2）に届かない。
 - 採用 run: `20261015T04284{5,9}Z-…-1m/3m`、`20261015T04285{3,7}Z-…-12m/5y`
-  （`datasets/cbx-search-trends/data/raw/google_trends/`）。
+  （当時は `datasets/cbx-search-trends/data/raw/google_trends/`。2026-11-04 の所有移管で
+  `datasets/cannabinoid-raw-collection/data/raw/google_trends/` に移った。§対応方針 3 も同様）
 
 ## 影響
 
@@ -43,7 +44,7 @@ manifest は実行中の入力で、証拠の正本は採用済み run）:
    verbatim の tool result を capture manifest に書く
    （`capture_version: 1.0.0`、run_id は `<UTC時刻>-google-trends-boundary-<timeframe slug>`）。
 2. `boundary verify --manifest` で形式検証（不一致なら行列を止めて parser を更新。spec §4.4）。
-3. `boundary stage --study cbx-search-trends` → `adopt`（L1 通過のみ catalog）。
+3. `boundary stage --study cannabinoid-raw-collection` → `adopt`（L1 通過のみ catalog）。
 4. `boundary-report` で `rule.eligible` を確認する。
 5. **昇格判断**: eligible なら `config/collectors.json` と compiler の `exact` / capability を
    **変更として**記録する（推測で `exact=true` にしない）。eligible でなければ理由を記録する。

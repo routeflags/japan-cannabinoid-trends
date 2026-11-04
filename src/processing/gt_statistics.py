@@ -294,7 +294,11 @@ def render_block(summary: dict, *, run_id: str, geo: str = "JP") -> str:
         "      </tr>\n"
         "    </thead>\n"
         "    <tbody>\n"
-        f"      <tr>\n        <td>収集期間</td>\n        <td>{period_label}</td>\n      </tr>\n"
+        # The request (geo / relative timeframe) and the range the collector
+        # actually returned are different facts; the table states both so the
+        # observed range cannot be read as the search condition.
+        f"      <tr>\n        <td>要求条件</td>\n        <td>{geo} / {timeframe}</td>\n      </tr>\n"
+        f"      <tr>\n        <td>観測範囲（返却点の範囲）</td>\n        <td>{period_label}</td>\n      </tr>\n"
         f"      <tr>\n        <td>5年平均</td>\n        <td>{mean}</td>\n      </tr>\n"
         f"      <tr>\n        <td>ピーク</td>\n        <td>{peak}</td>\n      </tr>\n"
         f"      <tr>\n        <td>最新値</td>\n        <td>{last}</td>\n      </tr>\n"

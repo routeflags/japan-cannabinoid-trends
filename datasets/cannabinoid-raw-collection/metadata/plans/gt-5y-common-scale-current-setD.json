@@ -1,0 +1,46 @@
+{
+  "plan_id": "gt-5y-common-scale-current-setD",
+  "study_id": "cannabinoid-raw-collection",
+  "source_id": "google-trends",
+  "collector_id": "google-trends-mcp",
+  "query_id": "comparison-5y-current-setD",
+  "query": {
+    "terms": [
+      "CBD",
+      "THC",
+      "HHCH",
+      "THC-O",
+      "THCNM"
+    ],
+    "geo": "JP",
+    "timeframe": "today 5-y",
+    "compound_id": "compound_cbd",
+    "text": "CBD vs THC vs HHCH vs THC-O vs THCNM"
+  },
+  "comparison": {
+    "comparison_scale": "common_scale",
+    "policy_id": "gt-5y-common-scale-cbd-thc",
+    "anchor_query_ids": [
+      "cbd-general-ja",
+      "thc-general-ja"
+    ],
+    "anchor_terms": [
+      "CBD",
+      "THC"
+    ],
+    "locale": "ja"
+  },
+  "required_capabilities": [
+    "geo_filter",
+    "relative_date_range"
+  ],
+  "window": {
+    "window_id": "2021-10-31_2026-11-08",
+    "start": "2021-10-31T00:00:00Z",
+    "end_exclusive": "2026-11-08T00:00:00Z",
+    "granularity": "week",
+    "week_start": "sunday",
+    "timezone": "Asia/Tokyo"
+  },
+  "purpose": "現行窓 2021-10-31_2026-11-08 の5年共通スケール再収集（owner 決定 B、ISS-20261105-GT-030）。アンカー CBD・THC に加えて THCNM を同一 compare_terms 要求に含め、geo JP・locale ja・today 5-y で測る。旧 setA〜D は legacy に残す。"
+}

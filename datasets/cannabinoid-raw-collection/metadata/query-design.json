@@ -38,5 +38,103 @@
         "reason": "The distribution slice uses the COL-033 YouTube declaration only; the raw study's YouTube runs are outside that slice. THCNM is outside the slice in every case: it has no YouTube run in this study and none in COL-033."
       }
     }
+  ],
+  "comparison_scales": [
+    {
+      "scale_id": "gt-5y-common-scale-cbd-thc",
+      "source_id": "google-trends",
+      "comparison_scale": "common_scale",
+      "anchor_query_ids": [
+        "cbd-general-ja",
+        "thc-general-ja"
+      ],
+      "anchor_terms": [
+        "CBD",
+        "THC"
+      ],
+      "request": {
+        "tool": "compare_terms",
+        "geo": "JP",
+        "locale": "ja",
+        "timeframe": "today 5-y",
+        "window_id": "2021-10-31_2026-11-08"
+      },
+      "compound_set": {
+        "authority": "metadata/queries/query-registry.json: every query with intent_id == compound_general and status == active is one compound the 5-year common-scale coverage must include. The policy does not restate that list, so a compound added to the registry is required here automatically. excluded_compound_ids / excluded_query_ids record a compound or query left out with its reason; an exclusion is a decision, not a silent gap.",
+        "excluded_compound_ids": [
+          {
+            "compound_id": "compound_cbx",
+            "reason": "CBX's canonical Google Trends raw is in cbx-search-trends (methodology §1.3); whether CBX joins this study's comparison set is ISS-20261024-COL-016. Excluded until that decision is recorded, not counted as covered."
+          }
+        ]
+      },
+      "rationale": "Google Trends の単独系列は各語のピーク=100 に正規化されるため、化合物間で値を比べられない。compare_terms の共通スケールだけが比較可能で、その要求にアンカー CBD・THC が同一リクエストで含まれることが条件である。5年の共通スケールは、収集時点の today 5-y が表現できる現行窓 2021-10-31_2026-11-08（geo JP・locale ja）に固定する。2026-10-23 の setA〜D（窓 2021-10-17_2026-10-18）は有効な歴史観測として legacy に残し、現行窓の被覆には数えない（ISS-20261105-GT-030、owner 決定 B 2026-11-05）。",
+      "decided": "2026-11-05",
+      "decided_by": "owner"
+    },
+    {
+      "scale_id": "gt-12m-common-scale-cbd-thc",
+      "source_id": "google-trends",
+      "comparison_scale": "common_scale",
+      "anchor_query_ids": [
+        "cbd-general-ja",
+        "thc-general-ja"
+      ],
+      "anchor_terms": [
+        "CBD",
+        "THC"
+      ],
+      "request": {
+        "tool": "compare_terms",
+        "geo": "JP",
+        "locale": "ja",
+        "timeframe": "today 12-m",
+        "window_id": "2025-11-02_2026-11-08"
+      },
+      "compound_set": {
+        "authority": "metadata/queries/query-registry.json: every query with intent_id == compound_general and status == active is one compound the 12-month common-scale coverage must include. The policy does not restate that list, so a compound added to the registry is required here automatically. excluded_compound_ids / excluded_query_ids record a compound or query left out with its reason; an exclusion is a decision, not a silent gap.",
+        "excluded_compound_ids": [
+          {
+            "compound_id": "compound_cbx",
+            "reason": "CBX's canonical Google Trends raw is in cbx-search-trends (methodology §1.3); whether CBX joins this study's comparison set is ISS-20261024-COL-016. Excluded until that decision is recorded, not counted as covered."
+          }
+        ]
+      },
+      "rationale": "Google Trends の単独系列は各語のピーク=100 に正規化されるため化合物間比較に使えない。THCNM は 2026-10-18 が初出（非ゼロ）で 5 年系列では初出以降の点が少ないため、12 ヶ月を THCNM の主比較系列とし、アンカー CBD・THC を同一 compare_terms 要求に含めた共通スケールで測る。timeframe と窓が 5 年ポリシー gt-5y-common-scale-cbd-thc と異なるため別ポリシーとする。窓は収集時点の today 12-m が表現できる現行窓 2025-11-02_2026-11-08（geo JP・locale ja）で、絶対窓の正本は metadata/windows。12 ヶ月の被覆は監査が active な compound_general ごとに報告する。",
+      "decided": "2026-11-04",
+      "decided_by": "owner"
+    },
+    {
+      "scale_id": "gt-3m-common-scale-cbd-thc",
+      "source_id": "google-trends",
+      "comparison_scale": "common_scale",
+      "anchor_query_ids": [
+        "cbd-general-ja",
+        "thc-general-ja"
+      ],
+      "anchor_terms": [
+        "CBD",
+        "THC"
+      ],
+      "request": {
+        "tool": "compare_terms",
+        "geo": "JP",
+        "locale": "ja",
+        "timeframe": "today 3-m",
+        "window_id": "2026-08-06_2026-11-04"
+      },
+      "compound_set": {
+        "authority": "metadata/queries/query-registry.json: every query with intent_id == compound_general and status == active is one compound the 3-month common-scale coverage must include. The policy does not restate that list, so a compound added to the registry is required here automatically. excluded_compound_ids / excluded_query_ids record a compound or query left out with its reason; an exclusion is a decision, not a silent gap.",
+        "excluded_compound_ids": [
+          {
+            "compound_id": "compound_cbx",
+            "reason": "CBX's canonical Google Trends raw is in cbx-search-trends (methodology §1.3); whether CBX joins this study's comparison set is ISS-20261024-COL-016. Excluded until that decision is recorded, not counted as covered."
+          }
+        ]
+      },
+      "rationale": "12 ヶ月の common-scale では、窓内の最大値（CBD の 2026-05 の週 = 100）が共通スケールの分母になるため、THCNM のような低容量語は 0 に丸められる。3 ヶ月は同じアンカー CBD・THC と THCNM を 1 要求で測る日次補足系列で、分母が窓内最大値に限られるため 12 ヶ月より低容量語を分解しやすい。ただし値は 12 ヶ月 common-scale とも単独系列とも直接比較できない（別の共通スケール）。窓は収集時点の today 3-m の公称 90 日で、絶対窓の正本は metadata/windows。",
+      "decided": "2026-11-04",
+      "decided_by": "owner"
+    }
   ]
 }

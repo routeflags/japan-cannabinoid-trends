@@ -23,7 +23,7 @@ REGISTRIES = FIXTURES / "registries"
 LEGACY_FILE = (
     REPO_ROOT
     / "datasets"
-    / "cbx-search-trends"
+    / "cannabinoid-raw-collection"
     / "data"
     / "raw"
     / "google_trends"
@@ -409,23 +409,24 @@ def test_validate_study_missing_manifest_exit_3(capsys, tmp_path):
     assert code == EXIT_IO
 
 
-def test_validate_study_real_legacy_default_cbsearch(capsys, tmp_path):
-    """P5-2 acceptance: the existing study reports strict failures, and the legacy
+def test_validate_study_real_legacy_default_raw_collection(capsys, tmp_path):
+    """P5-2 acceptance: a real study reports strict failures, and the legacy
     profile stays usable for its frozen runs.
 
-    The study also holds contract-era runs now (the 2026-10-15 boundary
-    measurements), so the study as a whole no longer passes under either profile:
-    strict fails on the legacy runs, and legacy refuses exactly the runs outside
-    the frozen list (a new run may not be validated under an audit profile built
-    for that list).  Asserting on that set rather than on ids keeps this true when
-    pass 2 of the measurement protocol adds runs.
+    ``cannabinoid-raw-collection`` holds frozen legacy runs and contract-era runs
+    (including the 2026-10-15 CBX boundary measurements, moved here from
+    ``cbx-search-trends`` on 2026-11-04), so the study as a whole passes under
+    neither profile: strict fails on the legacy runs, and legacy refuses exactly
+    the runs outside the frozen list (a new run may not be validated under an
+    audit profile built for that list).  Asserting on that set rather than on ids
+    keeps this true when pass 2 of the measurement protocol adds runs.
     """
 
     strict = main(
         [
             "validate-study",
             "--study",
-            "cbx-search-trends",
+            "cannabinoid-raw-collection",
             *_isolated_registry_args(tmp_path),
         ]
     )
@@ -434,7 +435,7 @@ def test_validate_study_real_legacy_default_cbsearch(capsys, tmp_path):
         [
             "validate-study",
             "--study",
-            "cbx-search-trends",
+            "cannabinoid-raw-collection",
             "--profile",
             "legacy",
             *_isolated_registry_args(tmp_path),

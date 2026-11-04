@@ -117,7 +117,7 @@
 
 ## データ出典
 
-- Google Trends: `datasets/cbx-search-trends/data/raw/google_trends/`
+- Google Trends: `datasets/cannabinoid-raw-collection/data/raw/google_trends/`（2026-11-04 に `datasets/cbx-search-trends/data/raw/google_trends/` から所有移管。run id とバイトは不変）
 - X: `datasets/cbx-social-trends/data/processed/x_cbx_202608_summary_anonymized.csv`
   （`x_cbx_202608_summary.csv` は 2026-10-13 に、匿名化版も 2026-10-15 に公開取り下げ。
   週別集計は匿名化版でも同一に得られたが、同版はもう追跡されていない）

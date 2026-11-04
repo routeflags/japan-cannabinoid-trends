@@ -3,15 +3,143 @@
   "profile": "g3_temporal_inventory",
   "spec": "docs/plans/20261013c.md §15 (local plan; not tracked)",
   "target_glob": "datasets/**/run_metadata.json",
-  "count": 61,
+  "count": 71,
   "raw_modified": false,
   "classification_summary": {
-    "verified": 32,
+    "verified": 42,
     "inferred": 29,
     "unknown": 0,
     "ambiguous": 0
   },
   "runs": [
+    {
+      "run_id": "20261001T115959Z-google-trends-cbx-rikiddo",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261001T115959Z-google-trends-cbx-rikiddo/run_metadata.json",
+      "sha256": "afc96ef019e82814543239988fe2738fd26401edf172e1bbe54bd69c5d69682b",
+      "timeframes": [
+        {
+          "value": "today 12-m",
+          "source": "run_metadata.json:queries"
+        },
+        {
+          "value": "today 12-m",
+          "source": "comparison.json"
+        },
+        {
+          "value": "today 12-m",
+          "source": "records.json"
+        },
+        {
+          "value": "today 12-m",
+          "source": "related_queries.json"
+        }
+      ],
+      "reference": {
+        "value": "2026-10-01T11:59:59Z",
+        "source": "run_metadata.json"
+      },
+      "observed_bounds": {
+        "start": "2025-09-28/2025-10-04T00:00:00Z",
+        "end_exclusive": null,
+        "basis": "bucket_labels"
+      },
+      "pagination": null,
+      "completeness_evidence": [],
+      "classification": "inferred",
+      "resolved_absolute_window": null,
+      "resolution_note": "not derived: conversion of legacy relative periods into absolute windows is prohibited (P1, c.md §15)"
+    },
+    {
+      "run_id": "20261001T121949Z-google-trends-h4cbh-hhbd",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261001T121949Z-google-trends-h4cbh-hhbd/run_metadata.json",
+      "sha256": "6389b71226ccdcee3fe3f288fcf5a259e885388547a4765851af69b166e958c6",
+      "timeframes": [
+        {
+          "value": "today 12-m",
+          "source": "run_metadata.json:queries"
+        },
+        {
+          "value": "today 12-m",
+          "source": "comparison.json"
+        },
+        {
+          "value": "today 12-m",
+          "source": "records_h4cbh.json"
+        },
+        {
+          "value": "today 12-m",
+          "source": "records_hhbd.json"
+        }
+      ],
+      "reference": {
+        "value": "2026-10-01T12:19:49Z",
+        "source": "run_metadata.json"
+      },
+      "observed_bounds": {
+        "start": "2025-09-28/2025-10-04T00:00:00Z",
+        "end_exclusive": null,
+        "basis": "bucket_labels"
+      },
+      "pagination": null,
+      "completeness_evidence": [],
+      "classification": "inferred",
+      "resolved_absolute_window": null,
+      "resolution_note": "not derived: conversion of legacy relative periods into absolute windows is prohibited (P1, c.md §15)"
+    },
+    {
+      "run_id": "disambiguated_queries",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261001T132500Z-google-trends-disambiguated/run_metadata.json",
+      "sha256": "f5b2b719a8dff341665af72690ca309e5f457486943017cac4f9a0c9268c3a83",
+      "timeframes": [
+        {
+          "value": "today 12-m",
+          "source": "run_metadata.json:queries"
+        },
+        {
+          "value": "today 12-m",
+          "source": "records_disambiguated.json"
+        }
+      ],
+      "reference": {
+        "value": "2026-10-01T13:25:00Z",
+        "source": "run_metadata.json"
+      },
+      "observed_bounds": null,
+      "pagination": null,
+      "completeness_evidence": [],
+      "classification": "inferred",
+      "resolved_absolute_window": null,
+      "resolution_note": "not derived: conversion of legacy relative periods into absolute windows is prohibited (P1, c.md §15)"
+    },
+    {
+      "run_id": "variance_check",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261001T135424Z-google-trends-variance-check/run_metadata.json",
+      "sha256": "65f3d8489cd55d12c2c07767f8498e2416ce48104472f377c389b9c25227fe35",
+      "timeframes": [
+        {
+          "value": "today 12-m",
+          "source": "run_metadata.json:queries"
+        },
+        {
+          "value": "today 12-m",
+          "source": "comparison_run2.json"
+        },
+        {
+          "value": "today 12-m",
+          "source": "records_cbx_rikiddo_run2.json"
+        }
+      ],
+      "reference": {
+        "value": "2026-10-01T13:15:00Z",
+        "source": "run_metadata.json"
+      },
+      "observed_bounds": null,
+      "pagination": null,
+      "completeness_evidence": [],
+      "classification": "inferred",
+      "resolved_absolute_window": null,
+      "resolution_note": "not derived: conversion of legacy relative periods into absolute windows is prohibited (P1, c.md §15)"
+    },
     {
       "run_id": "20261002T063821Z-google-trends-cbd",
       "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261002T063821Z-google-trends-cbd/run_metadata.json",
@@ -1108,6 +1236,106 @@
       "resolution_note": "not derived: conversion of legacy relative periods into absolute windows is prohibited (P1, c.md §15)"
     },
     {
+      "run_id": "20261015T042845Z-google-trends-boundary-1m",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261015T042845Z-google-trends-boundary-1m/run_metadata.json",
+      "sha256": "d309166deeeb5125638b23fbce07f530d3123fb246f5f40c0ac1855bb859f0f4",
+      "timeframes": [
+        {
+          "value": "today 1-m",
+          "source": "records_cbx.json"
+        }
+      ],
+      "reference": {
+        "value": "2026-10-15T04:28:46Z",
+        "source": "records_cbx.json"
+      },
+      "observed_bounds": {
+        "start": "2026-09-15T00:00:00Z",
+        "end_exclusive": "2026-10-16T00:00:00Z",
+        "basis": "bucket_labels"
+      },
+      "pagination": true,
+      "completeness_evidence": [],
+      "classification": "verified",
+      "resolved_absolute_window": null,
+      "resolution_note": "not derived: conversion of legacy relative periods into absolute windows is prohibited (P1, c.md §15)"
+    },
+    {
+      "run_id": "20261015T042849Z-google-trends-boundary-3m",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261015T042849Z-google-trends-boundary-3m/run_metadata.json",
+      "sha256": "caa3e85a0f6f0695ad7077f51b1af8690372c769880efd2ae25542fedd37d103",
+      "timeframes": [
+        {
+          "value": "today 3-m",
+          "source": "records_cbx.json"
+        }
+      ],
+      "reference": {
+        "value": "2026-10-15T04:28:50Z",
+        "source": "records_cbx.json"
+      },
+      "observed_bounds": {
+        "start": "2026-07-15T00:00:00Z",
+        "end_exclusive": "2026-10-16T00:00:00Z",
+        "basis": "bucket_labels"
+      },
+      "pagination": true,
+      "completeness_evidence": [],
+      "classification": "verified",
+      "resolved_absolute_window": null,
+      "resolution_note": "not derived: conversion of legacy relative periods into absolute windows is prohibited (P1, c.md §15)"
+    },
+    {
+      "run_id": "20261015T042853Z-google-trends-boundary-12m",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261015T042853Z-google-trends-boundary-12m/run_metadata.json",
+      "sha256": "e5d8b8a29517d5722fc69bd8be411c5618a849d6ded842de7f95c3f8c9a2df4b",
+      "timeframes": [
+        {
+          "value": "today 12-m",
+          "source": "records_cbx.json"
+        }
+      ],
+      "reference": {
+        "value": "2026-10-15T04:28:54Z",
+        "source": "records_cbx.json"
+      },
+      "observed_bounds": {
+        "start": "2025-10-12T00:00:00Z",
+        "end_exclusive": "2026-10-18T00:00:00Z",
+        "basis": "bucket_labels"
+      },
+      "pagination": true,
+      "completeness_evidence": [],
+      "classification": "verified",
+      "resolved_absolute_window": null,
+      "resolution_note": "not derived: conversion of legacy relative periods into absolute windows is prohibited (P1, c.md §15)"
+    },
+    {
+      "run_id": "20261015T042857Z-google-trends-boundary-5y",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261015T042857Z-google-trends-boundary-5y/run_metadata.json",
+      "sha256": "31c344c6f764f4ce4730b6f3a569b44722ce81421a5c4a2d767fd81828baba7d",
+      "timeframes": [
+        {
+          "value": "today 5-y",
+          "source": "records_cbx.json"
+        }
+      ],
+      "reference": {
+        "value": "2026-10-15T04:28:57Z",
+        "source": "records_cbx.json"
+      },
+      "observed_bounds": {
+        "start": "2021-10-10T00:00:00Z",
+        "end_exclusive": "2026-10-18T00:00:00Z",
+        "basis": "bucket_labels"
+      },
+      "pagination": true,
+      "completeness_evidence": [],
+      "classification": "verified",
+      "resolved_absolute_window": null,
+      "resolution_note": "not derived: conversion of legacy relative periods into absolute windows is prohibited (P1, c.md §15)"
+    },
+    {
       "run_id": "20261015T205048Z-google-trends-cannabinoid-multi-trends",
       "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261015T205048Z-google-trends-cannabinoid-multi-trends/run_metadata.json",
       "sha256": "0a6a8f894bdfce8af1d82b43064c7fc441fbf0a5e5077aefec213ae6137aaf97",
@@ -1608,150 +1836,22 @@
       "resolution_note": "not derived: conversion of legacy relative periods into absolute windows is prohibited (P1, c.md §15)"
     },
     {
-      "run_id": "20261001T115959Z-google-trends-cbx-rikiddo",
-      "path": "datasets/cbx-search-trends/data/raw/google_trends/20261001T115959Z-google-trends-cbx-rikiddo/run_metadata.json",
-      "sha256": "afc96ef019e82814543239988fe2738fd26401edf172e1bbe54bd69c5d69682b",
+      "run_id": "20261104T115425Z-google-trends-thcnm-12m",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261104T115425Z-google-trends-thcnm-12m/run_metadata.json",
+      "sha256": "a530e1f235e370a95efc0da9227143354799e8406994d93d0f985c26a8d462af",
       "timeframes": [
         {
           "value": "today 12-m",
-          "source": "run_metadata.json:queries"
-        },
-        {
-          "value": "today 12-m",
-          "source": "comparison.json"
-        },
-        {
-          "value": "today 12-m",
-          "source": "records.json"
-        },
-        {
-          "value": "today 12-m",
-          "source": "related_queries.json"
+          "source": "records_thcnm.json"
         }
       ],
       "reference": {
-        "value": "2026-10-01T11:59:59Z",
-        "source": "run_metadata.json"
+        "value": "2026-11-04T11:54:26.402150Z",
+        "source": "records_thcnm.json"
       },
       "observed_bounds": {
-        "start": "2025-09-28/2025-10-04T00:00:00Z",
-        "end_exclusive": null,
-        "basis": "bucket_labels"
-      },
-      "pagination": null,
-      "completeness_evidence": [],
-      "classification": "inferred",
-      "resolved_absolute_window": null,
-      "resolution_note": "not derived: conversion of legacy relative periods into absolute windows is prohibited (P1, c.md §15)"
-    },
-    {
-      "run_id": "20261001T121949Z-google-trends-h4cbh-hhbd",
-      "path": "datasets/cbx-search-trends/data/raw/google_trends/20261001T121949Z-google-trends-h4cbh-hhbd/run_metadata.json",
-      "sha256": "6389b71226ccdcee3fe3f288fcf5a259e885388547a4765851af69b166e958c6",
-      "timeframes": [
-        {
-          "value": "today 12-m",
-          "source": "run_metadata.json:queries"
-        },
-        {
-          "value": "today 12-m",
-          "source": "comparison.json"
-        },
-        {
-          "value": "today 12-m",
-          "source": "records_h4cbh.json"
-        },
-        {
-          "value": "today 12-m",
-          "source": "records_hhbd.json"
-        }
-      ],
-      "reference": {
-        "value": "2026-10-01T12:19:49Z",
-        "source": "run_metadata.json"
-      },
-      "observed_bounds": {
-        "start": "2025-09-28/2025-10-04T00:00:00Z",
-        "end_exclusive": null,
-        "basis": "bucket_labels"
-      },
-      "pagination": null,
-      "completeness_evidence": [],
-      "classification": "inferred",
-      "resolved_absolute_window": null,
-      "resolution_note": "not derived: conversion of legacy relative periods into absolute windows is prohibited (P1, c.md §15)"
-    },
-    {
-      "run_id": "disambiguated_queries",
-      "path": "datasets/cbx-search-trends/data/raw/google_trends/20261001T132500Z-google-trends-disambiguated/run_metadata.json",
-      "sha256": "f5b2b719a8dff341665af72690ca309e5f457486943017cac4f9a0c9268c3a83",
-      "timeframes": [
-        {
-          "value": "today 12-m",
-          "source": "run_metadata.json:queries"
-        },
-        {
-          "value": "today 12-m",
-          "source": "records_disambiguated.json"
-        }
-      ],
-      "reference": {
-        "value": "2026-10-01T13:25:00Z",
-        "source": "run_metadata.json"
-      },
-      "observed_bounds": null,
-      "pagination": null,
-      "completeness_evidence": [],
-      "classification": "inferred",
-      "resolved_absolute_window": null,
-      "resolution_note": "not derived: conversion of legacy relative periods into absolute windows is prohibited (P1, c.md §15)"
-    },
-    {
-      "run_id": "variance_check",
-      "path": "datasets/cbx-search-trends/data/raw/google_trends/20261001T135424Z-google-trends-variance-check/run_metadata.json",
-      "sha256": "65f3d8489cd55d12c2c07767f8498e2416ce48104472f377c389b9c25227fe35",
-      "timeframes": [
-        {
-          "value": "today 12-m",
-          "source": "run_metadata.json:queries"
-        },
-        {
-          "value": "today 12-m",
-          "source": "comparison_run2.json"
-        },
-        {
-          "value": "today 12-m",
-          "source": "records_cbx_rikiddo_run2.json"
-        }
-      ],
-      "reference": {
-        "value": "2026-10-01T13:15:00Z",
-        "source": "run_metadata.json"
-      },
-      "observed_bounds": null,
-      "pagination": null,
-      "completeness_evidence": [],
-      "classification": "inferred",
-      "resolved_absolute_window": null,
-      "resolution_note": "not derived: conversion of legacy relative periods into absolute windows is prohibited (P1, c.md §15)"
-    },
-    {
-      "run_id": "20261015T042845Z-google-trends-boundary-1m",
-      "path": "datasets/cbx-search-trends/data/raw/google_trends/20261015T042845Z-google-trends-boundary-1m/run_metadata.json",
-      "sha256": "09f3e2b12a357a05813c68af73956a695d78c7ef98018f600600727a523be750",
-      "timeframes": [
-        {
-          "value": "today 1-m",
-          "source": "records_cbx.json"
-        }
-      ],
-      "reference": {
-        "value": "2026-10-15T04:28:46Z",
-        "source": "records_cbx.json"
-      },
-      "observed_bounds": {
-        "start": "2026-09-15T00:00:00Z",
-        "end_exclusive": "2026-10-16T00:00:00Z",
+        "start": "2025-11-02T00:00:00Z",
+        "end_exclusive": "2026-11-08T00:00:00Z",
         "basis": "bucket_labels"
       },
       "pagination": true,
@@ -1761,72 +1861,222 @@
       "resolution_note": "not derived: conversion of legacy relative periods into absolute windows is prohibited (P1, c.md §15)"
     },
     {
-      "run_id": "20261015T042849Z-google-trends-boundary-3m",
-      "path": "datasets/cbx-search-trends/data/raw/google_trends/20261015T042849Z-google-trends-boundary-3m/run_metadata.json",
-      "sha256": "9754b238384521db5dfbce94bbbc7e1a3de974e51526e6672d396815db3d7d68",
-      "timeframes": [
-        {
-          "value": "today 3-m",
-          "source": "records_cbx.json"
-        }
-      ],
-      "reference": {
-        "value": "2026-10-15T04:28:50Z",
-        "source": "records_cbx.json"
-      },
-      "observed_bounds": {
-        "start": "2026-07-15T00:00:00Z",
-        "end_exclusive": "2026-10-16T00:00:00Z",
-        "basis": "bucket_labels"
-      },
-      "pagination": true,
-      "completeness_evidence": [],
-      "classification": "verified",
-      "resolved_absolute_window": null,
-      "resolution_note": "not derived: conversion of legacy relative periods into absolute windows is prohibited (P1, c.md §15)"
-    },
-    {
-      "run_id": "20261015T042853Z-google-trends-boundary-12m",
-      "path": "datasets/cbx-search-trends/data/raw/google_trends/20261015T042853Z-google-trends-boundary-12m/run_metadata.json",
-      "sha256": "ef949859719ae324483bcf09e08623655a982defada86d1d0610ca512e1d6817",
-      "timeframes": [
-        {
-          "value": "today 12-m",
-          "source": "records_cbx.json"
-        }
-      ],
-      "reference": {
-        "value": "2026-10-15T04:28:54Z",
-        "source": "records_cbx.json"
-      },
-      "observed_bounds": {
-        "start": "2025-10-12T00:00:00Z",
-        "end_exclusive": "2026-10-18T00:00:00Z",
-        "basis": "bucket_labels"
-      },
-      "pagination": true,
-      "completeness_evidence": [],
-      "classification": "verified",
-      "resolved_absolute_window": null,
-      "resolution_note": "not derived: conversion of legacy relative periods into absolute windows is prohibited (P1, c.md §15)"
-    },
-    {
-      "run_id": "20261015T042857Z-google-trends-boundary-5y",
-      "path": "datasets/cbx-search-trends/data/raw/google_trends/20261015T042857Z-google-trends-boundary-5y/run_metadata.json",
-      "sha256": "2014e033d1862ae9cb123ca86b22fe47e93f5e3a75b1c870e7bf0954771a1672",
+      "run_id": "20261104T115431Z-google-trends-thcnm-5y",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261104T115431Z-google-trends-thcnm-5y/run_metadata.json",
+      "sha256": "b6bf1a78798b9cc9619f3b981549110ba4a36d98f7bad651e12464a3e03da239",
       "timeframes": [
         {
           "value": "today 5-y",
-          "source": "records_cbx.json"
+          "source": "records_thcnm.json"
         }
       ],
       "reference": {
-        "value": "2026-10-15T04:28:57Z",
-        "source": "records_cbx.json"
+        "value": "2026-11-04T11:54:32.038999Z",
+        "source": "records_thcnm.json"
       },
       "observed_bounds": {
-        "start": "2021-10-10T00:00:00Z",
-        "end_exclusive": "2026-10-18T00:00:00Z",
+        "start": "2021-10-31T00:00:00Z",
+        "end_exclusive": "2026-11-08T00:00:00Z",
+        "basis": "bucket_labels"
+      },
+      "pagination": true,
+      "completeness_evidence": [],
+      "classification": "verified",
+      "resolved_absolute_window": null,
+      "resolution_note": "not derived: conversion of legacy relative periods into absolute windows is prohibited (P1, c.md §15)"
+    },
+    {
+      "run_id": "20261104T135330Z-google-trends-thc-o-general-thco-12m",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261104T135330Z-google-trends-thc-o-general-thco-12m/run_metadata.json",
+      "sha256": "33df550b2f3375ce6a76a35901ca71f1c6d17e28eee38ee042a3de3662a7ee04",
+      "timeframes": [
+        {
+          "value": "today 12-m",
+          "source": "records_thco.json"
+        }
+      ],
+      "reference": {
+        "value": "2026-11-04T13:53:31.224685Z",
+        "source": "records_thco.json"
+      },
+      "observed_bounds": {
+        "start": "2025-11-02T00:00:00Z",
+        "end_exclusive": "2026-11-08T00:00:00Z",
+        "basis": "bucket_labels"
+      },
+      "pagination": true,
+      "completeness_evidence": [],
+      "classification": "verified",
+      "resolved_absolute_window": null,
+      "resolution_note": "not derived: conversion of legacy relative periods into absolute windows is prohibited (P1, c.md §15)"
+    },
+    {
+      "run_id": "20261104T135339Z-google-trends-thc-o-general-thco-5y",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261104T135339Z-google-trends-thc-o-general-thco-5y/run_metadata.json",
+      "sha256": "9e9ecc6f95148754190fe0f089cc52816379c29fbf94ca2a111f9ad5d5b52378",
+      "timeframes": [
+        {
+          "value": "today 5-y",
+          "source": "records_thco.json"
+        }
+      ],
+      "reference": {
+        "value": "2026-11-04T13:53:41.467233Z",
+        "source": "records_thco.json"
+      },
+      "observed_bounds": {
+        "start": "2021-10-31T00:00:00Z",
+        "end_exclusive": "2026-11-08T00:00:00Z",
+        "basis": "bucket_labels"
+      },
+      "pagination": true,
+      "completeness_evidence": [],
+      "classification": "verified",
+      "resolved_absolute_window": null,
+      "resolution_note": "not derived: conversion of legacy relative periods into absolute windows is prohibited (P1, c.md §15)"
+    },
+    {
+      "run_id": "20261104T135345Z-google-trends-thc-o-liquid-thco-12m",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261104T135345Z-google-trends-thc-o-liquid-thco-12m/run_metadata.json",
+      "sha256": "c2266dbab81284c7939632990e8af1eb06597c8e43250b81dd97beec0c27f881",
+      "timeframes": [
+        {
+          "value": "today 12-m",
+          "source": "records_thco-リキッド.json"
+        }
+      ],
+      "reference": {
+        "value": "2026-11-04T13:53:46.244447Z",
+        "source": "records_thco-リキッド.json"
+      },
+      "observed_bounds": {
+        "start": "2025-11-02T00:00:00Z",
+        "end_exclusive": "2026-11-08T00:00:00Z",
+        "basis": "bucket_labels"
+      },
+      "pagination": true,
+      "completeness_evidence": [],
+      "classification": "verified",
+      "resolved_absolute_window": null,
+      "resolution_note": "not derived: conversion of legacy relative periods into absolute windows is prohibited (P1, c.md §15)"
+    },
+    {
+      "run_id": "20261104T135350Z-google-trends-thc-o-liquid-thco-5y",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261104T135350Z-google-trends-thc-o-liquid-thco-5y/run_metadata.json",
+      "sha256": "4d406032b03ef4a2f0d109783ad2ef500a181e5bc378c8ff5e16a0d8ce314bbf",
+      "timeframes": [
+        {
+          "value": "today 5-y",
+          "source": "records_thco-リキッド.json"
+        }
+      ],
+      "reference": {
+        "value": "2026-11-04T13:53:50.785749Z",
+        "source": "records_thco-リキッド.json"
+      },
+      "observed_bounds": {
+        "start": "2021-10-31T00:00:00Z",
+        "end_exclusive": "2026-11-08T00:00:00Z",
+        "basis": "bucket_labels"
+      },
+      "pagination": true,
+      "completeness_evidence": [],
+      "classification": "verified",
+      "resolved_absolute_window": null,
+      "resolution_note": "not derived: conversion of legacy relative periods into absolute windows is prohibited (P1, c.md §15)"
+    },
+    {
+      "run_id": "20261104T165149Z-google-trends-cannabinoid-raw-collection",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261104T165149Z-google-trends-cannabinoid-raw-collection/run_metadata.json",
+      "sha256": "e5107f023ec211a04bd4f22fc6a77ebfd90f30d5d85e4fd212a0900d5ee5f379",
+      "timeframes": [
+        {
+          "value": "today 12-m",
+          "source": "comparison_cbx-cbd-thc.json"
+        }
+      ],
+      "reference": {
+        "value": "2026-11-04T16:51:49.598933Z",
+        "source": "comparison_cbx-cbd-thc.json"
+      },
+      "observed_bounds": {
+        "start": "2025-11-02T00:00:00Z",
+        "end_exclusive": "2026-11-08T00:00:00Z",
+        "basis": "bucket_labels"
+      },
+      "pagination": true,
+      "completeness_evidence": [],
+      "classification": "verified",
+      "resolved_absolute_window": null,
+      "resolution_note": "not derived: conversion of legacy relative periods into absolute windows is prohibited (P1, c.md §15)"
+    },
+    {
+      "run_id": "20261104T165155Z-google-trends-cannabinoid-raw-collection",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261104T165155Z-google-trends-cannabinoid-raw-collection/run_metadata.json",
+      "sha256": "d7e5f583f824db00af70e9336c6612b5a42bf2b0be2b6eaca269af2dd6fd5f0b",
+      "timeframes": [
+        {
+          "value": "today 5-y",
+          "source": "comparison_cbx-cbd-thc.json"
+        }
+      ],
+      "reference": {
+        "value": "2026-11-04T16:51:55.642695Z",
+        "source": "comparison_cbx-cbd-thc.json"
+      },
+      "observed_bounds": {
+        "start": "2021-10-31T00:00:00Z",
+        "end_exclusive": "2026-11-08T00:00:00Z",
+        "basis": "bucket_labels"
+      },
+      "pagination": true,
+      "completeness_evidence": [],
+      "classification": "verified",
+      "resolved_absolute_window": null,
+      "resolution_note": "not derived: conversion of legacy relative periods into absolute windows is prohibited (P1, c.md §15)"
+    },
+    {
+      "run_id": "20261104T175032Z-google-trends-cannabinoid-raw-collection",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261104T175032Z-google-trends-cannabinoid-raw-collection/run_metadata.json",
+      "sha256": "34919985d68227e620fc1e6cf70212e97d547d224921fb5634bab922d3367857",
+      "timeframes": [
+        {
+          "value": "today 12-m",
+          "source": "comparison_cbd-thc-thcnm.json"
+        }
+      ],
+      "reference": {
+        "value": "2026-11-04T17:50:32.072360Z",
+        "source": "comparison_cbd-thc-thcnm.json"
+      },
+      "observed_bounds": {
+        "start": "2025-11-02T00:00:00Z",
+        "end_exclusive": "2026-11-08T00:00:00Z",
+        "basis": "bucket_labels"
+      },
+      "pagination": true,
+      "completeness_evidence": [],
+      "classification": "verified",
+      "resolved_absolute_window": null,
+      "resolution_note": "not derived: conversion of legacy relative periods into absolute windows is prohibited (P1, c.md §15)"
+    },
+    {
+      "run_id": "20261104T175220Z-google-trends-cannabinoid-raw-collection",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261104T175220Z-google-trends-cannabinoid-raw-collection/run_metadata.json",
+      "sha256": "d554560ea5d23539f14fc3e5673b70217e7107b21f6bcddc5a59f6861d9f2c3f",
+      "timeframes": [
+        {
+          "value": "today 3-m",
+          "source": "comparison_cbd-thc-thcnm.json"
+        }
+      ],
+      "reference": {
+        "value": "2026-11-04T17:52:20.042769Z",
+        "source": "comparison_cbd-thc-thcnm.json"
+      },
+      "observed_bounds": {
+        "start": "2026-08-04T00:00:00Z",
+        "end_exclusive": "2026-11-05T00:00:00Z",
         "basis": "bucket_labels"
       },
       "pagination": true,

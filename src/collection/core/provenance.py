@@ -35,6 +35,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 from validation.integrity import sha256_file
+from validation.schemas.comparison import COMMON_SCALE, SINGLE_SERIES
 
 from collection.core.contracts import CollectionResult
 
@@ -193,6 +194,52 @@ def _temporal_provenance(plan: dict, result: CollectionResult, window_id: str, c
     return block
 
 
+def _comparison_provenance(plan: dict, query: dict) -> dict | None:
+    """Copy the plan's comparison declaration into the run record.
+
+    A plan that declares ``comparison`` keeps its anchors and policy reference;
+    ``cross_compound_comparable`` is derived (only ``common_scale`` is eligible,
+    and the post-collection gate still verifies the anchors).  A single-term
+    plan without a declaration is explicitly marked ``single_series`` so a new
+    exploratory run cannot later be mistaken for a comparable one.  A
+    multi-term plan without a declaration keeps no block: it is undeclared
+    legacy-shaped provenance, and the post-collection gate reports it as a
+    warning instead of inventing a scale.
+    """
+
+    declared = plan.get("comparison")
+    if isinstance(declared, dict):
+        block = {
+            key: declared[key]
+            for key in (
+                "comparison_scale",
+                "policy_id",
+                "anchor_query_ids",
+                "anchor_terms",
+                "locale",
+                "geo",
+                "timeframe",
+                "tool",
+            )
+            if key in declared
+        }
+        block["cross_compound_comparable"] = (
+            declared.get("comparison_scale") == COMMON_SCALE
+        )
+        if query.get("geo") and "geo" not in block:
+            block["geo"] = query["geo"]
+        if query.get("timeframe") and "timeframe" not in block:
+            block["timeframe"] = query["timeframe"]
+        return block
+    terms = query.get("terms")
+    if isinstance(terms, list) and len(terms) > 1:
+        return None
+    return {
+        "comparison_scale": SINGLE_SERIES,
+        "cross_compound_comparable": False,
+    }
+
+
 def build_run_metadata(
     *,
     plan: dict,
@@ -228,6 +275,8 @@ def build_run_metadata(
     if query_registry_version:
         query_provenance["query_registry_version"] = query_registry_version
 
+    comparison = _comparison_provenance(plan, query)
+
     collector_block = {
         "collector_id": collector_entry.get("collector_id"),
         "adapter_id": adapter.adapter_id,
@@ -259,6 +308,8 @@ def build_run_metadata(
         "execution": execution,
         "artifact_manifest": artifact_manifest_name,
     }
+    if comparison is not None:
+        document["comparison"] = comparison
     if environment:
         document["environment"] = dict(environment)
     return document

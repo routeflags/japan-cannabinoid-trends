@@ -3,9 +3,83 @@
   "profile": "legacy_audit",
   "schema_id": "collection-run-v1",
   "target_glob": "datasets/**/run_metadata.json",
-  "count": 61,
+  "count": 71,
   "raw_modified": false,
   "runs": [
+    {
+      "profile": "legacy_audit",
+      "run_id": "20261001T115959Z-google-trends-cbx-rikiddo",
+      "status": "incomplete",
+      "missing_fields": [
+        "schema_version",
+        "source_id",
+        "purpose",
+        "collector",
+        "collection_started_at",
+        "query_provenance",
+        "temporal_provenance",
+        "execution"
+      ],
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261001T115959Z-google-trends-cbx-rikiddo/run_metadata.json",
+      "sha256": "afc96ef019e82814543239988fe2738fd26401edf172e1bbe54bd69c5d69682b",
+      "sha256_after": "afc96ef019e82814543239988fe2738fd26401edf172e1bbe54bd69c5d69682b",
+      "unchanged": true
+    },
+    {
+      "profile": "legacy_audit",
+      "run_id": "20261001T121949Z-google-trends-h4cbh-hhbd",
+      "status": "incomplete",
+      "missing_fields": [
+        "schema_version",
+        "source_id",
+        "purpose",
+        "collector",
+        "collection_started_at",
+        "query_provenance",
+        "temporal_provenance",
+        "execution"
+      ],
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261001T121949Z-google-trends-h4cbh-hhbd/run_metadata.json",
+      "sha256": "6389b71226ccdcee3fe3f288fcf5a259e885388547a4765851af69b166e958c6",
+      "sha256_after": "6389b71226ccdcee3fe3f288fcf5a259e885388547a4765851af69b166e958c6",
+      "unchanged": true
+    },
+    {
+      "profile": "legacy_audit",
+      "run_id": "disambiguated_queries",
+      "status": "incomplete",
+      "missing_fields": [
+        "schema_version",
+        "source_id",
+        "collector",
+        "collection_started_at",
+        "query_provenance",
+        "temporal_provenance",
+        "execution"
+      ],
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261001T132500Z-google-trends-disambiguated/run_metadata.json",
+      "sha256": "f5b2b719a8dff341665af72690ca309e5f457486943017cac4f9a0c9268c3a83",
+      "sha256_after": "f5b2b719a8dff341665af72690ca309e5f457486943017cac4f9a0c9268c3a83",
+      "unchanged": true
+    },
+    {
+      "profile": "legacy_audit",
+      "run_id": "variance_check",
+      "status": "incomplete",
+      "missing_fields": [
+        "schema_version",
+        "source_id",
+        "collector",
+        "collection_started_at",
+        "query_provenance",
+        "temporal_provenance",
+        "execution"
+      ],
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261001T135424Z-google-trends-variance-check/run_metadata.json",
+      "sha256": "65f3d8489cd55d12c2c07767f8498e2416ce48104472f377c389b9c25227fe35",
+      "sha256_after": "65f3d8489cd55d12c2c07767f8498e2416ce48104472f377c389b9c25227fe35",
+      "unchanged": true
+    },
     {
       "profile": "legacy_audit",
       "run_id": "20261002T063821Z-google-trends-cbd",
@@ -558,6 +632,46 @@
     },
     {
       "profile": "legacy_audit",
+      "run_id": "20261015T042845Z-google-trends-boundary-1m",
+      "status": "complete",
+      "missing_fields": [],
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261015T042845Z-google-trends-boundary-1m/run_metadata.json",
+      "sha256": "d309166deeeb5125638b23fbce07f530d3123fb246f5f40c0ac1855bb859f0f4",
+      "sha256_after": "d309166deeeb5125638b23fbce07f530d3123fb246f5f40c0ac1855bb859f0f4",
+      "unchanged": true
+    },
+    {
+      "profile": "legacy_audit",
+      "run_id": "20261015T042849Z-google-trends-boundary-3m",
+      "status": "complete",
+      "missing_fields": [],
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261015T042849Z-google-trends-boundary-3m/run_metadata.json",
+      "sha256": "caa3e85a0f6f0695ad7077f51b1af8690372c769880efd2ae25542fedd37d103",
+      "sha256_after": "caa3e85a0f6f0695ad7077f51b1af8690372c769880efd2ae25542fedd37d103",
+      "unchanged": true
+    },
+    {
+      "profile": "legacy_audit",
+      "run_id": "20261015T042853Z-google-trends-boundary-12m",
+      "status": "complete",
+      "missing_fields": [],
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261015T042853Z-google-trends-boundary-12m/run_metadata.json",
+      "sha256": "e5d8b8a29517d5722fc69bd8be411c5618a849d6ded842de7f95c3f8c9a2df4b",
+      "sha256_after": "e5d8b8a29517d5722fc69bd8be411c5618a849d6ded842de7f95c3f8c9a2df4b",
+      "unchanged": true
+    },
+    {
+      "profile": "legacy_audit",
+      "run_id": "20261015T042857Z-google-trends-boundary-5y",
+      "status": "complete",
+      "missing_fields": [],
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261015T042857Z-google-trends-boundary-5y/run_metadata.json",
+      "sha256": "31c344c6f764f4ce4730b6f3a569b44722ce81421a5c4a2d767fd81828baba7d",
+      "sha256_after": "31c344c6f764f4ce4730b6f3a569b44722ce81421a5c4a2d767fd81828baba7d",
+      "unchanged": true
+    },
+    {
+      "profile": "legacy_audit",
       "run_id": "20261015T205048Z-google-trends-cannabinoid-multi-trends",
       "status": "complete",
       "missing_fields": [],
@@ -758,116 +872,102 @@
     },
     {
       "profile": "legacy_audit",
-      "run_id": "20261001T115959Z-google-trends-cbx-rikiddo",
-      "status": "incomplete",
-      "missing_fields": [
-        "schema_version",
-        "source_id",
-        "purpose",
-        "collector",
-        "collection_started_at",
-        "query_provenance",
-        "temporal_provenance",
-        "execution"
-      ],
-      "path": "datasets/cbx-search-trends/data/raw/google_trends/20261001T115959Z-google-trends-cbx-rikiddo/run_metadata.json",
-      "sha256": "afc96ef019e82814543239988fe2738fd26401edf172e1bbe54bd69c5d69682b",
-      "sha256_after": "afc96ef019e82814543239988fe2738fd26401edf172e1bbe54bd69c5d69682b",
-      "unchanged": true
-    },
-    {
-      "profile": "legacy_audit",
-      "run_id": "20261001T121949Z-google-trends-h4cbh-hhbd",
-      "status": "incomplete",
-      "missing_fields": [
-        "schema_version",
-        "source_id",
-        "purpose",
-        "collector",
-        "collection_started_at",
-        "query_provenance",
-        "temporal_provenance",
-        "execution"
-      ],
-      "path": "datasets/cbx-search-trends/data/raw/google_trends/20261001T121949Z-google-trends-h4cbh-hhbd/run_metadata.json",
-      "sha256": "6389b71226ccdcee3fe3f288fcf5a259e885388547a4765851af69b166e958c6",
-      "sha256_after": "6389b71226ccdcee3fe3f288fcf5a259e885388547a4765851af69b166e958c6",
-      "unchanged": true
-    },
-    {
-      "profile": "legacy_audit",
-      "run_id": "disambiguated_queries",
-      "status": "incomplete",
-      "missing_fields": [
-        "schema_version",
-        "source_id",
-        "collector",
-        "collection_started_at",
-        "query_provenance",
-        "temporal_provenance",
-        "execution"
-      ],
-      "path": "datasets/cbx-search-trends/data/raw/google_trends/20261001T132500Z-google-trends-disambiguated/run_metadata.json",
-      "sha256": "f5b2b719a8dff341665af72690ca309e5f457486943017cac4f9a0c9268c3a83",
-      "sha256_after": "f5b2b719a8dff341665af72690ca309e5f457486943017cac4f9a0c9268c3a83",
-      "unchanged": true
-    },
-    {
-      "profile": "legacy_audit",
-      "run_id": "variance_check",
-      "status": "incomplete",
-      "missing_fields": [
-        "schema_version",
-        "source_id",
-        "collector",
-        "collection_started_at",
-        "query_provenance",
-        "temporal_provenance",
-        "execution"
-      ],
-      "path": "datasets/cbx-search-trends/data/raw/google_trends/20261001T135424Z-google-trends-variance-check/run_metadata.json",
-      "sha256": "65f3d8489cd55d12c2c07767f8498e2416ce48104472f377c389b9c25227fe35",
-      "sha256_after": "65f3d8489cd55d12c2c07767f8498e2416ce48104472f377c389b9c25227fe35",
-      "unchanged": true
-    },
-    {
-      "profile": "legacy_audit",
-      "run_id": "20261015T042845Z-google-trends-boundary-1m",
+      "run_id": "20261104T115425Z-google-trends-thcnm-12m",
       "status": "complete",
       "missing_fields": [],
-      "path": "datasets/cbx-search-trends/data/raw/google_trends/20261015T042845Z-google-trends-boundary-1m/run_metadata.json",
-      "sha256": "09f3e2b12a357a05813c68af73956a695d78c7ef98018f600600727a523be750",
-      "sha256_after": "09f3e2b12a357a05813c68af73956a695d78c7ef98018f600600727a523be750",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261104T115425Z-google-trends-thcnm-12m/run_metadata.json",
+      "sha256": "a530e1f235e370a95efc0da9227143354799e8406994d93d0f985c26a8d462af",
+      "sha256_after": "a530e1f235e370a95efc0da9227143354799e8406994d93d0f985c26a8d462af",
       "unchanged": true
     },
     {
       "profile": "legacy_audit",
-      "run_id": "20261015T042849Z-google-trends-boundary-3m",
+      "run_id": "20261104T115431Z-google-trends-thcnm-5y",
       "status": "complete",
       "missing_fields": [],
-      "path": "datasets/cbx-search-trends/data/raw/google_trends/20261015T042849Z-google-trends-boundary-3m/run_metadata.json",
-      "sha256": "9754b238384521db5dfbce94bbbc7e1a3de974e51526e6672d396815db3d7d68",
-      "sha256_after": "9754b238384521db5dfbce94bbbc7e1a3de974e51526e6672d396815db3d7d68",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261104T115431Z-google-trends-thcnm-5y/run_metadata.json",
+      "sha256": "b6bf1a78798b9cc9619f3b981549110ba4a36d98f7bad651e12464a3e03da239",
+      "sha256_after": "b6bf1a78798b9cc9619f3b981549110ba4a36d98f7bad651e12464a3e03da239",
       "unchanged": true
     },
     {
       "profile": "legacy_audit",
-      "run_id": "20261015T042853Z-google-trends-boundary-12m",
+      "run_id": "20261104T135330Z-google-trends-thc-o-general-thco-12m",
       "status": "complete",
       "missing_fields": [],
-      "path": "datasets/cbx-search-trends/data/raw/google_trends/20261015T042853Z-google-trends-boundary-12m/run_metadata.json",
-      "sha256": "ef949859719ae324483bcf09e08623655a982defada86d1d0610ca512e1d6817",
-      "sha256_after": "ef949859719ae324483bcf09e08623655a982defada86d1d0610ca512e1d6817",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261104T135330Z-google-trends-thc-o-general-thco-12m/run_metadata.json",
+      "sha256": "33df550b2f3375ce6a76a35901ca71f1c6d17e28eee38ee042a3de3662a7ee04",
+      "sha256_after": "33df550b2f3375ce6a76a35901ca71f1c6d17e28eee38ee042a3de3662a7ee04",
       "unchanged": true
     },
     {
       "profile": "legacy_audit",
-      "run_id": "20261015T042857Z-google-trends-boundary-5y",
+      "run_id": "20261104T135339Z-google-trends-thc-o-general-thco-5y",
       "status": "complete",
       "missing_fields": [],
-      "path": "datasets/cbx-search-trends/data/raw/google_trends/20261015T042857Z-google-trends-boundary-5y/run_metadata.json",
-      "sha256": "2014e033d1862ae9cb123ca86b22fe47e93f5e3a75b1c870e7bf0954771a1672",
-      "sha256_after": "2014e033d1862ae9cb123ca86b22fe47e93f5e3a75b1c870e7bf0954771a1672",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261104T135339Z-google-trends-thc-o-general-thco-5y/run_metadata.json",
+      "sha256": "9e9ecc6f95148754190fe0f089cc52816379c29fbf94ca2a111f9ad5d5b52378",
+      "sha256_after": "9e9ecc6f95148754190fe0f089cc52816379c29fbf94ca2a111f9ad5d5b52378",
+      "unchanged": true
+    },
+    {
+      "profile": "legacy_audit",
+      "run_id": "20261104T135345Z-google-trends-thc-o-liquid-thco-12m",
+      "status": "complete",
+      "missing_fields": [],
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261104T135345Z-google-trends-thc-o-liquid-thco-12m/run_metadata.json",
+      "sha256": "c2266dbab81284c7939632990e8af1eb06597c8e43250b81dd97beec0c27f881",
+      "sha256_after": "c2266dbab81284c7939632990e8af1eb06597c8e43250b81dd97beec0c27f881",
+      "unchanged": true
+    },
+    {
+      "profile": "legacy_audit",
+      "run_id": "20261104T135350Z-google-trends-thc-o-liquid-thco-5y",
+      "status": "complete",
+      "missing_fields": [],
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261104T135350Z-google-trends-thc-o-liquid-thco-5y/run_metadata.json",
+      "sha256": "4d406032b03ef4a2f0d109783ad2ef500a181e5bc378c8ff5e16a0d8ce314bbf",
+      "sha256_after": "4d406032b03ef4a2f0d109783ad2ef500a181e5bc378c8ff5e16a0d8ce314bbf",
+      "unchanged": true
+    },
+    {
+      "profile": "legacy_audit",
+      "run_id": "20261104T165149Z-google-trends-cannabinoid-raw-collection",
+      "status": "complete",
+      "missing_fields": [],
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261104T165149Z-google-trends-cannabinoid-raw-collection/run_metadata.json",
+      "sha256": "e5107f023ec211a04bd4f22fc6a77ebfd90f30d5d85e4fd212a0900d5ee5f379",
+      "sha256_after": "e5107f023ec211a04bd4f22fc6a77ebfd90f30d5d85e4fd212a0900d5ee5f379",
+      "unchanged": true
+    },
+    {
+      "profile": "legacy_audit",
+      "run_id": "20261104T165155Z-google-trends-cannabinoid-raw-collection",
+      "status": "complete",
+      "missing_fields": [],
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261104T165155Z-google-trends-cannabinoid-raw-collection/run_metadata.json",
+      "sha256": "d7e5f583f824db00af70e9336c6612b5a42bf2b0be2b6eaca269af2dd6fd5f0b",
+      "sha256_after": "d7e5f583f824db00af70e9336c6612b5a42bf2b0be2b6eaca269af2dd6fd5f0b",
+      "unchanged": true
+    },
+    {
+      "profile": "legacy_audit",
+      "run_id": "20261104T175032Z-google-trends-cannabinoid-raw-collection",
+      "status": "complete",
+      "missing_fields": [],
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261104T175032Z-google-trends-cannabinoid-raw-collection/run_metadata.json",
+      "sha256": "34919985d68227e620fc1e6cf70212e97d547d224921fb5634bab922d3367857",
+      "sha256_after": "34919985d68227e620fc1e6cf70212e97d547d224921fb5634bab922d3367857",
+      "unchanged": true
+    },
+    {
+      "profile": "legacy_audit",
+      "run_id": "20261104T175220Z-google-trends-cannabinoid-raw-collection",
+      "status": "complete",
+      "missing_fields": [],
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261104T175220Z-google-trends-cannabinoid-raw-collection/run_metadata.json",
+      "sha256": "d554560ea5d23539f14fc3e5673b70217e7107b21f6bcddc5a59f6861d9f2c3f",
+      "sha256_after": "d554560ea5d23539f14fc3e5673b70217e7107b21f6bcddc5a59f6861d9f2c3f",
       "unchanged": true
     }
   ]

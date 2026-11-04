@@ -3,10 +3,14 @@
 **ドメイン名:** 生産 (Production)。「パイプライン」は実装（モジュール・CLI）の名前で、
 ドメイン上の名前は生産である（`docs/specs/contracts.md` §3.1）。
 
-**版:** 0.5.0（2026-10-15）
+**版:** 0.6.0（2026-11-05）
 **仕様:** `docs/plans/20261013a.md`（G1、リポジトリ履歴外）+ `20261013h.md` §12
 **状態:** 実装済み・**ライブ収集実施済み**（2026-10-15 に 8 run をパイプライン経由で採用。
 契約検証は録画リプレイ / 合成 fixture でも継続）
+
+**0.6.0 の変更:** plan / run に任意の `comparison` ブロックを追加し、共通スケール
+比較のアンカーを `gate-plan` / L1 / `audit-comparison-scale` で検証する（§3.5、
+ISS-20261105-GT-030）。既存 plan / run は無宣言のまま有効（後方互換）。
 
 **0.5.0 の変更:** ドメイン名 **生産 (Production)** を明記（契約内容の変更なし）。
 同じ日に `collect --live` で 8 run をライブ収集し採用した（§9 の制限事項を更新）。
@@ -212,6 +216,12 @@ L2 が `not_comparable` になることはある。
   宣言値を記録する（ソース知識をコアに置かない = P1）。絶対窓は
   「宣言された観測区間」であり collector が強制した境界ではない旨を
   limitation に書く。
+- **週境界と観測境界**: 宣言の `temporal` は任意で `week_start` /
+  `observed_min_timestamp` / `observed_max_timestamp` を持てる（既存の宣言は
+  これらを持たないため後方互換）。週次系列を既存 run から再採用するときは
+  `week_start` が必須になる（L1 は week granularity に `week_start` を要求する）。
+  観測境界は collector が観測したラベルの範囲であり、要求窓とは別フィールドに
+  記録する（要求と観測を混ぜない = P5）。
 - **時刻**: payload に収集時刻列が無い場合は started_at / finished_at を
   宣言し、根拠を `environment.handover.timestamp_basis` に記録する
   （例: export ファイル名の timestamp のみ・timezone 未確証）。捏造しない。
@@ -240,6 +250,40 @@ L2 が `not_comparable` になることはある。
   宣言の path / SHA-256、run ごとの訂正内容と根拠、raw を変更していない旨を
   記録する。`validation.cli audit-raw-completeness` が元宣言・訂正版宣言の
   SHA-256 と run id の対応を検証する。raw の `run_metadata.json` は書き換えない。
+
+### 3.5 共通スケール比較の宣言（ISS-20261105-GT-030）
+
+`collection-plan-v1` と `collection-run-v1` は任意の `comparison` ブロックを持つ。
+Google Trends の単独系列は各語のピーク=100 に正規化されるため、化合物間比較は
+同じ `compare_terms` 要求の共通スケールでしか成立しない。この宣言はその事実を
+計画・run の両方に記録し、ゲートが機械検証できるようにする。
+
+| フィールド | 必須 | 内容 |
+|---|---|---|
+| `comparison_scale` | 必須 | `common_scale`（1 要求の共通スケール） / `single_series`（1 語・非比較） |
+| `policy_id` | 任意 | study の `metadata/query-design.json` の `comparison_scales[].scale_id` |
+| `anchor_query_ids` | `common_scale` で必須 | アンカーの query_id（この study は `cbd-general-ja` / `thc-general-ja`） |
+| `anchor_terms` | `common_scale` で必須 | 同じ要求に含めるアンカー語（`CBD` / `THC`） |
+| `locale` / `geo` / `timeframe` / `tool` | 任意 | 宣言と要求の一致検査に使う |
+| `cross_compound_comparable` | run のみ必須 | 宣言から導出。`common_scale` は `true`、`single_series` は `false` |
+
+- 正本は study の `comparison_scales`（study ごと・source ごとにアンカーを宣言できる）。
+  plan は `policy_id` で参照し、`anchor_query_ids` / `anchor_terms` を同じ要求に含める。
+- `gate-plan`（収集前）は、`common_scale` で両アンカーが同一 `compare_terms` 要求に
+  無い場合、geo / timeframe / window / locale がポリシーと一致しない場合、宣言の
+  無い複数語 plan の場合に **stop** する。`single_series` は許可するが非比較として
+  記録する。
+- L1（`gate-run` / `evaluate_l1`）は、宣言済み `common_scale` run の request と
+  comparison artifact の両方にアンカーがあり、window / request metadata が宣言と
+  一致することを検証する。宣言の無い comparison-shaped run は warning として残す
+  （legacy。raw は変更しない）。
+- `staging-declaration-v1` の run は任意の `comparison` と `query.terms` を宣言でき、
+  `stage_run` がそのまま run_metadata に写す。採用判定は `adopt` の L1 が行う。
+- 監査は `validation.cli audit-comparison-scale`（`make audit-comparison-scale`）。
+  ポリシーごとの missing anchor sets / compound coverage を読み取り専用で報告する。
+  比較に使えない run は `not_comparable_runs`、要求条件がポリシーの外にある run は
+  `out_of_scope_runs`、宣言前だがアンカーが揃う run は `legacy_undeclared_runs` に
+  分ける（別状態を同じ名前にまとめない）。
 
 ---
 

@@ -37,6 +37,10 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from pathlib import Path
 
+from validation.comparison_scale import (
+    check_plan_comparison,
+    check_run_comparison,
+)
 from validation.integrity import (
     load_artifact_manifest,
     verify_artifact_manifest,
@@ -79,13 +83,20 @@ def _failed(issues: list[Issue]) -> bool:
     return any(issue.severity == "error" for issue in issues)
 
 
-def pre_collection_gate(plan: dict, *, registries: Registries) -> GateResult:
+def pre_collection_gate(
+    plan: dict,
+    *,
+    registries: Registries,
+    comparison_policies=(),
+) -> GateResult:
     """P6-1: validate a Collection Plan before collection starts.
 
     FAIL (any error-severity issue) means the collection must not start
     (fail closed).  ``plan`` is structurally validated by the caller against
     ``collection-plan-v1``; this gate adds the registry / capability /
-    temporal semantics.
+    temporal semantics and the cross-compound comparison rule
+    (``validation.comparison_scale``).  ``comparison_policies`` are the study's
+    declared policies (empty when the study declares none).
     """
     issues: list[Issue] = []
     if not isinstance(plan, dict):
@@ -141,6 +152,16 @@ def pre_collection_gate(plan: dict, *, registries: Registries) -> GateResult:
         if registries.windows:
             issues.extend(check_plan_window_registry(window, registries.windows))
 
+    issues.extend(
+        check_plan_comparison(
+            plan,
+            policies=comparison_policies,
+            queries=registries.queries,
+            query_variants=registries.query_variants,
+            windows=registries.windows,
+        )
+    )
+
     passed = not _failed(issues)
     return GateResult(passed, _PRE_ACTIONS[passed], issues)
 
@@ -151,6 +172,7 @@ def post_collection_gate(
     registries: Registries | None = None,
     base_dir=None,
     schema_id: str = "collection-run-v1",
+    comparison_policies=(),
 ) -> GateResult:
     """P6-2 / L1: decide catalog vs quarantine for a collected run.
 
@@ -207,6 +229,20 @@ def post_collection_gate(
                 )
 
     issues.extend(check_missingness_consistency(document, manifest))
+
+    issues.extend(
+        check_run_comparison(
+            document,
+            policies=comparison_policies,
+            queries=registries.queries if registries is not None else (),
+            query_variants=(
+                registries.query_variants if registries is not None else ()
+            ),
+            windows=registries.windows if registries is not None else (),
+            base_dir=base_dir,
+            manifest=manifest,
+        )
+    )
 
     if isinstance(document, dict):
         execution = document.get("execution")

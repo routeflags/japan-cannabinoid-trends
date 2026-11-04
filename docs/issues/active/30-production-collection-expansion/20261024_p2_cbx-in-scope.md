@@ -88,11 +88,31 @@ owner は **YouTube の所有だけを本 study に確定**した。Google Trend
 
 この決定により、YouTube の liquid-only primary は **15 run / 14 化合物**で完了した（`make audit-youtube-coverage`: `missing_compounds=0`、retained out-of-scope は裸語 `HHC` 1 run）。採用は `20261101-youtube-cbx-liquid-cannabinoid-raw-collection.json` → `make stage` → `make adopt-all`（L1: catalog）。
 
+## 決定（2026-11-04、Google Trends 部分）
+
+owner は **CBX の Google Trends raw の所有も本 study へ移す**ことを決定した。2026-11-01 の YouTube 決定（ソース単位の分担）を、Google Trends についても「本 study が所有する」に更新する。GSC は `cbx-search-trends` に残す。
+
+| 問い | Google Trends についての決定 |
+|---|---|
+| Q1（対象に含めるか） | 含める（14 化合物目）。raw の所有者も本 study |
+| Q2（取得元） | 選択肢 2（本 study が所有）。ただし**新規観測は追加しない** — 既存 run を run id と payload バイトを変えずに再採用する（所有の移管） |
+| Q3（語彙） | 化合物語 `CBX`（`cbx-general-ja`）を単独系列の語とする。`CBX リキッド` は製品語のまま別観測 |
+| Q4（窓） | 既存の窓をそのまま引き継ぐ（5年 `20261015T042857Z-google-trends-boundary-5y` = 2021-10-10 〜 2026-10-11、12ヶ月 `…-boundary-12m` = 2025-10-12 〜 2026-10-11）。窓を揃えるための再収集はしない |
+| Q5（役割分担） | **ソース単位で分担**: Google Trends と YouTube は本 study、GSC は `cbx-search-trends`。`cbx-search-trends` 側に Google Trends raw は置かない（二重の正本を作らない） |
+
+実施内容:
+
+- **移管**: `datasets/cbx-search-trends/data/raw/google_trends/` の 8 run を `datasets/cannabinoid-raw-collection/data/raw/google_trends/` へ移した。現行契約の 4 run（`20261015T0428*Z-…-boundary-*`）は `staging-declaration-v1`（[`20261104-cbx-google-trends-ownership-cannabinoid-raw-collection.json`](../../../metadata/provenance/declarations/20261104-cbx-google-trends-ownership-cannabinoid-raw-collection.json)）で study 付き run_metadata を再発行し、凍結 legacy の 4 run は `git mv` で移動した。
+- **記録**: 各 run の `environment.ownership_migration` に `previous_study_id` / `previous_study_run_id` / 移管前 path / 移管前 metadata と manifest の SHA-256 / `is_new_observation: false` を記録した。
+- **問題 3 の解消**: CBX + CBD + THC を 1 リクエストの `compare_terms` で測る共通スケール bridge を 12ヶ月・5年とも収集した（`20261104T165149Z-google-trends-cannabinoid-raw-collection` / `20261104T165155Z-…`）。単独系列の平均を合成していない。詳細は [`cannabinoid-raw-collection/methodology.md`](../../../datasets/cannabinoid-raw-collection/methodology.md) §2.1.6。
+
+残る限界: 5年 bridge の窓は既存 setA〜D（`2021-10-17_2026-10-18`）と 1 週ずれる（`today 5-y` を 2026-11-04 に解決した結果）。アンカーは同じ整数値だが、窓をまたいだ同一スケールの主張はしない。
+
 ## 完了条件
 
-- [ ] Q1〜Q5 の回答（YouTube 部分は 2026-11-01 に決済。Google Trends / GSC の参照関係・窓揃えは未決）
-- [ ] `README.md`（概要・対象化合物表・キーワード表）と `methodology.md`（§1.3・§5.1・§6）が 14 化合物として一貫している
-- [x] CBX の観測がどの raw にあるかを文書から辿れる（YouTube は本 study の `data/raw/youtube/`、Google Trends / GSC は `cbx-search-trends` のパスを README・methodology に明記）
-- [ ] 窓・共通スケールの不一致が limitations に書かれている（または揃える run を収集した）
-- [ ] 配布物（`trend_observations.csv` / `platform_coverage.csv` / `gt-summary.json`）の CBX 行の出所が文書と一致している
+- [x] Q1〜Q5 の回答（YouTube 部分は 2026-11-01、Google Trends 部分は 2026-11-04 に決済）
+- [x] `README.md`（概要・対象化合物表・キーワード表）と `methodology.md`（§1.3・§5.1・§6）が 14 化合物として一貫している
+- [x] CBX の観測がどの raw にあるかを文書から辿れる（YouTube と Google Trends とも本 study の `data/raw/`、GSC は `cbx-search-trends`）
+- [x] 窓・共通スケールの不一致が limitations に書かれている（または揃える run を収集した）——bridge の収集と窓の限界の記述で対応
+- [x] 配布物（`trend_observations.csv` / `platform_coverage.csv` / `gt-summary.json`）の CBX 行の出所が文書と一致している（`gt-summary` の CBX エントリの `path` は移管先を指す）
 - [ ] 監査スナップショットの再生成

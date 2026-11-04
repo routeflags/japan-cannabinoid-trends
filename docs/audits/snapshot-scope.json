@@ -16,9 +16,9 @@
   "retention_record_count": 0,
   "retention_violation_count": 0,
   "retention_violations": [],
-  "claim_count": 50,
-  "git_tracked_run_count": 28,
-  "git_untracked_run_count": 22,
+  "claim_count": 66,
+  "git_tracked_run_count": 42,
+  "git_untracked_run_count": 24,
   "git_tracked_run_ids": [
     "20261014T204841Z-google-trends-cannabinoid-multi-trends",
     "20261014T204852Z-google-trends-cannabinoid-multi-trends",
@@ -28,6 +28,10 @@
     "20261014T204901Z-google-trends-cannabinoid-multi-trends",
     "20261014T204904Z-google-trends-cannabinoid-multi-trends",
     "20261014T215738Z-google-trends-cannabinoid-multi-trends",
+    "20261015T042845Z-google-trends-boundary-1m",
+    "20261015T042849Z-google-trends-boundary-3m",
+    "20261015T042853Z-google-trends-boundary-12m",
+    "20261015T042857Z-google-trends-boundary-5y",
     "20261015T205048Z-google-trends-cannabinoid-multi-trends",
     "20261023T160420Z-google-trends-cbg-5y",
     "20261023T160428Z-google-trends-hhc-5y",
@@ -47,7 +51,17 @@
     "20261023T185325Z-google-trends-ja-rikiddo-5y-h4cbh",
     "20261023T185332Z-google-trends-ja-rikiddo-5y-hhbd",
     "20261023T185339Z-google-trends-ja-rikiddo-5y-hhch",
-    "20261024T000000Z-google-trends-crdh-12m"
+    "20261024T000000Z-google-trends-crdh-12m",
+    "20261104T115425Z-google-trends-thcnm-12m",
+    "20261104T115431Z-google-trends-thcnm-5y",
+    "20261104T135330Z-google-trends-thc-o-general-thco-12m",
+    "20261104T135339Z-google-trends-thc-o-general-thco-5y",
+    "20261104T135345Z-google-trends-thc-o-liquid-thco-12m",
+    "20261104T135350Z-google-trends-thc-o-liquid-thco-5y",
+    "20261104T165149Z-google-trends-cannabinoid-raw-collection",
+    "20261104T165155Z-google-trends-cannabinoid-raw-collection",
+    "20261104T175032Z-google-trends-cannabinoid-raw-collection",
+    "20261104T175220Z-google-trends-cannabinoid-raw-collection"
   ],
   "not_repository_retained_run_ids": [
     "20261010T141947Z-youtube-cannabinoid-raw-collection",
@@ -71,7 +85,9 @@
     "20261101T111450Z-youtube-cannabinoid-raw-collection",
     "20261101T112513Z-youtube-cannabinoid-raw-collection",
     "20261101T112534Z-youtube-cannabinoid-raw-collection",
-    "20261101T112555Z-youtube-cannabinoid-raw-collection"
+    "20261101T112555Z-youtube-cannabinoid-raw-collection",
+    "20261104T120627Z-youtube-cannabinoid-raw-collection",
+    "20261104T120805Z-youtube-cannabinoid-raw-collection"
   ],
   "runs": [
     {
@@ -270,6 +286,118 @@
         {
           "kind": "catalog",
           "path": "datasets/cannabinoid-raw-collection/metadata/data-catalog.json"
+        }
+      ],
+      "retention_status": "git_tracked",
+      "retention_source": "storage_policy",
+      "retention_policy_id": "raw-search-tracked",
+      "retention_decision_id": null,
+      "availability": "git_tracked",
+      "raw_dependent_facts": "not_recorded_in_scope",
+      "record_count": null,
+      "sha256": null
+    },
+    {
+      "run_id": "20261015T042845Z-google-trends-boundary-1m",
+      "study_id": "cannabinoid-raw-collection",
+      "resolved_study_id": "cannabinoid-raw-collection",
+      "source_id": "google-trends",
+      "claim_sources": [
+        "catalog",
+        "declaration"
+      ],
+      "references": [
+        {
+          "kind": "catalog",
+          "path": "datasets/cannabinoid-raw-collection/metadata/data-catalog.json"
+        },
+        {
+          "kind": "declaration",
+          "path": "20261104-cbx-google-trends-ownership-cannabinoid-raw-collection.json"
+        }
+      ],
+      "retention_status": "git_tracked",
+      "retention_source": "storage_policy",
+      "retention_policy_id": "raw-search-tracked",
+      "retention_decision_id": null,
+      "availability": "git_tracked",
+      "raw_dependent_facts": "not_recorded_in_scope",
+      "record_count": null,
+      "sha256": null
+    },
+    {
+      "run_id": "20261015T042849Z-google-trends-boundary-3m",
+      "study_id": "cannabinoid-raw-collection",
+      "resolved_study_id": "cannabinoid-raw-collection",
+      "source_id": "google-trends",
+      "claim_sources": [
+        "catalog",
+        "declaration"
+      ],
+      "references": [
+        {
+          "kind": "catalog",
+          "path": "datasets/cannabinoid-raw-collection/metadata/data-catalog.json"
+        },
+        {
+          "kind": "declaration",
+          "path": "20261104-cbx-google-trends-ownership-cannabinoid-raw-collection.json"
+        }
+      ],
+      "retention_status": "git_tracked",
+      "retention_source": "storage_policy",
+      "retention_policy_id": "raw-search-tracked",
+      "retention_decision_id": null,
+      "availability": "git_tracked",
+      "raw_dependent_facts": "not_recorded_in_scope",
+      "record_count": null,
+      "sha256": null
+    },
+    {
+      "run_id": "20261015T042853Z-google-trends-boundary-12m",
+      "study_id": "cannabinoid-raw-collection",
+      "resolved_study_id": "cannabinoid-raw-collection",
+      "source_id": "google-trends",
+      "claim_sources": [
+        "catalog",
+        "declaration"
+      ],
+      "references": [
+        {
+          "kind": "catalog",
+          "path": "datasets/cannabinoid-raw-collection/metadata/data-catalog.json"
+        },
+        {
+          "kind": "declaration",
+          "path": "20261104-cbx-google-trends-ownership-cannabinoid-raw-collection.json"
+        }
+      ],
+      "retention_status": "git_tracked",
+      "retention_source": "storage_policy",
+      "retention_policy_id": "raw-search-tracked",
+      "retention_decision_id": null,
+      "availability": "git_tracked",
+      "raw_dependent_facts": "not_recorded_in_scope",
+      "record_count": null,
+      "sha256": null
+    },
+    {
+      "run_id": "20261015T042857Z-google-trends-boundary-5y",
+      "study_id": "cannabinoid-raw-collection",
+      "resolved_study_id": "cannabinoid-raw-collection",
+      "source_id": "google-trends",
+      "claim_sources": [
+        "catalog",
+        "declaration"
+      ],
+      "references": [
+        {
+          "kind": "catalog",
+          "path": "datasets/cannabinoid-raw-collection/metadata/data-catalog.json"
+        },
+        {
+          "kind": "declaration",
+          "path": "20261104-cbx-google-trends-ownership-cannabinoid-raw-collection.json"
         }
       ],
       "retention_status": "git_tracked",
@@ -697,6 +825,236 @@
     },
     {
       "run_id": "20261024T000000Z-google-trends-crdh-12m",
+      "study_id": "cannabinoid-raw-collection",
+      "resolved_study_id": "cannabinoid-raw-collection",
+      "source_id": "google-trends",
+      "claim_sources": [
+        "catalog"
+      ],
+      "references": [
+        {
+          "kind": "catalog",
+          "path": "datasets/cannabinoid-raw-collection/metadata/data-catalog.json"
+        }
+      ],
+      "retention_status": "git_tracked",
+      "retention_source": "storage_policy",
+      "retention_policy_id": "raw-search-tracked",
+      "retention_decision_id": null,
+      "availability": "git_tracked",
+      "raw_dependent_facts": "not_recorded_in_scope",
+      "record_count": null,
+      "sha256": null
+    },
+    {
+      "run_id": "20261104T115425Z-google-trends-thcnm-12m",
+      "study_id": "cannabinoid-raw-collection",
+      "resolved_study_id": "cannabinoid-raw-collection",
+      "source_id": "google-trends",
+      "claim_sources": [
+        "catalog"
+      ],
+      "references": [
+        {
+          "kind": "catalog",
+          "path": "datasets/cannabinoid-raw-collection/metadata/data-catalog.json"
+        }
+      ],
+      "retention_status": "git_tracked",
+      "retention_source": "storage_policy",
+      "retention_policy_id": "raw-search-tracked",
+      "retention_decision_id": null,
+      "availability": "git_tracked",
+      "raw_dependent_facts": "not_recorded_in_scope",
+      "record_count": null,
+      "sha256": null
+    },
+    {
+      "run_id": "20261104T115431Z-google-trends-thcnm-5y",
+      "study_id": "cannabinoid-raw-collection",
+      "resolved_study_id": "cannabinoid-raw-collection",
+      "source_id": "google-trends",
+      "claim_sources": [
+        "catalog"
+      ],
+      "references": [
+        {
+          "kind": "catalog",
+          "path": "datasets/cannabinoid-raw-collection/metadata/data-catalog.json"
+        }
+      ],
+      "retention_status": "git_tracked",
+      "retention_source": "storage_policy",
+      "retention_policy_id": "raw-search-tracked",
+      "retention_decision_id": null,
+      "availability": "git_tracked",
+      "raw_dependent_facts": "not_recorded_in_scope",
+      "record_count": null,
+      "sha256": null
+    },
+    {
+      "run_id": "20261104T135330Z-google-trends-thc-o-general-thco-12m",
+      "study_id": "cannabinoid-raw-collection",
+      "resolved_study_id": "cannabinoid-raw-collection",
+      "source_id": "google-trends",
+      "claim_sources": [
+        "catalog"
+      ],
+      "references": [
+        {
+          "kind": "catalog",
+          "path": "datasets/cannabinoid-raw-collection/metadata/data-catalog.json"
+        }
+      ],
+      "retention_status": "git_tracked",
+      "retention_source": "storage_policy",
+      "retention_policy_id": "raw-search-tracked",
+      "retention_decision_id": null,
+      "availability": "git_tracked",
+      "raw_dependent_facts": "not_recorded_in_scope",
+      "record_count": null,
+      "sha256": null
+    },
+    {
+      "run_id": "20261104T135339Z-google-trends-thc-o-general-thco-5y",
+      "study_id": "cannabinoid-raw-collection",
+      "resolved_study_id": "cannabinoid-raw-collection",
+      "source_id": "google-trends",
+      "claim_sources": [
+        "catalog"
+      ],
+      "references": [
+        {
+          "kind": "catalog",
+          "path": "datasets/cannabinoid-raw-collection/metadata/data-catalog.json"
+        }
+      ],
+      "retention_status": "git_tracked",
+      "retention_source": "storage_policy",
+      "retention_policy_id": "raw-search-tracked",
+      "retention_decision_id": null,
+      "availability": "git_tracked",
+      "raw_dependent_facts": "not_recorded_in_scope",
+      "record_count": null,
+      "sha256": null
+    },
+    {
+      "run_id": "20261104T135345Z-google-trends-thc-o-liquid-thco-12m",
+      "study_id": "cannabinoid-raw-collection",
+      "resolved_study_id": "cannabinoid-raw-collection",
+      "source_id": "google-trends",
+      "claim_sources": [
+        "catalog"
+      ],
+      "references": [
+        {
+          "kind": "catalog",
+          "path": "datasets/cannabinoid-raw-collection/metadata/data-catalog.json"
+        }
+      ],
+      "retention_status": "git_tracked",
+      "retention_source": "storage_policy",
+      "retention_policy_id": "raw-search-tracked",
+      "retention_decision_id": null,
+      "availability": "git_tracked",
+      "raw_dependent_facts": "not_recorded_in_scope",
+      "record_count": null,
+      "sha256": null
+    },
+    {
+      "run_id": "20261104T135350Z-google-trends-thc-o-liquid-thco-5y",
+      "study_id": "cannabinoid-raw-collection",
+      "resolved_study_id": "cannabinoid-raw-collection",
+      "source_id": "google-trends",
+      "claim_sources": [
+        "catalog"
+      ],
+      "references": [
+        {
+          "kind": "catalog",
+          "path": "datasets/cannabinoid-raw-collection/metadata/data-catalog.json"
+        }
+      ],
+      "retention_status": "git_tracked",
+      "retention_source": "storage_policy",
+      "retention_policy_id": "raw-search-tracked",
+      "retention_decision_id": null,
+      "availability": "git_tracked",
+      "raw_dependent_facts": "not_recorded_in_scope",
+      "record_count": null,
+      "sha256": null
+    },
+    {
+      "run_id": "20261104T165149Z-google-trends-cannabinoid-raw-collection",
+      "study_id": "cannabinoid-raw-collection",
+      "resolved_study_id": "cannabinoid-raw-collection",
+      "source_id": "google-trends",
+      "claim_sources": [
+        "catalog"
+      ],
+      "references": [
+        {
+          "kind": "catalog",
+          "path": "datasets/cannabinoid-raw-collection/metadata/data-catalog.json"
+        }
+      ],
+      "retention_status": "git_tracked",
+      "retention_source": "storage_policy",
+      "retention_policy_id": "raw-search-tracked",
+      "retention_decision_id": null,
+      "availability": "git_tracked",
+      "raw_dependent_facts": "not_recorded_in_scope",
+      "record_count": null,
+      "sha256": null
+    },
+    {
+      "run_id": "20261104T165155Z-google-trends-cannabinoid-raw-collection",
+      "study_id": "cannabinoid-raw-collection",
+      "resolved_study_id": "cannabinoid-raw-collection",
+      "source_id": "google-trends",
+      "claim_sources": [
+        "catalog"
+      ],
+      "references": [
+        {
+          "kind": "catalog",
+          "path": "datasets/cannabinoid-raw-collection/metadata/data-catalog.json"
+        }
+      ],
+      "retention_status": "git_tracked",
+      "retention_source": "storage_policy",
+      "retention_policy_id": "raw-search-tracked",
+      "retention_decision_id": null,
+      "availability": "git_tracked",
+      "raw_dependent_facts": "not_recorded_in_scope",
+      "record_count": null,
+      "sha256": null
+    },
+    {
+      "run_id": "20261104T175032Z-google-trends-cannabinoid-raw-collection",
+      "study_id": "cannabinoid-raw-collection",
+      "resolved_study_id": "cannabinoid-raw-collection",
+      "source_id": "google-trends",
+      "claim_sources": [
+        "catalog"
+      ],
+      "references": [
+        {
+          "kind": "catalog",
+          "path": "datasets/cannabinoid-raw-collection/metadata/data-catalog.json"
+        }
+      ],
+      "retention_status": "git_tracked",
+      "retention_source": "storage_policy",
+      "retention_policy_id": "raw-search-tracked",
+      "retention_decision_id": null,
+      "availability": "git_tracked",
+      "raw_dependent_facts": "not_recorded_in_scope",
+      "record_count": null,
+      "sha256": null
+    },
+    {
+      "run_id": "20261104T175220Z-google-trends-cannabinoid-raw-collection",
       "study_id": "cannabinoid-raw-collection",
       "resolved_study_id": "cannabinoid-raw-collection",
       "source_id": "google-trends",
@@ -1163,6 +1521,62 @@
         {
           "kind": "declaration",
           "path": "20261101-youtube-cbx-liquid-cannabinoid-raw-collection.json"
+        }
+      ],
+      "retention_status": "git_untracked",
+      "retention_source": "storage_policy",
+      "retention_policy_id": "raw-social-default",
+      "retention_decision_id": null,
+      "availability": "not_repository_retained",
+      "raw_dependent_facts": "unavailable",
+      "record_count": null,
+      "sha256": null
+    },
+    {
+      "run_id": "20261104T120627Z-youtube-cannabinoid-raw-collection",
+      "study_id": "cannabinoid-raw-collection",
+      "resolved_study_id": "cannabinoid-raw-collection",
+      "source_id": "youtube",
+      "claim_sources": [
+        "catalog",
+        "declaration"
+      ],
+      "references": [
+        {
+          "kind": "catalog",
+          "path": "datasets/cannabinoid-raw-collection/metadata/data-catalog.json"
+        },
+        {
+          "kind": "declaration",
+          "path": "20261104-youtube-thcnm-tha-liquid-cannabinoid-raw-collection.json"
+        }
+      ],
+      "retention_status": "git_untracked",
+      "retention_source": "storage_policy",
+      "retention_policy_id": "raw-social-default",
+      "retention_decision_id": null,
+      "availability": "not_repository_retained",
+      "raw_dependent_facts": "unavailable",
+      "record_count": null,
+      "sha256": null
+    },
+    {
+      "run_id": "20261104T120805Z-youtube-cannabinoid-raw-collection",
+      "study_id": "cannabinoid-raw-collection",
+      "resolved_study_id": "cannabinoid-raw-collection",
+      "source_id": "youtube",
+      "claim_sources": [
+        "catalog",
+        "declaration"
+      ],
+      "references": [
+        {
+          "kind": "catalog",
+          "path": "datasets/cannabinoid-raw-collection/metadata/data-catalog.json"
+        },
+        {
+          "kind": "declaration",
+          "path": "20261104-youtube-thcnm-tha-liquid-cannabinoid-raw-collection.json"
         }
       ],
       "retention_status": "git_untracked",

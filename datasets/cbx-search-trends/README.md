@@ -19,14 +19,14 @@
 
 ## データソース
 
-本 study が持つ raw は Google Search Console と Google Trends のみ。**CBX の YouTube 観測（`CBX リキッド`）は 2026-11-01 の owner 決定により [`datasets/cannabinoid-raw-collection/`](../cannabinoid-raw-collection/) が所有する**。本 study の Google Trends / GSC raw は移動も複製もしない。
+本 study が今もつ raw は **Google Search Console だけ**。**CBX の YouTube 観測（`CBX リキッド`）は 2026-11-01 の owner 決定**により、**CBX の Google Trends raw は 2026-11-04 の owner 決定**により、それぞれ [`datasets/cannabinoid-raw-collection/`](../cannabinoid-raw-collection/) が所有する。Google Trends の移管は run id と payload バイトを変えずに行い、観測のやり直しではない（[`ISS-20261024-COL-016`](../../docs/issues/active/30-production-collection-expansion/20261024_p2_cbx-in-scope.md)、[cannabinoid-raw-collection/methodology.md §2.1.6](../cannabinoid-raw-collection/methodology.md)）。**本 study は Google Trends の二重の正本を持たない。**
 
 | ソース | 期間 | 件数 | ステータス |
 |--------|------|------|-----------|
-| Google Search Console | 2026-07 (月次) | 200 クエリ（うち CBX 関連 6 件） | ✅ 取得済み |
-| Google Trends (CBX リキッド) | 2025-09 ~ 2026-10 | 週次 52 週分 | ✅ 取得済み (2026-10-01) |
-| Google Trends (H4CBH) | 2025-09 ~ 2026-10 | 週次 52 週分 | ✅ 取得済み (2026-10-01) |
-| Google Trends (HHBD) | 2025-09 ~ 2026-10 | 週次 52 週分 | ✅ 取得済み (2026-10-01) |
+| Google Search Console | 2026-07 (月次) | 200 クエリ（うち CBX 関連 6 件） | ✅ 取得済み（本 study の raw） |
+| Google Trends (CBX リキッド) | 2025-09 ~ 2026-10 | 週次 52 週分 | ✅ 取得済み (2026-10-01)。raw は cannabinoid-raw-collection |
+| Google Trends (H4CBH) | 2025-09 ~ 2026-10 | 週次 52 週分 | ✅ 取得済み (2026-10-01)。同上 |
+| Google Trends (HHBD) | 2025-09 ~ 2026-10 | 週次 52 週分 | ✅ 取得済み (2026-10-01)。同上 |
 
 ## Google Trends 収集結果（2026-10-01）
 
@@ -98,29 +98,20 @@ datasets/cbx-search-trends/
 ├── methodology.md
 ├── data/
 │   └── raw/
-│       ├── gsc/
-│       │   └── 202607_queries.csv
-│       └── google_trends/
-│           ├── 20261001T115959Z-google-trends-cbx-rikiddo/
-│           │   ├── records.json
-│           │   ├── comparison.json
-│           │   ├── related_queries.json
-│           │   └── run_metadata.json
-│           └── 20261001T121949Z-google-trends-h4cbh-hhbd/
-│               ├── records_h4cbh.json
-│               ├── records_hhbd.json
-│               ├── comparison.json
-│               ├── related_queries.json
-│               └── run_metadata.json
+│       └── gsc/
+│           └── 202607_queries.csv
 ├── metadata/
 └── analysis/
 ```
+
+Google Trends の run（`20261001T115959Z-google-trends-cbx-rikiddo` など 8 件）は
+2026-11-04 に `datasets/cannabinoid-raw-collection/data/raw/google_trends/` へ移管した。
 
 ## 関連研究
 
 | Study ID | 内容 | 関係 |
 |----------|------|------|
-| `cannabinoid-raw-collection` | 成分横断の Google Trends / X / YouTube raw | CBX の YouTube（`CBX リキッド`）は同 study が所有。Google Trends は本 study が正本 |
+| `cannabinoid-raw-collection` | 成分横断の Google Trends / X / YouTube raw | CBX の YouTube（`CBX リキッド`）と **Google Trends raw 8 run は同 study が所有**（本 study は Google Trends の正本を持たない） |
 | `cbx-social-trends` | SNS トレンド | 補完 |
 | `cbx-product-coa` | COA 分析 | 補完 |
 | `cbx-liquid-online-trend` | X (Twitter) 言及 | 補完（別指標） |

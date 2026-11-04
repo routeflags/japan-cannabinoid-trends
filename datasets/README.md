@@ -51,8 +51,8 @@ raw 列は**そのマシンのローカル checkout に存在する source**（G
 | study | 何を扱うか | ローカル raw source | 追跡されている成果物 | release |
 |---|---|---|---|---|
 | [`cannabinoid-platform-trends`](cannabinoid-platform-trends/README.md) | **横断集計（配布用）**: 化合物 × プラットフォームの観測表（Google Trends 5年 + YouTube 採用分。X は owner 判断で除外） | 無し（コミット済み証拠から生成） | `data/processed/` 5 ファイル、`metadata/schema/` 4 | ✓ |
-| [`cannabinoid-raw-collection`](cannabinoid-raw-collection/README.md) | **原データ収集**: カンナビノイド各化合物の Google Trends 5年/12ヶ月、X、YouTube の生記録 | `google_trends`（追跡）, `x`（ローカルのみ）, `youtube`（ローカルのみ） | `data/raw/google_trends/`、`data/interim/` 1、`data/processed/` 1（`youtube_monthly_counts.csv`）、`metadata/`（data-catalog + 収集計画 32 + クエリ設計 1） | ✓ |
-| [`cbx-search-trends`](cbx-search-trends/README.md) | CBX / H4CBH / HHBD の検索需要（Google Trends + Search Console） | `google_trends`（追跡）, `gsc` | `data/raw/google_trends/`、`analysis/` 2 | ✓ |
+| [`cannabinoid-raw-collection`](cannabinoid-raw-collection/README.md) | **原データ収集**: カンナビノイド各化合物の Google Trends 5年/12ヶ月、X、YouTube の生記録 | `google_trends`（追跡）, `x`（ローカルのみ）, `youtube`（ローカルのみ） | `data/raw/google_trends/`、`data/interim/` 1、`data/processed/` 1（`youtube_monthly_counts.csv`）、`metadata/`（data-catalog + 収集計画 38 + クエリ設計 1） | ✓ |
+| [`cbx-search-trends`](cbx-search-trends/README.md) | CBX / H4CBH / HHBD の検索需要（Google Search Console。CBX の Google Trends raw は 2026-11-04 に `cannabinoid-raw-collection` へ移管） | `gsc` | `analysis/` 2 | ✓ |
 | [`cbx-social-trends`](cbx-social-trends/README.md) | CBX の SNS 言及（X / YouTube / Instagram / TikTok） | `x`, `youtube`, `instagram`, `tiktok` | `analysis/` 8、`data/processed/` 4（YouTube 24 件フィルタ、X 月次粗集計） | ✓ |
 | [`cannabinoid-social-trends`](cannabinoid-social-trends/README.md) | 規制前後の X 言及 | `x` | `README.md` / `methodology.md` のみ | — |
 | [`cbx-liquid-online-trend`](cbx-liquid-online-trend/README.md) | CBX リキッドの X 投稿 | `x` | 空の `data/processed/`・`data/interim/`・`metadata/runs/` | — |

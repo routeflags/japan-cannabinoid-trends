@@ -131,10 +131,16 @@ report = outcome.to_report().to_dict()
 .venv/bin/python -m validation.cli validate-all --format json --output validation-report.json
 
 # 収集前ゲート（Phase 6 P6-1）: proceed / stop
-.venv/bin/python -m validation.cli gate-plan --file plan.json
+# --datasets-root から study の comparison_scales を読み、共通スケールの
+# アンカー（CBD/THC）と geo/timeframe/window/locale を検査する。
+.venv/bin/python -m validation.cli gate-plan --file plan.json --datasets-root datasets
 
 # 収集後 L1 ゲート（Phase 6 P6-2）: catalog / quarantine
 .venv/bin/python -m validation.cli gate-run --file datasets/<study>/.../run_metadata.json
+
+# 共通スケール比較の被覆監査（読み取り専用。--design-only は宣言だけを検証）
+.venv/bin/python -m validation.cli audit-comparison-scale --design-only
+.venv/bin/python -m validation.cli audit-comparison-scale --require-complete
 
 # L2 比較可能性（G1 §12、C1-C3。`--coverage-a`/`--coverage-b` で G3 T6/T7 も）: 常に exit 0、判定はレポートで
 .venv/bin/python -m validation.cli compare-runs --a a.json --b b.json
@@ -351,11 +357,14 @@ Cerberus の作業グループ（`G1`〜`G7` / `P6`）を指す。
 | `study-registry-v1` | G7 | `metadata/studies/study-registry.json` |
 | `measurement-registry-v1` | G7 | `metadata/measurements/measurement-registry.json` |
 | `research-view-v1` | G7 | 研究 view 定義（合算モード禁止） |
-| `collection-plan-v1` | P6 | 収集前ゲート入力（初期契約。G1 垂直スライスで adapter 向けの任意フィールド `query` / `window.granularity|week_start|timezone|window_id` を追加 — §13。G3 で `window.exact_required` を追加 — §16） |
+| `collection-plan-v1` | P6 | 収集前ゲート入力（初期契約。G1 垂直スライスで adapter 向けの任意フィールド `query` / `window.granularity|week_start|timezone|window_id` を追加 — §13。G3 で `window.exact_required` を追加 — §16。共通スケール比較の任意 `comparison` ブロックを追加 — §13、ISS-20261105-GT-030） |
 
 G5 `collection-run-v1` には G3 で `temporal_provenance.reference_time` /
 `temporal_provenance.limitations` を**任意フィールド**として追加した（後方互換。
-contract version は 1.0.0 のまま — G2 の plan 拡張と同じ手順）。
+contract version は 1.0.0 のまま — G2 の plan 拡張と同じ手順）。同じ手順で、
+plan の `comparison` 宣言を写す任意の `comparison` ブロック
+（`comparison_scale` / `anchor_*` / `cross_compound_comparable`）を追加した
+（ISS-20261105-GT-030。既存 run は無宣言のまま有効）。
 
 各スキーマの未包含事項（意味検証側の担当）は各モジュールの docstring に明記してある。
 
@@ -465,6 +474,13 @@ Phase 1 監査のとおり、リポジトリには**実在する JSON Schema フ
   - L2 最小実装（`compare-runs`、C1-C3。`comparability.compare_runs`）。
   - `collection-plan-v1` への adapter 向け任意フィールド追加（後方互換。
     既存 plan 文書の判定は不変 — `test_collection_plan.py`）。
+  - 共通スケール比較の宣言とゲート（`validation.comparison_scale`）。
+    `gate-plan` はアンカー欠落・request 不一致・無宣言の複数語 plan を停止し、
+    L1 は宣言済み run の request と comparison artifact を照合する。
+    `audit-comparison-scale` は missing anchor sets / compound coverage を報告し、
+    比較不可（`not_comparable_runs`）・ポリシー範囲外（`out_of_scope_runs`）・
+    未宣言の legacy アンカー run（`legacy_undeclared_runs`）を分けて出す
+    （ISS-20261105-GT-030）。
 - **未実施（親・ユーザーの判断事項）**:
   - ライブ収集（レート制限・資格情報）の実行と実レスポンスでの契約照合。
   - 既存 shell（`apify_run.sh` 等）・skill（`research-google-trends` 等）の
