@@ -14,12 +14,15 @@
 <h3>研究質問</h3>
 <p>「日本におけるTHCV成分へのオンライン関心は、どのように推移しているか？」</p>
 <p><strong>最終更新:</strong> 2026-11-05。</p>
-<p><strong>改訂:</strong> 2026-11-05 に研究質問の表現を統一し、引用の版表記を現行リリース 1.14.2 に合わせた。YouTube 節から動画単位の行（タイトル・チャンネル・URL）を削除し、あわせてチャンネル名を含む分布表（X・YouTube の上位5チャンネル）を削除した（集計のみ、ISS-20261015-COL-030 §4.1）。Google Trends 節は要求条件と観測範囲を分離し、表ごとの出所を明記し、共通スケール節を CBD・THC を同一要求に含むアンカー付き run の実測に合わせて更新した。</p>
+<p><strong>改訂:</strong> 2026-11-05 に研究質問の表現を統一し、引用の版表記をリリース 1.14.2 に合わせた。YouTube 節から動画単位の行（タイトル・チャンネル・URL）を削除し、あわせてチャンネル名を含む分布表（X・YouTube の上位5チャンネル）を削除した（集計のみ、ISS-20261015-COL-030 §4.1）。Google Trends 節は要求条件と観測範囲を分離し、表ごとの出所を明記し、共通スケール節を CBD・THC を同一要求に含むアンカー付き run の実測に合わせて更新した。2026-11-05 の C3 内容レビュー（C1〜C45）で数値・出所・区分を再確認し、公開状態の節を追加した（v1.14.5）。</p>
 
 <h3>データソース</h3>
 <ul>
   <li><strong>検索データ:</strong> Google Trends（日本、過去12ヶ月・5年）</li>
   <li><strong>規制資料:</strong> 厚生労働省</li>
+  <li><strong>収集手段と collector:</strong> Google Trends は <code>collect --live</code>（google-trends-mcp 0.1.1）、YouTube は YouTube Search via Apify（actor の版は当時の記録が無い）。</li>
+  <li><strong>合算しない:</strong> Google Trends・X・YouTube は異なるソース・異なるクエリであり、件数・比率・相対指数を合算・換算しない。</li>
+  <li><strong>値の区分:</strong> 観測（run が返した返却点・返却件数）と派生（平均・比率・Wilson 95% 信頼区間・再生数/動画長の集計）を区別する。共通スケール表は「区分」列に派生と記す。推移の解釈は行わない。</li>
 </ul>
 
 
@@ -93,7 +96,7 @@
   </table>
 
 
-  <p><strong>制約:</strong> YouTube 検索結果のサンプルであり、全動画を網羅するものではない。再生数は取得日時点の値であり、変動する可能性がある。動画単位の行（動画 ID・タイトル・チャンネル・URL・再生数）は公開しない（集計のみ、ISS-20261015-COL-030 §4.1）。</p>
+  <p><strong>制約:</strong> YouTube 検索結果のサンプルであり、全動画を網羅するものではない。再生数は取得日時点の値であり、変動する可能性がある。動画単位の行（動画 ID・タイトル・チャンネル・URL・再生数）は公開しない（集計のみ、ISS-20261015-COL-030 §4.1）。この節の 2026-10-08 の収集は run 記録を持たず、raw をリポジトリに保持していない（Git 非追跡・非公開）ため、返却件数・実行状態・collector の版はリポジトリの記録から再計算できない。</p>
 </div>
 
 
@@ -206,6 +209,14 @@
 </div>
 
 
+<!-- ===== 公開状態 ===== -->
+<div>
+  <h2 id="publication-status">公開状態</h2>
+  <p>本ページは<strong>公開承認済み（<code>approved</code>）</strong>である。公開契約 PC-7 の審査 envelope は <code>metadata/publication/research-thcv/</code> にあり、<code>decision.json</code> の status は <code>approved</code>、<code>artifact_sha256</code> は現行 HTML の SHA-256 と一致する。</p>
+  <p>2026-11-05 に <code>validation.cli audit-publication</code> と <code>gate-publication</code> を現行 hash で実行した。公開契約の機械検査は本ページについて finding 0、公開適格ゲートは <code>SUPPORTED</code>（PUB-01〜PUB-11 がすべて PASS、WARNING なし）。PUB-11（C3 内容レビュー）は 2026-11-05 に C1〜C45 の 45 項目を本ページ・raw/comparison 成果物・methodology・taxonomy・evidence に照合して記録した（<code>evidence.json</code> の <code>content_review</code>、チェックリスト <code>metadata/publication/content-review-checklist.json</code> v1.0.0）。根拠は envelope の <code>decision.json</code> / <code>evidence.json</code> にある。</p>
+  <p>本節の版を <strong>v1.14.5</strong> としてリリースする。</p>
+</div>
+
 <!-- ===== 引用情報 ===== -->
 <div>
   <h2 id="citation">引用 (How to Cite)</h2>
@@ -262,7 +273,7 @@
       </tr>
     </tbody>
   </table>
-  <p><strong>出所:</strong> run <code>20261023T160436Z-google-trends-thcv-5y</code>（JP / today 5-y / 2026-10-23T16:04:37.753992Z 収集）。記録にある項目: 初出 2022-02-27（値 38）、非ゼロ 45 週 / ゼロ 217 週、データあり期間 2021-10-17 〜 2026-10-18。</p>
+  <p><strong>出所:</strong> run <code>20261023T160436Z-google-trends-thcv-5y</code>（query_id <code>thcv-general-ja</code> / JP / today 5-y / 2026-10-23T16:04:37.753992Z 収集）。記録にある項目: 初出 2022-02-27（値 38）、非ゼロ 45 週 / ゼロ 217 週、データあり期間 2021-10-17 〜 2026-10-18。要求窓は <code>2021-10-17_2026-10-18</code>（<code>metadata/windows/2021-10-17_2026-10-18.json</code>）。5年平均は週次 262 点の算術平均（小数第 2 位）、非ゼロ週は値が 0 でない週。</p>
 
   <h3>12ヶ月データサマリー</h3>
   <table>
@@ -279,7 +290,7 @@
       </tr>
     </tbody>
   </table>
-  <p><strong>出所:</strong> run <code>20261023T161929Z-google-trends-thcv-12m</code>（JP / <code>today 12-m</code> / 2026-10-23T16:19:30Z 収集）。観測範囲 2025-10-19 〜 2026-10-18（53週）。表示値 1.9 は週次 53 点の算術平均（小数第 1 位）。</p>
+  <p><strong>出所:</strong> run <code>20261023T161929Z-google-trends-thcv-12m</code>（query_id <code>thcv-general-ja</code> / 要求: JP / <code>today 12-m</code>・単独系列 / 2026-10-23T16:19:30Z 収集）。要求窓は <code>2025-10-19_2026-10-18</code>（<code>metadata/windows/2025-10-19_2026-10-18.json</code>）、観測範囲は 2025-10-19 〜 2026-10-18（53週、初出 2026-02-15 の値 100、非ゼロ 1 週 / ゼロ 52 週、最高 100 は 2026-02-15）。表示値 1.9 は週次 53 点の算術平均（小数第 1 位）。</p>
 
   <h3>共通スケール比較</h3>
   <p><strong>現行窓:</strong> 5年 <code>2021-10-31_2026-11-08</code> を、<code>CBD</code>・<code>THC</code> と <code>THCV</code> を同一の <code>compare_terms</code> 要求に含む run で取得した。この化合物について現行窓の 12ヶ月アンカー付き run は未取得（単独系列の値で代用しない）。</p>
@@ -298,9 +309,9 @@
       <tr><td><strong>THCV</strong></td><td>0.0878</td><td>22 週</td><td>派生</td></tr>
     </tbody>
   </table>
-  <p><strong>出所:</strong> run <code>20261104T195126Z-google-trends-cannabinoid-raw-collection</code>（JP / <code>today 5-y</code> / 窓 <code>2021-10-31_2026-11-08</code> / 観測 2021-10-31 〜 2026-11-01（262 週） / 2026-11-04T19:51:26.401407Z 収集）。平均は週次 262 点の算術平均（小数第 4 位）。</p>
-  <p><strong>旧窓の値は現行窓の値ではない:</strong> 2026-10-23 収集の setA〜D（窓 <code>2021-10-17_2026-10-18</code>）と 2026-10-02 の 12ヶ月比較 run は履歴として raw に残るが、本節は現行窓の run だけを示す。</p>
-  <p><strong>制約:</strong> Google Trends は相対指数であり、絶対検索数ではない。0 は相対指数の最小値（閾値未満）であり、検索が存在しなかったことや欠測を意味しない。</p>
+  <p><strong>出所:</strong> run <code>20261104T195126Z-google-trends-cannabinoid-raw-collection</code>（query_id <code>comparison-5y-setA</code> / JP / <code>today 5-y</code> / 窓 <code>2021-10-31_2026-11-08</code>（<code>metadata/windows/2021-10-31_2026-11-08.json</code>） / 観測 2021-10-31 〜 2026-11-01（262 週） / 2026-11-04T19:51:26.401407Z 収集）。平均は週次 262 点の算術平均（小数第 4 位）。要求語は <code>CBD</code>・<code>THC</code>・<code>CBG</code>・<code>HHC</code>・<code>THCV</code> の 5 語で、正規化は同一要求内の最大値 = 100（CBD の 2025-08-31）。本表はこのうち CBD・THC・THCV だけを載せる。</p>
+  <p><strong>旧窓の値は現行窓の値ではない:</strong> 2026-10-23 収集の setA〜D（窓 <code>2021-10-17_2026-10-18</code>）と 2026-10-02 の 12ヶ月比較 run は履歴として raw に残るが、本節は現行窓の run だけを示す。run 間・窓間（12ヶ月と 5年を含む）の平均は比較しない。</p>
+  <p><strong>制約:</strong> Google Trends は 0-100 の相対指数であり、絶対検索数ではない。0 は相対指数の最小値（閾値未満）であり、検索が存在しなかったことや欠測を意味しない。各系列は単発 run であり、反復実行による安定性の測定は行っていない。</p>
 
 </div>
 

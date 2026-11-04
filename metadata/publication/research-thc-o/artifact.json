@@ -6,8 +6,8 @@
   "layer": "publication",
   "source_kind": "html",
   "storage_policy_id": "publication-html-candidate",
-  "sha256": "bce7d790da688d055279349d1abf5a3fef51b860bfcb4e6273da6b8253229174",
-  "byte_length": 18946,
+  "sha256": "23bc99833c8b727c0f6d68c68c7411512538c808b03b6b0aad90a6c6d4f28e5e",
+  "byte_length": 22124,
   "recorded_at": "2026-11-05",
-  "notes": "未公開 publication HTML。PC-7 の審査 envelope として内容 hash を固定する。対象 publication はまだ公開していないため、decision は requires_review から開始する。 v1.13.0 release metadata sync 後の hash。 v1.13.1 release metadata sync 後の hash。 2026-11-04: 12ヶ月 no data の明示（旧記載の 12ヶ月平均 8.2 は run から再現できず、no data 記録に置き換えた）と、THCO 表記バリアント節の追加後の hash。 2026-11-05、研究質問の統一・版表記 1.14.1 化・YouTube 動画単位行の削除・Google Trends の要求条件/観測範囲の分離および出所追記の後の hash（内容承認ではなく審査対象の再ピン）。 2026-11-05: THC-O の共通スケール節を、CBD・THC を含むアンカー付き run の実測に合わせて更新した後の hash（内容承認ではなく審査対象の再ピン）。"
+  "notes": "未公開 publication HTML。PC-7 の審査 envelope として内容 hash を固定する。対象 publication はまだ公開していないため、decision は requires_review から開始する。 v1.13.0 release metadata sync 後の hash。 v1.13.1 release metadata sync 後の hash。 2026-11-04: 12ヶ月 no data の明示（旧記載の 12ヶ月平均 8.2 は run から再現できず、no data 記録に置き換えた）と、THCO 表記バリアント節の追加後の hash。 2026-11-05、研究質問の統一・版表記 1.14.1 化・YouTube 動画単位行の削除・Google Trends の要求条件/観測範囲の分離および出所追記の後の hash（内容承認ではなく審査対象の再ピン）。 2026-11-05: THC-O の共通スケール節を、CBD・THC を含むアンカー付き run の実測に合わせて更新した後の hash（内容承認ではなく審査対象の再ピン）。 2026-11-05: C3 内容レビュー（C1〜C45）の記録と、レビューで検出した記載の訂正・公開状態の節の追加の後の hash。"
 }

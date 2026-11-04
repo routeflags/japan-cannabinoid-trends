@@ -6,22 +6,38 @@
   "integrity": "verified",
   "citations": {
     "integrity": [
-      "sha256(publication/research_thcv.html, 2026-11-05 検算) = 0a554a0641a4ee7d6eec02f08759fa6fc0f317ec2f953b92a8ca736794c7372b"
+      "sha256(publication/research_thcv.html, 2026-11-05 検算) = 4b4f1b420230eeb66fb064579fee8a101a4576503d250f12b19634151883813a"
     ],
     "publication_contract": [
       "validation.cli audit-publication（2026-10-15）: PC-1〜PC-8 の機械検査対象。PC-7 は本 envelope の存在と hash 固定を検査する。",
-      "validation.cli audit-publication（2026-11-05）: 本 artifact に PC-1〜PC-7 の finding は無い。PC-7 は本 envelope の存在と hash 固定を検査する。"
+      "validation.cli audit-publication（2026-11-05）: 本 artifact に PC-1〜PC-7 の finding は無い。PC-7 は本 envelope の存在と hash 固定を検査する。",
+      "validation.cli audit-publication（2026-11-05、C3 内容レビューの記録後）: 本 artifact に PC-1〜PC-10 の finding は無い（--output は /tmp に書いた）。"
     ],
     "content_changes": [
       "2026-11-05: 変更内容 — 研究質問を「日本におけるTHCV成分へのオンライン関心は、どのように推移しているか？」に統一し、引用の版表記を 1.14.2（CITATION.cff）に更新した。 / YouTube 節から動画単位の行（動画 ID・タイトル・チャンネル・URL・再生数）を削除し、あわせてチャンネル名を含む分布表（X・YouTube の上位5チャンネル）を削除した（集計のみ、ISS-20261015-COL-030 §4.1、docs/domain/contracts/processing.md）。 / Google Trends 節に要求条件（geo / timeframe）と観測範囲の区別、表ごとの出所 run、0 の意味（相対指数の最小値であり欠測ではない）を追記した。 / 12ヶ月平均を 3.1 から 1.9 に訂正した（run 20261023T161929Z-google-trends-thcv-12m の週次 53 点の算術平均 1.887）。旧値の出所は確認できなかった。",
-      "2026-11-05: 変更内容 — Google Trends の共通スケール節を、CBD・THC を同一 compare_terms 要求に含むアンカー付き run の実測に合わせて更新した。現行窓の run がある場合は現行窓、無い場合は旧窓の歴史観測と明記し、現行窓は未取得と記載した。単独系列の値は代用していない。"
+      "2026-11-05: 変更内容 — Google Trends の共通スケール節を、CBD・THC を同一 compare_terms 要求に含むアンカー付き run の実測に合わせて更新した。現行窓の run がある場合は現行窓、無い場合は旧窓の歴史観測と明記し、現行窓は未取得と記載した。単独系列の値は代用していない。",
+      "2026-11-05: C3 内容レビュー（C1〜C45）で次を検出して訂正した — 12ヶ月出所に「要求:」・要求窓（metadata/windows/2025-10-19_2026-10-18.json）・観測範囲・初出 2026-02-15（100）・非ゼロ 1 週 / ゼロ 52 週・最高 100 の日付を追加、5年出所に query_id・要求窓・平均と非ゼロ週の定義を追加、共通スケール出所に要求語 5 語と正規化分母（CBD 2025-08-31）を追加、run 間・窓間の平均を比較しない旨と単発 run・安定性未測定を追記、値が 0-100 の相対指数であることを明記、YouTube 節に raw 非保持・非再計算を追記、データソースに collector 版・合算しない・値の区分を追加、公開状態の節を追加し改訂の版表記を 1.14.2 に直した（v1.14.5）。"
+    ],
+    "google_trends_canonical_5y": [
+      "run 20261023T160436Z-google-trends-thcv-5y（query_id thcv-general-ja / geo JP / today 5-y / 窓 2021-10-17_2026-10-18 / 262 週 / 平均 7.431298（ページは小数第 2 位の 7.43）/ 最大 100（2023-09-03）/ 非ゼロ 45・ゼロ 217 / 初出 2022-02-27 の値 38 / 最新 2026-10-18 の値 0）",
+      "sha256: run_metadata.json = 0727f20df124c2fcfe9a88cdf989a5cb46c2cf84bbbf86d871f70228a0b624c1; artifact-manifest.json = 51f494b35928ea002a1fcfad230b129f7f590350ddbf2f5f0a5d5a8929b2af29; payload.json = c08f6e69250960a963a5801c8ea7dd31cf6b9a11d4e2af8e2a4460fc175858a4; records_thcv.json = f6f1f6566818d88b7403327633115b7f24e9281789e535ef6d968a46e6d8a83f"
+    ],
+    "google_trends_canonical_12m": [
+      "run 20261023T161929Z-google-trends-thcv-12m（query_id thcv-general-ja / geo JP / today 12-m / 窓 2025-10-19_2026-10-18 / 53 週 / 平均 1.886792（ページは小数第 1 位の 1.9）/ 最大 100（2026-02-15）/ 非ゼロ 1・ゼロ 52 / 初出 2026-02-15 の値 100）",
+      "sha256: run_metadata.json = eedf65e2e92e628eef3f4aa864aed9b95d93fc9f22bf0211530694d1ae903a84; artifact-manifest.json = 87f4b1437c108f4fe8f2cc76f9631a60dbcc52d3bb9f558a1648dffaa5f6f0fb; payload.json = efb71880b85e34d762f46fc3e58a7433d86fe812180cbb532482321f0eb7b5f5; records_thcv.json = 783f868b0a28a2a11f6a9cc9f1d923f00caadee4ce719258cf195cf216e0636c"
+    ],
+    "google_trends_common_scale_5y": [
+      "run 20261104T195126Z-google-trends-cannabinoid-raw-collection（query_id comparison-5y-setA / geo JP / today 5-y / 窓 2021-10-31_2026-11-08 / 262 週 / 要求語 CBD・THC・CBG・HHC・THCV / CBD 33.0916（非ゼロ 262）・THC 5.0496（262）・THCV 0.0878（非ゼロ 22）/ 正規化は同一要求内の最大値 = 100（CBD の 2025-08-31））",
+      "sha256: run_metadata.json = ea9090c226e34a16a53a91e51510165942e42adc4f48c99742bd96b5224d645b; artifact-manifest.json = 964f1059c2f2b2ea0cbddd1b88e37e1938a27dda58b8aa7e537f8492ab017a69; payload.json = ab11032ef1c93059d060d7ec91699d3fa698a4e431f9113f66688b12a7a129b9; comparison_cbd-thc-cbg-hhc-thcv.json = ecc3fb6fb7840ddf728a7b7f39589cfe438e56db76384d7f375372e25b90ec94"
+    ],
+    "youtube": [
+      "2026-10-08（23 件）と 2026-10-09（23 件 / 投稿日 2018-03-15 〜 2025-08-21）の YouTube 節は旧契約の収集で、run_id・run 記録・採用宣言を持たない。raw は Git 非追跡・非公開でリポジトリに保持しておらず、返却件数・実行状態・collector 版・投稿日範囲は再計算できない（ページの制約に明記）。"
     ]
   },
   "unrecorded": {
-    "publication_approval": "対象 publication はまだ公開していない。承認判断は未実施のため decision.status は requires_review。",
-    "human_content_review": "効能表現・法務・再配布条件などの人間による最終審査は未記録。"
+    "human_content_review": "効能表現・法務・再配布条件の人間による最終審査は未記録。内容レビューは PUB-11 の C1〜C45 として 2026-11-05 に記録した（content_review）。"
   },
-  "notes": "この evidence は機械的な存在・整合性の根拠だけを記録する。公開承認・人間の内容審査は推測で埋めない。 2026-10-23、THCV の 5 年系列を週次 raw から再取得（run 20261023T160436Z-google-trends-thcv-5y）し、`processing.cli gt-summary --write` で 5 年ブロックを再生成した後の hash。summary-only だった旧 baseline の記録値は使っていない。内容審査は requires_review のまま。 2026-11-05 に審査対象の hash を再固定し、変更内容を citations.content_changes に記録した。公開承認・人間の内容審査は推測で埋めない。",
+  "notes": "この evidence は機械的な存在・整合性の根拠だけを記録する。公開承認・人間の内容審査は推測で埋めない。 2026-10-23、THCV の 5 年系列を週次 raw から再取得（run 20261023T160436Z-google-trends-thcv-5y）し、`processing.cli gt-summary --write` で 5 年ブロックを再生成した後の hash。summary-only だった旧 baseline の記録値は使っていない。2026-11-05 に審査対象の hash を再固定し、変更内容を citations.content_changes に記録した。公開承認・人間の内容審査は推測で埋めない。 2026-11-05 に PUB-11（C3 内容レビュー）の C1〜C45 を content_review に記録し、現行 HTML の SHA-256 を artifact_sha256 として固定した。",
   "personal_data_reviewed": true,
   "personal_data_review_basis": "2026-11-05: publication/research_thcv.html の本文・表・画像・リンクを個人データの観点で確認した。走査結果: メールアドレス 0、@ハンドル 0、10 桁以上の識別子 0、行単位の投稿・動画の行 0（表ヘッダに 投稿者/ユーザー名/アカウント/動画 ID/タイトル/チャンネル/本文 を含む表は無い）。X 節・YouTube 節は件数・比率・Wilson 95% CI・再生数/動画長統計などの集計のみで、投稿本文・ユーザー名・動画単位の行・チャンネル名を含まない。 外部参照は doi.org（DOI）、zenodo.org（DOI バッジ）。時刻は run の収集時刻（UTC）のみ。結果: 個人を特定できる情報は含まれない。",
   "anonymization_applied": true,
@@ -35,5 +51,239 @@
   "redistribution_confirmed": true,
   "redistribution_basis": "掲載するのは自らの集計値・run metadata・方法論のみ。raw（Google Trends payload、X 投稿、YouTube 動画単位）は非公開/untracked のままで再配布しない。sns-redistribution-assessment §3.2 に整合する。",
   "copyright_confirmed": true,
-  "copyright_basis": "第三者の文章・動画・投稿を再掲していない。外部リンクは制度ページと DOI。"
+  "copyright_basis": "第三者の文章・動画・投稿を再掲していない。外部リンクは制度ページと DOI。",
+  "content_review": {
+    "checklist_id": "publication-content-review-c1-c45",
+    "checklist_version": "1.0.0",
+    "artifact_sha256": "4b4f1b420230eeb66fb064579fee8a101a4576503d250f12b19634151883813a",
+    "reviewer": "Delta agent (owner instruction 2026-11-05: C1–C45 review of research-thcv)",
+    "reviewed_at": "2026-11-05",
+    "items": [
+      {
+        "id": "C1",
+        "verdict": "not_applicable",
+        "basis": "本ページは12ヶ月共通スケールを掲載せず、現行窓の 12ヶ月アンカー付き run は未取得と明記している。"
+      },
+      {
+        "id": "C2",
+        "verdict": "not_applicable",
+        "basis": "12ヶ月共通スケールの表が無く、中央値・最大・最大の日付を掲載していない。"
+      },
+      {
+        "id": "C3",
+        "verdict": "not_applicable",
+        "basis": "12ヶ月共通スケールの表が無く、非ゼロ点の記載が無い。"
+      },
+      {
+        "id": "C4",
+        "verdict": "not_applicable",
+        "basis": "3ヶ月共通スケールの節が無く、平均値を掲載していない。"
+      },
+      {
+        "id": "C5",
+        "verdict": "not_applicable",
+        "basis": "3ヶ月共通スケールの表が無く、中央値・最大・最大の日付が無い。"
+      },
+      {
+        "id": "C6",
+        "verdict": "not_applicable",
+        "basis": "3ヶ月共通スケールの表が無く、非ゼロ点の記載が無い。"
+      },
+      {
+        "id": "C7",
+        "verdict": "pass",
+        "basis": "5年共通スケール表の CBD 33.0916・THC 5.0496・THCV 0.0878（非ゼロ 262/262/22 週）は comparison_cbd-thc-cbg-hhc-thcv.json（run 20261104T195126Z、262 点）の再計算値と一致。"
+      },
+      {
+        "id": "C8",
+        "verdict": "pass",
+        "basis": "12ヶ月表の平均 1.9・最高 100（2026-02-15）・初出 2026-02-15（100）・非ゼロ 1 週 / ゼロ 52 週は records_thcv.json（run 20261023T161929Z、53 点）と一致。"
+      },
+      {
+        "id": "C9",
+        "verdict": "pass",
+        "basis": "5年表の平均 7.43・ピーク 2023-09-03（100）・初出 2022-02-27（38）・非ゼロ 45 週 / ゼロ 217 週は records_thcv.json（run 20261023T160436Z、262 点）と一致。"
+      },
+      {
+        "id": "C10",
+        "verdict": "not_applicable",
+        "basis": "2026-10-08 / 2026-10-09 の YouTube 節は run_id も run 記録も持たない旧契約の収集で、返却件数・実行状態を照合する記録がリポジトリに無い（raw は非保持）。"
+      },
+      {
+        "id": "C11",
+        "verdict": "not_applicable",
+        "basis": "同 YouTube 節は半開区間の記録を持たず、投稿日範囲（2018-03-15 〜 2025-08-21）を照合する run 記録も無い。"
+      },
+      {
+        "id": "C12",
+        "verdict": "pass",
+        "basis": "Google Trends 節の要求条件（geo JP・today 12-m / today 5-y・検索語 THCV・共通スケールの today 5-y と窓 2021-10-31_2026-11-08）は各 run_metadata.json の query_provenance と temporal_provenance に一致。"
+      },
+      {
+        "id": "C13",
+        "verdict": "pass",
+        "basis": "「制約」が Google Trends の値を 0-100 の相対指数であり絶対検索数ではないと明記している。"
+      },
+      {
+        "id": "C14",
+        "verdict": "pass",
+        "basis": "共通スケール節「現行窓」が単独系列の値で代用しないと明記し、表の「区分」は派生としている。"
+      },
+      {
+        "id": "C15",
+        "verdict": "pass",
+        "basis": "「旧窓の値は現行窓の値ではない」段落に、run 間・窓間（12ヶ月と 5年を含む）の平均を比較しないと記載した。"
+      },
+      {
+        "id": "C16",
+        "verdict": "pass",
+        "basis": "共通スケールの出所が、正規化は同一要求内の最大値 = 100（CBD の 2025-08-31）と明記している。"
+      },
+      {
+        "id": "C17",
+        "verdict": "pass",
+        "basis": "同出所が要求語 CBD・THC・CBG・HHC・THCV の 5 語を開示し、本表は CBD・THC・THCV だけを載せると明記している。"
+      },
+      {
+        "id": "C18",
+        "verdict": "pass",
+        "basis": "「データソース」の「合算しない」が、異なるソース・クエリの件数・指数を合算・換算しないと明記している。"
+      },
+      {
+        "id": "C19",
+        "verdict": "pass",
+        "basis": "「制約」が 0 は相対指数の最小値（閾値未満）であり、検索の不在や欠測ではないと明記している。"
+      },
+      {
+        "id": "C20",
+        "verdict": "not_applicable",
+        "basis": "12ヶ月共通スケールを掲載しておらず、THCNM の記載も無い。"
+      },
+      {
+        "id": "C21",
+        "verdict": "not_applicable",
+        "basis": "3ヶ月の系列・節が無く、2026-08-13 = 12 の記載も無い。"
+      },
+      {
+        "id": "C22",
+        "verdict": "pass",
+        "basis": "X 節が観測期間を保持記録に持たないことを期間の欠測であり言及ゼロではないと明記している。"
+      },
+      {
+        "id": "C23",
+        "verdict": "pass",
+        "basis": "「制約」が各系列は単発 run で、反復実行による安定性の測定を行っていないと明記している。"
+      },
+      {
+        "id": "C24",
+        "verdict": "pass",
+        "basis": "5年表は「要求条件」行と「観測範囲（返却点の範囲）」行を分け、12ヶ月の出所も「要求:」と「要求窓 / 観測範囲は」を分けて記載した。"
+      },
+      {
+        "id": "C25",
+        "verdict": "pass",
+        "basis": "各 Google Trends 数値の出所に run_id と query_id（thcv-general-ja・comparison-5y-setA）を記載し、run_metadata の query_provenance と一致する。"
+      },
+      {
+        "id": "C26",
+        "verdict": "pass",
+        "basis": "run 3 件の run_metadata.json・payload.json・records_thcv.json・comparison_cbd-thc-cbg-hhc-thcv.json・artifact-manifest.json の SHA-256 を evidence.citations に記録し、本レビューで全件再計算して一致した。YouTube は raw 非保持で証跡が無く、ページに明記した。"
+      },
+      {
+        "id": "C27",
+        "verdict": "pass",
+        "basis": "12ヶ月の窓 2025-10-19_2026-10-18・5年の窓 2021-10-17_2026-10-18・共通スケールの窓 2021-10-31_2026-11-08 は metadata/windows/ の登録 id と一致する。"
+      },
+      {
+        "id": "C28",
+        "verdict": "pass",
+        "basis": "5年出所が平均を週次 262 点の算術平均（小数第 2 位）、非ゼロ週を値が 0 でない週と定義し、12ヶ月出所が算術平均（小数第 1 位）を定義する。再計算した 7.431298 / 1.886792 と一致。"
+      },
+      {
+        "id": "C29",
+        "verdict": "pass",
+        "basis": "Google Trends の派生値は追跡済み raw から全件再計算でき一致し、X の比率は classification JSON の件数から再計算できる。YouTube の集計値は raw 非保持で再計算できず、制約に明記した。"
+      },
+      {
+        "id": "C30",
+        "verdict": "pass",
+        "basis": "各 Google Trends 出所に収集日時（例 2026-10-23T16:04:37.753992Z）・手段（Google Trends / collect --live）・collector 版 google-trends-mcp 0.1.1 を記載した。YouTube の actor 版は当時の記録が無いと明記した。"
+      },
+      {
+        "id": "C31",
+        "verdict": "pass",
+        "basis": "「制約」が単発 run と明記し、「本節は現行窓の run だけを示す」が選択規則にあたる。"
+      },
+      {
+        "id": "C32",
+        "verdict": "not_applicable",
+        "basis": "THCNM・THA への言及が無く、両者の化学的同一性に関する記述も無い。"
+      },
+      {
+        "id": "C33",
+        "verdict": "pass",
+        "basis": "本文に CAS・ChEBI・PubChem・Wikidata・分子式は無い（Δ8/Δ9-THCV は規制の備考として名称のみ）。"
+      },
+      {
+        "id": "C34",
+        "verdict": "not_applicable",
+        "basis": "THAH・THC-O との混同を扱う節が無く、両者への言及も無い。"
+      },
+      {
+        "id": "C35",
+        "verdict": "pass",
+        "basis": "規制状況節は厚生労働省を出所として指定薬物・施行日を記載し、「制約」で調査日時点のもので変更されうると限定している（独自の法的判定はしていない）。"
+      },
+      {
+        "id": "C36",
+        "verdict": "pass",
+        "basis": "YouTube 節は返却件数・再生数/動画長の集計・投稿日範囲のみで、動画単位の行・ID・タイトル・チャンネル・URL を掲載していない。"
+      },
+      {
+        "id": "C37",
+        "verdict": "pass",
+        "basis": "本文・表・画像・リンクにメールアドレス・@ハンドル・顧客識別子・行単位の投稿/動画の行は無い（evidence.personal_data_review_basis の走査と同一）。"
+      },
+      {
+        "id": "C38",
+        "verdict": "pass",
+        "basis": "YouTube 節の制約が raw をリポジトリに保持せず Git 非追跡・非公開であると明記している。"
+      },
+      {
+        "id": "C39",
+        "verdict": "pass",
+        "basis": "evidence.redistribution_basis と source_terms_basis が、集計値のみを掲載し raw を再配布しないこと、docs/specs/sns-redistribution-assessment.md §3.2 に整合することを記録している。"
+      },
+      {
+        "id": "C40",
+        "verdict": "pass",
+        "basis": "本文に因果・相関の主張は無く、推移と出所の記述に限られている。"
+      },
+      {
+        "id": "C41",
+        "verdict": "pass",
+        "basis": "「データソース」の「値の区分」が観測と派生を区別し、5年共通スケール表は「区分」列に派生と記す。推移の解釈は示していない。"
+      },
+      {
+        "id": "C42",
+        "verdict": "pass",
+        "basis": "各節の「制約」「注意」が限界を列挙する（相対指数・0 の意味・run/窓間比較なし・単発 run・12ヶ月共通スケール未取得・X の分類誤りと期間欠測・YouTube のサンプル性/再生数変動/raw 非保持・法改正可能性）。"
+      },
+      {
+        "id": "C43",
+        "verdict": "pass",
+        "basis": "引用の Version 1.14.5 は CITATION.cff の version 1.14.5 と一致する。"
+      },
+      {
+        "id": "C44",
+        "verdict": "pass",
+        "basis": "公開状態節が decision の approved・現行 HTML の SHA-256 一致・gate-publication の SUPPORTED（PUB-01〜PUB-11 PASS、WARNING なし）・C3 記録を記載し、本レビュー後の gate 出力と一致する。"
+      },
+      {
+        "id": "C45",
+        "verdict": "pass",
+        "basis": "「改訂」が 2026-11-05 の内容変更に加え、C3 内容レビュー（C1〜C45）と公開状態節の追加（v1.14.5）を記載している。"
+      }
+    ]
+  }
 }
