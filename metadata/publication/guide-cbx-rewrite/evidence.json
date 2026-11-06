@@ -20,7 +20,7 @@
   "anonymization_basis": "Requester/client identity is suppressed from the publication layer; no person-level dataset is published.",
   "citations": {
     "integrity": [
-      "sha256(publication/guide_cbx_rewrite.html, 2026-11-05 検算) = a4a109988122473e5b9d67a43bc8607d3537b64af7c942815329eb23ed188f9a"
+      "sha256(publication/guide_cbx_rewrite.html, 2026-11-05 検算) = 2ae207df6113e16690b8d2d07d591f1fd60d5d1219ca34655e356ad4a04af50e"
     ],
     "publication_contract": [
       "validation.cli audit-publication（2026-10-15）: PC-1〜PC-8 の機械検査対象。PC-7 は本 envelope の存在と hash 固定を検査する。"
@@ -50,11 +50,11 @@
       "Google Search Console（2026-07 月次）・OpenSEO（2026-09-17）・X の投稿単位データ・TikTok（2026-09-01、20 件）・YouTube（2026-10-01、24 件）の raw はリポジトリに保持しない（raw social 層は git 非追跡）。本ページの当該数値は収集時の処理結果で、リポジトリ内では再計算できない。"
     ]
   },
-  "notes": "この evidence は機械的な存在・整合性と 2026-10-15 のオーナー確認を記録する。公開承認は decision.json (approved) を正とする。v1.13.0 release metadata sync 後の artifact hash を固定する。 v1.13.1 release metadata sync 後の artifact hash を固定する。 v1.14.0 release metadata sync 後の artifact hash を固定する。 2026-11-05 に版表記のみを 1.14.2 へ同期し、審査対象 hash を再固定した。",
+  "notes": "この evidence は機械的な存在・整合性と 2026-10-15 のオーナー確認を記録する。公開承認は decision.json (approved) を正とする。v1.13.0 release metadata sync 後の artifact hash を固定する。 v1.13.1 release metadata sync 後の artifact hash を固定する。 v1.14.0 release metadata sync 後の artifact hash を固定する。 2026-11-05 に版表記のみを 1.14.2 へ同期し、審査対象 hash を再固定した。 2026-11-06 の v1.14.6 準備（版表記 1.14.6）後の hash に再固定した。",
   "content_review": {
     "checklist_id": "publication-content-review-c1-c45",
     "checklist_version": "1.0.0",
-    "artifact_sha256": "a4a109988122473e5b9d67a43bc8607d3537b64af7c942815329eb23ed188f9a",
+    "artifact_sha256": "2ae207df6113e16690b8d2d07d591f1fd60d5d1219ca34655e356ad4a04af50e",
     "reviewer": "Delta agent (owner instruction 2026-11-05: C1–C45 review of guide-cbx-rewrite)",
     "reviewed_at": "2026-11-05",
     "items": [
@@ -271,7 +271,7 @@
       {
         "id": "C43",
         "verdict": "pass",
-        "basis": "引用の Version 1.14.5 は CITATION.cff の version 1.14.5 と一致する。"
+        "basis": "引用の Version 1.14.6 は CITATION.cff の version 1.14.6 と一致する。"
       },
       {
         "id": "C44",

@@ -7,6 +7,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.14.6] - 2026-11-06
+
+### Added
+- YouTube monthly publish-date aggregates (aggregate-only, per-run separate
+  tables, tie-aware peaks, 返却サンプル内の月次ピーク) for 14 pages: CBD
+  (2 runs: 456 all + 393 year) and CBG / CBN / CRDH / CRDP / CBX / H4CBH /
+  HHBD / HHC (2 runs) / HHCH / THC / THC-O / THCH / THCV (1 run each).
+  Each addition carries a recorded C1..C45 re-review, a hash re-pin, and a
+  SUPPORTED publication gate. Row-level social data stays unpublished
+  (ISS-20261015-COL-030 §4.1).
+
+### Changed
+- Citation Version 1.14.5 → 1.14.6 across CITATION.cff, datapackage.json,
+  CHANGELOG, and all 16 publication pages (hashes re-pinned, gates re-run).
+
+### Fixed
+- `research_cbd.html` views-max typo: 1,571,972 → 1,562,172 (matches the
+  recomputation from adopted raw; envelope re-pinned, gate SUPPORTED).
+
 ## [1.14.5] - 2026-11-05
 
 ### Added

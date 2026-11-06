@@ -15,6 +15,7 @@
 <p>「日本におけるCRDH成分へのオンライン関心は、どのように推移しているか？」</p>
 <p><strong>最終更新:</strong> 2026-11-05。</p>
 <p><strong>改訂:</strong> 2026-11-05 に研究質問の表現を統一し、引用の版表記をリリース 1.14.2 に合わせた。YouTube 節から動画単位の行（タイトル・チャンネル・URL）を削除し、あわせてチャンネル名を含む分布表（X・YouTube の上位5チャンネル）を削除した（集計のみ、ISS-20261015-COL-030 §4.1）。Google Trends 節は要求条件と観測範囲を分離し、表ごとの出所を明記し、共通スケール節を CBD・THC を同一要求に含むアンカー付き run の実測に合わせて更新した。2026-11-05 の C3 内容レビュー（C1〜C45）で数値・出所・区分を再確認し、公開状態の節を追加した（v1.14.5）。</p>
+<p><strong>改訂:</strong> 2026-11-06 に CRDH リキッド 1 run（352 件 <code>date_filter=all</code>）の月次公開日件数（ピーク月・年次分布・再生数統計）を別集計の節として追加した。既存の YouTube 節は変更していない。引用の版表記を 1.14.6 に更新した。</p>
 
 <h3>データソース</h3>
 <ul>
@@ -461,11 +462,85 @@
 </div>
 
 
+
+<!-- ===== 独自データ：YouTube 月次公開日件数（CRDH リキッド 1 run 別集計） ===== -->
+<div>
+  <h2 id="data-youtube-monthly">独自データ: CRDH リキッドの月次公開日件数（date_filter=all 別集計） <span>一次データ（観測 + 派生）</span></h2>
+  <p>データソース: YouTube Search via Apify / 検索クエリ: 「CRDH リキッド」（日本語・製品語による近似的な日本市場限定） / query_id: <code>crdh-liquid-ja</code></p>
+  <p>1 run の返却サンプルを集計した（他の run と合算しない）。値は返却サンプル内の月次公開日件数であり、YouTube 全体のピークではない。</p>
+
+  <h3>収集サマリー: date_filter=all（352 件）</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>指標</th>
+        <th>値</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>run</td>
+        <td><code>20261010T164915Z-youtube-youtube-consistency</code></td>
+      </tr>
+      <tr>
+        <td>query_id</td>
+        <td><code>crdh-liquid-ja</code>（CRDH リキッド）</td>
+      </tr>
+      <tr>
+        <td>date_filter（API 要求条件）</td>
+        <td><code>all</code>（関連度ベースの全期間取得）</td>
+      </tr>
+      <tr>
+        <td>収集終了（UTC）</td>
+        <td>2026-10-10T16:49:17Z</td>
+      </tr>
+      <tr>
+        <td>返却件数</td>
+        <td><strong>352 件</strong>（実行状態 success）</td>
+      </tr>
+      <tr>
+        <td>観測公開日範囲（返却レコードの公開日）</td>
+        <td>2022-09-29 〜 2026-09-11（UTC）</td>
+      </tr>
+      <tr>
+        <td>ピーク月（返却サンプル内）</td>
+        <td><strong>2025-12（35 件）</strong></td>
+      </tr>
+      <tr>
+        <td>再生数 最大 / 中央値 / 平均 / 最小</td>
+        <td>117,682 / 319 / 2,310.53 / 50（取得時点の値）</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>年次分布</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>年</th>
+        <th>件数</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>2022</td><td>1</td></tr>
+      <tr><td>2023</td><td>3</td></tr>
+      <tr><td>2024</td><td>3</td></tr>
+      <tr><td>2025</td><td>222</td></tr>
+      <tr><td>2026</td><td>123</td></tr>
+    </tbody>
+  </table>
+
+  <p><strong>制約:</strong> 月次・年次件数は返却サンプル内の公開日件数であり、YouTube 全体の投稿数を表さない（全動画を網羅するものではない）。結果上限は宣言に記録が無いため、件数は返却サンプル件数としてのみ扱い、総数の推定には使わない。再生数は取得日時点の値であり、変動する可能性がある。未取得を 0 観測として扱わない。1 run のみで、反復実行による安定性は未測定のため、他の run・他の化合物・他ソースの値と合算も比較もしない。動画単位の行（動画 ID・タイトル・チャンネル・URL・再生数）は公開しない（集計のみ、ISS-20261015-COL-030 §4.1）。</p>
+  <p><strong>出所:</strong> run <code>20261010T164915Z-youtube-youtube-consistency</code>（<code>date_filter=all</code> / 2026-10-10T16:40:25Z 開始・2026-10-10T16:49:17Z 終了、352 件）。採用宣言は <code>metadata/provenance/declarations/20261015-youtube-csv-adoption.json</code>（<code>execution.returned_count</code> 352、<code>window</code> 2022-09-29T00:00:00Z 〜 2026-09-12T00:00:00Z の半開区間）、再保持の検証記録は <code>metadata/provenance/declarations/20261106-youtube-liquid-batch-reretention-youtube-consistency.json</code>（hash・件数は宣言と一致）。payload SHA-256 は <code>2d9f0b1c…9ffca</code>。raw payload は Git 非追跡・非公開で、リポジトリに保持していない。</p>
+  <p><strong>照合:</strong> 年次合計は返却件数と一致する（352）。ピーク月は返却サンプル内の最多月である（2025-12 が 35 件）。</p>
+</div>
+
+
 <!-- ===== 公開状態 ===== -->
 <div>
   <h2 id="publication-status">公開状態</h2>
   <p>本ページは<strong>公開承認済み（<code>approved</code>）</strong>である。公開契約 PC-7 の審査 envelope は <code>metadata/publication/research-crdh/</code> にあり、<code>decision.json</code> の status は <code>approved</code>、<code>artifact_sha256</code> は現行 HTML の SHA-256 と一致する。</p>
-  <p>2026-11-05 に <code>validation.cli audit-publication</code> と <code>gate-publication</code> を現行 hash で実行した。公開契約の機械検査は本ページについて finding 0、公開適格ゲートは <code>SUPPORTED</code>（PUB-01〜PUB-11 がすべて PASS、WARNING なし）。PUB-11（C3 内容レビュー）は 2026-11-05 に C1〜C45 の 45 項目を本ページ・raw/comparison 成果物・methodology・taxonomy・evidence に照合して記録した（<code>evidence.json</code> の <code>content_review</code>、チェックリスト <code>metadata/publication/content-review-checklist.json</code> v1.0.0）。根拠は envelope の <code>decision.json</code> / <code>evidence.json</code> にある。</p>
+  <p>2026-11-06 に <code>validation.cli audit-publication</code> と <code>gate-publication</code> を現行 hash で実行した。公開契約の機械検査は本ページについて finding 0、公開適格ゲートは <code>SUPPORTED</code>（PUB-01〜PUB-11 がすべて PASS、WARNING なし）。PUB-11（C3 内容レビュー）は 2026-11-06 に C1〜C45 の 45 項目を本ページ・raw/comparison 成果物・methodology・taxonomy・evidence に照合して記録した（<code>evidence.json</code> の <code>content_review</code>、チェックリスト <code>metadata/publication/content-review-checklist.json</code> v1.0.0）。根拠は envelope の <code>decision.json</code> / <code>evidence.json</code> にある。</p>
   <p>本節の版を <strong>v1.14.5</strong> としてリリースする。</p>
 </div>
 
@@ -475,7 +550,7 @@
   <p>
     KATO, Kyoji（2026）.<br>
     「Japan Cannabinoid Platform Trends Dataset 2026: Google Trends and YouTube Evidence from Japan」.<br>
-    Version 1.14.5<br>
+    Version 1.14.6<br>
     Routeflags Co., Ltd.<br>
     [Dataset].<br>
     DOI: <a href="https://doi.org/10.5281/zenodo.23390594">10.5281/zenodo.23390594</a>
