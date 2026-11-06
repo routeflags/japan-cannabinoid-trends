@@ -13,8 +13,9 @@
 
 <h3>研究質問</h3>
 <p>「日本におけるHHBD成分へのオンライン関心は、どのように推移しているか？」</p>
-<p><strong>最終更新:</strong> 2026-11-05。</p>
+<p><strong>最終更新:</strong> 2026-11-06。</p>
 <p><strong>改訂:</strong> 2026-11-05 に研究質問の表現を統一し、引用の版表記をリリース 1.14.2 に合わせた。YouTube 節から動画単位の行（タイトル・チャンネル・URL）を削除し、あわせてチャンネル名を含む分布表（X・YouTube の上位5チャンネル）を削除した（集計のみ、ISS-20261015-COL-030 §4.1）。Google Trends 節は要求条件と観測範囲を分離し、表ごとの出所を明記し、共通スケール節を CBD・THC を同一要求に含むアンカー付き run の実測に合わせて更新した。2026-11-05 の C3 内容レビュー（C1〜C45）で数値・出所・区分を再確認し、公開状態の節を追加した（v1.14.5）。</p>
+<p><strong>改訂:</strong> 2026-11-06 に HHBD リキッド run（224 件 <code>date_filter=all</code>）の月次公開日件数（ピーク月・年次分布・再生数統計）を別集計の節として追加した。既存の YouTube 2 節と Google Trends 節は変更していない。</p>
 
 <h3>データソース</h3>
 <ul>
@@ -261,11 +262,86 @@
 </div>
 
 
+<!-- ===== 独自データ：YouTube 月次公開日件数（HHBD リキッド） ===== -->
+<div>
+  <h2 id="data-youtube-monthly">独自データ: HHBD リキッドの月次公開日件数（date_filter=all 別集計） <span>一次データ（観測 + 派生）</span></h2>
+  <p>データソース: YouTube Search via Apify / 検索クエリ: 「HHBD リキッド」（日本語・製品語による近似的な日本市場限定） / query_id: <code>hhbd-liquid-ja</code></p>
+  <p>2026-10-10 の 1 run を集計した。値は返却サンプル内の月次公開日件数であり、YouTube 全体のピークではない。<code>date_filter</code> の異なる run とは比較しない。</p>
+
+  <h3>収集: date_filter=all（224 件）</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>指標</th>
+        <th>値</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>run</td>
+        <td><code>20261010T141947Z-youtube-youtube-consistency</code></td>
+      </tr>
+      <tr>
+        <td>date_filter（API 要求条件）</td>
+        <td><code>all</code>（dateFilter を指定しない全期間要求）</td>
+      </tr>
+      <tr>
+        <td>収集開始</td>
+        <td>2026-10-10T14:15:44Z</td>
+      </tr>
+      <tr>
+        <td>収集終了</td>
+        <td>2026-10-10T14:19:48Z</td>
+      </tr>
+      <tr>
+        <td>返却件数</td>
+        <td><strong>224 件</strong></td>
+      </tr>
+      <tr>
+        <td>観測公開日範囲</td>
+        <td>2020-09-30 〜 2026-10-05（UTC、返却レコードの公開日。半開区間は [2020-09-30, 2026-10-06)）</td>
+      </tr>
+      <tr>
+        <td>ピーク月（返却サンプル内）</td>
+        <td><strong>2026-03（34 件）</strong></td>
+      </tr>
+      <tr>
+        <td>再生数 最大 / 中央値 / 平均 / 最小</td>
+        <td>670,980 / 540.5 / 14,467.89 / 52（取得時点の値）</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>年次分布</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>年</th>
+        <th>件数</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>2020</td><td>1</td></tr>
+      <tr><td>2021</td><td>4</td></tr>
+      <tr><td>2022</td><td>5</td></tr>
+      <tr><td>2023</td><td>2</td></tr>
+      <tr><td>2024</td><td>2</td></tr>
+      <tr><td>2025</td><td>55</td></tr>
+      <tr><td>2026</td><td>155</td></tr>
+    </tbody>
+  </table>
+
+  <p><strong>制約:</strong> 月次・年次件数は返却サンプル内の公開日件数であり、YouTube 全体の投稿数を表さない（全動画を網羅するものではない）。結果上限（maxResults）は採用宣言に記録が無く、件数は返却サンプル件数としてのみ扱い、総数の推定には使わない。再生数は取得日時点の値であり、変動する可能性がある。未取得を 0 観測として扱わない。run を合算せず、<code>date_filter</code> の異なる run 間は比較しない。動画単位の行（動画 ID・タイトル・チャンネル・URL・再生数）は公開しない（集計のみ、ISS-20261015-COL-030 §4.1）。</p>
+  <p><strong>出所:</strong> run <code>20261010T141947Z-youtube-youtube-consistency</code>（study <code>youtube-consistency</code> / <code>date_filter=all</code> / 2026-10-10T14:15:44Z 収集開始 / 2026-10-10T14:19:48Z 収集終了（宣言の timestamps.started_at / finished_at） / 返却 224 件 / 実行状態 success）。採用宣言は <code>metadata/provenance/declarations/20261015-youtube-csv-adoption.json</code>（COL-033）、payload SHA-256 は <code>98617d1c…25f13</code>（宣言の記録と一致）。宣言の window は 2020-09-30T00:00:00Z 〜 2026-10-06T00:00:00Z（半開区間、返却レコードの公開日から導出）で、上の観測範囲はその日単位の表記である。収集手段は YouTube Search via Apify（<code>youtube-apify-scraper</code>、Actor build 0.0.313 は宣言に記録）。raw payload は Git 非追跡・非公開でリポジトリに保持しておらず、本節の数値は保持データから再計算できない。</p>
+  <p><strong>照合:</strong> 年次合計は返却件数と一致する（7 年分の合計 224 = 返却 224）。ピーク月は返却サンプル内の最多月の件数で、同点の月があればすべて併記する（本 run は 2026-03 の単独）。月次全点の一覧は本ページに載せない。</p>
+</div>
+
+
 <!-- ===== 公開状態 ===== -->
 <div>
   <h2 id="publication-status">公開状態</h2>
   <p>本ページは<strong>公開承認済み（<code>approved</code>）</strong>である。公開契約 PC-7 の審査 envelope は <code>metadata/publication/research-hhbd/</code> にあり、<code>decision.json</code> の status は <code>approved</code>、<code>artifact_sha256</code> は現行 HTML の SHA-256 と一致する。</p>
-  <p>2026-11-05 に <code>validation.cli audit-publication</code> と <code>gate-publication</code> を現行 hash で実行した。公開契約の機械検査は本ページについて finding 0、公開適格ゲートは <code>SUPPORTED</code>（PUB-01〜PUB-11 がすべて PASS、WARNING なし）。PUB-11（C3 内容レビュー）は 2026-11-05 に C1〜C45 の 45 項目を本ページ・raw/comparison 成果物・methodology・taxonomy・evidence に照合して記録した（<code>evidence.json</code> の <code>content_review</code>、チェックリスト <code>metadata/publication/content-review-checklist.json</code> v1.0.0）。根拠は envelope の <code>decision.json</code> / <code>evidence.json</code> にある。</p>
+  <p>2026-11-06 に <code>validation.cli audit-publication</code> と <code>gate-publication</code> を現行 hash で実行した。公開契約の機械検査は本ページについて finding 0、公開適格ゲートは <code>SUPPORTED</code>（PUB-01〜PUB-11 がすべて PASS、WARNING なし）。PUB-11（C3 内容レビュー）は 2026-11-06 に C1〜C45 の 45 項目を本ページ・raw/comparison 成果物・採用宣言・methodology・taxonomy・evidence に照合して記録した（<code>evidence.json</code> の <code>content_review</code>、チェックリスト <code>metadata/publication/content-review-checklist.json</code> v1.0.0）。根拠は envelope の <code>decision.json</code> / <code>evidence.json</code> にある。</p>
   <p>本節の版を <strong>v1.14.5</strong> としてリリースする。</p>
 </div>
 

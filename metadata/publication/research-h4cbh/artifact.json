@@ -6,8 +6,8 @@
   "layer": "publication",
   "source_kind": "html",
   "storage_policy_id": "publication-html-candidate",
-  "sha256": "90bed3da42dc612033ad7ad40593f956f6abc9e975ce6a023379072e021b3cf9",
-  "byte_length": 17008,
-  "recorded_at": "2026-11-05",
-  "notes": "未公開 publication HTML。PC-7 の審査 envelope として内容 hash を固定する。対象 publication はまだ公開していないため、decision は requires_review から開始する。 v1.13.0 release metadata sync 後の hash。 v1.13.1 release metadata sync 後の hash。 2026-11-05、研究質問の統一・版表記 1.14.1 化・YouTube 動画単位行の削除・Google Trends の要求条件/観測範囲の分離および出所追記の後の hash（内容承認ではなく審査対象の再ピン）。 2026-11-05: H4CBH の共通スケール節を、CBD・THC を含むアンカー付き run の実測に合わせて更新した後の hash（内容承認ではなく審査対象の再ピン）。 2026-11-05: C3 内容レビュー（C1〜C45）の記録後の hash（内容承認ではなく審査対象の再ピン）。"
+  "sha256": "5a40ffccdb09b350f23ef5bff3b1d98c10c24723e027009bb3691a3534d860e0",
+  "byte_length": 21801,
+  "recorded_at": "2026-11-06",
+  "notes": "未公開 publication HTML。PC-7 の審査 envelope として内容 hash を固定する。対象 publication はまだ公開していないため、decision は requires_review から開始する。 v1.13.0 release metadata sync 後の hash。 v1.13.1 release metadata sync 後の hash。 2026-11-05、研究質問の統一・版表記 1.14.1 化・YouTube 動画単位行の削除・Google Trends の要求条件/観測範囲の分離および出所追記の後の hash（内容承認ではなく審査対象の再ピン）。 2026-11-05: H4CBH の共通スケール節を、CBD・THC を含むアンカー付き run の実測に合わせて更新した後の hash（内容承認ではなく審査対象の再ピン）。 2026-11-05: C3 内容レビュー（C1〜C45）の記録後の hash（内容承認ではなく審査対象の再ピン）。 2026-11-06: H4CBH の YouTube 月次公開日件数の別集計節（run 20261010T143429Z-youtube-youtube-consistency）の追加後の hash（C3 内容レビュー付き）。"
 }
