@@ -9,7 +9,7 @@
   "anonymization_applied": true,
   "citations": {
     "integrity": [
-      "sha256(publication/research_thcnm.html, 2026-11-05 検算) = 79319684f36658f638b2a90c609be0c3f4fe631d36f3dcff912bc21e612da7ac"
+      "sha256(publication/research_thcnm.html, 2026-11-05 検算) = d1e1229ac6ff692611bb16f8b4b8eea4a0357fe9c676f4cc9b446c34ea3b552d"
     ],
     "publication_contract": [
       "validation.cli audit-publication --output docs/audits/publication-contract.json（2026-11-04）: 本 artifact に finding は無い（適用される PC-1〜PC-7 すべて）。PC-7 は本 envelope の存在と hash 固定を検査する。",
@@ -97,7 +97,7 @@
     "pc2_release_commit": "THCNM の単独系列 2 run と共通スケール 3 run のディレクトリは Git 追跡済み（共通スケール 2 run は commit 4cf5509、5年 common-scale は v1.14.4）。計画・窓・policy も同じく追跡されている。",
     "three_month_granularity_label": "3ヶ月 run の temporal_provenance.granularity は adapter が week と記録しているが、返却点は日次 93 点（2026-08-04〜2026-11-04）である。ISS-20261105-GT-031 で adapter を修正済みで、当該 run の記録は当時のまま残す。ページの 3ヶ月節「記録の不備」で開示した。"
   },
-  "notes": "この evidence は機械的な存在・整合性の根拠、run / artifact の対応、完了した personal-data / redistribution / aggregation / content レビュー、gate-publication の記録を保持する。 content_review は C1〜C45（metadata/publication/content-review-checklist.json v1.0.0）の 45 項目を、本ページ・raw/comparison 成果物・methodology・taxonomy・evidence に照合した記録で、reviewer は owner の 2026-11-05 指示でレビューを実施した Delta agent、reviewed_at は 2026-11-05、artifact_sha256 はレビュー対象の現行 HTML。 公開承認とその限界（同一性未確認、raw 非公開）は decision.json に記録する。推測でフラグを立てない。 2026-11-06 の v1.14.6 準備（版表記 1.14.6）後の hash に再固定した。",
+  "notes": "この evidence は機械的な存在・整合性の根拠、run / artifact の対応、完了した personal-data / redistribution / aggregation / content レビュー、gate-publication の記録を保持する。 content_review は C1〜C45（metadata/publication/content-review-checklist.json v1.0.0）の 45 項目を、本ページ・raw/comparison 成果物・methodology・taxonomy・evidence に照合した記録で、reviewer は owner の 2026-11-05 指示でレビューを実施した Delta agent、reviewed_at は 2026-11-05、artifact_sha256 はレビュー対象の現行 HTML。 公開承認とその限界（同一性未確認、raw 非公開）は decision.json に記録する。推測でフラグを立てない。 2026-11-06 の v1.14.6 準備（版表記 1.14.6）後の hash に再固定した。 2026-11-06 の v1.14.7 準備（版表記 1.14.7）後の hash に再固定した。",
   "personal_data_review_basis": "2026-11-05: publication/research_thcnm.html の本文・表・画像・リンクを個人データの観点で確認した。走査結果: メールアドレス 0、@ハンドル 0、10 桁以上の識別子 0、行単位の投稿・動画の行 0（表ヘッダに 投稿者/ユーザー名/アカウント/動画 ID/タイトル/チャンネル/本文 を含む表は無い）。集計表のみで、行単位のデータを含まない。 外部参照は doi.org（DOI）、zenodo.org（DOI バッジ）。時刻は run の収集時刻（UTC）のみ。結果: 個人を特定できる情報は含まれない。",
   "anonymization_basis": "行単位のデータを掲載しない方針により、個人・アカウント単位の値は集計に置き換えている（投稿・動画の個別行なし）。",
   "provenance_present": true,
@@ -112,7 +112,7 @@
   "content_review": {
     "checklist_id": "publication-content-review-c1-c45",
     "checklist_version": "1.0.0",
-    "artifact_sha256": "79319684f36658f638b2a90c609be0c3f4fe631d36f3dcff912bc21e612da7ac",
+    "artifact_sha256": "d1e1229ac6ff692611bb16f8b4b8eea4a0357fe9c676f4cc9b446c34ea3b552d",
     "reviewer": "Delta agent (owner instruction 2026-11-05: THCNM の C1〜C45 内容レビューを実施)",
     "reviewed_at": "2026-11-05",
     "items": [
@@ -329,7 +329,7 @@
       {
         "id": "C43",
         "verdict": "pass",
-        "basis": "引用の Version 1.14.6 は CITATION.cff の version 1.14.6 と一致する。"
+        "basis": "引用の Version 1.14.7 は CITATION.cff の version 1.14.7 と一致する。"
       },
       {
         "id": "C44",

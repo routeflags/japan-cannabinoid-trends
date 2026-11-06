@@ -3,12 +3,12 @@
   "record": "publication_decision",
   "decision_id": "publication-review-research-cbd",
   "artifact_id": "research-cbd",
-  "artifact_sha256": "e5447f35fa2f1793c3119656c5dfbee7b244c54cc271eb54750d8cd01c50ff0e",
+  "artifact_sha256": "87b20116409bcd9ed738c49eddecd7855a5cfe5d65f7714f8da0f287c8ab778c",
   "status": "approved",
   "reviewed_at": "2026-11-06",
   "reviewer": "owner (thread instruction 2026-11-06: CBD リキッド 2 run の月次集計の追加と C1–C45 再レビューを指示)",
   "criteria_version": "PC-7 / publication-contract-v1.0.0 (2026-10-15)",
   "recorded_at": "2026-11-06",
   "basis": "owner が 2026-11-05 のスレッドで、PUB-04・PUB-10 を含む全項目の対応とリリースまでを明示的に指示した。承認の対象は現行 sha256 の artifact（publication/research_cbd.html、2026-11-05 時点）。PUB-04 は evidence の personal_data_review_basis に、PUB-06〜PUB-09 は同 evidence の各 basis に記録した。 2026-11-06 の owner 指示で CBD リキッド 2 run（456 件 all・393 件 year）の月次公開日件数の別集計節を追加し、C1–C45 を再レビューした。承認の対象は現行 sha256 の artifact である。",
-  "notes": "PC-7 は判断記録が存在することを検査する。PUB-10 は approved かつ同一 sha256 の decision で PASS。承認は現行 hash に固定され、artifact が変われば自動的には引き継がれない。2026-11-05 の内容変更（共通スケール節の実測反映・版表記 1.14.2・YouTube 動画単位行とチャンネル分布表の削除）に対する承認である。 2026-11-05 の v1.14.3 準備（版表記 1.14.3・THCNM 公開状態の訂正）後の hash に再固定した。 2026-11-05 の v1.14.4 準備（版表記 1.14.4・現行窓 5年 common-scale の反映）後の hash に再固定した。 2026-11-05 の v1.14.5 準備（版表記 1.14.5・C3 内容レビューゲートの追加）後の hash に再固定した。 2026-11-05 の C3 内容レビュー（C1〜C45）後に hash を再ピンした（status は approved を維持）。 2026-11-06 の C3 内容レビュー（C1〜C45、evidence.content_review）と、そのレビュー後の hash に再固定した。 2026-11-06 の typo 訂正（再生数 A 最大 1,571,972 → 1,562,172、aggregate 再計算値と一致）後の hash に再固定した（status は approved を維持）。 2026-11-06 の v1.14.6 準備（版表記 1.14.6）後の hash に再固定した（status は approved を維持）。"
+  "notes": "PC-7 は判断記録が存在することを検査する。PUB-10 は approved かつ同一 sha256 の decision で PASS。承認は現行 hash に固定され、artifact が変われば自動的には引き継がれない。2026-11-05 の内容変更（共通スケール節の実測反映・版表記 1.14.2・YouTube 動画単位行とチャンネル分布表の削除）に対する承認である。 2026-11-05 の v1.14.3 準備（版表記 1.14.3・THCNM 公開状態の訂正）後の hash に再固定した。 2026-11-05 の v1.14.4 準備（版表記 1.14.4・現行窓 5年 common-scale の反映）後の hash に再固定した。 2026-11-05 の v1.14.5 準備（版表記 1.14.5・C3 内容レビューゲートの追加）後の hash に再固定した。 2026-11-05 の C3 内容レビュー（C1〜C45）後に hash を再ピンした（status は approved を維持）。 2026-11-06 の C3 内容レビュー（C1〜C45、evidence.content_review）と、そのレビュー後の hash に再固定した。 2026-11-06 の typo 訂正（再生数 A 最大 1,571,972 → 1,562,172、aggregate 再計算値と一致）後の hash に再固定した（status は approved を維持）。 2026-11-06 の v1.14.6 準備（版表記 1.14.6）後の hash に再固定した（status は approved を維持）。 2026-11-06 の v1.14.7 準備（版表記 1.14.7）後の hash に再固定した（status は approved を維持）。"
 }

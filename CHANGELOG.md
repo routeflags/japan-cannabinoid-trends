@@ -7,6 +7,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.14.7] - 2026-11-06
+
+### Fixed
+- Regenerate all audit snapshots from tracked files only (CI-fidelity).
+  The v1.14.6 committed snapshots were generated with local-only gitignored
+  files visible (16 non-retained raw runs, 16 aggregate dirs, empty-dir
+  skeletons, and git-dependent git-tracking values computed outside a
+  repository), so fresh-clone regeneration differed (g4/g7 freshness, g4
+  reproducibility, g6 values; validation CI red on the release commit).
+  No research data, page, raw, or envelope content changed for this fix;
+  non-retained runs stay declared in the snapshot-scope sidecar per the
+  snapshot-scope spec (ISS-20261105-CI-032).
+
+### Changed
+- Citation Version 1.14.6 → 1.14.7 across CITATION.cff, datapackage.json,
+  CHANGELOG, methodology.md, and all 16 publication pages (hashes re-pinned,
+  gates re-run).
+
 ## [1.14.6] - 2026-11-06
 
 ### Added

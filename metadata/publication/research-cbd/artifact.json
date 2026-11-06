@@ -6,8 +6,8 @@
   "layer": "publication",
   "source_kind": "html",
   "storage_policy_id": "publication-html-candidate",
-  "sha256": "e5447f35fa2f1793c3119656c5dfbee7b244c54cc271eb54750d8cd01c50ff0e",
-  "byte_length": 27887,
+  "sha256": "87b20116409bcd9ed738c49eddecd7855a5cfe5d65f7714f8da0f287c8ab778c",
+  "byte_length": 27934,
   "recorded_at": "2026-11-06",
-  "notes": "未公開 publication HTML。PC-7 の審査 envelope として内容 hash を固定する。対象 publication はまだ公開していないため、decision は requires_review から開始する。 v1.13.0 release metadata sync 後の hash。 v1.13.1 release metadata sync 後の hash。 ISS-20261012-CBD-002 / CBD-006 による X 節・YouTube 節の数値訂正（2026-10-15、docs/reports/20261015d-cbd-page-provenance-reconciliation.md）後の hash。2026-10-16、現行 publication/research_cbd.html に審査対象を再ピン（内容承認ではなく requires_review 維持）。 2026-11-05、研究質問の統一・版表記 1.14.1 化・YouTube 動画単位行の削除・Google Trends の要求条件/観測範囲の分離および出所追記の後の hash（内容承認ではなく審査対象の再ピン）。 2026-11-05: CBD の共通スケール節を、CBD・THC を含むアンカー付き run の実測に合わせて更新した後の hash（内容承認ではなく審査対象の再ピン）。 2026-11-05: C3 内容レビュー（C1〜C45）後の hash に再ピン（公開状態の節追加とレビューによる訂正を含む）。 2026-11-06: CBD リキッド 2 run の月次公開日件数の別集計節の追加後の hash（C3 内容レビュー付き）。 2026-11-06: 再生数 A 最大の typo 訂正（1,571,972 → 1,562,172）後の hash（同字数のため byte_length 変更なし）。 2026-11-06 の v1.14.6 準備（版表記 1.14.6）後の hash に再固定した。"
+  "notes": "未公開 publication HTML。PC-7 の審査 envelope として内容 hash を固定する。対象 publication はまだ公開していないため、decision は requires_review から開始する。 v1.13.0 release metadata sync 後の hash。 v1.13.1 release metadata sync 後の hash。 ISS-20261012-CBD-002 / CBD-006 による X 節・YouTube 節の数値訂正（2026-10-15、docs/reports/20261015d-cbd-page-provenance-reconciliation.md）後の hash。2026-10-16、現行 publication/research_cbd.html に審査対象を再ピン（内容承認ではなく requires_review 維持）。 2026-11-05、研究質問の統一・版表記 1.14.1 化・YouTube 動画単位行の削除・Google Trends の要求条件/観測範囲の分離および出所追記の後の hash（内容承認ではなく審査対象の再ピン）。 2026-11-05: CBD の共通スケール節を、CBD・THC を含むアンカー付き run の実測に合わせて更新した後の hash（内容承認ではなく審査対象の再ピン）。 2026-11-05: C3 内容レビュー（C1〜C45）後の hash に再ピン（公開状態の節追加とレビューによる訂正を含む）。 2026-11-06: CBD リキッド 2 run の月次公開日件数の別集計節の追加後の hash（C3 内容レビュー付き）。 2026-11-06: 再生数 A 最大の typo 訂正（1,571,972 → 1,562,172）後の hash（同字数のため byte_length 変更なし）。 2026-11-06 の v1.14.6 準備（版表記 1.14.6）後の hash に再固定した。 2026-11-06 の v1.14.7 準備（版表記 1.14.7）後の hash に再固定した。"
 }

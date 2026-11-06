@@ -20,7 +20,7 @@
   "anonymization_basis": "The page applies aggregation-only publication: 6-run counts and total 2288, with no per-video or person-level rows.",
   "citations": {
     "integrity": [
-      "sha256(publication/research_cbx.html, 2026-11-06 検算) = 1d25c18661a312ea9c945049558a35e2a3e9d16f1823f107c87d9f6434c3adac"
+      "sha256(publication/research_cbx.html, 2026-11-06 検算) = 9e259d88f2f2e8e58cad9bc671f23b5f5edc8fb095625ec40b5daad7b54c482c"
     ],
     "publication_contract": [
       "validation.cli audit-publication（2026-10-15）: PC-1〜PC-8 の機械検査対象。PC-7 は本 envelope の存在と hash 固定を検査する。",
@@ -59,11 +59,11 @@
   "unrecorded": {
     "human_content_review": "効能表現・法務などの人間による内容審査は本 evidence の範囲外。公開可否の最終判定は decision.status に従う。"
   },
-  "notes": "この evidence は機械的な存在・整合性の根拠だけを記録する。2026-10-15 の owner 承認は decision.json に approved として記録されていたが、その対象は旧 hash である。2026-11-05 の内容変更（研究質問の統一・版表記 1.14.2 化・YouTube 動画単位行とチャンネル分布表の削除・共通スケール節の更新）により対象外となったため、decision.json は requires_review に戻した。 2026-11-05 に審査対象の hash を再固定し、変更内容を citations.content_changes に記録した。公開承認・人間の内容審査は推測で埋めない。 content_review は C1〜C45（metadata/publication/content-review-checklist.json v1.0.0）の 45 項目を本ページ・raw/comparison 成果物・methodology・taxonomy・evidence に照合した記録で、reviewer は owner の 2026-11-05 指示でレビューを実施した Delta agent、reviewed_at は 2026-11-05、artifact_sha256 はレビュー対象の現行 HTML。 2026-11-06: CBX リキッド 1 run の月次公開日件数の別集計節を追加し、現行 hash に C1〜C45 の再レビュー（content_review）を記録した。 2026-11-06 の v1.14.6 準備（版表記 1.14.6）後の hash に再固定した。",
+  "notes": "この evidence は機械的な存在・整合性の根拠だけを記録する。2026-10-15 の owner 承認は decision.json に approved として記録されていたが、その対象は旧 hash である。2026-11-05 の内容変更（研究質問の統一・版表記 1.14.2 化・YouTube 動画単位行とチャンネル分布表の削除・共通スケール節の更新）により対象外となったため、decision.json は requires_review に戻した。 2026-11-05 に審査対象の hash を再固定し、変更内容を citations.content_changes に記録した。公開承認・人間の内容審査は推測で埋めない。 content_review は C1〜C45（metadata/publication/content-review-checklist.json v1.0.0）の 45 項目を本ページ・raw/comparison 成果物・methodology・taxonomy・evidence に照合した記録で、reviewer は owner の 2026-11-05 指示でレビューを実施した Delta agent、reviewed_at は 2026-11-05、artifact_sha256 はレビュー対象の現行 HTML。 2026-11-06: CBX リキッド 1 run の月次公開日件数の別集計節を追加し、現行 hash に C1〜C45 の再レビュー（content_review）を記録した。 2026-11-06 の v1.14.6 準備（版表記 1.14.6）後の hash に再固定した。 2026-11-06 の v1.14.7 準備（版表記 1.14.7）後の hash に再固定した。",
   "content_review": {
     "checklist_id": "publication-content-review-c1-c45",
     "checklist_version": "1.0.0",
-    "artifact_sha256": "1d25c18661a312ea9c945049558a35e2a3e9d16f1823f107c87d9f6434c3adac",
+    "artifact_sha256": "9e259d88f2f2e8e58cad9bc671f23b5f5edc8fb095625ec40b5daad7b54c482c",
     "reviewer": "Delta agent (owner instruction 2026-11-06: C1–C45 review of research-cbx)",
     "reviewed_at": "2026-11-06",
     "items": [
@@ -280,7 +280,7 @@
       {
         "id": "C43",
         "verdict": "pass",
-        "basis": "引用情報の Version 1.14.6 は CITATION.cff の version（1.14.6、date-released 2026-11-06）と一致する。"
+        "basis": "引用情報の Version 1.14.7 は CITATION.cff の version（1.14.7、date-released 2026-11-06）と一致する。"
       },
       {
         "id": "C44",
