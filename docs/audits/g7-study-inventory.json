@@ -50,7 +50,7 @@
         "metadata",
         "methodology.md"
       ],
-      "data_file_count": 322,
+      "data_file_count": 292,
       "has_data_raw": true,
       "data_raw_file_count": 288,
       "sources": [
@@ -368,7 +368,7 @@
         "queries",
         "schema"
       ],
-      "data_file_count": 19,
+      "data_file_count": 1,
       "has_data_raw": true,
       "data_raw_file_count": 0,
       "sources": [],
