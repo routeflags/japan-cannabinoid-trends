@@ -10,8 +10,7 @@
   "state_summary": {
     "absent": 14,
     "ignored": 2,
-    "tracked": 414,
-    "untracked_unignored": 4
+    "tracked": 418
   },
   "entries": [
     {
@@ -147,8 +146,8 @@
     {
       "path": "datasets/cannabinoid-raw-collection/analysis/cbd-common-scale-5y/README.md",
       "exists": true,
-      "state": "untracked_unignored",
-      "tracked": false,
+      "state": "tracked",
+      "tracked": true,
       "ignored": false,
       "sha256": "66bc08c96686d61776d437737947d7f469fc2e1c0070fbd0e157577fce9ddf56",
       "sha256_after": "66bc08c96686d61776d437737947d7f469fc2e1c0070fbd0e157577fce9ddf56",
@@ -157,8 +156,8 @@
     {
       "path": "datasets/cannabinoid-raw-collection/analysis/cbd-common-scale-5y/cbd-common-scale-5y.svg",
       "exists": true,
-      "state": "untracked_unignored",
-      "tracked": false,
+      "state": "tracked",
+      "tracked": true,
       "ignored": false,
       "sha256": "85d2bbb28aa1ae991a04a09b69e0eff69f85324de0af25568584470cffc88db4",
       "sha256_after": "85d2bbb28aa1ae991a04a09b69e0eff69f85324de0af25568584470cffc88db4",
@@ -167,8 +166,8 @@
     {
       "path": "datasets/cannabinoid-raw-collection/analysis/cbd-common-scale-5y/provenance.json",
       "exists": true,
-      "state": "untracked_unignored",
-      "tracked": false,
+      "state": "tracked",
+      "tracked": true,
       "ignored": false,
       "sha256": "0deaad8143747dec32a5c32a416e05e8e33cfb9e5aa34c0fc9322aa372b08521",
       "sha256_after": "0deaad8143747dec32a5c32a416e05e8e33cfb9e5aa34c0fc9322aa372b08521",
@@ -177,11 +176,11 @@
     {
       "path": "datasets/cannabinoid-raw-collection/analysis/cbd-common-scale-5y/series.csv",
       "exists": true,
-      "state": "untracked_unignored",
-      "tracked": false,
+      "state": "tracked",
+      "tracked": true,
       "ignored": false,
-      "sha256": "6225563986f7b34199b25926edb719884b5c901ca8014d26149fd78c9f1cfe5d",
-      "sha256_after": "6225563986f7b34199b25926edb719884b5c901ca8014d26149fd78c9f1cfe5d",
+      "sha256": "7b23b92b8f38eba01c5bf6eddb2b2d32956a06342c814abcad8764558e651bbd",
+      "sha256_after": "7b23b92b8f38eba01c5bf6eddb2b2d32956a06342c814abcad8764558e651bbd",
       "unchanged": true
     },
     {
@@ -4269,12 +4268,7 @@
       "kind": "private_marker"
     }
   ],
-  "accidental_add_risk": [
-    "datasets/cannabinoid-raw-collection/analysis/cbd-common-scale-5y/README.md",
-    "datasets/cannabinoid-raw-collection/analysis/cbd-common-scale-5y/cbd-common-scale-5y.svg",
-    "datasets/cannabinoid-raw-collection/analysis/cbd-common-scale-5y/provenance.json",
-    "datasets/cannabinoid-raw-collection/analysis/cbd-common-scale-5y/series.csv"
-  ],
+  "accidental_add_risk": [],
   "ignore_warnings": [
     {
       "code": "GITIGNORE_BLANKET_PATTERN",
