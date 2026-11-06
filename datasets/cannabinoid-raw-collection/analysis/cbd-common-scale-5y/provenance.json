@@ -1,0 +1,65 @@
+{
+  "schema_version": "1.0.0",
+  "record": "analysis_derivation",
+  "analysis_id": "cbd-common-scale-5y",
+  "report": "README.md",
+  "source": {
+    "source_id": "google-trends",
+    "run_id": "20261104T195126Z-google-trends-cannabinoid-raw-collection",
+    "query_id": "comparison-5y-setA",
+    "geo": "JP",
+    "timeframe": "today 5-y",
+    "window_id": "2021-10-31_2026-11-08",
+    "collected_at": "2026-11-04T19:51:26.401407Z"
+  },
+  "source_files": [
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261104T195126Z-google-trends-cannabinoid-raw-collection/comparison_cbd-thc-cbg-hhc-thcv.json",
+      "sha256": "ecc3fb6fb7840ddf728a7b7f39589cfe438e56db76384d7f375372e25b90ec94"
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261104T195126Z-google-trends-cannabinoid-raw-collection/run_metadata.json",
+      "sha256": "ea9090c226e34a16a53a91e51510165942e42adc4f48c99742bd96b5224d645b"
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261104T195126Z-google-trends-cannabinoid-raw-collection/payload.json",
+      "sha256": "ab11032ef1c93059d060d7ec91699d3fa698a4e431f9113f66688b12a7a129b9"
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261104T195126Z-google-trends-cannabinoid-raw-collection/artifact-manifest.json",
+      "sha256": "964f1059c2f2b2ea0cbddd1b88e37e1938a27dda58b8aa7e537f8492ab017a69"
+    }
+  ],
+  "request_terms": [
+    "CBD",
+    "THC",
+    "CBG",
+    "HHC",
+    "THCV"
+  ],
+  "reported_series": "CBD",
+  "observed_start": "2021-10-31",
+  "observed_end": "2026-11-01",
+  "normalization": "same request max = 100 (CBD 2025-08-31)",
+  "cbd": {
+    "points": 262,
+    "mean": 33.0916,
+    "median": 33.0,
+    "max": 100,
+    "max_dates": [
+      "2025-08-31"
+    ],
+    "min": 12,
+    "nonzero_weeks": 262,
+    "zero_weeks": 0
+  },
+  "not_comparable": "Common-scale values are normalised within this request and are not the standalone CBD series; neither is convertible to the other.",
+  "source_separation": "One Google Trends compare_terms run only. No other source, window or run is joined to these values.",
+  "derived_by": "scripts/analysis/cbd_common_scale_plot.py",
+  "generated_at": "2026-11-05",
+  "outputs": [
+    "series.csv",
+    "cbd-common-scale-5y.svg"
+  ],
+  "release_scope": "Study analysis artifact. Not part of the cannabinoid-platform-trends release slice and not added to data-catalog.json."
+}

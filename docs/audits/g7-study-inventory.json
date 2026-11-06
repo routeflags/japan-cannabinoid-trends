@@ -45,6 +45,7 @@
       "catalog_entry_count": 116,
       "layout": [
         "README.md",
+        "analysis",
         "data",
         "metadata",
         "methodology.md"
