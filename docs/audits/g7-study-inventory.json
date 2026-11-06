@@ -369,7 +369,7 @@
         "schema"
       ],
       "data_file_count": 1,
-      "has_data_raw": true,
+      "has_data_raw": false,
       "data_raw_file_count": 0,
       "sources": [],
       "compound_ids": [],
