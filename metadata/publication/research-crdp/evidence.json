@@ -2,20 +2,22 @@
   "schema_version": "1.0.0",
   "record": "publication_review_evidence",
   "artifact_id": "research-crdp",
-  "recorded_at": "2026-11-05",
+  "recorded_at": "2026-11-06",
   "integrity": "verified",
   "citations": {
     "integrity": [
-      "sha256(publication/research_crdp.html, 2026-11-05 検算) = 2f3da6006eff2eef3f11dfe294c46348022193607661c68db7df6deb7b58cf5d"
+      "sha256(publication/research_crdp.html, 2026-11-06 検算) = 5faccf5310d8384a42a83195374e07eb9eb9b1c2b351b38b01e387d546f64129"
     ],
     "publication_contract": [
       "validation.cli audit-publication（2026-10-15）: PC-1〜PC-8 の機械検査対象。PC-7 は本 envelope の存在と hash 固定を検査する。",
-      "validation.cli audit-publication（2026-11-05）: 本 artifact に PC-1〜PC-7 の finding は無い。PC-7 は本 envelope の存在と hash 固定を検査する。"
+      "validation.cli audit-publication（2026-11-05）: 本 artifact に PC-1〜PC-7 の finding は無い。PC-7 は本 envelope の存在と hash 固定を検査する。",
+      "validation.cli audit-publication（2026-11-06）: 本 artifact に PC-1〜PC-10 の finding は無い（YouTube 月次節の追加と再ピンの後）。PC-7 は本 envelope の存在と hash 固定を検査する。"
     ],
     "content_changes": [
       "2026-11-05: 変更内容 — 研究質問を「日本におけるCRDP成分へのオンライン関心は、どのように推移しているか？」に統一し、引用の版表記を 1.14.2（CITATION.cff）に更新した。 / YouTube 節から動画単位の行（動画 ID・タイトル・チャンネル・URL・再生数）を削除し、あわせてチャンネル名を含む分布表（X・YouTube の上位5チャンネル）を削除した（集計のみ、ISS-20261015-COL-030 §4.1、docs/domain/contracts/processing.md）。 / Google Trends 節に要求条件（geo / timeframe）と観測範囲の区別、表ごとの出所 run、0 の意味（相対指数の最小値であり欠測ではない）を追記した。",
       "2026-11-05: 変更内容 — Google Trends の共通スケール節を、CBD・THC を同一 compare_terms 要求に含むアンカー付き run の実測に合わせて更新した。現行窓の run がある場合は現行窓、無い場合は旧窓の歴史観測と明記し、現行窓は未取得と記載した。単独系列の値は代用していない。",
-      "2026-11-05: C3 内容レビュー（C1〜C45）に伴う変更 — 5年・12ヶ月の出所に query_id と窓 id を追加し、平均が週次からの派生（算術平均、小数第 1 位）であること、12ヶ月の初出 2025-09-28（値 92）・非ゼロ 18 週 / ゼロ 35 週を追記した。共通スケールの出所に要求語 5 語（CBD・THC・CRDP・H4CBH・HHBD）と正規化分母（CBD の 2025-08-31 = 100）を追記し、制約に raw の追跡先・単発 run・選択規則・run 間/窓間の非比較・ソース間の非合算を追加した。YouTube 2 節に raw 非保持／非再計算の一文を追加し、改訂行に v1.14.5 と公開状態節を反映した。数値は変更していない。"
+      "2026-11-05: C3 内容レビュー（C1〜C45）に伴う変更 — 5年・12ヶ月の出所に query_id と窓 id を追加し、平均が週次からの派生（算術平均、小数第 1 位）であること、12ヶ月の初出 2025-09-28（値 92）・非ゼロ 18 週 / ゼロ 35 週を追記した。共通スケールの出所に要求語 5 語（CBD・THC・CRDP・H4CBH・HHBD）と正規化分母（CBD の 2025-08-31 = 100）を追記し、制約に raw の追跡先・単発 run・選択規則・run 間/窓間の非比較・ソース間の非合算を追加した。YouTube 2 節に raw 非保持／非再計算の一文を追加し、改訂行に v1.14.5 と公開状態節を反映した。数値は変更していない。",
+      "2026-11-06: CRDP リキッド 1 run（433 件 date_filter=all、run 20261101T111429Z-youtube-cannabinoid-raw-collection）の月次公開日件数（ピーク月・年次分布・再生数統計）を別集計の節として追加した。既存の YouTube 節は変更していない。年次合計=返却件数（433）、ピーク月（2025-08（37 件））、再生数統計は採用宣言と突合した検証値と一致する。"
     ],
     "google_trends": [
       "run 20261014T204852Z-google-trends-cannabinoid-multi-trends（datasets/cannabinoid-raw-collection/data/raw/google_trends/20261014T204852Z-google-trends-cannabinoid-multi-trends/）: artifact-manifest.json sha256 = 1c5ac7a58adce7c5bca6da972c7fc3cb5f2e699789840ab1ccd0433a33228b7d。payload.json sha256 = 07c507b3f83bb2b3952bd681190860add6e7d0f2e85621ea154fdfcd4a4366ca。records_crdp.json sha256 = 684beffb4b83e3c2454230fc01c1591007967c8abf0df80c831b30bacdbf3d8b。run_metadata.json sha256 = 5667fd8e45cb0ca9e0687c2394b8309fdc6ccfb4384fb7570a66c05a2d17ba0b。",
@@ -31,19 +33,24 @@
       "YouTube 2026-10-08 の Apify 検索（ページのユニーク動画数 27 件）は run_metadata も採用宣言も持たず、raw は Git 非追跡でリポジトリに無い。2026-10-08 バッチのユニーク videoId は commit 989ca22 の youtube_runs.csv と ISS-20261024-YT-013 に記録され、CRDP 27・H4CBH 24・HHBD 22・HHCH 20・HHC 27（2026-10-02 run は 28）。",
       "YouTube 2026-10-09 の Data API 検索（ページの 21 件、投稿日範囲 2025-06-10 〜 2026-09-03）は 2026-10-12 の方針判断で withdrawn（raw 削除）と記録され、返却件数・観測窓の run 記録は残っていない。",
       "したがって YouTube 節の返却件数・実行状態・公開日範囲は run 記録と照合できず、C10・C11 は照合対象なしとして記録した。ページは raw 非保持・非再計算を明記している。"
+    ],
+    "youtube_crdp_monthly": [
+      "run 20261101T111429Z-youtube-cannabinoid-raw-collection（CRDP リキッド / crdp-liquid-ja / date_filter=all / 2026-11-01T11:14:29.018Z 開始・2026-11-01T11:24:43.300Z 終了 / 返却 433 件 / 観測 2016-06-18 〜 2026-10-17 / ピーク月 2025-08（37 件） / 最大 367,364 / 中央値 428 / 平均 6,446.01 / 最小 50）",
+      "payload SHA-256 = 8fb9e0ace10b7a5e24b0c876ec821fc3d48671bc31b881a07322cd131259037e（採用宣言 metadata/provenance/declarations/20261101-youtube-liquid-batch2-cannabinoid-raw-collection.json と一致、2026-11-06 に再検証）。宣言の window は 2016-06-18T00:00:00Z 〜 2026-10-18T00:00:00Z の半開区間。要求の結果上限は maxResults 500、返却 433 件はその上限に達していない。",
+      "2026-11-06 の再保持検証記録 metadata/provenance/declarations/20261106-youtube-liquid-batch-reretention-cannabinoid-raw-collection.json でも同一 hash・件数を確認した。raw payload は Git 非追跡・非公開でリポジトリに保持しない。返却件数・観測範囲・ピーク・再生数統計は採用宣言と突合した検証値であり、本チェックアウトに raw が無いため raw からの再計算は行っていない。"
     ]
   },
   "unrecorded": {
-    "publication_approval": "公開承認は decision.json に記録済み（status approved、reviewed_at 2026-11-05）。本 evidence の content_review が C3 レビュー（C1〜C45）を記録し、artifact_sha256 は現行 HTML の SHA-256 と一致する。",
+    "publication_approval": "公開承認は decision.json に記録済み（status approved、reviewed_at 2026-11-06）。本 evidence の content_review が C3 レビュー（C1〜C45）を記録し、artifact_sha256 は現行 HTML の SHA-256 と一致する。",
     "human_content_review": "効能表現・法務・再配布条件などの人間による最終審査は未記録。"
   },
-  "notes": "この evidence は機械的な存在・整合性の根拠だけを記録する。公開承認・人間の内容審査は推測で埋めない。 2026-11-05 に審査対象の hash を再固定し、変更内容を citations.content_changes に記録した。公開承認・人間の内容審査は推測で埋めない。 2026-11-05 の C3 内容レビュー（C1〜C45、metadata/publication/content-review-checklist.json v1.0.0）を content_review に記録し、本ページの数値・出所・区分を raw/records/comparison 成果物と照合した。YouTube 節は run 記録を欠くため C10・C11 は照合対象なし（not_applicable）とし、citations.youtube に理由を残した。",
+  "notes": "この evidence は機械的な存在・整合性の根拠だけを記録する。公開承認・人間の内容審査は推測で埋めない。 2026-11-05 に審査対象の hash を再固定し、変更内容を citations.content_changes に記録した。公開承認・人間の内容審査は推測で埋めない。 2026-11-05 の C3 内容レビュー（C1〜C45、metadata/publication/content-review-checklist.json v1.0.0）を content_review に記録し、本ページの数値・出所・区分を raw/records/comparison 成果物と照合した。YouTube 節は run 記録を欠くため C10・C11 は照合対象なし（not_applicable）とし、citations.youtube に理由を残した。 2026-11-06: CRDP リキッド 1 run の月次公開日件数の別集計節を追加し、現行 hash に C1〜C45 の再レビュー（content_review）を記録した。既存の YouTube 2 節は run 記録の無いままで照合対象外（上記）だが、追加した run には採用宣言があるため C10・C11 は新節について pass とした。",
   "personal_data_reviewed": true,
-  "personal_data_review_basis": "2026-11-05: publication/research_crdp.html の本文・表・画像・リンクを個人データの観点で確認した。走査結果: メールアドレス 0、@ハンドル 0、10 桁以上の識別子 0、行単位の投稿・動画の行 0（表ヘッダに 投稿者/ユーザー名/アカウント/動画 ID/タイトル/チャンネル/本文 を含む表は無い）。X 節・YouTube 節は件数・比率・Wilson 95% CI・再生数/動画長統計などの集計のみで、投稿本文・ユーザー名・動画単位の行・チャンネル名を含まない。 外部参照は doi.org（DOI）、www.thch-vape.shop（当社ストア（COA 画像））、zenodo.org（DOI バッジ）。時刻は run の収集時刻（UTC）のみ。結果: 個人を特定できる情報は含まれない。",
+  "personal_data_review_basis": "2026-11-05: publication/research_crdp.html の本文・表・画像・リンクを個人データの観点で確認した。走査結果: メールアドレス 0、@ハンドル 0、10 桁以上の識別子 0、行単位の投稿・動画の行 0（表ヘッダに 投稿者/ユーザー名/アカウント/動画 ID/タイトル/チャンネル/本文 を含む表は無い）。X 節・YouTube 節は件数・比率・Wilson 95% CI・再生数/動画長統計などの集計のみで、投稿本文・ユーザー名・動画単位の行・チャンネル名を含まない。 外部参照は doi.org（DOI）、www.thch-vape.shop（当社ストア（COA 画像））、zenodo.org（DOI バッジ）。時刻は run の収集時刻（UTC）のみ。結果: 個人を特定できる情報は含まれない。 2026-11-06: 追加した YouTube 月次節（run_id・query_id・件数・公開日範囲・再生数の統計・hash）にも個人・アカウント単位の値は無く、この判定は現行ページにも当てはまる。",
   "anonymization_applied": true,
   "anonymization_basis": "行単位のデータを掲載しない方針により、個人・アカウント単位の値は集計に置き換えている（投稿・動画の個別行なし）。",
   "provenance_present": true,
-  "provenance_basis": "引用する run 3 件を照合: raw ディレクトリ 3 件（manifest 無しの legacy 1 件を含む）、採用宣言のみで raw 非保持 0 件。run_id と件数の出所は追跡できる（legacy は datasets/cannabinoid-raw-collection/data/raw/google_trends/README.md、宣言は metadata/provenance/declarations/）。",
+  "provenance_basis": "引用する run 3 件を照合: raw ディレクトリ 3 件（manifest 無しの legacy 1 件を含む）、採用宣言のみで raw 非保持 0 件。run_id と件数の出所は追跡できる（legacy は datasets/cannabinoid-raw-collection/data/raw/google_trends/README.md、宣言は metadata/provenance/declarations/）。 2026-11-06: YouTube run 20261101T111429Z-youtube-cannabinoid-raw-collection を追加し、採用宣言 metadata/provenance/declarations/20261101-youtube-liquid-batch2-cannabinoid-raw-collection.json（execution.returned_count・window・payload SHA-256）と再保持検証記録で照合した。raw payload は非保持。",
   "schema_valid": true,
   "schema_review_basis": "validation.cli audit-publication（2026-11-05）で本 artifact に PC-1〜PC-7 の finding は無い。artifact/decision/evidence の sha256 は現行ファイルと一致する。",
   "source_terms_confirmed": true,
@@ -55,234 +62,234 @@
   "content_review": {
     "checklist_id": "publication-content-review-c1-c45",
     "checklist_version": "1.0.0",
-    "artifact_sha256": "2f3da6006eff2eef3f11dfe294c46348022193607661c68db7df6deb7b58cf5d",
-    "reviewer": "Delta agent (owner instruction 2026-11-05: C1–C45 review of research-crdp)",
-    "reviewed_at": "2026-11-05",
+    "artifact_sha256": "5faccf5310d8384a42a83195374e07eb9eb9b1c2b351b38b01e387d546f64129",
+    "reviewer": "Delta agent (owner instruction 2026-11-06: C1–C45 review of research-crdp)",
+    "reviewed_at": "2026-11-06",
     "items": [
       {
         "id": "C1",
         "verdict": "not_applicable",
-        "basis": "本ページに 12ヶ月共通スケールの表は無く（現行窓の 12ヶ月アンカー付き run は未取得と明記）、12ヶ月共通スケールの平均値の記載が無い。"
+        "basis": "12ヶ月共通スケールの節が無い（「現行窓」行に現行窓の 12ヶ月アンカー付き run は未取得と明記）。対応する比較表・比較成果物そのものが無い。"
       },
       {
         "id": "C2",
         "verdict": "not_applicable",
-        "basis": "本ページに 12ヶ月共通スケールの表が無く、中央値・最大・最大日の記載が無い。"
+        "basis": "12ヶ月共通スケールの表が無く、中央値・最大・最大の日付を掲載していない。"
       },
       {
         "id": "C3",
         "verdict": "not_applicable",
-        "basis": "本ページに 12ヶ月共通スケールの表が無く、非ゼロ点の記載が無い。"
+        "basis": "12ヶ月共通スケールの表が無く、非ゼロ点を掲載していない。"
       },
       {
         "id": "C4",
         "verdict": "not_applicable",
-        "basis": "本ページに 3ヶ月の節が無く、3ヶ月共通スケールの平均値の記載が無い。"
+        "basis": "3ヶ月共通スケールの節が無く、3ヶ月 run を引用していない。対応する比較成果物も無い。"
       },
       {
         "id": "C5",
         "verdict": "not_applicable",
-        "basis": "本ページに 3ヶ月の節が無く、3ヶ月共通スケールの中央値・最大の記載が無い。"
+        "basis": "3ヶ月共通スケールの表が無く、中央値・最大・最大の日付を掲載していない。"
       },
       {
         "id": "C6",
         "verdict": "not_applicable",
-        "basis": "本ページに 3ヶ月の節が無く、3ヶ月共通スケールの非ゼロ点の記載が無い。"
+        "basis": "3ヶ月共通スケールの非ゼロ点の記載が無く、分布も掲載していない。"
       },
       {
         "id": "C7",
         "verdict": "pass",
-        "basis": "5年共通スケール表の CBD 33.0916 / THC 5.0496 / CRDP 0.1374 と非ゼロ 262 / 262 / 36 週は comparison_cbd-thc-crdp-h4cbh-hhbd.json（run 20261104T195134Z-google-trends-cannabinoid-raw-collection、262 点）から再計算して一致。"
+        "basis": "5年共通スケール表の値（CBD 33.0916・THC 5.0496・CRDP 0.1374、非ゼロ 262 / 262 / 36 週（comparison_cbd-thc-crdp-h4cbh-hhbd.json、20261104T195134Z-google-trends-cannabinoid-raw-collection））は、引用した comparison 成果物の 262 点から 2026-11-06 に再計算した平均・非ゼロ週数と一致する。"
       },
       {
         "id": "C8",
         "verdict": "pass",
-        "basis": "12ヶ月単独系列 平均 22.3・ピーク 2026-06-07（100）・初出 2025-09-28（値 92）・非ゼロ 18 週 / ゼロ 35 週は records_crdp_12m.json（run 20261002T085022Z-google-trends-crdp-12m、53 点）から再計算して一致。"
+        "basis": "12ヶ月単独系列表の値（22.3・初出 2025-09-28（92）・非ゼロ 18 週 / ゼロ 35 週（records_crdp_12m.json、20261002T085022Z-google-trends-crdp-12m、平均 22.283））は records の 53 点の算術平均・最大と一致する（2026-11-06 に再計算、小数第 1 位または第 2 位の丸めはページの表示どおり）。"
       },
       {
         "id": "C9",
         "verdict": "pass",
-        "basis": "5年単独系列表 平均 7.9・ピーク 2025-05-18（値 100）・初出 2022-08-07（値 34）・非ゼロ 40 週 / ゼロ 222 週・最新値 5 は records_crdp.json（run 20261014T204852Z-google-trends-cannabinoid-multi-trends、262 点）から再計算して一致。"
+        "basis": "5年単独系列表の値（7.9・ピーク 2025-05-18（100）・初出 2022-08-07（34）・非ゼロ 40 週 / ゼロ 222 週・最新値 5（records_crdp.json、20261014T204852Z-google-trends-cannabinoid-multi-trends））は run_metadata.json と records の 262 点から 2026-11-06 に再計算した平均・ピーク日・初出・非ゼロ/ゼロ週・最新値と一致する。"
       },
       {
         "id": "C10",
-        "verdict": "not_applicable",
-        "basis": "YouTube 節（2026-10-08 の 27 件、2026-10-09 の 21 件）には run_metadata も採用宣言も無く、返却件数と実行状態の run 記録がリポジトリに存在しない（raw は Git 非追跡、Data API 由来 raw は削除済み）。照合できる記録が無いため判定しない。"
+        "verdict": "pass",
+        "basis": "新節の返却 433 件と実行状態 success は採用宣言（metadata/provenance/declarations/20261101-youtube-liquid-batch2-cannabinoid-raw-collection.json）の execution.returned_count / execution.status と一致する（2026-11-06 に照合）。既存の YouTube 節（27 件（2026-10-08）・21 件（2026-10-09））は run 記録を持たないため、ページが raw 非保持・再計算不能を明記している。"
       },
       {
         "id": "C11",
-        "verdict": "not_applicable",
-        "basis": "YouTube の 2026-10-09 節は投稿日範囲 2025-06-10 〜 2026-09-03 を示すが、半開区間と観測窓を記録した run 記録（採用宣言）が無い。照合対象が存在しないため判定しない。"
+        "verdict": "pass",
+        "basis": "新節の観測公開日範囲 2016-06-18 〜 2026-10-17 は採用宣言の window（2016-06-18T00:00:00Z 〜 2026-10-18T00:00:00Z の半開区間）の内側に収まる。既存 dated 節（2025-06-10 〜 2026-09-03）は run 記録を持たず半開区間を記録していない（照合対象外）。"
       },
       {
         "id": "C12",
         "verdict": "pass",
-        "basis": "データソース行と各節の出所の検索語（CRDP）・地域（JP）・timeframe（today 12-m / today 5-y）は run 20261014T204852Z-google-trends-cannabinoid-multi-trends・20261002T085022Z-google-trends-crdp-12m・20261104T195134Z-google-trends-cannabinoid-raw-collection の run_metadata.json の query_provenance / temporal_provenance と一致。"
+        "basis": "Google Trends 節の要求（JP / today 12-m・today 5-y）は各 run_metadata.json の temporal_provenance・query_provenance と一致する（不変）。新節は検索語 CRDP リキッド・query_id crdp-liquid-ja・date_filter all・地域は API の geo フィルタ無し（日本語の製品語による近似）と明記し、採用宣言の collection_request と一致する。"
       },
       {
         "id": "C13",
         "verdict": "pass",
-        "basis": "データソース行と共通スケール節の制約が、値を 0-100 の相対指数であり絶対検索数ではないと明記している。"
+        "basis": "「用語の定義」の「興味度スコア」と Google Trends 節の冒頭が、値を 0-100 の相対指数であり絶対検索数ではないと明記している（不変）。新節の値は動画本数であり指数ではない。"
       },
       {
         "id": "C14",
         "verdict": "pass",
-        "basis": "共通スケール節の出所が、単独系列（各語のピーク = 100）と共通スケール（同一要求の最大値 = 100）を換算できないと明記している（用語の定義の比較平均も同旨）。"
+        "basis": "「現行窓」行（および用語の定義）が、単独系列の値と共通スケールを換算しないと明記している。新節の月次公開日件数は Google Trends の指数と換算しない。"
       },
       {
         "id": "C15",
         "verdict": "pass",
-        "basis": "「旧窓の値は現行窓の値ではない」と制約の「run 間・窓間で平均を比較しない」が、窓間・run 間の平均比較をしないと明記している。"
+        "basis": "Google Trends 節の「制約」が run 間・窓間の平均を比較しないと明記している。新節も 1 run のみで、他の run と合算・比較しないと明記した。"
       },
       {
         "id": "C16",
         "verdict": "pass",
-        "basis": "共通スケール節の出所が、正規化は同一要求内の最大値（CBD の 2025-08-31）= 100 であると明記している。"
+        "basis": "共通スケール節の「要求語（5年）」行が、正規化を同一要求内の最大値 = 100（CBD の 2025-08-31）と明記している。"
       },
       {
         "id": "C17",
         "verdict": "pass",
-        "basis": "共通スケール節の出所が要求語 5 語（CBD・THC・CRDP・H4CBH・HHBD）を開示し、本表は 5 語のうち 3 語を載せると明記している。"
+        "basis": "5年共通スケールの要求語 CBD・THC・CRDP・H4CBH・HHBD をすべて開示し、本表がそのうち何語を載せるかも明記している。"
       },
       {
         "id": "C18",
         "verdict": "pass",
-        "basis": "制約行が Google Trends・YouTube・X は別々の観測であり値を合算しないと明記している。"
+        "basis": "Google Trends 節の「制約」が Google Trends・X・YouTube の値を合算しないと明記している。新節は 1 run のみを集計し、他 run・他化合物・他ソースと合算しないと明記した。"
       },
       {
         "id": "C19",
         "verdict": "pass",
-        "basis": "制約行が 0 は相対指数の最小値（閾値未満）であり欠測・需要ゼロではないと明記している。"
+        "basis": "Google Trends 節の「制約」が、0 は相対指数の最小値（閾値未満）であり欠測・需要ゼロではないと明記している（不変）。"
       },
       {
         "id": "C20",
         "verdict": "not_applicable",
-        "basis": "本ページに 12ヶ月共通スケールの表は無く、THCNM も扱わない。全 0 の記載が無い。"
+        "basis": "12ヶ月共通スケールに THCNM を含む run が無く、全 0 の系列を掲載していない。"
       },
       {
         "id": "C21",
         "verdict": "not_applicable",
-        "basis": "本ページに 3ヶ月の節が無く、2026-08-13 = 12 の孤立値の記載が無い。"
+        "basis": "3ヶ月の節が無く、2026-08-13 = 12 の孤立値を掲載・解釈していない。"
       },
       {
         "id": "C22",
         "verdict": "pass",
-        "basis": "X 節の制約が、X の観測期間は記録に無く取得日のみを示す（期間の欠測であり言及ゼロではない）と明記している。"
+        "basis": "X 節の「制約」が、観測期間は記録に無い欠測であり言及ゼロではないと明記している。新節も未取得を 0 観測として扱わないと明記した。"
       },
       {
         "id": "C23",
         "verdict": "pass",
-        "basis": "制約行が各 run は単発で同一要求の反復実行が無く、安定性は未測定であると明記している。"
+        "basis": "Google Trends 節の「制約」が各系列は単発 run で反復実行による安定性は未測定と明記している。新節も 1 run のみで安定性は未測定と明記した。"
       },
       {
         "id": "C24",
         "verdict": "pass",
-        "basis": "5年表は「要求条件」と「観測範囲（返却点の範囲）」を別の行に置き、12ヶ月節も出所に観測範囲を別記している。"
+        "basis": "Google Trends の 5年表が「要求条件」と「観測範囲（返却点の範囲）」を別の行にしている。新節も date_filter（API 要求条件）と観測公開日範囲（返却レコードの観測値）を別の行にした。"
       },
       {
         "id": "C25",
         "verdict": "pass",
-        "basis": "Google Trends の各数値は出所に run_id と query_id を記載（5年 crdp-general-ja、12ヶ月 crdp-general-ja、共通スケール comparison-5y-setC）。COA はサンプル ID・バッチ、規制節は厚生労働省を出所として示す。"
+        "basis": "新節の数値は run_id（20261101T111429Z-youtube-cannabinoid-raw-collection）と query_id（crdp-liquid-ja）を持つ。Google Trends の数値は各出所の run_id と run_metadata.json の query_id で追える（20261014T204852Z は crdp-general-ja、20261002T085022Z は query_id 未記録（legacy）、20261104T195134Z は comparison-5y-setC）。X 節は raw 非保持で run_id を持たないため、分類記録と収集日を引く。"
       },
       {
         "id": "C26",
         "verdict": "pass",
-        "basis": "evidence.citations.google_trends が run 20261014T204852Z-google-trends-cannabinoid-multi-trends・20261002T085022Z-google-trends-crdp-12m・20261104T195134Z-google-trends-cannabinoid-raw-collection の run_metadata.json / records / comparison / payload の SHA-256 を記録している。本レビューで全ファイルの SHA-256 を再計算し、記録と一致することを確認した。"
+        "basis": "evidence.citations.integrity が現行 HTML の SHA-256 を記録し、raw_evidence が Google Trends の run_metadata/records/comparison の SHA-256 を記録している。新節は citations.youtube_crdp_monthly に採用宣言の payload SHA-256（8fb9e0ac…9037e）と run_id を記録した。"
       },
       {
         "id": "C27",
         "verdict": "pass",
-        "basis": "窓 id 2021-10-10_2026-10-12（metadata/windows/2021-10-10_2026-10-12.json、5年 run）と 2021-10-31_2026-11-08（metadata/windows/2021-10-31_2026-11-08.json、共通スケール run）を出所に記載し、granularity week・timezone Asia/Tokyo が一致する。12ヶ月の legacy run は窓登録を持たない。"
+        "basis": "Google Trends の窓 2021-10-10_2026-10-12 と 2021-10-31_2026-11-08 を metadata/windows/ の同名ファイルと照合した（不変）。YouTube の新節は metadata/windows に登録せず、採用宣言の window（2016-06-18T00:00:00Z 〜 2026-10-18T00:00:00Z の半開区間）を出所に示す。"
       },
       {
         "id": "C28",
         "verdict": "pass",
-        "basis": "5年・12ヶ月の出所が平均を算術平均（小数第 1 位）と定義し、非ゼロ点の数え方（0 以外の週数）を記載している。算出値は run の records / comparison と整合する。"
+        "basis": "Google Trends の各出所が平均を週次 N 点の算術平均と定義している（不変）。新節はピーク月を返却サンプル内の最多月（同点は併記）と定義し、再生数を取得時点の値として 最大 367,364 / 中央値 428 / 平均 6,446.01 / 最小 50 と示した。"
       },
       {
         "id": "C29",
         "verdict": "pass",
-        "basis": "Google Trends の派生値（平均・非ゼロ・ピーク・初出）は追跡済み raw（records / comparison）から再計算でき、本レビューで全件再計算した。YouTube の件数・統計は raw 非保持で再計算できないと明記し、派生として扱っていない。"
+        "basis": "Google Trends の派生値は追跡済みの records/comparison から 2026-11-06 に再計算し、ページの値と一致した。新節の返却件数・観測範囲・ピーク（2025-08（37 件））・再生数統計は、採用宣言の returned_count / window / payload SHA-256 と突合して一致を確認した。raw payload は本チェックアウトに無く、本レビューは raw からの再計算を行っていない（その旨を出所に明記し、派生の区分を偽っていない）。"
       },
       {
         "id": "C30",
         "verdict": "pass",
-        "basis": "データソース行に google-trends-mcp 0.1.1、各節の出所に収集日時（UTC、例 2026-10-14T20:48:52.824336Z）を記載している。"
+        "basis": "Google Trends の収集方法（google-trends-mcp 0.1.1）がデータソース欄に記載され、各節が出所に収集日時を記載している。新節は YouTube Search via Apify と開始・終了時刻（2026-11-01T11:14:29.018Z / 2026-11-01T11:24:43.300Z）を記載し、Actor build 0.0.322 は採用宣言に記録され、ページは版を主張していない。"
       },
       {
         "id": "C31",
         "verdict": "pass",
-        "basis": "制約行が各 run は単発であること、掲載するのは各節の出所に示す run だけで別 run からの選択を行っていないことを明記している。"
+        "basis": "Google Trends 節の「制約」が各 run は単発であることを明記している。新節は 1 run のみを掲載し、他の run からの選択・合成を行っていないと明記した。"
       },
       {
         "id": "C32",
         "verdict": "not_applicable",
-        "basis": "本ページは THCNM と THA を扱わず、両者の化学的同一性に関する記述が無い。"
+        "basis": "THCNM・THA に言及しておらず、両者の化学的同一性を述べた記述が無い。"
       },
       {
         "id": "C33",
         "verdict": "pass",
-        "basis": "本文に CAS・ChEBI・PubChem・Wikidata の識別子および分子式の記載は無い（化合物名と COA のサンプル ID・バッチのみ）。"
+        "basis": "本文に CAS・ChEBI・PubChem・Wikidata・分子式の記載は無い（新節は run_id・query_id・hash・件数・日付のみ）。"
       },
       {
         "id": "C34",
         "verdict": "not_applicable",
-        "basis": "本ページは THAH・THC-O を扱わず、これらとの混同を避ける記述の対象が無い（CRDP の語のみを扱う）。"
+        "basis": "THAH・THC-O に言及せず、これらとの混同を招く記述が無い。"
       },
       {
         "id": "C35",
         "verdict": "pass",
-        "basis": "規制状況節は厚生労働省を出所に「条件付き合法・指定薬物の候補・確信度 LOW」を確信度と「調査日時点」の制約付きで示す一次資料の整理であり、独自の法的判断を述べていない。"
+        "basis": "規制状況節は厚生労働省を出典とし調査日を併記した一次資料の整理で、独自の法的判定を述べていない（2026-11-06 に再読、内容は不変）。"
       },
       {
         "id": "C36",
         "verdict": "pass",
-        "basis": "YouTube 節はユニーク動画数・再生数統計・動画長統計のみで、動画単位の行・動画 ID・タイトル・チャンネル・URL を掲載していない。"
+        "basis": "新節は run_id・query_id・件数・公開日範囲・再生数の統計のみで、動画単位の行・動画 ID・タイトル・チャンネル・URL を掲載していない。既存の YouTube 節も同様（不変）。"
       },
       {
         "id": "C37",
         "verdict": "pass",
-        "basis": "本文・表・画像・リンクを走査し、メールアドレス 0、@ハンドル 0、10 桁以上の識別子 0、行単位の投稿・動画の行 0 を確認した（COA のサンプル ID・バッチは製品証明書の識別子）。"
+        "basis": "本文・表・リンクを走査し、メールアドレス 0・@ハンドル 0・行単位の投稿/動画の行 0 を確認した。新節の追加分も同様で、個人を特定できる情報を含まない。"
       },
       {
         "id": "C38",
         "verdict": "pass",
-        "basis": "制約行が Google Trends raw の追跡先 datasets/cannabinoid-raw-collection/data/raw/google_trends/ を記載し、YouTube 節が raw は Git 非追跡でリポジトリに保持しないと明記している。"
+        "basis": "新節の「出所」が、raw payload は Git 非追跡・非公開でリポジトリに保持していないと明記した。既存の YouTube 節の raw 非保持の記載も不変。"
       },
       {
         "id": "C39",
         "verdict": "pass",
-        "basis": "evidence.json の source_terms_basis / redistribution_basis が、docs/specs/sns-redistribution-assessment.md §3.2 に基づき集計値のみを掲載し raw を再配布しないと記録している。"
+        "basis": "evidence の source_terms_basis / redistribution_basis が、docs/specs/sns-redistribution-assessment.md §3.2 に基づき集計値のみを掲載し raw を再配布しないと記録している。"
       },
       {
         "id": "C40",
         "verdict": "pass",
-        "basis": "本文は検索興味度・件数・比率の推移の記述にとどまり、検索増加が出来事の原因または結果であるという主張をしていない。"
+        "basis": "本文に因果を主張する記述は無い（新節は返却サンプル内の件数と統計の事実記載のみ）。"
       },
       {
         "id": "C41",
         "verdict": "pass",
-        "basis": "各節見出しの「一次データ」「一次資料の整理」、共通スケール表の「区分」列（派生）、出所の「派生（算術平均）」の記載で観測と派生を区別している。"
+        "basis": "新節の見出しが「一次データ（観測 + 派生）」を示し、返却件数・公開日範囲・再生数（観測）と月次・年次件数・ピーク（派生）を区別している。Google Trends 節の「区分」列（派生）も不変。"
       },
       {
         "id": "C42",
         "verdict": "pass",
-        "basis": "各節に制約段落を置き、相対指数であること・窓と返却点・0 の意味・共通スケールの非換算・単発 run・YouTube のサンプル性と raw 非保持・X の分類誤りと期間欠測・規制情報の時点・COA の限界を列挙している。"
+        "basis": "新節の「制約」が、返却サンプルであること・結果上限（maxResults 500）・再生数の時点性・未取得≠0・単発 run で安定性未測定・合算/比較の禁止・動画単位の非公開を列挙している。既存各節の制約も不変。"
       },
       {
         "id": "C43",
         "verdict": "pass",
-        "basis": "引用の Version 1.14.5 は CITATION.cff の version 1.14.5（date-released 2026-11-05）と一致する。"
+        "basis": "引用情報の Version 1.14.5 は CITATION.cff の version（1.14.5、date-released 2026-11-05）と一致する。"
       },
       {
         "id": "C44",
         "verdict": "pass",
-        "basis": "公開状態節が decision approved・artifact_sha256 の一致・gate-publication の SUPPORTED（PUB-01〜PUB-11 PASS、WARNING なし）・C3 レビューの記録を記載している。"
+        "basis": "公開状態節を 2026-11-06 の実行に更新し、decision.json の status approved・artifact_sha256 の一致・gate-publication の SUPPORTED（PUB-01〜PUB-11 PASS、WARNING なし）・C3 記録を記載している。判定は同じ review envelope を入力にした gate-publication の出力で確認した。"
       },
       {
         "id": "C45",
         "verdict": "pass",
-        "basis": "改訂行が 2026-11-05 の C3 内容レビュー（C1〜C45）と公開状態節の追加（v1.14.5）を記載している。"
+        "basis": "「改訂」に 2026-11-06 の追記（CRDP リキッド 1 run 433 件の月次公開日件数の別集計節の追加、既存の YouTube 節は不変）を記載した。"
       }
     ]
   }
