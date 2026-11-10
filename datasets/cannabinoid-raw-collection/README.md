@@ -23,7 +23,7 @@ Google Trends の被覆（登録 30 語）:
 | 追加 15 語 | 15 | 11/15（NO_DATA 1・HTTP 429 3） | 6/15（NO_DATA 6・HTTP 429 3） |
 | **登録 30 語** | **30** | **26/30** | **20/30** |
 
-追加 15 語の内訳は、13 語バッチが 14/26 adopted（5年 9/13・12ヶ月 5/13）、CBC・CBDV が 4 run 中 3 adopted（CBDV の 12ヶ月は 429 が 2 回の後 NO_DATA）。採用されなかった 13 本は quarantine に残り、0 観測でも欠測でもない（§2.1.2・§2.1.3）。
+追加 15 語の内訳は、13 語バッチが 14/26 adopted（5年 9/13・12ヶ月 5/13）、CBC・CBDV が 4 run 中 3 adopted（CBDV の 12ヶ月は記録された HTTP 429 の後に NO_DATA）。採用されなかった 13 本は quarantine に残り、0 観測でも欠測でもない（§2.1.2・§2.1.3）。
 
 CBX を化合物間比較に載せるため、**CBX + CBD + THC を 1 リクエストで測る共通スケール bridge** を 12ヶ月・5年とも収集した（§2.1.6）。これは単独系列（各語のピーク=100）の平均を合成した値ではない。**CBX の YouTube は 2026-11-01 の owner 決定でこの study の所有**であり、`cbx-search-trends` 側に残るのは Google Search Console raw だけである（[`ISS-20261101-YT-019`](../../docs/issues/active/30-production-collection-expansion/20261101_p2_youtube-liquid-batch-usage-cap.md)）。集計・配布は別研究 [`datasets/cannabinoid-platform-trends/`](../cannabinoid-platform-trends/)（横断集計）が担当する。ここは「素材」、あちらは「配布物」。
 
@@ -73,7 +73,7 @@ CBX を化合物間比較に載せるため、**CBX + CBD + THC を 1 リクエ�
 読み方:
 
 - **5年系列**: 登録 30 語のうち **26 語が adopted**（既存 15/15、追加 11/15）。追加の採用なし 4 語は CBGa（NO_DATA）と 10-OH-HHC・THXE・THCA（HTTP 429、quarantine）。旧 `…-5y-baseline` run は summary-only で、どの化合物の引用元でもない（証跡として残る。[methodology.md](methodology.md) §2.1.1・§2.1.2）。
-- **12ヶ月系列**: 登録 30 語のうち **20 語が adopted**（既存 14/15、追加 6/15）。既存の THC-O は NO_DATA。追加の採用なし 9 語は NO_DATA 6（CBDV・THCB・THCPO・HHCPO・CBGa・10-OH-HHC）と HTTP 429 3（THCJD・THXE・THCA）で、CBDV は 429 が 2 回の後 NO_DATA。THCV・CRDH は 12ヶ月が 53 週中 1 週だけ非ゼロ（[methodology.md](methodology.md) §2.1.3）。CRDH の旧 summary（`records_crdh_12m.json`）は証跡として残るが、その記録値（`avg_12m` 1.9 等）は raw から再現できないので引用しない。
+- **12ヶ月系列**: 登録 30 語のうち **20 語が adopted**（既存 14/15、追加 6/15）。既存の THC-O は NO_DATA。追加の採用なし 9 語は NO_DATA 6（CBDV・THCB・THCPO・HHCPO・CBGa・10-OH-HHC）と HTTP 429 3（THCJD・THXE・THCA）で、CBDV は記録された HTTP 429 の後に NO_DATA。THCV・CRDH は 12ヶ月が 53 週中 1 週だけ非ゼロ（[methodology.md](methodology.md) §2.1.3）。CRDH の旧 summary（`records_crdh_12m.json`）は証跡として残るが、その記録値（`avg_12m` 1.9 等）は raw から再現できないので引用しない。
 - **週次系列は全面で比較できるわけではない**: 既存の 5年は 3 窓（10 化合物が 2021-10-10 〜 2026-10-11（CBX を含む）、4 化合物が 2021-10-17 〜 2026-10-18、THCNM が 2021-10-31 〜 2026-11-01）、12ヶ月は 4 窓（8 化合物が 2025-09-28 〜 2026-09-27、4 化合物が 2025-10-19 〜 2026-10-18、CBX が 2025-10-12 〜 2026-10-11、THCNM が 2025-11-02 〜 2026-11-01）に分かれる。追加 15 語は 12ヶ月 `2025-11-09_2026-11-15`（観測 2025-11-09 〜 2026-11-08、53 週）と 5年 `2021-11-07_2026-11-15`（観測 2021-11-07 〜 2026-11-08、262 週）で、`today 12-m` / `today 5-y` を reference time で nominal に解決した**近似窓**である。各 run は自分のピーク=100 に正規化されるので、単独系列の値を化合物間・run 間で比べない。化合物間の比較は共通スケール（§2.1.4・§2.1.6）でのみ行う。
 - **「データなし」**: 取得はしたが Google Trends が閾値未満で系列を返さなかった。**欠測であって 0 観測ではない**。
 - **「失敗（429）」**: HTTP 429 で取得に失敗し、adopted run が無い。試行は quarantine に残る。**0 観測でも欠測でもない**。
@@ -151,7 +151,7 @@ CBC・CBDV は taxonomy に既存の canonical concept があったため **ID�
 | 化合物 | `compound_id` | taxonomy | query（`intent_id`） | 状態 |
 |---|---|---|---|---|
 | CBC | `compound_cbc` | 既存（`compound_minor`、Wikidata Q422441） | `CBC`（`compound_general`）= `cbc-general-ja`、`CBC リキッド`（`product_liquid`）= `cbc-liquid-ja` | GT 12m 53 週 ✅ / 5y 262 週 ✅、YouTube 358 ✅ |
-| CBDV | `compound_cbdv` | 既存（`compound_minor`、Wikidata Q422426） | `CBDV`（`compound_general`）= `cbdv-general-ja`、`CBDV リキッド`（`product_liquid`）= `cbdv-liquid-ja` | GT 12m NO_DATA（429×2 後）/ 5y 262 週 ✅、YouTube 112 ✅ |
+| CBDV | `compound_cbdv` | 既存（`compound_minor`、Wikidata Q422426） | `CBDV`（`compound_general`）= `cbdv-general-ja`、`CBDV リキッド`（`product_liquid`）= `cbdv-liquid-ja` | GT 12m NO_DATA（記録された HTTP 429 の後）/ 5y 262 週 ✅、YouTube 112 ✅ |
 | THCB | `compound_thcb` | 新規（`compound_identity_unverified`） | `THCB`（`compound_general`）= `thcb-general-ja`、`THCB リキッド`（`product_liquid`）= `thcb-liquid-ja` | GT 12m NO_DATA / 5y 262 週 ✅、YouTube 209 ✅ |
 | THCP | `compound_thcp` | 新規（`compound_identity_unverified`） | `THCP`（`compound_general`）= `thcp-general-ja`、`THCP リキッド`（`product_liquid`）= `thcp-liquid-ja` | GT 12m 53 週 ✅ / 5y 262 週 ✅、YouTube 419 ✅ |
 | THCJD | `compound_thcjd` | 新規（`compound_identity_unverified`） | `THCJD`（`compound_general`）= `thcjd-general-ja`、`THCJD リキッド`（`product_liquid`）= `thcjd-liquid-ja` | GT 12m 429 / 5y 262 週 ✅、YouTube 55 ✅ |
