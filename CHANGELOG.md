@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.14.8] - 2026-11-11
+
+### Added
+- Embedded the verified per-compound publication figures: five-year Google Trends lines, YouTube yearly returned-sample counts, and same-request common-scale annual search-volume bubble matrices.
+- Added reproducible figure generation, embedding, provenance, and compound-page figure skill guidance.
+
+### Changed
+- Clarified the relationship between the long-range YouTube collection A and the rolling one-year collection B on the CBD page.
+- Marked partial calendar years in yearly YouTube figures and captions.
+
 ## [1.14.7] - 2026-11-06
 
 ### Fixed

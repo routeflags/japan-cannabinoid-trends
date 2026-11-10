@@ -6,8 +6,8 @@
   "layer": "publication",
   "source_kind": "html",
   "storage_policy_id": "publication-html-candidate",
-  "sha256": "5912a7b48331fb142064afa156eaa94cd6b171de33505c07cf63a93ccb7af107",
-  "byte_length": 22257,
-  "recorded_at": "2026-11-06",
-  "notes": "未公開 publication HTML。PC-7 の審査 envelope として内容 hash を固定する。対象 publication はまだ公開していないため、decision は requires_review から開始する。 v1.13.0 release metadata sync 後の hash。 v1.13.1 release metadata sync 後の hash。 2026-11-05、研究質問の統一・版表記 1.14.1 化・YouTube 動画単位行の削除・Google Trends の要求条件/観測範囲の分離および出所追記の後の hash（内容承認ではなく審査対象の再ピン）。 2026-11-05: CRDP の共通スケール節を、CBD・THC を含むアンカー付き run の実測に合わせて更新した後の hash（内容承認ではなく審査対象の再ピン）。 2026-11-05: C3 内容レビュー（C1〜C45）の記録後の hash（内容承認ではなく審査対象の再ピン）。 2026-11-06: CRDP リキッド 1 run（433 件）の月次公開日件数の別集計節の追加後の hash（C3 内容レビュー付き）。 2026-11-06 の v1.14.6 準備（版表記 1.14.6）後の hash に再固定した。 2026-11-06 の v1.14.7 準備（版表記 1.14.7）後の hash に再固定した。"
+  "sha256": "7fc96b7663c502db750bef8aa11c4aec8ad32d77df4d39566357ae8c905ec7e0",
+  "byte_length": 24451,
+  "recorded_at": "2026-11-11",
+  "notes": "未公開 publication HTML。PC-7 の審査 envelope として内容 hash を固定する。対象 publication はまだ公開していないため、decision は requires_review から開始する。 v1.13.0 release metadata sync 後の hash。 v1.13.1 release metadata sync 後の hash。 2026-11-05、研究質問の統一・版表記 1.14.1 化・YouTube 動画単位行の削除・Google Trends の要求条件/観測範囲の分離および出所追記の後の hash（内容承認ではなく審査対象の再ピン）。 2026-11-05: CRDP の共通スケール節を、CBD・THC を含むアンカー付き run の実測に合わせて更新した後の hash（内容承認ではなく審査対象の再ピン）。 2026-11-05: C3 内容レビュー（C1〜C45）の記録後の hash（内容承認ではなく審査対象の再ピン）。 2026-11-06: CRDP リキッド 1 run（433 件）の月次公開日件数の別集計節の追加後の hash（C3 内容レビュー付き）。 2026-11-06 の v1.14.6 準備（版表記 1.14.6）後の hash に再固定した。 2026-11-06 の v1.14.7 準備（版表記 1.14.7）後の hash に再固定した。 2026-11-11: v1.14.8 図入り版（C3再レビュー対象）の現行HTML hashに再固定。 2026-11-11: v1.14.8 図入り版（C3再レビュー対象）の現行HTML hashに再固定。"
 }

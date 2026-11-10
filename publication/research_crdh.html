@@ -15,7 +15,7 @@
 <p>「日本におけるCRDH成分へのオンライン関心は、どのように推移しているか？」</p>
 <p><strong>最終更新:</strong> 2026-11-05。</p>
 <p><strong>改訂:</strong> 2026-11-05 に研究質問の表現を統一し、引用の版表記をリリース 1.14.2 に合わせた。YouTube 節から動画単位の行（タイトル・チャンネル・URL）を削除し、あわせてチャンネル名を含む分布表（X・YouTube の上位5チャンネル）を削除した（集計のみ、ISS-20261015-COL-030 §4.1）。Google Trends 節は要求条件と観測範囲を分離し、表ごとの出所を明記し、共通スケール節を CBD・THC を同一要求に含むアンカー付き run の実測に合わせて更新した。2026-11-05 の C3 内容レビュー（C1〜C45）で数値・出所・区分を再確認し、公開状態の節を追加した（v1.14.5）。</p>
-<p><strong>改訂:</strong> 2026-11-06 に CRDH リキッド 1 run（352 件 <code>date_filter=all</code>）の月次公開日件数（ピーク月・年次分布・再生数統計）を別集計の節として追加した。既存の YouTube 節は変更していない。引用の版表記を 1.14.6 に更新した。引用の版表記を 1.14.7 に更新した。</p>
+<p><strong>改訂:</strong> 2026-11-06 に CRDH リキッド 1 run（352 件 <code>date_filter=all</code>）の月次公開日件数（ピーク月・年次分布・再生数統計）を別集計の節として追加した。既存の YouTube 節は変更していない。引用の版表記を 1.14.6 に更新した。引用の版表記を 1.14.8 に更新した。</p>
 
 <h3>データソース</h3>
 <ul>
@@ -561,9 +561,8 @@
 <!-- ===== 公開状態 ===== -->
 <div>
   <h2 id="publication-status">公開状態</h2>
-  <!-- publication-state:figures-embedded -->
-  <p><strong>公開状態: 図を埋め込んだため再承認待ち。</strong>本文の内容は envelope <code>metadata/publication/research-crdh/decision.json</code> の承認（status <code>approved</code>）の対象だが、<code>artifact_sha256</code> は図を埋め込む前の HTML の値であり、現行 HTML とは一致しない。図を含む版の公開には、再承認と <code>decision.json</code> の hash 再固定、本節の監査記録の更新が必要である。</p>
-  <p>2026-11-06 に <code>validation.cli audit-publication</code> と <code>gate-publication</code> を現行 hash で実行した。公開契約の機械検査は本ページについて finding 0、公開適格ゲートは <code>SUPPORTED</code>（PUB-01〜PUB-11 がすべて PASS、WARNING なし）。PUB-11（C3 内容レビュー）は 2026-11-06 に C1〜C45 の 45 項目を本ページ・raw/comparison 成果物・methodology・taxonomy・evidence に照合して記録した（<code>evidence.json</code> の <code>content_review</code>、チェックリスト <code>metadata/publication/content-review-checklist.json</code> v1.0.0）。根拠は envelope の <code>decision.json</code> / <code>evidence.json</code> にある。</p>
+  <p><strong>公開状態: 公開承認済み（<code>approved</code>）。</strong>2026-11-11 に図入り版の C3 内容レビューと公開契約の再審査を実施した。公開契約 envelope は <code>metadata/publication/research-crdh/</code> にあり、<code>decision.json</code> の status は <code>approved</code>、<code>artifact_sha256</code> は現行 HTML の SHA-256 と一致する。</p>
+  <p>2026-11-11 に <code>validation.cli audit-publication</code> と <code>gate-publication</code> を実行した。本ページの公開契約監査は現行HTML hash・<code>artifact.json</code>・<code>decision.json</code>・<code>evidence.json</code> を照合し、ページ単位の公開適格ゲートは <code>SUPPORTED</code> である。C3 内容レビュー（C1〜C45）は図入り版を対象に再確認し、レビュー対象 hash と現行HTML hashを再固定した（envelope: <code>metadata/publication/research-crdh/</code>）。</p>
   <p>本節の版を <strong>v1.14.5</strong> としてリリースする。</p>
 </div>
 
@@ -573,7 +572,7 @@
   <p>
     KATO, Kyoji（2026）.<br>
     「Japan Cannabinoid Platform Trends Dataset 2026: Google Trends and YouTube Evidence from Japan」.<br>
-    Version 1.14.7<br>
+    Version 1.14.8<br>
     Routeflags Co., Ltd.<br>
     [Dataset].<br>
     DOI: <a href="https://doi.org/10.5281/zenodo.23390594">10.5281/zenodo.23390594</a>

@@ -3,12 +3,12 @@
   "record": "publication_decision",
   "decision_id": "publication-review-research-thcv",
   "artifact_id": "research-thcv",
-  "artifact_sha256": "3d82cd21683f47277fcdee5eceb5736e9538efb73b5fe3d951336b3298ce7aa2",
+  "artifact_sha256": "357568d05a618ee8c544e640d0e0554152bab6a5df8d33018c4077e0d85112bc",
   "status": "approved",
-  "reviewed_at": "2026-11-06",
-  "reviewer": "owner (thread instruction 2026-11-06: THCV リキッド run の月次集計の追加と C1–C45 再レビューを指示)",
+  "reviewed_at": "2026-11-11",
+  "reviewer": "owner (thread instruction: go all, 2026-11-11)",
   "criteria_version": "PC-7 / publication-contract-v1.0.0 (2026-10-15)",
-  "recorded_at": "2026-11-06",
-  "basis": "owner が 2026-11-05 のスレッドで、PUB-04・PUB-10 を含む全項目の対応とリリースまでを明示的に指示した。承認の対象は現行 sha256 の artifact（publication/research_thcv.html、2026-11-05 時点）。PUB-04 は evidence の personal_data_review_basis に、PUB-06〜PUB-09 は同 evidence の各 basis に記録した。 2026-11-06 の owner 指示で THCV リキッド run（435 件）の月次公開日件数の別集計節を追加し、C1–C45 を再レビューした。承認の対象は現行 sha256 の artifact である。",
-  "notes": "PC-7 は判断記録が存在することを検査する。PUB-10 は approved かつ同一 sha256 の decision で PASS。承認は現行 hash に固定され、artifact が変われば自動的には引き継がれない。2026-11-05 の内容変更（共通スケール節の実測反映・版表記 1.14.2・YouTube 動画単位行とチャンネル分布表の削除）に対する承認である。 2026-11-05 の v1.14.3 準備（版表記 1.14.3・THCNM 公開状態の訂正）後の hash に再固定した。 2026-11-05 の v1.14.4 準備（版表記 1.14.4・現行窓 5年 common-scale の反映）後の hash に再固定した。 2026-11-05 の v1.14.5 準備（版表記 1.14.5・C3 内容レビューゲートの追加）後の hash に再固定した。 2026-11-05 の v1.14.5 C3 内容レビュー（C1〜C45、evidence.content_review）と、そのレビューで検出した記載の訂正後の hash に再固定した。 承認の対象はこの hash の artifact であり、内容レビューの記録は owner の 2026-11-05 指示で Delta agent が実施した。 2026-11-06 の C3 内容レビュー（C1〜C45、evidence.content_review）と、そのレビュー後の hash（月次節の追加を含む）に再固定した。 2026-11-06 の v1.14.6 準備（版表記 1.14.6）後の hash に再固定した（status は approved を維持）。 2026-11-06 の v1.14.7 準備（版表記 1.14.7）後の hash に再固定した（status は approved を維持）。"
+  "recorded_at": "2026-11-11",
+  "basis": "owner が 2026-11-05 のスレッドで、PUB-04・PUB-10 を含む全項目の対応とリリースまでを明示的に指示した。承認の対象は現行 sha256 の artifact（publication/research_thcv.html、2026-11-05 時点）。PUB-04 は evidence の personal_data_review_basis に、PUB-06〜PUB-09 は同 evidence の各 basis に記録した。 2026-11-06 の owner 指示で THCV リキッド run（435 件）の月次公開日件数の別集計節を追加し、C1–C45 を再レビューした。承認の対象は現行 sha256 の artifact である。 2026-11-11: 図入り v1.14.8 の C1-C45 内容レビュー、公開契約再審査、現行HTML hash再固定をowner指示で実施。 2026-11-11: 図入り v1.14.8 の C1-C45 内容レビュー、公開契約再審査、現行HTML hash再固定をowner指示で実施。",
+  "notes": "PC-7 は判断記録が存在することを検査する。PUB-10 は approved かつ同一 sha256 の decision で PASS。承認は現行 hash に固定され、artifact が変われば自動的には引き継がれない。2026-11-05 の内容変更（共通スケール節の実測反映・版表記 1.14.2・YouTube 動画単位行とチャンネル分布表の削除）に対する承認である。 2026-11-05 の v1.14.3 準備（版表記 1.14.3・THCNM 公開状態の訂正）後の hash に再固定した。 2026-11-05 の v1.14.4 準備（版表記 1.14.4・現行窓 5年 common-scale の反映）後の hash に再固定した。 2026-11-05 の v1.14.5 準備（版表記 1.14.5・C3 内容レビューゲートの追加）後の hash に再固定した。 2026-11-05 の v1.14.5 C3 内容レビュー（C1〜C45、evidence.content_review）と、そのレビューで検出した記載の訂正後の hash に再固定した。 承認の対象はこの hash の artifact であり、内容レビューの記録は owner の 2026-11-05 指示で Delta agent が実施した。 2026-11-06 の C3 内容レビュー（C1〜C45、evidence.content_review）と、そのレビュー後の hash（月次節の追加を含む）に再固定した。 2026-11-06 の v1.14.6 準備（版表記 1.14.6）後の hash に再固定した（status は approved を維持）。 2026-11-06 の v1.14.7 準備（版表記 1.14.7）後の hash に再固定した（status は approved を維持）。 2026-11-11 の v1.14.8 図入り版 hash に再固定。 2026-11-11 の v1.14.8 図入り版 hash に再固定。"
 }

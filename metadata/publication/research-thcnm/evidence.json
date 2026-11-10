@@ -2,14 +2,14 @@
   "schema_version": "1.0.0",
   "record": "publication_review_evidence",
   "artifact_id": "research-thcnm",
-  "recorded_at": "2026-11-05",
+  "recorded_at": "2026-11-11",
   "integrity": "verified",
   "personal_data_reviewed": true,
   "redistribution_confirmed": true,
   "anonymization_applied": true,
   "citations": {
     "integrity": [
-      "sha256(publication/research_thcnm.html, 2026-11-05 検算) = d1e1229ac6ff692611bb16f8b4b8eea4a0357fe9c676f4cc9b446c34ea3b552d"
+      "sha256(publication/research_thcnm.html, 2026-11-11 C3再レビュー・図入り版再固定) = b2897d02f72b49e0894f8bea19b0f3c178c8d8e01dd40a2c6a4282d3a207cc8a"
     ],
     "publication_contract": [
       "validation.cli audit-publication --output docs/audits/publication-contract.json（2026-11-04）: 本 artifact に finding は無い（適用される PC-1〜PC-7 すべて）。PC-7 は本 envelope の存在と hash 固定を検査する。",
@@ -81,7 +81,9 @@
       "2026-11-05: 変更内容 — 12ヶ月・3ヶ月の共通スケール（CBD + THC + THCNM）を主比較・補足として追加し、単独系列の初出 2026-10-18（値 47）が単独系列の値であること、5年の共通スケール被覆が未完了であること、引用版を 1.14.2 にすること、3ヶ月の孤立値（2026-08-13 = 12）を解釈しないことを明記した。",
       "2026-11-05: 公開状態の記述を decision（approved）と公開適格ゲート（SUPPORTED）に合わせて訂正した。PC-9 の追加により、この不整合は audit-publication と gate-publication で検出される。",
       "2026-11-05: C3 内容レビュー（C1〜C45）で次を検出して訂正した — 12ヶ月 THC の最大 18 は 3 週あること、3ヶ月 THCNM の非ゼロ 10 日は連続ではないこと、5年共通スケールの要求語 5 語と正規化分母、データソース表への 5年共通 run の追加、average_interest（整数丸め）との関係、3ヶ月 run_metadata の granularity 不備の開示、YouTube 実行状態の記録語彙（success / Apify SUCCEEDED）、再計算できない重複除去後の件数を派生列から外したこと、公開状態の PUB-11 と C3 記録への更新。",
-      "2026-11-05: C3 チェックリストを metadata/publication/content-review-checklist.json に置いた（metadata/publication/<id>/ は審査 envelope とみなされるため、サブディレクトリを作らない）。公開状態節の参照を同じ path に合わせた。"
+      "2026-11-05: C3 チェックリストを metadata/publication/content-review-checklist.json に置いた（metadata/publication/<id>/ は審査 envelope とみなされるため、サブディレクトリを作らない）。公開状態節の参照を同じ path に合わせた。",
+      "2026-11-11: 図入り版 v1.14.8 の再レビュー。推移・年次・共通スケール年間バブルマトリクスの位置、出所、制約、部分年表示を確認。",
+      "2026-11-11: 図入り版 v1.14.8 の再レビュー。推移・年次・共通スケール年間バブルマトリクスの位置、出所、制約、部分年表示を確認。"
     ],
     "google_trends_common_scale_5y": [
       "run 20261104T195136Z-google-trends-cannabinoid-raw-collection（geo JP / today 5-y / 窓 2021-10-31_2026-11-08 / 262 週 / CBD 33.0916 / THC 5.0496 / THCNM 0.0000（非ゼロ 0））",
@@ -97,7 +99,7 @@
     "pc2_release_commit": "THCNM の単独系列 2 run と共通スケール 3 run のディレクトリは Git 追跡済み（共通スケール 2 run は commit 4cf5509、5年 common-scale は v1.14.4）。計画・窓・policy も同じく追跡されている。",
     "three_month_granularity_label": "3ヶ月 run の temporal_provenance.granularity は adapter が week と記録しているが、返却点は日次 93 点（2026-08-04〜2026-11-04）である。ISS-20261105-GT-031 で adapter を修正済みで、当該 run の記録は当時のまま残す。ページの 3ヶ月節「記録の不備」で開示した。"
   },
-  "notes": "この evidence は機械的な存在・整合性の根拠、run / artifact の対応、完了した personal-data / redistribution / aggregation / content レビュー、gate-publication の記録を保持する。 content_review は C1〜C45（metadata/publication/content-review-checklist.json v1.0.0）の 45 項目を、本ページ・raw/comparison 成果物・methodology・taxonomy・evidence に照合した記録で、reviewer は owner の 2026-11-05 指示でレビューを実施した Delta agent、reviewed_at は 2026-11-05、artifact_sha256 はレビュー対象の現行 HTML。 公開承認とその限界（同一性未確認、raw 非公開）は decision.json に記録する。推測でフラグを立てない。 2026-11-06 の v1.14.6 準備（版表記 1.14.6）後の hash に再固定した。 2026-11-06 の v1.14.7 準備（版表記 1.14.7）後の hash に再固定した。",
+  "notes": "この evidence は機械的な存在・整合性の根拠、run / artifact の対応、完了した personal-data / redistribution / aggregation / content レビュー、gate-publication の記録を保持する。 content_review は C1〜C45（metadata/publication/content-review-checklist.json v1.0.0）の 45 項目を、本ページ・raw/comparison 成果物・methodology・taxonomy・evidence に照合した記録で、reviewer は owner の 2026-11-05 指示でレビューを実施した Delta agent、reviewed_at は 2026-11-05、artifact_sha256 はレビュー対象の現行 HTML。 公開承認とその限界（同一性未確認、raw 非公開）は decision.json に記録する。推測でフラグを立てない。 2026-11-06 の v1.14.6 準備（版表記 1.14.6）後の hash に再固定した。 2026-11-06 の v1.14.7 準備（版表記 1.14.7）後の hash に再固定した。 2026-11-11 に図入り v1.14.8 の C1-C45 再レビューと現行hash再固定を実施。 2026-11-11 に図入り v1.14.8 の C1-C45 再レビューと現行hash再固定を実施。",
   "personal_data_review_basis": "2026-11-05: publication/research_thcnm.html の本文・表・画像・リンクを個人データの観点で確認した。走査結果: メールアドレス 0、@ハンドル 0、10 桁以上の識別子 0、行単位の投稿・動画の行 0（表ヘッダに 投稿者/ユーザー名/アカウント/動画 ID/タイトル/チャンネル/本文 を含む表は無い）。集計表のみで、行単位のデータを含まない。 外部参照は doi.org（DOI）、zenodo.org（DOI バッジ）。時刻は run の収集時刻（UTC）のみ。結果: 個人を特定できる情報は含まれない。",
   "anonymization_basis": "行単位のデータを掲載しない方針により、個人・アカウント単位の値は集計に置き換えている（投稿・動画の個別行なし）。",
   "provenance_present": true,
@@ -112,9 +114,9 @@
   "content_review": {
     "checklist_id": "publication-content-review-c1-c45",
     "checklist_version": "1.0.0",
-    "artifact_sha256": "d1e1229ac6ff692611bb16f8b4b8eea4a0357fe9c676f4cc9b446c34ea3b552d",
-    "reviewer": "Delta agent (owner instruction 2026-11-05: THCNM の C1〜C45 内容レビューを実施)",
-    "reviewed_at": "2026-11-05",
+    "artifact_sha256": "b2897d02f72b49e0894f8bea19b0f3c178c8d8e01dd40a2c6a4282d3a207cc8a",
+    "reviewer": "Delta agent (owner instruction: go all, 2026-11-11)",
+    "reviewed_at": "2026-11-11",
     "items": [
       {
         "id": "C1",
@@ -324,22 +326,22 @@
       {
         "id": "C42",
         "verdict": "pass",
-        "basis": "限界表に 12 行（相対指数・窓の解決・系列間比較・共通スケールの解像度・3ヶ月の孤立値・5年の被覆・0 の意味・反復の欠如・YouTube の地域・YouTube の被覆・同一性・法的地位・欠測の扱い・配布物との関係）。"
+        "basis": "限界表に 12 行（相対指数・窓の解決・系列間比較・共通スケールの解像度・3ヶ月の孤立値・5年の被覆・0 の意味・反復の欠如・YouTube の地域・YouTube の被覆・同一性・法的地位・欠測の扱い・配布物との関係）。 図にも相対指数・サンプル性・部分年・比較禁止の制約を表示した。 図にも相対指数・サンプル性・部分年・比較禁止の制約を表示した。"
       },
       {
         "id": "C43",
         "verdict": "pass",
-        "basis": "引用の Version 1.14.7 は CITATION.cff の version 1.14.7 と一致する。"
+        "basis": "引用の Version 1.14.8 は CITATION.cff の version 1.14.8 と一致する。"
       },
       {
         "id": "C44",
         "verdict": "pass",
-        "basis": "公開状態節が decision approved・artifact_sha256 一致・ゲート SUPPORTED（PUB-01〜PUB-11 PASS、WARNING なし）・C3 記録を記載。本レビュー後の gate-publication 出力と一致する。"
+        "basis": "図入り版の公開状態、decision/evidence/artifact の現行hash固定、公開契約再審査対象を確認した（2026-11-11）。"
       },
       {
         "id": "C45",
         "verdict": "pass",
-        "basis": "「最終更新 / 改訂」行が 2026-11-05 の共通スケール追加・公開状態の訂正・C3 レビューによる訂正を記載している。"
+        "basis": "「最終更新 / 改訂」行が 2026-11-05 の共通スケール追加・公開状態の訂正・C3 レビューによる訂正を記載している。 2026-11-11: 図入り版の推移・年次・共通スケール年間バブルマトリクス、部分年注記、出所・制約を確認した。 2026-11-11: 図入り版の推移・年次・共通スケール年間バブルマトリクス、部分年注記、出所・制約を確認した。"
       }
     ]
   }

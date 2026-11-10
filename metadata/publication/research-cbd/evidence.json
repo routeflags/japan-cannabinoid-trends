@@ -2,11 +2,11 @@
   "schema_version": "1.0.0",
   "record": "publication_review_evidence",
   "artifact_id": "research-cbd",
-  "recorded_at": "2026-11-06",
+  "recorded_at": "2026-11-11",
   "integrity": "verified",
   "citations": {
     "integrity": [
-      "sha256(publication/research_cbd.html, 2026-11-06 検算・typo 訂正再固定) = 87b20116409bcd9ed738c49eddecd7855a5cfe5d65f7714f8da0f287c8ab778c"
+      "sha256(publication/research_cbd.html, 2026-11-11 C3再レビュー・図入り版再固定) = 6adc02ff2a7dca6b7ff4145a122f6418c77864ef1e04fd99b95f3e83e8956f81"
     ],
     "publication_contract": [
       "validation.cli audit-publication（2026-10-15）: PC-1〜PC-8 の機械検査対象。PC-7 は本 envelope の存在と hash 固定を検査する。",
@@ -16,7 +16,9 @@
       "2026-11-05: 変更内容 — 研究質問を「日本におけるCBD成分へのオンライン関心は、どのように推移しているか？」に統一し、引用の版表記を 1.14.2（CITATION.cff）に更新した。 / YouTube 節から動画単位の行（動画 ID・タイトル・チャンネル・URL・再生数）を削除し、あわせてチャンネル名を含む分布表（X・YouTube の上位5チャンネル）を削除した（集計のみ、ISS-20261015-COL-030 §4.1、docs/domain/contracts/processing.md）。 / Google Trends 節に要求条件（geo / timeframe）と観測範囲の区別、表ごとの出所 run、0 の意味（相対指数の最小値であり欠測ではない）を追記した。",
       "2026-11-05: 変更内容 — Google Trends の共通スケール節を、CBD・THC を同一 compare_terms 要求に含むアンカー付き run の実測に合わせて更新した。現行窓の run がある場合は現行窓、無い場合は旧窓の歴史観測と明記し、現行窓は未取得と記載した。単独系列の値は代用していない。",
       "2026-11-05: C3 内容レビュー（C1〜C45）で次を検出して訂正した — 5年共通スケールの要求語 5 語と正規化分母の開示、12ヶ月共通スケールの正規化分母と THCNM 全 0 の解像度注記、収集方法（google-trends-mcp 0.1.1）の記載、単発 run と安定性未測定・run 間/窓間の平均を比較しない・ソース間で合算しない旨の追記、YouTube・X の raw 非保持（再計算不能）の明示、dated YouTube 節への半開区間の併記、X 節の存在しない raw パス（datasets/cannabinoid-social-trends/data/raw/x/）の削除、YouTube 節の旧 study パス（datasets/cannabinoid-multi-trends/）を datasets/cannabinoid-raw-collection/ に修正、窓の登録ファイルの記載、公開状態の節と改訂行の追加（v1.14.5）。データ値そのものの変更は無い。",
-      "2026-11-06: CBD リキッド 2 run（456 件 date_filter=all・393 件 date_filter=year）の月次公開日件数（ピーク月・年次分布・再生数統計）を別集計の節として追加した。既存の「CBD オイル」節と dated 節は変更していない。年次合計=返却件数、ピーク月（B は 2025-12 と 2026-01 の同点併記）、再生数統計は採用済み raw から再計算して一致を確認した。"
+      "2026-11-06: CBD リキッド 2 run（456 件 date_filter=all・393 件 date_filter=year）の月次公開日件数（ピーク月・年次分布・再生数統計）を別集計の節として追加した。既存の「CBD オイル」節と dated 節は変更していない。年次合計=返却件数、ピーク月（B は 2025-12 と 2026-01 の同点併記）、再生数統計は採用済み raw から再計算して一致を確認した。",
+      "2026-11-11: 図入り版 v1.14.8 の再レビュー。推移・年次・共通スケール年間バブルマトリクスの位置、出所、制約、部分年表示を確認。",
+      "2026-11-11: 図入り版 v1.14.8 の再レビュー。推移・年次・共通スケール年間バブルマトリクスの位置、出所、制約、部分年表示を確認。"
     ],
     "raw_evidence": [
       "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261002T063821Z-google-trends-cbd/run_metadata.json sha256 = a72651ed22b39a2fb2b11ccedd9e5330bb521b55a6a770ab46e387f912d4fbf1",
@@ -41,7 +43,7 @@
     "publication_approval": "公開承認は decision.status = approved（owner 指示 2026-11-05）。C3 内容レビュー（C1〜C45）は evidence.content_review に記録した。",
     "human_content_review": "効能表現・法務・再配布条件などの人間による最終審査は未記録。"
   },
-  "notes": "この evidence は機械的な存在・整合性の根拠だけを記録する。公開承認・人間の内容審査は推測で埋めない。2026-10-15 に ISS-20261012-CBD-002 / CBD-006 の数値訂正で hash を再固定した（照合は docs/reports/20261015d-cbd-page-provenance-reconciliation.md）。 2026-11-05 に審査対象の hash を再固定し、変更内容を citations.content_changes に記録した。公開承認・人間の内容審査は推測で埋めない。 content_review は C1〜C45（metadata/publication/content-review-checklist.json v1.0.0）の 45 項目を本ページ・raw/comparison 成果物・methodology・taxonomy・evidence に照合した記録で、reviewer は owner の 2026-11-05 指示でレビューを実施した Delta agent、reviewed_at は 2026-11-05、artifact_sha256 はレビュー対象の現行 HTML。 2026-11-06 の v1.14.6 準備（版表記 1.14.6）後の hash に再固定した。 2026-11-06 の v1.14.7 準備（版表記 1.14.7）後の hash に再固定した。",
+  "notes": "この evidence は機械的な存在・整合性の根拠だけを記録する。公開承認・人間の内容審査は推測で埋めない。2026-10-15 に ISS-20261012-CBD-002 / CBD-006 の数値訂正で hash を再固定した（照合は docs/reports/20261015d-cbd-page-provenance-reconciliation.md）。 2026-11-05 に審査対象の hash を再固定し、変更内容を citations.content_changes に記録した。公開承認・人間の内容審査は推測で埋めない。 content_review は C1〜C45（metadata/publication/content-review-checklist.json v1.0.0）の 45 項目を本ページ・raw/comparison 成果物・methodology・taxonomy・evidence に照合した記録で、reviewer は owner の 2026-11-05 指示でレビューを実施した Delta agent、reviewed_at は 2026-11-05、artifact_sha256 はレビュー対象の現行 HTML。 2026-11-06 の v1.14.6 準備（版表記 1.14.6）後の hash に再固定した。 2026-11-06 の v1.14.7 準備（版表記 1.14.7）後の hash に再固定した。 2026-11-11 に図入り v1.14.8 の C1-C45 再レビューと現行hash再固定を実施。 2026-11-11 に図入り v1.14.8 の C1-C45 再レビューと現行hash再固定を実施。",
   "personal_data_reviewed": true,
   "personal_data_review_basis": "2026-11-05: publication/research_cbd.html の本文・表・画像・リンクを個人データの観点で確認した。走査結果: メールアドレス 0、@ハンドル 0、10 桁以上の識別子 0、行単位の投稿・動画の行 0（表ヘッダに 投稿者/ユーザー名/アカウント/動画 ID/タイトル/チャンネル/本文 を含む表は無い）。X 節・YouTube 節は件数・比率・Wilson 95% CI・再生数/動画長統計などの集計のみで、投稿本文・ユーザー名・動画単位の行・チャンネル名を含まない。 外部参照は doi.org（DOI）、www.mhlw.go.jp（厚生労働省（制度））、www.thch-vape.shop（当社ストア（COA 画像））、zenodo.org（DOI バッジ）。時刻は run の収集時刻（UTC）のみ。結果: 個人を特定できる情報は含まれない。",
   "anonymization_applied": true,
@@ -59,9 +61,9 @@
   "content_review": {
     "checklist_id": "publication-content-review-c1-c45",
     "checklist_version": "1.0.0",
-    "artifact_sha256": "87b20116409bcd9ed738c49eddecd7855a5cfe5d65f7714f8da0f287c8ab778c",
-    "reviewer": "Delta agent (owner instruction 2026-11-06: C1–C45 review of research-cbd)",
-    "reviewed_at": "2026-11-06",
+    "artifact_sha256": "6adc02ff2a7dca6b7ff4145a122f6418c77864ef1e04fd99b95f3e83e8956f81",
+    "reviewer": "Delta agent (owner instruction: go all, 2026-11-11)",
+    "reviewed_at": "2026-11-11",
     "items": [
       {
         "id": "C1",
@@ -271,22 +273,22 @@
       {
         "id": "C42",
         "verdict": "pass",
-        "basis": "各節の「制約」（相対指数・0 の意味・単発 run・X の誤分類・YouTube のサンプリングと raw 非保持・COA の限界）が限界を列挙している。新節の「制約」はサンプル性・結果上限未記録・再生数の時点性・未取得≠0・合算/比較禁止・行単位非公開を列挙した。"
+        "basis": "各節の「制約」（相対指数・0 の意味・単発 run・X の誤分類・YouTube のサンプリングと raw 非保持・COA の限界）が限界を列挙している。新節の「制約」はサンプル性・結果上限未記録・再生数の時点性・未取得≠0・合算/比較禁止・行単位非公開を列挙した。 図にも相対指数・サンプル性・部分年・比較禁止の制約を表示した。 図にも相対指数・サンプル性・部分年・比較禁止の制約を表示した。"
       },
       {
         "id": "C43",
         "verdict": "pass",
-        "basis": "引用の Version 1.14.7 は CITATION.cff の version 1.14.7 と一致する。"
+        "basis": "引用の Version 1.14.8 は CITATION.cff の version 1.14.8 と一致する。"
       },
       {
         "id": "C44",
         "verdict": "pass",
-        "basis": "公開状態節を 2026-11-06 の gate 実行に更新し、decision approved・artifact_sha256 一致・ゲート SUPPORTED（PUB-01〜PUB-11、WARNING なし）・C3 記録を記載している（gate-publication の結果で確認する）。"
+        "basis": "図入り版の公開状態、decision/evidence/artifact の現行hash固定、公開契約再審査対象を確認した（2026-11-11）。"
       },
       {
         "id": "C45",
         "verdict": "pass",
-        "basis": "「改訂」に 2026-11-06 の追記（CBD リキッド 2 run の月次公開日件数の別集計節の追加、既存 2 節は不変）を記載した。"
+        "basis": "「改訂」に 2026-11-06 の追記（CBD リキッド 2 run の月次公開日件数の別集計節の追加、既存 2 節は不変）を記載した。 2026-11-11: 図入り版の推移・年次・共通スケール年間バブルマトリクス、部分年注記、出所・制約を確認した。 2026-11-11: 図入り版の推移・年次・共通スケール年間バブルマトリクス、部分年注記、出所・制約を確認した。"
       }
     ]
   }

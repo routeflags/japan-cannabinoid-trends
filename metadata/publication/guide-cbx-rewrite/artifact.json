@@ -6,8 +6,8 @@
   "layer": "publication",
   "source_kind": "html",
   "storage_policy_id": "publication-html-candidate",
-  "sha256": "e671c705e87e97e9abbb0f6c7e16c8a0b89f18f2bb6d0b2aef7caea09b44c54a",
+  "sha256": "da54913e1795674fdb5821570b64b945601299947126556e4f56c04f745b1ba9",
   "byte_length": 70320,
-  "recorded_at": "2026-11-05",
-  "notes": "未公開 publication HTML。PC-7 の審査 envelope として内容 hash を固定する。2026-10-15 のオーナー確認により公開候補として承認済み。v1.13.0 release metadata sync 後の hash。 v1.13.1 release metadata sync 後の hash。 v1.14.0 release metadata sync 後の hash。 2026-11-06 の v1.14.6 準備（版表記 1.14.6）後の hash に再固定した。 2026-11-06 の v1.14.7 準備（版表記 1.14.7）後の hash に再固定した。"
+  "recorded_at": "2026-11-11",
+  "notes": "未公開 publication HTML。PC-7 の審査 envelope として内容 hash を固定する。2026-10-15 のオーナー確認により公開候補として承認済み。v1.13.0 release metadata sync 後の hash。 v1.13.1 release metadata sync 後の hash。 v1.14.0 release metadata sync 後の hash。 2026-11-06 の v1.14.6 準備（版表記 1.14.6）後の hash に再固定した。 2026-11-06 の v1.14.7 準備（版表記 1.14.7）後の hash に再固定した。 2026-11-11: v1.14.8 citation sync hash re-pinned."
 }

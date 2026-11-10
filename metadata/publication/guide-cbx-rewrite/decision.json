@@ -3,12 +3,12 @@
   "record": "publication_decision",
   "decision_id": "publication-review-guide-cbx-rewrite",
   "artifact_id": "guide-cbx-rewrite",
-  "artifact_sha256": "e671c705e87e97e9abbb0f6c7e16c8a0b89f18f2bb6d0b2aef7caea09b44c54a",
+  "artifact_sha256": "da54913e1795674fdb5821570b64b945601299947126556e4f56c04f745b1ba9",
   "status": "approved",
-  "reviewed_at": "2026-11-05",
-  "reviewer": "owner (thread instruction 2026-11-05: PUB-04・PUB-10 を含む全項目の対応とリリースまでを指示)",
+  "reviewed_at": "2026-11-11",
+  "reviewer": "owner (thread instruction: go all, 2026-11-11)",
   "criteria_version": "PC-7 / publication-contract-v1.0.0 (2026-10-15)",
-  "recorded_at": "2026-11-05",
-  "basis": "owner が 2026-11-05 のスレッドで、全項目の対応とリリースまでを明示的に指示した。2026-11-05 の変更は引用の版表記 1.14.0 → 1.14.2 の同期のみで、本文の内容は変えていない。承認は現行 sha256 に固定される。",
-  "notes": "PC-7 は判断記録が存在することを検査する。PUB-10 は approved かつ同一 sha256 の decision で PASS。2026-10-15 の承認は旧 hash に対するもので、版表記の同期により対象外となったため、今回の指示で現行 hash に再承認した。 2026-11-05 の v1.14.3 準備（版表記 1.14.3・THCNM 公開状態の訂正）後の hash に再固定した。 2026-11-05 の v1.14.4 準備（版表記 1.14.4・現行窓 5年 common-scale の反映）後の hash に再固定した。 2026-11-05 の v1.14.5 準備（版表記 1.14.5・C3 内容レビューゲートの追加）後の hash に再固定した。 2026-11-05 の C3 内容レビュー（C1〜C45、evidence.content_review）と、そのレビューで検出した記載の訂正後の hash に再固定した。 2026-11-06 の v1.14.6 準備（版表記 1.14.6）後の hash に再固定した（status は approved を維持）。 2026-11-06 の v1.14.7 準備（版表記 1.14.7）後の hash に再固定した（status は approved を維持）。"
+  "recorded_at": "2026-11-11",
+  "basis": "owner が 2026-11-05 のスレッドで、全項目の対応とリリースまでを明示的に指示した。2026-11-05 の変更は引用の版表記 1.14.0 → 1.14.2 の同期のみで、本文の内容は変えていない。承認は現行 sha256 に固定される。 2026-11-11: v1.14.8 citation sync hash re-pinned; no guide content change.",
+  "notes": "PC-7 は判断記録が存在することを検査する。PUB-10 は approved かつ同一 sha256 の decision で PASS。2026-10-15 の承認は旧 hash に対するもので、版表記の同期により対象外となったため、今回の指示で現行 hash に再承認した。 2026-11-05 の v1.14.3 準備（版表記 1.14.3・THCNM 公開状態の訂正）後の hash に再固定した。 2026-11-05 の v1.14.4 準備（版表記 1.14.4・現行窓 5年 common-scale の反映）後の hash に再固定した。 2026-11-05 の v1.14.5 準備（版表記 1.14.5・C3 内容レビューゲートの追加）後の hash に再固定した。 2026-11-05 の C3 内容レビュー（C1〜C45、evidence.content_review）と、そのレビューで検出した記載の訂正後の hash に再固定した。 2026-11-06 の v1.14.6 準備（版表記 1.14.6）後の hash に再固定した（status は approved を維持）。 2026-11-06 の v1.14.7 準備（版表記 1.14.7）後の hash に再固定した（status は approved を維持）。 2026-11-11 v1.14.8 hash re-pinned."
 }

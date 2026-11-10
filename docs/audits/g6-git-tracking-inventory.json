@@ -4,13 +4,12 @@
   "spec": "docs/plans/20261013f.md §15 (local plan; not tracked)",
   "target_root": "datasets",
   "include_private": false,
-  "count": 390,
+  "count": 467,
   "extra_count": 44,
   "raw_modified": false,
   "state_summary": {
-    "absent": 15,
-    "ignored": 1,
-    "tracked": 418
+    "absent": 16,
+    "tracked": 495
   },
   "entries": [
     {
@@ -144,6 +143,16 @@
       "unchanged": true
     },
     {
+      "path": "datasets/cannabinoid-raw-collection/analysis/README.md",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "5e2923f6fa68287dd2291ca2342f52d43793863dd27e2095d75127dc3446d37a",
+      "sha256_after": "5e2923f6fa68287dd2291ca2342f52d43793863dd27e2095d75127dc3446d37a",
+      "unchanged": true
+    },
+    {
       "path": "datasets/cannabinoid-raw-collection/analysis/cbd-common-scale-5y/README.md",
       "exists": true,
       "state": "tracked",
@@ -181,6 +190,766 @@
       "ignored": false,
       "sha256": "7b23b92b8f38eba01c5bf6eddb2b2d32956a06342c814abcad8764558e651bbd",
       "sha256_after": "7b23b92b8f38eba01c5bf6eddb2b2d32956a06342c814abcad8764558e651bbd",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/analysis/cbd-page-charts/README.md",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "8918381d15fc77d866dc0d028a523b587c1de445803b2d33a54dc1359d5089e7",
+      "sha256_after": "8918381d15fc77d866dc0d028a523b587c1de445803b2d33a54dc1359d5089e7",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/analysis/cbd-page-charts/bubble-matrix-setA.csv",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "023b668d02b12d6e9ef496f8f5792439c154ca06bd5cc5c94863bdef90098bfc",
+      "sha256_after": "023b668d02b12d6e9ef496f8f5792439c154ca06bd5cc5c94863bdef90098bfc",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/analysis/cbd-page-charts/provenance.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "4187a84758f248f08ffcfa8d5608197ebf1323960bdb9787af8fca1f65a88186",
+      "sha256_after": "4187a84758f248f08ffcfa8d5608197ebf1323960bdb9787af8fca1f65a88186",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/analysis/cbd-page-charts/trends-5y-standalone.csv",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "42b04e07b5b6874299b89b9603e84f65bb963567366605ec273656abf5670cfe",
+      "sha256_after": "42b04e07b5b6874299b89b9603e84f65bb963567366605ec273656abf5670cfe",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/analysis/cbd-page-charts/youtube-yearly-collection-a.csv",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "986c801554178b064aa7e5c440b1fb50269dbac356d11911f30e80fc9312d833",
+      "sha256_after": "986c801554178b064aa7e5c440b1fb50269dbac356d11911f30e80fc9312d833",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/analysis/cbd-page-charts/youtube-yearly-collection-b.csv",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "237b34183bbb7140fc4fe81c6fd83ab1c4188b8526bf41b623882672b1a6168b",
+      "sha256_after": "237b34183bbb7140fc4fe81c6fd83ab1c4188b8526bf41b623882672b1a6168b",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/analysis/cbg-page-charts/README.md",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "056d63993bbd9074119b3d3876f1a1bafc4c22c35f95846e71a0ba60c9b888e2",
+      "sha256_after": "056d63993bbd9074119b3d3876f1a1bafc4c22c35f95846e71a0ba60c9b888e2",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/analysis/cbg-page-charts/bubble-matrix-setA.csv",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "3115fde96e945e8fd6593358a3fa5747f02b2f021f21e339230061b1fcd6aa02",
+      "sha256_after": "3115fde96e945e8fd6593358a3fa5747f02b2f021f21e339230061b1fcd6aa02",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/analysis/cbg-page-charts/provenance.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "4e5dedf24b1e0f6cd2384ce6acdfd49a71c1b46e9a8233def3fa8882c7f5ecdd",
+      "sha256_after": "4e5dedf24b1e0f6cd2384ce6acdfd49a71c1b46e9a8233def3fa8882c7f5ecdd",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/analysis/cbg-page-charts/trends-5y-standalone.csv",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "4fc8e05a3ae3d0962754633a10797ae8353a8a9ca1c17a92d23113dd315398b7",
+      "sha256_after": "4fc8e05a3ae3d0962754633a10797ae8353a8a9ca1c17a92d23113dd315398b7",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/analysis/cbg-page-charts/youtube-yearly-cbg-liquid.csv",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "ad656b1b282a5114d74aa470998e3bcf7ad0f149fcba359afff67a72c9dcffbb",
+      "sha256_after": "ad656b1b282a5114d74aa470998e3bcf7ad0f149fcba359afff67a72c9dcffbb",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/analysis/cbn-page-charts/README.md",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "805609383ef5c7b5f4aaf37650ca970c9d56aa937d10a39176a538c3cee94f4a",
+      "sha256_after": "805609383ef5c7b5f4aaf37650ca970c9d56aa937d10a39176a538c3cee94f4a",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/analysis/cbn-page-charts/bubble-matrix-setB.csv",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "3241e60caa0ed6242040ff83d5493ee938b3e9c649dab7d17c07283ca4859570",
+      "sha256_after": "3241e60caa0ed6242040ff83d5493ee938b3e9c649dab7d17c07283ca4859570",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/analysis/cbn-page-charts/provenance.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "a792be17bb8a68f1da541e7e7ed2b8c420f813bd00af677419a6221b150f1688",
+      "sha256_after": "a792be17bb8a68f1da541e7e7ed2b8c420f813bd00af677419a6221b150f1688",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/analysis/cbn-page-charts/trends-5y-standalone.csv",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "d630d1d0ab7d52114c420a356db86655b7d5f13efab30c75147dfd5fecb57065",
+      "sha256_after": "d630d1d0ab7d52114c420a356db86655b7d5f13efab30c75147dfd5fecb57065",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/analysis/cbn-page-charts/youtube-yearly-cbn-liquid.csv",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "032a0f0c8999833471c232380c77c8e3c527f521c58c7a38cbe11b7be1e5f6d5",
+      "sha256_after": "032a0f0c8999833471c232380c77c8e3c527f521c58c7a38cbe11b7be1e5f6d5",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/analysis/cbx-page-charts/README.md",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "152c997fec2536e3d9f5dc8a64f35bf70904fdb4e8d2dafaeb6663175836a87d",
+      "sha256_after": "152c997fec2536e3d9f5dc8a64f35bf70904fdb4e8d2dafaeb6663175836a87d",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/analysis/cbx-page-charts/bubble-matrix-cbx-bridge.csv",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "ae34d16a5c47eee0c5ba039e8ebda345ee574d42ab92c241a5a319ab8dc070d0",
+      "sha256_after": "ae34d16a5c47eee0c5ba039e8ebda345ee574d42ab92c241a5a319ab8dc070d0",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/analysis/cbx-page-charts/provenance.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "9a540c8ab1a04e284cdb5e9a96fe42e3fc157dda629501e35279d718b28ec4c0",
+      "sha256_after": "9a540c8ab1a04e284cdb5e9a96fe42e3fc157dda629501e35279d718b28ec4c0",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/analysis/cbx-page-charts/trends-5y-standalone.csv",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "46745dbc22bf497c7a8b677a974cfed50b4853e43330aa6de69849cf3ee91620",
+      "sha256_after": "46745dbc22bf497c7a8b677a974cfed50b4853e43330aa6de69849cf3ee91620",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/analysis/cbx-page-charts/youtube-yearly-cbx-liquid.csv",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "7c3428af5001e252629dbcf71ec8d20d4d974863d0bc3ffe81a0bac31f982c49",
+      "sha256_after": "7c3428af5001e252629dbcf71ec8d20d4d974863d0bc3ffe81a0bac31f982c49",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/analysis/crdh-page-charts/README.md",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "ab0ddc030a34991ca706c573ceba6e67d466fdd3ff59496f6a7e83da714c8b76",
+      "sha256_after": "ab0ddc030a34991ca706c573ceba6e67d466fdd3ff59496f6a7e83da714c8b76",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/analysis/crdh-page-charts/bubble-matrix-setB.csv",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "677460eab414beaff2e207afa1ebbf59c3fc325c5e02eee5f5b2d3de82eae678",
+      "sha256_after": "677460eab414beaff2e207afa1ebbf59c3fc325c5e02eee5f5b2d3de82eae678",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/analysis/crdh-page-charts/provenance.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "7fd46372b8486a2a3e5e7e84be4cbe2ff67dde55b4e8f6f01c67f37af71f9255",
+      "sha256_after": "7fd46372b8486a2a3e5e7e84be4cbe2ff67dde55b4e8f6f01c67f37af71f9255",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/analysis/crdh-page-charts/trends-5y-standalone.csv",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "865b07245dad13d42ae8e14daecc25c01bdbd1781485481c4d6184186b7f82a2",
+      "sha256_after": "865b07245dad13d42ae8e14daecc25c01bdbd1781485481c4d6184186b7f82a2",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/analysis/crdh-page-charts/youtube-yearly-crdh-liquid.csv",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "e60c4576bcb5d36d7cfd26be8dc394a7fe0721b41044c4d15340b9e5f7e65489",
+      "sha256_after": "e60c4576bcb5d36d7cfd26be8dc394a7fe0721b41044c4d15340b9e5f7e65489",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/analysis/crdp-page-charts/README.md",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "b1d11449bb8534297fe4415145fbf89dcaa4f4609fe67afa9c6f9d7567d02100",
+      "sha256_after": "b1d11449bb8534297fe4415145fbf89dcaa4f4609fe67afa9c6f9d7567d02100",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/analysis/crdp-page-charts/bubble-matrix-setC.csv",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "94d0838dd248e8eb647365f30a5ca9a44030b237f201e853c9f81ef0f7e117d9",
+      "sha256_after": "94d0838dd248e8eb647365f30a5ca9a44030b237f201e853c9f81ef0f7e117d9",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/analysis/crdp-page-charts/provenance.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "ee740309e0b231019aa09daf485746b4767efe42dea057cd2c943ad5d462df14",
+      "sha256_after": "ee740309e0b231019aa09daf485746b4767efe42dea057cd2c943ad5d462df14",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/analysis/crdp-page-charts/trends-5y-standalone.csv",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "6180a87528cc635003ad4a13fb55ab24d71ef301d3b4762c5efae40f2c536626",
+      "sha256_after": "6180a87528cc635003ad4a13fb55ab24d71ef301d3b4762c5efae40f2c536626",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/analysis/crdp-page-charts/youtube-yearly-crdp-liquid.csv",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "08661984e474cd2a3734554a40b9bbb6e101339f484fe72b6a82bdfbefa1c640",
+      "sha256_after": "08661984e474cd2a3734554a40b9bbb6e101339f484fe72b6a82bdfbefa1c640",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/analysis/h4cbh-page-charts/README.md",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "97ac06a959041e87ca7dcb68028f58feb47a4cc637b6bf9b8b835c7d530a536c",
+      "sha256_after": "97ac06a959041e87ca7dcb68028f58feb47a4cc637b6bf9b8b835c7d530a536c",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/analysis/h4cbh-page-charts/bubble-matrix-setC.csv",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "90310f59ca93492b822006dc0969fa03af6b863823fdbb3b877668613be6ab01",
+      "sha256_after": "90310f59ca93492b822006dc0969fa03af6b863823fdbb3b877668613be6ab01",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/analysis/h4cbh-page-charts/provenance.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "6571fa641c04528e24d86b66a1506b0be4189de332139bc9619051c2db66b9ba",
+      "sha256_after": "6571fa641c04528e24d86b66a1506b0be4189de332139bc9619051c2db66b9ba",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/analysis/h4cbh-page-charts/trends-5y-standalone.csv",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "fb8a7c563ce38c5bae8cc98af4a454207d768d3caaa0ba70686b555d74542f18",
+      "sha256_after": "fb8a7c563ce38c5bae8cc98af4a454207d768d3caaa0ba70686b555d74542f18",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/analysis/h4cbh-page-charts/youtube-yearly-h4cbh-liquid.csv",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "c43f45ab7027e4f91e7b8b93e1fd033c28c7e0015afdd98bfc888d4957e589ea",
+      "sha256_after": "c43f45ab7027e4f91e7b8b93e1fd033c28c7e0015afdd98bfc888d4957e589ea",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/analysis/hhbd-page-charts/README.md",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "dd376b0df4b0008f9e8148bd7ae072178dc422ca39c84b2c56adeb8367472a7f",
+      "sha256_after": "dd376b0df4b0008f9e8148bd7ae072178dc422ca39c84b2c56adeb8367472a7f",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/analysis/hhbd-page-charts/bubble-matrix-setC.csv",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "3d413dc895c3e97c2f6ec9f198fc9dd55220d96f67b67093242074a136f03982",
+      "sha256_after": "3d413dc895c3e97c2f6ec9f198fc9dd55220d96f67b67093242074a136f03982",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/analysis/hhbd-page-charts/provenance.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "6bc4b02999b03d4a7cbbf16c4478468ebb643ab6cba67cc365b95ab4f2e6a34e",
+      "sha256_after": "6bc4b02999b03d4a7cbbf16c4478468ebb643ab6cba67cc365b95ab4f2e6a34e",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/analysis/hhbd-page-charts/trends-5y-standalone.csv",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "d37d3f8e945b450be565282e021b8070d70da641137086299d268f2e2a0ef6cf",
+      "sha256_after": "d37d3f8e945b450be565282e021b8070d70da641137086299d268f2e2a0ef6cf",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/analysis/hhbd-page-charts/youtube-yearly-hhbd-liquid.csv",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "c7823856630b219397a08191274dfb2da335141506c6216b87522f17be8beaf6",
+      "sha256_after": "c7823856630b219397a08191274dfb2da335141506c6216b87522f17be8beaf6",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/analysis/hhc-page-charts/README.md",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "9b4dc04d783610109fa97c1c0c74ce09b14687b59958154227275a97d6acf4ce",
+      "sha256_after": "9b4dc04d783610109fa97c1c0c74ce09b14687b59958154227275a97d6acf4ce",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/analysis/hhc-page-charts/bubble-matrix-setA.csv",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "2c4936670131884b3c8ff0cc30e29b789ef69acd65e41a4b61418ee6587b454b",
+      "sha256_after": "2c4936670131884b3c8ff0cc30e29b789ef69acd65e41a4b61418ee6587b454b",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/analysis/hhc-page-charts/provenance.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "c30d329b0b6ed3e2603f2aae18f63cc64bc0507a2766365c3f98ccfa27dd0ce4",
+      "sha256_after": "c30d329b0b6ed3e2603f2aae18f63cc64bc0507a2766365c3f98ccfa27dd0ce4",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/analysis/hhc-page-charts/trends-5y-standalone.csv",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "7ef00eacc5f9f1f0586ab74ebb6df30c3d500842cf0d46a040d35dff7b5e1349",
+      "sha256_after": "7ef00eacc5f9f1f0586ab74ebb6df30c3d500842cf0d46a040d35dff7b5e1349",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/analysis/hhc-page-charts/youtube-yearly-hhc-liquid.csv",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "9ce3fbeffa1b2d7528aaad751241ae69bc3dcdffe974c86da32a288d1a04e84c",
+      "sha256_after": "9ce3fbeffa1b2d7528aaad751241ae69bc3dcdffe974c86da32a288d1a04e84c",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/analysis/hhc-page-charts/youtube-yearly-hhc.csv",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "f3a55c8f4f5e58a18abeba4323ce8e677805486e044b5e813758ffd63053bce0",
+      "sha256_after": "f3a55c8f4f5e58a18abeba4323ce8e677805486e044b5e813758ffd63053bce0",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/analysis/hhch-page-charts/README.md",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "daa7e3fafa87a0d723bd6e60efec7be08ba383f4cef7e0c3323acc781498e0f0",
+      "sha256_after": "daa7e3fafa87a0d723bd6e60efec7be08ba383f4cef7e0c3323acc781498e0f0",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/analysis/hhch-page-charts/bubble-matrix-setD.csv",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "9a8466706f6260c0bc035161c586e9e80af3540691754bc3a282b126dfa8453b",
+      "sha256_after": "9a8466706f6260c0bc035161c586e9e80af3540691754bc3a282b126dfa8453b",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/analysis/hhch-page-charts/provenance.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "e759d1be937a4939b0044dd7526b525b47b2b41829bd8c2d4b2335a8b8e68dcc",
+      "sha256_after": "e759d1be937a4939b0044dd7526b525b47b2b41829bd8c2d4b2335a8b8e68dcc",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/analysis/hhch-page-charts/trends-5y-standalone.csv",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "fecc90f05d942cc85770e3a3c8f0ae01b5f394758b12c75afd22f2d5a342379d",
+      "sha256_after": "fecc90f05d942cc85770e3a3c8f0ae01b5f394758b12c75afd22f2d5a342379d",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/analysis/hhch-page-charts/youtube-yearly-hhch-liquid.csv",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "0d4ab7542a40b1082692ede62c71f630a305b12f9b0ad300ff96bee83c033011",
+      "sha256_after": "0d4ab7542a40b1082692ede62c71f630a305b12f9b0ad300ff96bee83c033011",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/analysis/thc-o-page-charts/README.md",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "260d136774da0eee950b297c646b07e8c44789698b02fa26e210bf01ccb932e5",
+      "sha256_after": "260d136774da0eee950b297c646b07e8c44789698b02fa26e210bf01ccb932e5",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/analysis/thc-o-page-charts/bubble-matrix-setD.csv",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "40f4a565dcd5532861c1ae1a0d1df2e2e59434b778ad22c9387db38f0eb8671a",
+      "sha256_after": "40f4a565dcd5532861c1ae1a0d1df2e2e59434b778ad22c9387db38f0eb8671a",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/analysis/thc-o-page-charts/provenance.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "2cb215a2d96a383199a5a7f695d0289c4015c9ba491c45b297bc1a1414bd9a15",
+      "sha256_after": "2cb215a2d96a383199a5a7f695d0289c4015c9ba491c45b297bc1a1414bd9a15",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/analysis/thc-o-page-charts/trends-5y-standalone.csv",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "490d3bca96cb5b0abb9a2acd88e2dc6282ea59a11c1acb9492c7bc5ecea0e502",
+      "sha256_after": "490d3bca96cb5b0abb9a2acd88e2dc6282ea59a11c1acb9492c7bc5ecea0e502",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/analysis/thc-o-page-charts/youtube-yearly-thc-o-liquid.csv",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "694387e4235fa2161eeb7afc5b5d9df9fbf99be07f6250e5709f546c93637e37",
+      "sha256_after": "694387e4235fa2161eeb7afc5b5d9df9fbf99be07f6250e5709f546c93637e37",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/analysis/thc-page-charts/README.md",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "048315a16b574113fa2eefd096e3c27ac44828bdfaf9a89dc9acd3879f764530",
+      "sha256_after": "048315a16b574113fa2eefd096e3c27ac44828bdfaf9a89dc9acd3879f764530",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/analysis/thc-page-charts/bubble-matrix-setA.csv",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "023b668d02b12d6e9ef496f8f5792439c154ca06bd5cc5c94863bdef90098bfc",
+      "sha256_after": "023b668d02b12d6e9ef496f8f5792439c154ca06bd5cc5c94863bdef90098bfc",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/analysis/thc-page-charts/provenance.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "e4a23d8b35272a8476a380281eb2588348f966c692c019eda2e1769d39fee30d",
+      "sha256_after": "e4a23d8b35272a8476a380281eb2588348f966c692c019eda2e1769d39fee30d",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/analysis/thc-page-charts/trends-5y-standalone.csv",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "08adaa31b144c8aef1910f2f60f21e8f075e2b57729651f43330766096e86e3c",
+      "sha256_after": "08adaa31b144c8aef1910f2f60f21e8f075e2b57729651f43330766096e86e3c",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/analysis/thc-page-charts/youtube-yearly-thc-liquid.csv",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "cc53f5baba611f0882662ba075e870cee723409c7497d9c2c918b60994f3e372",
+      "sha256_after": "cc53f5baba611f0882662ba075e870cee723409c7497d9c2c918b60994f3e372",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/analysis/thch-page-charts/README.md",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "027e4d7fa90b85050e360fc030918bd6dd93a2e8d7b2649ad67f8174698a7774",
+      "sha256_after": "027e4d7fa90b85050e360fc030918bd6dd93a2e8d7b2649ad67f8174698a7774",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/analysis/thch-page-charts/bubble-matrix-setB.csv",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "9d59ba123dbf10ce5ff6ffa8b598a22267900e1e76c88485b8af4f0de76d9a9e",
+      "sha256_after": "9d59ba123dbf10ce5ff6ffa8b598a22267900e1e76c88485b8af4f0de76d9a9e",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/analysis/thch-page-charts/provenance.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "09bd78d3bcd23b89087b3272ac4e41473c324ff0c1ec383cc472389e30c31c2d",
+      "sha256_after": "09bd78d3bcd23b89087b3272ac4e41473c324ff0c1ec383cc472389e30c31c2d",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/analysis/thch-page-charts/trends-5y-standalone.csv",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "996955a61373ed6a2f9c97c386cbef80e002793ad676b7202a27f028c0913a95",
+      "sha256_after": "996955a61373ed6a2f9c97c386cbef80e002793ad676b7202a27f028c0913a95",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/analysis/thch-page-charts/youtube-yearly-thch-liquid.csv",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "697f5312a61d01e535109aff8a97015e426df8cfc9128d65df2f86de6e1f61e5",
+      "sha256_after": "697f5312a61d01e535109aff8a97015e426df8cfc9128d65df2f86de6e1f61e5",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/analysis/thcnm-page-charts/README.md",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "fa33b0c3a5b56f60b55788c2f3ec3422b9d63d12401226292a127b14af61f8eb",
+      "sha256_after": "fa33b0c3a5b56f60b55788c2f3ec3422b9d63d12401226292a127b14af61f8eb",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/analysis/thcnm-page-charts/bubble-matrix-setD.csv",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "3ec8c076809c2c02c89498effa7077b288e6594ec2544ce59e1a31da5cd58f78",
+      "sha256_after": "3ec8c076809c2c02c89498effa7077b288e6594ec2544ce59e1a31da5cd58f78",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/analysis/thcnm-page-charts/provenance.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "4056c613abb0137786a015f2c0b89feefdc90888b61f3ccb19f1c48b04aa816d",
+      "sha256_after": "4056c613abb0137786a015f2c0b89feefdc90888b61f3ccb19f1c48b04aa816d",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/analysis/thcnm-page-charts/trends-5y-standalone.csv",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "ea205eee757cb82d833d93d501709b8efb8b7ce83291e0275e04c65c73aaba85",
+      "sha256_after": "ea205eee757cb82d833d93d501709b8efb8b7ce83291e0275e04c65c73aaba85",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/analysis/thcv-page-charts/README.md",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "870345f7713acfd96dcd41ffd3d1a9c83abfada2343cbe8e5ebad11a6a013c6d",
+      "sha256_after": "870345f7713acfd96dcd41ffd3d1a9c83abfada2343cbe8e5ebad11a6a013c6d",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/analysis/thcv-page-charts/bubble-matrix-setA.csv",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "83eee7d0439d2fff7b3ee3d41f43a512a5ec318b83d5ceb262f6ba69fa3a248c",
+      "sha256_after": "83eee7d0439d2fff7b3ee3d41f43a512a5ec318b83d5ceb262f6ba69fa3a248c",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/analysis/thcv-page-charts/provenance.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "1b42c9d57dcd96d13cc30bbbe39c48e64d09897f8557dd3b9c80cb99dd77187b",
+      "sha256_after": "1b42c9d57dcd96d13cc30bbbe39c48e64d09897f8557dd3b9c80cb99dd77187b",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/analysis/thcv-page-charts/trends-5y-standalone.csv",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "c8fbb1e49f595a1ef2f7846dfc530ddab1a9ccfa025bab650322267a503ac44a",
+      "sha256_after": "c8fbb1e49f595a1ef2f7846dfc530ddab1a9ccfa025bab650322267a503ac44a",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/analysis/thcv-page-charts/youtube-yearly-thcv-liquid.csv",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "38902604d39742c3617c5bf59bbe33c434fb173da1320e892091e4ad8559ec3f",
+      "sha256_after": "38902604d39742c3617c5bf59bbe33c434fb173da1320e892091e4ad8559ec3f",
       "unchanged": true
     },
     {
@@ -4165,10 +4934,10 @@
     },
     {
       "path": ".staging",
-      "exists": true,
-      "state": "ignored",
+      "exists": false,
+      "state": "absent",
       "tracked": false,
-      "ignored": true,
+      "ignored": false,
       "kind": "local_only"
     },
     {
