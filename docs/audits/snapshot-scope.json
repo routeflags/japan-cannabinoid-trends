@@ -16,9 +16,9 @@
   "retention_record_count": 0,
   "retention_violation_count": 0,
   "retention_violations": [],
-  "claim_count": 70,
+  "claim_count": 72,
   "git_tracked_run_count": 46,
-  "git_untracked_run_count": 24,
+  "git_untracked_run_count": 26,
   "git_tracked_run_ids": [
     "20261014T204841Z-google-trends-cannabinoid-multi-trends",
     "20261014T204852Z-google-trends-cannabinoid-multi-trends",
@@ -91,7 +91,9 @@
     "20261101T112534Z-youtube-cannabinoid-raw-collection",
     "20261101T112555Z-youtube-cannabinoid-raw-collection",
     "20261104T120627Z-youtube-cannabinoid-raw-collection",
-    "20261104T120805Z-youtube-cannabinoid-raw-collection"
+    "20261104T120805Z-youtube-cannabinoid-raw-collection",
+    "20261110T170316Z-youtube-cannabinoid-raw-collection",
+    "20261110T171742Z-youtube-cannabinoid-raw-collection"
   ],
   "runs": [
     {
@@ -1713,6 +1715,52 @@
         {
           "kind": "declaration",
           "path": "20261104-youtube-thcnm-tha-liquid-cannabinoid-raw-collection.json"
+        }
+      ],
+      "retention_status": "git_untracked",
+      "retention_source": "storage_policy",
+      "retention_policy_id": "raw-social-default",
+      "retention_decision_id": null,
+      "availability": "not_repository_retained",
+      "raw_dependent_facts": "unavailable",
+      "record_count": null,
+      "sha256": null
+    },
+    {
+      "run_id": "20261110T170316Z-youtube-cannabinoid-raw-collection",
+      "study_id": "cannabinoid-raw-collection",
+      "resolved_study_id": "cannabinoid-raw-collection",
+      "source_id": "youtube",
+      "claim_sources": [
+        "declaration"
+      ],
+      "references": [
+        {
+          "kind": "declaration",
+          "path": "20261110-youtube-cbc-cbdv-cannabinoid-raw-collection.json"
+        }
+      ],
+      "retention_status": "git_untracked",
+      "retention_source": "storage_policy",
+      "retention_policy_id": "raw-social-default",
+      "retention_decision_id": null,
+      "availability": "not_repository_retained",
+      "raw_dependent_facts": "unavailable",
+      "record_count": null,
+      "sha256": null
+    },
+    {
+      "run_id": "20261110T171742Z-youtube-cannabinoid-raw-collection",
+      "study_id": "cannabinoid-raw-collection",
+      "resolved_study_id": "cannabinoid-raw-collection",
+      "source_id": "youtube",
+      "claim_sources": [
+        "declaration"
+      ],
+      "references": [
+        {
+          "kind": "declaration",
+          "path": "20261110-youtube-cbc-cbdv-cannabinoid-raw-collection.json"
         }
       ],
       "retention_status": "git_untracked",
