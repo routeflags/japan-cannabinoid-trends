@@ -73,7 +73,14 @@
   <p><strong>出所:</strong> run <code>20261015T205048Z-google-trends-cannabinoid-multi-trends</code>（JP / today 5-y / 2026-10-15T20:56:39.857995Z 収集）。記録にある項目: 初出 2021-10-10（値 44）、非ゼロ 262 週 / ゼロ 0 週、データあり期間 2021-10-10 〜 2026-10-11。</p>
   <p><strong>補足:</strong> この表の run は <code>20261015T205048Z-google-trends-cannabinoid-multi-trends</code>（<code>query_id</code> <code>cbd-general-ja</code>）、要求窓は <code>metadata/windows/2021-10-10_2026-10-12.json</code>。5年平均は週次 262 点の算術平均（小数第 2 位）、非ゼロ週は値が 0 でない週である。</p>
 
-  <h3>12ヶ月データサマリー</h3>
+<!-- figure:trends-5y-standalone start -->
+<figure id="figure-trends-5y-standalone">
+  <img src="figures/cbd/trends-5y-standalone.svg" alt="CBD 検索関心度の5年推移" width="960" height="470" style="max-width:100%;height:auto">
+  <figcaption><strong>図1: CBD 検索関心度の5年推移</strong>。値は単独系列の相対指数（この系列の最大 = 100、2025-08-31）で、絶対検索数ではない。破線は週次平均 34.02。観測範囲 2021-10-10 〜 2026-10-11（262 週）。出所: run <code>20261015T205048Z-google-trends-cannabinoid-multi-trends</code>。</figcaption>
+</figure>
+<!-- figure:trends-5y-standalone end -->
+
+<h3>12ヶ月データサマリー</h3>
   <table>
     <thead>
       <tr>
@@ -110,6 +117,14 @@
       <tr><td>THC（アンカー）</td><td>5.0496</td><td>262 週</td><td>派生</td></tr>
     </tbody>
   </table>
+
+<!-- figure:bubble-matrix-setA start -->
+<figure id="figure-bubble-matrix-setA">
+  <img src="figures/cbd/bubble-matrix-setA.svg" alt="CBD・THC — 年間検索ボリューム（共通スケール）" width="960" height="402" style="max-width:100%;height:auto">
+  <figcaption><strong>図2: CBD・THC — 年間検索ボリューム（共通スケール）</strong>。値は同一 <code>compare_terms</code> 要求（CBD・THC）の共通スケールによる年間平均で、要求内の最大 = 100。要求間・単独系列とは換算できない。年間平均は週次値の暦年平均（部分年: 2021（9 週）、2026（44 週））。出所: run <code>20261104T195126Z-google-trends-cannabinoid-raw-collection</code>。</figcaption>
+</figure>
+<!-- figure:bubble-matrix-setA end -->
+
   <p><strong>出所（5年）:</strong> run <code>20261104T195126Z-google-trends-cannabinoid-raw-collection</code>（JP / <code>today 5-y</code> / 窓 <code>2021-10-31_2026-11-08</code> / 観測 2021-10-31 〜 2026-11-01（262 週） / 2026-11-04T19:51:26.401407Z 収集）。平均は週次 262 点の算術平均（小数第 4 位）。</p>
   <p><strong>要求語（5年）:</strong> この run の要求語は <code>CBD</code>・<code>THC</code>・<code>CBG</code>・<code>HHC</code>・<code>THCV</code> の 5 語で、正規化は同一要求内の最大値 = 100（CBD の 2025-08-31）。本表はこのうち CBD・THC だけを載せる。</p>
   <p><strong>12ヶ月（現行窓）:</strong> run <code>20261104T175032Z-google-trends-cannabinoid-raw-collection</code>（<code>CBD</code>・<code>THC</code>・<code>THCNM</code>）で CBD 45.7925 / THC 11.9057 / THCNM 0.0000（53 週）。正規化は同一要求内の最大値 = 100（CBD の 2026-05-03）。THCNM の全 0 は CBD = 100 に対する丸めによる解像度の限界で、欠測ではない。詳細は <a href="research_thcnm.html">THCNM</a> ページ。</p>
@@ -475,6 +490,8 @@
   <h2 id="data-youtube-monthly">独自データ: CBD リキッドの月次公開日件数（2 run 別集計） <span>一次データ（観測 + 派生）</span></h2>
   <p>データソース: YouTube Search via Apify / 検索クエリ: 「CBD リキッド」（日本語・製品語による近似的な日本市場限定） / query_id: <code>cbd-liquid-ja</code></p>
   <p>同じ検索語の 2 run を別々に集計した（合算しない）。値は各 run の返却サンプル内の月次公開日件数であり、YouTube 全体のピークではない。<code>date_filter</code> の異なる run 間は比較しない。</p>
+  <p><strong>A と B の違い:</strong> 長期の公開日範囲を確認するため、検索条件の異なる 2 種類の収集を残している。<strong>収集 A</strong>（<code>date_filter=all</code>）は全期間の関連度ベースの返却サンプルで、観測公開日は 2014-11-17 〜 2026-10-09。<strong>収集 B</strong>（<code>date_filter=year</code>）は収集終了時点から遡る約365日のローリング条件で、観測公開日は 2025-10-11 〜 2026-10-09 である。B の期間は A の観測範囲に含まれるが、A と B は同じ動画集合を期間分割したものではなく、異なる要求条件で得た別の検索結果サンプルである。そのため件数や年次分布が一致しないことは矛盾ではなく、どちらも YouTube 全体の投稿数を表さない。</p>
+  <p><strong>読み方:</strong> A は長期の公開日分布、B は直近約1年のサンプル状況を示す。B の 2025 年・2026 年はそれぞれ観測範囲の一部だけを含む部分年であり、年次件数を単純な年対年の増減として読まない。A と B の数値を比較・合算せず、各 run 内の記述として扱う。</p>
 
   <h3>収集 A: date_filter=all（456 件）</h3>
   <table>
@@ -541,6 +558,13 @@
     </tbody>
   </table>
 
+<!-- figure:youtube-yearly-collection-a start -->
+<figure id="figure-youtube-yearly-collection-a">
+  <img src="figures/cbd/youtube-yearly-collection-a.svg" alt="CBD リキッド 動画の年次公開件数（収集 A）" width="960" height="500" style="max-width:100%;height:auto">
+  <figcaption><strong>図3: CBD リキッド 動画の年次公開件数（収集 A）</strong>。部分年（2014、2026）は * で示し、その年の観測日数分の件数である。返却サンプル内の公開日件数であり、YouTube 全体の投稿数ではない。観測公開日 2014-11-17 〜 2026-10-09、返却 456 件（年次合計と一致）。公開日がサンプルにない年は棒を作らない。出所: run <code>20261010T144421Z-youtube-youtube-consistency</code>。</figcaption>
+</figure>
+<!-- figure:youtube-yearly-collection-a end -->
+
   <h3>収集 B: date_filter=year（393 件）</h3>
   <table>
     <thead>
@@ -595,6 +619,13 @@
     </tbody>
   </table>
 
+<!-- figure:youtube-yearly-collection-b start -->
+<figure id="figure-youtube-yearly-collection-b">
+  <img src="figures/cbd/youtube-yearly-collection-b.svg" alt="CBD リキッド 動画の年次公開件数（収集 B）" width="960" height="500" style="max-width:100%;height:auto">
+  <figcaption><strong>図4: CBD リキッド 動画の年次公開件数（収集 B）</strong>。部分年（2025、2026）は * で示し、その年の観測日数分の件数である。返却サンプル内の公開日件数であり、YouTube 全体の投稿数ではない。観測公開日 2025-10-11 〜 2026-10-09、返却 393 件（年次合計と一致）。公開日がサンプルにない年は棒を作らない。出所: run <code>20261011T191900Z-youtube-youtube-consistency</code>。</figcaption>
+</figure>
+<!-- figure:youtube-yearly-collection-b end -->
+
   <p><strong>制約:</strong> 月次・年次件数は返却サンプル内の公開日件数であり、YouTube 全体の投稿数を表さない（全動画を網羅するものではない）。結果上限は未記録のため、件数は返却サンプル件数としてのみ扱い、総数の推定には使わない。再生数は取得日時点の値であり、変動する可能性がある。未取得を 0 観測として扱わない。2 run を合算せず、<code>date_filter</code> の異なる run 間は比較しない。動画単位の行（動画 ID・タイトル・チャンネル・URL・再生数）は公開しない（集計のみ、ISS-20261015-COL-030 §4.1）。</p>
   <p><strong>出所:</strong> run <code>20261010T144421Z-youtube-youtube-consistency</code>（<code>date_filter=all</code> / 2026-10-10T14:44:22Z 収集、456 件）と run <code>20261011T191900Z-youtube-youtube-consistency</code>（<code>date_filter=year</code> / 2026-10-11T19:19:02Z 収集、393 件）。採用宣言は <code>metadata/provenance/declarations/20261015-youtube-csv-adoption.json</code>、再保持の検証記録は <code>metadata/provenance/declarations/20261106-youtube-cbd-liquid-reretention-youtube-consistency.json</code>（hash・件数は宣言と一致）。payload SHA-256 は <code>cc2dfbf4…199a1</code> / <code>77aae411…3066e5</code>。raw payload は Git 非追跡・非公開で、リポジトリに保持していない。</p>
   <p><strong>照合:</strong> 年次合計は返却件数と一致する（A: 456、B: 393）。ピーク月は返却サンプル内の最多月で、同点の月は併記する（B は 2025-12 と 2026-01 が各 48 件）。月次全点の図はローカル分析成果物に置き、本ページには載せない。</p>
@@ -604,7 +635,8 @@
 <!-- ===== 公開状態 ===== -->
 <div>
   <h2 id="publication-status">公開状態</h2>
-  <p>本ページは<strong>公開承認済み（<code>approved</code>）</strong>である。公開契約 PC-7 の審査 envelope は <code>metadata/publication/research-cbd/</code> にあり、<code>decision.json</code> の status は <code>approved</code>、<code>artifact_sha256</code> は現行 HTML の SHA-256 と一致する。</p>
+  <!-- publication-state:figures-embedded -->
+  <p><strong>公開状態: 図を埋め込んだため再承認待ち。</strong>本文の内容は envelope <code>metadata/publication/research-cbd/decision.json</code> の承認（status <code>approved</code>）の対象だが、<code>artifact_sha256</code> は図を埋め込む前の HTML の値であり、現行 HTML とは一致しない。図を含む版の公開には、再承認と <code>decision.json</code> の hash 再固定、本節の監査記録の更新が必要である。</p>
   <p>2026-11-06 に <code>validation.cli audit-publication</code> と <code>gate-publication</code> を現行 hash で実行した。公開契約の機械検査は本ページについて finding 0、公開適格ゲートは <code>SUPPORTED</code>（PUB-01〜PUB-11 がすべて PASS、WARNING なし）。PUB-11（C3 内容レビュー）は 2026-11-05 に C1〜C45 の 45 項目を本ページ・raw/comparison 成果物・methodology・taxonomy・evidence に照合して記録した（<code>evidence.json</code> の <code>content_review</code>、チェックリスト <code>metadata/publication/content-review-checklist.json</code> v1.0.0）。根拠は envelope の <code>decision.json</code> / <code>evidence.json</code> にある。</p>
   <p>本節の版を <strong>v1.14.5</strong> としてリリースする。</p>
 </div>

@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="500" viewBox="0 0 960 500" role="img" aria-label="THC-O リキッド yearly video counts in returned sample">
+<rect width="960" height="500" fill="#ffffff"/>
+<g font-family="system-ui, sans-serif">
+<text x="64" y="34" font-size="19" font-weight="600">THC-O リキッド 動画の年次公開件数</text>
+<text x="64" y="58" font-size="12.5" fill="#444">返却 388件 / 2015-10-30 〜 2026-10-31 の公開日 / run 20261101T112513Z-youtube-cannabinoid-raw-collection</text>
+<text x="64" y="78" font-size="12" fill="#b3261e">返却サンプル内の年次公開日件数であり、YouTube 全体の投稿数ではない。</text>
+<text x="64" y="96" font-size="12" fill="#b3261e">date_filter の異なる run とは比較せず、複数 run を合算しない。</text>
+<line x1="64" y1="404.0" x2="936" y2="404.0" stroke="#888"/>
+<text x="54" y="408.0" text-anchor="end" font-size="12">0</text>
+<line x1="64" y1="312.7" x2="936" y2="312.7" stroke="#d0d0d0"/>
+<text x="54" y="316.7" text-anchor="end" font-size="12">40</text>
+<line x1="64" y1="221.3" x2="936" y2="221.3" stroke="#d0d0d0"/>
+<text x="54" y="225.3" text-anchor="end" font-size="12">80</text>
+<line x1="64" y1="130.0" x2="936" y2="130.0" stroke="#d0d0d0"/>
+<text x="54" y="134.0" text-anchor="end" font-size="12">120</text>
+<rect x="77.8" y="401.7" width="45.1" height="2.3" fill="#1f5fa8"/>
+<text x="100.3" y="395.7" text-anchor="middle" font-size="12">1</text>
+<text x="100.3" y="426" text-anchor="middle" font-size="12">2015*</text>
+<rect x="150.5" y="390.3" width="45.1" height="13.7" fill="#1f5fa8"/>
+<text x="173.0" y="384.3" text-anchor="middle" font-size="12">6</text>
+<text x="173.0" y="426" text-anchor="middle" font-size="12">2016</text>
+<rect x="223.1" y="385.7" width="45.1" height="18.3" fill="#1f5fa8"/>
+<text x="245.7" y="379.7" text-anchor="middle" font-size="12">8</text>
+<text x="245.7" y="426" text-anchor="middle" font-size="12">2017</text>
+<rect x="295.8" y="394.9" width="45.1" height="9.1" fill="#1f5fa8"/>
+<text x="318.3" y="388.9" text-anchor="middle" font-size="12">4</text>
+<text x="318.3" y="426" text-anchor="middle" font-size="12">2018</text>
+<rect x="368.5" y="385.7" width="45.1" height="18.3" fill="#1f5fa8"/>
+<text x="391.0" y="379.7" text-anchor="middle" font-size="12">8</text>
+<text x="391.0" y="426" text-anchor="middle" font-size="12">2019</text>
+<rect x="441.1" y="351.5" width="45.1" height="52.5" fill="#1f5fa8"/>
+<text x="463.7" y="345.5" text-anchor="middle" font-size="12">23</text>
+<text x="463.7" y="426" text-anchor="middle" font-size="12">2020</text>
+<rect x="513.8" y="310.4" width="45.1" height="93.6" fill="#1f5fa8"/>
+<text x="536.3" y="304.4" text-anchor="middle" font-size="12">41</text>
+<text x="536.3" y="426" text-anchor="middle" font-size="12">2021</text>
+<rect x="586.5" y="130.0" width="45.1" height="274.0" fill="#b3261e"/>
+<text x="609.0" y="124.0" text-anchor="middle" font-size="12">120</text>
+<text x="609.0" y="426" text-anchor="middle" font-size="12">2022</text>
+<rect x="659.1" y="214.5" width="45.1" height="189.5" fill="#1f5fa8"/>
+<text x="681.7" y="208.5" text-anchor="middle" font-size="12">83</text>
+<text x="681.7" y="426" text-anchor="middle" font-size="12">2023</text>
+<rect x="731.8" y="312.7" width="45.1" height="91.3" fill="#1f5fa8"/>
+<text x="754.3" y="306.7" text-anchor="middle" font-size="12">40</text>
+<text x="754.3" y="426" text-anchor="middle" font-size="12">2024</text>
+<rect x="804.5" y="326.4" width="45.1" height="77.6" fill="#1f5fa8"/>
+<text x="827.0" y="320.4" text-anchor="middle" font-size="12">34</text>
+<text x="827.0" y="426" text-anchor="middle" font-size="12">2025</text>
+<rect x="877.1" y="358.3" width="45.1" height="45.7" fill="#1f5fa8"/>
+<text x="899.7" y="352.3" text-anchor="middle" font-size="12">20</text>
+<text x="899.7" y="426" text-anchor="middle" font-size="12">2026*</text>
+<text x="609.0" y="106.0" text-anchor="middle" font-size="12" fill="#b3261e">ピーク 2022年</text>
+<text x="64" y="442" font-size="11.5" fill="#b3261e">* 部分年（2015、2026）: 観測 2015-10-30 〜 2026-10-31 の分だけ。年の比較に使わない。</text>
+<text x="64" y="460" font-size="11.5" fill="#666">公開日がサンプルにない年は行を作らない。未取得を0として扱わない。</text>
+<text x="64" y="478" font-size="11.5" fill="#666">年次合計は返却件数と一致する(388件)。</text>
+</g>
+</svg>

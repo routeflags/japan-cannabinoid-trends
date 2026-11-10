@@ -72,7 +72,14 @@
   <p><strong>出所:</strong> run <code>20261014T204852Z-google-trends-cannabinoid-multi-trends</code>（JP / today 5-y / 2026-10-14T20:48:52.824336Z 収集）。記録にある項目: 初出 2022-08-07（値 34）、非ゼロ 40 週 / ゼロ 222 週、データあり期間 2021-10-10 〜 2026-10-11。</p>
   <p><strong>補足:</strong> この表の run は <code>20261014T204852Z-google-trends-cannabinoid-multi-trends</code>（<code>query_id</code> <code>crdp-general-ja</code>）、要求窓は <code>metadata/windows/2021-10-10_2026-10-12.json</code>。5年平均は週次 262 点の算術平均（小数第 2 位）、非ゼロ週は値が 0 でない週である。</p>
 
-  <h3>12ヶ月データサマリー（個別正規化値）</h3>
+<!-- figure:trends-5y-standalone start -->
+<figure id="figure-trends-5y-standalone">
+  <img src="figures/crdp/trends-5y-standalone.svg" alt="CRDP 検索関心度の5年推移" width="960" height="470" style="max-width:100%;height:auto">
+  <figcaption><strong>図1: CRDP 検索関心度の5年推移</strong>。値は単独系列の相対指数（この系列の最大 = 100、2025-05-18）で、絶対検索数ではない。破線は週次平均 7.9。観測範囲 2021-10-10 〜 2026-10-11（262 週）。出所: run <code>20261014T204852Z-google-trends-cannabinoid-multi-trends</code>。</figcaption>
+</figure>
+<!-- figure:trends-5y-standalone end -->
+
+<h3>12ヶ月データサマリー（個別正規化値）</h3>
   <table>
     <thead>
       <tr>
@@ -108,6 +115,14 @@
       <tr><td><strong>CRDP</strong></td><td>0.1374</td><td>36 週</td><td>派生</td></tr>
     </tbody>
   </table>
+
+<!-- figure:bubble-matrix-setC start -->
+<figure id="figure-bubble-matrix-setC">
+  <img src="figures/crdp/bubble-matrix-setC.svg" alt="CBD・THC・CRDP — 年間検索ボリューム（共通スケール）" width="960" height="476" style="max-width:100%;height:auto">
+  <figcaption><strong>図2: CBD・THC・CRDP — 年間検索ボリューム（共通スケール）</strong>。値は同一 <code>compare_terms</code> 要求（CBD・THC・CRDP）の共通スケールによる年間平均で、要求内の最大 = 100。要求間・単独系列とは換算できない。年間平均は週次値の暦年平均（部分年: 2021（9 週）、2026（44 週））。出所: run <code>20261104T195134Z-google-trends-cannabinoid-raw-collection</code>。</figcaption>
+</figure>
+<!-- figure:bubble-matrix-setC end -->
+
   <p><strong>出所:</strong> run <code>20261104T195134Z-google-trends-cannabinoid-raw-collection</code>（query_id <code>comparison-5y-setC</code> / JP / <code>today 5-y</code> / 窓 <code>2021-10-31_2026-11-08</code> / 観測 2021-10-31 〜 2026-11-01（262 週） / 2026-11-04T19:51:34.828721Z 収集）。平均は週次 262 点の算術平均（小数第 4 位）。要求語は CBD・THC・CRDP・H4CBH・HHBD の 5 語で、正規化は同一要求内の最大値（CBD の 2025-08-31）= 100 であり、本表はこのうち 3 語を載せる。</p>
   <p><strong>旧窓の値は現行窓の値ではない:</strong> 2026-10-23 収集の setA〜D（窓 <code>2021-10-17_2026-10-18</code>）と 2026-10-02 の 12ヶ月比較 run は履歴として raw に残るが、本節は現行窓の run だけを示す。</p>
   <p><strong>制約:</strong> Google Trends は相対指数であり、絶対検索数ではない。0 は相対指数の最小値（閾値未満）であり、検索が存在しなかったことや欠測を意味しない。Google Trends の raw（payload・records・comparison）は <code>datasets/cannabinoid-raw-collection/data/raw/google_trends/</code> に追跡されている。各 run は単発で、同一要求の反復実行は無い（安定性は未測定）。掲載するのは各節の出所に示す run だけで、別 run からの選択は行っていない。run 間・窓間で平均を比較しない。Google Trends・YouTube・X は別々の観測であり、値を合算しない。</p>
@@ -425,6 +440,13 @@
     </tbody>
   </table>
 
+<!-- figure:youtube-yearly-crdp-liquid start -->
+<figure id="figure-youtube-yearly-crdp-liquid">
+  <img src="figures/crdp/youtube-yearly-crdp-liquid.svg" alt="CRDP リキッド 動画の年次公開件数" width="960" height="500" style="max-width:100%;height:auto">
+  <figcaption><strong>図3: CRDP リキッド 動画の年次公開件数</strong>。部分年（2016、2026）は * で示し、その年の観測日数分の件数である。返却サンプル内の公開日件数であり、YouTube 全体の投稿数ではない。観測公開日 2016-06-18 〜 2026-10-17、返却 433 件（年次合計と一致）。公開日がサンプルにない年は棒を作らない。出所: run <code>20261101T111429Z-youtube-cannabinoid-raw-collection</code>。</figcaption>
+</figure>
+<!-- figure:youtube-yearly-crdp-liquid end -->
+
   <p><strong>制約:</strong> 月次・年次件数は返却サンプル内の公開日件数であり、YouTube 全体の投稿数を表さない（全動画を網羅するものではない）。要求の結果上限（<code>maxResults</code> 500）は宣言に記録され、返却 433 件はその上限に達していないが、返却サンプルであることは変わらない。再生数は取得日時点の値であり、変動する可能性がある。未取得を 0 観測として扱わない。1 run のみで、反復実行による安定性は未測定のため、他の run・他の化合物・他ソースの値と合算も比較もしない。動画単位の行（動画 ID・タイトル・チャンネル・URL・再生数）は公開しない（集計のみ、ISS-20261015-COL-030 §4.1）。</p>
   <p><strong>出所:</strong> run <code>20261101T111429Z-youtube-cannabinoid-raw-collection</code>（<code>date_filter=all</code> / 2026-11-01T11:14:29.018Z 開始・2026-11-01T11:24:43.300Z 終了、433 件）。採用宣言は <code>metadata/provenance/declarations/20261101-youtube-liquid-batch2-cannabinoid-raw-collection.json</code>（<code>execution.returned_count</code> 433、<code>window</code> 2016-06-18T00:00:00Z 〜 2026-10-18T00:00:00Z の半開区間）、再保持の検証記録は <code>metadata/provenance/declarations/20261106-youtube-liquid-batch-reretention-cannabinoid-raw-collection.json</code>（hash・件数は宣言と一致）。payload SHA-256 は <code>8fb9e0ac…9037e</code>。raw payload は Git 非追跡・非公開で、リポジトリに保持していない。</p>
   <p><strong>照合:</strong> 年次合計は返却件数と一致する（433）。ピーク月は返却サンプル内の最多月である（2025-08 が 37 件）。</p>
@@ -434,7 +456,8 @@
 <!-- ===== 公開状態 ===== -->
 <div>
   <h2 id="publication-status">公開状態</h2>
-  <p>本ページは<strong>公開承認済み（<code>approved</code>）</strong>である。公開契約 PC-7 の審査 envelope は <code>metadata/publication/research-crdp/</code> にあり、<code>decision.json</code> の status は <code>approved</code>、<code>artifact_sha256</code> は現行 HTML の SHA-256 と一致する。</p>
+  <!-- publication-state:figures-embedded -->
+  <p><strong>公開状態: 図を埋め込んだため再承認待ち。</strong>本文の内容は envelope <code>metadata/publication/research-crdp/decision.json</code> の承認（status <code>approved</code>）の対象だが、<code>artifact_sha256</code> は図を埋め込む前の HTML の値であり、現行 HTML とは一致しない。図を含む版の公開には、再承認と <code>decision.json</code> の hash 再固定、本節の監査記録の更新が必要である。</p>
   <p>2026-11-06 に <code>validation.cli audit-publication</code> と <code>gate-publication</code> を現行 hash で実行した。公開契約の機械検査は本ページについて finding 0、公開適格ゲートは <code>SUPPORTED</code>（PUB-01〜PUB-11 がすべて PASS、WARNING なし）。PUB-11（C3 内容レビュー）は 2026-11-06 に C1〜C45 の 45 項目を本ページ・raw/comparison 成果物・methodology・taxonomy・evidence に照合して記録した（<code>evidence.json</code> の <code>content_review</code>、チェックリスト <code>metadata/publication/content-review-checklist.json</code> v1.0.0）。根拠は envelope の <code>decision.json</code> / <code>evidence.json</code> にある。</p>
   <p>本節の版を <strong>v1.14.5</strong> としてリリースする。</p>
 </div>

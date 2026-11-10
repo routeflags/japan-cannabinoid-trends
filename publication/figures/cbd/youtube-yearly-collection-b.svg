@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="500" viewBox="0 0 960 500" role="img" aria-label="CBD リキッド yearly video counts in returned sample">
+<rect width="960" height="500" fill="#ffffff"/>
+<g font-family="system-ui, sans-serif">
+<text x="64" y="34" font-size="19" font-weight="600">CBD リキッド 動画の年次公開件数（収集 B）</text>
+<text x="64" y="58" font-size="12.5" fill="#444">返却 393件 / 2025-10-11 〜 2026-10-09 の公開日 / run 20261011T191900Z-youtube-youtube-consistency</text>
+<text x="64" y="78" font-size="12" fill="#b3261e">返却サンプル内の年次公開日件数であり、YouTube 全体の投稿数ではない。</text>
+<text x="64" y="96" font-size="12" fill="#b3261e">date_filter の異なる run とは比較せず、複数 run を合算しない。</text>
+<line x1="64" y1="404.0" x2="936" y2="404.0" stroke="#888"/>
+<text x="54" y="408.0" text-anchor="end" font-size="12">0</text>
+<line x1="64" y1="364.9" x2="936" y2="364.9" stroke="#d0d0d0"/>
+<text x="54" y="368.9" text-anchor="end" font-size="12">40</text>
+<line x1="64" y1="325.7" x2="936" y2="325.7" stroke="#d0d0d0"/>
+<text x="54" y="329.7" text-anchor="end" font-size="12">80</text>
+<line x1="64" y1="286.6" x2="936" y2="286.6" stroke="#d0d0d0"/>
+<text x="54" y="290.6" text-anchor="end" font-size="12">120</text>
+<line x1="64" y1="247.4" x2="936" y2="247.4" stroke="#d0d0d0"/>
+<text x="54" y="251.4" text-anchor="end" font-size="12">160</text>
+<line x1="64" y1="208.3" x2="936" y2="208.3" stroke="#d0d0d0"/>
+<text x="54" y="212.3" text-anchor="end" font-size="12">200</text>
+<line x1="64" y1="169.1" x2="936" y2="169.1" stroke="#d0d0d0"/>
+<text x="54" y="173.1" text-anchor="end" font-size="12">240</text>
+<line x1="64" y1="130.0" x2="936" y2="130.0" stroke="#d0d0d0"/>
+<text x="54" y="134.0" text-anchor="end" font-size="12">280</text>
+<rect x="256.0" y="288.5" width="52.0" height="115.5" fill="#1f5fa8"/>
+<text x="282.0" y="282.5" text-anchor="middle" font-size="12">118</text>
+<text x="282.0" y="426" text-anchor="middle" font-size="12">2025*</text>
+<rect x="692.0" y="134.9" width="52.0" height="269.1" fill="#b3261e"/>
+<text x="718.0" y="128.9" text-anchor="middle" font-size="12">275</text>
+<text x="718.0" y="426" text-anchor="middle" font-size="12">2026*</text>
+<text x="718.0" y="110.9" text-anchor="middle" font-size="12" fill="#b3261e">ピーク 2026年</text>
+<text x="64" y="442" font-size="11.5" fill="#b3261e">* 部分年（2025、2026）: 観測 2025-10-11 〜 2026-10-09 の分だけ。年の比較に使わない。</text>
+<text x="64" y="460" font-size="11.5" fill="#666">公開日がサンプルにない年は行を作らない。未取得を0として扱わない。</text>
+<text x="64" y="478" font-size="11.5" fill="#666">年次合計は返却件数と一致する(393件)。</text>
+</g>
+</svg>

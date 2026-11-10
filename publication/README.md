@@ -12,6 +12,35 @@ CBX / カンナビノイド関連ガイドページの公開用アーティフ�
 |------|------|
 | `research_*.html` | スキル `generate-research-data-page`（`.github/skills/generate-research-data-page/SKILL.md`） |
 | `guide_cbx_rewrite.html` | スキル `generate-compound-guide`（`.github/skills/generate-compound-guide/SKILL.md`） |
+| `figures/<compound>/` と図の差し込み | スキル `compound-page-figures`（`.agents/skills/compound-page-figures/SKILL.md`） |
+
+## figures/
+
+各 `research_<compound>.html` に埋め込む図の実体を置く。
+
+```text
+publication/figures/<compound>/
+    trends-5y-standalone.svg / .png      # 検索関心度の5年推移（折れ線）
+    youtube-yearly-<slug>.svg / .png    # 動画の年次公開件数（縦棒、run ごと）
+    bubble-matrix-<set>.svg / .png      # 年間検索ボリューム（compare_terms の同一要求内）
+```
+
+ページは `figures/<compound>/...` を相対参照する。図の生成・差し込みは
+`scripts/` の2つのスクリプトで行い、数値の出所は
+`datasets/cannabinoid-raw-collection/analysis/<compound>-page-charts/provenance.json`
+に記録する（系列 CSV も同ディレクトリ）。
+
+バブルマトリクスは `compare_terms` の共通スケールを使う。**同じ要求の中でだけ**比較でき、
+要求間・単独系列とは換算できない（`datasets/cannabinoid-raw-collection/metadata/query-design.json`
+の `comparison_scales` が正本）。
+
+```bash
+python3 scripts/analysis/compound_page_charts.py      # ページ記載値と raw を照合して図を生成
+python3 scripts/publication/embed_compound_figures.py  # 図をページに差し込む
+```
+
+図を差し込むとページの SHA-256 が変わる。公開承認（`metadata/publication/research-<compound>/decision.json`）
+は hash 単位なので、**図を含む版には再承認と hash の再固定が必要**になる。
 
 更新後は公開契約を検査して結果を記録する（**record-only**。判定は記録し、公開を止めるかは
 AGENTS.md の公開規則に従って人が決める）:

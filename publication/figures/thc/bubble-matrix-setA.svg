@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="402" viewBox="0 0 960 402" role="img" aria-label="THC annual search interest bubble matrix">
+<rect width="960" height="402" fill="#ffffff"/>
+<g font-family="system-ui, sans-serif">
+<text x="116" y="34" font-size="19" font-weight="600">CBD・THC — 年間検索ボリューム（共通スケール）</text>
+<text x="116" y="58" font-size="12.5" fill="#444">run 20261104T195126Z-google-trends-cannabinoid-raw-collection / today 5-y / JP / 2021-10-31 〜 2026-11-01</text>
+<text x="116" y="78" font-size="12" fill="#b3261e">値は同一 compare_terms 要求の共通スケール（要求内の最大 = 100）。要求間・単独系列とは換算不可。</text>
+<text x="116" y="96" font-size="12" fill="#b3261e">円の面積は年間平均に比例（極小値は最小半径）。0 は相対指数の最小値への丸めで、欠測ではない。</text>
+<text x="238.0" y="140" text-anchor="middle" font-size="15" font-weight="600" fill="#333">2021*</text>
+<text x="362.0" y="140" text-anchor="middle" font-size="15" font-weight="600" fill="#333">2022</text>
+<text x="486.0" y="140" text-anchor="middle" font-size="15" font-weight="600" fill="#333">2023</text>
+<text x="610.0" y="140" text-anchor="middle" font-size="15" font-weight="600" fill="#333">2024</text>
+<text x="734.0" y="140" text-anchor="middle" font-size="15" font-weight="600" fill="#333">2025</text>
+<text x="858.0" y="140" text-anchor="middle" font-size="15" font-weight="600" fill="#333">2026*</text>
+<line x1="168" y1="232.0" x2="920" y2="232.0" stroke="#ececec"/>
+<text x="160" y="200.0" text-anchor="end" font-size="15" fill="#222">CBD</text>
+<circle cx="238.0" cy="195.0" r="27.0" fill="#385f87"/>
+<text x="238.0" y="199.0" text-anchor="middle" font-size="12" fill="#ffffff">34.6</text>
+<circle cx="362.0" cy="195.0" r="30.0" fill="#123f6d"/>
+<text x="362.0" y="199.0" text-anchor="middle" font-size="12" fill="#ffffff">42.6</text>
+<circle cx="486.0" cy="195.0" r="29.6" fill="#174370"/>
+<text x="486.0" y="199.0" text-anchor="middle" font-size="12" fill="#ffffff">41.5</text>
+<circle cx="610.0" cy="195.0" r="26.2" fill="#42678d"/>
+<text x="610.0" y="199.0" text-anchor="middle" font-size="12" fill="#ffffff">32.5</text>
+<circle cx="734.0" cy="195.0" r="22.5" fill="#6a89a9"/>
+<text x="734.0" y="199.0" text-anchor="middle" font-size="12" fill="#ffffff">24.0</text>
+<circle cx="858.0" cy="195.0" r="22.0" fill="#6f8dac"/>
+<text x="858.0" y="199.0" text-anchor="middle" font-size="12" fill="#ffffff">22.9</text>
+<line x1="168" y1="306.0" x2="920" y2="306.0" stroke="#ececec"/>
+<text x="160" y="274.0" text-anchor="end" font-size="15" fill="#222">THC</text>
+<circle cx="238.0" cy="269.0" r="9.4" fill="#c8d7e8"/>
+<text x="252.4" y="273.0" text-anchor="start" font-size="12" fill="#555">4.2</text>
+<circle cx="362.0" cy="269.0" r="10.6" fill="#c3d3e5"/>
+<text x="377.6" y="273.0" text-anchor="start" font-size="12" fill="#555">5.3</text>
+<circle cx="486.0" cy="269.0" r="10.3" fill="#c4d4e6"/>
+<text x="501.3" y="273.0" text-anchor="start" font-size="12" fill="#555">5.0</text>
+<circle cx="610.0" cy="269.0" r="9.5" fill="#c8d7e8"/>
+<text x="624.5" y="273.0" text-anchor="start" font-size="12" fill="#555">4.2</text>
+<circle cx="734.0" cy="269.0" r="10.5" fill="#c3d3e5"/>
+<text x="749.5" y="273.0" text-anchor="start" font-size="12" fill="#555">5.2</text>
+<circle cx="858.0" cy="269.0" r="10.9" fill="#c1d2e4"/>
+<text x="873.9" y="273.0" text-anchor="start" font-size="12" fill="#555">5.6</text>
+<text x="116" y="330" font-size="11.5" fill="#666">* 部分年: 2021（9週）、2026（44週）。完全年は 52 週前後。値は年間平均の相対指数（要求内最大 = 100）。</text>
+</g>
+</svg>

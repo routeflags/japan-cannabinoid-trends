@@ -1,0 +1,148 @@
+{
+  "schema_version": "1.0.0",
+  "record": "analysis_derivation",
+  "analysis_id": "crdp-page-charts",
+  "page": "publication/research_crdp.html",
+  "page_sha256": "134bfa9623f3f7e8e5b3176ad8ab8e432405a31de8600e8716968699e50e5555",
+  "report": "README.md",
+  "figures": [
+    {
+      "id": "trends-5y-standalone",
+      "title": "CRDP 検索関心度の5年推移",
+      "source": {
+        "source_id": "google-trends",
+        "run_id": "20261014T204852Z-google-trends-cannabinoid-multi-trends",
+        "geo": "JP",
+        "timeframe": "today 5-y",
+        "normalization": "standalone series max = 100 (2025-05-18)"
+      },
+      "inputs": [
+        {
+          "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261014T204852Z-google-trends-cannabinoid-multi-trends/records_crdp.json",
+          "sha256": "684beffb4b83e3c2454230fc01c1591007967c8abf0df80c831b30bacdbf3d8b"
+        },
+        {
+          "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261014T204852Z-google-trends-cannabinoid-multi-trends/run_metadata.json",
+          "sha256": "5667fd8e45cb0ca9e0687c2394b8309fdc6ccfb4384fb7570a66c05a2d17ba0b"
+        }
+      ],
+      "stats": {
+        "points": 262,
+        "mean": 7.9,
+        "decimals": 1,
+        "max": 100,
+        "max_dates": [
+          "2025-05-18"
+        ],
+        "latest": {
+          "date": "2026-10-11",
+          "value": 5
+        },
+        "nonzero_weeks": 40,
+        "observed_start": "2021-10-10",
+        "observed_end": "2026-10-11"
+      },
+      "verification": "page 5-year summary mean/peak/latest/observed range matched the raw series"
+    },
+    {
+      "id": "bubble-matrix-setC",
+      "title": "CBD・THC・CRDP — 年間検索ボリューム（共通スケール）",
+      "source": {
+        "source_id": "google-trends",
+        "run_id": "20261104T195134Z-google-trends-cannabinoid-raw-collection",
+        "query_id": "comparison-5y-setC",
+        "geo": "JP",
+        "timeframe": "today 5-y",
+        "terms": [
+          "CBD",
+          "THC",
+          "CRDP"
+        ],
+        "request_terms": [
+          "CBD",
+          "THC",
+          "CRDP",
+          "H4CBH",
+          "HHBD"
+        ],
+        "normalization": "same request max = 100; comparable only within this request"
+      },
+      "inputs": [
+        {
+          "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261104T195134Z-google-trends-cannabinoid-raw-collection/comparison_cbd-thc-crdp-h4cbh-hhbd.json",
+          "sha256": "dc5f5d81c790d24438f8a87e7a26476611f22e24f777be0da4cdfed21f395ee6"
+        }
+      ],
+      "derivation": "annual mean of the weekly common-scale index, bucketed by the UTC year of the week-start date; partial years flagged by week count (not imputed)",
+      "stats": {
+        "years": [
+          "2021",
+          "2022",
+          "2023",
+          "2024",
+          "2025",
+          "2026"
+        ],
+        "weeks_per_year": {
+          "2021": 9,
+          "2022": 52,
+          "2023": 53,
+          "2024": 52,
+          "2025": 52,
+          "2026": 44
+        },
+        "complete_years": [
+          "2022",
+          "2023",
+          "2024",
+          "2025"
+        ],
+        "mean_5y": {
+          "CBD": "33.0916",
+          "THC": "5.0496",
+          "CRDP": "0.1374"
+        },
+        "page_terms_verified": {
+          "CBD": "33.0916",
+          "THC": "5.0496",
+          "CRDP": "0.1374"
+        }
+      },
+      "verification": "per-term 5-year means matched the page's 共通スケール table"
+    },
+    {
+      "id": "youtube-yearly-crdp-liquid",
+      "title": "CRDP リキッド 動画の年次公開件数",
+      "source": {
+        "source_id": "youtube",
+        "run_id": "20261101T111429Z-youtube-cannabinoid-raw-collection",
+        "returned_count": 433,
+        "observed_publish_start": "2016-06-18",
+        "observed_publish_end": "2026-10-17",
+        "partial_years": [
+          "2016",
+          "2026"
+        ],
+        "note": "Yearly counts extracted from the published table in the page; raw payload is local-only."
+      },
+      "years": 9,
+      "yearly_sum": 433,
+      "verification": "yearly sum equals the published 返却件数"
+    }
+  ],
+  "not_comparable": "Trends relative index and YouTube sample counts measure different phenomena; never combined.",
+  "png_renderer": "rsvg-convert version 2.63.2",
+  "derived_by": "scripts/analysis/compound_page_charts.py",
+  "publication_scope": "Analysis artifacts. Embedding into the page needs republication review; not done here.",
+  "output_sha256": {
+    "datasets/cannabinoid-raw-collection/analysis/crdp-page-charts/trends-5y-standalone.csv": "6180a87528cc635003ad4a13fb55ab24d71ef301d3b4762c5efae40f2c536626",
+    "publication/figures/crdp/trends-5y-standalone.svg": "9ebb80410ffbf0aae83e012cc1dcd6eeb43b77eafb635e5e8e2b170546813a98",
+    "publication/figures/crdp/trends-5y-standalone.png": "413b04260b53682e98b783224b8b4545c6bb2c2d3d2901825bf6cefc8d8eaaec",
+    "datasets/cannabinoid-raw-collection/analysis/crdp-page-charts/youtube-yearly-crdp-liquid.csv": "08661984e474cd2a3734554a40b9bbb6e101339f484fe72b6a82bdfbefa1c640",
+    "publication/figures/crdp/youtube-yearly-crdp-liquid.svg": "f458a5c0264838577d66fd1da5c3f8db0d8785b946e9a52c1bfb3e1c0d63541b",
+    "publication/figures/crdp/youtube-yearly-crdp-liquid.png": "283e7232197f4d5aa3e3cf041e2d3a58ba6b78619c100f5df9a566ee15c3b7f8",
+    "datasets/cannabinoid-raw-collection/analysis/crdp-page-charts/bubble-matrix-setC.csv": "94d0838dd248e8eb647365f30a5ca9a44030b237f201e853c9f81ef0f7e117d9",
+    "publication/figures/crdp/bubble-matrix-setC.svg": "41f690185679c731edb1dc72e4f59120b6f35108ea0a8e9fb30dd902dfd1c42d",
+    "publication/figures/crdp/bubble-matrix-setC.png": "2b3642d656e444f32220f858fa4bb7782f0f95f0766ae7e5e8755bbb39e87fb0"
+  }
+}

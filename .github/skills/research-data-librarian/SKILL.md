@@ -1634,6 +1634,11 @@ pdf
 
 generated from analysis.
 
+Repository exception (japan-cannabinoid-trends): figures that a published page embeds live in
+`publication/figures/<compound>/` because the page references them relatively, while the derivation
+record (CSV + `provenance.json`) stays in the study's `analysis/<compound>-page-charts/`. Do not
+copy the same figure into both trees. See the skill `compound-page-figures`.
+
 Similarly:
 
 ```text

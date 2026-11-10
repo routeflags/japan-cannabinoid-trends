@@ -1,0 +1,126 @@
+{
+  "schema_version": "1.0.0",
+  "record": "analysis_derivation",
+  "analysis_id": "thcnm-page-charts",
+  "page": "publication/research_thcnm.html",
+  "page_sha256": "930e71a065edb0d5bc7e802b39e0defdec9e1c7797011b50a52351668c7a5ee3",
+  "report": "README.md",
+  "figures": [
+    {
+      "id": "trends-5y-standalone",
+      "title": "THCNM 検索関心度の5年推移",
+      "source": {
+        "source_id": "google-trends",
+        "run_id": "20261104T115431Z-google-trends-thcnm-5y",
+        "geo": "JP",
+        "timeframe": "today 5-y",
+        "normalization": "standalone series max = 100 (2026-11-01)"
+      },
+      "inputs": [
+        {
+          "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261104T115431Z-google-trends-thcnm-5y/records_thcnm.json",
+          "sha256": "21a92265fe2ec965c6ce63f0fdb0c39d4c15179e06b8cf32180d5a084bb524a6"
+        },
+        {
+          "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261104T115431Z-google-trends-thcnm-5y/run_metadata.json",
+          "sha256": "b6bf1a78798b9cc9619f3b981549110ba4a36d98f7bad651e12464a3e03da239"
+        }
+      ],
+      "stats": {
+        "points": 262,
+        "mean": 0.9122,
+        "decimals": 4,
+        "max": 100,
+        "max_dates": [
+          "2026-11-01"
+        ],
+        "latest": {
+          "date": "2026-11-01",
+          "value": 100
+        },
+        "nonzero_weeks": 3,
+        "observed_start": "2021-10-31",
+        "observed_end": "2026-11-01"
+      },
+      "verification": "page 5-year summary mean/peak/latest/observed range matched the raw series"
+    },
+    {
+      "id": "bubble-matrix-setD",
+      "title": "CBD・THC・THCNM — 年間検索ボリューム（共通スケール）",
+      "source": {
+        "source_id": "google-trends",
+        "run_id": "20261104T195136Z-google-trends-cannabinoid-raw-collection",
+        "query_id": "comparison-5y-current-setD",
+        "geo": "JP",
+        "timeframe": "today 5-y",
+        "terms": [
+          "CBD",
+          "THC",
+          "THCNM"
+        ],
+        "request_terms": [
+          "CBD",
+          "THC",
+          "HHCH",
+          "THC-O",
+          "THCNM"
+        ],
+        "normalization": "same request max = 100; comparable only within this request"
+      },
+      "inputs": [
+        {
+          "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261104T195136Z-google-trends-cannabinoid-raw-collection/comparison_cbd-thc-hhch-thc-o-thcnm.json",
+          "sha256": "8880f59043dc38ba135045df25e722ac96f297926df927d8fbf27f9e4a161093"
+        }
+      ],
+      "derivation": "annual mean of the weekly common-scale index, bucketed by the UTC year of the week-start date; partial years flagged by week count (not imputed)",
+      "stats": {
+        "years": [
+          "2021",
+          "2022",
+          "2023",
+          "2024",
+          "2025",
+          "2026"
+        ],
+        "weeks_per_year": {
+          "2021": 9,
+          "2022": 52,
+          "2023": 53,
+          "2024": 52,
+          "2025": 52,
+          "2026": 44
+        },
+        "complete_years": [
+          "2022",
+          "2023",
+          "2024",
+          "2025"
+        ],
+        "mean_5y": {
+          "CBD": "33.0916",
+          "THC": "5.0496",
+          "THCNM": "0.0000"
+        },
+        "page_terms_verified": {
+          "CBD": "33.0916",
+          "THC": "5.0496",
+          "THCNM": "0.0000"
+        }
+      },
+      "verification": "per-term 5-year means matched the page's 共通スケール table"
+    }
+  ],
+  "not_comparable": "Trends relative index and YouTube sample counts measure different phenomena; never combined.",
+  "png_renderer": "rsvg-convert version 2.63.2",
+  "derived_by": "scripts/analysis/compound_page_charts.py",
+  "publication_scope": "Analysis artifacts. Embedding into the page needs republication review; not done here.",
+  "output_sha256": {
+    "datasets/cannabinoid-raw-collection/analysis/thcnm-page-charts/trends-5y-standalone.csv": "ea205eee757cb82d833d93d501709b8efb8b7ce83291e0275e04c65c73aaba85",
+    "publication/figures/thcnm/trends-5y-standalone.svg": "c50eb4dd3f8a894c3f6ccdce5327e33886fe92fac545acdfd4bfe2083d44a67e",
+    "publication/figures/thcnm/trends-5y-standalone.png": "6024d7fbd36aa5b90ad3ebc2f16db352afccd46deba1b93d5eec17b78bcef638",
+    "datasets/cannabinoid-raw-collection/analysis/thcnm-page-charts/bubble-matrix-setD.csv": "3ec8c076809c2c02c89498effa7077b288e6594ec2544ce59e1a31da5cd58f78",
+    "publication/figures/thcnm/bubble-matrix-setD.svg": "ece9d198c0f981b8cd5934ae9303803ddf8238cc8a0ace109db1d720e69b0859",
+    "publication/figures/thcnm/bubble-matrix-setD.png": "754f2403ea2834b9dd09df902e3bfeb9d8d9adc397f0d8205a10df279e778341"
+  }
+}

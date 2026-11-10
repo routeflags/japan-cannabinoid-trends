@@ -366,6 +366,14 @@
       <tr><td><strong>THCNM</strong></td><td>0.0000</td><td>0 週</td><td>派生</td></tr>
     </tbody>
   </table>
+
+<!-- figure:bubble-matrix-setD start -->
+<figure id="figure-bubble-matrix-setD">
+  <img src="figures/thcnm/bubble-matrix-setD.svg" alt="CBD・THC・THCNM — 年間検索ボリューム（共通スケール）" width="960" height="476" style="max-width:100%;height:auto">
+  <figcaption><strong>図1: CBD・THC・THCNM — 年間検索ボリューム（共通スケール）</strong>。値は同一 <code>compare_terms</code> 要求（CBD・THC・THCNM）の共通スケールによる年間平均で、要求内の最大 = 100。要求間・単独系列とは換算できない。年間平均は週次値の暦年平均（部分年: 2021（9 週）、2026（44 週））。THCNM は 5 年平均 0.0000 で、相対指数の最小値への丸めであり、需要ゼロの観測ではない。出所: run <code>20261104T195136Z-google-trends-cannabinoid-raw-collection</code>。</figcaption>
+</figure>
+<!-- figure:bubble-matrix-setD end -->
+
   <p><strong>要求:</strong> <code>CBD</code>・<code>THC</code>・<code>HHCH</code>・<code>THC-O</code>・<code>THCNM</code> の 5 語を同じ <code>compare_terms</code> 要求で取得した（<code>query_id</code> <code>comparison-5y-current-setD</code>、catalog の <code>compound_id</code> は <code>compound_cbd</code>）。正規化は同じ要求内の最大値 = 100（CBD の 2025-08-31）。本ページはこのうち CBD・THC・THCNM の 3 語だけを載せ、HHCH・THC-O の値は載せない。</p>
   <p><strong>出所:</strong> run <code>20261104T195136Z-google-trends-cannabinoid-raw-collection</code>（JP / <code>today 5-y</code> / 窓 <code>2021-10-31_2026-11-08</code> / 観測 2021-10-31 〜 2026-11-01（262 週） / 2026-11-04T19:51:36Z 収集）。平均は週次 262 点の算術平均（小数第 4 位）。</p>
   <p><strong>読み方:</strong> 5年の共通スケールでも THCNM は全 262 週が 0 である。これは丸め（相対指数の最小値未満）であり、需要ゼロの観測ではない。12ヶ月共通スケールと同じく、単独系列の初出 2026-10-18（47）とは換算しない。</p>
@@ -419,7 +427,14 @@
   </table>
   <p><strong>出所:</strong> run <code>20261104T115431Z-google-trends-thcnm-5y</code>（JP / <code>today 5-y</code> / 2026-11-04T11:54:32Z 収集）。窓 <code>2021-10-31_2026-11-08</code>（週次・日曜始まり・Asia/Tokyo）。平均は週次 262 点の算術平均（小数第 4 位）。</p>
 
-  <h3>12ヶ月データサマリー（単独系列）</h3>
+<!-- figure:trends-5y-standalone start -->
+<figure id="figure-trends-5y-standalone">
+  <img src="figures/thcnm/trends-5y-standalone.svg" alt="THCNM 検索関心度の5年推移" width="960" height="470" style="max-width:100%;height:auto">
+  <figcaption><strong>図2: THCNM 検索関心度の5年推移</strong>。値は単独系列の相対指数（この系列の最大 = 100、2026-11-01）で、絶対検索数ではない。破線は週次平均 0.9122。観測範囲 2021-10-31 〜 2026-11-01（262 週）。出所: run <code>20261104T115431Z-google-trends-thcnm-5y</code>。</figcaption>
+</figure>
+<!-- figure:trends-5y-standalone end -->
+
+<h3>12ヶ月データサマリー（単独系列）</h3>
   <table>
     <thead>
       <tr>
@@ -745,7 +760,8 @@
 <!-- ===== 公開状態 ===== -->
 <div>
   <h2 id="publication-status">公開状態</h2>
-  <p>本ページは<strong>公開承認済み（<code>approved</code>）</strong>である。公開契約 PC-7 の審査 envelope は <code>metadata/publication/research-thcnm/</code> にあり、<code>decision.json</code> の status は <code>approved</code>、<code>artifact_sha256</code> は現行 HTML の SHA-256 と一致する。</p>
+  <!-- publication-state:figures-embedded -->
+  <p><strong>公開状態: 図を埋め込んだため再承認待ち。</strong>本文の内容は envelope <code>metadata/publication/research-thcnm/decision.json</code> の承認（status <code>approved</code>）の対象だが、<code>artifact_sha256</code> は図を埋め込む前の HTML の値であり、現行 HTML とは一致しない。図を含む版の公開には、再承認と <code>decision.json</code> の hash 再固定、本節の監査記録の更新が必要である。</p>
   <p>2026-11-05 に <code>validation.cli audit-publication</code> と <code>gate-publication</code> を現行 hash で実行した。公開契約の機械検査は本ページについて finding 0、公開適格ゲートは <code>SUPPORTED</code>（PUB-01〜PUB-11 がすべて PASS、WARNING なし）。PUB-04（個人データ審査）は本文・表・画像・リンクを走査し、メールアドレス・@ハンドル・10 桁以上の識別子・行単位の投稿/動画の行が無いことを確認して記録した。PUB-10（公開承認）は owner の 2026-11-05 指示を現行 hash に固定して記録した。PUB-11（C3 内容レビュー）は 2026-11-05 に C1〜C45 の 45 項目を本ページ・raw/comparison 成果物・methodology・taxonomy・evidence に照合して記録した（<code>evidence.json</code> の <code>content_review</code>、チェックリスト <code>metadata/publication/content-review-checklist.json</code> v1.0.0）。根拠は envelope の <code>decision.json</code> / <code>evidence.json</code> にある。</p>
   <p>公開承認は <strong>v1.14.2</strong> で固定し、公開状態の記述を decision とゲートの現状に合わせて <strong>v1.14.3</strong>・<strong>v1.14.5</strong> で更新した。C3 内容レビュー（PUB-11）の記録を含む本節の版を <strong>v1.14.5</strong> としてリリースする。</p>
   <p>平均・非ゼロ点・観測範囲の算出方法は、単独系列では <code>src/processing/gt_statistics.py</code> と同じ定義（週次値の算術平均、値が 0 でない週数、返却点の最小・最大）、共通スケールでは <code>comparison_cbd-thc-thcnm.json</code> の週次・日次値の算術平均（値が 0 でない点数、返却点の最小・最大）による。</p>

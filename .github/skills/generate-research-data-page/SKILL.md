@@ -30,13 +30,27 @@ description: |
 
 4. **出力を確認する**
    下の「必須項目」を満たすか、数値と `run_id` が対応しているかを見る。
-5. **公開契約を記録する**（ページを変えたときだけ）
+5. **図を生成して差し込む**（ページを変えたら必ず）
+
+   ```bash
+   python3 scripts/analysis/compound_page_charts.py <compound>   # 図を生成（ページ記載値と raw を照合）
+   python3 scripts/publication/embed_compound_figures.py          # ページへ差し込む
+   ```
+
+   図は他スキル `compound-page-figures` の担当。図の計算・位置・制約はそちらが正本で、ここでは
+   実行の順番だけを示す。ページの見出し・表の形が変わると図が差し込めなくなるので、
+   節名（`5年データサマリー`、`年次分布`、`共通スケール`）を変えたときはスキルの手順を見直す。
+
+   **図の差し込みはページの SHA-256 を変える。** embed スクリプトは公開状態の節を
+   「再承認待ち」に書き換える。承認・hash の再固定は人が行う（このスキルは承認しない）。
+6. **公開契約を記録する**（最後に実行する）
 
    ```bash
    python -m validation.cli audit-publication --output docs/audits/publication-contract.json
    ```
 
-   これは記録のみ。公開するかどうかは人が決める。
+   これは記録のみ。公開するかどうかは人が決める。図を差し込んだ後に実行する
+   （先に実行すると、図の差し込み前のページの hash が記録されてしまう）。
 
 ## 必須ルール
 
@@ -53,7 +67,8 @@ description: |
 - **未取得と 0 を区別する。** 取得できなかったのか、0 件だったのかを書き分ける。
 - **版表記は現行リリースに合わせる。** 引用節の `Version` は `CITATION.cff` の `version` と同じ番号にする（PC-1）。
 - **公開状態を変えない。** 承認状態・hash・review envelope は publication review の担当。
-  このスキルはページ本文だけを作る。
+  このスキルはページ本文だけを作る。例外は図の差し込みで、embed スクリプトが
+  「再承認待ち」に書き換える（承認は追加しない）。
 
 ## 必須項目
 
@@ -155,5 +170,6 @@ description: |
 ## 関連
 
 - 数値の正本: `datasets/<study>/data/raw/**/run_metadata.json`
+- 図（推移・年次・バブルマトリクス）と差し込み: スキル `compound-page-figures`
 - 公開契約: `src/validation/publication_contract.py`、`docs/audits/publication-contract.json`
 - 完全なガイドページ: スキル `generate-compound-guide`

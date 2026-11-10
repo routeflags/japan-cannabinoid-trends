@@ -1,0 +1,149 @@
+{
+  "schema_version": "1.0.0",
+  "record": "analysis_derivation",
+  "analysis_id": "thc-o-page-charts",
+  "page": "publication/research_thc-o.html",
+  "page_sha256": "32da2c265d491b1cd2e2fa444b8ab34009edb07c758b4dc24988715908064dab",
+  "report": "README.md",
+  "figures": [
+    {
+      "id": "trends-5y-standalone",
+      "title": "THC-O 検索関心度の5年推移",
+      "source": {
+        "source_id": "google-trends",
+        "run_id": "20261014T204904Z-google-trends-cannabinoid-multi-trends",
+        "geo": "JP",
+        "timeframe": "today 5-y",
+        "normalization": "standalone series max = 100 (2022-04-10)"
+      },
+      "inputs": [
+        {
+          "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261014T204904Z-google-trends-cannabinoid-multi-trends/records_thc-o.json",
+          "sha256": "0a4431c78de61b1eb9c2886c9c3facc5d265c41d01bfdbd4b00a6dc4918094f0"
+        },
+        {
+          "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261014T204904Z-google-trends-cannabinoid-multi-trends/run_metadata.json",
+          "sha256": "f6b19a33ba2812a10db969cde7387a2b1f2160effca123ab77601539302e9fec"
+        }
+      ],
+      "stats": {
+        "points": 262,
+        "mean": 4.96,
+        "decimals": 2,
+        "max": 100,
+        "max_dates": [
+          "2022-04-10",
+          "2022-05-08"
+        ],
+        "latest": {
+          "date": "2026-10-11",
+          "value": 0
+        },
+        "nonzero_weeks": 19,
+        "observed_start": "2021-10-10",
+        "observed_end": "2026-10-11"
+      },
+      "verification": "page 5-year summary mean/peak/latest/observed range matched the raw series"
+    },
+    {
+      "id": "bubble-matrix-setD",
+      "title": "CBD・THC・THC-O — 年間検索ボリューム（共通スケール）",
+      "source": {
+        "source_id": "google-trends",
+        "run_id": "20261104T195136Z-google-trends-cannabinoid-raw-collection",
+        "query_id": "comparison-5y-current-setD",
+        "geo": "JP",
+        "timeframe": "today 5-y",
+        "terms": [
+          "CBD",
+          "THC",
+          "THC-O"
+        ],
+        "request_terms": [
+          "CBD",
+          "THC",
+          "HHCH",
+          "THC-O",
+          "THCNM"
+        ],
+        "normalization": "same request max = 100; comparable only within this request"
+      },
+      "inputs": [
+        {
+          "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261104T195136Z-google-trends-cannabinoid-raw-collection/comparison_cbd-thc-hhch-thc-o-thcnm.json",
+          "sha256": "8880f59043dc38ba135045df25e722ac96f297926df927d8fbf27f9e4a161093"
+        }
+      ],
+      "derivation": "annual mean of the weekly common-scale index, bucketed by the UTC year of the week-start date; partial years flagged by week count (not imputed)",
+      "stats": {
+        "years": [
+          "2021",
+          "2022",
+          "2023",
+          "2024",
+          "2025",
+          "2026"
+        ],
+        "weeks_per_year": {
+          "2021": 9,
+          "2022": 52,
+          "2023": 53,
+          "2024": 52,
+          "2025": 52,
+          "2026": 44
+        },
+        "complete_years": [
+          "2022",
+          "2023",
+          "2024",
+          "2025"
+        ],
+        "mean_5y": {
+          "CBD": "33.0916",
+          "THC": "5.0496",
+          "THC-O": "0.0458"
+        },
+        "page_terms_verified": {
+          "CBD": "33.0916",
+          "THC": "5.0496",
+          "THC-O": "0.0458"
+        }
+      },
+      "verification": "per-term 5-year means matched the page's 共通スケール table"
+    },
+    {
+      "id": "youtube-yearly-thc-o-liquid",
+      "title": "THC-O リキッド 動画の年次公開件数",
+      "source": {
+        "source_id": "youtube",
+        "run_id": "20261101T112513Z-youtube-cannabinoid-raw-collection",
+        "returned_count": 388,
+        "observed_publish_start": "2015-10-30",
+        "observed_publish_end": "2026-10-31",
+        "partial_years": [
+          "2015",
+          "2026"
+        ],
+        "note": "Yearly counts extracted from the published table in the page; raw payload is local-only."
+      },
+      "years": 12,
+      "yearly_sum": 388,
+      "verification": "yearly sum equals the published 返却件数"
+    }
+  ],
+  "not_comparable": "Trends relative index and YouTube sample counts measure different phenomena; never combined.",
+  "png_renderer": "rsvg-convert version 2.63.2",
+  "derived_by": "scripts/analysis/compound_page_charts.py",
+  "publication_scope": "Analysis artifacts. Embedding into the page needs republication review; not done here.",
+  "output_sha256": {
+    "datasets/cannabinoid-raw-collection/analysis/thc-o-page-charts/trends-5y-standalone.csv": "490d3bca96cb5b0abb9a2acd88e2dc6282ea59a11c1acb9492c7bc5ecea0e502",
+    "publication/figures/thc-o/trends-5y-standalone.svg": "1136b73597d13ca9a3c6a4ae806c9225c9f231248252c6121e4baac0a0f2ab74",
+    "publication/figures/thc-o/trends-5y-standalone.png": "73ecd2a6d2cac79f07280861b96381819a0fb477100c94bf34a0e51c994e69f5",
+    "datasets/cannabinoid-raw-collection/analysis/thc-o-page-charts/youtube-yearly-thc-o-liquid.csv": "694387e4235fa2161eeb7afc5b5d9df9fbf99be07f6250e5709f546c93637e37",
+    "publication/figures/thc-o/youtube-yearly-thc-o-liquid.svg": "82a1127af86713e21edaab1ae4653e107cee4951088a9685e4b0220bae7fd72b",
+    "publication/figures/thc-o/youtube-yearly-thc-o-liquid.png": "37fbac79c37f3f74594be072b85aacc6819f2d6bb0b4216738f48da3775d9ab2",
+    "datasets/cannabinoid-raw-collection/analysis/thc-o-page-charts/bubble-matrix-setD.csv": "40f4a565dcd5532861c1ae1a0d1df2e2e59434b778ad22c9387db38f0eb8671a",
+    "publication/figures/thc-o/bubble-matrix-setD.svg": "92fd517bd14e8d9a8123db4db96121be60870129f46e54c603ecc3551fae899c",
+    "publication/figures/thc-o/bubble-matrix-setD.png": "35df5da785dce5954382d58aa3755d1fbcba1bd8052eea0c992cdbc95f0a530a"
+  }
+}
