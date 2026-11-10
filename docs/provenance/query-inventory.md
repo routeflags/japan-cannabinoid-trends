@@ -1,6 +1,6 @@
 # Query Inventory（クエリ証拠台帳）
 
-**版:** 1.5.0（2026-11-04）
+**版:** 1.6.0（2026-11-10）
 **目的:** G2 垂直スライスで `metadata/queries/` に登録したクエリ・表記ゆれ・除外
 規則の**証拠台帳**（G1 §18 Phase 1 の collector-inventory.md のクエリ版）。登録は
 「実 run の記録」または「既存 keywords.yaml / taxonomy」に基づき、推測の語彙は
@@ -8,7 +8,7 @@
 
 ---
 
-## 1. 登録済みクエリ（`query-registry.json`、38 件）
+## 1. 登録済みクエリ（`query-registry.json` の化合物語 38 件。`other` intent の比較セットは本表に含めない）
 
 compound_id は compound-taxonomy の `skos:notation`（例 `compound_cbx`）。
 
@@ -48,6 +48,10 @@ compound_id は compound-taxonomy の `skos:notation`（例 `compound_cbx`）。
 | `thcnm-general-ja` | `compound_thcnm` | compound_general | THCNM | active | Google Trends の 12ヶ月・5年（`20261104T115425Z-google-trends-thcnm-12m` / `20261104T115431Z-google-trends-thcnm-5y`）。taxonomy 概念 `compound_thcnm`（`THA` は別名・商業名。ISS-20261104-TAX-028） |
 | `thcnm-liquid-ja` | `compound_thcnm` | product_liquid | THCNM リキッド | active | YouTube 1 run（`20261104T120627Z-youtube-cannabinoid-raw-collection`、30 件。2026-11-04）。`datasets/cannabinoid-raw-collection/metadata/query-design.json` の required primary query |
 | `tha-liquid-ja` | `compound_thcnm` | product_liquid | THA リキッド | active | YouTube 1 run（`20261104T120805Z-youtube-cannabinoid-raw-collection`、311 件。2026-11-04）。`THA` は `compound_thcnm` の別名・商業名（ISS-20261104-TAX-028）であり、別化合物の集合ではない。同じ化合物の 2 本目の required primary query |
+| `cbc-general-ja` | `compound_cbc` | compound_general | CBC | active | **run なし**。taxonomy の既存概念 `compound_cbc`（`compound_minor`、`wikidata:Q422441`）を根拠に 2026-11-10 に登録（ISS-20261110-TAX-039）。未収集であり 0 観測ではない |
+| `cbc-liquid-ja` | `compound_cbc` | product_liquid | CBC リキッド | active | **run なし**。同上。`datasets/cannabinoid-raw-collection/metadata/query-design.json` の required primary query だが、宣言済み未収集 |
+| `cbdv-general-ja` | `compound_cbdv` | compound_general | CBDV | active | **run なし**。taxonomy の既存概念 `compound_cbdv`（`compound_minor`、`wikidata:Q422426`）を根拠に 2026-11-10 に登録（ISS-20261110-TAX-039）。未収集であり 0 観測ではない |
+| `cbdv-liquid-ja` | `compound_cbdv` | product_liquid | CBDV リキッド | active | **run なし**。同上。required primary query だが、宣言済み未収集 |
 
 注（2026-10-13 追加分・表の下 10 行）: 下の5化合物は taxonomy に概念が無かったため登録
 できずにいたものが、`compound_hhc` / `compound_hhch` / `compound_thch` / `compound_thc_o` /
@@ -118,16 +122,23 @@ canonical の `THC-O` の 12ヶ月 NO_DATA・5年系列は不変で、variant �
 
 ## 4. 範囲の線引きと限界
 
-- 登録範囲は「compound-taxonomy に概念があり、29 run の記録または keywords.yaml
-  に実在する」ものに限定（J3）。2026-10-13 の G2 増分で THC / CBG / CBN / CRDH /
+- 登録範囲は「compound-taxonomy に概念があり、実 run の記録または keywords.yaml
+  に実在する」ものを基本とする（J3。例外は本节末尾に列挙する）。2026-10-13 の G2 増分で THC / CBG / CBN / CRDH /
   H4CBH / HHBD / THCV の 14 クエリを追加し、29 run に記録された化合物トークンは
   全て登録済みとなった（`docs/audits/g2-query-inventory.json` で再計算一致を強制。
   `ambiguous` 32 → 0、`exact_match` 41 → 73 はその正当な帰結）。未登録のまま自動採用
   しない（状態 `unmapped` / `ambiguous` / `semantic_match_candidate`）。
 - 残る `semantic_match_candidate` 1 件（`THC-Oリキッド`）は空白なし表記の候補であり、
   variant への自動昇格はしない（人手レビューが必要）。taxonomy に概念がない成分は
-  現時点で存在しない（全 15 化合物が notation を持つ。THCNM を含む）。
+  現時点で存在しない（この study の登録 17 化合物がすべて notation を持つ。
+  THCNM・CBC・CBDV を含む。CBC・CBDV は概念だけが既存で、query は 2026-11-10 に
+  登録したが run は 0 本）。
 - `thcnm-general-ja` / `thcnm-liquid-ja` / `tha-liquid-ja` は**実 run と keywords.yaml のいずれも根拠にせず**登録し、後に収集で実測した語である。
+- `cbc-general-ja` / `cbc-liquid-ja` / `cbdv-general-ja` / `cbdv-liquid-ja`（2026-11-10、
+  ISS-20261110-TAX-039）は**実 run を根拠にしない**登録である。根拠は taxonomy の既存概念
+  （`compound_cbc` / `compound_cbdv`）と owner の対象拡張依頼で、run は 0 本。
+  未収集を 0 観測とも欠測とも書かない（`datasets/cannabinoid-raw-collection/metadata/query-design.json`
+  の `declared_not_yet_collected`）。
   登録時の根拠は taxonomy の `compound_thcnm` 概念（名称・同一性の根拠は ISS-20261104-TAX-028）と
   研究設計上の化合物集合への追加であり、その時点では収集を行っていなかった。2026-11-04 に
   `thcnm-general-ja`（Google Trends 12ヶ月・5年）と `thcnm-liquid-ja` / `tha-liquid-ja`（YouTube 各 1 run）を

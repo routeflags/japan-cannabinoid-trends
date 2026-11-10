@@ -274,6 +274,38 @@
       "status": "active"
     },
     {
+      "query_id": "cbc-general-ja",
+      "compound_id": "compound_cbc",
+      "intent_id": "compound_general",
+      "language": "ja",
+      "canonical_text": "CBC",
+      "status": "active"
+    },
+    {
+      "query_id": "cbc-liquid-ja",
+      "compound_id": "compound_cbc",
+      "intent_id": "product_liquid",
+      "language": "ja",
+      "canonical_text": "CBC リキッド",
+      "status": "active"
+    },
+    {
+      "query_id": "cbdv-general-ja",
+      "compound_id": "compound_cbdv",
+      "intent_id": "compound_general",
+      "language": "ja",
+      "canonical_text": "CBDV",
+      "status": "active"
+    },
+    {
+      "query_id": "cbdv-liquid-ja",
+      "compound_id": "compound_cbdv",
+      "intent_id": "product_liquid",
+      "language": "ja",
+      "canonical_text": "CBDV リキッド",
+      "status": "active"
+    },
+    {
       "query_id": "comparison-5y-setA",
       "compound_id": "compound_cbd",
       "intent_id": "other",

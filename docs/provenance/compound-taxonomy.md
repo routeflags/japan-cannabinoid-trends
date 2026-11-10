@@ -191,6 +191,50 @@
 - 派生物: `bash scripts/export/export-taxonomy.sh` と同じエクスポータで
   `exports/taxonomy/compound-taxonomy.ttl` / `.schema.jsonld` を再生成した（概念・ラベルの数は不変）。
 
+## 2026-11-10 — `cannabinoid-raw-collection` の対象集合に CBC・CBDV を追加（ISS-20261110-TAX-039）
+
+**taxonomy は変更していない。** 両語は既に concept として登録済みで、今回の変更は study の対象集合、
+query registry、study 文書の層に限る。
+
+| 項目 | 記録した値 | 根拠 |
+|---|---|---|
+| `compound_id` | `compound_cbc` / `compound_cbdv` | 既存 `skos:notation`。新設していない |
+| 名称 | Cannabichromene (CBC) / Cannabidivarin (CBDV) | 既存 `skos:prefLabel`（en / ja） |
+| 分類 | `compound_minor` | 既存 `skos:broader`。新しい分類判断をしていない |
+| 外部識別子 | `wikidata:Q422441` / `wikidata:Q422426` | 既存 `skos:exactMatch`。追加の照会はしていない |
+| 登録 query | `cbc-general-ja` / `cbc-liquid-ja` / `cbdv-general-ja` / `cbdv-liquid-ja` | 既存規約（`<compound>-general-ja` / `<compound>-liquid-ja`）の適用 |
+| 収集状態 | 未収集（run 0） | 依頼は対象集合とクエリ設計の拡張であり、収集を含まない |
+
+### 未収集であることの扱い
+
+- 4 query はいずれも **run 0** で、raw payload・staging declaration・catalog 登録・採用はいずれも無い。
+  **0 観測でも欠測でもない**（未収集。`docs/specs/raw-data-policy.md` が区別する「非保持・未収集・欠測・0 観測」のうち未収集）。
+- `metadata/queries/query-variants.json` は変更していない。variant は観測された表記の記録であり
+  （`THCO` の前例）、run の無い語の表記（`CBCリキッド` 等）を先に作らない。
+- `metadata/keywords.yaml` は変更していない。THCNM 追加時にも更新していない legacy の辞書で、
+  正本ではない（正本は query registry と study の `query-design.json`）。
+- `iptc-mapping.yaml` と `docs/data-dictionary.md` §6.4 は変更していない。`jptr:compound-cbc` /
+  `jptr:compound-cbdv` は既に `deliberately_unmapped`（理由付き）で、§6.4 の `compound_minor` 行にも
+  列挙済みである。
+- `CBC` はカナダ放送協会などドメイン外の略号と衝突する。登録文字列は物質の同定ではないことを
+  study の `query-design.json`（`limitations`）と methodology に書いた。
+
+### 保留した語
+
+依頼の列挙 15 語のうち 13 語（`THCB` / `THCP` / `THCJD` / `THCPO` / `CBE` / `HHCPO` / `CBND` / `CBL` /
+`CBGa` / `CBP` / `10-OH-HHC` / `THXE` / `THCA`）は、リポジトリに canonical concept が無いため
+**登録も query 作成もしていない**。名称・route 配置・外部識別子のいずれも文書化された根拠が無く、
+2026-10-15 の TAX-027 gate（名称の根拠 / 分類の根拠 / 全層同時更新）を満たさない。
+各語に必要な確認事項は ISS-20261110-TAX-039 に語ごとに記録した。
+`THCP` は TAX-027 が「登録しない」と判断済みであり、その判断を変えるには新しい根拠が要る。
+
+### 同時に更新した層
+
+`query-registry.json`（4 query）、`datasets/cannabinoid-raw-collection/metadata/query-design.json`
+（`declared_not_yet_collected` に 2 化合物）、study README / methodology、`project.json` の
+`queryDesign`（写し）、`metadata/provenance/evidence-registry.json`（query registry の hash 再観測）、
+本台帳、ISS-20261110-TAX-039。
+
 ## 未修正の既知事項（本変更では触っていない）
 
 1. `metadata/taxonomy/iptc-mapping.yaml` の `compound_mapping` は部分収載（`cbc`/`thcv`/`cbdv`/`crdh` も未収載）。

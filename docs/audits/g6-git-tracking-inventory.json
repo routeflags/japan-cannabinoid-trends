@@ -8,7 +8,8 @@
   "extra_count": 44,
   "raw_modified": false,
   "state_summary": {
-    "absent": 16,
+    "absent": 15,
+    "ignored": 1,
     "tracked": 495
   },
   "entries": [
@@ -138,8 +139,8 @@
       "state": "tracked",
       "tracked": true,
       "ignored": false,
-      "sha256": "b167a354fe91e848312395928ce58043d0f05c2b2032b1f47ea6c237603c1a2d",
-      "sha256_after": "b167a354fe91e848312395928ce58043d0f05c2b2032b1f47ea6c237603c1a2d",
+      "sha256": "16c528e92f13aa504a064b409fc48b43dedcbca953897e243ced894834357a76",
+      "sha256_after": "16c528e92f13aa504a064b409fc48b43dedcbca953897e243ced894834357a76",
       "unchanged": true
     },
     {
@@ -4328,8 +4329,8 @@
       "state": "tracked",
       "tracked": true,
       "ignored": false,
-      "sha256": "06bd4ee752ef1d6c799ae77f204fd4330281a8143fb9b71cc5dd0022e320aa58",
-      "sha256_after": "06bd4ee752ef1d6c799ae77f204fd4330281a8143fb9b71cc5dd0022e320aa58",
+      "sha256": "f79292b41e012dff693316e316eb8b793f637f759cfd0fe5deea1ed0e3b857ca",
+      "sha256_after": "f79292b41e012dff693316e316eb8b793f637f759cfd0fe5deea1ed0e3b857ca",
       "unchanged": true
     },
     {
@@ -4338,8 +4339,8 @@
       "state": "tracked",
       "tracked": true,
       "ignored": false,
-      "sha256": "de61a727bcbf05b8e995d161b4e9230b8ac6e0616c3cb0ca0abb1f3e45902130",
-      "sha256_after": "de61a727bcbf05b8e995d161b4e9230b8ac6e0616c3cb0ca0abb1f3e45902130",
+      "sha256": "e6d43198ae5ff9efa742a1bd7b5bf4651fda7ea1d21cc18926c9d55525b02b02",
+      "sha256_after": "e6d43198ae5ff9efa742a1bd7b5bf4651fda7ea1d21cc18926c9d55525b02b02",
       "unchanged": true
     },
     {
@@ -4958,10 +4959,10 @@
     },
     {
       "path": ".venv",
-      "exists": false,
-      "state": "absent",
+      "exists": true,
+      "state": "ignored",
       "tracked": false,
-      "ignored": false,
+      "ignored": true,
       "kind": "local_only"
     },
     {
