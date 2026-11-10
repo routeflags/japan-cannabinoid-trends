@@ -14,161 +14,42 @@
       "coverage_unit": "compound_id",
       "compound_set": {
         "authority": "metadata/queries/query-registry.json: every query with intent_id == product_liquid is one required primary query, and its compound_id is a compound the design covers. This block does not restate that list.",
-        "declared_not_yet_collected": [
+        "registration_basis": [
           {
-            "compound_id": "compound_cbc",
-            "query_ids": [
-              "cbc-liquid-ja"
+            "compound_ids": [
+              "compound_cbc",
+              "compound_cbdv"
             ],
-            "state": "not_collected",
             "decided": "2026-11-10",
             "decided_by": "owner",
-            "reason": "The compound was added to this study's registered set on 2026-11-10 (canonical identity already existed in metadata/taxonomy/compound-taxonomy.skos.jsonld as compound_cbc, so no new identity decision was needed). No YouTube run exists for `CBC リキッド`: the query string is registered so the requirement is visible, not to report a measurement. run 0 is neither observed_zero nor missing."
+            "identity_state": "existing_canonical_concept_reused",
+            "reason": "CBC and CBDV were added to the study's registered set on 2026-11-10. Both canonical identities already existed in metadata/taxonomy/compound-taxonomy.skos.jsonld (compound_cbc, compound_cbdv), so the addition reused the existing concept IDs and classifications instead of creating new ones (ISS-20261110-TAX-039). Registration fixes the query strings; it is not a substance identification."
           },
           {
-            "compound_id": "compound_cbdv",
-            "query_ids": [
-              "cbdv-liquid-ja"
+            "compound_ids": [
+              "compound_thcb",
+              "compound_thcp",
+              "compound_thcjd",
+              "compound_thcpo",
+              "compound_cbe",
+              "compound_hhcpo",
+              "compound_cbnd",
+              "compound_cbl",
+              "compound_cbga",
+              "compound_cbp",
+              "compound_10_oh_hhc",
+              "compound_thxe",
+              "compound_thca"
             ],
-            "state": "not_collected",
-            "decided": "2026-11-10",
-            "decided_by": "owner",
-            "reason": "Registered on 2026-11-10 against the existing canonical concept compound_cbdv; no `CBDV リキッド` run has been executed. Same not_collected state as compound_cbc."
-          },
-          {
-            "compound_id": "compound_thcb",
-            "query_ids": [
-              "thcb-liquid-ja"
-            ],
-            "state": "not_collected",
             "decided": "2026-11-11",
             "decided_by": "owner",
-            "reason": "Registered on 2026-11-11 at the owner's direction. The taxonomy concept `compound_thcb` was newly registered in the administrative registration-state category `compound_identity_unverified` because the chemical identity of the term `THCB` is UNVERIFIED in this repository: no name, structure, chemical class, natural occurrence, route/origin, synonym or regulatory evidence exists, so registration is a search string, not a substance identification. No YouTube run exists for `THCB リキッド`: the query string is registered so the requirement is visible, not to report a measurement. run 0 is neither observed_zero nor missing (ISS-20261111-TAX-040)."
-          },
-          {
-            "compound_id": "compound_thcp",
-            "query_ids": [
-              "thcp-liquid-ja"
-            ],
-            "state": "not_collected",
-            "decided": "2026-11-11",
-            "decided_by": "owner",
-            "reason": "Registered on 2026-11-11 at the owner's direction. The taxonomy concept `compound_thcp` was newly registered in the administrative registration-state category `compound_identity_unverified` because the chemical identity of the term `THCP` is UNVERIFIED in this repository: no name, structure, chemical class, natural occurrence, route/origin, synonym or regulatory evidence exists, so registration is a search string, not a substance identification. No YouTube run exists for `THCP リキッド`: the query string is registered so the requirement is visible, not to report a measurement. run 0 is neither observed_zero nor missing (ISS-20261111-TAX-040). The 2026-10-15 decision not to register this term (ISS-20261015-TAX-027) is superseded for this term by the owner's 2026-11-11 scope decision; the supersession is recorded in the taxonomy scopeNote and the provenance ledger."
-          },
-          {
-            "compound_id": "compound_thcjd",
-            "query_ids": [
-              "thcjd-liquid-ja"
-            ],
-            "state": "not_collected",
-            "decided": "2026-11-11",
-            "decided_by": "owner",
-            "reason": "Registered on 2026-11-11 at the owner's direction. The taxonomy concept `compound_thcjd` was newly registered in the administrative registration-state category `compound_identity_unverified` because the chemical identity of the term `THCJD` is UNVERIFIED in this repository: no name, structure, chemical class, natural occurrence, route/origin, synonym or regulatory evidence exists, so registration is a search string, not a substance identification. No YouTube run exists for `THCJD リキッド`: the query string is registered so the requirement is visible, not to report a measurement. run 0 is neither observed_zero nor missing (ISS-20261111-TAX-040)."
-          },
-          {
-            "compound_id": "compound_thcpo",
-            "query_ids": [
-              "thcpo-liquid-ja"
-            ],
-            "state": "not_collected",
-            "decided": "2026-11-11",
-            "decided_by": "owner",
-            "reason": "Registered on 2026-11-11 at the owner's direction. The taxonomy concept `compound_thcpo` was newly registered in the administrative registration-state category `compound_identity_unverified` because the chemical identity of the term `THCPO` is UNVERIFIED in this repository: no name, structure, chemical class, natural occurrence, route/origin, synonym or regulatory evidence exists, so registration is a search string, not a substance identification. No YouTube run exists for `THCPO リキッド`: the query string is registered so the requirement is visible, not to report a measurement. run 0 is neither observed_zero nor missing (ISS-20261111-TAX-040)."
-          },
-          {
-            "compound_id": "compound_cbe",
-            "query_ids": [
-              "cbe-liquid-ja"
-            ],
-            "state": "not_collected",
-            "decided": "2026-11-11",
-            "decided_by": "owner",
-            "reason": "Registered on 2026-11-11 at the owner's direction. The taxonomy concept `compound_cbe` was newly registered in the administrative registration-state category `compound_identity_unverified` because the chemical identity of the term `CBE` is UNVERIFIED in this repository: no name, structure, chemical class, natural occurrence, route/origin, synonym or regulatory evidence exists, so registration is a search string, not a substance identification. No YouTube run exists for `CBE リキッド`: the query string is registered so the requirement is visible, not to report a measurement. run 0 is neither observed_zero nor missing (ISS-20261111-TAX-040)."
-          },
-          {
-            "compound_id": "compound_hhcpo",
-            "query_ids": [
-              "hhcpo-liquid-ja"
-            ],
-            "state": "not_collected",
-            "decided": "2026-11-11",
-            "decided_by": "owner",
-            "reason": "Registered on 2026-11-11 at the owner's direction. The taxonomy concept `compound_hhcpo` was newly registered in the administrative registration-state category `compound_identity_unverified` because the chemical identity of the term `HHCPO` is UNVERIFIED in this repository: no name, structure, chemical class, natural occurrence, route/origin, synonym or regulatory evidence exists, so registration is a search string, not a substance identification. No YouTube run exists for `HHCPO リキッド`: the query string is registered so the requirement is visible, not to report a measurement. run 0 is neither observed_zero nor missing (ISS-20261111-TAX-040)."
-          },
-          {
-            "compound_id": "compound_cbnd",
-            "query_ids": [
-              "cbnd-liquid-ja"
-            ],
-            "state": "not_collected",
-            "decided": "2026-11-11",
-            "decided_by": "owner",
-            "reason": "Registered on 2026-11-11 at the owner's direction. The taxonomy concept `compound_cbnd` was newly registered in the administrative registration-state category `compound_identity_unverified` because the chemical identity of the term `CBND` is UNVERIFIED in this repository: no name, structure, chemical class, natural occurrence, route/origin, synonym or regulatory evidence exists, so registration is a search string, not a substance identification. No YouTube run exists for `CBND リキッド`: the query string is registered so the requirement is visible, not to report a measurement. run 0 is neither observed_zero nor missing (ISS-20261111-TAX-040)."
-          },
-          {
-            "compound_id": "compound_cbl",
-            "query_ids": [
-              "cbl-liquid-ja"
-            ],
-            "state": "not_collected",
-            "decided": "2026-11-11",
-            "decided_by": "owner",
-            "reason": "Registered on 2026-11-11 at the owner's direction. The taxonomy concept `compound_cbl` was newly registered in the administrative registration-state category `compound_identity_unverified` because the chemical identity of the term `CBL` is UNVERIFIED in this repository: no name, structure, chemical class, natural occurrence, route/origin, synonym or regulatory evidence exists, so registration is a search string, not a substance identification. No YouTube run exists for `CBL リキッド`: the query string is registered so the requirement is visible, not to report a measurement. run 0 is neither observed_zero nor missing (ISS-20261111-TAX-040)."
-          },
-          {
-            "compound_id": "compound_cbga",
-            "query_ids": [
-              "cbga-liquid-ja"
-            ],
-            "state": "not_collected",
-            "decided": "2026-11-11",
-            "decided_by": "owner",
-            "reason": "Registered on 2026-11-11 at the owner's direction. The taxonomy concept `compound_cbga` was newly registered in the administrative registration-state category `compound_identity_unverified` because the chemical identity of the term `CBGa` is UNVERIFIED in this repository: no name, structure, chemical class, natural occurrence, route/origin, synonym or regulatory evidence exists, so registration is a search string, not a substance identification. No YouTube run exists for `CBGa リキッド`: the query string is registered so the requirement is visible, not to report a measurement. run 0 is neither observed_zero nor missing (ISS-20261111-TAX-040)."
-          },
-          {
-            "compound_id": "compound_cbp",
-            "query_ids": [
-              "cbp-liquid-ja"
-            ],
-            "state": "not_collected",
-            "decided": "2026-11-11",
-            "decided_by": "owner",
-            "reason": "Registered on 2026-11-11 at the owner's direction. The taxonomy concept `compound_cbp` was newly registered in the administrative registration-state category `compound_identity_unverified` because the chemical identity of the term `CBP` is UNVERIFIED in this repository: no name, structure, chemical class, natural occurrence, route/origin, synonym or regulatory evidence exists, so registration is a search string, not a substance identification. No YouTube run exists for `CBP リキッド`: the query string is registered so the requirement is visible, not to report a measurement. run 0 is neither observed_zero nor missing (ISS-20261111-TAX-040)."
-          },
-          {
-            "compound_id": "compound_10_oh_hhc",
-            "query_ids": [
-              "10-oh-hhc-liquid-ja"
-            ],
-            "state": "not_collected",
-            "decided": "2026-11-11",
-            "decided_by": "owner",
-            "reason": "Registered on 2026-11-11 at the owner's direction. The taxonomy concept `compound_10_oh_hhc` was newly registered in the administrative registration-state category `compound_identity_unverified` because the chemical identity of the term `10-OH-HHC` is UNVERIFIED in this repository: no name, structure, chemical class, natural occurrence, route/origin, synonym or regulatory evidence exists, so registration is a search string, not a substance identification. No YouTube run exists for `10-OH-HHC リキッド`: the query string is registered so the requirement is visible, not to report a measurement. run 0 is neither observed_zero nor missing (ISS-20261111-TAX-040)."
-          },
-          {
-            "compound_id": "compound_thxe",
-            "query_ids": [
-              "thxe-liquid-ja"
-            ],
-            "state": "not_collected",
-            "decided": "2026-11-11",
-            "decided_by": "owner",
-            "reason": "Registered on 2026-11-11 at the owner's direction. The taxonomy concept `compound_thxe` was newly registered in the administrative registration-state category `compound_identity_unverified` because the chemical identity of the term `THXE` is UNVERIFIED in this repository: no name, structure, chemical class, natural occurrence, route/origin, synonym or regulatory evidence exists, so registration is a search string, not a substance identification. No YouTube run exists for `THXE リキッド`: the query string is registered so the requirement is visible, not to report a measurement. run 0 is neither observed_zero nor missing (ISS-20261111-TAX-040)."
-          },
-          {
-            "compound_id": "compound_thca",
-            "query_ids": [
-              "thca-liquid-ja"
-            ],
-            "state": "not_collected",
-            "decided": "2026-11-11",
-            "decided_by": "owner",
-            "reason": "Registered on 2026-11-11 at the owner's direction. The taxonomy concept `compound_thca` was newly registered in the administrative registration-state category `compound_identity_unverified` because the chemical identity of the term `THCA` is UNVERIFIED in this repository: no name, structure, chemical class, natural occurrence, route/origin, synonym or regulatory evidence exists, so registration is a search string, not a substance identification. No YouTube run exists for `THCA リキッド`: the query string is registered so the requirement is visible, not to report a measurement. run 0 is neither observed_zero nor missing (ISS-20261111-TAX-040)."
+            "identity_state": "compound_identity_unverified",
+            "reason": "The owner directed registration of THCB, THCP, THCJD, THCPO, CBE, HHCPO, CBND, CBL, CBGa, CBP, 10-OH-HHC, THXE and THCA on 2026-11-11. Their chemical identities are UNVERIFIED in this repository: no name, structure, chemical class, natural occurrence, route/origin, synonym or regulatory evidence exists, so registration is a search string, not a substance identification. The taxonomy places them in the administrative registration-state category compound_identity_unverified, which asserts none of those properties. No synonym or identity relationship is inferred. The owner's instruction stated 17 substances but enumerated 15; the enumerated 15 are registered and no term is invented to reach 17. THCP's 2026-10-15 non-registration decision (ISS-20261015-TAX-027) is superseded for this term by the owner's 2026-11-11 scope decision; the supersession is recorded in the taxonomy scopeNote and the provenance ledger (ISS-20261111-TAX-040)."
           }
         ],
-        "coverage_state_note": "compound_thcnm's two required primary queries (`thcnm-liquid-ja` = THCNM リキッド and `tha-liquid-ja` = THA リキッド) each have an adopted run collected on 2026-11-04: declaration metadata/provenance/declarations/20261104-youtube-thcnm-tha-liquid-cannabinoid-raw-collection.json, runs and counts in data-catalog.json. They are two independent runs; their counts are not merged and neither substitutes for the other. Fifteen compounds are registered but have no run: compound_cbc and compound_cbdv (added 2026-11-10 from existing taxonomy concepts) and the thirteen terms added on 2026-11-11 in the administrative category `compound_identity_unverified` (THCB, THCP, THCJD, THCPO, CBE, HHCPO, CBND, CBL, CBGa, CBP, 10-OH-HHC, THXE, THCA). With them the required primary set is 31 queries, 16 of which have an adopted run, so `make audit-youtube-coverage` reports 15 missing_compounds while the 15 collected compounds stay complete. This block is the design declaration, not a measurement: absence of a run is not a zero observation. The thirteen new terms carry no chemical identity: the query strings are registered so the requirement is visible, not because a substance was identified (ISS-20261111-TAX-040).",
+        "coverage_authority": "Current adopted coverage is reported by `make audit-youtube-coverage` (staging declarations + data-catalog.json) and by datasets/cannabinoid-raw-collection/README.md. This design declares the required primary set and the coverage rule; it does not carry run counts or per-term collection states. A registered primary query with no adopted run is not a zero observation, and a preserved failure (NO_DATA, HTTP 429, or NO_VIDEOS) is never converted to zero.",
         "coverage_rule": "Two levels, both reported. Query level: a required primary query is covered when at least one adopted run carries that query_id. Compound level: a compound is complete only when all of its required primary queries are covered; some-but-not-all is `partial`, none is `missing`. One run covers only its own query_id and is never substituted for another query, and counts are never summed across queries or runs.",
-        "identity_caveat": "compound_thcnm's chemical identity is supplier/market-reported and unconfirmed. THA is an alias / commercial name of the same compound, not a second substance: both required primary queries resolve to compound_thcnm, and the two runs measure two query strings, not two substances. The query terms are the registry's canonical_text, so a run measures content matching that string, not a verified substance (ISS-20261104-TAX-028). The same caveat applies with no identity evidence at all to the thirteen terms registered on 2026-11-11: they sit in the administrative category `compound_identity_unverified`, which makes no chemical claim (ISS-20261111-TAX-040)."
+        "identity_caveat": "compound_thcnm's chemical identity is supplier/market-reported and unconfirmed. THA is an alias / commercial name of the same compound, not a second substance: both required primary queries resolve to compound_thcnm, and the two runs measure two query strings, not two substances. The query terms are the registry's canonical_text, so a run measures content matching that string, not a verified substance (ISS-20261104-TAX-028). The same caveat applies with no identity evidence at all to the thirteen terms registered on 2026-11-11: they sit in the administrative category `compound_identity_unverified`, which makes no chemical claim (ISS-20261111-TAX-040). Registration does not assert that the substance exists as the term implies."
       },
       "out_of_primary_intent_ids": [
         "compound_general",
@@ -182,13 +63,15 @@
         "Query-language restriction is approximate: Japanese-language content about non-Japanese markets, and non-Japanese-language content about the Japanese market, are not separated.",
         "The actor returns a search-result sample, not a census.",
         "Out-of-primary runs do not complete coverage for any compound.",
-        "`CBC` is also an acronym outside this domain (for example the Canadian Broadcasting Corporation), so the registered string `CBC` and `CBC リキッド` measure content matching that string, not a verified substance. Neither compound has a run yet (2026-11-10), so no observed series exists to review under this caveat.",
-        "The thirteen terms registered on 2026-11-11 (THCB, THCP, THCJD, THCPO, CBE, HHCPO, CBND, CBL, CBGa, CBP, 10-OH-HHC, THXE, THCA) are registered as search strings only. Their chemical identity is unverified and the taxonomy places them in the administrative category `compound_identity_unverified`, which asserts no route, natural occurrence, chemical class, structure, synonym or regulatory status. A run for one of them would measure content matching the string, never the substance (ISS-20261111-TAX-040)."
+        "`CBC` is also an acronym outside this domain (for example the Canadian Broadcasting Corporation), so the registered string `CBC` and `CBC リキッド` measure content matching that string, not a verified substance.",
+        "The thirteen terms registered on 2026-11-11 (THCB, THCP, THCJD, THCPO, CBE, HHCPO, CBND, CBL, CBGa, CBP, 10-OH-HHC, THXE, THCA) are registered as search strings only. Their chemical identity is unverified and the taxonomy places them in the administrative category `compound_identity_unverified`, which asserts no route, natural occurrence, chemical class, structure, synonym or regulatory status. A run for one of them measures content matching the string, never the substance (ISS-20261111-TAX-040).",
+        "A Google Trends attempt that returns no series (`NO_DATA`) or fails with HTTP 429 is preserved as a failed attempt, not adopted and never converted to zero.",
+        "An empty YouTube result (`NO_VIDEOS`) has no observable video dates, so it cannot yield the absolute observation window a staging declaration requires. It is preserved as an explicit marker, not adopted and not treated as a global zero."
       ],
       "distribution": {
         "study_id": "cannabinoid-platform-trends",
         "included": false,
-        "reason": "The distribution slice uses the COL-033 YouTube declaration only; the raw study's YouTube runs are outside that slice. THCNM is outside the slice in every case: it has no YouTube run in this study and none in COL-033. compound_cbc and compound_cbdv are outside the slice as well: they were added to the study's registered set on 2026-11-10 and have no run in any source, so nothing about them enters a release. The thirteen terms registered on 2026-11-11 (ISS-20261111-TAX-040) are outside the slice for the same reason and their identity is unverified, so no series about them may enter a release even after collection. Registering a compound does not widen the slice."
+        "reason": "The distribution slice uses the COL-033 YouTube declaration only; this study's YouTube runs, including THCNM's, are outside that slice. compound_cbc and compound_cbdv are outside the slice because they were added to this study's registered set on 2026-11-10 and are not part of COL-033. The thirteen terms registered on 2026-11-11 (ISS-20261111-TAX-040) are outside the slice for the same reason, and their identity is unverified, so no series about them may enter a release even after collection. Registering a compound does not widen the slice."
       }
     }
   ],

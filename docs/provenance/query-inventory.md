@@ -48,38 +48,40 @@ compound_id は compound-taxonomy の `skos:notation`（例 `compound_cbx`）。
 | `thcnm-general-ja` | `compound_thcnm` | compound_general | THCNM | active | Google Trends の 12ヶ月・5年（`20261104T115425Z-google-trends-thcnm-12m` / `20261104T115431Z-google-trends-thcnm-5y`）。taxonomy 概念 `compound_thcnm`（`THA` は別名・商業名。ISS-20261104-TAX-028） |
 | `thcnm-liquid-ja` | `compound_thcnm` | product_liquid | THCNM リキッド | active | YouTube 1 run（`20261104T120627Z-youtube-cannabinoid-raw-collection`、30 件。2026-11-04）。`datasets/cannabinoid-raw-collection/metadata/query-design.json` の required primary query |
 | `tha-liquid-ja` | `compound_thcnm` | product_liquid | THA リキッド | active | YouTube 1 run（`20261104T120805Z-youtube-cannabinoid-raw-collection`、311 件。2026-11-04）。`THA` は `compound_thcnm` の別名・商業名（ISS-20261104-TAX-028）であり、別化合物の集合ではない。同じ化合物の 2 本目の required primary query |
-| `cbc-general-ja` | `compound_cbc` | compound_general | CBC | active | **run なし**。taxonomy の既存概念 `compound_cbc`（`compound_minor`、`wikidata:Q422441`）を根拠に 2026-11-10 に登録（ISS-20261110-TAX-039）。未収集であり 0 観測ではない |
-| `cbc-liquid-ja` | `compound_cbc` | product_liquid | CBC リキッド | active | **run なし**。同上。`datasets/cannabinoid-raw-collection/metadata/query-design.json` の required primary query だが、宣言済み未収集 |
-| `cbdv-general-ja` | `compound_cbdv` | compound_general | CBDV | active | **run なし**。taxonomy の既存概念 `compound_cbdv`（`compound_minor`、`wikidata:Q422426`）を根拠に 2026-11-10 に登録（ISS-20261110-TAX-039）。未収集であり 0 観測ではない |
-| `cbdv-liquid-ja` | `compound_cbdv` | product_liquid | CBDV リキッド | active | **run なし**。同上。required primary query だが、宣言済み未収集 |
-| `thcb-general-ja` | `compound_thcb` | compound_general | THCB | active | **run なし**。管理カテゴリ `compound_identity_unverified` の新規概念 `compound_thcb`（化学的同一性未確認）を根拠に 2026-11-11 に登録（ISS-20261111-TAX-040）。未収集であり 0 観測ではない |
-| `thcb-liquid-ja` | `compound_thcb` | product_liquid | THCB リキッド | active | **run なし**。同上。`datasets/cannabinoid-raw-collection/metadata/query-design.json` の required primary query だが、宣言済み未収集 |
-| `thcp-general-ja` | `compound_thcp` | compound_general | THCP | active | **run なし**。管理カテゴリ `compound_identity_unverified` の新規概念 `compound_thcp`（化学的同一性未確認）を根拠に 2026-11-11 に登録（ISS-20261111-TAX-040）。未収集であり 0 観測ではない |
-| `thcp-liquid-ja` | `compound_thcp` | product_liquid | THCP リキッド | active | **run なし**。同上。`datasets/cannabinoid-raw-collection/metadata/query-design.json` の required primary query だが、宣言済み未収集 |
-| `thcjd-general-ja` | `compound_thcjd` | compound_general | THCJD | active | **run なし**。管理カテゴリ `compound_identity_unverified` の新規概念 `compound_thcjd`（化学的同一性未確認）を根拠に 2026-11-11 に登録（ISS-20261111-TAX-040）。未収集であり 0 観測ではない |
-| `thcjd-liquid-ja` | `compound_thcjd` | product_liquid | THCJD リキッド | active | **run なし**。同上。`datasets/cannabinoid-raw-collection/metadata/query-design.json` の required primary query だが、宣言済み未収集 |
-| `thcpo-general-ja` | `compound_thcpo` | compound_general | THCPO | active | **run なし**。管理カテゴリ `compound_identity_unverified` の新規概念 `compound_thcpo`（化学的同一性未確認）を根拠に 2026-11-11 に登録（ISS-20261111-TAX-040）。未収集であり 0 観測ではない |
-| `thcpo-liquid-ja` | `compound_thcpo` | product_liquid | THCPO リキッド | active | **run なし**。同上。`datasets/cannabinoid-raw-collection/metadata/query-design.json` の required primary query だが、宣言済み未収集 |
-| `cbe-general-ja` | `compound_cbe` | compound_general | CBE | active | **run なし**。管理カテゴリ `compound_identity_unverified` の新規概念 `compound_cbe`（化学的同一性未確認）を根拠に 2026-11-11 に登録（ISS-20261111-TAX-040）。未収集であり 0 観測ではない |
-| `cbe-liquid-ja` | `compound_cbe` | product_liquid | CBE リキッド | active | **run なし**。同上。`datasets/cannabinoid-raw-collection/metadata/query-design.json` の required primary query だが、宣言済み未収集 |
-| `hhcpo-general-ja` | `compound_hhcpo` | compound_general | HHCPO | active | **run なし**。管理カテゴリ `compound_identity_unverified` の新規概念 `compound_hhcpo`（化学的同一性未確認）を根拠に 2026-11-11 に登録（ISS-20261111-TAX-040）。未収集であり 0 観測ではない |
-| `hhcpo-liquid-ja` | `compound_hhcpo` | product_liquid | HHCPO リキッド | active | **run なし**。同上。`datasets/cannabinoid-raw-collection/metadata/query-design.json` の required primary query だが、宣言済み未収集 |
-| `cbnd-general-ja` | `compound_cbnd` | compound_general | CBND | active | **run なし**。管理カテゴリ `compound_identity_unverified` の新規概念 `compound_cbnd`（化学的同一性未確認）を根拠に 2026-11-11 に登録（ISS-20261111-TAX-040）。未収集であり 0 観測ではない |
-| `cbnd-liquid-ja` | `compound_cbnd` | product_liquid | CBND リキッド | active | **run なし**。同上。`datasets/cannabinoid-raw-collection/metadata/query-design.json` の required primary query だが、宣言済み未収集 |
-| `cbl-general-ja` | `compound_cbl` | compound_general | CBL | active | **run なし**。管理カテゴリ `compound_identity_unverified` の新規概念 `compound_cbl`（化学的同一性未確認）を根拠に 2026-11-11 に登録（ISS-20261111-TAX-040）。未収集であり 0 観測ではない |
-| `cbl-liquid-ja` | `compound_cbl` | product_liquid | CBL リキッド | active | **run なし**。同上。`datasets/cannabinoid-raw-collection/metadata/query-design.json` の required primary query だが、宣言済み未収集 |
-| `cbga-general-ja` | `compound_cbga` | compound_general | CBGa | active | **run なし**。管理カテゴリ `compound_identity_unverified` の新規概念 `compound_cbga`（化学的同一性未確認）を根拠に 2026-11-11 に登録（ISS-20261111-TAX-040）。未収集であり 0 観測ではない |
-| `cbga-liquid-ja` | `compound_cbga` | product_liquid | CBGa リキッド | active | **run なし**。同上。`datasets/cannabinoid-raw-collection/metadata/query-design.json` の required primary query だが、宣言済み未収集 |
-| `cbp-general-ja` | `compound_cbp` | compound_general | CBP | active | **run なし**。管理カテゴリ `compound_identity_unverified` の新規概念 `compound_cbp`（化学的同一性未確認）を根拠に 2026-11-11 に登録（ISS-20261111-TAX-040）。未収集であり 0 観測ではない |
-| `cbp-liquid-ja` | `compound_cbp` | product_liquid | CBP リキッド | active | **run なし**。同上。`datasets/cannabinoid-raw-collection/metadata/query-design.json` の required primary query だが、宣言済み未収集 |
-| `10-oh-hhc-general-ja` | `compound_10_oh_hhc` | compound_general | 10-OH-HHC | active | **run なし**。管理カテゴリ `compound_identity_unverified` の新規概念 `compound_10_oh_hhc`（化学的同一性未確認）を根拠に 2026-11-11 に登録（ISS-20261111-TAX-040）。未収集であり 0 観測ではない |
-| `10-oh-hhc-liquid-ja` | `compound_10_oh_hhc` | product_liquid | 10-OH-HHC リキッド | active | **run なし**。同上。`datasets/cannabinoid-raw-collection/metadata/query-design.json` の required primary query だが、宣言済み未収集 |
-| `thxe-general-ja` | `compound_thxe` | compound_general | THXE | active | **run なし**。管理カテゴリ `compound_identity_unverified` の新規概念 `compound_thxe`（化学的同一性未確認）を根拠に 2026-11-11 に登録（ISS-20261111-TAX-040）。未収集であり 0 観測ではない |
-| `thxe-liquid-ja` | `compound_thxe` | product_liquid | THXE リキッド | active | **run なし**。同上。`datasets/cannabinoid-raw-collection/metadata/query-design.json` の required primary query だが、宣言済み未収集 |
-| `thca-general-ja` | `compound_thca` | compound_general | THCA | active | **run なし**。管理カテゴリ `compound_identity_unverified` の新規概念 `compound_thca`（化学的同一性未確認）を根拠に 2026-11-11 に登録（ISS-20261111-TAX-040）。未収集であり 0 観測ではない |
-| `thca-liquid-ja` | `compound_thca` | product_liquid | THCA リキッド | active | **run なし**。同上。`datasets/cannabinoid-raw-collection/metadata/query-design.json` の required primary query だが、宣言済み未収集 |
+| `cbc-general-ja` | `compound_cbc` | compound_general | CBC | active | 登録根拠: taxonomy の既存概念 `compound_cbc`（`compound_minor`、`wikidata:Q422441`）を根拠に 2026-11-10 に登録（ISS-20261110-TAX-039）。**run 実績は登録根拠ではない** |
+| `cbc-liquid-ja` | `compound_cbc` | product_liquid | CBC リキッド | active | 登録根拠: 同上（`product_liquid` の required primary query 設計。run 実績ではない） |
+| `cbdv-general-ja` | `compound_cbdv` | compound_general | CBDV | active | 登録根拠: taxonomy の既存概念 `compound_cbdv`（`compound_minor`、`wikidata:Q422426`）を根拠に 2026-11-10 に登録（ISS-20261110-TAX-039）。**run 実績は登録根拠ではない** |
+| `cbdv-liquid-ja` | `compound_cbdv` | product_liquid | CBDV リキッド | active | 登録根拠: 同上（`product_liquid` の required primary query 設計。run 実績ではない） |
+| `thcb-general-ja` | `compound_thcb` | compound_general | THCB | active | 登録根拠: 管理カテゴリ `compound_identity_unverified` の新規概念 `compound_thcb`（化学的同一性未確認）を根拠に 2026-11-11 に登録（ISS-20261111-TAX-040）。**run 実績は登録根拠ではない** |
+| `thcb-liquid-ja` | `compound_thcb` | product_liquid | THCB リキッド | active | 登録根拠: 同上（`product_liquid` の required primary query 設計。run 実績ではない） |
+| `thcp-general-ja` | `compound_thcp` | compound_general | THCP | active | 登録根拠: 管理カテゴリ `compound_identity_unverified` の新規概念 `compound_thcp`（化学的同一性未確認）を根拠に 2026-11-11 に登録（ISS-20261111-TAX-040）。**run 実績は登録根拠ではない** |
+| `thcp-liquid-ja` | `compound_thcp` | product_liquid | THCP リキッド | active | 登録根拠: 同上（`product_liquid` の required primary query 設計。run 実績ではない） |
+| `thcjd-general-ja` | `compound_thcjd` | compound_general | THCJD | active | 登録根拠: 管理カテゴリ `compound_identity_unverified` の新規概念 `compound_thcjd`（化学的同一性未確認）を根拠に 2026-11-11 に登録（ISS-20261111-TAX-040）。**run 実績は登録根拠ではない** |
+| `thcjd-liquid-ja` | `compound_thcjd` | product_liquid | THCJD リキッド | active | 登録根拠: 同上（`product_liquid` の required primary query 設計。run 実績ではない） |
+| `thcpo-general-ja` | `compound_thcpo` | compound_general | THCPO | active | 登録根拠: 管理カテゴリ `compound_identity_unverified` の新規概念 `compound_thcpo`（化学的同一性未確認）を根拠に 2026-11-11 に登録（ISS-20261111-TAX-040）。**run 実績は登録根拠ではない** |
+| `thcpo-liquid-ja` | `compound_thcpo` | product_liquid | THCPO リキッド | active | 登録根拠: 同上（`product_liquid` の required primary query 設計。run 実績ではない） |
+| `cbe-general-ja` | `compound_cbe` | compound_general | CBE | active | 登録根拠: 管理カテゴリ `compound_identity_unverified` の新規概念 `compound_cbe`（化学的同一性未確認）を根拠に 2026-11-11 に登録（ISS-20261111-TAX-040）。**run 実績は登録根拠ではない** |
+| `cbe-liquid-ja` | `compound_cbe` | product_liquid | CBE リキッド | active | 登録根拠: 同上（`product_liquid` の required primary query 設計。run 実績ではない） |
+| `hhcpo-general-ja` | `compound_hhcpo` | compound_general | HHCPO | active | 登録根拠: 管理カテゴリ `compound_identity_unverified` の新規概念 `compound_hhcpo`（化学的同一性未確認）を根拠に 2026-11-11 に登録（ISS-20261111-TAX-040）。**run 実績は登録根拠ではない** |
+| `hhcpo-liquid-ja` | `compound_hhcpo` | product_liquid | HHCPO リキッド | active | 登録根拠: 同上（`product_liquid` の required primary query 設計。run 実績ではない） |
+| `cbnd-general-ja` | `compound_cbnd` | compound_general | CBND | active | 登録根拠: 管理カテゴリ `compound_identity_unverified` の新規概念 `compound_cbnd`（化学的同一性未確認）を根拠に 2026-11-11 に登録（ISS-20261111-TAX-040）。**run 実績は登録根拠ではない** |
+| `cbnd-liquid-ja` | `compound_cbnd` | product_liquid | CBND リキッド | active | 登録根拠: 同上（`product_liquid` の required primary query 設計。run 実績ではない） |
+| `cbl-general-ja` | `compound_cbl` | compound_general | CBL | active | 登録根拠: 管理カテゴリ `compound_identity_unverified` の新規概念 `compound_cbl`（化学的同一性未確認）を根拠に 2026-11-11 に登録（ISS-20261111-TAX-040）。**run 実績は登録根拠ではない** |
+| `cbl-liquid-ja` | `compound_cbl` | product_liquid | CBL リキッド | active | 登録根拠: 同上（`product_liquid` の required primary query 設計。run 実績ではない） |
+| `cbga-general-ja` | `compound_cbga` | compound_general | CBGa | active | 登録根拠: 管理カテゴリ `compound_identity_unverified` の新規概念 `compound_cbga`（化学的同一性未確認）を根拠に 2026-11-11 に登録（ISS-20261111-TAX-040）。**run 実績は登録根拠ではない** |
+| `cbga-liquid-ja` | `compound_cbga` | product_liquid | CBGa リキッド | active | 登録根拠: 同上（`product_liquid` の required primary query 設計。run 実績ではない） |
+| `cbp-general-ja` | `compound_cbp` | compound_general | CBP | active | 登録根拠: 管理カテゴリ `compound_identity_unverified` の新規概念 `compound_cbp`（化学的同一性未確認）を根拠に 2026-11-11 に登録（ISS-20261111-TAX-040）。**run 実績は登録根拠ではない** |
+| `cbp-liquid-ja` | `compound_cbp` | product_liquid | CBP リキッド | active | 登録根拠: 同上（`product_liquid` の required primary query 設計。run 実績ではない） |
+| `10-oh-hhc-general-ja` | `compound_10_oh_hhc` | compound_general | 10-OH-HHC | active | 登録根拠: 管理カテゴリ `compound_identity_unverified` の新規概念 `compound_10_oh_hhc`（化学的同一性未確認）を根拠に 2026-11-11 に登録（ISS-20261111-TAX-040）。**run 実績は登録根拠ではない** |
+| `10-oh-hhc-liquid-ja` | `compound_10_oh_hhc` | product_liquid | 10-OH-HHC リキッド | active | 登録根拠: 同上（`product_liquid` の required primary query 設計。run 実績ではない） |
+| `thxe-general-ja` | `compound_thxe` | compound_general | THXE | active | 登録根拠: 管理カテゴリ `compound_identity_unverified` の新規概念 `compound_thxe`（化学的同一性未確認）を根拠に 2026-11-11 に登録（ISS-20261111-TAX-040）。**run 実績は登録根拠ではない** |
+| `thxe-liquid-ja` | `compound_thxe` | product_liquid | THXE リキッド | active | 登録根拠: 同上（`product_liquid` の required primary query 設計。run 実績ではない） |
+| `thca-general-ja` | `compound_thca` | compound_general | THCA | active | 登録根拠: 管理カテゴリ `compound_identity_unverified` の新規概念 `compound_thca`（化学的同一性未確認）を根拠に 2026-11-11 に登録（ISS-20261111-TAX-040）。**run 実績は登録根拠ではない** |
+| `thca-liquid-ja` | `compound_thca` | product_liquid | THCA リキッド | active | 登録根拠: 同上（`product_liquid` の required primary query 設計。run 実績ではない） |
 
-注（2026-10-13 追加分・表の下 10 行）: 下の5化合物は taxonomy に概念が無かったため登録
+**追加 15 語（CBC・CBDV と 2026-11-11 の 13 語）の 30 行は登録根拠の記録である。** 登録時点では run 0（未収集）で、0 観測でも欠測でもない。**現在の run 結果はこの表ではなく、`datasets/cannabinoid-raw-collection/README.md`・`methodology.md`、`metadata/data-catalog.json`、`make audit-youtube-coverage` を正本とする。**
+
+注（2026-10-13 追加分）: `HHC` / `HHCH` / `THCH` / `THC-O` / `CRDP` の 5 化合物は taxonomy に概念が無かったため登録
 できずにいたものが、`compound_hhc` / `compound_hhch` / `compound_thch` / `compound_thc_o` /
 `compound_crdp` の追加により可能になった。登録した文字列は**実 run に記録されたもの**
 のみ（`docs/audits/g2-query-inventory.json` で再計算一致を強制）。表記ゆれ（空白なし形）
@@ -155,23 +157,25 @@ canonical の `THC-O` の 12ヶ月 NO_DATA・5年系列は不変で、variant �
   `ambiguous` 32 → 0、`exact_match` 41 → 73 はその正当な帰結）。未登録のまま自動採用
   しない（状態 `unmapped` / `ambiguous` / `semantic_match_candidate`）。
 - 残る `semantic_match_candidate` 1 件（`THC-Oリキッド`）は空白なし表記の候補であり、
-  variant への自動昇格はしない（人手レビューが必要）。taxonomy に概念がない成分は
-  現時点で存在しない（この study の登録 17 化合物がすべて notation を持つ。
-  THCNM・CBC・CBDV を含む。CBC・CBDV は概念だけが既存で、query は 2026-11-10 に
-  登録したが run は 0 本）。
+  variant への自動昇格はしない（人手レビューが必要）。登録 30 化合物はすべて notation を持つ
+  （THCNM・CBC・CBDV・2026-11-11 の 13 語を含む）。CBC・CBDV は概念だけが既存で、query は 2026-11-10 に
+  登録した（**登録時点で run なし**。現在の run 結果は study README / methodology / catalog /
+  `make audit-youtube-coverage` を正本とする）。
 - `thcnm-general-ja` / `thcnm-liquid-ja` / `tha-liquid-ja` は**実 run と keywords.yaml のいずれも根拠にせず**登録し、後に収集で実測した語である。
 - `cbc-general-ja` / `cbc-liquid-ja` / `cbdv-general-ja` / `cbdv-liquid-ja`（2026-11-10、
   ISS-20261110-TAX-039）は**実 run を根拠にしない**登録である。根拠は taxonomy の既存概念
-  （`compound_cbc` / `compound_cbdv`）と owner の対象拡張依頼で、run は 0 本。
-  未収集を 0 観測とも欠測とも書かない（`datasets/cannabinoid-raw-collection/metadata/query-design.json`
-  の `declared_not_yet_collected`）。
+  （`compound_cbc` / `compound_cbdv`）と owner の対象拡張依頼であり、**登録時点では run 0** だった。
+  登録時点の未収集を 0 観測とも欠測とも書かない。**現在の run 結果は
+  `datasets/cannabinoid-raw-collection/README.md`・`methodology.md`、
+  `metadata/data-catalog.json`、`make audit-youtube-coverage` を正本とする。**
 - 2026-11-11 の 26 query（13 語 × `compound_general` / `product_liquid`。
   ISS-20261111-TAX-040）も**実 run を根拠にしない**登録である。根拠は owner の列挙と、
   管理カテゴリ `compound_identity_unverified` に追加した taxonomy 概念である。
   13 語の化学的同一性は未確認で、名称・構造・クラス・別名のいずれも根拠が無い。
   variant は作っていない（表記は観測の記録であり、run の無い語の綴りを先に作らない）。
-  run は 0 本で、未収集を 0 観測とも欠測とも書かない。
-  登録時の根拠は taxonomy の `compound_thcnm` 概念（名称・同一性の根拠は ISS-20261104-TAX-028）と
+  **登録時点では run 0** で、登録時点の未収集を 0 観測とも欠測とも書かない。
+  現在の run 結果は上と同じ study 文書・catalog・監査を正本とする。
+- **THCNM の登録と収集**: 登録時の根拠は taxonomy の `compound_thcnm` 概念（名称・同一性の根拠は ISS-20261104-TAX-028）と
   研究設計上の化合物集合への追加であり、その時点では収集を行っていなかった。2026-11-04 に
   `thcnm-general-ja`（Google Trends 12ヶ月・5年）と `thcnm-liquid-ja` / `tha-liquid-ja`（YouTube 各 1 run）を
   収集し、登録した文字列がそのまま送られたことを payload の `input` 列（YouTube）と

@@ -86,17 +86,23 @@ def _repository_retained_only(document: dict) -> dict:
 
 
 def _study_scope(document: dict) -> dict:
-    """g7 also derives per-study source / window / measurement lists from runs.
+    """g7 derives per-study lists from runs as well as registrations.
 
-    Those lists grow when a machine sees raw a checkout does not have, so the
-    comparison keeps the study records and their registration facts, not the
-    run-derived lists.
+    Compound, query, source, window, and measurement lists grow when a machine
+    sees raw a checkout does not have, so compare study registration facts, not
+    those checkout-local run-derived lists.
     """
 
     view = _repository_retained_only(document)
     for study in view.get("studies", []):
         if isinstance(study, dict):
-            for key in ("sources", "window_ids", "measurement_ids"):
+            for key in (
+                "compound_ids",
+                "query_ids",
+                "sources",
+                "window_ids",
+                "measurement_ids",
+            ):
                 study.pop(key, None)
     return view
 

@@ -441,9 +441,8 @@
           "googleTrends": "CBC"
         },
         "commonScaleSet": null,
-        "coverageStatus": "declared_not_yet_collected",
         "identityNote": "canonical identity は metadata/taxonomy/compound-taxonomy.skos.jsonld の既存 concept `compound_cbc`（Cannabichromene、Wikidata Q422441 の exactMatch 付き）。今回の追加で ID・分類を新設していない。",
-        "note": "2026-11-10 に study の登録化合物集合へ追加した。run は 0 本で、Google Trends / YouTube とも未収集（0 観測でも欠測でもない）。`CBC` はカナダ放送協会など化合物以外の略号と衝突するため、登録文字列は物質の同定ではない。X のクエリは設計していない。正本は metadata/queries/query-registry.json（cbc-general-ja / cbc-liquid-ja）と datasets/cannabinoid-raw-collection/metadata/query-design.json（declared_not_yet_collected）。ISS-20261110-TAX-039。"
+        "note": "2026-11-10 に study の登録化合物集合へ追加した。`CBC` はカナダ放送協会など化合物以外の略号と衝突する。登録は検索文字列の固定であり、物質の同定ではない。ソース別の adopted 被覆（採用・NO_DATA・HTTP 429・NO_VIDEOS を含む）は datasets/cannabinoid-raw-collection/README.md と `make audit-youtube-coverage` が報告する。この queryDesign は実行状態を持たない。X のクエリは設計していない。正本は metadata/queries/query-registry.json（cbc-general-ja / cbc-liquid-ja）。ISS-20261110-TAX-039。"
       },
       "CBDV": {
         "japaneseName": "カンナビジバリン",
@@ -453,9 +452,8 @@
           "googleTrends": "CBDV"
         },
         "commonScaleSet": null,
-        "coverageStatus": "declared_not_yet_collected",
         "identityNote": "canonical identity は metadata/taxonomy/compound-taxonomy.skos.jsonld の既存 concept `compound_cbdv`（Cannabidivarin、Wikidata Q422426 の exactMatch 付き）。今回の追加で ID・分類を新設していない。",
-        "note": "2026-11-10 に study の登録化合物集合へ追加した。run は 0 本で、Google Trends / YouTube とも未収集（0 観測でも欠測でもない）。X のクエリは設計していない。正本は metadata/queries/query-registry.json（cbdv-general-ja / cbdv-liquid-ja）と datasets/cannabinoid-raw-collection/metadata/query-design.json（declared_not_yet_collected）。ISS-20261110-TAX-039。"
+        "note": "2026-11-10 に study の登録化合物集合へ追加した。登録は検索文字列の固定であり、物質の同定ではない。ソース別の adopted 被覆（採用・NO_DATA・HTTP 429・NO_VIDEOS を含む）は datasets/cannabinoid-raw-collection/README.md と `make audit-youtube-coverage` が報告する。この queryDesign は実行状態を持たない。X のクエリは設計していない。正本は metadata/queries/query-registry.json（cbdv-general-ja / cbdv-liquid-ja）。ISS-20261110-TAX-039。"
       },
     "THCB": {
       "japaneseName": "THCB",
@@ -465,9 +463,8 @@
         "googleTrends": "THCB"
       },
       "commonScaleSet": null,
-      "coverageStatus": "declared_not_yet_collected",
       "identityNote": "化学的同一性は**未確認**。taxonomy の管理上の登録状態カテゴリ `compound_identity_unverified` に `compound_thcb` として置き、経路・由来、天然存在、化学クラス、構造、別名、規制状態のいずれも主張しない。外部識別子（CAS / ChEBI / Wikidata）は記録しない。",
-      "note": "2026-11-11 の owner 指示で登録化合物集合へ追加した。run は 0 本で、Google Trends / YouTube とも未収集（0 観測でも欠測でもない）。X のクエリは設計していない。正本は metadata/queries/query-registry.json（thcb-general-ja / thcb-liquid-ja）と datasets/cannabinoid-raw-collection/metadata/query-design.json（declared_not_yet_collected）。ISS-20261111-TAX-040。"
+      "note": "2026-11-11 の owner 指示で登録化合物集合へ追加した。登録は検索文字列の固定であり、物質の同定ではない。ソース別の adopted 被覆（採用・NO_DATA・HTTP 429・NO_VIDEOS を含む）は datasets/cannabinoid-raw-collection/README.md と `make audit-youtube-coverage` が報告する。この queryDesign は実行状態を持たない。X のクエリは設計していない。正本は metadata/queries/query-registry.json（thcb-general-ja / thcb-liquid-ja）。ISS-20261111-TAX-040。"
     },
     "THCP": {
       "japaneseName": "THCP",
@@ -477,9 +474,8 @@
         "googleTrends": "THCP"
       },
       "commonScaleSet": null,
-      "coverageStatus": "declared_not_yet_collected",
       "identityNote": "化学的同一性は**未確認**。taxonomy の管理上の登録状態カテゴリ `compound_identity_unverified` に `compound_thcp` として置き、経路・由来、天然存在、化学クラス、構造、別名、規制状態のいずれも主張しない。外部識別子（CAS / ChEBI / Wikidata）は記録しない。",
-      "note": "THCP については ISS-20261015-TAX-027 の非登録判断を本指示が置換した。2026-11-11 の owner 指示で登録化合物集合へ追加した。run は 0 本で、Google Trends / YouTube とも未収集（0 観測でも欠測でもない）。X のクエリは設計していない。正本は metadata/queries/query-registry.json（thcp-general-ja / thcp-liquid-ja）と datasets/cannabinoid-raw-collection/metadata/query-design.json（declared_not_yet_collected）。ISS-20261111-TAX-040。"
+      "note": "THCP については ISS-20261015-TAX-027 の非登録判断を本指示が置換した。2026-11-11 の owner 指示で登録化合物集合へ追加した。登録は検索文字列の固定であり、物質の同定ではない。ソース別の adopted 被覆（採用・NO_DATA・HTTP 429・NO_VIDEOS を含む）は datasets/cannabinoid-raw-collection/README.md と `make audit-youtube-coverage` が報告する。この queryDesign は実行状態を持たない。X のクエリは設計していない。正本は metadata/queries/query-registry.json（thcp-general-ja / thcp-liquid-ja）。ISS-20261111-TAX-040。"
     },
     "THCJD": {
       "japaneseName": "THCJD",
@@ -489,9 +485,8 @@
         "googleTrends": "THCJD"
       },
       "commonScaleSet": null,
-      "coverageStatus": "declared_not_yet_collected",
       "identityNote": "化学的同一性は**未確認**。taxonomy の管理上の登録状態カテゴリ `compound_identity_unverified` に `compound_thcjd` として置き、経路・由来、天然存在、化学クラス、構造、別名、規制状態のいずれも主張しない。外部識別子（CAS / ChEBI / Wikidata）は記録しない。",
-      "note": "2026-11-11 の owner 指示で登録化合物集合へ追加した。run は 0 本で、Google Trends / YouTube とも未収集（0 観測でも欠測でもない）。X のクエリは設計していない。正本は metadata/queries/query-registry.json（thcjd-general-ja / thcjd-liquid-ja）と datasets/cannabinoid-raw-collection/metadata/query-design.json（declared_not_yet_collected）。ISS-20261111-TAX-040。"
+      "note": "2026-11-11 の owner 指示で登録化合物集合へ追加した。登録は検索文字列の固定であり、物質の同定ではない。ソース別の adopted 被覆（採用・NO_DATA・HTTP 429・NO_VIDEOS を含む）は datasets/cannabinoid-raw-collection/README.md と `make audit-youtube-coverage` が報告する。この queryDesign は実行状態を持たない。X のクエリは設計していない。正本は metadata/queries/query-registry.json（thcjd-general-ja / thcjd-liquid-ja）。ISS-20261111-TAX-040。"
     },
     "THCPO": {
       "japaneseName": "THCPO",
@@ -501,9 +496,8 @@
         "googleTrends": "THCPO"
       },
       "commonScaleSet": null,
-      "coverageStatus": "declared_not_yet_collected",
       "identityNote": "化学的同一性は**未確認**。taxonomy の管理上の登録状態カテゴリ `compound_identity_unverified` に `compound_thcpo` として置き、経路・由来、天然存在、化学クラス、構造、別名、規制状態のいずれも主張しない。外部識別子（CAS / ChEBI / Wikidata）は記録しない。",
-      "note": "2026-11-11 の owner 指示で登録化合物集合へ追加した。run は 0 本で、Google Trends / YouTube とも未収集（0 観測でも欠測でもない）。X のクエリは設計していない。正本は metadata/queries/query-registry.json（thcpo-general-ja / thcpo-liquid-ja）と datasets/cannabinoid-raw-collection/metadata/query-design.json（declared_not_yet_collected）。ISS-20261111-TAX-040。"
+      "note": "2026-11-11 の owner 指示で登録化合物集合へ追加した。登録は検索文字列の固定であり、物質の同定ではない。ソース別の adopted 被覆（採用・NO_DATA・HTTP 429・NO_VIDEOS を含む）は datasets/cannabinoid-raw-collection/README.md と `make audit-youtube-coverage` が報告する。この queryDesign は実行状態を持たない。X のクエリは設計していない。正本は metadata/queries/query-registry.json（thcpo-general-ja / thcpo-liquid-ja）。ISS-20261111-TAX-040。"
     },
     "CBE": {
       "japaneseName": "CBE",
@@ -513,9 +507,8 @@
         "googleTrends": "CBE"
       },
       "commonScaleSet": null,
-      "coverageStatus": "declared_not_yet_collected",
       "identityNote": "化学的同一性は**未確認**。taxonomy の管理上の登録状態カテゴリ `compound_identity_unverified` に `compound_cbe` として置き、経路・由来、天然存在、化学クラス、構造、別名、規制状態のいずれも主張しない。外部識別子（CAS / ChEBI / Wikidata）は記録しない。",
-      "note": "2026-11-11 の owner 指示で登録化合物集合へ追加した。run は 0 本で、Google Trends / YouTube とも未収集（0 観測でも欠測でもない）。X のクエリは設計していない。正本は metadata/queries/query-registry.json（cbe-general-ja / cbe-liquid-ja）と datasets/cannabinoid-raw-collection/metadata/query-design.json（declared_not_yet_collected）。ISS-20261111-TAX-040。"
+      "note": "2026-11-11 の owner 指示で登録化合物集合へ追加した。登録は検索文字列の固定であり、物質の同定ではない。ソース別の adopted 被覆（採用・NO_DATA・HTTP 429・NO_VIDEOS を含む）は datasets/cannabinoid-raw-collection/README.md と `make audit-youtube-coverage` が報告する。この queryDesign は実行状態を持たない。X のクエリは設計していない。正本は metadata/queries/query-registry.json（cbe-general-ja / cbe-liquid-ja）。ISS-20261111-TAX-040。"
     },
     "HHCPO": {
       "japaneseName": "HHCPO",
@@ -525,9 +518,8 @@
         "googleTrends": "HHCPO"
       },
       "commonScaleSet": null,
-      "coverageStatus": "declared_not_yet_collected",
       "identityNote": "化学的同一性は**未確認**。taxonomy の管理上の登録状態カテゴリ `compound_identity_unverified` に `compound_hhcpo` として置き、経路・由来、天然存在、化学クラス、構造、別名、規制状態のいずれも主張しない。外部識別子（CAS / ChEBI / Wikidata）は記録しない。",
-      "note": "2026-11-11 の owner 指示で登録化合物集合へ追加した。run は 0 本で、Google Trends / YouTube とも未収集（0 観測でも欠測でもない）。X のクエリは設計していない。正本は metadata/queries/query-registry.json（hhcpo-general-ja / hhcpo-liquid-ja）と datasets/cannabinoid-raw-collection/metadata/query-design.json（declared_not_yet_collected）。ISS-20261111-TAX-040。"
+      "note": "2026-11-11 の owner 指示で登録化合物集合へ追加した。登録は検索文字列の固定であり、物質の同定ではない。ソース別の adopted 被覆（採用・NO_DATA・HTTP 429・NO_VIDEOS を含む）は datasets/cannabinoid-raw-collection/README.md と `make audit-youtube-coverage` が報告する。この queryDesign は実行状態を持たない。X のクエリは設計していない。正本は metadata/queries/query-registry.json（hhcpo-general-ja / hhcpo-liquid-ja）。ISS-20261111-TAX-040。"
     },
     "CBND": {
       "japaneseName": "CBND",
@@ -537,9 +529,8 @@
         "googleTrends": "CBND"
       },
       "commonScaleSet": null,
-      "coverageStatus": "declared_not_yet_collected",
       "identityNote": "化学的同一性は**未確認**。taxonomy の管理上の登録状態カテゴリ `compound_identity_unverified` に `compound_cbnd` として置き、経路・由来、天然存在、化学クラス、構造、別名、規制状態のいずれも主張しない。外部識別子（CAS / ChEBI / Wikidata）は記録しない。",
-      "note": "2026-11-11 の owner 指示で登録化合物集合へ追加した。run は 0 本で、Google Trends / YouTube とも未収集（0 観測でも欠測でもない）。X のクエリは設計していない。正本は metadata/queries/query-registry.json（cbnd-general-ja / cbnd-liquid-ja）と datasets/cannabinoid-raw-collection/metadata/query-design.json（declared_not_yet_collected）。ISS-20261111-TAX-040。"
+      "note": "2026-11-11 の owner 指示で登録化合物集合へ追加した。登録は検索文字列の固定であり、物質の同定ではない。ソース別の adopted 被覆（採用・NO_DATA・HTTP 429・NO_VIDEOS を含む）は datasets/cannabinoid-raw-collection/README.md と `make audit-youtube-coverage` が報告する。この queryDesign は実行状態を持たない。X のクエリは設計していない。正本は metadata/queries/query-registry.json（cbnd-general-ja / cbnd-liquid-ja）。ISS-20261111-TAX-040。"
     },
     "CBL": {
       "japaneseName": "CBL",
@@ -549,9 +540,8 @@
         "googleTrends": "CBL"
       },
       "commonScaleSet": null,
-      "coverageStatus": "declared_not_yet_collected",
       "identityNote": "化学的同一性は**未確認**。taxonomy の管理上の登録状態カテゴリ `compound_identity_unverified` に `compound_cbl` として置き、経路・由来、天然存在、化学クラス、構造、別名、規制状態のいずれも主張しない。外部識別子（CAS / ChEBI / Wikidata）は記録しない。",
-      "note": "2026-11-11 の owner 指示で登録化合物集合へ追加した。run は 0 本で、Google Trends / YouTube とも未収集（0 観測でも欠測でもない）。X のクエリは設計していない。正本は metadata/queries/query-registry.json（cbl-general-ja / cbl-liquid-ja）と datasets/cannabinoid-raw-collection/metadata/query-design.json（declared_not_yet_collected）。ISS-20261111-TAX-040。"
+      "note": "2026-11-11 の owner 指示で登録化合物集合へ追加した。登録は検索文字列の固定であり、物質の同定ではない。ソース別の adopted 被覆（採用・NO_DATA・HTTP 429・NO_VIDEOS を含む）は datasets/cannabinoid-raw-collection/README.md と `make audit-youtube-coverage` が報告する。この queryDesign は実行状態を持たない。X のクエリは設計していない。正本は metadata/queries/query-registry.json（cbl-general-ja / cbl-liquid-ja）。ISS-20261111-TAX-040。"
     },
     "CBGa": {
       "japaneseName": "CBGa",
@@ -561,9 +551,8 @@
         "googleTrends": "CBGa"
       },
       "commonScaleSet": null,
-      "coverageStatus": "declared_not_yet_collected",
       "identityNote": "化学的同一性は**未確認**。taxonomy の管理上の登録状態カテゴリ `compound_identity_unverified` に `compound_cbga` として置き、経路・由来、天然存在、化学クラス、構造、別名、規制状態のいずれも主張しない。外部識別子（CAS / ChEBI / Wikidata）は記録しない。",
-      "note": "2026-11-11 の owner 指示で登録化合物集合へ追加した。run は 0 本で、Google Trends / YouTube とも未収集（0 観測でも欠測でもない）。X のクエリは設計していない。正本は metadata/queries/query-registry.json（cbga-general-ja / cbga-liquid-ja）と datasets/cannabinoid-raw-collection/metadata/query-design.json（declared_not_yet_collected）。ISS-20261111-TAX-040。"
+      "note": "2026-11-11 の owner 指示で登録化合物集合へ追加した。登録は検索文字列の固定であり、物質の同定ではない。ソース別の adopted 被覆（採用・NO_DATA・HTTP 429・NO_VIDEOS を含む）は datasets/cannabinoid-raw-collection/README.md と `make audit-youtube-coverage` が報告する。この queryDesign は実行状態を持たない。X のクエリは設計していない。正本は metadata/queries/query-registry.json（cbga-general-ja / cbga-liquid-ja）。ISS-20261111-TAX-040。"
     },
     "CBP": {
       "japaneseName": "CBP",
@@ -573,9 +562,8 @@
         "googleTrends": "CBP"
       },
       "commonScaleSet": null,
-      "coverageStatus": "declared_not_yet_collected",
       "identityNote": "化学的同一性は**未確認**。taxonomy の管理上の登録状態カテゴリ `compound_identity_unverified` に `compound_cbp` として置き、経路・由来、天然存在、化学クラス、構造、別名、規制状態のいずれも主張しない。外部識別子（CAS / ChEBI / Wikidata）は記録しない。",
-      "note": "2026-11-11 の owner 指示で登録化合物集合へ追加した。run は 0 本で、Google Trends / YouTube とも未収集（0 観測でも欠測でもない）。X のクエリは設計していない。正本は metadata/queries/query-registry.json（cbp-general-ja / cbp-liquid-ja）と datasets/cannabinoid-raw-collection/metadata/query-design.json（declared_not_yet_collected）。ISS-20261111-TAX-040。"
+      "note": "2026-11-11 の owner 指示で登録化合物集合へ追加した。登録は検索文字列の固定であり、物質の同定ではない。ソース別の adopted 被覆（採用・NO_DATA・HTTP 429・NO_VIDEOS を含む）は datasets/cannabinoid-raw-collection/README.md と `make audit-youtube-coverage` が報告する。この queryDesign は実行状態を持たない。X のクエリは設計していない。正本は metadata/queries/query-registry.json（cbp-general-ja / cbp-liquid-ja）。ISS-20261111-TAX-040。"
     },
     "10-OH-HHC": {
       "japaneseName": "10-OH-HHC",
@@ -585,9 +573,8 @@
         "googleTrends": "10-OH-HHC"
       },
       "commonScaleSet": null,
-      "coverageStatus": "declared_not_yet_collected",
       "identityNote": "化学的同一性は**未確認**。taxonomy の管理上の登録状態カテゴリ `compound_identity_unverified` に `compound_10_oh_hhc` として置き、経路・由来、天然存在、化学クラス、構造、別名、規制状態のいずれも主張しない。外部識別子（CAS / ChEBI / Wikidata）は記録しない。",
-      "note": "2026-11-11 の owner 指示で登録化合物集合へ追加した。run は 0 本で、Google Trends / YouTube とも未収集（0 観測でも欠測でもない）。X のクエリは設計していない。正本は metadata/queries/query-registry.json（10-oh-hhc-general-ja / 10-oh-hhc-liquid-ja）と datasets/cannabinoid-raw-collection/metadata/query-design.json（declared_not_yet_collected）。ISS-20261111-TAX-040。"
+      "note": "2026-11-11 の owner 指示で登録化合物集合へ追加した。登録は検索文字列の固定であり、物質の同定ではない。ソース別の adopted 被覆（採用・NO_DATA・HTTP 429・NO_VIDEOS を含む）は datasets/cannabinoid-raw-collection/README.md と `make audit-youtube-coverage` が報告する。この queryDesign は実行状態を持たない。X のクエリは設計していない。正本は metadata/queries/query-registry.json（10-oh-hhc-general-ja / 10-oh-hhc-liquid-ja）。ISS-20261111-TAX-040。"
     },
     "THXE": {
       "japaneseName": "THXE",
@@ -597,9 +584,8 @@
         "googleTrends": "THXE"
       },
       "commonScaleSet": null,
-      "coverageStatus": "declared_not_yet_collected",
       "identityNote": "化学的同一性は**未確認**。taxonomy の管理上の登録状態カテゴリ `compound_identity_unverified` に `compound_thxe` として置き、経路・由来、天然存在、化学クラス、構造、別名、規制状態のいずれも主張しない。外部識別子（CAS / ChEBI / Wikidata）は記録しない。",
-      "note": "2026-11-11 の owner 指示で登録化合物集合へ追加した。run は 0 本で、Google Trends / YouTube とも未収集（0 観測でも欠測でもない）。X のクエリは設計していない。正本は metadata/queries/query-registry.json（thxe-general-ja / thxe-liquid-ja）と datasets/cannabinoid-raw-collection/metadata/query-design.json（declared_not_yet_collected）。ISS-20261111-TAX-040。"
+      "note": "2026-11-11 の owner 指示で登録化合物集合へ追加した。登録は検索文字列の固定であり、物質の同定ではない。ソース別の adopted 被覆（採用・NO_DATA・HTTP 429・NO_VIDEOS を含む）は datasets/cannabinoid-raw-collection/README.md と `make audit-youtube-coverage` が報告する。この queryDesign は実行状態を持たない。X のクエリは設計していない。正本は metadata/queries/query-registry.json（thxe-general-ja / thxe-liquid-ja）。ISS-20261111-TAX-040。"
     },
     "THCA": {
       "japaneseName": "THCA",
@@ -609,9 +595,8 @@
         "googleTrends": "THCA"
       },
       "commonScaleSet": null,
-      "coverageStatus": "declared_not_yet_collected",
       "identityNote": "化学的同一性は**未確認**。taxonomy の管理上の登録状態カテゴリ `compound_identity_unverified` に `compound_thca` として置き、経路・由来、天然存在、化学クラス、構造、別名、規制状態のいずれも主張しない。外部識別子（CAS / ChEBI / Wikidata）は記録しない。",
-      "note": "2026-11-11 の owner 指示で登録化合物集合へ追加した。run は 0 本で、Google Trends / YouTube とも未収集（0 観測でも欠測でもない）。X のクエリは設計していない。正本は metadata/queries/query-registry.json（thca-general-ja / thca-liquid-ja）と datasets/cannabinoid-raw-collection/metadata/query-design.json（declared_not_yet_collected）。ISS-20261111-TAX-040。"
+      "note": "2026-11-11 の owner 指示で登録化合物集合へ追加した。登録は検索文字列の固定であり、物質の同定ではない。ソース別の adopted 被覆（採用・NO_DATA・HTTP 429・NO_VIDEOS を含む）は datasets/cannabinoid-raw-collection/README.md と `make audit-youtube-coverage` が報告する。この queryDesign は実行状態を持たない。X のクエリは設計していない。正本は metadata/queries/query-registry.json（thca-general-ja / thca-liquid-ja）。ISS-20261111-TAX-040。"
     }
     }
   },
@@ -632,7 +617,7 @@
   },
   "dataCoverage": {
     "lastAudit": "2026-10-23",
-    "auditNote": "X/Twitter data is limited to recent tweets due to Apify actor constraints. Historical date range filtering is not supported. Distribution: only Google Trends raw (37 runs) and the aggregate YouTube tables (data/processed/youtube_*.csv, 182 videos) are tracked; the X and YouTube raw payloads are local evidence only (not distributed). The source paths below therefore point to non-distributed local files.",
+    "auditNote": "X/Twitter data is limited to recent tweets due to Apify actor constraints. Historical date range filtering is not supported. Distribution: only Google Trends raw and the aggregate YouTube tables (data/processed/youtube_*.csv, 182 videos) are tracked; the X and YouTube raw payloads are local evidence only (not distributed). The source paths below therefore point to non-distributed local files. The per-compound entries, summary and known issues below record the 2026-10-23 view; they are not a 30-term coverage table. Current 30-term coverage, including adopted runs, NO_DATA, HTTP 429 and unadopted NO_VIDEOS states, is reported in datasets/cannabinoid-raw-collection/README.md (Google Trends and YouTube) and by make audit-youtube-coverage (YouTube). The processed YouTube tables were not refreshed for the expanded batch.",
     "compounds": {
       "CBD": {
         "x": {

@@ -154,7 +154,7 @@
 `iptc-mapping.yaml`（`compound_mapping` に `mapping_type: none`、IPTC 主題は与えない）、
 `docs/data-dictionary.md` §6.4 の写し、`query-registry.json`（`thcnm-general-ja` / `thcnm-liquid-ja`）、
 `query-variants.json`（THA を別名 variant として）、`datasets/cannabinoid-raw-collection/metadata/query-design.json`
-（`compound_set` で未収集を宣言）、study README / methodology、`project.json` の `queryDesign`。
+（required primary query と安定した被覆ルール）、study README / methodology、`project.json` の `queryDesign`。
 
 ## 2026-11-04 — `compound_thc_o` の同一性留保（`THCO` 表記の証拠を登録、ISS-20261104-TAX-029）
 
@@ -203,12 +203,17 @@ query registry、study 文書の層に限る。
 | 分類 | `compound_minor` | 既存 `skos:broader`。新しい分類判断をしていない |
 | 外部識別子 | `wikidata:Q422441` / `wikidata:Q422426` | 既存 `skos:exactMatch`。追加の照会はしていない |
 | 登録 query | `cbc-general-ja` / `cbc-liquid-ja` / `cbdv-general-ja` / `cbdv-liquid-ja` | 既存規約（`<compound>-general-ja` / `<compound>-liquid-ja`）の適用 |
-| 収集状態 | 未収集（run 0） | 依頼は対象集合とクエリ設計の拡張であり、収集を含まない |
+| 登録時の収集状態 | 未収集（run 0） | 依頼は対象集合とクエリ設計の拡張であり、収集を含まない |
 
-### 未収集であることの扱い
+### 登録時点で未収集だったことの扱い
 
-- 4 query はいずれも **run 0** で、raw payload・staging declaration・catalog 登録・採用はいずれも無い。
-  **0 観測でも欠測でもない**（未収集。`docs/specs/raw-data-policy.md` が区別する「非保持・未収集・欠測・0 観測」のうち未収集）。
+- 登録時点では 4 query はいずれも **run 0** で、raw payload・staging declaration・catalog 登録・採用はいずれも無かった。
+  **これは登録時点の状態であり、現在のカバレッジではない。** 現在の run 結果は
+  [`datasets/cannabinoid-raw-collection/README.md`](../../datasets/cannabinoid-raw-collection/README.md)・
+  [`methodology.md`](../../datasets/cannabinoid-raw-collection/methodology.md)、
+  [`metadata/data-catalog.json`](../../datasets/cannabinoid-raw-collection/metadata/data-catalog.json)、
+  `make audit-youtube-coverage` を正本とする。登録時点の未収集は **0 観測でも欠測でもない**
+  （`docs/specs/raw-data-policy.md` が区別する「非保持・未収集・欠測・0 観測」のうち未収集）。
 - `metadata/queries/query-variants.json` は変更していない。variant は観測された表記の記録であり
   （`THCO` の前例）、run の無い語の表記（`CBCリキッド` 等）を先に作らない。
 - `metadata/keywords.yaml` は変更していない。THCNM 追加時にも更新していない legacy の辞書で、
@@ -231,7 +236,7 @@ query registry、study 文書の層に限る。
 ### 同時に更新した層
 
 `query-registry.json`（4 query）、`datasets/cannabinoid-raw-collection/metadata/query-design.json`
-（`declared_not_yet_collected` に 2 化合物）、study README / methodology、`project.json` の
+（登録時点の未収集宣言に 2 化合物）、study README / methodology、`project.json` の
 `queryDesign`（写し）、`metadata/provenance/evidence-registry.json`（query registry の hash 再観測）、
 本台帳、ISS-20261110-TAX-039。
 
@@ -245,21 +250,21 @@ owner の明示的な scope 決定（2026-11-11 の列挙 15 語）に基づき�
 
 `CBC` / `CBDV` は既存概念を再利用済み（下の 2026-11-10 節）であり、本節では扱わない。
 
-| 語（owner 表記） | notation | `@id` | 配置（`skos:broader`） | 外部識別子 | 化学クラス | 収集状態 |
+| 語（owner 表記） | notation | `@id` | 配置（`skos:broader`） | 外部識別子 | 化学クラス | 登録時の収集状態 |
 |---|---|---|---|---|---|---|
-| `THCB` | `compound_thcb` | `jptr:compound-thcb` | `compound_identity_unverified` | なし | 未形式化 | 未収集（run 0） |
-| `THCP` | `compound_thcp` | `jptr:compound-thcp` | `compound_identity_unverified` | なし | 未形式化 | 未収集（run 0） |
-| `THCJD` | `compound_thcjd` | `jptr:compound-thcjd` | `compound_identity_unverified` | なし | 未形式化 | 未収集（run 0） |
-| `THCPO` | `compound_thcpo` | `jptr:compound-thcpo` | `compound_identity_unverified` | なし | 未形式化 | 未収集（run 0） |
-| `CBE` | `compound_cbe` | `jptr:compound-cbe` | `compound_identity_unverified` | なし | 未形式化 | 未収集（run 0） |
-| `HHCPO` | `compound_hhcpo` | `jptr:compound-hhcpo` | `compound_identity_unverified` | なし | 未形式化 | 未収集（run 0） |
-| `CBND` | `compound_cbnd` | `jptr:compound-cbnd` | `compound_identity_unverified` | なし | 未形式化 | 未収集（run 0） |
-| `CBL` | `compound_cbl` | `jptr:compound-cbl` | `compound_identity_unverified` | なし | 未形式化 | 未収集（run 0） |
-| `CBGa` | `compound_cbga` | `jptr:compound-cbga` | `compound_identity_unverified` | なし | 未形式化 | 未収集（run 0） |
-| `CBP` | `compound_cbp` | `jptr:compound-cbp` | `compound_identity_unverified` | なし | 未形式化 | 未収集（run 0） |
-| `10-OH-HHC` | `compound_10_oh_hhc` | `jptr:compound-10-oh-hhc` | `compound_identity_unverified` | なし | 未形式化 | 未収集（run 0） |
-| `THXE` | `compound_thxe` | `jptr:compound-thxe` | `compound_identity_unverified` | なし | 未形式化 | 未収集（run 0） |
-| `THCA` | `compound_thca` | `jptr:compound-thca` | `compound_identity_unverified` | なし | 未形式化 | 未収集（run 0） |
+| `THCB` | `compound_thcb` | `jptr:compound-thcb` | `compound_identity_unverified` | なし | 未形式化 | 登録時点で未収集（run 0） |
+| `THCP` | `compound_thcp` | `jptr:compound-thcp` | `compound_identity_unverified` | なし | 未形式化 | 登録時点で未収集（run 0） |
+| `THCJD` | `compound_thcjd` | `jptr:compound-thcjd` | `compound_identity_unverified` | なし | 未形式化 | 登録時点で未収集（run 0） |
+| `THCPO` | `compound_thcpo` | `jptr:compound-thcpo` | `compound_identity_unverified` | なし | 未形式化 | 登録時点で未収集（run 0） |
+| `CBE` | `compound_cbe` | `jptr:compound-cbe` | `compound_identity_unverified` | なし | 未形式化 | 登録時点で未収集（run 0） |
+| `HHCPO` | `compound_hhcpo` | `jptr:compound-hhcpo` | `compound_identity_unverified` | なし | 未形式化 | 登録時点で未収集（run 0） |
+| `CBND` | `compound_cbnd` | `jptr:compound-cbnd` | `compound_identity_unverified` | なし | 未形式化 | 登録時点で未収集（run 0） |
+| `CBL` | `compound_cbl` | `jptr:compound-cbl` | `compound_identity_unverified` | なし | 未形式化 | 登録時点で未収集（run 0） |
+| `CBGa` | `compound_cbga` | `jptr:compound-cbga` | `compound_identity_unverified` | なし | 未形式化 | 登録時点で未収集（run 0） |
+| `CBP` | `compound_cbp` | `jptr:compound-cbp` | `compound_identity_unverified` | なし | 未形式化 | 登録時点で未収集（run 0） |
+| `10-OH-HHC` | `compound_10_oh_hhc` | `jptr:compound-10-oh-hhc` | `compound_identity_unverified` | なし | 未形式化 | 登録時点で未収集（run 0） |
+| `THXE` | `compound_thxe` | `jptr:compound-thxe` | `compound_identity_unverified` | なし | 未形式化 | 登録時点で未収集（run 0） |
+| `THCA` | `compound_thca` | `jptr:compound-thca` | `compound_identity_unverified` | なし | 未形式化 | 登録時点で未収集（run 0） |
 
 - `skos:prefLabel` は **owner の表記をそのまま** en / ja に置いた（`CBGa` の小文字 `a`、
   `10-OH-HHC` のハイフンを保持）。コード名を化学名に置き換えない（H4CBH / HHBD / THCNM の前例）。
@@ -301,7 +306,7 @@ owner の明示的な scope 決定（2026-11-11 の列挙 15 語）に基づき�
 
 `metadata/queries/query-registry.json`（26 query = 13 語 × `compound_general` / `product_liquid`）、
 `datasets/cannabinoid-raw-collection/metadata/query-design.json`
-（`declared_not_yet_collected` に 13 化合物、`coverage_state_note` / `identity_caveat` / `limitations`）、
+（登録時点の未収集宣言、`identity_caveat` / `limitations`）、
 `docs/data-dictionary.md` §6.4、`metadata/taxonomy/iptc-mapping.yaml`
 （13 語は `deliberately_unmapped`、カテゴリは `not_applicable`）、
 `exports/taxonomy/*`（`bash scripts/export/export-taxonomy.sh` で再生成）、
@@ -309,13 +314,13 @@ study README / methodology、`project.json` の `queryDesign`（写し）、
 `metadata/provenance/evidence-registry.json`（taxonomy と query registry の hash 再観測）、
 `docs/provenance/query-inventory.md` §1、本台帳、`ISS-20261111-TAX-040`。
 
-### 未収集であることの扱い
+### 登録時点の収集状態と現在の被覆
 
-- 13 語の 26 query はすべて **run 0**。raw payload・staging declaration・catalog 登録・
-  採用はいずれも無い。**0 観測でも欠測でもない**（未収集）。
-- `make audit-youtube-coverage` は 15 化合物を `missing_compounds` として報告する
-  （13 語 + CBC・CBDV）。`missing` は「採用済み run が無い」であり 0 観測ではない。
-- 登録は「対象集合とクエリ設計の拡張」であり、収集・公開・release slice の拡張ではない。
+- 13 語の 26 query は**登録時点では run 0** だった（raw payload・staging declaration・catalog 登録・採用はいずれも無い）。これは登録の根拠が run 実績ではなく owner 列挙と taxonomy 概念だったことの記録であり、**現在のカバレッジではない**。
+- 現在の run 結果は [`datasets/cannabinoid-raw-collection/README.md`](../../datasets/cannabinoid-raw-collection/README.md)・[`methodology.md`](../../datasets/cannabinoid-raw-collection/methodology.md)、[`metadata/data-catalog.json`](../../datasets/cannabinoid-raw-collection/metadata/data-catalog.json)、`make audit-youtube-coverage` を正本とし、ここに run 表を複製しない。
+- `missing` は「採用済み run が無い」であり 0 観測ではない。
+- 登録は「対象集合とクエリ設計の拡張」であり、登録自体が収集・公開・release slice を広げるものではない。
+- `datasets/cannabinoid-raw-collection/metadata/query-design.json` records registration basis and points to the query registry / `make audit-youtube-coverage` for current coverage; it does not duplicate per-run state. This keeps query design distinct from the observed run record.
 
 ### 未決事項
 
