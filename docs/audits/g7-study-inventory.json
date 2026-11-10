@@ -41,8 +41,8 @@
       "research_questions_quoted": [
         "日本におけるカンナビノイド成分へのオンライン関心は、どのように推移しているか？"
       ],
-      "run_count": 76,
-      "catalog_entry_count": 116,
+      "run_count": 93,
+      "catalog_entry_count": 150,
       "layout": [
         "README.md",
         "analysis",
@@ -50,17 +50,23 @@
         "metadata",
         "methodology.md"
       ],
-      "data_file_count": 292,
+      "data_file_count": 360,
       "has_data_raw": true,
-      "data_raw_file_count": 288,
+      "data_raw_file_count": 356,
       "sources": [
         "google-trends",
         "google-trends-mcp"
       ],
       "compound_ids": [
+        "compound_cbc",
         "compound_cbd",
+        "compound_cbdv",
+        "compound_cbe",
         "compound_cbg",
+        "compound_cbl",
         "compound_cbn",
+        "compound_cbnd",
+        "compound_cbp",
         "compound_cbx",
         "compound_crdh",
         "compound_crdp",
@@ -68,20 +74,31 @@
         "compound_hhbd",
         "compound_hhc",
         "compound_hhch",
+        "compound_hhcpo",
         "compound_thc",
         "compound_thc_o",
+        "compound_thcb",
         "compound_thch",
+        "compound_thcjd",
         "compound_thcnm",
+        "compound_thcp",
+        "compound_thcpo",
         "compound_thcv"
       ],
       "query_ids": [
+        "cbc-general-ja",
         "cbd-general-ja",
         "cbd-liquid-ja",
         "cbd-oil-ja",
+        "cbdv-general-ja",
+        "cbe-general-ja",
         "cbg-general-ja",
         "cbg-liquid-ja",
+        "cbl-general-ja",
         "cbn-general-ja",
         "cbn-liquid-ja",
+        "cbnd-general-ja",
+        "cbp-general-ja",
         "cbx-general-ja",
         "cbx-liquid-ja",
         "comparison-5y-current-setD",
@@ -104,13 +121,18 @@
         "hhc-liquid-ja",
         "hhch-general-ja",
         "hhch-liquid-ja",
+        "hhcpo-general-ja",
         "thc-general-ja",
         "thc-liquid-ja",
         "thc-o-general-ja",
         "thc-o-liquid-ja",
+        "thcb-general-ja",
         "thch-general-ja",
         "thch-liquid-ja",
+        "thcjd-general-ja",
         "thcnm-general-ja",
+        "thcp-general-ja",
+        "thcpo-general-ja",
         "thcv-general-ja",
         "thcv-liquid-ja"
       ],
@@ -126,9 +148,11 @@
         "2021-10-15T04:28:57Z_2026-10-15T04:28:57Z",
         "2021-10-17_2026-10-18",
         "2021-10-31_2026-11-08",
+        "2021-11-07_2026-11-15",
         "2025-10-15T04:28:53Z_2026-10-15T04:28:53Z",
         "2025-10-19_2026-10-18",
         "2025-11-02_2026-11-08",
+        "2025-11-09_2026-11-15",
         "2026-07-17T04:28:49Z_2026-10-15T04:28:49Z",
         "2026-08-06_2026-11-04",
         "2026-09-15T04:28:45Z_2026-10-15T04:28:45Z"
@@ -458,9 +482,9 @@
       ]
     }
   ],
-  "raw_file_count": 290,
+  "raw_file_count": 358,
   "raw_modified": false,
-  "raw_combined_sha256": "583bd89c74b07756cefb7ab256d66a947979ecf047faecd8094cbcdea606cb32",
+  "raw_combined_sha256": "fb4d190077fa3506c850a6e70d6a31124d8f716d49d43859d9357131c0d4ae1e",
   "note": "non-destructive: study boundaries intact, raw and old metadata only read"
 }
 
