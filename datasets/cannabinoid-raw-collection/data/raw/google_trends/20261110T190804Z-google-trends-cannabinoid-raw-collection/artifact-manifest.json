@@ -1,0 +1,33 @@
+{
+  "schema_version": "1.0.0",
+  "run_id": "20261110T190804Z-google-trends-cannabinoid-raw-collection",
+  "artifacts": [
+    {
+      "artifact_id": "20261110T190804Z-google-trends-cannabinoid-raw-collection-payload-json",
+      "path": "payload.json",
+      "artifact_type": "raw_response",
+      "format": "json",
+      "schema_id": "google-trends-mcp-tool-result-v1",
+      "byte_length": 7817,
+      "sha256": "f8b76d93402b928394049bfbce558ad461c21c8dbecacd274ba057b0cb335ffa",
+      "layer": "raw",
+      "completeness": "complete",
+      "record_count": 262
+    },
+    {
+      "artifact_id": "20261110T190804Z-google-trends-cannabinoid-raw-collection-records-cbc-json",
+      "path": "records_cbc.json",
+      "artifact_type": "timeseries",
+      "format": "json",
+      "schema_id": "google-trends-interest-over-time-v1",
+      "byte_length": 15590,
+      "sha256": "1a0fe5e04d6e417129f7e5b55eac4e99ef0228a330463dc88cd3c21158e1d3ce",
+      "layer": "raw",
+      "completeness": "complete",
+      "record_count": 262,
+      "derived_from": [
+        "20261110T190804Z-google-trends-cannabinoid-raw-collection-payload-json"
+      ]
+    }
+  ]
+}

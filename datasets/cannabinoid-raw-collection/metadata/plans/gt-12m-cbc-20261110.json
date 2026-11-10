@@ -1,0 +1,26 @@
+{
+  "plan_id": "gt-12m-cbc-20261110",
+  "study_id": "cannabinoid-raw-collection",
+  "source_id": "google-trends",
+  "collector_id": "google-trends-mcp",
+  "query_id": "cbc-general-ja",
+  "query": {
+    "text": "CBC",
+    "geo": "JP",
+    "timeframe": "today 12-m",
+    "compound_id": "compound_cbc"
+  },
+  "required_capabilities": [
+    "geo_filter",
+    "relative_date_range"
+  ],
+  "window": {
+    "window_id": "2025-11-09_2026-11-15",
+    "start": "2025-11-09T00:00:00Z",
+    "end_exclusive": "2026-11-15T00:00:00Z",
+    "granularity": "week",
+    "week_start": "sunday",
+    "timezone": "Asia/Tokyo"
+  },
+  "purpose": "Owner-authorized initial 12m standalone Google Trends collection for registered batch term CBC (scope expansion, issue ISS-20261111-TAX-040). Search string is measured verbatim; chemical identity/aliases are not asserted. Window is a declared weekly-grid approximation; collector resolves the relative timeframe at actual request time."
+}
