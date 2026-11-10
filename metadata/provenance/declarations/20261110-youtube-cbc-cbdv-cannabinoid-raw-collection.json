@@ -1,0 +1,190 @@
+{
+  "declaration_version": "staging-declaration-v1",
+  "description": "Owner-authorized sequential Apify collection for the registered CBC and CBDV YouTube liquid primary queries. Each is a separate run and sample; counts must not be combined. Raw retention follows raw-social-default (git_untracked/private); publication is not authorized by this declaration.",
+  "runs": [
+    {
+      "run_id": "20261110T170316Z-youtube-cannabinoid-raw-collection",
+      "study_id": "cannabinoid-raw-collection",
+      "source_id": "youtube",
+      "collector_id": "youtube-apify-scraper",
+      "purpose": "Owner-authorized collection for the registered primary query CBC リキッド (cbc-liquid-ja); the exact query string is the measured unit and does not establish verified chemical identity.",
+      "query": {
+        "keyword": "CBC リキッド",
+        "query_id": "cbc-liquid-ja"
+      },
+      "window": {
+        "start": "2007-07-19T00:00:00Z",
+        "end_exclusive": "2026-11-11T00:00:00Z",
+        "granularity": "day",
+        "timezone": "UTC"
+      },
+      "collection_request": {
+        "date_filter": "all",
+        "reference_time": "2026-11-10T17:03:16.069Z",
+        "actor_input": {
+          "searchQueries": [
+            "CBC リキッド"
+          ],
+          "maxResults": 500,
+          "maxResultsShorts": 0,
+          "maxResultStreams": 0
+        },
+        "actor_input_basis": "Submitted verbatim through netloom Apify run; checked the returned input field equals the registered canonical query and all returned rows are type video.",
+        "date_filter_basis": "No dateFilter was supplied; all is the declaration vocabulary for this unbounded request, not an actor enum."
+      },
+      "temporal": {
+        "collector_window_type": "unbounded",
+        "boundary_semantics": "Observed video publish-date range from returned record date values, normalized to a half-open UTC day interval; not a request window.",
+        "exact_window_match": false,
+        "limitations": [
+          "The search request omitted dateFilter and has no absolute publish-date window.",
+          "This is a search-result sample capped by maxResults=500, not a census; a successful actor run does not establish completeness of all matching videos.",
+          "No geographic filter is applied. Japanese リキッド is a query-language approximation only, not a geo restriction."
+        ]
+      },
+      "timestamps": {
+        "started_at": "2026-11-10T17:03:16.069Z",
+        "finished_at": "2026-11-10T17:12:14.763Z",
+        "basis": "Apify actor run status object queried through netloom apify run-status; timestamps are the actor run UTC values."
+      },
+      "execution": {
+        "status": "success",
+        "returned_count": 358,
+        "errors": []
+      },
+      "artifacts": [
+        {
+          "source": "/Users/bookair18/OS/home/Codes/github.com/routeflags/japan-cannabinoid-trends/.delta/worktrees/9jw2p6f7wbbs/japan-cannabinoid-trends/.staging/youtube-20261110/cbc/payload.json",
+          "path": "youtube-dataset-cbc-liquid_Q9Yn0mYnFDiGRHV1g_2026-11-10.json",
+          "artifact_type": "raw_records",
+          "format": "json",
+          "schema_id": "youtube-search-result-list-v1",
+          "completeness": "complete",
+          "record_count": 358,
+          "media_type": "application/json"
+        }
+      ],
+      "environment": {
+        "actor_run_id": "6cg8hm2ysPkq6LIOp",
+        "apify_dataset_id": "Q9Yn0mYnFDiGRHV1g",
+        "actor_build": "0.0.329",
+        "actor_build_id": "I9MDqq7in32HuJQZc",
+        "actor_build_basis": "buildNumber and buildId from the Apify run status object queried via netloom.",
+        "origin": "API",
+        "payload_sha256": "f9077cc069efd016b446cfe3da7ddaf0e278aaa80814a4051a52d56748852a0d",
+        "payload_bytes": 1601728,
+        "export_filename": "youtube-dataset-cbc-liquid_Q9Yn0mYnFDiGRHV1g_2026-11-10.json",
+        "payload_shape": "JSON array of flat YouTube video records; one search input and type=video per record.",
+        "observed_range": {
+          "min_date": "2007-07-19T18:25:04Z",
+          "max_date": "2026-11-10T15:04:21Z",
+          "derivation": "min/max of the payload date field, converted to UTC; window bounds are half-open UTC day normalization of these observations."
+        },
+        "deduplication": {
+          "key": "flat id (video id)",
+          "raw_count": 358,
+          "deduplicated_count": 358,
+          "duplicates_removed": 0,
+          "note": "Uniqueness checked within this raw payload; no in-place deduplication applied."
+        },
+        "scope": {
+          "primary_design": "youtube-liquid-only-primary",
+          "query_intent_id": "product_liquid",
+          "primary_coverage": "yes"
+        }
+      }
+    },
+    {
+      "run_id": "20261110T171742Z-youtube-cannabinoid-raw-collection",
+      "study_id": "cannabinoid-raw-collection",
+      "source_id": "youtube",
+      "collector_id": "youtube-apify-scraper",
+      "purpose": "Owner-authorized collection for the registered primary query CBDV リキッド (cbdv-liquid-ja); the exact query string is the measured unit and does not establish verified chemical identity.",
+      "query": {
+        "keyword": "CBDV リキッド",
+        "query_id": "cbdv-liquid-ja"
+      },
+      "window": {
+        "start": "2016-02-14T00:00:00Z",
+        "end_exclusive": "2026-11-05T00:00:00Z",
+        "granularity": "day",
+        "timezone": "UTC"
+      },
+      "collection_request": {
+        "date_filter": "all",
+        "reference_time": "2026-11-10T17:17:42.192Z",
+        "actor_input": {
+          "searchQueries": [
+            "CBDV リキッド"
+          ],
+          "maxResults": 500,
+          "maxResultsShorts": 0,
+          "maxResultStreams": 0
+        },
+        "actor_input_basis": "Submitted verbatim through netloom Apify run; checked the returned input field equals the registered canonical query and all returned rows are type video.",
+        "date_filter_basis": "No dateFilter was supplied; all is the declaration vocabulary for this unbounded request, not an actor enum."
+      },
+      "temporal": {
+        "collector_window_type": "unbounded",
+        "boundary_semantics": "Observed video publish-date range from returned record date values, normalized to a half-open UTC day interval; not a request window.",
+        "exact_window_match": false,
+        "limitations": [
+          "The search request omitted dateFilter and has no absolute publish-date window.",
+          "This is a search-result sample capped by maxResults=500, not a census; a successful actor run does not establish completeness of all matching videos.",
+          "No geographic filter is applied. Japanese リキッド is a query-language approximation only, not a geo restriction."
+        ]
+      },
+      "timestamps": {
+        "started_at": "2026-11-10T17:17:42.192Z",
+        "finished_at": "2026-11-10T17:21:12.678Z",
+        "basis": "Apify actor run status object queried through netloom apify run-status; timestamps are the actor run UTC values."
+      },
+      "execution": {
+        "status": "success",
+        "returned_count": 112,
+        "errors": []
+      },
+      "artifacts": [
+        {
+          "source": "/Users/bookair18/OS/home/Codes/github.com/routeflags/japan-cannabinoid-trends/.delta/worktrees/9jw2p6f7wbbs/japan-cannabinoid-trends/.staging/youtube-20261110/cbdv/payload.json",
+          "path": "youtube-dataset-cbdv-liquid_YXLm9j2hgqiQW5iH8_2026-11-10.json",
+          "artifact_type": "raw_records",
+          "format": "json",
+          "schema_id": "youtube-search-result-list-v1",
+          "completeness": "complete",
+          "record_count": 112,
+          "media_type": "application/json"
+        }
+      ],
+      "environment": {
+        "actor_run_id": "55yteiM1jLknIZqoI",
+        "apify_dataset_id": "YXLm9j2hgqiQW5iH8",
+        "actor_build": "0.0.329",
+        "actor_build_id": "I9MDqq7in32HuJQZc",
+        "actor_build_basis": "buildNumber and buildId from the Apify run status object queried via netloom.",
+        "origin": "API",
+        "payload_sha256": "52c3ae355239e6e3813f5435bcd8af9a3378f054c96a312d63ba6de4334703fe",
+        "payload_bytes": 391446,
+        "export_filename": "youtube-dataset-cbdv-liquid_YXLm9j2hgqiQW5iH8_2026-11-10.json",
+        "payload_shape": "JSON array of flat YouTube video records; one search input and type=video per record.",
+        "observed_range": {
+          "min_date": "2016-02-14T03:23:56Z",
+          "max_date": "2026-11-04T11:17:06Z",
+          "derivation": "min/max of the payload date field, converted to UTC; window bounds are half-open UTC day normalization of these observations."
+        },
+        "deduplication": {
+          "key": "flat id (video id)",
+          "raw_count": 112,
+          "deduplicated_count": 112,
+          "duplicates_removed": 0,
+          "note": "Uniqueness checked within this raw payload; no in-place deduplication applied."
+        },
+        "scope": {
+          "primary_design": "youtube-liquid-only-primary",
+          "query_intent_id": "product_liquid",
+          "primary_coverage": "yes"
+        }
+      }
+    }
+  ]
+}
