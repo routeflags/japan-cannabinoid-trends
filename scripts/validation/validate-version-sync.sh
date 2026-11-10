@@ -315,14 +315,40 @@ print_info "最新タグ: ${LATEST_TAG:-N/A}"
 print_info "タグ数: $(git tag -l 'v*' | wc -l | tr -d ' ')"
 
 # リモートタグ
-REMOTE_TAG_COUNT=$(git ls-remote --tags origin 2>/dev/null | grep -c 'refs/tags/v' || echo "0")
-LOCAL_TAG_COUNT=$(git tag -l 'v*' | wc -l | tr -d ' ')
+# `git ls-remote --tags` は注釈付きタグの peeled ref（refs/tags/vX^{}）も返すため、
+# 件数を数えると注釈付きタグが二重に数えられる（ローカルと同一のタグ集合でも
+# 件数が一致しない）。`--refs` で peeled ref を除き、件数ではなくタグ名の集合で
+# 比較する。
+#
+# 比較の向きは「ローカルのタグがすべてリモートにあるか」。
+# - ローカルにあってリモートにない = 未 push のタグ（リリース手順の確認対象）。
+# - リモートにあってローカルにない = この checkout が fetch していないだけ。
+#   バージョン/DOI の不整合ではないため WARN にしない（spec §6.1: このスクリプトは
+#   最新タグを基準にするリリース時検査で、古い checkout では無実の FAIL/WARN になる）。
+LOCAL_TAGS=$(git tag -l 'v*' | sort)
+REMOTE_TAGS=""
+REMOTE_TAGS_READ=false
+if REMOTE_REFS=$(git ls-remote --tags --refs origin 2>/dev/null); then
+  REMOTE_TAGS_READ=true
+  REMOTE_TAGS=$(printf '%s\n' "$REMOTE_REFS" | sed 's#.*refs/tags/##' | grep '^v' | sort || true)
+fi
+LOCAL_TAG_COUNT=$(printf '%s\n' "$LOCAL_TAGS" | grep -c '^v' || true)
+REMOTE_TAG_COUNT=$(printf '%s\n' "$REMOTE_TAGS" | grep -c '^v' || true)
 print_info "ローカル: $LOCAL_TAG_COUNT / リモート: $REMOTE_TAG_COUNT"
 
-if [ "$LOCAL_TAG_COUNT" != "$REMOTE_TAG_COUNT" ]; then
-  print_warn "タグ数がローカルとリモートで異なります"
-else
-  print_pass "タグ数がローカルとリモートで一致"
+if [ "$REMOTE_TAGS_READ" != "true" ]; then
+  print_info "リモートタグを取得できないため、タグ push の検証はスキップしました"
+elif [ -n "$LOCAL_TAGS" ]; then
+  UNPUSHED_TAGS=$(comm -23 <(printf '%s\n' "$LOCAL_TAGS") <(printf '%s\n' "$REMOTE_TAGS"))
+  REMOTE_ONLY_TAGS=$(comm -13 <(printf '%s\n' "$LOCAL_TAGS") <(printf '%s\n' "$REMOTE_TAGS"))
+  if [ -n "$UNPUSHED_TAGS" ]; then
+    print_warn "リモートに未 push のタグがあります: $(printf '%s\n' "$UNPUSHED_TAGS" | tr '\n' ' ')"
+  else
+    print_pass "ローカルのタグはすべてリモートに存在"
+  fi
+  if [ -n "$REMOTE_ONLY_TAGS" ]; then
+    print_info "ローカル未取得のタグ（fetch で同期）: $(printf '%s\n' "$REMOTE_ONLY_TAGS" | tr '\n' ' ')"
+  fi
 fi
 
 # =============================================================================

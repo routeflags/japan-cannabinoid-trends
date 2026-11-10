@@ -2,19 +2,315 @@
   "schema_version": "1.0.0",
   "record": "publication_review_evidence",
   "artifact_id": "search-emergence-tracker-index",
-  "recorded_at": "2026-10-15",
+  "recorded_at": "2026-11-11",
   "integrity": "verified",
   "citations": {
     "integrity": [
-      "sha256(publication/search-emergence-tracker/index.html, 2026-10-15 検算) = 7914810c497367100e275d4946272b1ac23ed3a736149a436d9f345dcfdfde64"
+      "sha256(publication/search-emergence-tracker/index.html, 2026-11-11 C3レビュー・訂正後の現行ファイル) = ddac95670af80c9705b6d8fdb1c96a474c109e6442757963b11f6841c27dd21c"
     ],
     "publication_contract": [
-      "validation.cli audit-publication（2026-10-15）: PC-1〜PC-8 の機械検査対象。PC-7 は本 envelope の存在と hash 固定を検査する。"
+      "validation.cli audit-publication（2026-11-11）: 本 artifact に PC-1〜PC-10 の finding は無い（PC-7 の hash 固定と PC-10 の C1〜C45 記録を確認。--output は /tmp に書いた）。"
+    ],
+    "raw_evidence": [
+      "sha256: 20261002T063821Z-google-trends-cbd/run_metadata.json = a72651ed22b39a2fb2b11ccedd9e5330bb521b55a6a770ab46e387f912d4fbf1",
+      "sha256: 20261002T063821Z-google-trends-cbd/records_cbd.json = a65bce16a8a11c385d11f5fa2fedfd67eb1ee9114473b5919c8bd751db5ab43c",
+      "sha256: 20261002T063852Z-google-trends-thc/run_metadata.json = 42f6bb12721ca44f4126000e07f8586266b13ec6c75d4108c2f4c4b6b74c6afc",
+      "sha256: 20261002T063852Z-google-trends-thc/records_thc.json = 055246af09c81e8e4913aca5d2575e8ff42435f6bbb2d7a5f451dab5587cf25e",
+      "sha256: 20261002T063924Z-google-trends-cbg/run_metadata.json = b57b06a1fdcdfc8c41f8bbf51af0a5b31485f0eb95e3e52c8fda73586915f334",
+      "sha256: 20261002T063924Z-google-trends-cbg/records_cbg.json = 2d18b6d16037129b62c046b6959b308c9d838aea8f6d54919a0a76b18843eba5",
+      "sha256: 20261002T064008Z-google-trends-hhc/run_metadata.json = dcc8ef4cef46abbef55613365cd1f05315f28f40dc4ca047f047f16cfc2b29db",
+      "sha256: 20261002T064008Z-google-trends-hhc/records_hhc.json = 6fa8ba90d29e9f6400ac6459308b9a328b7f4160627cd4c2aa56eeeb9bd787a6",
+      "sha256: 20261002T064118Z-google-trends-thch/run_metadata.json = b1d30eed5251373fd5fa68d2c55f43b38be780a32bdfaa4d73804ddba2eed760",
+      "sha256: 20261002T064118Z-google-trends-thch/records_thch.json = 9380890925419aaafaf2e299c2446d7514da7dd56efc609680cc208e94810d64",
+      "sha256: 20261002T064135Z-google-trends-nodata/run_metadata.json = 8910104f34525a10ad26492f6dd5d6570fbf6a1958a555228443101dec9c4d0a",
+      "sha256: 20261002T064135Z-google-trends-nodata/records_nodata.json = c71b90a32a3e7f28f4e9ceed3f211e5bcc141484cbe85f012a02844eb3aea3ed",
+      "sha256: 20261002T071255Z-google-trends-thc-o-5y/run_metadata.json = 5b63fa2617b85be46cc08dea36a0fe8912c6d23a557e41a21d240a4af8daa179",
+      "sha256: 20261002T071255Z-google-trends-thc-o-5y/records_thc_o_5y.json = da34e4fdae647fb125ee42767178de23ccf69ef85fd4d572d2d83a60cd328822",
+      "sha256: 20261002T080652Z-google-trends-h4cbh-5y/run_metadata.json = 048fa9d356746d6cc538d71bfefc12d7c393a3fd50036001fd676f943168bbf9",
+      "sha256: 20261002T080652Z-google-trends-h4cbh-5y/records_h4cbh_5y.json = 14fd84de641182b9467b3151ddaeaafe1de8632a85c02e425b029f1f83c01fbf",
+      "sha256: 20261002T080800Z-google-trends-hhbd-5y/run_metadata.json = 4daac472024fec6ae5a57a46ea675e86fee4990c25f2c87226f7b8c941bdb7a7",
+      "sha256: 20261002T080800Z-google-trends-hhbd-5y/records_hhbd_5y.json = 054c0354b64f686575fd27d1d1c8225da6c8b0f16b2a371ada0d2ca146c1c7e8",
+      "sha256: 20261002T082000Z-google-trends-cbn-5y/run_metadata.json = ef912f29925918ccabb683d16f4d85f1edae8b2c2dbf8311b7586db84dd2ca87",
+      "sha256: 20261002T082000Z-google-trends-cbn-5y/records_cbn_5y.json = 732c70201c0244a144e714a0ef0580f576e1dec0537d703c0ce6fa5e5eded9a2",
+      "sha256: 20261002T085359Z-google-trends-crdp-5y/run_metadata.json = 85311294dd9d0ea31b695d01d3338f3f7b32631ea35f1ff23879ffc0d9fd922c",
+      "sha256: 20261002T085359Z-google-trends-crdp-5y/records_crdp_5y.json = eeb59f9adcdfb0920b2727336505ad130458e4787a38538bda1ccecd4035f33a",
+      "sha256: 20261002T094730Z-google-trends-hhch-5y/run_metadata.json = 964e846fe53cd0bd9437882fdd76ef1667227343d0c8aa1331ecb0b92c034463",
+      "sha256: 20261002T094730Z-google-trends-hhch-5y/records_hhch_5y.json = 3dbe867a0937e27c029f3d5e213b40c25cea1d8fceef0f94c7000186dc36979a",
+      "sha256: 20261008T121338Z-google-trends-crdh-5y/run_metadata.json = fb23aa5e7eb885cb81fb98d002a93525d1f58c19f5887589bf4e6e8de2b09b62",
+      "sha256: 20261008T121338Z-google-trends-crdh-5y/records_crdh_5y.json = 95260e45390a2dfd10f34a4040f8ea09f0686def4ad2c7a42749800613b7c923",
+      "sha256: 20261008T093228Z-google-trends-5y-baseline/run_metadata.json = d771ef38c2bd695087a141adc1bdf64c86b8f4ca3c337d8d51427f05d761edcf",
+      "sha256: 20261008T093228Z-google-trends-5y-baseline/cbd_5y_summary.json = f3e805073bf476abea78a94d8d7d60ff15dd8a496be6b5d30af5d55fbc0fd3c5",
+      "sha256: 20261008T093228Z-google-trends-5y-baseline/cbg_5y_summary.json = 4cba207a8ebae9dba6cbc447a2f3beabb2ff197b764f6787af7303d6950407b2",
+      "sha256: 20261008T093228Z-google-trends-5y-baseline/hhc_5y_summary.json = 00614a41457568b281a639a5a918ac4fa778f6bb189393d68b27a074fffb2c11",
+      "sha256: 20261008T093228Z-google-trends-5y-baseline/thc_5y_summary.json = a25c321ff2a33cc7448aa2ad828c13595a6ed3706f46e6225a3167718a6e0efb",
+      "sha256: 20261008T093228Z-google-trends-5y-baseline/thcv_5y_summary.json = 125c9ecfb55ddb4f13297ec3a07db5c7a80e35d8170a116f00e34dbfb6e92acb",
+      "sha256: research/google-trends/20261002-first-mention-timeline.md = de28e8d98b651da1e773861ab77ae7ab90d327926ae658e4d329571514d97399",
+      "sha256: research/regulatory-status/SUMMARY.md = 7b17fd66eb6a069639738201b3d8ffd4eebee2f0cb79da2ee02c6ca3cc12b095",
+      "sha256: research/regulatory-status/CBN.md = 48929a07debb1f89d8bd7aa61d1f834856ebf3f4b4bbc9813ba8c837fecb19ac"
+    ],
+    "regulatory_sources": [
+      "https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/kenkou_iryou/iyakuhin/yakubuturanyou/other/CBN_shitei.html（2026-11-11 取得、表題「CBNの指定薬物の指定について」、令和8年3月18日公布・令和8年6月1日施行）",
+      "https://www.mhlw.go.jp/seisakunitsuite/bunya/kenkou_iryou/iyakuhin/yakubuturanyou/oshirase/20231227-1.html（2026-11-11 取得、表題「指定薬物を指定する省令が公布されました」、HHCH を令和5年12月2日施行で指定）",
+      "research/regulatory-status/SUMMARY.md・CBN.md・THCV.md（規制日・分類のリポジトリ内記録）"
+    ],
+    "content_changes": [
+      "2026-11-11: C3 内容レビュー（C1〜C45）と訂正。化合物数の 12→13（説明文・JSON-LD・meta グリッド）、CRDH の追加（F005・F007）、THCV を指定薬物群へ（F004・F006・Key Findings の 6→7）、F005 の 2023 年を HHCH+CRDH の 2 件・合計 7 へ、コホート定義を市場地位ベースに明確化（HHC 2021-11-28 の注記）、CBG を左打ち切りに、ES 0 を「非ゼロ週なし（検索量 0 の証拠ではない）」に、Data Provenance（run_id・記録・要求条件・観測範囲・導出定義・保持/再計算不能・反復収集の差）と Publication Status・Revision の各節を追加、撤回済み CSV のダウンロードを Data Availability に置換、引用を Version 1.14.9 と concept DOI に更新。"
+    ],
+    "repeated_collection": [
+      "2026-10-14 の同一語 5年再収集（H4CBH 2022-12-04=44、HHBD 2022-09-18=38、THCH 2022-09-04=1）と 2026-10-23 の THCV 5年系列（初出 2022-02-27）は、2026-10-02 の記録（H4CBH 2025-04-06、HHBD 2025-11-30、THCH 2022-04-17、THCV 2021-12-19）と一致しない。v1.0 は 2026-10-02 の記録を採用し、再収集を代入・合算しない（ページに明記）。"
     ]
   },
   "unrecorded": {
-    "publication_approval": "対象 publication はまだ公開していない。承認判断は未実施のため decision.status は requires_review。",
-    "human_content_review": "効能表現・法務・再配布条件などの人間による最終審査は未記録。"
+    "publication_approval": "公開承認は未記録。decision.status は requires_review のままで、gate-publication は PUB-10 で BLOCKED。公開の可否は所有者の判断。",
+    "human_final_review": "本レビューは Delta agent が 2026-11-11 に実施した。人間の最終審査・法務確認は未記録。"
   },
-  "notes": "この evidence は機械的な存在・整合性の根拠だけを記録する。公開承認・人間の内容審査は推測で埋めない。"
+  "personal_data_reviewed": true,
+  "personal_data_review_basis": "2026-11-11: publication/search-emergence-tracker/index.html の本文・表・リンク・JSON-LD を個人データの観点で確認した。走査結果: メールアドレス 0、@ハンドル 0（@context/@type/@dataset/@media は JSON-LD/CSS）、10 桁以上の識別子 0、行単位の投稿・動画の行 0。著者名 Kyoji Kato と ORCID は CC BY 4.0 の帰属表示であり、データ主体の個人情報ではない。",
+  "anonymization_applied": true,
+  "anonymization_basis": "行単位のデータを掲載せず、化合物単位の集計値・run 識別子・要求条件のみを掲載している。",
+  "provenance_present": true,
+  "provenance_basis": "2026-11-11: 13 化合物の初出を 14 run の run_metadata.json と records/summary ファイルに対応させ、SHA-256 を raw_evidence に記録した。THCH は 5年 run 記録がなく research note のみ、THCV/CBG/THCH は系列非保持で再計算不能とページに明記した。",
+  "schema_valid": true,
+  "schema_review_basis": "validation.cli audit-publication（2026-11-11）で本 artifact に PC-1〜PC-10 の finding はない。HTML の JSON-LD（Dataset）は妥当な JSON で、artifact/decision/evidence の sha256 は現行ファイルと一致する。",
+  "source_terms_confirmed": true,
+  "source_terms_basis": "Google Trends は公開データで相対指数として引用・再配布可能（docs/specs/sns-redistribution-assessment.md の扱いに整合）。MHLW の公表ページはリンクのみで本文を再掲していない。",
+  "redistribution_confirmed": true,
+  "redistribution_basis": "掲載するのは集計値・run metadata・要求条件・方法論のみ。Google Trends の週次 payload と撤回済み CSV は再配布しない。CC BY 4.0。",
+  "copyright_confirmed": true,
+  "copyright_basis": "第三者の文章・動画・投稿を再掲していない。外部リンクは MHLW の制度ページと ORCID・CC ライセンスのみ。",
+  "content_review": {
+    "checklist_id": "publication-content-review-c1-c45",
+    "checklist_version": "1.0.0",
+    "artifact_sha256": "ddac95670af80c9705b6d8fdb1c96a474c109e6442757963b11f6841c27dd21c",
+    "reviewer": "Delta agent (publication-readiness task, 2026-11-11)",
+    "reviewed_at": "2026-11-11",
+    "items": [
+      {
+        "id": "C1",
+        "verdict": "not_applicable",
+        "basis": "12ヶ月共通スケールの表がなく、compare_terms の要求も使用していない。"
+      },
+      {
+        "id": "C2",
+        "verdict": "not_applicable",
+        "basis": "12ヶ月共通スケールの表がなく、中央値・最大・最大の日付を掲載していない。"
+      },
+      {
+        "id": "C3",
+        "verdict": "not_applicable",
+        "basis": "12ヶ月共通スケールの表がなく、非ゼロ点の記載がない。"
+      },
+      {
+        "id": "C4",
+        "verdict": "not_applicable",
+        "basis": "3ヶ月系列を収集・掲載していない。"
+      },
+      {
+        "id": "C5",
+        "verdict": "not_applicable",
+        "basis": "3ヶ月共通スケールの表がない。"
+      },
+      {
+        "id": "C6",
+        "verdict": "not_applicable",
+        "basis": "3ヶ月系列の非ゼロ点の記載がない。"
+      },
+      {
+        "id": "C7",
+        "verdict": "not_applicable",
+        "basis": "5年の共通スケール（compare_terms）表がなく、共通スケールの値を掲載していない。"
+      },
+      {
+        "id": "C8",
+        "verdict": "not_applicable",
+        "basis": "12ヶ月単独系列の平均・ピーク・初出・非ゼロ週を掲載していない。12ヶ月 run は初出の裏取りに使っていない。"
+      },
+      {
+        "id": "C9",
+        "verdict": "pass",
+        "basis": "5年系列で提示する値は、HHCH の初出 2023-03-26・ピーク 2023-11-12=100 が records_hhch_5y.json と一致。THC-O 2022-03-13 / CRDP 2022-07-31 / H4CBH 2025-04-06 / HHBD 2025-11-30 / CBN 2021-09-26以前 / CRDH 2023-09-24 は各 records_*_5y.json と一致。CBD/THC は 5年 baseline summary の窓起点値（42/8）が非ゼロ、HHC 2021-11-28 は 2026-10-23 の保持系列と一致。CBG 2021-09-26 は 2026-10-06 の 5年 summary が窓起点で非ゼロ（28）だが、2026-10-02 窓の同日値は保持していない。THCV 2021-12-19 と THCH 2022-04-17 は 2026-10-02 の系列が保持されておらず research note の記録のみで、保持系列では THCV 2022-02-27・THCH 2022-09-04（差分はページに記載）。平均・非ゼロ週はページに掲載していない。"
+      },
+      {
+        "id": "C10",
+        "verdict": "not_applicable",
+        "basis": "YouTube の掲載がない。"
+      },
+      {
+        "id": "C11",
+        "verdict": "not_applicable",
+        "basis": "YouTube の観測日範囲を掲載していない。"
+      },
+      {
+        "id": "C12",
+        "verdict": "pass",
+        "basis": "Data Provenance の表が各化合物の run_id・要求語・geo JP・timeframe（today 5-y / today 12-m）を示し、2026-10-02 の run_metadata.json の queries[0]（例: 20261002T094730Z は HHCH / JP / today 5-y）と一致する。THCV の 12ヶ月要求は no_data（20261002T064135Z）、THCH の 5年 run は 2026-10-02 に存在しないことを明記した。"
+      },
+      {
+        "id": "C13",
+        "verdict": "pass",
+        "basis": "Limitations と ES 節が 0-100 の相対指数であり絶対検索数ではないと明記している。"
+      },
+      {
+        "id": "C14",
+        "verdict": "not_applicable",
+        "basis": "共通スケールを使用していないため換算の記載対象がない。"
+      },
+      {
+        "id": "C15",
+        "verdict": "pass",
+        "basis": "Methodology の Data Source が各系列は自己ピークで正規化され化合物間で比較できないと明記し、平均を掲載していない。"
+      },
+      {
+        "id": "C16",
+        "verdict": "not_applicable",
+        "basis": "共通スケールの正規化を使用していない。"
+      },
+      {
+        "id": "C17",
+        "verdict": "not_applicable",
+        "basis": "共通スケールの要求語がない。"
+      },
+      {
+        "id": "C18",
+        "verdict": "pass",
+        "basis": "Google Trends 単一ソースで run を合算しない。Data Provenance が 2026-10-14/23 の再収集を代入せず v1.0 と結合しないと明記している。"
+      },
+      {
+        "id": "C19",
+        "verdict": "pass",
+        "basis": "Limitations の Low-volume censoring が閾値未満は 0 と表示され得ると明記し、ES 0 の説明も「窓内に非ゼロ週がない（検索量 0 の証拠ではない）」に修正した。"
+      },
+      {
+        "id": "C20",
+        "verdict": "not_applicable",
+        "basis": "THCNM を扱っていない。"
+      },
+      {
+        "id": "C21",
+        "verdict": "not_applicable",
+        "basis": "3ヶ月系列を扱っていない。"
+      },
+      {
+        "id": "C22",
+        "verdict": "pass",
+        "basis": "ES 0 の定義を検索量 0 の証拠ではないと明記し、THCV の 12ヶ月 no_data を 0 観測として扱っていない（Data Provenance に no data と記載）。"
+      },
+      {
+        "id": "C23",
+        "verdict": "pass",
+        "basis": "v1.0 は 2026-10-02 の単発収集。2026-10-14/23 の再収集との差（H4CBH・HHBD・THCH・THCV）を Data Provenance と Limitations に記載し、安定性は未確立と明記した。"
+      },
+      {
+        "id": "C24",
+        "verdict": "pass",
+        "basis": "Data Provenance が要求（today 5-y / today 12-m の相対 timeframe）と観測範囲（2021-09-26〜2026-10-03）を別の段落で区別し、legacy 記録に絶対要求窓がないと明記している。"
+      },
+      {
+        "id": "C25",
+        "verdict": "pass",
+        "basis": "13 化合物の初出は Data Provenance の run_id と記録ファイルに対応する。2026-10-02 の run は legacy 形式で query_id を持たない（run_id で一意）と明記した。THCH は 5年 run 記録なしと明記した。"
+      },
+      {
+        "id": "C26",
+        "verdict": "pass",
+        "basis": "evidence.citations.raw_evidence が 14 run の run_metadata.json・records/summary ファイルの SHA-256 を記録した。THCH は 5年 run 記録がなく research note のみ（note の SHA-256 を記録）であると明記した。"
+      },
+      {
+        "id": "C27",
+        "verdict": "pass",
+        "basis": "観測範囲 2021-09-26〜2026-10-03 をページに記載した。2026-10-02 の legacy run は window_id を持たず metadata/windows/ に未登録であることを明記し、登録窓を偽っていない。"
+      },
+      {
+        "id": "C28",
+        "verdict": "pass",
+        "basis": "初出 = 5年系列の最初の非ゼロ週、ピーク = 最大値と Data Provenance に定義した。平均・非ゼロ週は掲載せず、run 記録と矛盾する値を出していない。"
+      },
+      {
+        "id": "C29",
+        "verdict": "pass",
+        "basis": "2026-10-02 の週次系列は保持されておらず、初出値は記録済み summary（THCH は research note）からの転記で再計算できないとページに明記した。再計算できない事実を隠していない。"
+      },
+      {
+        "id": "C30",
+        "verdict": "pass",
+        "basis": "Methodology が収集日 2026-10-02・collector google-trends-mcp を記載し、legacy 記録に collector 版がないと明記した。"
+      },
+      {
+        "id": "C31",
+        "verdict": "pass",
+        "basis": "v1.0 は 2026-10-02 の単一収集（＋2026-10-06 の 5年 baseline）。選択規則として v1.0 の記録を採用し 2026-10-14/23 の再収集を代入しないと明記した。"
+      },
+      {
+        "id": "C32",
+        "verdict": "not_applicable",
+        "basis": "THCNM と THA の化学的同一性を扱っていない。"
+      },
+      {
+        "id": "C33",
+        "verdict": "pass",
+        "basis": "CAS・ChEBI・PubChem・Wikidata・分子式の記載を走査し 0 件だった。"
+      },
+      {
+        "id": "C34",
+        "verdict": "not_applicable",
+        "basis": "THCNM と THAH/THC-O の混同に関する項目で、本ページは THCNM を扱わない。THC-O は独立した行として掲載している。"
+      },
+      {
+        "id": "C35",
+        "verdict": "pass",
+        "basis": "規制状況は MHLW の公表資料と research/regulatory-status の整理に基づき、調査日 2026-10-02 を併記した。Methodology が独自の法的判断ではないと明記している。"
+      },
+      {
+        "id": "C36",
+        "verdict": "pass",
+        "basis": "動画単位の行・ID・タイトル・チャンネル・URL・再生数の記載はない（YouTube 節自体がない）。"
+      },
+      {
+        "id": "C37",
+        "verdict": "pass",
+        "basis": "本文・表・リンクを走査し、メールアドレス 0・@ハンドル 0・10 桁以上の識別子 0・行単位の投稿/動画 0 を確認した。著者名と ORCID は CC BY の帰属表示で、データ主体の個人情報ではない。"
+      },
+      {
+        "id": "C38",
+        "verdict": "pass",
+        "basis": "Google Trends の run metadata と summary records は公開・Git 追跡（本リポジトリの Google Trends 例外）で、週次 payload は保持せず再配布しないと Data Provenance に明記した。"
+      },
+      {
+        "id": "C39",
+        "verdict": "pass",
+        "basis": "CC BY 4.0。掲載は集計値・run 識別子・要求条件のみで、第三者コンテンツを再配布しない。"
+      },
+      {
+        "id": "C40",
+        "verdict": "pass",
+        "basis": "JCSET-F001 の Interpretation が Temporal association only. No causal relationship is inferred と明記している。"
+      },
+      {
+        "id": "C41",
+        "verdict": "pass",
+        "basis": "Data Provenance の Value classes が派生（初出・ピーク・ES）・観測（規制日・run 識別子）・解釈（finding card の Interpretation）を区分している。"
+      },
+      {
+        "id": "C42",
+        "verdict": "pass",
+        "basis": "Limitations が相対指数・5年窓・多義性・閾値・規制日・因果・ES に加え、単発収集/再現不能・反復収集・コホート分類を列挙している。"
+      },
+      {
+        "id": "C43",
+        "verdict": "pass",
+        "basis": "引用の Version 1.14.9 は CITATION.cff の version 1.14.9 と一致する。DOI 10.5281/zenodo.23390594 は concept DOI の宣言と一致する。"
+      },
+      {
+        "id": "C44",
+        "verdict": "pass",
+        "basis": "Publication Status 節が decision requires_review と gate の BLOCKED（PUB-10）を記載し、PUB-11 の C3 記録に言及している。2026-11-11 の audit/gate で公開状態比較に矛盾がないことを確認した。"
+      },
+      {
+        "id": "C45",
+        "verdict": "pass",
+        "basis": "Revision 節が 2026-11-11 の訂正（件数、CRDH、THCV、コホート定義、CBG、CSV、出所、公開状態、引用）を列挙している。"
+      }
+    ]
+  },
+  "notes": "この evidence は機械的な存在・整合性の根拠と、2026-11-11 の C3 内容レビューを記録する。公開承認は推測で埋めない。2026-11-11 にページの件数・CRDH・THCV・コホート定義・CSV リンク・出所・公開状態・引用を訂正し、現行 HTML の SHA-256 を再固定した。v1.0 の 5年系列は保持されておらず、初出値は記録済み summary（THCH は research note）からの転記で再計算できない。2026-10-14/23 の再収集は異なる初出を示すため、ページに差分と選択規則を記載した。"
 }

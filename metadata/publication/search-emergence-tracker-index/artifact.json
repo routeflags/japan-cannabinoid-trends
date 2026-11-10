@@ -6,8 +6,8 @@
   "layer": "publication",
   "source_kind": "html",
   "storage_policy_id": "publication-html-candidate",
-  "sha256": "7914810c497367100e275d4946272b1ac23ed3a736149a436d9f345dcfdfde64",
-  "byte_length": 35605,
-  "recorded_at": "2026-10-15",
-  "notes": "未公開 publication HTML。PC-7 の審査 envelope として内容 hash を固定する。対象 publication はまだ公開していないため、decision は requires_review から開始する。"
+  "sha256": "ddac95670af80c9705b6d8fdb1c96a474c109e6442757963b11f6841c27dd21c",
+  "byte_length": 48523,
+  "recorded_at": "2026-11-11",
+  "notes": "未公開 publication HTML。PC-7 の審査 envelope として内容 hash を固定する。対象 publication はまだ公開していないため、decision は requires_review から開始する。2026-11-11 に C3 内容レビュー（C1〜C45）とページ訂正を行い、hash と byte_length を再固定した。"
 }

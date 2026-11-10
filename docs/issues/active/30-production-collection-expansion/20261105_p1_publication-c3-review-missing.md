@@ -61,7 +61,8 @@ C1〜C45 の正式定義が無いため、45 項目の内容レビューは実�
 
 ## 残件（本 issue の対象外）
 
-- `publication/search-emergence-tracker/index.html` と `youtube-hhbd-liquid-monthly-counts` 集計は C3 未記録で `BLOCKED`（前者は PUB-04/PUB-10 も未了）。別途レビューが必要。
+- `publication/search-emergence-tracker/index.html` は 2026-11-11 に C3 レビュー（C1〜C45）を記録した（PUB-11 PASS、PUB-04 も PASS）。未公開のため PUB-10（公開承認）のみ `BLOCKED`。
+- `youtube-hhbd-liquid-monthly-counts` 集計は C3 未記録で `BLOCKED`。別途レビューが必要。
 
 ## 受入条件
 

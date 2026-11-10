@@ -15,14 +15,10 @@
   "catalog_run_count": 100,
   "summary": {
     "artifact_count": 16,
-    "finding_count": 1,
+    "finding_count": 0,
     "declared_gap_count": 11,
-    "by_rule": {
-      "PC-10": 1
-    },
-    "by_kind": {
-      "content_review_missing": 1
-    }
+    "by_rule": {},
+    "by_kind": {}
   },
   "implemented_rules": [
     "PC-1",
@@ -37,14 +33,7 @@
     "PC-10"
   ],
   "unimplemented_rules": [],
-  "findings": [
-    {
-      "rule": "PC-10",
-      "kind": "content_review_missing",
-      "path": "publication/search-emergence-tracker/index.html",
-      "detail": "evidence.json has no content_review record; the C3 review was not performed (a mechanical pass is not a content review)"
-    }
-  ],
+  "findings": [],
   "declared_gaps": [
     {
       "path": "publication/research_cbg.html",
