@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.14.9] - 2026-11-11
+
+### Removed
+- Removed the redundant `publication/guide_cbx_rewrite.html` guide page and its publication envelope; `research_cbx.html` is the current CBX research page.
+
 ## [1.14.8] - 2026-11-11
 
 ### Added

@@ -279,58 +279,10 @@ else
 fi
 
 # =============================================================================
-# 5. publication/guide_cbx_rewrite.html
+# 5. README.md
 # =============================================================================
 
-print_header "5. publication/guide_cbx_rewrite.html"
-
-GUIDE_FILE="publication/guide_cbx_rewrite.html"
-
-if [ -f "$GUIDE_FILE" ]; then
-  # 引用ブロックのバージョン（最後の Version 表記）
-  GUIDE_VERSION=$(grep -oE 'Version\s*[0-9]+\.[0-9]+(\.[0-9]+)?' "$GUIDE_FILE" | tail -1 | grep -oE '[0-9]+\.[0-9]+(\.[0-9]+)?' || echo "")
-  # 全ての DOI を取得（Concept DOI も有効）
-  GUIDE_DOIS=$(grep -oE '10\.5281/zenodo\.[0-9]+' "$GUIDE_FILE" | sort -u || echo "")
-  GUIDE_DATE=$(grep -oE 'dateModified["\s:]+[0-9]{4}-[0-9]{2}-[0-9]{2}' "$GUIDE_FILE" | head -1 | grep -oE '[0-9]{4}-[0-9]{2}-[0-9]{2}' || echo "")
-
-  if [ "$GUIDE_VERSION" = "$BASELINE_VERSION" ]; then
-    print_pass "引用 Version: $GUIDE_VERSION"
-  else
-    print_fail "引用 Version: $GUIDE_VERSION → $BASELINE_VERSION"
-  fi
-
-  # DOI チェック（version DOI または concept DOI が含まれていれば OK）
-  if [ -n "$BASELINE_DOI" ]; then
-    # version DOI または concept DOI との完全一致のみ合格とする。
-    # `${BASELINE_DOI%.*}` のような接頭辞一致は任意の Zenodo DOI を通してしまう
-    # （旧 DOI 23164972/23164973 が素通りしていた。README の同種チェックと同じ規則）。
-    UNEXPECTED_DOIS=""
-    for doi in $GUIDE_DOIS; do
-      if [ "$doi" = "$BASELINE_DOI" ]; then
-        continue
-      fi
-      if [ -n "${ZENODO_CONCEPT_DOI:-}" ] && [ "$doi" = "$ZENODO_CONCEPT_DOI" ]; then
-        continue
-      fi
-      UNEXPECTED_DOIS="${UNEXPECTED_DOIS} ${doi}"
-    done
-    if [ -z "$UNEXPECTED_DOIS" ]; then
-      print_pass "引用 DOI: $(echo $GUIDE_DOIS | tr '\n' ' ')"
-    else
-      print_fail "引用 DOI:${UNEXPECTED_DOIS} → ${BASELINE_DOI}（または concept DOI ${ZENODO_CONCEPT_DOI:-N/A}）"
-    fi
-  fi
-
-  print_info "dateModified: $GUIDE_DATE"
-else
-  print_fail "$GUIDE_FILE が存在しません"
-fi
-
-# =============================================================================
-# 6. README.md
-# =============================================================================
-
-print_header "6. README.md"
+print_header "5. README.md"
 
 README_FILE="README.md"
 

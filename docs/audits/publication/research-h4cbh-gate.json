@@ -2,7 +2,7 @@
   "gate": "publication_eligibility",
   "criteria": "G6 §10.2 (PUB-01..PUB-10); PUB-11 = C3 content review",
   "artifact_id": "research-h4cbh",
-  "artifact_sha256": "d103c45bbbb821d2109b6a7403340b4b253899208596a6090c2be35dadef13b6",
+  "artifact_sha256": "8e628a540ef0f902a339353591e302144824fd67ba21d74cf7ec8d8b6112b0ff",
   "decision_id": "publication-review-research-h4cbh",
   "verdict": "SUPPORTED",
   "checks": [

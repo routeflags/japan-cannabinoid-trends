@@ -6,8 +6,8 @@
   "layer": "publication",
   "source_kind": "html",
   "storage_policy_id": "publication-html-candidate",
-  "sha256": "1a34ca57277038d95323049824a02493b1cf9c5a16c788e313d5d867f6b79422",
+  "sha256": "3cabe0eeea7ca3c932cf6bbe3e4d9cb9ff30268522143aa8634cb013b2849e3d",
   "byte_length": 25495,
   "recorded_at": "2026-11-11",
-  "notes": "未公開 publication HTML。PC-7 の審査 envelope として内容 hash を固定する。対象 publication はまだ公開していないため、decision は requires_review から開始する。 v1.13.0 release metadata sync 後の hash。 v1.13.1 release metadata sync 後の hash。 2026-11-05、研究質問の統一・版表記 1.14.1 化・YouTube 動画単位行の削除・Google Trends の要求条件/観測範囲の分離および出所追記の後の hash（内容承認ではなく審査対象の再ピン）。 2026-11-05: HHCH の共通スケール節を、CBD・THC を含むアンカー付き run の実測に合わせて更新した後の hash（内容承認ではなく審査対象の再ピン）。 2026-11-05: C3 内容レビュー（C1〜C45）の記録後の hash（内容承認ではなく審査対象の再ピン）。 2026-11-06: HHCH の YouTube 月次公開日件数の別集計節（run 20261101T105037Z-youtube-cannabinoid-raw-collection）の追加後の hash（C3 内容レビュー付き）。 2026-11-06 の v1.14.6 準備（版表記 1.14.6）後の hash に再固定した。 2026-11-06 の v1.14.7 準備（版表記 1.14.7）後の hash に再固定した。 2026-11-11: v1.14.8 図入り版（C3再レビュー対象）の現行HTML hashに再固定。 2026-11-11: v1.14.8 図入り版（C3再レビュー対象）の現行HTML hashに再固定。"
+  "notes": "未公開 publication HTML。PC-7 の審査 envelope として内容 hash を固定する。対象 publication はまだ公開していないため、decision は requires_review から開始する。 v1.13.0 release metadata sync 後の hash。 v1.13.1 release metadata sync 後の hash。 2026-11-05、研究質問の統一・版表記 1.14.1 化・YouTube 動画単位行の削除・Google Trends の要求条件/観測範囲の分離および出所追記の後の hash（内容承認ではなく審査対象の再ピン）。 2026-11-05: HHCH の共通スケール節を、CBD・THC を含むアンカー付き run の実測に合わせて更新した後の hash（内容承認ではなく審査対象の再ピン）。 2026-11-05: C3 内容レビュー（C1〜C45）の記録後の hash（内容承認ではなく審査対象の再ピン）。 2026-11-06: HHCH の YouTube 月次公開日件数の別集計節（run 20261101T105037Z-youtube-cannabinoid-raw-collection）の追加後の hash（C3 内容レビュー付き）。 2026-11-06 の v1.14.6 準備（版表記 1.14.6）後の hash に再固定した。 2026-11-06 の v1.14.7 準備（版表記 1.14.7）後の hash に再固定した。 2026-11-11: v1.14.8 図入り版（C3再レビュー対象）の現行HTML hashに再固定。 2026-11-11: v1.14.8 図入り版（C3再レビュー対象）の現行HTML hashに再固定。 2026-11-11: v1.14.9 図入り版（C3再レビュー対象）の現行HTML hashに再固定。"
 }

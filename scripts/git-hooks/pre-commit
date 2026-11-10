@@ -67,8 +67,7 @@ for file in $CHANGED_FILES; do
     CHANGELOG.md|\
     metadata/datapackage.json|\
     methodology.md|\
-    README.md|\
-    publication/guide_cbx_rewrite.html)
+    README.md)
       VERSION_VALIDATION_NEEDED=true
       ;;
   esac

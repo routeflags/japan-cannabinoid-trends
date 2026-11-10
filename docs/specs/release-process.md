@@ -90,7 +90,7 @@ When uploading manually, use:
 - [ ] Update `CHANGELOG.md`
 - [ ] Update version in `CITATION.cff`
 - [ ] Update version in `metadata/datapackage.json`
-- [ ] Update `publication/guide_cbx_rewrite.html` citation version (`dateModified` only when the page content changes; it must stay equal to `最終更新`)
+- [ ] Confirm the current publication set (`publication/research_*.html` and `publication/figures/`); the retired `guide_cbx_rewrite.html` is not part of a release
 - [ ] Commit all changes
 - [ ] Run `./scripts/release/create-clean-archive.sh` to verify
 - [ ] Run `gate-publication` 手動ゲートを実行し判定と証拠を記録する（公開は人の判断。現行方針: 機械は公開を止めない。例: `python -m validation.cli gate-publication --artifact <artifact.json> --decision <decision.json> --evidence <evidence.json> --output docs/audits/g6-publication-eligibility.json`。判定が BLOCKED の場合は理由を記録し公開しない。詳細は `docs/specs/validation-framework.md` §19）

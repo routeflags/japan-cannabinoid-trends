@@ -20,7 +20,7 @@
   "anonymization_basis": "The page applies aggregation-only publication: 6-run counts and total 2288, with no per-video or person-level rows.",
   "citations": {
     "integrity": [
-      "sha256(publication/research_cbx.html, 2026-11-11 C3再レビュー・図入り版再固定) = 3eadb27bfb9e010249647556895b35f8b192bf5e63e28f45c6c1a244fc3c99bc"
+      "sha256(publication/research_cbx.html, 2026-11-11 C3再レビュー・図入り版再固定) = cef54e4eb8d2e8ccebbd19ec916a97580bcb70b780e2d857be4b0375e9c8f4bb"
     ],
     "publication_contract": [
       "validation.cli audit-publication（2026-10-15）: PC-1〜PC-8 の機械検査対象。PC-7 は本 envelope の存在と hash 固定を検査する。",
@@ -38,7 +38,8 @@
       "2026-11-05: C3 内容レビュー（C1〜C45）で次を検出して訂正した — 12ヶ月単独系列の平均 69.77 の桁表記を「小数第 1 位」から「小数第 2 位」に訂正、12ヶ月・5年共通スケールの正規化分母の追記、6 runs 表の観測範囲を宣言の半開区間 [start, end_exclusive) に修正、X 節の 147 件の出所と分類内訳が再計算できない旨および分類 batch JSON に CBX の項が無い旨の明示、収集方法（google-trends-mcp 0.1.1）の記載、単発 run・安定性未測定・run 間/窓間の平均を比較しない・ソース間で合算しない旨の追記、窓の登録ファイルの記載、公開状態の節と改訂行の追加（v1.14.5）。データ値そのものの変更は無い。",
       "2026-11-06: CBX リキッド 1 run（329 件 date_filter=all、run 20261101T112555Z-youtube-cannabinoid-raw-collection）の月次公開日件数（ピーク月・年次分布・再生数統計）を別集計の節として追加した。既存の YouTube 節は変更していない。年次合計=返却件数（329）、ピーク月（2026-08（28 件））、再生数統計は採用宣言と突合した検証値と一致する。",
       "2026-11-11: 図入り版 v1.14.8 の再レビュー。推移・年次・共通スケール年間バブルマトリクスの位置、出所、制約、部分年表示を確認。",
-      "2026-11-11: 図入り版 v1.14.8 の再レビュー。推移・年次・共通スケール年間バブルマトリクスの位置、出所、制約、部分年表示を確認。"
+      "2026-11-11: 図入り版 v1.14.8 の再レビュー。推移・年次・共通スケール年間バブルマトリクスの位置、出所、制約、部分年表示を確認。",
+      "2026-11-11: 図入り版 v1.14.9 の再レビュー。推移・年次・共通スケール年間バブルマトリクスの位置、出所、制約、部分年表示を確認。"
     ],
     "raw_evidence": [
       "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261015T042853Z-google-trends-boundary-12m/run_metadata.json sha256 = e5d8b8a29517d5722fc69bd8be411c5618a849d6ded842de7f95c3f8c9a2df4b",
@@ -61,11 +62,11 @@
   "unrecorded": {
     "human_content_review": "効能表現・法務などの人間による内容審査は本 evidence の範囲外。公開可否の最終判定は decision.status に従う。"
   },
-  "notes": "この evidence は機械的な存在・整合性の根拠だけを記録する。2026-10-15 の owner 承認は decision.json に approved として記録されていたが、その対象は旧 hash である。2026-11-05 の内容変更（研究質問の統一・版表記 1.14.2 化・YouTube 動画単位行とチャンネル分布表の削除・共通スケール節の更新）により対象外となったため、decision.json は requires_review に戻した。 2026-11-05 に審査対象の hash を再固定し、変更内容を citations.content_changes に記録した。公開承認・人間の内容審査は推測で埋めない。 content_review は C1〜C45（metadata/publication/content-review-checklist.json v1.0.0）の 45 項目を本ページ・raw/comparison 成果物・methodology・taxonomy・evidence に照合した記録で、reviewer は owner の 2026-11-05 指示でレビューを実施した Delta agent、reviewed_at は 2026-11-05、artifact_sha256 はレビュー対象の現行 HTML。 2026-11-06: CBX リキッド 1 run の月次公開日件数の別集計節を追加し、現行 hash に C1〜C45 の再レビュー（content_review）を記録した。 2026-11-06 の v1.14.6 準備（版表記 1.14.6）後の hash に再固定した。 2026-11-06 の v1.14.7 準備（版表記 1.14.7）後の hash に再固定した。 2026-11-11 に図入り v1.14.8 の C1-C45 再レビューと現行hash再固定を実施。 2026-11-11 に図入り v1.14.8 の C1-C45 再レビューと現行hash再固定を実施。",
+  "notes": "この evidence は機械的な存在・整合性の根拠だけを記録する。2026-10-15 の owner 承認は decision.json に approved として記録されていたが、その対象は旧 hash である。2026-11-05 の内容変更（研究質問の統一・版表記 1.14.2 化・YouTube 動画単位行とチャンネル分布表の削除・共通スケール節の更新）により対象外となったため、decision.json は requires_review に戻した。 2026-11-05 に審査対象の hash を再固定し、変更内容を citations.content_changes に記録した。公開承認・人間の内容審査は推測で埋めない。 content_review は C1〜C45（metadata/publication/content-review-checklist.json v1.0.0）の 45 項目を本ページ・raw/comparison 成果物・methodology・taxonomy・evidence に照合した記録で、reviewer は owner の 2026-11-05 指示でレビューを実施した Delta agent、reviewed_at は 2026-11-05、artifact_sha256 はレビュー対象の現行 HTML。 2026-11-06: CBX リキッド 1 run の月次公開日件数の別集計節を追加し、現行 hash に C1〜C45 の再レビュー（content_review）を記録した。 2026-11-06 の v1.14.6 準備（版表記 1.14.6）後の hash に再固定した。 2026-11-06 の v1.14.7 準備（版表記 1.14.7）後の hash に再固定した。 2026-11-11 に図入り v1.14.8 の C1-C45 再レビューと現行hash再固定を実施。 2026-11-11 に図入り v1.14.8 の C1-C45 再レビューと現行hash再固定を実施。 2026-11-11 に図入り v1.14.9 の C1-C45 再レビューと現行hash再固定を実施。",
   "content_review": {
     "checklist_id": "publication-content-review-c1-c45",
     "checklist_version": "1.0.0",
-    "artifact_sha256": "3eadb27bfb9e010249647556895b35f8b192bf5e63e28f45c6c1a244fc3c99bc",
+    "artifact_sha256": "cef54e4eb8d2e8ccebbd19ec916a97580bcb70b780e2d857be4b0375e9c8f4bb",
     "reviewer": "Delta agent (owner instruction: go all, 2026-11-11)",
     "reviewed_at": "2026-11-11",
     "items": [
@@ -277,12 +278,12 @@
       {
         "id": "C42",
         "verdict": "pass",
-        "basis": "新節の「制約」が、返却サンプルであること・結果上限（maxResults 500）・再生数の時点性・未取得≠0・単発 run で安定性未測定・合算/比較の禁止・動画単位の非公開を列挙している。既存各節の制約も不変。 図にも相対指数・サンプル性・部分年・比較禁止の制約を表示した。 図にも相対指数・サンプル性・部分年・比較禁止の制約を表示した。"
+        "basis": "新節の「制約」が、返却サンプルであること・結果上限（maxResults 500）・再生数の時点性・未取得≠0・単発 run で安定性未測定・合算/比較の禁止・動画単位の非公開を列挙している。既存各節の制約も不変。 図にも相対指数・サンプル性・部分年・比較禁止の制約を表示した。 図にも相対指数・サンプル性・部分年・比較禁止の制約を表示した。 図にも相対指数・サンプル性・部分年・比較禁止の制約を表示した。"
       },
       {
         "id": "C43",
         "verdict": "pass",
-        "basis": "引用の Version 1.14.8 は CITATION.cff の version 1.14.8 と一致する。"
+        "basis": "引用の Version 1.14.9 は CITATION.cff の version 1.14.9 と一致する。"
       },
       {
         "id": "C44",
@@ -292,7 +293,7 @@
       {
         "id": "C45",
         "verdict": "pass",
-        "basis": "「改訂」に 2026-11-06 の追記（CBX リキッド 1 run 329 件の月次公開日件数の別集計節の追加、既存の YouTube 節は不変）を記載した。 2026-11-11: 図入り版の推移・年次・共通スケール年間バブルマトリクス、部分年注記、出所・制約を確認した。 2026-11-11: 図入り版の推移・年次・共通スケール年間バブルマトリクス、部分年注記、出所・制約を確認した。"
+        "basis": "「改訂」に 2026-11-06 の追記（CBX リキッド 1 run 329 件の月次公開日件数の別集計節の追加、既存の YouTube 節は不変）を記載した。 2026-11-11: 図入り版の推移・年次・共通スケール年間バブルマトリクス、部分年注記、出所・制約を確認した。 2026-11-11: 図入り版の推移・年次・共通スケール年間バブルマトリクス、部分年注記、出所・制約を確認した。 2026-11-11: 図入り版の推移・年次・共通スケール年間バブルマトリクス、部分年注記、出所・制約を確認した。"
       }
     ]
   }
