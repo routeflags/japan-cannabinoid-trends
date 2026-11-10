@@ -1,0 +1,33 @@
+{
+  "schema_version": "1.0.0",
+  "run_id": "20261110T235706Z-google-trends-thca-5y-retry",
+  "artifacts": [
+    {
+      "artifact_id": "20261110T235706Z-google-trends-thca-5y-retry-payload-json",
+      "path": "payload.json",
+      "artifact_type": "raw_response",
+      "format": "json",
+      "schema_id": "google-trends-mcp-tool-result-v1",
+      "byte_length": 7591,
+      "sha256": "9e04ec0b91d7f1500f3ff1be91db606c1b1be08bcb66c396a693c3a8f994c1dd",
+      "layer": "raw",
+      "completeness": "complete",
+      "record_count": 262
+    },
+    {
+      "artifact_id": "20261110T235706Z-google-trends-thca-5y-retry-records-thca-json",
+      "path": "records_thca.json",
+      "artifact_type": "timeseries",
+      "format": "json",
+      "schema_id": "google-trends-interest-over-time-v1",
+      "byte_length": 15363,
+      "sha256": "dd4c211e19aa86104978cc28f148f89136051a0eb010bc0383a19f79dfd07eff",
+      "layer": "raw",
+      "completeness": "complete",
+      "record_count": 262,
+      "derived_from": [
+        "20261110T235706Z-google-trends-thca-5y-retry-payload-json"
+      ]
+    }
+  ]
+}

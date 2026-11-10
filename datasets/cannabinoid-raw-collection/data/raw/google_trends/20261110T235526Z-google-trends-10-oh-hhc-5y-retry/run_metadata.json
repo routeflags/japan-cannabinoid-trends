@@ -1,0 +1,74 @@
+{
+  "schema_version": "1.0.0",
+  "run_id": "20261110T235526Z-google-trends-10-oh-hhc-5y-retry",
+  "study_id": "cannabinoid-raw-collection",
+  "source_id": "google-trends",
+  "purpose": "New owner-requested retry attempt for the 10-OH-HHC 5y Google Trends window (execution 2; prior attempt 20261110T193118Z-google-trends-10-oh-hhc-5y (HTTP 429)). Same registered query string '10-OH-HHC', geo JP, timeframe 'today 5-y', and declared window 2021-11-07_2026-11-15 as the committed original plan gt-5y-10-oh-hhc-20261110; the query, geo, timeframe and window are unchanged. Taxonomy registration state is identity-unverified; this run measures the string as submitted and does not resolve chemical identity or aliases. The window is a declared weekly-grid approximation; the collector resolves the relative timeframe at actual request time.",
+  "collector": {
+    "collector_id": "google-trends-mcp",
+    "adapter_id": "google-trends-mcp@1",
+    "version": "0.1.1",
+    "provider": "mcp",
+    "transport": "mcp",
+    "external_id": "google-trends-mcp"
+  },
+  "collection_started_at": "2026-11-10T23:55:27Z",
+  "collection_finished_at": "2026-11-10T23:55:28Z",
+  "query_provenance": {
+    "query_id": "10-oh-hhc-general-ja",
+    "submitted_query": "10-OH-HHC",
+    "compound_id": "compound_10_oh_hhc",
+    "query_registry_version": "1.0.0"
+  },
+  "temporal_provenance": {
+    "window_id": "2021-11-07_2026-11-15",
+    "requested_start": "2021-11-07T00:00:00Z",
+    "requested_end_exclusive": "2026-11-15T00:00:00Z",
+    "granularity": "week",
+    "timezone": "Asia/Tokyo",
+    "week_start": "sunday",
+    "collector_window_type": "relative_duration",
+    "boundary_semantics": "relative timeframe resolved by the collector at request time; weekly buckets (Sunday start) label the series; observed range 2021-11-07..2026-11-08",
+    "exact_window_match": false,
+    "observed_min_timestamp": "2021-11-07T00:00:00Z",
+    "observed_max_timestamp": "2026-11-08T00:00:00Z",
+    "reference_time": "2026-11-10T23:55:27.538571Z",
+    "limitations": [
+      "collector window type is relative_duration; the absolute requested window cannot be expressed exactly (boundary semantics unverified, c.md §6.2)",
+      "'today 5-y' is resolved nominally at the recorded reference time; Google Trends resolves it at request time and the actual boundaries are unverified (c.md §6.3)",
+      "coverage is recorded as partial/unknown until boundary verification (c.md §9)"
+    ],
+    "submitted_parameters": {
+      "tool": "interest_over_time",
+      "terms": [
+        "10-OH-HHC"
+      ],
+      "geo": "JP",
+      "timeframe": "today 5-y"
+    }
+  },
+  "execution": {
+    "status": "success",
+    "returned_count": 262,
+    "errors": [],
+    "pagination_exhausted": true
+  },
+  "artifact_manifest": "artifact-manifest.json",
+  "comparison": {
+    "comparison_scale": "single_series",
+    "cross_compound_comparable": false
+  },
+  "environment": {
+    "collection_core_version": "1.0.0",
+    "adapter_contract_version": "1.0.0",
+    "runtime_version": "python-3.15.2",
+    "adapter": {
+      "tool": "interest_over_time",
+      "package": "google-trends-mcp",
+      "version": "0.1.1",
+      "collection_mode": "live",
+      "transport": "mcp"
+    },
+    "code_commit": "e4525ea1644fd0be520fb0f568a38d15cd869a9f"
+  }
+}
