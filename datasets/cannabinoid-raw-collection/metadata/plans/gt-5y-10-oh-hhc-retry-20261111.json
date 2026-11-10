@@ -1,0 +1,26 @@
+{
+  "plan_id": "gt-5y-10-oh-hhc-retry-20261111",
+  "study_id": "cannabinoid-raw-collection",
+  "source_id": "google-trends",
+  "collector_id": "google-trends-mcp",
+  "query_id": "10-oh-hhc-general-ja",
+  "query": {
+    "text": "10-OH-HHC",
+    "geo": "JP",
+    "timeframe": "today 5-y",
+    "compound_id": "compound_10_oh_hhc"
+  },
+  "required_capabilities": [
+    "geo_filter",
+    "relative_date_range"
+  ],
+  "window": {
+    "window_id": "2021-11-07_2026-11-15",
+    "start": "2021-11-07T00:00:00Z",
+    "end_exclusive": "2026-11-15T00:00:00Z",
+    "granularity": "week",
+    "week_start": "sunday",
+    "timezone": "Asia/Tokyo"
+  },
+  "purpose": "New owner-requested retry attempt for the 10-OH-HHC 5y Google Trends window (execution 2; prior attempt 20261110T193118Z-google-trends-10-oh-hhc-5y (HTTP 429)). Same registered query string '10-OH-HHC', geo JP, timeframe 'today 5-y', and declared window 2021-11-07_2026-11-15 as the committed original plan gt-5y-10-oh-hhc-20261110; the query, geo, timeframe and window are unchanged. Taxonomy registration state is identity-unverified; this run measures the string as submitted and does not resolve chemical identity or aliases. The window is a declared weekly-grid approximation; the collector resolves the relative timeframe at actual request time."
+}
