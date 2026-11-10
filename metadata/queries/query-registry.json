@@ -306,6 +306,214 @@
       "status": "active"
     },
     {
+      "query_id": "thcb-general-ja",
+      "compound_id": "compound_thcb",
+      "intent_id": "compound_general",
+      "language": "ja",
+      "canonical_text": "THCB",
+      "status": "active"
+    },
+    {
+      "query_id": "thcb-liquid-ja",
+      "compound_id": "compound_thcb",
+      "intent_id": "product_liquid",
+      "language": "ja",
+      "canonical_text": "THCB リキッド",
+      "status": "active"
+    },
+    {
+      "query_id": "thcp-general-ja",
+      "compound_id": "compound_thcp",
+      "intent_id": "compound_general",
+      "language": "ja",
+      "canonical_text": "THCP",
+      "status": "active"
+    },
+    {
+      "query_id": "thcp-liquid-ja",
+      "compound_id": "compound_thcp",
+      "intent_id": "product_liquid",
+      "language": "ja",
+      "canonical_text": "THCP リキッド",
+      "status": "active"
+    },
+    {
+      "query_id": "thcjd-general-ja",
+      "compound_id": "compound_thcjd",
+      "intent_id": "compound_general",
+      "language": "ja",
+      "canonical_text": "THCJD",
+      "status": "active"
+    },
+    {
+      "query_id": "thcjd-liquid-ja",
+      "compound_id": "compound_thcjd",
+      "intent_id": "product_liquid",
+      "language": "ja",
+      "canonical_text": "THCJD リキッド",
+      "status": "active"
+    },
+    {
+      "query_id": "thcpo-general-ja",
+      "compound_id": "compound_thcpo",
+      "intent_id": "compound_general",
+      "language": "ja",
+      "canonical_text": "THCPO",
+      "status": "active"
+    },
+    {
+      "query_id": "thcpo-liquid-ja",
+      "compound_id": "compound_thcpo",
+      "intent_id": "product_liquid",
+      "language": "ja",
+      "canonical_text": "THCPO リキッド",
+      "status": "active"
+    },
+    {
+      "query_id": "cbe-general-ja",
+      "compound_id": "compound_cbe",
+      "intent_id": "compound_general",
+      "language": "ja",
+      "canonical_text": "CBE",
+      "status": "active"
+    },
+    {
+      "query_id": "cbe-liquid-ja",
+      "compound_id": "compound_cbe",
+      "intent_id": "product_liquid",
+      "language": "ja",
+      "canonical_text": "CBE リキッド",
+      "status": "active"
+    },
+    {
+      "query_id": "hhcpo-general-ja",
+      "compound_id": "compound_hhcpo",
+      "intent_id": "compound_general",
+      "language": "ja",
+      "canonical_text": "HHCPO",
+      "status": "active"
+    },
+    {
+      "query_id": "hhcpo-liquid-ja",
+      "compound_id": "compound_hhcpo",
+      "intent_id": "product_liquid",
+      "language": "ja",
+      "canonical_text": "HHCPO リキッド",
+      "status": "active"
+    },
+    {
+      "query_id": "cbnd-general-ja",
+      "compound_id": "compound_cbnd",
+      "intent_id": "compound_general",
+      "language": "ja",
+      "canonical_text": "CBND",
+      "status": "active"
+    },
+    {
+      "query_id": "cbnd-liquid-ja",
+      "compound_id": "compound_cbnd",
+      "intent_id": "product_liquid",
+      "language": "ja",
+      "canonical_text": "CBND リキッド",
+      "status": "active"
+    },
+    {
+      "query_id": "cbl-general-ja",
+      "compound_id": "compound_cbl",
+      "intent_id": "compound_general",
+      "language": "ja",
+      "canonical_text": "CBL",
+      "status": "active"
+    },
+    {
+      "query_id": "cbl-liquid-ja",
+      "compound_id": "compound_cbl",
+      "intent_id": "product_liquid",
+      "language": "ja",
+      "canonical_text": "CBL リキッド",
+      "status": "active"
+    },
+    {
+      "query_id": "cbga-general-ja",
+      "compound_id": "compound_cbga",
+      "intent_id": "compound_general",
+      "language": "ja",
+      "canonical_text": "CBGa",
+      "status": "active"
+    },
+    {
+      "query_id": "cbga-liquid-ja",
+      "compound_id": "compound_cbga",
+      "intent_id": "product_liquid",
+      "language": "ja",
+      "canonical_text": "CBGa リキッド",
+      "status": "active"
+    },
+    {
+      "query_id": "cbp-general-ja",
+      "compound_id": "compound_cbp",
+      "intent_id": "compound_general",
+      "language": "ja",
+      "canonical_text": "CBP",
+      "status": "active"
+    },
+    {
+      "query_id": "cbp-liquid-ja",
+      "compound_id": "compound_cbp",
+      "intent_id": "product_liquid",
+      "language": "ja",
+      "canonical_text": "CBP リキッド",
+      "status": "active"
+    },
+    {
+      "query_id": "10-oh-hhc-general-ja",
+      "compound_id": "compound_10_oh_hhc",
+      "intent_id": "compound_general",
+      "language": "ja",
+      "canonical_text": "10-OH-HHC",
+      "status": "active"
+    },
+    {
+      "query_id": "10-oh-hhc-liquid-ja",
+      "compound_id": "compound_10_oh_hhc",
+      "intent_id": "product_liquid",
+      "language": "ja",
+      "canonical_text": "10-OH-HHC リキッド",
+      "status": "active"
+    },
+    {
+      "query_id": "thxe-general-ja",
+      "compound_id": "compound_thxe",
+      "intent_id": "compound_general",
+      "language": "ja",
+      "canonical_text": "THXE",
+      "status": "active"
+    },
+    {
+      "query_id": "thxe-liquid-ja",
+      "compound_id": "compound_thxe",
+      "intent_id": "product_liquid",
+      "language": "ja",
+      "canonical_text": "THXE リキッド",
+      "status": "active"
+    },
+    {
+      "query_id": "thca-general-ja",
+      "compound_id": "compound_thca",
+      "intent_id": "compound_general",
+      "language": "ja",
+      "canonical_text": "THCA",
+      "status": "active"
+    },
+    {
+      "query_id": "thca-liquid-ja",
+      "compound_id": "compound_thca",
+      "intent_id": "product_liquid",
+      "language": "ja",
+      "canonical_text": "THCA リキッド",
+      "status": "active"
+    },
+    {
       "query_id": "comparison-5y-setA",
       "compound_id": "compound_cbd",
       "intent_id": "other",

@@ -84,6 +84,18 @@
     },
     {
       "@type": "schema:DefinedTerm",
+      "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound_identity_unverified",
+      "schema:name": "Identity-Unverified Registered Terms (registration state)",
+      "schema:inDefinedTermSet": {
+        "@type": "schema:DefinedTermSet",
+        "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-identity-unverified-scheme"
+      },
+      "schema:alternateName": "同一性未確認の登録語（登録状態）",
+      "schema:description": "An ADMINISTRATIVE registration-state category, not a route/origin or chemical classification. Its members are search terms the owner named for this study whose chemical identity is UNCONFIRMED in this repository. Placing a term here records only that the string is registered and queryable: it makes no claim about route or origin, natural occurrence, chemical class, structure, synonym relationships or regulatory status, and it neither asserts that the term names a distinct substance nor that a substance behind the string exists. Membership is not a judgement that a term is rare, minor, semi-synthetic or synthetic, and it never substitutes for one of those categories; when evidence arrives, move the term to the category that evidence supports. Members carry no skos:exactMatch, CAS number, PubChem or IUPAC name and no chemical-class link until an identifier is verified. A term is registered here because the owner named it, not because its identity was established. Decision record: ISS-20261111-TAX-040, which supersedes the ISS-20261015-TAX-027 non-registration decision for THCP.",
+      "schema:termCode": "compound_identity_unverified"
+    },
+    {
+      "@type": "schema:DefinedTerm",
       "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound_cbd",
       "schema:name": "Cannabidiol (CBD)",
       "schema:inDefinedTermSet": {
@@ -363,6 +375,149 @@
         "2AG"
       ],
       "schema:termCode": "compound_2ag"
+    },
+    {
+      "@type": "schema:DefinedTerm",
+      "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound_thcb",
+      "schema:name": "THCB",
+      "schema:inDefinedTermSet": {
+        "@type": "schema:DefinedTermSet",
+        "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-thcb-scheme"
+      },
+      "schema:description": "'THCB' is the owner's term, registered as a search string on 2026-11-11 by owner direction (ISS-20261111-TAX-040). Its chemical identity is UNCONFIRMED: the repository records no verified chemical name, structure, chemical class, natural occurrence, route/origin, synonym relation or regulatory status for this term, and no external identifier (CAS, ChEBI, Wikidata, PubChem) was verified - none is recorded here and none may be inferred from the query string. The term sits in compound_identity_unverified, an administrative registration-state category, so this placement asserts no route or chemical classification. What the code 'THCB' expands to is not recorded anywhere in this repository, so no chemical name is supplied. Evidence that would move the term out of this category: a documented chemical name with a verified external identifier, or a recorded source naming the substance and its route/origin; the basis belongs in docs/provenance/compound-taxonomy.md.",
+      "schema:termCode": "compound_thcb"
+    },
+    {
+      "@type": "schema:DefinedTerm",
+      "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound_thcp",
+      "schema:name": "THCP",
+      "schema:inDefinedTermSet": {
+        "@type": "schema:DefinedTermSet",
+        "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-thcp-scheme"
+      },
+      "schema:description": "'THCP' is the owner's term, registered as a search string on 2026-11-11 by owner direction (ISS-20261111-TAX-040). Its chemical identity is UNCONFIRMED: the repository records no verified chemical name, structure, chemical class, natural occurrence, route/origin, synonym relation or regulatory status for this term, and no external identifier (CAS, ChEBI, Wikidata, PubChem) was verified - none is recorded here and none may be inferred from the query string. The term sits in compound_identity_unverified, an administrative registration-state category, so this placement asserts no route or chemical classification. ISS-20261015-TAX-027 recorded a decision not to register this term because no name, route placement or identifier evidence existed; the owner's 2026-11-11 scope decision supersedes that decision for this term (ISS-20261111-TAX-040). Registering the string does not settle what it denotes. The COA panel entry records THCP as not detected in one sample, which is an observation about that sample, not a placement basis. Evidence that would move the term out of this category: a documented chemical name with a verified external identifier, or a recorded source naming the substance and its route/origin; the basis belongs in docs/provenance/compound-taxonomy.md.",
+      "schema:termCode": "compound_thcp"
+    },
+    {
+      "@type": "schema:DefinedTerm",
+      "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound_thcjd",
+      "schema:name": "THCJD",
+      "schema:inDefinedTermSet": {
+        "@type": "schema:DefinedTermSet",
+        "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-thcjd-scheme"
+      },
+      "schema:description": "'THCJD' is the owner's term, registered as a search string on 2026-11-11 by owner direction (ISS-20261111-TAX-040). Its chemical identity is UNCONFIRMED: the repository records no verified chemical name, structure, chemical class, natural occurrence, route/origin, synonym relation or regulatory status for this term, and no external identifier (CAS, ChEBI, Wikidata, PubChem) was verified - none is recorded here and none may be inferred from the query string. The term sits in compound_identity_unverified, an administrative registration-state category, so this placement asserts no route or chemical classification. The letters 'JD' are not expanded anywhere in this repository, so no compound identity is inferred from the code. Evidence that would move the term out of this category: a documented chemical name with a verified external identifier, or a recorded source naming the substance and its route/origin; the basis belongs in docs/provenance/compound-taxonomy.md.",
+      "schema:termCode": "compound_thcjd"
+    },
+    {
+      "@type": "schema:DefinedTerm",
+      "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound_thcpo",
+      "schema:name": "THCPO",
+      "schema:inDefinedTermSet": {
+        "@type": "schema:DefinedTermSet",
+        "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-thcpo-scheme"
+      },
+      "schema:description": "'THCPO' is the owner's term, registered as a search string on 2026-11-11 by owner direction (ISS-20261111-TAX-040). Its chemical identity is UNCONFIRMED: the repository records no verified chemical name, structure, chemical class, natural occurrence, route/origin, synonym relation or regulatory status for this term, and no external identifier (CAS, ChEBI, Wikidata, PubChem) was verified - none is recorded here and none may be inferred from the query string. The term sits in compound_identity_unverified, an administrative registration-state category, so this placement asserts no route or chemical classification. Whether this term denotes an acetate/ester form of THCP, a positional variant or an unrelated substance is not recorded and is not inferred; no relationship to any other concept is asserted. Evidence that would move the term out of this category: a documented chemical name with a verified external identifier, or a recorded source naming the substance and its route/origin; the basis belongs in docs/provenance/compound-taxonomy.md.",
+      "schema:termCode": "compound_thcpo"
+    },
+    {
+      "@type": "schema:DefinedTerm",
+      "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound_cbe",
+      "schema:name": "CBE",
+      "schema:inDefinedTermSet": {
+        "@type": "schema:DefinedTermSet",
+        "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-cbe-scheme"
+      },
+      "schema:description": "'CBE' is the owner's term, registered as a search string on 2026-11-11 by owner direction (ISS-20261111-TAX-040). Its chemical identity is UNCONFIRMED: the repository records no verified chemical name, structure, chemical class, natural occurrence, route/origin, synonym relation or regulatory status for this term, and no external identifier (CAS, ChEBI, Wikidata, PubChem) was verified - none is recorded here and none may be inferred from the query string. The term sits in compound_identity_unverified, an administrative registration-state category, so this placement asserts no route or chemical classification. What the code 'CBE' expands to is not recorded anywhere in this repository, so no chemical name is supplied. Evidence that would move the term out of this category: a documented chemical name with a verified external identifier, or a recorded source naming the substance and its route/origin; the basis belongs in docs/provenance/compound-taxonomy.md.",
+      "schema:termCode": "compound_cbe"
+    },
+    {
+      "@type": "schema:DefinedTerm",
+      "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound_hhcpo",
+      "schema:name": "HHCPO",
+      "schema:inDefinedTermSet": {
+        "@type": "schema:DefinedTermSet",
+        "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-hhcpo-scheme"
+      },
+      "schema:description": "'HHCPO' is the owner's term, registered as a search string on 2026-11-11 by owner direction (ISS-20261111-TAX-040). Its chemical identity is UNCONFIRMED: the repository records no verified chemical name, structure, chemical class, natural occurrence, route/origin, synonym relation or regulatory status for this term, and no external identifier (CAS, ChEBI, Wikidata, PubChem) was verified - none is recorded here and none may be inferred from the query string. The term sits in compound_identity_unverified, an administrative registration-state category, so this placement asserts no route or chemical classification. Whether this term denotes an acetate/ester form of another cannabinoid or an unrelated substance is not recorded and is not inferred; no relationship to any other concept is asserted. Evidence that would move the term out of this category: a documented chemical name with a verified external identifier, or a recorded source naming the substance and its route/origin; the basis belongs in docs/provenance/compound-taxonomy.md.",
+      "schema:termCode": "compound_hhcpo"
+    },
+    {
+      "@type": "schema:DefinedTerm",
+      "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound_cbnd",
+      "schema:name": "CBND",
+      "schema:inDefinedTermSet": {
+        "@type": "schema:DefinedTermSet",
+        "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-cbnd-scheme"
+      },
+      "schema:description": "'CBND' is the owner's term, registered as a search string on 2026-11-11 by owner direction (ISS-20261111-TAX-040). Its chemical identity is UNCONFIRMED: the repository records no verified chemical name, structure, chemical class, natural occurrence, route/origin, synonym relation or regulatory status for this term, and no external identifier (CAS, ChEBI, Wikidata, PubChem) was verified - none is recorded here and none may be inferred from the query string. The term sits in compound_identity_unverified, an administrative registration-state category, so this placement asserts no route or chemical classification. What the code 'CBND' expands to is not recorded anywhere in this repository, so no chemical name is supplied. Evidence that would move the term out of this category: a documented chemical name with a verified external identifier, or a recorded source naming the substance and its route/origin; the basis belongs in docs/provenance/compound-taxonomy.md.",
+      "schema:termCode": "compound_cbnd"
+    },
+    {
+      "@type": "schema:DefinedTerm",
+      "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound_cbl",
+      "schema:name": "CBL",
+      "schema:inDefinedTermSet": {
+        "@type": "schema:DefinedTermSet",
+        "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-cbl-scheme"
+      },
+      "schema:description": "'CBL' is the owner's term, registered as a search string on 2026-11-11 by owner direction (ISS-20261111-TAX-040). Its chemical identity is UNCONFIRMED: the repository records no verified chemical name, structure, chemical class, natural occurrence, route/origin, synonym relation or regulatory status for this term, and no external identifier (CAS, ChEBI, Wikidata, PubChem) was verified - none is recorded here and none may be inferred from the query string. The term sits in compound_identity_unverified, an administrative registration-state category, so this placement asserts no route or chemical classification. What the code 'CBL' expands to is not recorded anywhere in this repository, so no chemical name is supplied. Evidence that would move the term out of this category: a documented chemical name with a verified external identifier, or a recorded source naming the substance and its route/origin; the basis belongs in docs/provenance/compound-taxonomy.md.",
+      "schema:termCode": "compound_cbl"
+    },
+    {
+      "@type": "schema:DefinedTerm",
+      "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound_cbga",
+      "schema:name": "CBGa",
+      "schema:inDefinedTermSet": {
+        "@type": "schema:DefinedTermSet",
+        "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-cbga-scheme"
+      },
+      "schema:description": "'CBGa' is the owner's term, registered as a search string on 2026-11-11 by owner direction (ISS-20261111-TAX-040). Its chemical identity is UNCONFIRMED: the repository records no verified chemical name, structure, chemical class, natural occurrence, route/origin, synonym relation or regulatory status for this term, and no external identifier (CAS, ChEBI, Wikidata, PubChem) was verified - none is recorded here and none may be inferred from the query string. The term sits in compound_identity_unverified, an administrative registration-state category, so this placement asserts no route or chemical classification. The lowercase 'a' is the owner's spelling and is preserved exactly. The repository holds no record of what the term denotes, so no relationship to compound_cbg is asserted. Evidence that would move the term out of this category: a documented chemical name with a verified external identifier, or a recorded source naming the substance and its route/origin; the basis belongs in docs/provenance/compound-taxonomy.md.",
+      "schema:termCode": "compound_cbga"
+    },
+    {
+      "@type": "schema:DefinedTerm",
+      "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound_cbp",
+      "schema:name": "CBP",
+      "schema:inDefinedTermSet": {
+        "@type": "schema:DefinedTermSet",
+        "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-cbp-scheme"
+      },
+      "schema:description": "'CBP' is the owner's term, registered as a search string on 2026-11-11 by owner direction (ISS-20261111-TAX-040). Its chemical identity is UNCONFIRMED: the repository records no verified chemical name, structure, chemical class, natural occurrence, route/origin, synonym relation or regulatory status for this term, and no external identifier (CAS, ChEBI, Wikidata, PubChem) was verified - none is recorded here and none may be inferred from the query string. The term sits in compound_identity_unverified, an administrative registration-state category, so this placement asserts no route or chemical classification. What the code 'CBP' expands to is not recorded anywhere in this repository, so no chemical name is supplied. Evidence that would move the term out of this category: a documented chemical name with a verified external identifier, or a recorded source naming the substance and its route/origin; the basis belongs in docs/provenance/compound-taxonomy.md.",
+      "schema:termCode": "compound_cbp"
+    },
+    {
+      "@type": "schema:DefinedTerm",
+      "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound_10_oh_hhc",
+      "schema:name": "10-OH-HHC",
+      "schema:inDefinedTermSet": {
+        "@type": "schema:DefinedTermSet",
+        "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-10-oh-hhc-scheme"
+      },
+      "schema:description": "'10-OH-HHC' is the owner's term, registered as a search string on 2026-11-11 by owner direction (ISS-20261111-TAX-040). Its chemical identity is UNCONFIRMED: the repository records no verified chemical name, structure, chemical class, natural occurrence, route/origin, synonym relation or regulatory status for this term, and no external identifier (CAS, ChEBI, Wikidata, PubChem) was verified - none is recorded here and none may be inferred from the query string. The term sits in compound_identity_unverified, an administrative registration-state category, so this placement asserts no route or chemical classification. The repository records no basis for relating this term to compound_hhc; whether it denotes a hydroxylated derivative, a positional variant or a different substance is not recorded and is not inferred. Evidence that would move the term out of this category: a documented chemical name with a verified external identifier, or a recorded source naming the substance and its route/origin; the basis belongs in docs/provenance/compound-taxonomy.md.",
+      "schema:termCode": "compound_10_oh_hhc"
+    },
+    {
+      "@type": "schema:DefinedTerm",
+      "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound_thxe",
+      "schema:name": "THXE",
+      "schema:inDefinedTermSet": {
+        "@type": "schema:DefinedTermSet",
+        "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-thxe-scheme"
+      },
+      "schema:description": "'THXE' is the owner's term, registered as a search string on 2026-11-11 by owner direction (ISS-20261111-TAX-040). Its chemical identity is UNCONFIRMED: the repository records no verified chemical name, structure, chemical class, natural occurrence, route/origin, synonym relation or regulatory status for this term, and no external identifier (CAS, ChEBI, Wikidata, PubChem) was verified - none is recorded here and none may be inferred from the query string. The term sits in compound_identity_unverified, an administrative registration-state category, so this placement asserts no route or chemical classification. The code 'THXE' is not expanded anywhere in this repository, so no compound identity is inferred from it. Evidence that would move the term out of this category: a documented chemical name with a verified external identifier, or a recorded source naming the substance and its route/origin; the basis belongs in docs/provenance/compound-taxonomy.md.",
+      "schema:termCode": "compound_thxe"
+    },
+    {
+      "@type": "schema:DefinedTerm",
+      "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound_thca",
+      "schema:name": "THCA",
+      "schema:inDefinedTermSet": {
+        "@type": "schema:DefinedTermSet",
+        "@id": "https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-thca-scheme"
+      },
+      "schema:description": "'THCA' is the owner's term, registered as a search string on 2026-11-11 by owner direction (ISS-20261111-TAX-040). Its chemical identity is UNCONFIRMED: the repository records no verified chemical name, structure, chemical class, natural occurrence, route/origin, synonym relation or regulatory status for this term, and no external identifier (CAS, ChEBI, Wikidata, PubChem) was verified - none is recorded here and none may be inferred from the query string. The term sits in compound_identity_unverified, an administrative registration-state category, so this placement asserts no route or chemical classification. The repository mentions 'Δ9-THC + Δ9-THCA-A' only as a measurement baseline in research/regulatory-status (CBD, CBG, CBX). That does not establish what 'THCA' denotes here, and no relationship to compound_thc is asserted. Evidence that would move the term out of this category: a documented chemical name with a verified external identifier, or a recorded source naming the substance and its route/origin; the basis belongs in docs/provenance/compound-taxonomy.md.",
+      "schema:termCode": "compound_thca"
     }
   ]
 }

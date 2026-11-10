@@ -1,5 +1,5 @@
 # RDF/Turtle export
-# Generated: 2026-11-04T14:18:56.224985Z
+# Generated: 2026-11-10T16:56:36.954954Z
 # Source: SKOS JSON-LD
 
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
@@ -17,17 +17,18 @@
     rdf:type <http://www.w3.org/2004/02/skos/core#ConceptScheme> ;
     <http://purl.org/dc/terms/title> "Cannabinoid Compound Taxonomy"@en ;
     <http://purl.org/dc/terms/title> "カンナビノイド化合物タクソノミー"@ja ;
-    <http://purl.org/dc/terms/description> "Taxonomy of cannabinoid compounds tracked in this research project. Route/origin dimension; chemical class lives in a second dimension (jptr:chemical-class-taxonomy, owner decision (a) ISS-20261015-TAX-026)."@en ;
+    <http://purl.org/dc/terms/description> "Taxonomy of cannabinoid compounds tracked in this research project. Route/origin dimension; chemical class lives in a second dimension (jptr:chemical-class-taxonomy, owner decision (a) ISS-20261015-TAX-026). The scheme also carries one ADMINISTRATIVE registration-state category (jptr:compound-identity-unverified) for owner-named terms whose chemical identity is unverified; it states no route or chemical claim (ISS-20261111-TAX-040)."@en ;
     <http://purl.org/dc/terms/creator> "Routeflags Co., Ltd." ;
     <http://purl.org/dc/terms/created> "2026-10-02" ;
-    <http://purl.org/dc/terms/modified> "2026-11-04" ;
+    <http://purl.org/dc/terms/modified> "2026-11-11" ;
     <http://purl.org/dc/terms/license> <https://creativecommons.org/licenses/by/4.0/> ;
     <http://www.w3.org/2004/02/skos/core#hasTopConcept> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-major> ;
     <http://www.w3.org/2004/02/skos/core#hasTopConcept> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-minor> ;
     <http://www.w3.org/2004/02/skos/core#hasTopConcept> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-rare> ;
     <http://www.w3.org/2004/02/skos/core#hasTopConcept> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-semisynthetic> ;
     <http://www.w3.org/2004/02/skos/core#hasTopConcept> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-synthetic> ;
-    <http://www.w3.org/2004/02/skos/core#hasTopConcept> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-endocannabinoid> .
+    <http://www.w3.org/2004/02/skos/core#hasTopConcept> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-endocannabinoid> ;
+    <http://www.w3.org/2004/02/skos/core#hasTopConcept> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-identity-unverified> .
 
 <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-major>
     rdf:type <http://www.w3.org/2004/02/skos/core#Concept> ;
@@ -101,6 +102,29 @@
     <http://www.w3.org/2004/02/skos/core#scopeNote> "Endogenous signalling molecules of the endocannabinoid system: anandamide and 2-AG. Listed because they are described in the same literature, not because they are administered products."@en ;
     <http://www.w3.org/2004/02/skos/core#narrower> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-anandamide> ;
     <http://www.w3.org/2004/02/skos/core#narrower> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-2ag> .
+
+<https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-identity-unverified>
+    rdf:type <http://www.w3.org/2004/02/skos/core#Concept> ;
+    <http://www.w3.org/2004/02/skos/core#inScheme> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-taxonomy> ;
+    <http://www.w3.org/2004/02/skos/core#topConceptOf> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-taxonomy> ;
+    <http://www.w3.org/2004/02/skos/core#prefLabel> "Identity-Unverified Registered Terms (registration state)"@en ;
+    <http://www.w3.org/2004/02/skos/core#prefLabel> "同一性未確認の登録語（登録状態）"@ja ;
+    <http://www.w3.org/2004/02/skos/core#notation> "compound_identity_unverified" ;
+    <http://www.w3.org/2004/02/skos/core#scopeNote> "An ADMINISTRATIVE registration-state category, not a route/origin or chemical classification. Its members are search terms the owner named for this study whose chemical identity is UNCONFIRMED in this repository. Placing a term here records only that the string is registered and queryable: it makes no claim about route or origin, natural occurrence, chemical class, structure, synonym relationships or regulatory status, and it neither asserts that the term names a distinct substance nor that a substance behind the string exists. Membership is not a judgement that a term is rare, minor, semi-synthetic or synthetic, and it never substitutes for one of those categories; when evidence arrives, move the term to the category that evidence supports. Members carry no skos:exactMatch, CAS number, PubChem or IUPAC name and no chemical-class link until an identifier is verified. A term is registered here because the owner named it, not because its identity was established. Decision record: ISS-20261111-TAX-040, which supersedes the ISS-20261015-TAX-027 non-registration decision for THCP."@en ;
+    <http://www.w3.org/2004/02/skos/core#scopeNote> "経路・由来や化学分類ではなく、**管理上の登録状態**カテゴリ。members は owner が本研究のために名指しした検索語のうち、リポジトリ内で化学的同一性が**未確認**のものである。ここに置くことは「その文字列を登録し照会可能にした」ことだけを記録する。経路・由来、天然存在、化学クラス、構造、別名関係、規制状態について何も主張せず、語が別個の物質を指すことや、文字列の背後に物質が存在することの主張でもない。希少・マイナー・半合成・合成のいずれかであるという判断でもなく、これらのカテゴリの代替にもならない。根拠が得られたら、その根拠が支えるカテゴリへ移す。識別子が検証されるまで `skos:exactMatch`・CAS 番号・PubChem / IUPAC 名・化学クラスへのリンクを付けない。ここへの登録は owner が語を名指ししたことが理由であり、同一性が確定したことが理由ではない。決定記録: ISS-20261111-TAX-040（THCP については ISS-20261015-TAX-027 の非登録判断を置換）。"@ja ;
+    <http://www.w3.org/2004/02/skos/core#narrower> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-thcb> ;
+    <http://www.w3.org/2004/02/skos/core#narrower> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-thcp> ;
+    <http://www.w3.org/2004/02/skos/core#narrower> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-thcjd> ;
+    <http://www.w3.org/2004/02/skos/core#narrower> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-thcpo> ;
+    <http://www.w3.org/2004/02/skos/core#narrower> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-cbe> ;
+    <http://www.w3.org/2004/02/skos/core#narrower> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-hhcpo> ;
+    <http://www.w3.org/2004/02/skos/core#narrower> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-cbnd> ;
+    <http://www.w3.org/2004/02/skos/core#narrower> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-cbl> ;
+    <http://www.w3.org/2004/02/skos/core#narrower> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-cbga> ;
+    <http://www.w3.org/2004/02/skos/core#narrower> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-cbp> ;
+    <http://www.w3.org/2004/02/skos/core#narrower> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-10-oh-hhc> ;
+    <http://www.w3.org/2004/02/skos/core#narrower> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-thxe> ;
+    <http://www.w3.org/2004/02/skos/core#narrower> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-thca> .
 
 <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-cbd>
     rdf:type <http://www.w3.org/2004/02/skos/core#Concept> ;
@@ -350,3 +374,146 @@
     <http://www.w3.org/2004/02/skos/core#notation> "compound_2ag" ;
     <http://www.w3.org/2004/02/skos/core#exactMatch> <http://purl.obolibrary.org/obo/chebi/64901> ;
     <http://www.w3.org/2004/02/skos/core#exactMatch> <http://www.wikidata.org/entity/Q295793> .
+
+<https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-thcb>
+    rdf:type <http://www.w3.org/2004/02/skos/core#Concept> ;
+    <http://www.w3.org/2004/02/skos/core#inScheme> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-taxonomy> ;
+    <http://www.w3.org/2004/02/skos/core#broader> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-identity-unverified> ;
+    <http://www.w3.org/2004/02/skos/core#prefLabel> "THCB"@en ;
+    <http://www.w3.org/2004/02/skos/core#prefLabel> "THCB"@ja ;
+    <http://www.w3.org/2004/02/skos/core#altLabel> "THCB リキッド"@ja ;
+    <http://www.w3.org/2004/02/skos/core#notation> "compound_thcb" ;
+    <http://www.w3.org/2004/02/skos/core#scopeNote> "'THCB' is the owner's term, registered as a search string on 2026-11-11 by owner direction (ISS-20261111-TAX-040). Its chemical identity is UNCONFIRMED: the repository records no verified chemical name, structure, chemical class, natural occurrence, route/origin, synonym relation or regulatory status for this term, and no external identifier (CAS, ChEBI, Wikidata, PubChem) was verified - none is recorded here and none may be inferred from the query string. The term sits in compound_identity_unverified, an administrative registration-state category, so this placement asserts no route or chemical classification. What the code 'THCB' expands to is not recorded anywhere in this repository, so no chemical name is supplied. Evidence that would move the term out of this category: a documented chemical name with a verified external identifier, or a recorded source naming the substance and its route/origin; the basis belongs in docs/provenance/compound-taxonomy.md."@en ;
+    <http://www.w3.org/2004/02/skos/core#scopeNote> "owner が記した表記 `THCB` を、2026-11-11 の owner 指示で検索文字列として登録したもの（ISS-20261111-TAX-040）。化学的同一性は**未確認**である。名称・構造・化学クラス・天然存在・経路／由来・別名関係・規制状態のいずれも、リポジトリ内に検証済みの記録が無く、外部識別子（CAS / ChEBI / Wikidata / PubChem）の確認も行っていない。したがって記載せず、検索文字列から推測もしない。配置先 `compound_identity_unverified` は**管理上の登録状態カテゴリ**であり、この配置は経路・化学分類の主張ではない。略号 `THCB` の展開はリポジトリ内に記録が無く、化学名を補わない。 本カテゴリから移す条件は、検証済み外部識別子を伴う文書化された化学名、または物質名と経路／由来を記録した出所が得られた場合で、根拠は docs/provenance/compound-taxonomy.md に記録する。"@ja .
+
+<https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-thcp>
+    rdf:type <http://www.w3.org/2004/02/skos/core#Concept> ;
+    <http://www.w3.org/2004/02/skos/core#inScheme> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-taxonomy> ;
+    <http://www.w3.org/2004/02/skos/core#broader> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-identity-unverified> ;
+    <http://www.w3.org/2004/02/skos/core#prefLabel> "THCP"@en ;
+    <http://www.w3.org/2004/02/skos/core#prefLabel> "THCP"@ja ;
+    <http://www.w3.org/2004/02/skos/core#altLabel> "THCP リキッド"@ja ;
+    <http://www.w3.org/2004/02/skos/core#notation> "compound_thcp" ;
+    <http://www.w3.org/2004/02/skos/core#scopeNote> "'THCP' is the owner's term, registered as a search string on 2026-11-11 by owner direction (ISS-20261111-TAX-040). Its chemical identity is UNCONFIRMED: the repository records no verified chemical name, structure, chemical class, natural occurrence, route/origin, synonym relation or regulatory status for this term, and no external identifier (CAS, ChEBI, Wikidata, PubChem) was verified - none is recorded here and none may be inferred from the query string. The term sits in compound_identity_unverified, an administrative registration-state category, so this placement asserts no route or chemical classification. ISS-20261015-TAX-027 recorded a decision not to register this term because no name, route placement or identifier evidence existed; the owner's 2026-11-11 scope decision supersedes that decision for this term (ISS-20261111-TAX-040). Registering the string does not settle what it denotes. The COA panel entry records THCP as not detected in one sample, which is an observation about that sample, not a placement basis. Evidence that would move the term out of this category: a documented chemical name with a verified external identifier, or a recorded source naming the substance and its route/origin; the basis belongs in docs/provenance/compound-taxonomy.md."@en ;
+    <http://www.w3.org/2004/02/skos/core#scopeNote> "owner が記した表記 `THCP` を、2026-11-11 の owner 指示で検索文字列として登録したもの（ISS-20261111-TAX-040）。化学的同一性は**未確認**である。名称・構造・化学クラス・天然存在・経路／由来・別名関係・規制状態のいずれも、リポジトリ内に検証済みの記録が無く、外部識別子（CAS / ChEBI / Wikidata / PubChem）の確認も行っていない。したがって記載せず、検索文字列から推測もしない。配置先 `compound_identity_unverified` は**管理上の登録状態カテゴリ**であり、この配置は経路・化学分類の主張ではない。ISS-20261015-TAX-027 は名称・経路配置・識別子の根拠が無いとして本語を登録しないと判断したが、2026-11-11 の owner による scope 決定が本語についてその判断を置換した（ISS-20261111-TAX-040）。文字列の登録は、それが何を指すかを確定しない。COA パネルの THCP は 1 検体での未検出（ND）記録であり、当該検体についての観測であって配置の根拠ではない。 本カテゴリから移す条件は、検証済み外部識別子を伴う文書化された化学名、または物質名と経路／由来を記録した出所が得られた場合で、根拠は docs/provenance/compound-taxonomy.md に記録する。"@ja .
+
+<https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-thcjd>
+    rdf:type <http://www.w3.org/2004/02/skos/core#Concept> ;
+    <http://www.w3.org/2004/02/skos/core#inScheme> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-taxonomy> ;
+    <http://www.w3.org/2004/02/skos/core#broader> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-identity-unverified> ;
+    <http://www.w3.org/2004/02/skos/core#prefLabel> "THCJD"@en ;
+    <http://www.w3.org/2004/02/skos/core#prefLabel> "THCJD"@ja ;
+    <http://www.w3.org/2004/02/skos/core#altLabel> "THCJD リキッド"@ja ;
+    <http://www.w3.org/2004/02/skos/core#notation> "compound_thcjd" ;
+    <http://www.w3.org/2004/02/skos/core#scopeNote> "'THCJD' is the owner's term, registered as a search string on 2026-11-11 by owner direction (ISS-20261111-TAX-040). Its chemical identity is UNCONFIRMED: the repository records no verified chemical name, structure, chemical class, natural occurrence, route/origin, synonym relation or regulatory status for this term, and no external identifier (CAS, ChEBI, Wikidata, PubChem) was verified - none is recorded here and none may be inferred from the query string. The term sits in compound_identity_unverified, an administrative registration-state category, so this placement asserts no route or chemical classification. The letters 'JD' are not expanded anywhere in this repository, so no compound identity is inferred from the code. Evidence that would move the term out of this category: a documented chemical name with a verified external identifier, or a recorded source naming the substance and its route/origin; the basis belongs in docs/provenance/compound-taxonomy.md."@en ;
+    <http://www.w3.org/2004/02/skos/core#scopeNote> "owner が記した表記 `THCJD` を、2026-11-11 の owner 指示で検索文字列として登録したもの（ISS-20261111-TAX-040）。化学的同一性は**未確認**である。名称・構造・化学クラス・天然存在・経路／由来・別名関係・規制状態のいずれも、リポジトリ内に検証済みの記録が無く、外部識別子（CAS / ChEBI / Wikidata / PubChem）の確認も行っていない。したがって記載せず、検索文字列から推測もしない。配置先 `compound_identity_unverified` は**管理上の登録状態カテゴリ**であり、この配置は経路・化学分類の主張ではない。`JD` が何を指す略号かはリポジトリ内に記録が無く、略号から化合物の同一性を推測しない。 本カテゴリから移す条件は、検証済み外部識別子を伴う文書化された化学名、または物質名と経路／由来を記録した出所が得られた場合で、根拠は docs/provenance/compound-taxonomy.md に記録する。"@ja .
+
+<https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-thcpo>
+    rdf:type <http://www.w3.org/2004/02/skos/core#Concept> ;
+    <http://www.w3.org/2004/02/skos/core#inScheme> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-taxonomy> ;
+    <http://www.w3.org/2004/02/skos/core#broader> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-identity-unverified> ;
+    <http://www.w3.org/2004/02/skos/core#prefLabel> "THCPO"@en ;
+    <http://www.w3.org/2004/02/skos/core#prefLabel> "THCPO"@ja ;
+    <http://www.w3.org/2004/02/skos/core#altLabel> "THCPO リキッド"@ja ;
+    <http://www.w3.org/2004/02/skos/core#notation> "compound_thcpo" ;
+    <http://www.w3.org/2004/02/skos/core#scopeNote> "'THCPO' is the owner's term, registered as a search string on 2026-11-11 by owner direction (ISS-20261111-TAX-040). Its chemical identity is UNCONFIRMED: the repository records no verified chemical name, structure, chemical class, natural occurrence, route/origin, synonym relation or regulatory status for this term, and no external identifier (CAS, ChEBI, Wikidata, PubChem) was verified - none is recorded here and none may be inferred from the query string. The term sits in compound_identity_unverified, an administrative registration-state category, so this placement asserts no route or chemical classification. Whether this term denotes an acetate/ester form of THCP, a positional variant or an unrelated substance is not recorded and is not inferred; no relationship to any other concept is asserted. Evidence that would move the term out of this category: a documented chemical name with a verified external identifier, or a recorded source naming the substance and its route/origin; the basis belongs in docs/provenance/compound-taxonomy.md."@en ;
+    <http://www.w3.org/2004/02/skos/core#scopeNote> "owner が記した表記 `THCPO` を、2026-11-11 の owner 指示で検索文字列として登録したもの（ISS-20261111-TAX-040）。化学的同一性は**未確認**である。名称・構造・化学クラス・天然存在・経路／由来・別名関係・規制状態のいずれも、リポジトリ内に検証済みの記録が無く、外部識別子（CAS / ChEBI / Wikidata / PubChem）の確認も行っていない。したがって記載せず、検索文字列から推測もしない。配置先 `compound_identity_unverified` は**管理上の登録状態カテゴリ**であり、この配置は経路・化学分類の主張ではない。`THCPO` が THCP のアセテート体・位置異性体・別物質のいずれを指すかは記録が無く、推測しない。他のどの概念との関係も主張しない。 本カテゴリから移す条件は、検証済み外部識別子を伴う文書化された化学名、または物質名と経路／由来を記録した出所が得られた場合で、根拠は docs/provenance/compound-taxonomy.md に記録する。"@ja .
+
+<https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-cbe>
+    rdf:type <http://www.w3.org/2004/02/skos/core#Concept> ;
+    <http://www.w3.org/2004/02/skos/core#inScheme> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-taxonomy> ;
+    <http://www.w3.org/2004/02/skos/core#broader> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-identity-unverified> ;
+    <http://www.w3.org/2004/02/skos/core#prefLabel> "CBE"@en ;
+    <http://www.w3.org/2004/02/skos/core#prefLabel> "CBE"@ja ;
+    <http://www.w3.org/2004/02/skos/core#altLabel> "CBE リキッド"@ja ;
+    <http://www.w3.org/2004/02/skos/core#notation> "compound_cbe" ;
+    <http://www.w3.org/2004/02/skos/core#scopeNote> "'CBE' is the owner's term, registered as a search string on 2026-11-11 by owner direction (ISS-20261111-TAX-040). Its chemical identity is UNCONFIRMED: the repository records no verified chemical name, structure, chemical class, natural occurrence, route/origin, synonym relation or regulatory status for this term, and no external identifier (CAS, ChEBI, Wikidata, PubChem) was verified - none is recorded here and none may be inferred from the query string. The term sits in compound_identity_unverified, an administrative registration-state category, so this placement asserts no route or chemical classification. What the code 'CBE' expands to is not recorded anywhere in this repository, so no chemical name is supplied. Evidence that would move the term out of this category: a documented chemical name with a verified external identifier, or a recorded source naming the substance and its route/origin; the basis belongs in docs/provenance/compound-taxonomy.md."@en ;
+    <http://www.w3.org/2004/02/skos/core#scopeNote> "owner が記した表記 `CBE` を、2026-11-11 の owner 指示で検索文字列として登録したもの（ISS-20261111-TAX-040）。化学的同一性は**未確認**である。名称・構造・化学クラス・天然存在・経路／由来・別名関係・規制状態のいずれも、リポジトリ内に検証済みの記録が無く、外部識別子（CAS / ChEBI / Wikidata / PubChem）の確認も行っていない。したがって記載せず、検索文字列から推測もしない。配置先 `compound_identity_unverified` は**管理上の登録状態カテゴリ**であり、この配置は経路・化学分類の主張ではない。略号 `CBE` の展開はリポジトリ内に記録が無く、化学名を補わない。 本カテゴリから移す条件は、検証済み外部識別子を伴う文書化された化学名、または物質名と経路／由来を記録した出所が得られた場合で、根拠は docs/provenance/compound-taxonomy.md に記録する。"@ja .
+
+<https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-hhcpo>
+    rdf:type <http://www.w3.org/2004/02/skos/core#Concept> ;
+    <http://www.w3.org/2004/02/skos/core#inScheme> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-taxonomy> ;
+    <http://www.w3.org/2004/02/skos/core#broader> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-identity-unverified> ;
+    <http://www.w3.org/2004/02/skos/core#prefLabel> "HHCPO"@en ;
+    <http://www.w3.org/2004/02/skos/core#prefLabel> "HHCPO"@ja ;
+    <http://www.w3.org/2004/02/skos/core#altLabel> "HHCPO リキッド"@ja ;
+    <http://www.w3.org/2004/02/skos/core#notation> "compound_hhcpo" ;
+    <http://www.w3.org/2004/02/skos/core#scopeNote> "'HHCPO' is the owner's term, registered as a search string on 2026-11-11 by owner direction (ISS-20261111-TAX-040). Its chemical identity is UNCONFIRMED: the repository records no verified chemical name, structure, chemical class, natural occurrence, route/origin, synonym relation or regulatory status for this term, and no external identifier (CAS, ChEBI, Wikidata, PubChem) was verified - none is recorded here and none may be inferred from the query string. The term sits in compound_identity_unverified, an administrative registration-state category, so this placement asserts no route or chemical classification. Whether this term denotes an acetate/ester form of another cannabinoid or an unrelated substance is not recorded and is not inferred; no relationship to any other concept is asserted. Evidence that would move the term out of this category: a documented chemical name with a verified external identifier, or a recorded source naming the substance and its route/origin; the basis belongs in docs/provenance/compound-taxonomy.md."@en ;
+    <http://www.w3.org/2004/02/skos/core#scopeNote> "owner が記した表記 `HHCPO` を、2026-11-11 の owner 指示で検索文字列として登録したもの（ISS-20261111-TAX-040）。化学的同一性は**未確認**である。名称・構造・化学クラス・天然存在・経路／由来・別名関係・規制状態のいずれも、リポジトリ内に検証済みの記録が無く、外部識別子（CAS / ChEBI / Wikidata / PubChem）の確認も行っていない。したがって記載せず、検索文字列から推測もしない。配置先 `compound_identity_unverified` は**管理上の登録状態カテゴリ**であり、この配置は経路・化学分類の主張ではない。`HHCPO` が別のカンナビノイドのアセテート体か別物質かは記録が無く、推測しない。他のどの概念との関係も主張しない。 本カテゴリから移す条件は、検証済み外部識別子を伴う文書化された化学名、または物質名と経路／由来を記録した出所が得られた場合で、根拠は docs/provenance/compound-taxonomy.md に記録する。"@ja .
+
+<https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-cbnd>
+    rdf:type <http://www.w3.org/2004/02/skos/core#Concept> ;
+    <http://www.w3.org/2004/02/skos/core#inScheme> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-taxonomy> ;
+    <http://www.w3.org/2004/02/skos/core#broader> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-identity-unverified> ;
+    <http://www.w3.org/2004/02/skos/core#prefLabel> "CBND"@en ;
+    <http://www.w3.org/2004/02/skos/core#prefLabel> "CBND"@ja ;
+    <http://www.w3.org/2004/02/skos/core#altLabel> "CBND リキッド"@ja ;
+    <http://www.w3.org/2004/02/skos/core#notation> "compound_cbnd" ;
+    <http://www.w3.org/2004/02/skos/core#scopeNote> "'CBND' is the owner's term, registered as a search string on 2026-11-11 by owner direction (ISS-20261111-TAX-040). Its chemical identity is UNCONFIRMED: the repository records no verified chemical name, structure, chemical class, natural occurrence, route/origin, synonym relation or regulatory status for this term, and no external identifier (CAS, ChEBI, Wikidata, PubChem) was verified - none is recorded here and none may be inferred from the query string. The term sits in compound_identity_unverified, an administrative registration-state category, so this placement asserts no route or chemical classification. What the code 'CBND' expands to is not recorded anywhere in this repository, so no chemical name is supplied. Evidence that would move the term out of this category: a documented chemical name with a verified external identifier, or a recorded source naming the substance and its route/origin; the basis belongs in docs/provenance/compound-taxonomy.md."@en ;
+    <http://www.w3.org/2004/02/skos/core#scopeNote> "owner が記した表記 `CBND` を、2026-11-11 の owner 指示で検索文字列として登録したもの（ISS-20261111-TAX-040）。化学的同一性は**未確認**である。名称・構造・化学クラス・天然存在・経路／由来・別名関係・規制状態のいずれも、リポジトリ内に検証済みの記録が無く、外部識別子（CAS / ChEBI / Wikidata / PubChem）の確認も行っていない。したがって記載せず、検索文字列から推測もしない。配置先 `compound_identity_unverified` は**管理上の登録状態カテゴリ**であり、この配置は経路・化学分類の主張ではない。略号 `CBND` の展開はリポジトリ内に記録が無く、化学名を補わない。 本カテゴリから移す条件は、検証済み外部識別子を伴う文書化された化学名、または物質名と経路／由来を記録した出所が得られた場合で、根拠は docs/provenance/compound-taxonomy.md に記録する。"@ja .
+
+<https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-cbl>
+    rdf:type <http://www.w3.org/2004/02/skos/core#Concept> ;
+    <http://www.w3.org/2004/02/skos/core#inScheme> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-taxonomy> ;
+    <http://www.w3.org/2004/02/skos/core#broader> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-identity-unverified> ;
+    <http://www.w3.org/2004/02/skos/core#prefLabel> "CBL"@en ;
+    <http://www.w3.org/2004/02/skos/core#prefLabel> "CBL"@ja ;
+    <http://www.w3.org/2004/02/skos/core#altLabel> "CBL リキッド"@ja ;
+    <http://www.w3.org/2004/02/skos/core#notation> "compound_cbl" ;
+    <http://www.w3.org/2004/02/skos/core#scopeNote> "'CBL' is the owner's term, registered as a search string on 2026-11-11 by owner direction (ISS-20261111-TAX-040). Its chemical identity is UNCONFIRMED: the repository records no verified chemical name, structure, chemical class, natural occurrence, route/origin, synonym relation or regulatory status for this term, and no external identifier (CAS, ChEBI, Wikidata, PubChem) was verified - none is recorded here and none may be inferred from the query string. The term sits in compound_identity_unverified, an administrative registration-state category, so this placement asserts no route or chemical classification. What the code 'CBL' expands to is not recorded anywhere in this repository, so no chemical name is supplied. Evidence that would move the term out of this category: a documented chemical name with a verified external identifier, or a recorded source naming the substance and its route/origin; the basis belongs in docs/provenance/compound-taxonomy.md."@en ;
+    <http://www.w3.org/2004/02/skos/core#scopeNote> "owner が記した表記 `CBL` を、2026-11-11 の owner 指示で検索文字列として登録したもの（ISS-20261111-TAX-040）。化学的同一性は**未確認**である。名称・構造・化学クラス・天然存在・経路／由来・別名関係・規制状態のいずれも、リポジトリ内に検証済みの記録が無く、外部識別子（CAS / ChEBI / Wikidata / PubChem）の確認も行っていない。したがって記載せず、検索文字列から推測もしない。配置先 `compound_identity_unverified` は**管理上の登録状態カテゴリ**であり、この配置は経路・化学分類の主張ではない。略号 `CBL` の展開はリポジトリ内に記録が無く、化学名を補わない。 本カテゴリから移す条件は、検証済み外部識別子を伴う文書化された化学名、または物質名と経路／由来を記録した出所が得られた場合で、根拠は docs/provenance/compound-taxonomy.md に記録する。"@ja .
+
+<https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-cbga>
+    rdf:type <http://www.w3.org/2004/02/skos/core#Concept> ;
+    <http://www.w3.org/2004/02/skos/core#inScheme> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-taxonomy> ;
+    <http://www.w3.org/2004/02/skos/core#broader> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-identity-unverified> ;
+    <http://www.w3.org/2004/02/skos/core#prefLabel> "CBGa"@en ;
+    <http://www.w3.org/2004/02/skos/core#prefLabel> "CBGa"@ja ;
+    <http://www.w3.org/2004/02/skos/core#altLabel> "CBGa リキッド"@ja ;
+    <http://www.w3.org/2004/02/skos/core#notation> "compound_cbga" ;
+    <http://www.w3.org/2004/02/skos/core#scopeNote> "'CBGa' is the owner's term, registered as a search string on 2026-11-11 by owner direction (ISS-20261111-TAX-040). Its chemical identity is UNCONFIRMED: the repository records no verified chemical name, structure, chemical class, natural occurrence, route/origin, synonym relation or regulatory status for this term, and no external identifier (CAS, ChEBI, Wikidata, PubChem) was verified - none is recorded here and none may be inferred from the query string. The term sits in compound_identity_unverified, an administrative registration-state category, so this placement asserts no route or chemical classification. The lowercase 'a' is the owner's spelling and is preserved exactly. The repository holds no record of what the term denotes, so no relationship to compound_cbg is asserted. Evidence that would move the term out of this category: a documented chemical name with a verified external identifier, or a recorded source naming the substance and its route/origin; the basis belongs in docs/provenance/compound-taxonomy.md."@en ;
+    <http://www.w3.org/2004/02/skos/core#scopeNote> "owner が記した表記 `CBGa` を、2026-11-11 の owner 指示で検索文字列として登録したもの（ISS-20261111-TAX-040）。化学的同一性は**未確認**である。名称・構造・化学クラス・天然存在・経路／由来・別名関係・規制状態のいずれも、リポジトリ内に検証済みの記録が無く、外部識別子（CAS / ChEBI / Wikidata / PubChem）の確認も行っていない。したがって記載せず、検索文字列から推測もしない。配置先 `compound_identity_unverified` は**管理上の登録状態カテゴリ**であり、この配置は経路・化学分類の主張ではない。小文字の `a` は owner の表記であり、そのまま保存する。本語が何を指すかの記録はリポジトリ内に無く、`compound_cbg` との関係を主張しない。 本カテゴリから移す条件は、検証済み外部識別子を伴う文書化された化学名、または物質名と経路／由来を記録した出所が得られた場合で、根拠は docs/provenance/compound-taxonomy.md に記録する。"@ja .
+
+<https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-cbp>
+    rdf:type <http://www.w3.org/2004/02/skos/core#Concept> ;
+    <http://www.w3.org/2004/02/skos/core#inScheme> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-taxonomy> ;
+    <http://www.w3.org/2004/02/skos/core#broader> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-identity-unverified> ;
+    <http://www.w3.org/2004/02/skos/core#prefLabel> "CBP"@en ;
+    <http://www.w3.org/2004/02/skos/core#prefLabel> "CBP"@ja ;
+    <http://www.w3.org/2004/02/skos/core#altLabel> "CBP リキッド"@ja ;
+    <http://www.w3.org/2004/02/skos/core#notation> "compound_cbp" ;
+    <http://www.w3.org/2004/02/skos/core#scopeNote> "'CBP' is the owner's term, registered as a search string on 2026-11-11 by owner direction (ISS-20261111-TAX-040). Its chemical identity is UNCONFIRMED: the repository records no verified chemical name, structure, chemical class, natural occurrence, route/origin, synonym relation or regulatory status for this term, and no external identifier (CAS, ChEBI, Wikidata, PubChem) was verified - none is recorded here and none may be inferred from the query string. The term sits in compound_identity_unverified, an administrative registration-state category, so this placement asserts no route or chemical classification. What the code 'CBP' expands to is not recorded anywhere in this repository, so no chemical name is supplied. Evidence that would move the term out of this category: a documented chemical name with a verified external identifier, or a recorded source naming the substance and its route/origin; the basis belongs in docs/provenance/compound-taxonomy.md."@en ;
+    <http://www.w3.org/2004/02/skos/core#scopeNote> "owner が記した表記 `CBP` を、2026-11-11 の owner 指示で検索文字列として登録したもの（ISS-20261111-TAX-040）。化学的同一性は**未確認**である。名称・構造・化学クラス・天然存在・経路／由来・別名関係・規制状態のいずれも、リポジトリ内に検証済みの記録が無く、外部識別子（CAS / ChEBI / Wikidata / PubChem）の確認も行っていない。したがって記載せず、検索文字列から推測もしない。配置先 `compound_identity_unverified` は**管理上の登録状態カテゴリ**であり、この配置は経路・化学分類の主張ではない。略号 `CBP` の展開はリポジトリ内に記録が無く、化学名を補わない。 本カテゴリから移す条件は、検証済み外部識別子を伴う文書化された化学名、または物質名と経路／由来を記録した出所が得られた場合で、根拠は docs/provenance/compound-taxonomy.md に記録する。"@ja .
+
+<https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-10-oh-hhc>
+    rdf:type <http://www.w3.org/2004/02/skos/core#Concept> ;
+    <http://www.w3.org/2004/02/skos/core#inScheme> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-taxonomy> ;
+    <http://www.w3.org/2004/02/skos/core#broader> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-identity-unverified> ;
+    <http://www.w3.org/2004/02/skos/core#prefLabel> "10-OH-HHC"@en ;
+    <http://www.w3.org/2004/02/skos/core#prefLabel> "10-OH-HHC"@ja ;
+    <http://www.w3.org/2004/02/skos/core#altLabel> "10-OH-HHC リキッド"@ja ;
+    <http://www.w3.org/2004/02/skos/core#notation> "compound_10_oh_hhc" ;
+    <http://www.w3.org/2004/02/skos/core#scopeNote> "'10-OH-HHC' is the owner's term, registered as a search string on 2026-11-11 by owner direction (ISS-20261111-TAX-040). Its chemical identity is UNCONFIRMED: the repository records no verified chemical name, structure, chemical class, natural occurrence, route/origin, synonym relation or regulatory status for this term, and no external identifier (CAS, ChEBI, Wikidata, PubChem) was verified - none is recorded here and none may be inferred from the query string. The term sits in compound_identity_unverified, an administrative registration-state category, so this placement asserts no route or chemical classification. The repository records no basis for relating this term to compound_hhc; whether it denotes a hydroxylated derivative, a positional variant or a different substance is not recorded and is not inferred. Evidence that would move the term out of this category: a documented chemical name with a verified external identifier, or a recorded source naming the substance and its route/origin; the basis belongs in docs/provenance/compound-taxonomy.md."@en ;
+    <http://www.w3.org/2004/02/skos/core#scopeNote> "owner が記した表記 `10-OH-HHC` を、2026-11-11 の owner 指示で検索文字列として登録したもの（ISS-20261111-TAX-040）。化学的同一性は**未確認**である。名称・構造・化学クラス・天然存在・経路／由来・別名関係・規制状態のいずれも、リポジトリ内に検証済みの記録が無く、外部識別子（CAS / ChEBI / Wikidata / PubChem）の確認も行っていない。したがって記載せず、検索文字列から推測もしない。配置先 `compound_identity_unverified` は**管理上の登録状態カテゴリ**であり、この配置は経路・化学分類の主張ではない。本語と `compound_hhc` の関係を示す記録はリポジトリ内に無い。水酸化誘導体・位置異性体・別物質のいずれを指すかは記録が無く、推測しない。 本カテゴリから移す条件は、検証済み外部識別子を伴う文書化された化学名、または物質名と経路／由来を記録した出所が得られた場合で、根拠は docs/provenance/compound-taxonomy.md に記録する。"@ja .
+
+<https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-thxe>
+    rdf:type <http://www.w3.org/2004/02/skos/core#Concept> ;
+    <http://www.w3.org/2004/02/skos/core#inScheme> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-taxonomy> ;
+    <http://www.w3.org/2004/02/skos/core#broader> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-identity-unverified> ;
+    <http://www.w3.org/2004/02/skos/core#prefLabel> "THXE"@en ;
+    <http://www.w3.org/2004/02/skos/core#prefLabel> "THXE"@ja ;
+    <http://www.w3.org/2004/02/skos/core#altLabel> "THXE リキッド"@ja ;
+    <http://www.w3.org/2004/02/skos/core#notation> "compound_thxe" ;
+    <http://www.w3.org/2004/02/skos/core#scopeNote> "'THXE' is the owner's term, registered as a search string on 2026-11-11 by owner direction (ISS-20261111-TAX-040). Its chemical identity is UNCONFIRMED: the repository records no verified chemical name, structure, chemical class, natural occurrence, route/origin, synonym relation or regulatory status for this term, and no external identifier (CAS, ChEBI, Wikidata, PubChem) was verified - none is recorded here and none may be inferred from the query string. The term sits in compound_identity_unverified, an administrative registration-state category, so this placement asserts no route or chemical classification. The code 'THXE' is not expanded anywhere in this repository, so no compound identity is inferred from it. Evidence that would move the term out of this category: a documented chemical name with a verified external identifier, or a recorded source naming the substance and its route/origin; the basis belongs in docs/provenance/compound-taxonomy.md."@en ;
+    <http://www.w3.org/2004/02/skos/core#scopeNote> "owner が記した表記 `THXE` を、2026-11-11 の owner 指示で検索文字列として登録したもの（ISS-20261111-TAX-040）。化学的同一性は**未確認**である。名称・構造・化学クラス・天然存在・経路／由来・別名関係・規制状態のいずれも、リポジトリ内に検証済みの記録が無く、外部識別子（CAS / ChEBI / Wikidata / PubChem）の確認も行っていない。したがって記載せず、検索文字列から推測もしない。配置先 `compound_identity_unverified` は**管理上の登録状態カテゴリ**であり、この配置は経路・化学分類の主張ではない。略号 `THXE` の展開はリポジトリ内に記録が無く、そこから化合物の同一性を推測しない。 本カテゴリから移す条件は、検証済み外部識別子を伴う文書化された化学名、または物質名と経路／由来を記録した出所が得られた場合で、根拠は docs/provenance/compound-taxonomy.md に記録する。"@ja .
+
+<https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-thca>
+    rdf:type <http://www.w3.org/2004/02/skos/core#Concept> ;
+    <http://www.w3.org/2004/02/skos/core#inScheme> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-taxonomy> ;
+    <http://www.w3.org/2004/02/skos/core#broader> <https://japan-cannabinoid-trends.routeflags.com/taxonomy/compound-identity-unverified> ;
+    <http://www.w3.org/2004/02/skos/core#prefLabel> "THCA"@en ;
+    <http://www.w3.org/2004/02/skos/core#prefLabel> "THCA"@ja ;
+    <http://www.w3.org/2004/02/skos/core#altLabel> "THCA リキッド"@ja ;
+    <http://www.w3.org/2004/02/skos/core#notation> "compound_thca" ;
+    <http://www.w3.org/2004/02/skos/core#scopeNote> "'THCA' is the owner's term, registered as a search string on 2026-11-11 by owner direction (ISS-20261111-TAX-040). Its chemical identity is UNCONFIRMED: the repository records no verified chemical name, structure, chemical class, natural occurrence, route/origin, synonym relation or regulatory status for this term, and no external identifier (CAS, ChEBI, Wikidata, PubChem) was verified - none is recorded here and none may be inferred from the query string. The term sits in compound_identity_unverified, an administrative registration-state category, so this placement asserts no route or chemical classification. The repository mentions 'Δ9-THC + Δ9-THCA-A' only as a measurement baseline in research/regulatory-status (CBD, CBG, CBX). That does not establish what 'THCA' denotes here, and no relationship to compound_thc is asserted. Evidence that would move the term out of this category: a documented chemical name with a verified external identifier, or a recorded source naming the substance and its route/origin; the basis belongs in docs/provenance/compound-taxonomy.md."@en ;
+    <http://www.w3.org/2004/02/skos/core#scopeNote> "owner が記した表記 `THCA` を、2026-11-11 の owner 指示で検索文字列として登録したもの（ISS-20261111-TAX-040）。化学的同一性は**未確認**である。名称・構造・化学クラス・天然存在・経路／由来・別名関係・規制状態のいずれも、リポジトリ内に検証済みの記録が無く、外部識別子（CAS / ChEBI / Wikidata / PubChem）の確認も行っていない。したがって記載せず、検索文字列から推測もしない。配置先 `compound_identity_unverified` は**管理上の登録状態カテゴリ**であり、この配置は経路・化学分類の主張ではない。リポジトリ内の `Δ9-THC + Δ9-THCA-A` は research/regulatory-status（CBD・CBG・CBX）の測定基準としての言及に限られる。本語が何を指すかを確定するものではなく、`compound_thc` との関係を主張しない。 本カテゴリから移す条件は、検証済み外部識別子を伴う文書化された化学名、または物質名と経路／由来を記録した出所が得られた場合で、根拠は docs/provenance/compound-taxonomy.md に記録する。"@ja .

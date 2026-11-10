@@ -40,8 +40,14 @@
 - [x] 追加可否の判断（2026-10-15: 追加しない。空のまま維持）
 - [ ] 登録する場合の概念 ID / 外部対応 / 分類規則テスト（該当なし。未登録のため）
 - [x] 登録しない場合の理由の記録（`docs/provenance/compound-taxonomy.md` TAX-027 節）
+- [x] 2026-11-11: THCP の非登録判断の置換記録（`ISS-20261111-TAX-040`）と固定テストの更新
 
 ## 判断記録（2026-10-15。ステータスは OPEN のまま）
+
+> **2026-11-11 注記:** 本節の「`compound_thcp` を追加しない」判断は、owner 指示により
+> **置換された**（末尾「判断の置換（2026-11-11）」、`ISS-20261111-TAX-040`）。
+> `compound_rare` を空のまま維持する判断、`compound_cbdp` を登録しない判断、
+> 希少メンバーに収集級の根拠を要求する gate は**有効なまま**である。
 
 - **判断:** `compound_rare` は空のまま維持する。`compound_cbdp` / `compound_thcp` を追加しない。
 - ここでいう membership は SKOS カテゴリ所属（`skos:broader` が `compound_rare` の化合物 concept）であり、
@@ -56,3 +62,24 @@
 - 詳細は `docs/provenance/compound-taxonomy.md` の TAX-027 節、
   固定テストは `tests/validation/test_compound_rare_membership.py` を参照。
 - 本 issue は OPEN のまま残す（希少化合物の言及が未分類に落ちる課題自体は未解消のため。閉じない）。
+
+## 判断の置換（2026-11-11。owner 指示）
+
+- 2026-10-15 の判断のうち **`compound_thcp` を登録しない**という部分は、2026-11-11 の
+  owner 指示（「ほかのHHBDなどと同じく対応、いちいち保留しなくていい」）により
+  **置換された**。決定記録は `ISS-20261111-TAX-040`。
+- THCP は taxonomy の管理カテゴリ `compound_identity_unverified` に `compound_thcp`
+  として登録し、`thcp-general-ja` / `thcp-liquid-ja` を `active` で登録した（**run 0、未収集**）。
+- **`compound_rare` は空のまま**を維持する。本 issue の「意図的に空」の判断、
+  `compound_cbdp` を登録しない判断、希少メンバーに収集級の根拠を要求する gate は
+  **有効なまま**である。置換したのは THCP の非登録判断だけであり、THCP を `compound_rare`
+  に入れていない。
+- 置換の理由: owner が語を明示的に列挙して登録を指示した（**同一性の確定ではない**）。
+  13 語は経路カテゴリではなく管理カテゴリに置いたため、本 issue が問題にした
+  「根拠のない route 配置」は発生していない。`exactMatch` は付与していない。
+- 固定テスト `tests/validation/test_compound_rare_membership.py` は、
+  (a) `compound_rare` が空で説明を持つこと、(b) `compound_cbdp` が未登録であること、
+  (c) 13 語が管理カテゴリにあり THCP の scopeNote が本置換を記録していること、
+  を検査する。テストは削除・緩和していない。
+- 本 issue のステータスは **OPEN のまま**（希少化合物の言及が未分類に落ちる課題と、
+  13 語の同一性未確認は未解消）。
