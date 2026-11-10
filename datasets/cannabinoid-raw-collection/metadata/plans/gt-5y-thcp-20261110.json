@@ -1,0 +1,26 @@
+{
+  "plan_id": "gt-5y-thcp-20261110",
+  "study_id": "cannabinoid-raw-collection",
+  "source_id": "google-trends",
+  "collector_id": "google-trends-mcp",
+  "query_id": "thcp-general-ja",
+  "query": {
+    "text": "THCP",
+    "geo": "JP",
+    "timeframe": "today 5-y",
+    "compound_id": "compound_thcp"
+  },
+  "required_capabilities": [
+    "geo_filter",
+    "relative_date_range"
+  ],
+  "window": {
+    "window_id": "2021-11-07_2026-11-15",
+    "start": "2021-11-07T00:00:00Z",
+    "end_exclusive": "2026-11-15T00:00:00Z",
+    "granularity": "week",
+    "week_start": "sunday",
+    "timezone": "Asia/Tokyo"
+  },
+  "purpose": "Owner-authorized collection of the exact registered query string THCP for 5y standalone Google Trends. Taxonomy registration state is identity-unverified; this run measures the string as submitted and does not resolve chemical identity or aliases. Window is a weekly-grid declared approximation of the relative timeframe."
+}
