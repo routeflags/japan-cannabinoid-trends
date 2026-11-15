@@ -1,0 +1,98 @@
+{
+  "declaration_version": "staging-declaration-v1",
+  "description": "Owner-authorized Apify collection for registered YouTube liquid primary query Δ9-THCJD リキッド. Each query is a separate run and sample; counts are not combined. Raw retention follows raw-social-default (git_untracked/private); publication is not authorized by this declaration.",
+  "runs": [
+    {
+      "run_id": "20261115T120952Z-youtube-cannabinoid-raw-collection-delta9-thcjd-liquid-ja",
+      "study_id": "cannabinoid-raw-collection",
+      "source_id": "youtube",
+      "collector_id": "youtube-apify-scraper",
+      "purpose": "Owner-authorized collection for the registered primary query Δ9-THCJD リキッド (delta9-thcjd-liquid-ja); the exact query string is the measured unit and does not establish verified chemical identity.",
+      "query": {
+        "keyword": "Δ9-THCJD リキッド",
+        "query_id": "delta9-thcjd-liquid-ja"
+      },
+      "window": {
+        "start": "2022-06-23T00:00:00Z",
+        "end_exclusive": "2023-10-19T00:00:00Z",
+        "granularity": "day",
+        "timezone": "UTC"
+      },
+      "collection_request": {
+        "date_filter": "all",
+        "reference_time": "2026-11-15T12:09:52.724Z",
+        "actor_input": {
+          "searchQueries": [
+            "Δ9-THCJD リキッド"
+          ],
+          "maxResults": 500,
+          "maxResultsShorts": 0,
+          "maxResultStreams": 0
+        },
+        "actor_input_basis": "Submitted verbatim through netloom Apify run; checked the returned input field equals the registered canonical query and all returned rows have type=video.",
+        "date_filter_basis": "No dateFilter was supplied; all is the declaration vocabulary for this unbounded request, not an actor enum."
+      },
+      "temporal": {
+        "collector_window_type": "unbounded",
+        "boundary_semantics": "Observed video publish-date range from returned record date values, normalized to a half-open UTC day interval; not a request window.",
+        "exact_window_match": false,
+        "limitations": [
+          "The search request omitted dateFilter and has no absolute publish-date window.",
+          "This is a search-result sample capped by maxResults=500, not a census; a successful actor run does not establish completeness of all matching videos.",
+          "No geographic filter is applied. Japanese リキッド is a query-language approximation only, not a geo restriction."
+        ]
+      },
+      "timestamps": {
+        "started_at": "2026-11-15T12:09:52.724Z",
+        "finished_at": "2026-11-15T12:10:35.818Z",
+        "basis": "Apify actor run status object queried through netloom apify run-status; timestamps are the actor run UTC values."
+      },
+      "execution": {
+        "status": "success",
+        "returned_count": 3,
+        "errors": []
+      },
+      "artifacts": [
+        {
+          "source": "/Users/bookair18/OS/home/Codes/github.com/routeflags/japan-cannabinoid-trends/.delta/worktrees/9jw2p6f7wbbs/japan-cannabinoid-trends/.staging/.inputs/youtube/candidate-forms-20261115/delta9-thcjd/payload.json",
+          "path": "payload.json",
+          "artifact_type": "raw_records",
+          "format": "json",
+          "schema_id": "youtube-search-result-list-v1",
+          "completeness": "complete",
+          "record_count": 3,
+          "media_type": "application/json"
+        }
+      ],
+      "environment": {
+        "actor_run_id": "Ob0r6WqOHT9y73fLc",
+        "apify_dataset_id": "r9plDM9pPZyyfnzni",
+        "actor_build": "0.0.333",
+        "actor_build_id": "VwOSqrRqssnh5PHbs",
+        "actor_build_basis": "buildNumber and buildId from the Apify run status object queried via netloom.",
+        "origin": "API",
+        "payload_sha256": "bf35f6d5ac14d1affed869e67a3b1cdea77a4d7ac3625d1542f1234627288a8a",
+        "payload_bytes": 16477,
+        "export_filename": "payload.json",
+        "payload_shape": "JSON array of flat YouTube video records; one search input and type=video per record.",
+        "observed_range": {
+          "min_date": "2022-06-23T18:42:34Z",
+          "max_date": "2023-10-18T09:09:29Z",
+          "derivation": "min/max of the payload date field, converted to UTC; window bounds are half-open UTC day normalization of these observations."
+        },
+        "deduplication": {
+          "key": "flat id (video id)",
+          "raw_count": 3,
+          "deduplicated_count": 3,
+          "duplicates_removed": 0,
+          "note": "Uniqueness checked within this raw payload; no in-place deduplication applied."
+        },
+        "scope": {
+          "primary_design": "youtube-liquid-only-primary",
+          "query_intent_id": "product_liquid",
+          "primary_coverage": "yes"
+        }
+      }
+    }
+  ]
+}
