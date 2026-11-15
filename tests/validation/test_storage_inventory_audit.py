@@ -39,17 +39,17 @@ def test_committed_inventory_is_reproducible():
 
 def test_inventory_covers_the_legacy_runs_and_is_non_destructive():
     inventory = _committed()
-    # Derived: one entry per run on disk (the legacy 29 plus every run the
-    # pipeline has collected since), so the count cannot rot.
-    # One entry per run this checkout can see, minus the runs whose raw is not
-    # repository-retained (they are listed in the snapshot sidecar instead).
-    assert len(inventory["runs"]) == len(
-        [
-            path
-            for path in (REPO_ROOT / "datasets").rglob("run_metadata.json")
-            if path.parent.name not in NON_RETAINED
-        ]
-    )
+    # The local snapshot keeps non-retained rows, but its repository-retained
+    # view must cover exactly the run directories retained by Git.
+    snapshot_retained_ids = {
+        run["run_id"] for run in inventory["runs"] if run["run_id"] not in NON_RETAINED
+    }
+    disk_retained_ids = {
+        metadata["run_id"]
+        for path in (REPO_ROOT / "datasets").rglob("run_metadata.json")
+        if (metadata := json.loads(path.read_text(encoding="utf-8")))["run_id"] not in NON_RETAINED
+    }
+    assert snapshot_retained_ids == disk_retained_ids
     assert inventory["raw_modified"] is False
     assert inventory["count"] > 0
 

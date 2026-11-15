@@ -473,13 +473,15 @@ def test_audit_snapshot_matches_the_real_inventory():
     non_retained = non_retained_run_ids(REPO_ROOT)
     assert retained_view(recomputed, non_retained) == retained_view(stored, non_retained)
     assert stored["raw_modified"] is False
-    assert len(stored["runs"]) == len(
-        [
-            path
-            for path in (REPO_ROOT / "datasets").rglob("run_metadata.json")
-            if path.parent.name not in non_retained
-        ]
-    )
+    retained_snapshot_ids = {
+        run["run_id"] for run in stored["runs"] if run["run_id"] not in non_retained
+    }
+    retained_disk_ids = {
+        metadata["run_id"]
+        for path in (REPO_ROOT / "datasets").rglob("run_metadata.json")
+        if (metadata := json.loads(path.read_text(encoding="utf-8")))["run_id"] not in non_retained
+    }
+    assert retained_snapshot_ids == retained_disk_ids
 
 
 def test_audit_snapshot_records_the_legacy_examples():

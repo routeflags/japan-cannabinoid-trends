@@ -16,15 +16,15 @@
 **関連:** `ISS-20261115-TAX-044`（候補表の作成と精度基準。本 issue がその 27 行を登録する）、
 `ISS-20261111-TAX-042`（異性体別根拠レビュー）、`ISS-20261115-TAX-043`（外部識別子 crosswalk）、
 `ISS-20261111-TAX-041`（THCA / THCB の個別検索トピック登録の先例）、
-`ISS-20261111-TAX-040`（管理カテゴリ `compound_identity_unverified` の新設）
+`ISS-20261111-TAX-040`（管理カテゴリ `compound_identity_unverified` の新設）、
+[`ISS-20261115-COL-034`](../30-production-collection-expansion/20261115_p2_candidate-form-collection.md)（後続の別収集許可と実収集結果）
 
 ## 概要
 
 2026-11-15、owner は `datasets/cannabinoid-raw-collection/README.md` の
 「未登録・未収集の候補形式」に棚卸しした **27 行を検索トピックとして登録すること**を明示した。本 issue はその登録を記録する。
 
-**登録は検索文字列の固定であり、収集・採用・公開・release の許可ではない。** 本 issue は raw data、run metadata、
-catalog、collection declaration、source coverage observation、release slice、公開状態を変更していない。scope split のローカル commit は作成済みだが、push・公開・release は行っていない。
+**登録時の指示は検索文字列の固定だけを許可し、収集・採用・公開・release を許可しなかった。** その後、別の owner 指示が候補形式27語について Google Trends（12ヶ月・5年）と YouTube liquid-only primary の収集、および必要な変更のローカル branch commit を許可した。X、push、外部公開、release は許可されていない。別指示と収集結果は [`ISS-20261115-COL-034`](../30-production-collection-expansion/20261115_p2_candidate-form-collection.md) に記録する。本 issue の登録変更そのものは raw data、run metadata、catalog、collection declaration、source coverage observation、release slice、公開状態を変更しなかった。
 
 登録対象は候補表の 27 行そのものであり、行の追加・削除・言い換えはしていない。
 
@@ -53,8 +53,7 @@ catalog、collection declaration、source coverage observation、release slice�
    `THCPO` / `THCB-O-acetate` / `THCV` / `THCH` / `HHC` の query ID・canonical_text・status・run は
    変更せず、総称 `THC` の series をどの位置異性体へも帰属させない。既存 75 本の general+liquid query は
    すべて `active` のまま。
-7. **未収集を明示した。** 27 語はいずれも run を持たない。README の term-to-query map は各行に
-   「未収集」を記し、登録バッチ節にも run が無いことを明記した。**0 観測でも欠測でも収集失敗でもない。**
+7. **登録時点の未収集を記録した。** 登録変更時点では27語はいずれもrunを持たなかった。後続の収集は登録を遡及変更せず、現在のsource別状態はREADME / methodologyおよび[`ISS-20261115-COL-034`](../30-production-collection-expansion/20261115_p2_candidate-form-collection.md)に記録する。NO_DATA、NO_VIDEOS、HTTP 429、未試行を0観測にまとめない。
 
 ## 登録した 27 語（term / concept / query base）
 
@@ -144,7 +143,7 @@ catalog、collection declaration、source coverage observation、release slice�
 - `metadata/provenance/evidence-registry.json`: `ev-compound-taxonomy` / `ev-query-registry` の新 hash・
   `observed_at` と、既存 note への追記（過去 hash は改変しない）。
 - `docs/audits/g4-storage-inventory.json`: 変更した 2 つの data README の hash を再生成で更新。
-- `docs/audits/g6-git-tracking-inventory.json`: README・methodology・query-design・data README 2 件の tracked hash を更新した。checkout-local な `count` / `extra_count` / `state_summary` / `extras` は再生成していない。
+- `docs/audits/g6-git-tracking-inventory.json`: README・methodology・query-design・data README 2 件の tracked hash を、候補形式収集の追跡更新と合わせて更新した（`ISS-20261115-COL-034`）。`state_summary` / `extras` は当該 checkout のローカル状態を記録し、他 checkout の状態を示さない。
 - テスト: `tests/validation/test_candidate_form_registration.py`（新規、27 語の identity・query・未収集・
   既存保持を固定）、`test_dictionary_form_precision.py`（行数と登録済み状態へ更新）、
   `test_taxonomy_consistency.py`（export 72）、`test_compound_rare_membership.py`（管理カテゴリの成员）、
@@ -164,14 +163,14 @@ catalog、collection declaration、source coverage observation、release slice�
    `Δ9-THCV` / `Δ9-THCP` / `9(R)-HHC` / `9(S)-HHC` などに識別子を付けるかは別作業である（live registry の再検証が必要）。
 2. **`THCJD-O-acetate` の Δ8/Δ9 分割**: 法令の別個の構造が確認できれば分割できるが、owner の追加判断を要する。
 3. **`Δ8` エステル体の製品分析証拠**（`Δ8-THCP-O-acetate` / `Δ8-THCB-O-acetate` / `Δ9-THCB-O-acetate`）は未確認。
-4. **収集**: 27 語はいずれも未収集であり、収集には別の owner 承認を要する。
+4. **収集**: 登録後の別 owner 指示で許可されたGoogle Trends / YouTube候補形式収集の状態と未解決分は[`ISS-20261115-COL-034`](../30-production-collection-expansion/20261115_p2_candidate-form-collection.md)を参照する。追加collectionは現在のplan/windowとsource rate limitを確認する。
 5. **`project.json` mirror の既知の不一致**: `CBX` は registry にあるが mirror に無い（本変更では触れていない）。
 
 ## 検証
 
 ```sh
 bash scripts/export/export-taxonomy.sh
-.venv/bin/python -m pytest -q tests/            # 1736 passed, 4 skipped, 10 failed（checkout-local raw と committed audit snapshots の retained-view mismatch）
+.venv/bin/python -m pytest -q tests/            # 1745 passed, 4 skipped（g6 freshness 1 件は下記の理由で失敗）
 make gates GATE=registries                     # valid (18 targets)
 make gates GATE=comparison                     # OK, policies=3, failures=0
 make audit-raw-completeness
@@ -182,15 +181,11 @@ make audit-distribution-scope
 git diff --check
 ```
 
-raw payload / run metadata の可視性は checkout-local である。この checkout では Git 非追跡の追加 run metadata が見えるため、committed audit snapshots の retained view と freshness tests が一致しない。**その状態を 0 観測として扱わない。** ローカル run を公開・採用する代わりに snapshot を再生成せず、`docs/audits/**` の run-derived data を変更していない。
-
-`docs/audits/g6-git-tracking-inventory.json` の tracked-entry hashes は変更した 5 ファイルに合わせて更新し、
-checkout-local の件数・extras・state summary は更新前の記録を保持した。freshness 比較は tracked-entry hashes を検証し、
-checkout-local fields は比較対象から除外する。
+上記の検証記録は登録変更時点のものであり、後続の収集状態を表さない。2026-11-15候補形式収集の最新監査結果は[`ISS-20261115-COL-034`](../30-production-collection-expansion/20261115_p2_candidate-form-collection.md)と現在の Makefile auditを参照する。checkout-local rawを含むsnapshotはraw retention policyとscopeを確認してから更新する。
 
 ## 出所
 
-- 2026-11-15 の owner 指示（候補表 27 行の検索トピック登録。収集・公開・commit は許可しない）。
+- 2026-11-15 の当初 owner 指示（候補表 27 行の検索トピック登録。登録単独では収集・採用・公開・releaseを許可しない）。後続の別収集指示は [`ISS-20261115-COL-034`](../30-production-collection-expansion/20261115_p2_candidate-form-collection.md) に記録する。
 - リポジトリ内: `datasets/cannabinoid-raw-collection/README.md`（候補表 27 行）、`ISS-20261115-TAX-044`、
   `ISS-20261111-TAX-042`、`ISS-20261115-TAX-043`、`metadata/taxonomy/compound-taxonomy.skos.jsonld`、
   `metadata/queries/query-registry.json`、`docs/specs/thc-nomenclature-standard.md`、

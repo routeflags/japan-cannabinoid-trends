@@ -16,9 +16,9 @@
   "retention_record_count": 0,
   "retention_violation_count": 0,
   "retention_violations": [],
-  "claim_count": 106,
-  "git_tracked_run_count": 68,
-  "git_untracked_run_count": 38,
+  "claim_count": 134,
+  "git_tracked_run_count": 77,
+  "git_untracked_run_count": 57,
   "git_tracked_run_ids": [
     "20261014T204841Z-google-trends-cannabinoid-multi-trends",
     "20261014T204852Z-google-trends-cannabinoid-multi-trends",
@@ -87,7 +87,16 @@
     "20261110T235526Z-google-trends-10-oh-hhc-5y-retry",
     "20261110T235617Z-google-trends-thxe-5y-retry",
     "20261110T235641Z-google-trends-thca-12m-retry",
-    "20261110T235706Z-google-trends-thca-5y-retry"
+    "20261110T235706Z-google-trends-thca-5y-retry",
+    "20261115T115317Z-google-trends-6ar-9r-10as-hhc-12m-retry1",
+    "20261115T115353Z-google-trends-6as-9r-10ar-hhc-12m",
+    "20261115T115355Z-google-trends-6as-9r-10as-hhc-12m",
+    "20261115T115358Z-google-trends-6as-9s-10ar-hhc-12m",
+    "20261115T115404Z-google-trends-9r-hhc-12m",
+    "20261115T115407Z-google-trends-9s-hhc-12m",
+    "20261115T115415Z-google-trends-delta6a-7-thc-12m",
+    "20261115T115420Z-google-trends-delta8-thc-12m",
+    "20261115T115440Z-google-trends-delta9-thcb-o-acetate-12m"
   ],
   "not_repository_retained_run_ids": [
     "20261010T141947Z-youtube-cannabinoid-raw-collection",
@@ -127,7 +136,26 @@
     "20261110T194826Z-youtube-cannabinoid-raw-collection",
     "20261110T195055Z-youtube-cannabinoid-raw-collection",
     "20261110T200043Z-youtube-cannabinoid-raw-collection",
-    "20261110T200518Z-youtube-cannabinoid-raw-collection"
+    "20261110T200518Z-youtube-cannabinoid-raw-collection",
+    "20261115T120210Z-youtube-cannabinoid-raw-collection-delta8-thcp-liquid-ja",
+    "20261115T120659Z-youtube-cannabinoid-raw-collection-delta8-thcjd-liquid-ja",
+    "20261115T120659Z-youtube-cannabinoid-raw-collection-delta9-thcp-liquid-ja",
+    "20261115T120952Z-youtube-cannabinoid-raw-collection-delta8-thcp-o-acetate-liquid-ja",
+    "20261115T120952Z-youtube-cannabinoid-raw-collection-delta9-thcjd-liquid-ja",
+    "20261115T120952Z-youtube-cannabinoid-raw-collection-delta9-thcp-o-acetate-liquid-ja",
+    "20261115T121113Z-youtube-cannabinoid-raw-collection-delta8-thcb-o-acetate-liquid-ja",
+    "20261115T121113Z-youtube-cannabinoid-raw-collection-delta9-thcb-o-acetate-liquid-ja",
+    "20261115T121228Z-youtube-cannabinoid-raw-collection-delta6a-10a-thc-liquid-ja",
+    "20261115T121228Z-youtube-cannabinoid-raw-collection-delta8-thc-liquid-ja",
+    "20261115T121432Z-youtube-cannabinoid-raw-collection-delta10-thc-liquid-ja",
+    "20261115T121714Z-youtube-cannabinoid-raw-collection-delta9-11-thc-liquid-ja",
+    "20261115T121714Z-youtube-cannabinoid-raw-collection-delta9-thcv-liquid-ja",
+    "20261115T121950Z-youtube-cannabinoid-raw-collection-delta8-thcv-liquid-ja",
+    "20261115T122200Z-youtube-cannabinoid-raw-collection-thcjd-o-acetate-liquid-ja",
+    "20261115T122319Z-youtube-cannabinoid-raw-collection-delta8-thch-liquid-ja",
+    "20261115T122319Z-youtube-cannabinoid-raw-collection-delta9-thch-liquid-ja",
+    "20261115T122435Z-youtube-cannabinoid-raw-collection-9r-hhc-liquid-ja",
+    "20261115T122610Z-youtube-cannabinoid-raw-collection-9s-hhc-liquid-ja"
   ],
   "runs": [
     {
@@ -1715,6 +1743,213 @@
       "sha256": null
     },
     {
+      "run_id": "20261115T115317Z-google-trends-6ar-9r-10as-hhc-12m-retry1",
+      "study_id": "cannabinoid-raw-collection",
+      "resolved_study_id": "cannabinoid-raw-collection",
+      "source_id": "google-trends",
+      "claim_sources": [
+        "catalog"
+      ],
+      "references": [
+        {
+          "kind": "catalog",
+          "path": "datasets/cannabinoid-raw-collection/metadata/data-catalog.json"
+        }
+      ],
+      "retention_status": "git_tracked",
+      "retention_source": "storage_policy",
+      "retention_policy_id": "raw-search-tracked",
+      "retention_decision_id": null,
+      "availability": "git_tracked",
+      "raw_dependent_facts": "not_recorded_in_scope",
+      "record_count": null,
+      "sha256": null
+    },
+    {
+      "run_id": "20261115T115353Z-google-trends-6as-9r-10ar-hhc-12m",
+      "study_id": "cannabinoid-raw-collection",
+      "resolved_study_id": "cannabinoid-raw-collection",
+      "source_id": "google-trends",
+      "claim_sources": [
+        "catalog"
+      ],
+      "references": [
+        {
+          "kind": "catalog",
+          "path": "datasets/cannabinoid-raw-collection/metadata/data-catalog.json"
+        }
+      ],
+      "retention_status": "git_tracked",
+      "retention_source": "storage_policy",
+      "retention_policy_id": "raw-search-tracked",
+      "retention_decision_id": null,
+      "availability": "git_tracked",
+      "raw_dependent_facts": "not_recorded_in_scope",
+      "record_count": null,
+      "sha256": null
+    },
+    {
+      "run_id": "20261115T115355Z-google-trends-6as-9r-10as-hhc-12m",
+      "study_id": "cannabinoid-raw-collection",
+      "resolved_study_id": "cannabinoid-raw-collection",
+      "source_id": "google-trends",
+      "claim_sources": [
+        "catalog"
+      ],
+      "references": [
+        {
+          "kind": "catalog",
+          "path": "datasets/cannabinoid-raw-collection/metadata/data-catalog.json"
+        }
+      ],
+      "retention_status": "git_tracked",
+      "retention_source": "storage_policy",
+      "retention_policy_id": "raw-search-tracked",
+      "retention_decision_id": null,
+      "availability": "git_tracked",
+      "raw_dependent_facts": "not_recorded_in_scope",
+      "record_count": null,
+      "sha256": null
+    },
+    {
+      "run_id": "20261115T115358Z-google-trends-6as-9s-10ar-hhc-12m",
+      "study_id": "cannabinoid-raw-collection",
+      "resolved_study_id": "cannabinoid-raw-collection",
+      "source_id": "google-trends",
+      "claim_sources": [
+        "catalog"
+      ],
+      "references": [
+        {
+          "kind": "catalog",
+          "path": "datasets/cannabinoid-raw-collection/metadata/data-catalog.json"
+        }
+      ],
+      "retention_status": "git_tracked",
+      "retention_source": "storage_policy",
+      "retention_policy_id": "raw-search-tracked",
+      "retention_decision_id": null,
+      "availability": "git_tracked",
+      "raw_dependent_facts": "not_recorded_in_scope",
+      "record_count": null,
+      "sha256": null
+    },
+    {
+      "run_id": "20261115T115404Z-google-trends-9r-hhc-12m",
+      "study_id": "cannabinoid-raw-collection",
+      "resolved_study_id": "cannabinoid-raw-collection",
+      "source_id": "google-trends",
+      "claim_sources": [
+        "catalog"
+      ],
+      "references": [
+        {
+          "kind": "catalog",
+          "path": "datasets/cannabinoid-raw-collection/metadata/data-catalog.json"
+        }
+      ],
+      "retention_status": "git_tracked",
+      "retention_source": "storage_policy",
+      "retention_policy_id": "raw-search-tracked",
+      "retention_decision_id": null,
+      "availability": "git_tracked",
+      "raw_dependent_facts": "not_recorded_in_scope",
+      "record_count": null,
+      "sha256": null
+    },
+    {
+      "run_id": "20261115T115407Z-google-trends-9s-hhc-12m",
+      "study_id": "cannabinoid-raw-collection",
+      "resolved_study_id": "cannabinoid-raw-collection",
+      "source_id": "google-trends",
+      "claim_sources": [
+        "catalog"
+      ],
+      "references": [
+        {
+          "kind": "catalog",
+          "path": "datasets/cannabinoid-raw-collection/metadata/data-catalog.json"
+        }
+      ],
+      "retention_status": "git_tracked",
+      "retention_source": "storage_policy",
+      "retention_policy_id": "raw-search-tracked",
+      "retention_decision_id": null,
+      "availability": "git_tracked",
+      "raw_dependent_facts": "not_recorded_in_scope",
+      "record_count": null,
+      "sha256": null
+    },
+    {
+      "run_id": "20261115T115415Z-google-trends-delta6a-7-thc-12m",
+      "study_id": "cannabinoid-raw-collection",
+      "resolved_study_id": "cannabinoid-raw-collection",
+      "source_id": "google-trends",
+      "claim_sources": [
+        "catalog"
+      ],
+      "references": [
+        {
+          "kind": "catalog",
+          "path": "datasets/cannabinoid-raw-collection/metadata/data-catalog.json"
+        }
+      ],
+      "retention_status": "git_tracked",
+      "retention_source": "storage_policy",
+      "retention_policy_id": "raw-search-tracked",
+      "retention_decision_id": null,
+      "availability": "git_tracked",
+      "raw_dependent_facts": "not_recorded_in_scope",
+      "record_count": null,
+      "sha256": null
+    },
+    {
+      "run_id": "20261115T115420Z-google-trends-delta8-thc-12m",
+      "study_id": "cannabinoid-raw-collection",
+      "resolved_study_id": "cannabinoid-raw-collection",
+      "source_id": "google-trends",
+      "claim_sources": [
+        "catalog"
+      ],
+      "references": [
+        {
+          "kind": "catalog",
+          "path": "datasets/cannabinoid-raw-collection/metadata/data-catalog.json"
+        }
+      ],
+      "retention_status": "git_tracked",
+      "retention_source": "storage_policy",
+      "retention_policy_id": "raw-search-tracked",
+      "retention_decision_id": null,
+      "availability": "git_tracked",
+      "raw_dependent_facts": "not_recorded_in_scope",
+      "record_count": null,
+      "sha256": null
+    },
+    {
+      "run_id": "20261115T115440Z-google-trends-delta9-thcb-o-acetate-12m",
+      "study_id": "cannabinoid-raw-collection",
+      "resolved_study_id": "cannabinoid-raw-collection",
+      "source_id": "google-trends",
+      "claim_sources": [
+        "catalog"
+      ],
+      "references": [
+        {
+          "kind": "catalog",
+          "path": "datasets/cannabinoid-raw-collection/metadata/data-catalog.json"
+        }
+      ],
+      "retention_status": "git_tracked",
+      "retention_source": "storage_policy",
+      "retention_policy_id": "raw-search-tracked",
+      "retention_decision_id": null,
+      "availability": "git_tracked",
+      "raw_dependent_facts": "not_recorded_in_scope",
+      "record_count": null,
+      "sha256": null
+    },
+    {
       "run_id": "20261010T141947Z-youtube-cannabinoid-raw-collection",
       "study_id": "cannabinoid-raw-collection",
       "resolved_study_id": "cannabinoid-raw-collection",
@@ -2647,6 +2882,538 @@
         {
           "kind": "declaration",
           "path": "20261110-youtube-thxe-cannabinoid-raw-collection.json"
+        }
+      ],
+      "retention_status": "git_untracked",
+      "retention_source": "storage_policy",
+      "retention_policy_id": "raw-social-default",
+      "retention_decision_id": null,
+      "availability": "not_repository_retained",
+      "raw_dependent_facts": "unavailable",
+      "record_count": null,
+      "sha256": null
+    },
+    {
+      "run_id": "20261115T120210Z-youtube-cannabinoid-raw-collection-delta8-thcp-liquid-ja",
+      "study_id": "cannabinoid-raw-collection",
+      "resolved_study_id": "cannabinoid-raw-collection",
+      "source_id": "youtube",
+      "claim_sources": [
+        "catalog",
+        "declaration"
+      ],
+      "references": [
+        {
+          "kind": "catalog",
+          "path": "datasets/cannabinoid-raw-collection/metadata/data-catalog.json"
+        },
+        {
+          "kind": "declaration",
+          "path": "20261115-youtube-candidate-form-delta8-thcp-cannabinoid-raw-collection.json"
+        }
+      ],
+      "retention_status": "git_untracked",
+      "retention_source": "storage_policy",
+      "retention_policy_id": "raw-social-default",
+      "retention_decision_id": null,
+      "availability": "not_repository_retained",
+      "raw_dependent_facts": "unavailable",
+      "record_count": null,
+      "sha256": null
+    },
+    {
+      "run_id": "20261115T120659Z-youtube-cannabinoid-raw-collection-delta8-thcjd-liquid-ja",
+      "study_id": "cannabinoid-raw-collection",
+      "resolved_study_id": "cannabinoid-raw-collection",
+      "source_id": "youtube",
+      "claim_sources": [
+        "catalog",
+        "declaration"
+      ],
+      "references": [
+        {
+          "kind": "catalog",
+          "path": "datasets/cannabinoid-raw-collection/metadata/data-catalog.json"
+        },
+        {
+          "kind": "declaration",
+          "path": "20261115-youtube-candidate-form-delta8-thcjd-cannabinoid-raw-collection.json"
+        }
+      ],
+      "retention_status": "git_untracked",
+      "retention_source": "storage_policy",
+      "retention_policy_id": "raw-social-default",
+      "retention_decision_id": null,
+      "availability": "not_repository_retained",
+      "raw_dependent_facts": "unavailable",
+      "record_count": null,
+      "sha256": null
+    },
+    {
+      "run_id": "20261115T120659Z-youtube-cannabinoid-raw-collection-delta9-thcp-liquid-ja",
+      "study_id": "cannabinoid-raw-collection",
+      "resolved_study_id": "cannabinoid-raw-collection",
+      "source_id": "youtube",
+      "claim_sources": [
+        "catalog",
+        "declaration"
+      ],
+      "references": [
+        {
+          "kind": "catalog",
+          "path": "datasets/cannabinoid-raw-collection/metadata/data-catalog.json"
+        },
+        {
+          "kind": "declaration",
+          "path": "20261115-youtube-candidate-form-delta9-thcp-cannabinoid-raw-collection.json"
+        }
+      ],
+      "retention_status": "git_untracked",
+      "retention_source": "storage_policy",
+      "retention_policy_id": "raw-social-default",
+      "retention_decision_id": null,
+      "availability": "not_repository_retained",
+      "raw_dependent_facts": "unavailable",
+      "record_count": null,
+      "sha256": null
+    },
+    {
+      "run_id": "20261115T120952Z-youtube-cannabinoid-raw-collection-delta8-thcp-o-acetate-liquid-ja",
+      "study_id": "cannabinoid-raw-collection",
+      "resolved_study_id": "cannabinoid-raw-collection",
+      "source_id": "youtube",
+      "claim_sources": [
+        "catalog",
+        "declaration"
+      ],
+      "references": [
+        {
+          "kind": "catalog",
+          "path": "datasets/cannabinoid-raw-collection/metadata/data-catalog.json"
+        },
+        {
+          "kind": "declaration",
+          "path": "20261115-youtube-candidate-form-delta8-thcp-o-acetate-cannabinoid-raw-collection.json"
+        }
+      ],
+      "retention_status": "git_untracked",
+      "retention_source": "storage_policy",
+      "retention_policy_id": "raw-social-default",
+      "retention_decision_id": null,
+      "availability": "not_repository_retained",
+      "raw_dependent_facts": "unavailable",
+      "record_count": null,
+      "sha256": null
+    },
+    {
+      "run_id": "20261115T120952Z-youtube-cannabinoid-raw-collection-delta9-thcjd-liquid-ja",
+      "study_id": "cannabinoid-raw-collection",
+      "resolved_study_id": "cannabinoid-raw-collection",
+      "source_id": "youtube",
+      "claim_sources": [
+        "catalog",
+        "declaration"
+      ],
+      "references": [
+        {
+          "kind": "catalog",
+          "path": "datasets/cannabinoid-raw-collection/metadata/data-catalog.json"
+        },
+        {
+          "kind": "declaration",
+          "path": "20261115-youtube-candidate-form-delta9-thcjd-cannabinoid-raw-collection.json"
+        }
+      ],
+      "retention_status": "git_untracked",
+      "retention_source": "storage_policy",
+      "retention_policy_id": "raw-social-default",
+      "retention_decision_id": null,
+      "availability": "not_repository_retained",
+      "raw_dependent_facts": "unavailable",
+      "record_count": null,
+      "sha256": null
+    },
+    {
+      "run_id": "20261115T120952Z-youtube-cannabinoid-raw-collection-delta9-thcp-o-acetate-liquid-ja",
+      "study_id": "cannabinoid-raw-collection",
+      "resolved_study_id": "cannabinoid-raw-collection",
+      "source_id": "youtube",
+      "claim_sources": [
+        "catalog",
+        "declaration"
+      ],
+      "references": [
+        {
+          "kind": "catalog",
+          "path": "datasets/cannabinoid-raw-collection/metadata/data-catalog.json"
+        },
+        {
+          "kind": "declaration",
+          "path": "20261115-youtube-candidate-form-delta9-thcp-o-acetate-cannabinoid-raw-collection.json"
+        }
+      ],
+      "retention_status": "git_untracked",
+      "retention_source": "storage_policy",
+      "retention_policy_id": "raw-social-default",
+      "retention_decision_id": null,
+      "availability": "not_repository_retained",
+      "raw_dependent_facts": "unavailable",
+      "record_count": null,
+      "sha256": null
+    },
+    {
+      "run_id": "20261115T121113Z-youtube-cannabinoid-raw-collection-delta8-thcb-o-acetate-liquid-ja",
+      "study_id": "cannabinoid-raw-collection",
+      "resolved_study_id": "cannabinoid-raw-collection",
+      "source_id": "youtube",
+      "claim_sources": [
+        "catalog",
+        "declaration"
+      ],
+      "references": [
+        {
+          "kind": "catalog",
+          "path": "datasets/cannabinoid-raw-collection/metadata/data-catalog.json"
+        },
+        {
+          "kind": "declaration",
+          "path": "20261115-youtube-candidate-form-delta8-thcb-o-acetate-cannabinoid-raw-collection.json"
+        }
+      ],
+      "retention_status": "git_untracked",
+      "retention_source": "storage_policy",
+      "retention_policy_id": "raw-social-default",
+      "retention_decision_id": null,
+      "availability": "not_repository_retained",
+      "raw_dependent_facts": "unavailable",
+      "record_count": null,
+      "sha256": null
+    },
+    {
+      "run_id": "20261115T121113Z-youtube-cannabinoid-raw-collection-delta9-thcb-o-acetate-liquid-ja",
+      "study_id": "cannabinoid-raw-collection",
+      "resolved_study_id": "cannabinoid-raw-collection",
+      "source_id": "youtube",
+      "claim_sources": [
+        "catalog",
+        "declaration"
+      ],
+      "references": [
+        {
+          "kind": "catalog",
+          "path": "datasets/cannabinoid-raw-collection/metadata/data-catalog.json"
+        },
+        {
+          "kind": "declaration",
+          "path": "20261115-youtube-candidate-form-delta9-thcb-o-acetate-cannabinoid-raw-collection.json"
+        }
+      ],
+      "retention_status": "git_untracked",
+      "retention_source": "storage_policy",
+      "retention_policy_id": "raw-social-default",
+      "retention_decision_id": null,
+      "availability": "not_repository_retained",
+      "raw_dependent_facts": "unavailable",
+      "record_count": null,
+      "sha256": null
+    },
+    {
+      "run_id": "20261115T121228Z-youtube-cannabinoid-raw-collection-delta6a-10a-thc-liquid-ja",
+      "study_id": "cannabinoid-raw-collection",
+      "resolved_study_id": "cannabinoid-raw-collection",
+      "source_id": "youtube",
+      "claim_sources": [
+        "catalog",
+        "declaration"
+      ],
+      "references": [
+        {
+          "kind": "catalog",
+          "path": "datasets/cannabinoid-raw-collection/metadata/data-catalog.json"
+        },
+        {
+          "kind": "declaration",
+          "path": "20261115-youtube-candidate-form-delta6a-10a-thc-cannabinoid-raw-collection.json"
+        }
+      ],
+      "retention_status": "git_untracked",
+      "retention_source": "storage_policy",
+      "retention_policy_id": "raw-social-default",
+      "retention_decision_id": null,
+      "availability": "not_repository_retained",
+      "raw_dependent_facts": "unavailable",
+      "record_count": null,
+      "sha256": null
+    },
+    {
+      "run_id": "20261115T121228Z-youtube-cannabinoid-raw-collection-delta8-thc-liquid-ja",
+      "study_id": "cannabinoid-raw-collection",
+      "resolved_study_id": "cannabinoid-raw-collection",
+      "source_id": "youtube",
+      "claim_sources": [
+        "catalog",
+        "declaration"
+      ],
+      "references": [
+        {
+          "kind": "catalog",
+          "path": "datasets/cannabinoid-raw-collection/metadata/data-catalog.json"
+        },
+        {
+          "kind": "declaration",
+          "path": "20261115-youtube-candidate-form-delta8-thc-cannabinoid-raw-collection.json"
+        }
+      ],
+      "retention_status": "git_untracked",
+      "retention_source": "storage_policy",
+      "retention_policy_id": "raw-social-default",
+      "retention_decision_id": null,
+      "availability": "not_repository_retained",
+      "raw_dependent_facts": "unavailable",
+      "record_count": null,
+      "sha256": null
+    },
+    {
+      "run_id": "20261115T121432Z-youtube-cannabinoid-raw-collection-delta10-thc-liquid-ja",
+      "study_id": "cannabinoid-raw-collection",
+      "resolved_study_id": "cannabinoid-raw-collection",
+      "source_id": "youtube",
+      "claim_sources": [
+        "catalog",
+        "declaration"
+      ],
+      "references": [
+        {
+          "kind": "catalog",
+          "path": "datasets/cannabinoid-raw-collection/metadata/data-catalog.json"
+        },
+        {
+          "kind": "declaration",
+          "path": "20261115-youtube-candidate-form-delta10-thc-cannabinoid-raw-collection.json"
+        }
+      ],
+      "retention_status": "git_untracked",
+      "retention_source": "storage_policy",
+      "retention_policy_id": "raw-social-default",
+      "retention_decision_id": null,
+      "availability": "not_repository_retained",
+      "raw_dependent_facts": "unavailable",
+      "record_count": null,
+      "sha256": null
+    },
+    {
+      "run_id": "20261115T121714Z-youtube-cannabinoid-raw-collection-delta9-11-thc-liquid-ja",
+      "study_id": "cannabinoid-raw-collection",
+      "resolved_study_id": "cannabinoid-raw-collection",
+      "source_id": "youtube",
+      "claim_sources": [
+        "catalog",
+        "declaration"
+      ],
+      "references": [
+        {
+          "kind": "catalog",
+          "path": "datasets/cannabinoid-raw-collection/metadata/data-catalog.json"
+        },
+        {
+          "kind": "declaration",
+          "path": "20261115-youtube-candidate-form-delta9-11-thc-cannabinoid-raw-collection.json"
+        }
+      ],
+      "retention_status": "git_untracked",
+      "retention_source": "storage_policy",
+      "retention_policy_id": "raw-social-default",
+      "retention_decision_id": null,
+      "availability": "not_repository_retained",
+      "raw_dependent_facts": "unavailable",
+      "record_count": null,
+      "sha256": null
+    },
+    {
+      "run_id": "20261115T121714Z-youtube-cannabinoid-raw-collection-delta9-thcv-liquid-ja",
+      "study_id": "cannabinoid-raw-collection",
+      "resolved_study_id": "cannabinoid-raw-collection",
+      "source_id": "youtube",
+      "claim_sources": [
+        "catalog",
+        "declaration"
+      ],
+      "references": [
+        {
+          "kind": "catalog",
+          "path": "datasets/cannabinoid-raw-collection/metadata/data-catalog.json"
+        },
+        {
+          "kind": "declaration",
+          "path": "20261115-youtube-candidate-form-delta9-thcv-cannabinoid-raw-collection.json"
+        }
+      ],
+      "retention_status": "git_untracked",
+      "retention_source": "storage_policy",
+      "retention_policy_id": "raw-social-default",
+      "retention_decision_id": null,
+      "availability": "not_repository_retained",
+      "raw_dependent_facts": "unavailable",
+      "record_count": null,
+      "sha256": null
+    },
+    {
+      "run_id": "20261115T121950Z-youtube-cannabinoid-raw-collection-delta8-thcv-liquid-ja",
+      "study_id": "cannabinoid-raw-collection",
+      "resolved_study_id": "cannabinoid-raw-collection",
+      "source_id": "youtube",
+      "claim_sources": [
+        "catalog",
+        "declaration"
+      ],
+      "references": [
+        {
+          "kind": "catalog",
+          "path": "datasets/cannabinoid-raw-collection/metadata/data-catalog.json"
+        },
+        {
+          "kind": "declaration",
+          "path": "20261115-youtube-candidate-form-delta8-thcv-cannabinoid-raw-collection.json"
+        }
+      ],
+      "retention_status": "git_untracked",
+      "retention_source": "storage_policy",
+      "retention_policy_id": "raw-social-default",
+      "retention_decision_id": null,
+      "availability": "not_repository_retained",
+      "raw_dependent_facts": "unavailable",
+      "record_count": null,
+      "sha256": null
+    },
+    {
+      "run_id": "20261115T122200Z-youtube-cannabinoid-raw-collection-thcjd-o-acetate-liquid-ja",
+      "study_id": "cannabinoid-raw-collection",
+      "resolved_study_id": "cannabinoid-raw-collection",
+      "source_id": "youtube",
+      "claim_sources": [
+        "catalog",
+        "declaration"
+      ],
+      "references": [
+        {
+          "kind": "catalog",
+          "path": "datasets/cannabinoid-raw-collection/metadata/data-catalog.json"
+        },
+        {
+          "kind": "declaration",
+          "path": "20261115-youtube-candidate-form-thcjd-o-acetate-cannabinoid-raw-collection.json"
+        }
+      ],
+      "retention_status": "git_untracked",
+      "retention_source": "storage_policy",
+      "retention_policy_id": "raw-social-default",
+      "retention_decision_id": null,
+      "availability": "not_repository_retained",
+      "raw_dependent_facts": "unavailable",
+      "record_count": null,
+      "sha256": null
+    },
+    {
+      "run_id": "20261115T122319Z-youtube-cannabinoid-raw-collection-delta8-thch-liquid-ja",
+      "study_id": "cannabinoid-raw-collection",
+      "resolved_study_id": "cannabinoid-raw-collection",
+      "source_id": "youtube",
+      "claim_sources": [
+        "catalog",
+        "declaration"
+      ],
+      "references": [
+        {
+          "kind": "catalog",
+          "path": "datasets/cannabinoid-raw-collection/metadata/data-catalog.json"
+        },
+        {
+          "kind": "declaration",
+          "path": "20261115-youtube-candidate-form-delta8-thch-cannabinoid-raw-collection.json"
+        }
+      ],
+      "retention_status": "git_untracked",
+      "retention_source": "storage_policy",
+      "retention_policy_id": "raw-social-default",
+      "retention_decision_id": null,
+      "availability": "not_repository_retained",
+      "raw_dependent_facts": "unavailable",
+      "record_count": null,
+      "sha256": null
+    },
+    {
+      "run_id": "20261115T122319Z-youtube-cannabinoid-raw-collection-delta9-thch-liquid-ja",
+      "study_id": "cannabinoid-raw-collection",
+      "resolved_study_id": "cannabinoid-raw-collection",
+      "source_id": "youtube",
+      "claim_sources": [
+        "catalog",
+        "declaration"
+      ],
+      "references": [
+        {
+          "kind": "catalog",
+          "path": "datasets/cannabinoid-raw-collection/metadata/data-catalog.json"
+        },
+        {
+          "kind": "declaration",
+          "path": "20261115-youtube-candidate-form-delta9-thch-cannabinoid-raw-collection.json"
+        }
+      ],
+      "retention_status": "git_untracked",
+      "retention_source": "storage_policy",
+      "retention_policy_id": "raw-social-default",
+      "retention_decision_id": null,
+      "availability": "not_repository_retained",
+      "raw_dependent_facts": "unavailable",
+      "record_count": null,
+      "sha256": null
+    },
+    {
+      "run_id": "20261115T122435Z-youtube-cannabinoid-raw-collection-9r-hhc-liquid-ja",
+      "study_id": "cannabinoid-raw-collection",
+      "resolved_study_id": "cannabinoid-raw-collection",
+      "source_id": "youtube",
+      "claim_sources": [
+        "catalog",
+        "declaration"
+      ],
+      "references": [
+        {
+          "kind": "catalog",
+          "path": "datasets/cannabinoid-raw-collection/metadata/data-catalog.json"
+        },
+        {
+          "kind": "declaration",
+          "path": "20261115-youtube-candidate-form-9r-hhc-cannabinoid-raw-collection.json"
+        }
+      ],
+      "retention_status": "git_untracked",
+      "retention_source": "storage_policy",
+      "retention_policy_id": "raw-social-default",
+      "retention_decision_id": null,
+      "availability": "not_repository_retained",
+      "raw_dependent_facts": "unavailable",
+      "record_count": null,
+      "sha256": null
+    },
+    {
+      "run_id": "20261115T122610Z-youtube-cannabinoid-raw-collection-9s-hhc-liquid-ja",
+      "study_id": "cannabinoid-raw-collection",
+      "resolved_study_id": "cannabinoid-raw-collection",
+      "source_id": "youtube",
+      "claim_sources": [
+        "catalog",
+        "declaration"
+      ],
+      "references": [
+        {
+          "kind": "catalog",
+          "path": "datasets/cannabinoid-raw-collection/metadata/data-catalog.json"
+        },
+        {
+          "kind": "declaration",
+          "path": "20261115-youtube-candidate-form-9s-hhc-cannabinoid-raw-collection.json"
         }
       ],
       "retention_status": "git_untracked",

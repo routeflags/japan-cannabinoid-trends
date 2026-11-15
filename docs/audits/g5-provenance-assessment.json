@@ -3,16 +3,16 @@
   "profile": "provenance_assessment",
   "schema_id": "collection-run-v1",
   "target_glob": "datasets/**/run_metadata.json",
-  "count": 97,
+  "count": 125,
   "raw_modified": false,
   "summary": {
     "readiness": {
       "not_ready": 29,
-      "ready": 68
+      "ready": 96
     },
-    "mean_completeness": 0.7315,
-    "strict_valid": 68,
-    "integrity_verified": 68
+    "mean_completeness": 0.7916,
+    "strict_valid": 96,
+    "integrity_verified": 96
   },
   "runs": [
     {
@@ -7142,6 +7142,1807 @@
         "artifact_ids": [
           "20261110T235706Z-google-trends-thca-5y-retry-payload-json",
           "20261110T235706Z-google-trends-thca-5y-retry-records-thca-json"
+        ],
+        "transformations": []
+      },
+      "evidence_refs": []
+    },
+    {
+      "run_id": "20261115T115317Z-google-trends-6ar-9r-10as-hhc-12m-retry1",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261115T115317Z-google-trends-6ar-9r-10as-hhc-12m-retry1/run_metadata.json",
+      "sha256": "6981021aee6863c997b9e37d36f521962702732473cd6badf465b33f72d9e415",
+      "sha256_after": "6981021aee6863c997b9e37d36f521962702732473cd6badf465b33f72d9e415",
+      "unchanged": true,
+      "strict_valid": true,
+      "strict_error_codes": [],
+      "completeness": {
+        "total": 22,
+        "verified": 22,
+        "score": 1.0,
+        "missing": [],
+        "essential_missing": []
+      },
+      "confidence": {
+        "fields": {
+          "schema_version": "observed",
+          "run_id": "observed",
+          "study_id": "observed",
+          "source_id": "observed",
+          "purpose": "observed",
+          "collector": "observed",
+          "collector.collector_id": "observed",
+          "collector.adapter_id": "observed",
+          "collection_started_at": "observed",
+          "query_provenance": "observed",
+          "query_provenance.query_id": "observed",
+          "query_provenance.submitted_query": "observed",
+          "temporal_provenance": "observed",
+          "temporal_provenance.window_id": "observed",
+          "temporal_provenance.requested_start": "observed",
+          "temporal_provenance.requested_end_exclusive": "observed",
+          "temporal_provenance.granularity": "observed",
+          "temporal_provenance.timezone": "observed",
+          "execution": "observed",
+          "execution.status": "observed",
+          "execution.returned_count": "observed",
+          "execution.errors": "observed"
+        },
+        "observed_count": 22,
+        "unknown_count": 0
+      },
+      "integrity": {
+        "manifest_reference": "artifact-manifest.json",
+        "manifest_present": true,
+        "manifest_valid": true,
+        "verified": true,
+        "artifact_issues": [],
+        "note": ""
+      },
+      "readiness": "ready",
+      "readiness_reasons": [
+        "strict valid, references resolve, artifacts verified"
+      ],
+      "lineage": {
+        "run_id": "20261115T115317Z-google-trends-6ar-9r-10as-hhc-12m-retry1",
+        "artifact_ids": [
+          "20261115T115317Z-google-trends-6ar-9r-10as-hhc-12m-retry1-payload-json",
+          "20261115T115317Z-google-trends-6ar-9r-10as-hhc-12m-retry1-records-6ar-9r-10as-hhc-json"
+        ],
+        "transformations": []
+      },
+      "evidence_refs": []
+    },
+    {
+      "run_id": "20261115T115353Z-google-trends-6as-9r-10ar-hhc-12m",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261115T115353Z-google-trends-6as-9r-10ar-hhc-12m/run_metadata.json",
+      "sha256": "b0c20f1930c8d3ea9b746cef83edeae4cfcdc4f15a977f12aeae69a92c163284",
+      "sha256_after": "b0c20f1930c8d3ea9b746cef83edeae4cfcdc4f15a977f12aeae69a92c163284",
+      "unchanged": true,
+      "strict_valid": true,
+      "strict_error_codes": [],
+      "completeness": {
+        "total": 22,
+        "verified": 22,
+        "score": 1.0,
+        "missing": [],
+        "essential_missing": []
+      },
+      "confidence": {
+        "fields": {
+          "schema_version": "observed",
+          "run_id": "observed",
+          "study_id": "observed",
+          "source_id": "observed",
+          "purpose": "observed",
+          "collector": "observed",
+          "collector.collector_id": "observed",
+          "collector.adapter_id": "observed",
+          "collection_started_at": "observed",
+          "query_provenance": "observed",
+          "query_provenance.query_id": "observed",
+          "query_provenance.submitted_query": "observed",
+          "temporal_provenance": "observed",
+          "temporal_provenance.window_id": "observed",
+          "temporal_provenance.requested_start": "observed",
+          "temporal_provenance.requested_end_exclusive": "observed",
+          "temporal_provenance.granularity": "observed",
+          "temporal_provenance.timezone": "observed",
+          "execution": "observed",
+          "execution.status": "observed",
+          "execution.returned_count": "observed",
+          "execution.errors": "observed"
+        },
+        "observed_count": 22,
+        "unknown_count": 0
+      },
+      "integrity": {
+        "manifest_reference": "artifact-manifest.json",
+        "manifest_present": true,
+        "manifest_valid": true,
+        "verified": true,
+        "artifact_issues": [],
+        "note": ""
+      },
+      "readiness": "ready",
+      "readiness_reasons": [
+        "strict valid, references resolve, artifacts verified"
+      ],
+      "lineage": {
+        "run_id": "20261115T115353Z-google-trends-6as-9r-10ar-hhc-12m",
+        "artifact_ids": [
+          "20261115T115353Z-google-trends-6as-9r-10ar-hhc-12m-payload-json",
+          "20261115T115353Z-google-trends-6as-9r-10ar-hhc-12m-records-6as-9r-10ar-hhc-json"
+        ],
+        "transformations": []
+      },
+      "evidence_refs": []
+    },
+    {
+      "run_id": "20261115T115355Z-google-trends-6as-9r-10as-hhc-12m",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261115T115355Z-google-trends-6as-9r-10as-hhc-12m/run_metadata.json",
+      "sha256": "1b21918880943a337606e25f88de317ffa604a44685eca7caf2914c517570cd8",
+      "sha256_after": "1b21918880943a337606e25f88de317ffa604a44685eca7caf2914c517570cd8",
+      "unchanged": true,
+      "strict_valid": true,
+      "strict_error_codes": [],
+      "completeness": {
+        "total": 22,
+        "verified": 22,
+        "score": 1.0,
+        "missing": [],
+        "essential_missing": []
+      },
+      "confidence": {
+        "fields": {
+          "schema_version": "observed",
+          "run_id": "observed",
+          "study_id": "observed",
+          "source_id": "observed",
+          "purpose": "observed",
+          "collector": "observed",
+          "collector.collector_id": "observed",
+          "collector.adapter_id": "observed",
+          "collection_started_at": "observed",
+          "query_provenance": "observed",
+          "query_provenance.query_id": "observed",
+          "query_provenance.submitted_query": "observed",
+          "temporal_provenance": "observed",
+          "temporal_provenance.window_id": "observed",
+          "temporal_provenance.requested_start": "observed",
+          "temporal_provenance.requested_end_exclusive": "observed",
+          "temporal_provenance.granularity": "observed",
+          "temporal_provenance.timezone": "observed",
+          "execution": "observed",
+          "execution.status": "observed",
+          "execution.returned_count": "observed",
+          "execution.errors": "observed"
+        },
+        "observed_count": 22,
+        "unknown_count": 0
+      },
+      "integrity": {
+        "manifest_reference": "artifact-manifest.json",
+        "manifest_present": true,
+        "manifest_valid": true,
+        "verified": true,
+        "artifact_issues": [],
+        "note": ""
+      },
+      "readiness": "ready",
+      "readiness_reasons": [
+        "strict valid, references resolve, artifacts verified"
+      ],
+      "lineage": {
+        "run_id": "20261115T115355Z-google-trends-6as-9r-10as-hhc-12m",
+        "artifact_ids": [
+          "20261115T115355Z-google-trends-6as-9r-10as-hhc-12m-payload-json",
+          "20261115T115355Z-google-trends-6as-9r-10as-hhc-12m-records-6as-9r-10as-hhc-json"
+        ],
+        "transformations": []
+      },
+      "evidence_refs": []
+    },
+    {
+      "run_id": "20261115T115358Z-google-trends-6as-9s-10ar-hhc-12m",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261115T115358Z-google-trends-6as-9s-10ar-hhc-12m/run_metadata.json",
+      "sha256": "71df3aa2fca63a9244a057dab53c601d73c33594afa2ab7899aa955cfcd33c2d",
+      "sha256_after": "71df3aa2fca63a9244a057dab53c601d73c33594afa2ab7899aa955cfcd33c2d",
+      "unchanged": true,
+      "strict_valid": true,
+      "strict_error_codes": [],
+      "completeness": {
+        "total": 22,
+        "verified": 22,
+        "score": 1.0,
+        "missing": [],
+        "essential_missing": []
+      },
+      "confidence": {
+        "fields": {
+          "schema_version": "observed",
+          "run_id": "observed",
+          "study_id": "observed",
+          "source_id": "observed",
+          "purpose": "observed",
+          "collector": "observed",
+          "collector.collector_id": "observed",
+          "collector.adapter_id": "observed",
+          "collection_started_at": "observed",
+          "query_provenance": "observed",
+          "query_provenance.query_id": "observed",
+          "query_provenance.submitted_query": "observed",
+          "temporal_provenance": "observed",
+          "temporal_provenance.window_id": "observed",
+          "temporal_provenance.requested_start": "observed",
+          "temporal_provenance.requested_end_exclusive": "observed",
+          "temporal_provenance.granularity": "observed",
+          "temporal_provenance.timezone": "observed",
+          "execution": "observed",
+          "execution.status": "observed",
+          "execution.returned_count": "observed",
+          "execution.errors": "observed"
+        },
+        "observed_count": 22,
+        "unknown_count": 0
+      },
+      "integrity": {
+        "manifest_reference": "artifact-manifest.json",
+        "manifest_present": true,
+        "manifest_valid": true,
+        "verified": true,
+        "artifact_issues": [],
+        "note": ""
+      },
+      "readiness": "ready",
+      "readiness_reasons": [
+        "strict valid, references resolve, artifacts verified"
+      ],
+      "lineage": {
+        "run_id": "20261115T115358Z-google-trends-6as-9s-10ar-hhc-12m",
+        "artifact_ids": [
+          "20261115T115358Z-google-trends-6as-9s-10ar-hhc-12m-payload-json",
+          "20261115T115358Z-google-trends-6as-9s-10ar-hhc-12m-records-6as-9s-10ar-hhc-json"
+        ],
+        "transformations": []
+      },
+      "evidence_refs": []
+    },
+    {
+      "run_id": "20261115T115404Z-google-trends-9r-hhc-12m",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261115T115404Z-google-trends-9r-hhc-12m/run_metadata.json",
+      "sha256": "46b40b38ecca5e998518f5bea1349ae7953727b9983046068b92e6d63e266f73",
+      "sha256_after": "46b40b38ecca5e998518f5bea1349ae7953727b9983046068b92e6d63e266f73",
+      "unchanged": true,
+      "strict_valid": true,
+      "strict_error_codes": [],
+      "completeness": {
+        "total": 22,
+        "verified": 22,
+        "score": 1.0,
+        "missing": [],
+        "essential_missing": []
+      },
+      "confidence": {
+        "fields": {
+          "schema_version": "observed",
+          "run_id": "observed",
+          "study_id": "observed",
+          "source_id": "observed",
+          "purpose": "observed",
+          "collector": "observed",
+          "collector.collector_id": "observed",
+          "collector.adapter_id": "observed",
+          "collection_started_at": "observed",
+          "query_provenance": "observed",
+          "query_provenance.query_id": "observed",
+          "query_provenance.submitted_query": "observed",
+          "temporal_provenance": "observed",
+          "temporal_provenance.window_id": "observed",
+          "temporal_provenance.requested_start": "observed",
+          "temporal_provenance.requested_end_exclusive": "observed",
+          "temporal_provenance.granularity": "observed",
+          "temporal_provenance.timezone": "observed",
+          "execution": "observed",
+          "execution.status": "observed",
+          "execution.returned_count": "observed",
+          "execution.errors": "observed"
+        },
+        "observed_count": 22,
+        "unknown_count": 0
+      },
+      "integrity": {
+        "manifest_reference": "artifact-manifest.json",
+        "manifest_present": true,
+        "manifest_valid": true,
+        "verified": true,
+        "artifact_issues": [],
+        "note": ""
+      },
+      "readiness": "ready",
+      "readiness_reasons": [
+        "strict valid, references resolve, artifacts verified"
+      ],
+      "lineage": {
+        "run_id": "20261115T115404Z-google-trends-9r-hhc-12m",
+        "artifact_ids": [
+          "20261115T115404Z-google-trends-9r-hhc-12m-payload-json",
+          "20261115T115404Z-google-trends-9r-hhc-12m-records-9-r-hhc-json"
+        ],
+        "transformations": []
+      },
+      "evidence_refs": []
+    },
+    {
+      "run_id": "20261115T115407Z-google-trends-9s-hhc-12m",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261115T115407Z-google-trends-9s-hhc-12m/run_metadata.json",
+      "sha256": "f7fd607424ffe6e2c450a01e12921d76001cd9e555e94c77a22481c7bffead98",
+      "sha256_after": "f7fd607424ffe6e2c450a01e12921d76001cd9e555e94c77a22481c7bffead98",
+      "unchanged": true,
+      "strict_valid": true,
+      "strict_error_codes": [],
+      "completeness": {
+        "total": 22,
+        "verified": 22,
+        "score": 1.0,
+        "missing": [],
+        "essential_missing": []
+      },
+      "confidence": {
+        "fields": {
+          "schema_version": "observed",
+          "run_id": "observed",
+          "study_id": "observed",
+          "source_id": "observed",
+          "purpose": "observed",
+          "collector": "observed",
+          "collector.collector_id": "observed",
+          "collector.adapter_id": "observed",
+          "collection_started_at": "observed",
+          "query_provenance": "observed",
+          "query_provenance.query_id": "observed",
+          "query_provenance.submitted_query": "observed",
+          "temporal_provenance": "observed",
+          "temporal_provenance.window_id": "observed",
+          "temporal_provenance.requested_start": "observed",
+          "temporal_provenance.requested_end_exclusive": "observed",
+          "temporal_provenance.granularity": "observed",
+          "temporal_provenance.timezone": "observed",
+          "execution": "observed",
+          "execution.status": "observed",
+          "execution.returned_count": "observed",
+          "execution.errors": "observed"
+        },
+        "observed_count": 22,
+        "unknown_count": 0
+      },
+      "integrity": {
+        "manifest_reference": "artifact-manifest.json",
+        "manifest_present": true,
+        "manifest_valid": true,
+        "verified": true,
+        "artifact_issues": [],
+        "note": ""
+      },
+      "readiness": "ready",
+      "readiness_reasons": [
+        "strict valid, references resolve, artifacts verified"
+      ],
+      "lineage": {
+        "run_id": "20261115T115407Z-google-trends-9s-hhc-12m",
+        "artifact_ids": [
+          "20261115T115407Z-google-trends-9s-hhc-12m-payload-json",
+          "20261115T115407Z-google-trends-9s-hhc-12m-records-9-s-hhc-json"
+        ],
+        "transformations": []
+      },
+      "evidence_refs": []
+    },
+    {
+      "run_id": "20261115T115415Z-google-trends-delta6a-7-thc-12m",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261115T115415Z-google-trends-delta6a-7-thc-12m/run_metadata.json",
+      "sha256": "b1b958ca0c4afcffe34f7a9e43bff0330ee1376dae27b50d080324d886581d2d",
+      "sha256_after": "b1b958ca0c4afcffe34f7a9e43bff0330ee1376dae27b50d080324d886581d2d",
+      "unchanged": true,
+      "strict_valid": true,
+      "strict_error_codes": [],
+      "completeness": {
+        "total": 22,
+        "verified": 22,
+        "score": 1.0,
+        "missing": [],
+        "essential_missing": []
+      },
+      "confidence": {
+        "fields": {
+          "schema_version": "observed",
+          "run_id": "observed",
+          "study_id": "observed",
+          "source_id": "observed",
+          "purpose": "observed",
+          "collector": "observed",
+          "collector.collector_id": "observed",
+          "collector.adapter_id": "observed",
+          "collection_started_at": "observed",
+          "query_provenance": "observed",
+          "query_provenance.query_id": "observed",
+          "query_provenance.submitted_query": "observed",
+          "temporal_provenance": "observed",
+          "temporal_provenance.window_id": "observed",
+          "temporal_provenance.requested_start": "observed",
+          "temporal_provenance.requested_end_exclusive": "observed",
+          "temporal_provenance.granularity": "observed",
+          "temporal_provenance.timezone": "observed",
+          "execution": "observed",
+          "execution.status": "observed",
+          "execution.returned_count": "observed",
+          "execution.errors": "observed"
+        },
+        "observed_count": 22,
+        "unknown_count": 0
+      },
+      "integrity": {
+        "manifest_reference": "artifact-manifest.json",
+        "manifest_present": true,
+        "manifest_valid": true,
+        "verified": true,
+        "artifact_issues": [],
+        "note": ""
+      },
+      "readiness": "ready",
+      "readiness_reasons": [
+        "strict valid, references resolve, artifacts verified"
+      ],
+      "lineage": {
+        "run_id": "20261115T115415Z-google-trends-delta6a-7-thc-12m",
+        "artifact_ids": [
+          "20261115T115415Z-google-trends-delta6a-7-thc-12m-payload-json",
+          "20261115T115415Z-google-trends-delta6a-7-thc-12m-records-δ6a-7-thc-json"
+        ],
+        "transformations": []
+      },
+      "evidence_refs": []
+    },
+    {
+      "run_id": "20261115T115420Z-google-trends-delta8-thc-12m",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261115T115420Z-google-trends-delta8-thc-12m/run_metadata.json",
+      "sha256": "33cadb87e9245856c876e42d900b183b4a3e50db0177b9b3779756bbf22c5c8b",
+      "sha256_after": "33cadb87e9245856c876e42d900b183b4a3e50db0177b9b3779756bbf22c5c8b",
+      "unchanged": true,
+      "strict_valid": true,
+      "strict_error_codes": [],
+      "completeness": {
+        "total": 22,
+        "verified": 22,
+        "score": 1.0,
+        "missing": [],
+        "essential_missing": []
+      },
+      "confidence": {
+        "fields": {
+          "schema_version": "observed",
+          "run_id": "observed",
+          "study_id": "observed",
+          "source_id": "observed",
+          "purpose": "observed",
+          "collector": "observed",
+          "collector.collector_id": "observed",
+          "collector.adapter_id": "observed",
+          "collection_started_at": "observed",
+          "query_provenance": "observed",
+          "query_provenance.query_id": "observed",
+          "query_provenance.submitted_query": "observed",
+          "temporal_provenance": "observed",
+          "temporal_provenance.window_id": "observed",
+          "temporal_provenance.requested_start": "observed",
+          "temporal_provenance.requested_end_exclusive": "observed",
+          "temporal_provenance.granularity": "observed",
+          "temporal_provenance.timezone": "observed",
+          "execution": "observed",
+          "execution.status": "observed",
+          "execution.returned_count": "observed",
+          "execution.errors": "observed"
+        },
+        "observed_count": 22,
+        "unknown_count": 0
+      },
+      "integrity": {
+        "manifest_reference": "artifact-manifest.json",
+        "manifest_present": true,
+        "manifest_valid": true,
+        "verified": true,
+        "artifact_issues": [],
+        "note": ""
+      },
+      "readiness": "ready",
+      "readiness_reasons": [
+        "strict valid, references resolve, artifacts verified"
+      ],
+      "lineage": {
+        "run_id": "20261115T115420Z-google-trends-delta8-thc-12m",
+        "artifact_ids": [
+          "20261115T115420Z-google-trends-delta8-thc-12m-payload-json",
+          "20261115T115420Z-google-trends-delta8-thc-12m-records-δ8-thc-json"
+        ],
+        "transformations": []
+      },
+      "evidence_refs": []
+    },
+    {
+      "run_id": "20261115T115440Z-google-trends-delta9-thcb-o-acetate-12m",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261115T115440Z-google-trends-delta9-thcb-o-acetate-12m/run_metadata.json",
+      "sha256": "b6fca45526fa055310c52cd03dda21d17bccae007f32211c73fa985dbe02bb2e",
+      "sha256_after": "b6fca45526fa055310c52cd03dda21d17bccae007f32211c73fa985dbe02bb2e",
+      "unchanged": true,
+      "strict_valid": true,
+      "strict_error_codes": [],
+      "completeness": {
+        "total": 22,
+        "verified": 22,
+        "score": 1.0,
+        "missing": [],
+        "essential_missing": []
+      },
+      "confidence": {
+        "fields": {
+          "schema_version": "observed",
+          "run_id": "observed",
+          "study_id": "observed",
+          "source_id": "observed",
+          "purpose": "observed",
+          "collector": "observed",
+          "collector.collector_id": "observed",
+          "collector.adapter_id": "observed",
+          "collection_started_at": "observed",
+          "query_provenance": "observed",
+          "query_provenance.query_id": "observed",
+          "query_provenance.submitted_query": "observed",
+          "temporal_provenance": "observed",
+          "temporal_provenance.window_id": "observed",
+          "temporal_provenance.requested_start": "observed",
+          "temporal_provenance.requested_end_exclusive": "observed",
+          "temporal_provenance.granularity": "observed",
+          "temporal_provenance.timezone": "observed",
+          "execution": "observed",
+          "execution.status": "observed",
+          "execution.returned_count": "observed",
+          "execution.errors": "observed"
+        },
+        "observed_count": 22,
+        "unknown_count": 0
+      },
+      "integrity": {
+        "manifest_reference": "artifact-manifest.json",
+        "manifest_present": true,
+        "manifest_valid": true,
+        "verified": true,
+        "artifact_issues": [],
+        "note": ""
+      },
+      "readiness": "ready",
+      "readiness_reasons": [
+        "strict valid, references resolve, artifacts verified"
+      ],
+      "lineage": {
+        "run_id": "20261115T115440Z-google-trends-delta9-thcb-o-acetate-12m",
+        "artifact_ids": [
+          "20261115T115440Z-google-trends-delta9-thcb-o-acetate-12m-payload-json",
+          "20261115T115440Z-google-trends-delta9-thcb-o-acetate-12m-records-δ9-thcb-o-acetate-json"
+        ],
+        "transformations": []
+      },
+      "evidence_refs": []
+    },
+    {
+      "run_id": "20261115T120210Z-youtube-cannabinoid-raw-collection-delta8-thcp-liquid-ja",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/youtube/20261115T120210Z-youtube-cannabinoid-raw-collection-delta8-thcp-liquid-ja/run_metadata.json",
+      "sha256": "ac7d40599332406ee35cde9146ce43ff8209e706600535becf9466a2a74fbe51",
+      "sha256_after": "ac7d40599332406ee35cde9146ce43ff8209e706600535becf9466a2a74fbe51",
+      "unchanged": true,
+      "strict_valid": true,
+      "strict_error_codes": [],
+      "completeness": {
+        "total": 22,
+        "verified": 22,
+        "score": 1.0,
+        "missing": [],
+        "essential_missing": []
+      },
+      "confidence": {
+        "fields": {
+          "schema_version": "observed",
+          "run_id": "observed",
+          "study_id": "observed",
+          "source_id": "observed",
+          "purpose": "observed",
+          "collector": "observed",
+          "collector.collector_id": "observed",
+          "collector.adapter_id": "observed",
+          "collection_started_at": "observed",
+          "query_provenance": "observed",
+          "query_provenance.query_id": "observed",
+          "query_provenance.submitted_query": "observed",
+          "temporal_provenance": "observed",
+          "temporal_provenance.window_id": "observed",
+          "temporal_provenance.requested_start": "observed",
+          "temporal_provenance.requested_end_exclusive": "observed",
+          "temporal_provenance.granularity": "observed",
+          "temporal_provenance.timezone": "observed",
+          "execution": "observed",
+          "execution.status": "observed",
+          "execution.returned_count": "observed",
+          "execution.errors": "observed"
+        },
+        "observed_count": 22,
+        "unknown_count": 0
+      },
+      "integrity": {
+        "manifest_reference": "artifact-manifest.json",
+        "manifest_present": true,
+        "manifest_valid": true,
+        "verified": true,
+        "artifact_issues": [],
+        "note": ""
+      },
+      "readiness": "ready",
+      "readiness_reasons": [
+        "strict valid, references resolve, artifacts verified"
+      ],
+      "lineage": {
+        "run_id": "20261115T120210Z-youtube-cannabinoid-raw-collection-delta8-thcp-liquid-ja",
+        "artifact_ids": [
+          "20261115T120210Z-youtube-cannabinoid-raw-collection-delta8-thcp-liquid-ja-payload-json"
+        ],
+        "transformations": []
+      },
+      "evidence_refs": []
+    },
+    {
+      "run_id": "20261115T120659Z-youtube-cannabinoid-raw-collection-delta8-thcjd-liquid-ja",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/youtube/20261115T120659Z-youtube-cannabinoid-raw-collection-delta8-thcjd-liquid-ja/run_metadata.json",
+      "sha256": "24a5de435b6a9ec72d6d914510ae05484f6bfbbbec50eb423bbf80696bce942e",
+      "sha256_after": "24a5de435b6a9ec72d6d914510ae05484f6bfbbbec50eb423bbf80696bce942e",
+      "unchanged": true,
+      "strict_valid": true,
+      "strict_error_codes": [],
+      "completeness": {
+        "total": 22,
+        "verified": 22,
+        "score": 1.0,
+        "missing": [],
+        "essential_missing": []
+      },
+      "confidence": {
+        "fields": {
+          "schema_version": "observed",
+          "run_id": "observed",
+          "study_id": "observed",
+          "source_id": "observed",
+          "purpose": "observed",
+          "collector": "observed",
+          "collector.collector_id": "observed",
+          "collector.adapter_id": "observed",
+          "collection_started_at": "observed",
+          "query_provenance": "observed",
+          "query_provenance.query_id": "observed",
+          "query_provenance.submitted_query": "observed",
+          "temporal_provenance": "observed",
+          "temporal_provenance.window_id": "observed",
+          "temporal_provenance.requested_start": "observed",
+          "temporal_provenance.requested_end_exclusive": "observed",
+          "temporal_provenance.granularity": "observed",
+          "temporal_provenance.timezone": "observed",
+          "execution": "observed",
+          "execution.status": "observed",
+          "execution.returned_count": "observed",
+          "execution.errors": "observed"
+        },
+        "observed_count": 22,
+        "unknown_count": 0
+      },
+      "integrity": {
+        "manifest_reference": "artifact-manifest.json",
+        "manifest_present": true,
+        "manifest_valid": true,
+        "verified": true,
+        "artifact_issues": [],
+        "note": ""
+      },
+      "readiness": "ready",
+      "readiness_reasons": [
+        "strict valid, references resolve, artifacts verified"
+      ],
+      "lineage": {
+        "run_id": "20261115T120659Z-youtube-cannabinoid-raw-collection-delta8-thcjd-liquid-ja",
+        "artifact_ids": [
+          "20261115T120659Z-youtube-cannabinoid-raw-collection-delta8-thcjd-liquid-ja-payload-json"
+        ],
+        "transformations": []
+      },
+      "evidence_refs": []
+    },
+    {
+      "run_id": "20261115T120659Z-youtube-cannabinoid-raw-collection-delta9-thcp-liquid-ja",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/youtube/20261115T120659Z-youtube-cannabinoid-raw-collection-delta9-thcp-liquid-ja/run_metadata.json",
+      "sha256": "63f4320078901f594433afaf64c3584f39ded599981a3883b26f1cd301a00b3b",
+      "sha256_after": "63f4320078901f594433afaf64c3584f39ded599981a3883b26f1cd301a00b3b",
+      "unchanged": true,
+      "strict_valid": true,
+      "strict_error_codes": [],
+      "completeness": {
+        "total": 22,
+        "verified": 22,
+        "score": 1.0,
+        "missing": [],
+        "essential_missing": []
+      },
+      "confidence": {
+        "fields": {
+          "schema_version": "observed",
+          "run_id": "observed",
+          "study_id": "observed",
+          "source_id": "observed",
+          "purpose": "observed",
+          "collector": "observed",
+          "collector.collector_id": "observed",
+          "collector.adapter_id": "observed",
+          "collection_started_at": "observed",
+          "query_provenance": "observed",
+          "query_provenance.query_id": "observed",
+          "query_provenance.submitted_query": "observed",
+          "temporal_provenance": "observed",
+          "temporal_provenance.window_id": "observed",
+          "temporal_provenance.requested_start": "observed",
+          "temporal_provenance.requested_end_exclusive": "observed",
+          "temporal_provenance.granularity": "observed",
+          "temporal_provenance.timezone": "observed",
+          "execution": "observed",
+          "execution.status": "observed",
+          "execution.returned_count": "observed",
+          "execution.errors": "observed"
+        },
+        "observed_count": 22,
+        "unknown_count": 0
+      },
+      "integrity": {
+        "manifest_reference": "artifact-manifest.json",
+        "manifest_present": true,
+        "manifest_valid": true,
+        "verified": true,
+        "artifact_issues": [],
+        "note": ""
+      },
+      "readiness": "ready",
+      "readiness_reasons": [
+        "strict valid, references resolve, artifacts verified"
+      ],
+      "lineage": {
+        "run_id": "20261115T120659Z-youtube-cannabinoid-raw-collection-delta9-thcp-liquid-ja",
+        "artifact_ids": [
+          "20261115T120659Z-youtube-cannabinoid-raw-collection-delta9-thcp-liquid-ja-payload-json"
+        ],
+        "transformations": []
+      },
+      "evidence_refs": []
+    },
+    {
+      "run_id": "20261115T120952Z-youtube-cannabinoid-raw-collection-delta8-thcp-o-acetate-liquid-ja",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/youtube/20261115T120952Z-youtube-cannabinoid-raw-collection-delta8-thcp-o-acetate-liquid-ja/run_metadata.json",
+      "sha256": "c2ceadb390e4954d9f5eed6bf2c7e3ddd635f9384fa493ebbd1d8947ad55b331",
+      "sha256_after": "c2ceadb390e4954d9f5eed6bf2c7e3ddd635f9384fa493ebbd1d8947ad55b331",
+      "unchanged": true,
+      "strict_valid": true,
+      "strict_error_codes": [],
+      "completeness": {
+        "total": 22,
+        "verified": 22,
+        "score": 1.0,
+        "missing": [],
+        "essential_missing": []
+      },
+      "confidence": {
+        "fields": {
+          "schema_version": "observed",
+          "run_id": "observed",
+          "study_id": "observed",
+          "source_id": "observed",
+          "purpose": "observed",
+          "collector": "observed",
+          "collector.collector_id": "observed",
+          "collector.adapter_id": "observed",
+          "collection_started_at": "observed",
+          "query_provenance": "observed",
+          "query_provenance.query_id": "observed",
+          "query_provenance.submitted_query": "observed",
+          "temporal_provenance": "observed",
+          "temporal_provenance.window_id": "observed",
+          "temporal_provenance.requested_start": "observed",
+          "temporal_provenance.requested_end_exclusive": "observed",
+          "temporal_provenance.granularity": "observed",
+          "temporal_provenance.timezone": "observed",
+          "execution": "observed",
+          "execution.status": "observed",
+          "execution.returned_count": "observed",
+          "execution.errors": "observed"
+        },
+        "observed_count": 22,
+        "unknown_count": 0
+      },
+      "integrity": {
+        "manifest_reference": "artifact-manifest.json",
+        "manifest_present": true,
+        "manifest_valid": true,
+        "verified": true,
+        "artifact_issues": [],
+        "note": ""
+      },
+      "readiness": "ready",
+      "readiness_reasons": [
+        "strict valid, references resolve, artifacts verified"
+      ],
+      "lineage": {
+        "run_id": "20261115T120952Z-youtube-cannabinoid-raw-collection-delta8-thcp-o-acetate-liquid-ja",
+        "artifact_ids": [
+          "20261115T120952Z-youtube-cannabinoid-raw-collection-delta8-thcp-o-acetate-liquid-ja-payload-json"
+        ],
+        "transformations": []
+      },
+      "evidence_refs": []
+    },
+    {
+      "run_id": "20261115T120952Z-youtube-cannabinoid-raw-collection-delta9-thcjd-liquid-ja",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/youtube/20261115T120952Z-youtube-cannabinoid-raw-collection-delta9-thcjd-liquid-ja/run_metadata.json",
+      "sha256": "db86017344959e33944e374c34ca0836202c95005fe74cda9652252198604348",
+      "sha256_after": "db86017344959e33944e374c34ca0836202c95005fe74cda9652252198604348",
+      "unchanged": true,
+      "strict_valid": true,
+      "strict_error_codes": [],
+      "completeness": {
+        "total": 22,
+        "verified": 22,
+        "score": 1.0,
+        "missing": [],
+        "essential_missing": []
+      },
+      "confidence": {
+        "fields": {
+          "schema_version": "observed",
+          "run_id": "observed",
+          "study_id": "observed",
+          "source_id": "observed",
+          "purpose": "observed",
+          "collector": "observed",
+          "collector.collector_id": "observed",
+          "collector.adapter_id": "observed",
+          "collection_started_at": "observed",
+          "query_provenance": "observed",
+          "query_provenance.query_id": "observed",
+          "query_provenance.submitted_query": "observed",
+          "temporal_provenance": "observed",
+          "temporal_provenance.window_id": "observed",
+          "temporal_provenance.requested_start": "observed",
+          "temporal_provenance.requested_end_exclusive": "observed",
+          "temporal_provenance.granularity": "observed",
+          "temporal_provenance.timezone": "observed",
+          "execution": "observed",
+          "execution.status": "observed",
+          "execution.returned_count": "observed",
+          "execution.errors": "observed"
+        },
+        "observed_count": 22,
+        "unknown_count": 0
+      },
+      "integrity": {
+        "manifest_reference": "artifact-manifest.json",
+        "manifest_present": true,
+        "manifest_valid": true,
+        "verified": true,
+        "artifact_issues": [],
+        "note": ""
+      },
+      "readiness": "ready",
+      "readiness_reasons": [
+        "strict valid, references resolve, artifacts verified"
+      ],
+      "lineage": {
+        "run_id": "20261115T120952Z-youtube-cannabinoid-raw-collection-delta9-thcjd-liquid-ja",
+        "artifact_ids": [
+          "20261115T120952Z-youtube-cannabinoid-raw-collection-delta9-thcjd-liquid-ja-payload-json"
+        ],
+        "transformations": []
+      },
+      "evidence_refs": []
+    },
+    {
+      "run_id": "20261115T120952Z-youtube-cannabinoid-raw-collection-delta9-thcp-o-acetate-liquid-ja",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/youtube/20261115T120952Z-youtube-cannabinoid-raw-collection-delta9-thcp-o-acetate-liquid-ja/run_metadata.json",
+      "sha256": "fd8f73700d71c0801cd885ced323651e3d85c24339ea828343f01974f055afc2",
+      "sha256_after": "fd8f73700d71c0801cd885ced323651e3d85c24339ea828343f01974f055afc2",
+      "unchanged": true,
+      "strict_valid": true,
+      "strict_error_codes": [],
+      "completeness": {
+        "total": 22,
+        "verified": 22,
+        "score": 1.0,
+        "missing": [],
+        "essential_missing": []
+      },
+      "confidence": {
+        "fields": {
+          "schema_version": "observed",
+          "run_id": "observed",
+          "study_id": "observed",
+          "source_id": "observed",
+          "purpose": "observed",
+          "collector": "observed",
+          "collector.collector_id": "observed",
+          "collector.adapter_id": "observed",
+          "collection_started_at": "observed",
+          "query_provenance": "observed",
+          "query_provenance.query_id": "observed",
+          "query_provenance.submitted_query": "observed",
+          "temporal_provenance": "observed",
+          "temporal_provenance.window_id": "observed",
+          "temporal_provenance.requested_start": "observed",
+          "temporal_provenance.requested_end_exclusive": "observed",
+          "temporal_provenance.granularity": "observed",
+          "temporal_provenance.timezone": "observed",
+          "execution": "observed",
+          "execution.status": "observed",
+          "execution.returned_count": "observed",
+          "execution.errors": "observed"
+        },
+        "observed_count": 22,
+        "unknown_count": 0
+      },
+      "integrity": {
+        "manifest_reference": "artifact-manifest.json",
+        "manifest_present": true,
+        "manifest_valid": true,
+        "verified": true,
+        "artifact_issues": [],
+        "note": ""
+      },
+      "readiness": "ready",
+      "readiness_reasons": [
+        "strict valid, references resolve, artifacts verified"
+      ],
+      "lineage": {
+        "run_id": "20261115T120952Z-youtube-cannabinoid-raw-collection-delta9-thcp-o-acetate-liquid-ja",
+        "artifact_ids": [
+          "20261115T120952Z-youtube-cannabinoid-raw-collection-delta9-thcp-o-acetate-liquid-ja-payload-json"
+        ],
+        "transformations": []
+      },
+      "evidence_refs": []
+    },
+    {
+      "run_id": "20261115T121113Z-youtube-cannabinoid-raw-collection-delta8-thcb-o-acetate-liquid-ja",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/youtube/20261115T121113Z-youtube-cannabinoid-raw-collection-delta8-thcb-o-acetate-liquid-ja/run_metadata.json",
+      "sha256": "cd7dbd53e9b8b164e96ee60770c0faec53316b756c2588aeabc656226db4d800",
+      "sha256_after": "cd7dbd53e9b8b164e96ee60770c0faec53316b756c2588aeabc656226db4d800",
+      "unchanged": true,
+      "strict_valid": true,
+      "strict_error_codes": [],
+      "completeness": {
+        "total": 22,
+        "verified": 22,
+        "score": 1.0,
+        "missing": [],
+        "essential_missing": []
+      },
+      "confidence": {
+        "fields": {
+          "schema_version": "observed",
+          "run_id": "observed",
+          "study_id": "observed",
+          "source_id": "observed",
+          "purpose": "observed",
+          "collector": "observed",
+          "collector.collector_id": "observed",
+          "collector.adapter_id": "observed",
+          "collection_started_at": "observed",
+          "query_provenance": "observed",
+          "query_provenance.query_id": "observed",
+          "query_provenance.submitted_query": "observed",
+          "temporal_provenance": "observed",
+          "temporal_provenance.window_id": "observed",
+          "temporal_provenance.requested_start": "observed",
+          "temporal_provenance.requested_end_exclusive": "observed",
+          "temporal_provenance.granularity": "observed",
+          "temporal_provenance.timezone": "observed",
+          "execution": "observed",
+          "execution.status": "observed",
+          "execution.returned_count": "observed",
+          "execution.errors": "observed"
+        },
+        "observed_count": 22,
+        "unknown_count": 0
+      },
+      "integrity": {
+        "manifest_reference": "artifact-manifest.json",
+        "manifest_present": true,
+        "manifest_valid": true,
+        "verified": true,
+        "artifact_issues": [],
+        "note": ""
+      },
+      "readiness": "ready",
+      "readiness_reasons": [
+        "strict valid, references resolve, artifacts verified"
+      ],
+      "lineage": {
+        "run_id": "20261115T121113Z-youtube-cannabinoid-raw-collection-delta8-thcb-o-acetate-liquid-ja",
+        "artifact_ids": [
+          "20261115T121113Z-youtube-cannabinoid-raw-collection-delta8-thcb-o-acetate-liquid-ja-payload-json"
+        ],
+        "transformations": []
+      },
+      "evidence_refs": []
+    },
+    {
+      "run_id": "20261115T121113Z-youtube-cannabinoid-raw-collection-delta9-thcb-o-acetate-liquid-ja",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/youtube/20261115T121113Z-youtube-cannabinoid-raw-collection-delta9-thcb-o-acetate-liquid-ja/run_metadata.json",
+      "sha256": "8ac65b2786d51fbaf5e842598389c2ff3fa82679a04531ddf7f996679f722ac8",
+      "sha256_after": "8ac65b2786d51fbaf5e842598389c2ff3fa82679a04531ddf7f996679f722ac8",
+      "unchanged": true,
+      "strict_valid": true,
+      "strict_error_codes": [],
+      "completeness": {
+        "total": 22,
+        "verified": 22,
+        "score": 1.0,
+        "missing": [],
+        "essential_missing": []
+      },
+      "confidence": {
+        "fields": {
+          "schema_version": "observed",
+          "run_id": "observed",
+          "study_id": "observed",
+          "source_id": "observed",
+          "purpose": "observed",
+          "collector": "observed",
+          "collector.collector_id": "observed",
+          "collector.adapter_id": "observed",
+          "collection_started_at": "observed",
+          "query_provenance": "observed",
+          "query_provenance.query_id": "observed",
+          "query_provenance.submitted_query": "observed",
+          "temporal_provenance": "observed",
+          "temporal_provenance.window_id": "observed",
+          "temporal_provenance.requested_start": "observed",
+          "temporal_provenance.requested_end_exclusive": "observed",
+          "temporal_provenance.granularity": "observed",
+          "temporal_provenance.timezone": "observed",
+          "execution": "observed",
+          "execution.status": "observed",
+          "execution.returned_count": "observed",
+          "execution.errors": "observed"
+        },
+        "observed_count": 22,
+        "unknown_count": 0
+      },
+      "integrity": {
+        "manifest_reference": "artifact-manifest.json",
+        "manifest_present": true,
+        "manifest_valid": true,
+        "verified": true,
+        "artifact_issues": [],
+        "note": ""
+      },
+      "readiness": "ready",
+      "readiness_reasons": [
+        "strict valid, references resolve, artifacts verified"
+      ],
+      "lineage": {
+        "run_id": "20261115T121113Z-youtube-cannabinoid-raw-collection-delta9-thcb-o-acetate-liquid-ja",
+        "artifact_ids": [
+          "20261115T121113Z-youtube-cannabinoid-raw-collection-delta9-thcb-o-acetate-liquid-ja-payload-json"
+        ],
+        "transformations": []
+      },
+      "evidence_refs": []
+    },
+    {
+      "run_id": "20261115T121228Z-youtube-cannabinoid-raw-collection-delta6a-10a-thc-liquid-ja",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/youtube/20261115T121228Z-youtube-cannabinoid-raw-collection-delta6a-10a-thc-liquid-ja/run_metadata.json",
+      "sha256": "4635fe4dd7dcbb4d343eb9fa508064e01a4d98a6e22c8023fc156bdb558c2cf9",
+      "sha256_after": "4635fe4dd7dcbb4d343eb9fa508064e01a4d98a6e22c8023fc156bdb558c2cf9",
+      "unchanged": true,
+      "strict_valid": true,
+      "strict_error_codes": [],
+      "completeness": {
+        "total": 22,
+        "verified": 22,
+        "score": 1.0,
+        "missing": [],
+        "essential_missing": []
+      },
+      "confidence": {
+        "fields": {
+          "schema_version": "observed",
+          "run_id": "observed",
+          "study_id": "observed",
+          "source_id": "observed",
+          "purpose": "observed",
+          "collector": "observed",
+          "collector.collector_id": "observed",
+          "collector.adapter_id": "observed",
+          "collection_started_at": "observed",
+          "query_provenance": "observed",
+          "query_provenance.query_id": "observed",
+          "query_provenance.submitted_query": "observed",
+          "temporal_provenance": "observed",
+          "temporal_provenance.window_id": "observed",
+          "temporal_provenance.requested_start": "observed",
+          "temporal_provenance.requested_end_exclusive": "observed",
+          "temporal_provenance.granularity": "observed",
+          "temporal_provenance.timezone": "observed",
+          "execution": "observed",
+          "execution.status": "observed",
+          "execution.returned_count": "observed",
+          "execution.errors": "observed"
+        },
+        "observed_count": 22,
+        "unknown_count": 0
+      },
+      "integrity": {
+        "manifest_reference": "artifact-manifest.json",
+        "manifest_present": true,
+        "manifest_valid": true,
+        "verified": true,
+        "artifact_issues": [],
+        "note": ""
+      },
+      "readiness": "ready",
+      "readiness_reasons": [
+        "strict valid, references resolve, artifacts verified"
+      ],
+      "lineage": {
+        "run_id": "20261115T121228Z-youtube-cannabinoid-raw-collection-delta6a-10a-thc-liquid-ja",
+        "artifact_ids": [
+          "20261115T121228Z-youtube-cannabinoid-raw-collection-delta6a-10a-thc-liquid-ja-payload-json"
+        ],
+        "transformations": []
+      },
+      "evidence_refs": []
+    },
+    {
+      "run_id": "20261115T121228Z-youtube-cannabinoid-raw-collection-delta8-thc-liquid-ja",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/youtube/20261115T121228Z-youtube-cannabinoid-raw-collection-delta8-thc-liquid-ja/run_metadata.json",
+      "sha256": "b7a9184352497b992219a21a6ac3f7d80fda0738320d97c354865c9a00ac3df9",
+      "sha256_after": "b7a9184352497b992219a21a6ac3f7d80fda0738320d97c354865c9a00ac3df9",
+      "unchanged": true,
+      "strict_valid": true,
+      "strict_error_codes": [],
+      "completeness": {
+        "total": 22,
+        "verified": 22,
+        "score": 1.0,
+        "missing": [],
+        "essential_missing": []
+      },
+      "confidence": {
+        "fields": {
+          "schema_version": "observed",
+          "run_id": "observed",
+          "study_id": "observed",
+          "source_id": "observed",
+          "purpose": "observed",
+          "collector": "observed",
+          "collector.collector_id": "observed",
+          "collector.adapter_id": "observed",
+          "collection_started_at": "observed",
+          "query_provenance": "observed",
+          "query_provenance.query_id": "observed",
+          "query_provenance.submitted_query": "observed",
+          "temporal_provenance": "observed",
+          "temporal_provenance.window_id": "observed",
+          "temporal_provenance.requested_start": "observed",
+          "temporal_provenance.requested_end_exclusive": "observed",
+          "temporal_provenance.granularity": "observed",
+          "temporal_provenance.timezone": "observed",
+          "execution": "observed",
+          "execution.status": "observed",
+          "execution.returned_count": "observed",
+          "execution.errors": "observed"
+        },
+        "observed_count": 22,
+        "unknown_count": 0
+      },
+      "integrity": {
+        "manifest_reference": "artifact-manifest.json",
+        "manifest_present": true,
+        "manifest_valid": true,
+        "verified": true,
+        "artifact_issues": [],
+        "note": ""
+      },
+      "readiness": "ready",
+      "readiness_reasons": [
+        "strict valid, references resolve, artifacts verified"
+      ],
+      "lineage": {
+        "run_id": "20261115T121228Z-youtube-cannabinoid-raw-collection-delta8-thc-liquid-ja",
+        "artifact_ids": [
+          "20261115T121228Z-youtube-cannabinoid-raw-collection-delta8-thc-liquid-ja-payload-json"
+        ],
+        "transformations": []
+      },
+      "evidence_refs": []
+    },
+    {
+      "run_id": "20261115T121432Z-youtube-cannabinoid-raw-collection-delta10-thc-liquid-ja",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/youtube/20261115T121432Z-youtube-cannabinoid-raw-collection-delta10-thc-liquid-ja/run_metadata.json",
+      "sha256": "07d62dd5b9da8d204500e880c28b49a76b79652eb3e3f6c36761aaee877768a0",
+      "sha256_after": "07d62dd5b9da8d204500e880c28b49a76b79652eb3e3f6c36761aaee877768a0",
+      "unchanged": true,
+      "strict_valid": true,
+      "strict_error_codes": [],
+      "completeness": {
+        "total": 22,
+        "verified": 22,
+        "score": 1.0,
+        "missing": [],
+        "essential_missing": []
+      },
+      "confidence": {
+        "fields": {
+          "schema_version": "observed",
+          "run_id": "observed",
+          "study_id": "observed",
+          "source_id": "observed",
+          "purpose": "observed",
+          "collector": "observed",
+          "collector.collector_id": "observed",
+          "collector.adapter_id": "observed",
+          "collection_started_at": "observed",
+          "query_provenance": "observed",
+          "query_provenance.query_id": "observed",
+          "query_provenance.submitted_query": "observed",
+          "temporal_provenance": "observed",
+          "temporal_provenance.window_id": "observed",
+          "temporal_provenance.requested_start": "observed",
+          "temporal_provenance.requested_end_exclusive": "observed",
+          "temporal_provenance.granularity": "observed",
+          "temporal_provenance.timezone": "observed",
+          "execution": "observed",
+          "execution.status": "observed",
+          "execution.returned_count": "observed",
+          "execution.errors": "observed"
+        },
+        "observed_count": 22,
+        "unknown_count": 0
+      },
+      "integrity": {
+        "manifest_reference": "artifact-manifest.json",
+        "manifest_present": true,
+        "manifest_valid": true,
+        "verified": true,
+        "artifact_issues": [],
+        "note": ""
+      },
+      "readiness": "ready",
+      "readiness_reasons": [
+        "strict valid, references resolve, artifacts verified"
+      ],
+      "lineage": {
+        "run_id": "20261115T121432Z-youtube-cannabinoid-raw-collection-delta10-thc-liquid-ja",
+        "artifact_ids": [
+          "20261115T121432Z-youtube-cannabinoid-raw-collection-delta10-thc-liquid-ja-payload-json"
+        ],
+        "transformations": []
+      },
+      "evidence_refs": []
+    },
+    {
+      "run_id": "20261115T121714Z-youtube-cannabinoid-raw-collection-delta9-11-thc-liquid-ja",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/youtube/20261115T121714Z-youtube-cannabinoid-raw-collection-delta9-11-thc-liquid-ja/run_metadata.json",
+      "sha256": "0a6ce5b46d26975a0df0bb29eb036c95a54a8ce83553cbb758654541fc86bb0d",
+      "sha256_after": "0a6ce5b46d26975a0df0bb29eb036c95a54a8ce83553cbb758654541fc86bb0d",
+      "unchanged": true,
+      "strict_valid": true,
+      "strict_error_codes": [],
+      "completeness": {
+        "total": 22,
+        "verified": 22,
+        "score": 1.0,
+        "missing": [],
+        "essential_missing": []
+      },
+      "confidence": {
+        "fields": {
+          "schema_version": "observed",
+          "run_id": "observed",
+          "study_id": "observed",
+          "source_id": "observed",
+          "purpose": "observed",
+          "collector": "observed",
+          "collector.collector_id": "observed",
+          "collector.adapter_id": "observed",
+          "collection_started_at": "observed",
+          "query_provenance": "observed",
+          "query_provenance.query_id": "observed",
+          "query_provenance.submitted_query": "observed",
+          "temporal_provenance": "observed",
+          "temporal_provenance.window_id": "observed",
+          "temporal_provenance.requested_start": "observed",
+          "temporal_provenance.requested_end_exclusive": "observed",
+          "temporal_provenance.granularity": "observed",
+          "temporal_provenance.timezone": "observed",
+          "execution": "observed",
+          "execution.status": "observed",
+          "execution.returned_count": "observed",
+          "execution.errors": "observed"
+        },
+        "observed_count": 22,
+        "unknown_count": 0
+      },
+      "integrity": {
+        "manifest_reference": "artifact-manifest.json",
+        "manifest_present": true,
+        "manifest_valid": true,
+        "verified": true,
+        "artifact_issues": [],
+        "note": ""
+      },
+      "readiness": "ready",
+      "readiness_reasons": [
+        "strict valid, references resolve, artifacts verified"
+      ],
+      "lineage": {
+        "run_id": "20261115T121714Z-youtube-cannabinoid-raw-collection-delta9-11-thc-liquid-ja",
+        "artifact_ids": [
+          "20261115T121714Z-youtube-cannabinoid-raw-collection-delta9-11-thc-liquid-ja-payload-json"
+        ],
+        "transformations": []
+      },
+      "evidence_refs": []
+    },
+    {
+      "run_id": "20261115T121714Z-youtube-cannabinoid-raw-collection-delta9-thcv-liquid-ja",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/youtube/20261115T121714Z-youtube-cannabinoid-raw-collection-delta9-thcv-liquid-ja/run_metadata.json",
+      "sha256": "1997ff6df6066ea19e69161aa0d575920550790dcae47f9dc21c9adaeb7bfb34",
+      "sha256_after": "1997ff6df6066ea19e69161aa0d575920550790dcae47f9dc21c9adaeb7bfb34",
+      "unchanged": true,
+      "strict_valid": true,
+      "strict_error_codes": [],
+      "completeness": {
+        "total": 22,
+        "verified": 22,
+        "score": 1.0,
+        "missing": [],
+        "essential_missing": []
+      },
+      "confidence": {
+        "fields": {
+          "schema_version": "observed",
+          "run_id": "observed",
+          "study_id": "observed",
+          "source_id": "observed",
+          "purpose": "observed",
+          "collector": "observed",
+          "collector.collector_id": "observed",
+          "collector.adapter_id": "observed",
+          "collection_started_at": "observed",
+          "query_provenance": "observed",
+          "query_provenance.query_id": "observed",
+          "query_provenance.submitted_query": "observed",
+          "temporal_provenance": "observed",
+          "temporal_provenance.window_id": "observed",
+          "temporal_provenance.requested_start": "observed",
+          "temporal_provenance.requested_end_exclusive": "observed",
+          "temporal_provenance.granularity": "observed",
+          "temporal_provenance.timezone": "observed",
+          "execution": "observed",
+          "execution.status": "observed",
+          "execution.returned_count": "observed",
+          "execution.errors": "observed"
+        },
+        "observed_count": 22,
+        "unknown_count": 0
+      },
+      "integrity": {
+        "manifest_reference": "artifact-manifest.json",
+        "manifest_present": true,
+        "manifest_valid": true,
+        "verified": true,
+        "artifact_issues": [],
+        "note": ""
+      },
+      "readiness": "ready",
+      "readiness_reasons": [
+        "strict valid, references resolve, artifacts verified"
+      ],
+      "lineage": {
+        "run_id": "20261115T121714Z-youtube-cannabinoid-raw-collection-delta9-thcv-liquid-ja",
+        "artifact_ids": [
+          "20261115T121714Z-youtube-cannabinoid-raw-collection-delta9-thcv-liquid-ja-payload-json"
+        ],
+        "transformations": []
+      },
+      "evidence_refs": []
+    },
+    {
+      "run_id": "20261115T121950Z-youtube-cannabinoid-raw-collection-delta8-thcv-liquid-ja",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/youtube/20261115T121950Z-youtube-cannabinoid-raw-collection-delta8-thcv-liquid-ja/run_metadata.json",
+      "sha256": "ce23a2a786c7077ae61bc30e64849dd5060e0cbc75526c25239bf626c9a71c7c",
+      "sha256_after": "ce23a2a786c7077ae61bc30e64849dd5060e0cbc75526c25239bf626c9a71c7c",
+      "unchanged": true,
+      "strict_valid": true,
+      "strict_error_codes": [],
+      "completeness": {
+        "total": 22,
+        "verified": 22,
+        "score": 1.0,
+        "missing": [],
+        "essential_missing": []
+      },
+      "confidence": {
+        "fields": {
+          "schema_version": "observed",
+          "run_id": "observed",
+          "study_id": "observed",
+          "source_id": "observed",
+          "purpose": "observed",
+          "collector": "observed",
+          "collector.collector_id": "observed",
+          "collector.adapter_id": "observed",
+          "collection_started_at": "observed",
+          "query_provenance": "observed",
+          "query_provenance.query_id": "observed",
+          "query_provenance.submitted_query": "observed",
+          "temporal_provenance": "observed",
+          "temporal_provenance.window_id": "observed",
+          "temporal_provenance.requested_start": "observed",
+          "temporal_provenance.requested_end_exclusive": "observed",
+          "temporal_provenance.granularity": "observed",
+          "temporal_provenance.timezone": "observed",
+          "execution": "observed",
+          "execution.status": "observed",
+          "execution.returned_count": "observed",
+          "execution.errors": "observed"
+        },
+        "observed_count": 22,
+        "unknown_count": 0
+      },
+      "integrity": {
+        "manifest_reference": "artifact-manifest.json",
+        "manifest_present": true,
+        "manifest_valid": true,
+        "verified": true,
+        "artifact_issues": [],
+        "note": ""
+      },
+      "readiness": "ready",
+      "readiness_reasons": [
+        "strict valid, references resolve, artifacts verified"
+      ],
+      "lineage": {
+        "run_id": "20261115T121950Z-youtube-cannabinoid-raw-collection-delta8-thcv-liquid-ja",
+        "artifact_ids": [
+          "20261115T121950Z-youtube-cannabinoid-raw-collection-delta8-thcv-liquid-ja-payload-json"
+        ],
+        "transformations": []
+      },
+      "evidence_refs": []
+    },
+    {
+      "run_id": "20261115T122200Z-youtube-cannabinoid-raw-collection-thcjd-o-acetate-liquid-ja",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/youtube/20261115T122200Z-youtube-cannabinoid-raw-collection-thcjd-o-acetate-liquid-ja/run_metadata.json",
+      "sha256": "dc49869088398c538e1769f02811c564f8766db59cacb4c5e295751584b7ced4",
+      "sha256_after": "dc49869088398c538e1769f02811c564f8766db59cacb4c5e295751584b7ced4",
+      "unchanged": true,
+      "strict_valid": true,
+      "strict_error_codes": [],
+      "completeness": {
+        "total": 22,
+        "verified": 22,
+        "score": 1.0,
+        "missing": [],
+        "essential_missing": []
+      },
+      "confidence": {
+        "fields": {
+          "schema_version": "observed",
+          "run_id": "observed",
+          "study_id": "observed",
+          "source_id": "observed",
+          "purpose": "observed",
+          "collector": "observed",
+          "collector.collector_id": "observed",
+          "collector.adapter_id": "observed",
+          "collection_started_at": "observed",
+          "query_provenance": "observed",
+          "query_provenance.query_id": "observed",
+          "query_provenance.submitted_query": "observed",
+          "temporal_provenance": "observed",
+          "temporal_provenance.window_id": "observed",
+          "temporal_provenance.requested_start": "observed",
+          "temporal_provenance.requested_end_exclusive": "observed",
+          "temporal_provenance.granularity": "observed",
+          "temporal_provenance.timezone": "observed",
+          "execution": "observed",
+          "execution.status": "observed",
+          "execution.returned_count": "observed",
+          "execution.errors": "observed"
+        },
+        "observed_count": 22,
+        "unknown_count": 0
+      },
+      "integrity": {
+        "manifest_reference": "artifact-manifest.json",
+        "manifest_present": true,
+        "manifest_valid": true,
+        "verified": true,
+        "artifact_issues": [],
+        "note": ""
+      },
+      "readiness": "ready",
+      "readiness_reasons": [
+        "strict valid, references resolve, artifacts verified"
+      ],
+      "lineage": {
+        "run_id": "20261115T122200Z-youtube-cannabinoid-raw-collection-thcjd-o-acetate-liquid-ja",
+        "artifact_ids": [
+          "20261115T122200Z-youtube-cannabinoid-raw-collection-thcjd-o-acetate-liquid-ja-payload-json"
+        ],
+        "transformations": []
+      },
+      "evidence_refs": []
+    },
+    {
+      "run_id": "20261115T122319Z-youtube-cannabinoid-raw-collection-delta8-thch-liquid-ja",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/youtube/20261115T122319Z-youtube-cannabinoid-raw-collection-delta8-thch-liquid-ja/run_metadata.json",
+      "sha256": "35cebb5edaf30e8ea287cbc4672b997746aea96ab92faface3c66aaa53ff016b",
+      "sha256_after": "35cebb5edaf30e8ea287cbc4672b997746aea96ab92faface3c66aaa53ff016b",
+      "unchanged": true,
+      "strict_valid": true,
+      "strict_error_codes": [],
+      "completeness": {
+        "total": 22,
+        "verified": 22,
+        "score": 1.0,
+        "missing": [],
+        "essential_missing": []
+      },
+      "confidence": {
+        "fields": {
+          "schema_version": "observed",
+          "run_id": "observed",
+          "study_id": "observed",
+          "source_id": "observed",
+          "purpose": "observed",
+          "collector": "observed",
+          "collector.collector_id": "observed",
+          "collector.adapter_id": "observed",
+          "collection_started_at": "observed",
+          "query_provenance": "observed",
+          "query_provenance.query_id": "observed",
+          "query_provenance.submitted_query": "observed",
+          "temporal_provenance": "observed",
+          "temporal_provenance.window_id": "observed",
+          "temporal_provenance.requested_start": "observed",
+          "temporal_provenance.requested_end_exclusive": "observed",
+          "temporal_provenance.granularity": "observed",
+          "temporal_provenance.timezone": "observed",
+          "execution": "observed",
+          "execution.status": "observed",
+          "execution.returned_count": "observed",
+          "execution.errors": "observed"
+        },
+        "observed_count": 22,
+        "unknown_count": 0
+      },
+      "integrity": {
+        "manifest_reference": "artifact-manifest.json",
+        "manifest_present": true,
+        "manifest_valid": true,
+        "verified": true,
+        "artifact_issues": [],
+        "note": ""
+      },
+      "readiness": "ready",
+      "readiness_reasons": [
+        "strict valid, references resolve, artifacts verified"
+      ],
+      "lineage": {
+        "run_id": "20261115T122319Z-youtube-cannabinoid-raw-collection-delta8-thch-liquid-ja",
+        "artifact_ids": [
+          "20261115T122319Z-youtube-cannabinoid-raw-collection-delta8-thch-liquid-ja-payload-json"
+        ],
+        "transformations": []
+      },
+      "evidence_refs": []
+    },
+    {
+      "run_id": "20261115T122319Z-youtube-cannabinoid-raw-collection-delta9-thch-liquid-ja",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/youtube/20261115T122319Z-youtube-cannabinoid-raw-collection-delta9-thch-liquid-ja/run_metadata.json",
+      "sha256": "171d930c876203e914161eee63c123caa4a502276d7465be4547b117d2e8a77f",
+      "sha256_after": "171d930c876203e914161eee63c123caa4a502276d7465be4547b117d2e8a77f",
+      "unchanged": true,
+      "strict_valid": true,
+      "strict_error_codes": [],
+      "completeness": {
+        "total": 22,
+        "verified": 22,
+        "score": 1.0,
+        "missing": [],
+        "essential_missing": []
+      },
+      "confidence": {
+        "fields": {
+          "schema_version": "observed",
+          "run_id": "observed",
+          "study_id": "observed",
+          "source_id": "observed",
+          "purpose": "observed",
+          "collector": "observed",
+          "collector.collector_id": "observed",
+          "collector.adapter_id": "observed",
+          "collection_started_at": "observed",
+          "query_provenance": "observed",
+          "query_provenance.query_id": "observed",
+          "query_provenance.submitted_query": "observed",
+          "temporal_provenance": "observed",
+          "temporal_provenance.window_id": "observed",
+          "temporal_provenance.requested_start": "observed",
+          "temporal_provenance.requested_end_exclusive": "observed",
+          "temporal_provenance.granularity": "observed",
+          "temporal_provenance.timezone": "observed",
+          "execution": "observed",
+          "execution.status": "observed",
+          "execution.returned_count": "observed",
+          "execution.errors": "observed"
+        },
+        "observed_count": 22,
+        "unknown_count": 0
+      },
+      "integrity": {
+        "manifest_reference": "artifact-manifest.json",
+        "manifest_present": true,
+        "manifest_valid": true,
+        "verified": true,
+        "artifact_issues": [],
+        "note": ""
+      },
+      "readiness": "ready",
+      "readiness_reasons": [
+        "strict valid, references resolve, artifacts verified"
+      ],
+      "lineage": {
+        "run_id": "20261115T122319Z-youtube-cannabinoid-raw-collection-delta9-thch-liquid-ja",
+        "artifact_ids": [
+          "20261115T122319Z-youtube-cannabinoid-raw-collection-delta9-thch-liquid-ja-payload-json"
+        ],
+        "transformations": []
+      },
+      "evidence_refs": []
+    },
+    {
+      "run_id": "20261115T122435Z-youtube-cannabinoid-raw-collection-9r-hhc-liquid-ja",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/youtube/20261115T122435Z-youtube-cannabinoid-raw-collection-9r-hhc-liquid-ja/run_metadata.json",
+      "sha256": "018b3bb16dbb9eae8145195f3af884b45dca5ad005083c6ee9a3f1ffd1e78ddc",
+      "sha256_after": "018b3bb16dbb9eae8145195f3af884b45dca5ad005083c6ee9a3f1ffd1e78ddc",
+      "unchanged": true,
+      "strict_valid": true,
+      "strict_error_codes": [],
+      "completeness": {
+        "total": 22,
+        "verified": 22,
+        "score": 1.0,
+        "missing": [],
+        "essential_missing": []
+      },
+      "confidence": {
+        "fields": {
+          "schema_version": "observed",
+          "run_id": "observed",
+          "study_id": "observed",
+          "source_id": "observed",
+          "purpose": "observed",
+          "collector": "observed",
+          "collector.collector_id": "observed",
+          "collector.adapter_id": "observed",
+          "collection_started_at": "observed",
+          "query_provenance": "observed",
+          "query_provenance.query_id": "observed",
+          "query_provenance.submitted_query": "observed",
+          "temporal_provenance": "observed",
+          "temporal_provenance.window_id": "observed",
+          "temporal_provenance.requested_start": "observed",
+          "temporal_provenance.requested_end_exclusive": "observed",
+          "temporal_provenance.granularity": "observed",
+          "temporal_provenance.timezone": "observed",
+          "execution": "observed",
+          "execution.status": "observed",
+          "execution.returned_count": "observed",
+          "execution.errors": "observed"
+        },
+        "observed_count": 22,
+        "unknown_count": 0
+      },
+      "integrity": {
+        "manifest_reference": "artifact-manifest.json",
+        "manifest_present": true,
+        "manifest_valid": true,
+        "verified": true,
+        "artifact_issues": [],
+        "note": ""
+      },
+      "readiness": "ready",
+      "readiness_reasons": [
+        "strict valid, references resolve, artifacts verified"
+      ],
+      "lineage": {
+        "run_id": "20261115T122435Z-youtube-cannabinoid-raw-collection-9r-hhc-liquid-ja",
+        "artifact_ids": [
+          "20261115T122435Z-youtube-cannabinoid-raw-collection-9r-hhc-liquid-ja-payload-json"
+        ],
+        "transformations": []
+      },
+      "evidence_refs": []
+    },
+    {
+      "run_id": "20261115T122610Z-youtube-cannabinoid-raw-collection-9s-hhc-liquid-ja",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/youtube/20261115T122610Z-youtube-cannabinoid-raw-collection-9s-hhc-liquid-ja/run_metadata.json",
+      "sha256": "827ab5a915944fbe5b68948dd4c83422b60c7c274041f73db347df98bc0ebb3b",
+      "sha256_after": "827ab5a915944fbe5b68948dd4c83422b60c7c274041f73db347df98bc0ebb3b",
+      "unchanged": true,
+      "strict_valid": true,
+      "strict_error_codes": [],
+      "completeness": {
+        "total": 22,
+        "verified": 22,
+        "score": 1.0,
+        "missing": [],
+        "essential_missing": []
+      },
+      "confidence": {
+        "fields": {
+          "schema_version": "observed",
+          "run_id": "observed",
+          "study_id": "observed",
+          "source_id": "observed",
+          "purpose": "observed",
+          "collector": "observed",
+          "collector.collector_id": "observed",
+          "collector.adapter_id": "observed",
+          "collection_started_at": "observed",
+          "query_provenance": "observed",
+          "query_provenance.query_id": "observed",
+          "query_provenance.submitted_query": "observed",
+          "temporal_provenance": "observed",
+          "temporal_provenance.window_id": "observed",
+          "temporal_provenance.requested_start": "observed",
+          "temporal_provenance.requested_end_exclusive": "observed",
+          "temporal_provenance.granularity": "observed",
+          "temporal_provenance.timezone": "observed",
+          "execution": "observed",
+          "execution.status": "observed",
+          "execution.returned_count": "observed",
+          "execution.errors": "observed"
+        },
+        "observed_count": 22,
+        "unknown_count": 0
+      },
+      "integrity": {
+        "manifest_reference": "artifact-manifest.json",
+        "manifest_present": true,
+        "manifest_valid": true,
+        "verified": true,
+        "artifact_issues": [],
+        "note": ""
+      },
+      "readiness": "ready",
+      "readiness_reasons": [
+        "strict valid, references resolve, artifacts verified"
+      ],
+      "lineage": {
+        "run_id": "20261115T122610Z-youtube-cannabinoid-raw-collection-9s-hhc-liquid-ja",
+        "artifact_ids": [
+          "20261115T122610Z-youtube-cannabinoid-raw-collection-9s-hhc-liquid-ja-payload-json"
         ],
         "transformations": []
       },

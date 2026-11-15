@@ -7,11 +7,11 @@ study README inventoried as unregistered, uncollected candidate forms;
 topics; and the study's ``metadata/query-design.json``.
 
 The rule: registering a term fixes a search string. It does not establish a
-chemical identity, does not collect anything, and never reassigns an existing
-query or run. Every registered form here is uncollected -- not zero, not missing,
-not a collection failure -- and the evidence types behind the rows (registry
-record, statutory structural group, nomenclature standard, WHO configuration
-review, product analysis) stay distinct.
+chemical identity or itself collect anything, and never reassigns an existing
+query or run. A later, separately authorized collection may add coverage; its
+source-specific state is not inferred from registration. The evidence types
+behind the rows (registry record, statutory structural group, nomenclature
+standard, WHO configuration review, product analysis) stay distinct.
 """
 
 from __future__ import annotations
@@ -88,6 +88,23 @@ BATCH = (
 HHC_FORMS = tuple(term for term, _, _ in BATCH if term.endswith("-HHC"))
 #: The only term whose registered scope stays positional-isomer-unspecified.
 ISOMER_UNSPECIFIED = "THCJD-O-acetate"
+
+#: Current adopted coverage, independently verified from the plans, catalog,
+#: declarations, and run records; query registration alone does not imply these.
+GT_12M_ADOPTED = {
+    "6ar-9r-10as-hhc", "6as-9r-10ar-hhc", "6as-9r-10as-hhc",
+    "6as-9s-10ar-hhc", "9r-hhc", "9s-hhc", "delta6a-7-thc",
+    "delta8-thc", "delta9-thcb-o-acetate",
+}
+YOUTUBE_ADOPTED = {
+    "delta8-thcp", "delta9-thcp", "delta8-thcjd", "delta9-thcjd",
+    "delta8-thcp-o-acetate", "delta9-thcp-o-acetate",
+    "delta8-thcb-o-acetate", "delta9-thcb-o-acetate", "delta8-thc",
+    "delta6a-10a-thc", "delta10-thc", "delta9-11-thc", "delta9-thcv",
+    "delta8-thcv", "thcjd-o-acetate", "delta8-thch", "delta9-thch",
+    "9r-hhc", "9s-hhc",
+}
+GT_5Y_HTTP_429 = {"6ar-9r-10as-hhc"}
 
 #: The 75 general+liquid canonical queries the study had before this batch.
 PRE_EXISTING_GENERAL_LIQUID = 75
@@ -306,18 +323,19 @@ def test_the_category_states_the_new_cases() -> None:
 
 
 # ---------------------------------------------------------------------------
-# nothing is collected, and nothing historical moved
+# registration is independent of collection; historical assignments stay fixed
 # ---------------------------------------------------------------------------
 
 
-def test_no_new_query_appears_in_a_run() -> None:
-    """Registration is not collection: the catalog holds no run for them."""
+def test_candidate_catalog_entries_reference_registered_adopted_queries() -> None:
+    """Only the audited adopted candidate queries appear in the catalog."""
 
     new_ids = {
         query_id
         for _, _, slug in BATCH
         for query_id in (f"{slug}-general-ja", f"{slug}-liquid-ja")
     }
+    registered = {query["query_id"] for query in _registry()}
     catalog = json.loads(CATALOG.read_text(encoding="utf-8"))
     referenced: set[str] = set()
 
@@ -333,7 +351,12 @@ def test_no_new_query_appears_in_a_run() -> None:
                 walk(value)
 
     walk(catalog)
-    assert new_ids & referenced == set()
+    expected = {
+        *(f"{slug}-general-ja" for slug in GT_12M_ADOPTED),
+        *(f"{slug}-liquid-ja" for slug in YOUTUBE_ADOPTED),
+    }
+    assert new_ids <= registered
+    assert new_ids & referenced == expected
 
 
 def test_existing_general_and_liquid_queries_are_preserved() -> None:
@@ -410,17 +433,32 @@ def test_the_project_mirror_carries_every_term_without_a_coverage_status() -> No
 # ---------------------------------------------------------------------------
 
 
-def test_readme_lists_each_registered_term_as_uncollected() -> None:
+def test_readme_lists_current_source_specific_candidate_coverage() -> None:
     map_rows = {
         cells[0]: cells
         for cells in _rows(_section(_readme(), "### 登録済みキーワードと収集状態"))
     }
     assert len(map_rows) == 63
-    for term, notation, _ in BATCH:
+    observed_gt_12m: set[str] = set()
+    observed_gt_12m_no_data: set[str] = set()
+    observed_yt: set[str] = set()
+    observed_yt_no_videos: set[str] = set()
+    for term, notation, slug in BATCH:
         row = map_rows[term]
         assert row[1].strip("`") == notation
-        assert "未収集" in row[4], term
-        assert "✅" not in row[4], term
+        status = row[4]
+        if "GT 12m ✅" in status:
+            observed_gt_12m.add(slug)
+        if "GT 12m NO_DATA" in status:
+            observed_gt_12m_no_data.add(slug)
+        if "YouTube ✅" in status:
+            observed_yt.add(slug)
+        if "YouTube NO_VIDEOS" in status:
+            observed_yt_no_videos.add(slug)
+    assert observed_gt_12m == GT_12M_ADOPTED
+    assert observed_gt_12m_no_data == {slug for _, _, slug in BATCH} - GT_12M_ADOPTED
+    assert observed_yt == YOUTUBE_ADOPTED
+    assert observed_yt_no_videos == {slug for _, _, slug in BATCH} - YOUTUBE_ADOPTED
 
 
 def test_readme_keeps_the_batch_out_of_the_identity_tables() -> None:
@@ -428,10 +466,12 @@ def test_readme_keeps_the_batch_out_of_the_identity_tables() -> None:
 
     text = _readme()
     batch = _section(text, "#### 2026-11-15 登録バッチ")
-    assert "未収集" in batch
-    assert "✅" not in batch
-    assert "ixiv" not in batch  # no adopted marker smuggled in
-    assert "登録は収集の許可ではない" in batch or "run を持たない" in batch
+    assert "登録時点" in batch
+    assert "19 adopted" in batch
+    assert "8 `NO_VIDEOS`" in batch
+    assert "NO_DATA" in batch
+    assert "登録時点では 27 語はいずれも run を持たなかった" in batch
+    assert "現在は Google Trends" in batch
 
     form_rows = {
         cells[0].strip("`"): cells
@@ -534,21 +574,21 @@ def _methodology_topic_rows() -> list[list[str]]:
 def test_methodology_current_table_has_all_63_topics_and_64_queries() -> None:
     methodology = METHODOLOGY.read_text(encoding="utf-8")
     assert "現在の登録集合は **63 トピック**" in methodology
-    assert "| **登録 63 語** | **29/63** | **21/63** |" in methodology
+    assert "| **登録 63 語** | **29/63** | **30/63** |" in methodology
 
     rows = _methodology_topic_rows()
     assert len(rows) == 63
     by_notation = {cells[2].strip("`"): cells for cells in rows}
     assert len(by_notation) == 63
 
-    for term, notation, _ in BATCH:
+    for term, notation, slug in BATCH:
         cells = by_notation[notation]
         assert len(cells) == 9, cells
         assert cells[1] == term, cells
         assert cells[4] == f"`{term}`", cells
         assert cells[5] == f"`{term} リキッド`", cells
-        assert cells[6] == "未収集", cells
-        assert cells[7] == "未収集", cells
+        assert cells[6] == ("✅" if slug in GT_12M_ADOPTED else "データなし"), cells
+        assert cells[7] == ("失敗（429）×3" if slug in GT_5Y_HTTP_429 else "未試行"), cells
         assert cells[8] == "設計外", cells
 
 
@@ -557,9 +597,9 @@ def test_readme_current_counts_are_63_topics_and_64_primary_queries() -> None:
     assert "残る 56 トピック" in readme
     assert "残る 29 トピック" not in readme
     assert "登録集合は 36 トピック" not in readme
-    assert "required primary query 64 本" in readme
+    assert "required primary 64 本" in readme
     assert "required primary query 37 本" not in readme
-    assert "計 34 本" in readme
+    assert "未被覆15 query" in readme
 
     inventory = QUERY_INVENTORY.read_text(encoding="utf-8")
     assert "登録 63 トピック" in inventory
@@ -627,8 +667,10 @@ def test_slug_normalization_prose_matches_the_stable_query_ids() -> None:
             assert example in text, (path, example)
 
 
-def test_the_12_month_numerator_is_documented_as_pre_existing() -> None:
-    assert "12ヶ月 21/63 の分子は既存の被覆記録を引き継ぐ" in README.read_text(encoding="utf-8")
+def test_the_12_month_baseline_is_separated_from_candidate_series() -> None:
+    readme = README.read_text(encoding="utf-8")
+    assert "inherited baseline21/63 + 候補形式9/27" in readme
+    assert "今回の候補形式9 runはraw / declarationから確認した" in readme
     methodology = METHODOLOGY.read_text(encoding="utf-8")
-    assert "12ヶ月の分子 21/63 は既存の被覆記録を引き継いだ**既存値**" in methodology
-    assert "本変更で新たに照合した数ではない" in methodology
+    assert "12ヶ月30/63のうち inherited baseline 21/63" in methodology
+    assert "候補形式9/27" in methodology

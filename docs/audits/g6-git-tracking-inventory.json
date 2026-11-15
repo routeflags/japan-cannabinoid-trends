@@ -4,13 +4,13 @@
   "spec": "docs/plans/20261013f.md §15 (local plan; not tracked)",
   "target_root": "datasets",
   "include_private": false,
-  "count": 648,
+  "count": 741,
   "extra_count": 44,
   "raw_modified": false,
   "state_summary": {
-    "absent": 14,
-    "ignored": 2,
-    "tracked": 676
+    "absent": 13,
+    "ignored": 60,
+    "tracked": 712
   },
   "entries": [
     {
@@ -139,8 +139,8 @@
       "state": "tracked",
       "tracked": true,
       "ignored": false,
-      "sha256": "14f44d9e92c0a2ced856d88b0c867fc22304d74e24f325fbb02f52f7c3f41df4",
-      "sha256_after": "14f44d9e92c0a2ced856d88b0c867fc22304d74e24f325fbb02f52f7c3f41df4",
+      "sha256": "0c7103549ee97e64a1470f9da28482028f410a78e258177b5349202404b8eb38",
+      "sha256_after": "0c7103549ee97e64a1470f9da28482028f410a78e258177b5349202404b8eb38",
       "unchanged": true
     },
     {
@@ -959,8 +959,8 @@
       "state": "tracked",
       "tracked": true,
       "ignored": false,
-      "sha256": "211b41e5cbc5c293c1b74184db75f49ea68e2a3d00767b48d9a95380d8669eee",
-      "sha256_after": "211b41e5cbc5c293c1b74184db75f49ea68e2a3d00767b48d9a95380d8669eee",
+      "sha256": "df1229be405a0cd5b86595b5643226d2f9aef3c602b07126df20acad93f15dfc",
+      "sha256_after": "df1229be405a0cd5b86595b5643226d2f9aef3c602b07126df20acad93f15dfc",
       "unchanged": true
     },
     {
@@ -4694,13 +4694,943 @@
       "unchanged": true
     },
     {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261115T115317Z-google-trends-6ar-9r-10as-hhc-12m-retry1/artifact-manifest.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "8be9d708ad75f1d7237a69777a7440fdceebba4cedddf4df36f55686467f37d5",
+      "sha256_after": "8be9d708ad75f1d7237a69777a7440fdceebba4cedddf4df36f55686467f37d5",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261115T115317Z-google-trends-6ar-9r-10as-hhc-12m-retry1/payload.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "21c013bac6a84dadaadd2446a157d4c5e9666e20de86c62968955e9962f78035",
+      "sha256_after": "21c013bac6a84dadaadd2446a157d4c5e9666e20de86c62968955e9962f78035",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261115T115317Z-google-trends-6ar-9r-10as-hhc-12m-retry1/records_6ar-9r-10as-hhc.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "5885b6a63a86834ab098598338872a035d1d55acad0d74646ffef4b044d15fb2",
+      "sha256_after": "5885b6a63a86834ab098598338872a035d1d55acad0d74646ffef4b044d15fb2",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261115T115317Z-google-trends-6ar-9r-10as-hhc-12m-retry1/run_metadata.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "6981021aee6863c997b9e37d36f521962702732473cd6badf465b33f72d9e415",
+      "sha256_after": "6981021aee6863c997b9e37d36f521962702732473cd6badf465b33f72d9e415",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261115T115353Z-google-trends-6as-9r-10ar-hhc-12m/artifact-manifest.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "6ac41e9a83cfdea8fa709e9011b7711fe75947d30fdd6eb899b25097099f1ea5",
+      "sha256_after": "6ac41e9a83cfdea8fa709e9011b7711fe75947d30fdd6eb899b25097099f1ea5",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261115T115353Z-google-trends-6as-9r-10ar-hhc-12m/payload.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "cab01f253b9ba39e0707a98da17c550ebe6aaf993da6cb7599de1947eded63fb",
+      "sha256_after": "cab01f253b9ba39e0707a98da17c550ebe6aaf993da6cb7599de1947eded63fb",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261115T115353Z-google-trends-6as-9r-10ar-hhc-12m/records_6as-9r-10ar-hhc.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "33bcc8b68d1c18cda8ec5d35b2c8a792366f1bc08dd47f16fb4d0566f8a6c11f",
+      "sha256_after": "33bcc8b68d1c18cda8ec5d35b2c8a792366f1bc08dd47f16fb4d0566f8a6c11f",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261115T115353Z-google-trends-6as-9r-10ar-hhc-12m/run_metadata.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "b0c20f1930c8d3ea9b746cef83edeae4cfcdc4f15a977f12aeae69a92c163284",
+      "sha256_after": "b0c20f1930c8d3ea9b746cef83edeae4cfcdc4f15a977f12aeae69a92c163284",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261115T115355Z-google-trends-6as-9r-10as-hhc-12m/artifact-manifest.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "240f5189ca352828778e04b3b13af47105781398031552d80228980c80bebb51",
+      "sha256_after": "240f5189ca352828778e04b3b13af47105781398031552d80228980c80bebb51",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261115T115355Z-google-trends-6as-9r-10as-hhc-12m/payload.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "32d0d4c6b7534b61b0276db3435275e10fed372e0f8bbbbc7ff94d6b7a765f7b",
+      "sha256_after": "32d0d4c6b7534b61b0276db3435275e10fed372e0f8bbbbc7ff94d6b7a765f7b",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261115T115355Z-google-trends-6as-9r-10as-hhc-12m/records_6as-9r-10as-hhc.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "7a3d512e41f7f1602b845579170a56cf33d164ae995c6dc4dc6b6fd9a3eed6be",
+      "sha256_after": "7a3d512e41f7f1602b845579170a56cf33d164ae995c6dc4dc6b6fd9a3eed6be",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261115T115355Z-google-trends-6as-9r-10as-hhc-12m/run_metadata.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "1b21918880943a337606e25f88de317ffa604a44685eca7caf2914c517570cd8",
+      "sha256_after": "1b21918880943a337606e25f88de317ffa604a44685eca7caf2914c517570cd8",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261115T115358Z-google-trends-6as-9s-10ar-hhc-12m/artifact-manifest.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "26a766cffbd84d70f2d9cf7d51450f70862c187ca019e1930dd33fa6b88e4086",
+      "sha256_after": "26a766cffbd84d70f2d9cf7d51450f70862c187ca019e1930dd33fa6b88e4086",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261115T115358Z-google-trends-6as-9s-10ar-hhc-12m/payload.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "afcb52299b562407f4f94cb1fb31d11a9ffa2a122d00220a104294b1a890bd5f",
+      "sha256_after": "afcb52299b562407f4f94cb1fb31d11a9ffa2a122d00220a104294b1a890bd5f",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261115T115358Z-google-trends-6as-9s-10ar-hhc-12m/records_6as-9s-10ar-hhc.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "7d3f11c5d1659e689c92df9d4182930d0c25c15e8efd7f1b895208c25acccdc9",
+      "sha256_after": "7d3f11c5d1659e689c92df9d4182930d0c25c15e8efd7f1b895208c25acccdc9",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261115T115358Z-google-trends-6as-9s-10ar-hhc-12m/run_metadata.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "71df3aa2fca63a9244a057dab53c601d73c33594afa2ab7899aa955cfcd33c2d",
+      "sha256_after": "71df3aa2fca63a9244a057dab53c601d73c33594afa2ab7899aa955cfcd33c2d",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261115T115404Z-google-trends-9r-hhc-12m/artifact-manifest.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "9c87d692e16ad9aa569d56954eec63d62b8552097901b3efbc42e070c108c0af",
+      "sha256_after": "9c87d692e16ad9aa569d56954eec63d62b8552097901b3efbc42e070c108c0af",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261115T115404Z-google-trends-9r-hhc-12m/payload.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "fce2188c0b7a4c177391017eeeb2751d8b76f3e2a31a7db081a8b64c963feb69",
+      "sha256_after": "fce2188c0b7a4c177391017eeeb2751d8b76f3e2a31a7db081a8b64c963feb69",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261115T115404Z-google-trends-9r-hhc-12m/records_9-r-hhc.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "33ba9f917ac2dac71da0debd0afe52507b2c001c362178ae255adba05f015c4d",
+      "sha256_after": "33ba9f917ac2dac71da0debd0afe52507b2c001c362178ae255adba05f015c4d",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261115T115404Z-google-trends-9r-hhc-12m/run_metadata.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "46b40b38ecca5e998518f5bea1349ae7953727b9983046068b92e6d63e266f73",
+      "sha256_after": "46b40b38ecca5e998518f5bea1349ae7953727b9983046068b92e6d63e266f73",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261115T115407Z-google-trends-9s-hhc-12m/artifact-manifest.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "b0dcb1c6a7c54eb5942a48998205de607711dca4320df4c5cb8c8e9e6cb3c119",
+      "sha256_after": "b0dcb1c6a7c54eb5942a48998205de607711dca4320df4c5cb8c8e9e6cb3c119",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261115T115407Z-google-trends-9s-hhc-12m/payload.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "3e5a27f8e6d7d0d7876ae28761565e4762fa028e65d47ad224af18f17f31da0a",
+      "sha256_after": "3e5a27f8e6d7d0d7876ae28761565e4762fa028e65d47ad224af18f17f31da0a",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261115T115407Z-google-trends-9s-hhc-12m/records_9-s-hhc.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "0122f4cc6b93549a691b5fe3b7f9a05d94a073374a243499422ca6d952ba9399",
+      "sha256_after": "0122f4cc6b93549a691b5fe3b7f9a05d94a073374a243499422ca6d952ba9399",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261115T115407Z-google-trends-9s-hhc-12m/run_metadata.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "f7fd607424ffe6e2c450a01e12921d76001cd9e555e94c77a22481c7bffead98",
+      "sha256_after": "f7fd607424ffe6e2c450a01e12921d76001cd9e555e94c77a22481c7bffead98",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261115T115415Z-google-trends-delta6a-7-thc-12m/artifact-manifest.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "33e4405e569bd625a964e883885e335a4b80adc54c282b1cf43473ee1cf9eaae",
+      "sha256_after": "33e4405e569bd625a964e883885e335a4b80adc54c282b1cf43473ee1cf9eaae",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261115T115415Z-google-trends-delta6a-7-thc-12m/payload.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "2abe0d82421d9116fa4a0a46ab5a2420bb5554290774dc2d98e8b7201869b6d2",
+      "sha256_after": "2abe0d82421d9116fa4a0a46ab5a2420bb5554290774dc2d98e8b7201869b6d2",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261115T115415Z-google-trends-delta6a-7-thc-12m/records_δ6a-7-thc.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "3cd016aca0d2544eb2e7162bde5ab767599c57b4ace797a8b53dd3a1f490c059",
+      "sha256_after": "3cd016aca0d2544eb2e7162bde5ab767599c57b4ace797a8b53dd3a1f490c059",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261115T115415Z-google-trends-delta6a-7-thc-12m/run_metadata.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "b1b958ca0c4afcffe34f7a9e43bff0330ee1376dae27b50d080324d886581d2d",
+      "sha256_after": "b1b958ca0c4afcffe34f7a9e43bff0330ee1376dae27b50d080324d886581d2d",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261115T115420Z-google-trends-delta8-thc-12m/artifact-manifest.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "a2aa337c6b1dec2d624cd3d2b94ce51a522fe931551d60cc403819279182342b",
+      "sha256_after": "a2aa337c6b1dec2d624cd3d2b94ce51a522fe931551d60cc403819279182342b",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261115T115420Z-google-trends-delta8-thc-12m/payload.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "d7a1184d823ef9c6aaeca75c2a3259d84d09d60c5e56042449bd246eafe1c943",
+      "sha256_after": "d7a1184d823ef9c6aaeca75c2a3259d84d09d60c5e56042449bd246eafe1c943",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261115T115420Z-google-trends-delta8-thc-12m/records_δ8-thc.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "bf23cde705c901187e3c3156d73197a3c17b5875f46104a4020be621bbc639d6",
+      "sha256_after": "bf23cde705c901187e3c3156d73197a3c17b5875f46104a4020be621bbc639d6",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261115T115420Z-google-trends-delta8-thc-12m/run_metadata.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "33cadb87e9245856c876e42d900b183b4a3e50db0177b9b3779756bbf22c5c8b",
+      "sha256_after": "33cadb87e9245856c876e42d900b183b4a3e50db0177b9b3779756bbf22c5c8b",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261115T115440Z-google-trends-delta9-thcb-o-acetate-12m/artifact-manifest.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "2ee5124098ce049a8010608e48e303508ed823423afe241c0d288ab79456973b",
+      "sha256_after": "2ee5124098ce049a8010608e48e303508ed823423afe241c0d288ab79456973b",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261115T115440Z-google-trends-delta9-thcb-o-acetate-12m/payload.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "23344bc69eb49ca7683e070e425d108f60cdd99cc15cfc58ae577f16f5ad875c",
+      "sha256_after": "23344bc69eb49ca7683e070e425d108f60cdd99cc15cfc58ae577f16f5ad875c",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261115T115440Z-google-trends-delta9-thcb-o-acetate-12m/records_δ9-thcb-o-acetate.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "33e7f345a60c703bcf86e115220455f6e6ef192cc0399a91992ee2610a3a7d31",
+      "sha256_after": "33e7f345a60c703bcf86e115220455f6e6ef192cc0399a91992ee2610a3a7d31",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261115T115440Z-google-trends-delta9-thcb-o-acetate-12m/run_metadata.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "b6fca45526fa055310c52cd03dda21d17bccae007f32211c73fa985dbe02bb2e",
+      "sha256_after": "b6fca45526fa055310c52cd03dda21d17bccae007f32211c73fa985dbe02bb2e",
+      "unchanged": true
+    },
+    {
       "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/README.md",
       "exists": true,
       "state": "tracked",
       "tracked": true,
       "ignored": false,
-      "sha256": "696744a8f6da7c6c562d9e304effbb3f4fcf7925cd506c85ec0f1e8421107b67",
-      "sha256_after": "696744a8f6da7c6c562d9e304effbb3f4fcf7925cd506c85ec0f1e8421107b67",
+      "sha256": "11835fa1ad113c7694dfc2c7a0956e435a78b3a6adc3499355ddfc8a5bbe43d6",
+      "sha256_after": "11835fa1ad113c7694dfc2c7a0956e435a78b3a6adc3499355ddfc8a5bbe43d6",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/youtube/20261115T120210Z-youtube-cannabinoid-raw-collection-delta8-thcp-liquid-ja/artifact-manifest.json",
+      "exists": true,
+      "state": "ignored",
+      "tracked": false,
+      "ignored": true,
+      "sha256": "732df04466129f4f6bf9a19bcc2778b95d758f6ea5a51366c642612edcce5830",
+      "sha256_after": "732df04466129f4f6bf9a19bcc2778b95d758f6ea5a51366c642612edcce5830",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/youtube/20261115T120210Z-youtube-cannabinoid-raw-collection-delta8-thcp-liquid-ja/payload.json",
+      "exists": true,
+      "state": "ignored",
+      "tracked": false,
+      "ignored": true,
+      "sha256": "5e1f2fa3845bb0383036b81d6d3691f64f7cabfc34d48c30c10d035037246abd",
+      "sha256_after": "5e1f2fa3845bb0383036b81d6d3691f64f7cabfc34d48c30c10d035037246abd",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/youtube/20261115T120210Z-youtube-cannabinoid-raw-collection-delta8-thcp-liquid-ja/run_metadata.json",
+      "exists": true,
+      "state": "ignored",
+      "tracked": false,
+      "ignored": true,
+      "sha256": "ac7d40599332406ee35cde9146ce43ff8209e706600535becf9466a2a74fbe51",
+      "sha256_after": "ac7d40599332406ee35cde9146ce43ff8209e706600535becf9466a2a74fbe51",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/youtube/20261115T120659Z-youtube-cannabinoid-raw-collection-delta8-thcjd-liquid-ja/artifact-manifest.json",
+      "exists": true,
+      "state": "ignored",
+      "tracked": false,
+      "ignored": true,
+      "sha256": "b06be14501e35a5308eb545e71c99b015059377f3111a1fdcaca405598674a9b",
+      "sha256_after": "b06be14501e35a5308eb545e71c99b015059377f3111a1fdcaca405598674a9b",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/youtube/20261115T120659Z-youtube-cannabinoid-raw-collection-delta8-thcjd-liquid-ja/payload.json",
+      "exists": true,
+      "state": "ignored",
+      "tracked": false,
+      "ignored": true,
+      "sha256": "d041002bdfd53512b6ceed80e8c6dba953c4d27706876f7e422e747cdab09e6a",
+      "sha256_after": "d041002bdfd53512b6ceed80e8c6dba953c4d27706876f7e422e747cdab09e6a",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/youtube/20261115T120659Z-youtube-cannabinoid-raw-collection-delta8-thcjd-liquid-ja/run_metadata.json",
+      "exists": true,
+      "state": "ignored",
+      "tracked": false,
+      "ignored": true,
+      "sha256": "24a5de435b6a9ec72d6d914510ae05484f6bfbbbec50eb423bbf80696bce942e",
+      "sha256_after": "24a5de435b6a9ec72d6d914510ae05484f6bfbbbec50eb423bbf80696bce942e",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/youtube/20261115T120659Z-youtube-cannabinoid-raw-collection-delta9-thcp-liquid-ja/artifact-manifest.json",
+      "exists": true,
+      "state": "ignored",
+      "tracked": false,
+      "ignored": true,
+      "sha256": "00d0c6ef946bb6fc124ea6c4ab484e54012e59af77730ffce8c7e643436e888f",
+      "sha256_after": "00d0c6ef946bb6fc124ea6c4ab484e54012e59af77730ffce8c7e643436e888f",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/youtube/20261115T120659Z-youtube-cannabinoid-raw-collection-delta9-thcp-liquid-ja/payload.json",
+      "exists": true,
+      "state": "ignored",
+      "tracked": false,
+      "ignored": true,
+      "sha256": "4cb48500c6864b573d62f6d1a7e7dd144e123b2d1f8e14b2c5bf9bc33a6c8f52",
+      "sha256_after": "4cb48500c6864b573d62f6d1a7e7dd144e123b2d1f8e14b2c5bf9bc33a6c8f52",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/youtube/20261115T120659Z-youtube-cannabinoid-raw-collection-delta9-thcp-liquid-ja/run_metadata.json",
+      "exists": true,
+      "state": "ignored",
+      "tracked": false,
+      "ignored": true,
+      "sha256": "63f4320078901f594433afaf64c3584f39ded599981a3883b26f1cd301a00b3b",
+      "sha256_after": "63f4320078901f594433afaf64c3584f39ded599981a3883b26f1cd301a00b3b",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/youtube/20261115T120952Z-youtube-cannabinoid-raw-collection-delta8-thcp-o-acetate-liquid-ja/artifact-manifest.json",
+      "exists": true,
+      "state": "ignored",
+      "tracked": false,
+      "ignored": true,
+      "sha256": "2716267398f1f0b93def538337c0183a45e1e17c096f1af5e5ca5fa9657ccb39",
+      "sha256_after": "2716267398f1f0b93def538337c0183a45e1e17c096f1af5e5ca5fa9657ccb39",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/youtube/20261115T120952Z-youtube-cannabinoid-raw-collection-delta8-thcp-o-acetate-liquid-ja/payload.json",
+      "exists": true,
+      "state": "ignored",
+      "tracked": false,
+      "ignored": true,
+      "sha256": "223ee3d62be6b6d6e4e0dd3a6216b54340fd6b4f175b9f13ca58b0861f0d0e1a",
+      "sha256_after": "223ee3d62be6b6d6e4e0dd3a6216b54340fd6b4f175b9f13ca58b0861f0d0e1a",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/youtube/20261115T120952Z-youtube-cannabinoid-raw-collection-delta8-thcp-o-acetate-liquid-ja/run_metadata.json",
+      "exists": true,
+      "state": "ignored",
+      "tracked": false,
+      "ignored": true,
+      "sha256": "c2ceadb390e4954d9f5eed6bf2c7e3ddd635f9384fa493ebbd1d8947ad55b331",
+      "sha256_after": "c2ceadb390e4954d9f5eed6bf2c7e3ddd635f9384fa493ebbd1d8947ad55b331",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/youtube/20261115T120952Z-youtube-cannabinoid-raw-collection-delta9-thcjd-liquid-ja/artifact-manifest.json",
+      "exists": true,
+      "state": "ignored",
+      "tracked": false,
+      "ignored": true,
+      "sha256": "0065c00deb6bc283da1840d3ab0f272e432054f0afe4b656c6c3a6b635ffed8b",
+      "sha256_after": "0065c00deb6bc283da1840d3ab0f272e432054f0afe4b656c6c3a6b635ffed8b",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/youtube/20261115T120952Z-youtube-cannabinoid-raw-collection-delta9-thcjd-liquid-ja/payload.json",
+      "exists": true,
+      "state": "ignored",
+      "tracked": false,
+      "ignored": true,
+      "sha256": "bf35f6d5ac14d1affed869e67a3b1cdea77a4d7ac3625d1542f1234627288a8a",
+      "sha256_after": "bf35f6d5ac14d1affed869e67a3b1cdea77a4d7ac3625d1542f1234627288a8a",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/youtube/20261115T120952Z-youtube-cannabinoid-raw-collection-delta9-thcjd-liquid-ja/run_metadata.json",
+      "exists": true,
+      "state": "ignored",
+      "tracked": false,
+      "ignored": true,
+      "sha256": "db86017344959e33944e374c34ca0836202c95005fe74cda9652252198604348",
+      "sha256_after": "db86017344959e33944e374c34ca0836202c95005fe74cda9652252198604348",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/youtube/20261115T120952Z-youtube-cannabinoid-raw-collection-delta9-thcp-o-acetate-liquid-ja/artifact-manifest.json",
+      "exists": true,
+      "state": "ignored",
+      "tracked": false,
+      "ignored": true,
+      "sha256": "bac7081ffe3b403c7e9fc28aabad3e71c171e5a4855b88b88ad15b0abe208048",
+      "sha256_after": "bac7081ffe3b403c7e9fc28aabad3e71c171e5a4855b88b88ad15b0abe208048",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/youtube/20261115T120952Z-youtube-cannabinoid-raw-collection-delta9-thcp-o-acetate-liquid-ja/payload.json",
+      "exists": true,
+      "state": "ignored",
+      "tracked": false,
+      "ignored": true,
+      "sha256": "73f32a267e06036e9368dca5a212af644e016db80865f947f9cd461fcf90c8cd",
+      "sha256_after": "73f32a267e06036e9368dca5a212af644e016db80865f947f9cd461fcf90c8cd",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/youtube/20261115T120952Z-youtube-cannabinoid-raw-collection-delta9-thcp-o-acetate-liquid-ja/run_metadata.json",
+      "exists": true,
+      "state": "ignored",
+      "tracked": false,
+      "ignored": true,
+      "sha256": "fd8f73700d71c0801cd885ced323651e3d85c24339ea828343f01974f055afc2",
+      "sha256_after": "fd8f73700d71c0801cd885ced323651e3d85c24339ea828343f01974f055afc2",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/youtube/20261115T121113Z-youtube-cannabinoid-raw-collection-delta8-thcb-o-acetate-liquid-ja/artifact-manifest.json",
+      "exists": true,
+      "state": "ignored",
+      "tracked": false,
+      "ignored": true,
+      "sha256": "f5a3de2cd2bbaaf4b0d7dd09c711541d54ad4ce282b75875a002755fdf50ffbe",
+      "sha256_after": "f5a3de2cd2bbaaf4b0d7dd09c711541d54ad4ce282b75875a002755fdf50ffbe",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/youtube/20261115T121113Z-youtube-cannabinoid-raw-collection-delta8-thcb-o-acetate-liquid-ja/payload.json",
+      "exists": true,
+      "state": "ignored",
+      "tracked": false,
+      "ignored": true,
+      "sha256": "7775b17b42b206847930dfdefc3225d0fc645d56ee545c7bd682c6b9b02fc5f8",
+      "sha256_after": "7775b17b42b206847930dfdefc3225d0fc645d56ee545c7bd682c6b9b02fc5f8",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/youtube/20261115T121113Z-youtube-cannabinoid-raw-collection-delta8-thcb-o-acetate-liquid-ja/run_metadata.json",
+      "exists": true,
+      "state": "ignored",
+      "tracked": false,
+      "ignored": true,
+      "sha256": "cd7dbd53e9b8b164e96ee60770c0faec53316b756c2588aeabc656226db4d800",
+      "sha256_after": "cd7dbd53e9b8b164e96ee60770c0faec53316b756c2588aeabc656226db4d800",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/youtube/20261115T121113Z-youtube-cannabinoid-raw-collection-delta9-thcb-o-acetate-liquid-ja/artifact-manifest.json",
+      "exists": true,
+      "state": "ignored",
+      "tracked": false,
+      "ignored": true,
+      "sha256": "fc2390f7ca8baf666509faa81e10a676f78b96ae4b46d278fc3c6df672a57834",
+      "sha256_after": "fc2390f7ca8baf666509faa81e10a676f78b96ae4b46d278fc3c6df672a57834",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/youtube/20261115T121113Z-youtube-cannabinoid-raw-collection-delta9-thcb-o-acetate-liquid-ja/payload.json",
+      "exists": true,
+      "state": "ignored",
+      "tracked": false,
+      "ignored": true,
+      "sha256": "10c7fff6e1affda7e566263e45067ca90986244880b7d3ff6aa2f8d40599f79d",
+      "sha256_after": "10c7fff6e1affda7e566263e45067ca90986244880b7d3ff6aa2f8d40599f79d",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/youtube/20261115T121113Z-youtube-cannabinoid-raw-collection-delta9-thcb-o-acetate-liquid-ja/run_metadata.json",
+      "exists": true,
+      "state": "ignored",
+      "tracked": false,
+      "ignored": true,
+      "sha256": "8ac65b2786d51fbaf5e842598389c2ff3fa82679a04531ddf7f996679f722ac8",
+      "sha256_after": "8ac65b2786d51fbaf5e842598389c2ff3fa82679a04531ddf7f996679f722ac8",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/youtube/20261115T121228Z-youtube-cannabinoid-raw-collection-delta6a-10a-thc-liquid-ja/artifact-manifest.json",
+      "exists": true,
+      "state": "ignored",
+      "tracked": false,
+      "ignored": true,
+      "sha256": "5df2226608e5fbc1a820643c28f47a22a3b0c2405402be257c3a359c3ab4de23",
+      "sha256_after": "5df2226608e5fbc1a820643c28f47a22a3b0c2405402be257c3a359c3ab4de23",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/youtube/20261115T121228Z-youtube-cannabinoid-raw-collection-delta6a-10a-thc-liquid-ja/payload.json",
+      "exists": true,
+      "state": "ignored",
+      "tracked": false,
+      "ignored": true,
+      "sha256": "558c3f35b37f80883840d5864a37d721eb7aabee871a8a8413e34f430a275a52",
+      "sha256_after": "558c3f35b37f80883840d5864a37d721eb7aabee871a8a8413e34f430a275a52",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/youtube/20261115T121228Z-youtube-cannabinoid-raw-collection-delta6a-10a-thc-liquid-ja/run_metadata.json",
+      "exists": true,
+      "state": "ignored",
+      "tracked": false,
+      "ignored": true,
+      "sha256": "4635fe4dd7dcbb4d343eb9fa508064e01a4d98a6e22c8023fc156bdb558c2cf9",
+      "sha256_after": "4635fe4dd7dcbb4d343eb9fa508064e01a4d98a6e22c8023fc156bdb558c2cf9",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/youtube/20261115T121228Z-youtube-cannabinoid-raw-collection-delta8-thc-liquid-ja/artifact-manifest.json",
+      "exists": true,
+      "state": "ignored",
+      "tracked": false,
+      "ignored": true,
+      "sha256": "47a1f0829f09e6165e455cf6daa71c310bfefab41b552d58ee9e3723bfe8b178",
+      "sha256_after": "47a1f0829f09e6165e455cf6daa71c310bfefab41b552d58ee9e3723bfe8b178",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/youtube/20261115T121228Z-youtube-cannabinoid-raw-collection-delta8-thc-liquid-ja/payload.json",
+      "exists": true,
+      "state": "ignored",
+      "tracked": false,
+      "ignored": true,
+      "sha256": "09f09095d793af3ce9640cbc71320ee431c0d5991c69580d4aba9fa49e3d05ce",
+      "sha256_after": "09f09095d793af3ce9640cbc71320ee431c0d5991c69580d4aba9fa49e3d05ce",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/youtube/20261115T121228Z-youtube-cannabinoid-raw-collection-delta8-thc-liquid-ja/run_metadata.json",
+      "exists": true,
+      "state": "ignored",
+      "tracked": false,
+      "ignored": true,
+      "sha256": "b7a9184352497b992219a21a6ac3f7d80fda0738320d97c354865c9a00ac3df9",
+      "sha256_after": "b7a9184352497b992219a21a6ac3f7d80fda0738320d97c354865c9a00ac3df9",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/youtube/20261115T121432Z-youtube-cannabinoid-raw-collection-delta10-thc-liquid-ja/artifact-manifest.json",
+      "exists": true,
+      "state": "ignored",
+      "tracked": false,
+      "ignored": true,
+      "sha256": "1e85ec5d468186043e010c0e9189fcd39b2ecf0045f1c46c04cebf999fa1b9f6",
+      "sha256_after": "1e85ec5d468186043e010c0e9189fcd39b2ecf0045f1c46c04cebf999fa1b9f6",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/youtube/20261115T121432Z-youtube-cannabinoid-raw-collection-delta10-thc-liquid-ja/payload.json",
+      "exists": true,
+      "state": "ignored",
+      "tracked": false,
+      "ignored": true,
+      "sha256": "6c008661f46eaec8b339dc69ca2653441f6d828e72c4674956c9da8c2e94c995",
+      "sha256_after": "6c008661f46eaec8b339dc69ca2653441f6d828e72c4674956c9da8c2e94c995",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/youtube/20261115T121432Z-youtube-cannabinoid-raw-collection-delta10-thc-liquid-ja/run_metadata.json",
+      "exists": true,
+      "state": "ignored",
+      "tracked": false,
+      "ignored": true,
+      "sha256": "07d62dd5b9da8d204500e880c28b49a76b79652eb3e3f6c36761aaee877768a0",
+      "sha256_after": "07d62dd5b9da8d204500e880c28b49a76b79652eb3e3f6c36761aaee877768a0",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/youtube/20261115T121714Z-youtube-cannabinoid-raw-collection-delta9-11-thc-liquid-ja/artifact-manifest.json",
+      "exists": true,
+      "state": "ignored",
+      "tracked": false,
+      "ignored": true,
+      "sha256": "22f585df1d51c505f3307f3bcbd3f797e60638fd39b569a03631cdea53107a73",
+      "sha256_after": "22f585df1d51c505f3307f3bcbd3f797e60638fd39b569a03631cdea53107a73",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/youtube/20261115T121714Z-youtube-cannabinoid-raw-collection-delta9-11-thc-liquid-ja/payload.json",
+      "exists": true,
+      "state": "ignored",
+      "tracked": false,
+      "ignored": true,
+      "sha256": "f03faa69a54344e8f90b3d46f82152c06b9157a4e7c3d70670e988899ba975e5",
+      "sha256_after": "f03faa69a54344e8f90b3d46f82152c06b9157a4e7c3d70670e988899ba975e5",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/youtube/20261115T121714Z-youtube-cannabinoid-raw-collection-delta9-11-thc-liquid-ja/run_metadata.json",
+      "exists": true,
+      "state": "ignored",
+      "tracked": false,
+      "ignored": true,
+      "sha256": "0a6ce5b46d26975a0df0bb29eb036c95a54a8ce83553cbb758654541fc86bb0d",
+      "sha256_after": "0a6ce5b46d26975a0df0bb29eb036c95a54a8ce83553cbb758654541fc86bb0d",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/youtube/20261115T121714Z-youtube-cannabinoid-raw-collection-delta9-thcv-liquid-ja/artifact-manifest.json",
+      "exists": true,
+      "state": "ignored",
+      "tracked": false,
+      "ignored": true,
+      "sha256": "c96a054e34bfff4ea3a464f281985510fb279d79a76f736aa56dab4c87e7e74e",
+      "sha256_after": "c96a054e34bfff4ea3a464f281985510fb279d79a76f736aa56dab4c87e7e74e",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/youtube/20261115T121714Z-youtube-cannabinoid-raw-collection-delta9-thcv-liquid-ja/payload.json",
+      "exists": true,
+      "state": "ignored",
+      "tracked": false,
+      "ignored": true,
+      "sha256": "63c5f98ce1ebc030392b44cb33ec44ddbac0933148657db76a549f0df80fac0a",
+      "sha256_after": "63c5f98ce1ebc030392b44cb33ec44ddbac0933148657db76a549f0df80fac0a",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/youtube/20261115T121714Z-youtube-cannabinoid-raw-collection-delta9-thcv-liquid-ja/run_metadata.json",
+      "exists": true,
+      "state": "ignored",
+      "tracked": false,
+      "ignored": true,
+      "sha256": "1997ff6df6066ea19e69161aa0d575920550790dcae47f9dc21c9adaeb7bfb34",
+      "sha256_after": "1997ff6df6066ea19e69161aa0d575920550790dcae47f9dc21c9adaeb7bfb34",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/youtube/20261115T121950Z-youtube-cannabinoid-raw-collection-delta8-thcv-liquid-ja/artifact-manifest.json",
+      "exists": true,
+      "state": "ignored",
+      "tracked": false,
+      "ignored": true,
+      "sha256": "cccd8079a395baebbbf4dcc2b030d04f2cbb57709cb22de181ddaedd8f2fce2f",
+      "sha256_after": "cccd8079a395baebbbf4dcc2b030d04f2cbb57709cb22de181ddaedd8f2fce2f",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/youtube/20261115T121950Z-youtube-cannabinoid-raw-collection-delta8-thcv-liquid-ja/payload.json",
+      "exists": true,
+      "state": "ignored",
+      "tracked": false,
+      "ignored": true,
+      "sha256": "c14eeaa00634a3d78a9488e9d28649fadb2a5e5c8eb0ee809a62ef28d857b82a",
+      "sha256_after": "c14eeaa00634a3d78a9488e9d28649fadb2a5e5c8eb0ee809a62ef28d857b82a",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/youtube/20261115T121950Z-youtube-cannabinoid-raw-collection-delta8-thcv-liquid-ja/run_metadata.json",
+      "exists": true,
+      "state": "ignored",
+      "tracked": false,
+      "ignored": true,
+      "sha256": "ce23a2a786c7077ae61bc30e64849dd5060e0cbc75526c25239bf626c9a71c7c",
+      "sha256_after": "ce23a2a786c7077ae61bc30e64849dd5060e0cbc75526c25239bf626c9a71c7c",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/youtube/20261115T122200Z-youtube-cannabinoid-raw-collection-thcjd-o-acetate-liquid-ja/artifact-manifest.json",
+      "exists": true,
+      "state": "ignored",
+      "tracked": false,
+      "ignored": true,
+      "sha256": "a4e8432619a52c84cc3280b24eedaf1b978891cdda8dbd5ab5957c452954fa8b",
+      "sha256_after": "a4e8432619a52c84cc3280b24eedaf1b978891cdda8dbd5ab5957c452954fa8b",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/youtube/20261115T122200Z-youtube-cannabinoid-raw-collection-thcjd-o-acetate-liquid-ja/payload.json",
+      "exists": true,
+      "state": "ignored",
+      "tracked": false,
+      "ignored": true,
+      "sha256": "fe561a5458013d7892b4c9d779fff16caac1912286f85bf19a523ed39b1a7851",
+      "sha256_after": "fe561a5458013d7892b4c9d779fff16caac1912286f85bf19a523ed39b1a7851",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/youtube/20261115T122200Z-youtube-cannabinoid-raw-collection-thcjd-o-acetate-liquid-ja/run_metadata.json",
+      "exists": true,
+      "state": "ignored",
+      "tracked": false,
+      "ignored": true,
+      "sha256": "dc49869088398c538e1769f02811c564f8766db59cacb4c5e295751584b7ced4",
+      "sha256_after": "dc49869088398c538e1769f02811c564f8766db59cacb4c5e295751584b7ced4",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/youtube/20261115T122319Z-youtube-cannabinoid-raw-collection-delta8-thch-liquid-ja/artifact-manifest.json",
+      "exists": true,
+      "state": "ignored",
+      "tracked": false,
+      "ignored": true,
+      "sha256": "3819a1109e3788dd5f23f024f84f8ce989b795d3139f018890ad6f1e37a62636",
+      "sha256_after": "3819a1109e3788dd5f23f024f84f8ce989b795d3139f018890ad6f1e37a62636",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/youtube/20261115T122319Z-youtube-cannabinoid-raw-collection-delta8-thch-liquid-ja/payload.json",
+      "exists": true,
+      "state": "ignored",
+      "tracked": false,
+      "ignored": true,
+      "sha256": "38dda8ddb31129465aa8e347d6ae62c9a2c01bd5f1dfe6126a0bbfbc5cc70b4f",
+      "sha256_after": "38dda8ddb31129465aa8e347d6ae62c9a2c01bd5f1dfe6126a0bbfbc5cc70b4f",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/youtube/20261115T122319Z-youtube-cannabinoid-raw-collection-delta8-thch-liquid-ja/run_metadata.json",
+      "exists": true,
+      "state": "ignored",
+      "tracked": false,
+      "ignored": true,
+      "sha256": "35cebb5edaf30e8ea287cbc4672b997746aea96ab92faface3c66aaa53ff016b",
+      "sha256_after": "35cebb5edaf30e8ea287cbc4672b997746aea96ab92faface3c66aaa53ff016b",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/youtube/20261115T122319Z-youtube-cannabinoid-raw-collection-delta9-thch-liquid-ja/artifact-manifest.json",
+      "exists": true,
+      "state": "ignored",
+      "tracked": false,
+      "ignored": true,
+      "sha256": "b117b129f0b9d81bc5a944560d6618c6d6c3aea3e991893b28c91be9c0a76db4",
+      "sha256_after": "b117b129f0b9d81bc5a944560d6618c6d6c3aea3e991893b28c91be9c0a76db4",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/youtube/20261115T122319Z-youtube-cannabinoid-raw-collection-delta9-thch-liquid-ja/payload.json",
+      "exists": true,
+      "state": "ignored",
+      "tracked": false,
+      "ignored": true,
+      "sha256": "e93ad750f76505fc73fbde2773be6996b00b09515d3f1d83e7541435624e9423",
+      "sha256_after": "e93ad750f76505fc73fbde2773be6996b00b09515d3f1d83e7541435624e9423",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/youtube/20261115T122319Z-youtube-cannabinoid-raw-collection-delta9-thch-liquid-ja/run_metadata.json",
+      "exists": true,
+      "state": "ignored",
+      "tracked": false,
+      "ignored": true,
+      "sha256": "171d930c876203e914161eee63c123caa4a502276d7465be4547b117d2e8a77f",
+      "sha256_after": "171d930c876203e914161eee63c123caa4a502276d7465be4547b117d2e8a77f",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/youtube/20261115T122435Z-youtube-cannabinoid-raw-collection-9r-hhc-liquid-ja/artifact-manifest.json",
+      "exists": true,
+      "state": "ignored",
+      "tracked": false,
+      "ignored": true,
+      "sha256": "65a489033c6b81b4ff2dd6235c8e86401edcae5476bccdc59fed1188d139b8f0",
+      "sha256_after": "65a489033c6b81b4ff2dd6235c8e86401edcae5476bccdc59fed1188d139b8f0",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/youtube/20261115T122435Z-youtube-cannabinoid-raw-collection-9r-hhc-liquid-ja/payload.json",
+      "exists": true,
+      "state": "ignored",
+      "tracked": false,
+      "ignored": true,
+      "sha256": "8996464d53861f70c6575b4086230ab285b69a5676a218c18bedf7bbe2e4769b",
+      "sha256_after": "8996464d53861f70c6575b4086230ab285b69a5676a218c18bedf7bbe2e4769b",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/youtube/20261115T122435Z-youtube-cannabinoid-raw-collection-9r-hhc-liquid-ja/run_metadata.json",
+      "exists": true,
+      "state": "ignored",
+      "tracked": false,
+      "ignored": true,
+      "sha256": "018b3bb16dbb9eae8145195f3af884b45dca5ad005083c6ee9a3f1ffd1e78ddc",
+      "sha256_after": "018b3bb16dbb9eae8145195f3af884b45dca5ad005083c6ee9a3f1ffd1e78ddc",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/youtube/20261115T122610Z-youtube-cannabinoid-raw-collection-9s-hhc-liquid-ja/artifact-manifest.json",
+      "exists": true,
+      "state": "ignored",
+      "tracked": false,
+      "ignored": true,
+      "sha256": "93a213cb88776440db8dfb36911fe69b6c181e575259c58863f5472b63ef6355",
+      "sha256_after": "93a213cb88776440db8dfb36911fe69b6c181e575259c58863f5472b63ef6355",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/youtube/20261115T122610Z-youtube-cannabinoid-raw-collection-9s-hhc-liquid-ja/payload.json",
+      "exists": true,
+      "state": "ignored",
+      "tracked": false,
+      "ignored": true,
+      "sha256": "9efad13c5f06ffc229ceadae9516a31fca8547925a9fd6b420b3e66987c2a0ae",
+      "sha256_after": "9efad13c5f06ffc229ceadae9516a31fca8547925a9fd6b420b3e66987c2a0ae",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/youtube/20261115T122610Z-youtube-cannabinoid-raw-collection-9s-hhc-liquid-ja/run_metadata.json",
+      "exists": true,
+      "state": "ignored",
+      "tracked": false,
+      "ignored": true,
+      "sha256": "827ab5a915944fbe5b68948dd4c83422b60c7c274041f73db347df98bc0ebb3b",
+      "sha256_after": "827ab5a915944fbe5b68948dd4c83422b60c7c274041f73db347df98bc0ebb3b",
       "unchanged": true
     },
     {
@@ -4709,8 +5639,8 @@
       "state": "tracked",
       "tracked": true,
       "ignored": false,
-      "sha256": "86c711f8c9bef5fc93488ead8c27f0c93a4ffb5bfe79ef6e32eddcfe93b33295",
-      "sha256_after": "86c711f8c9bef5fc93488ead8c27f0c93a4ffb5bfe79ef6e32eddcfe93b33295",
+      "sha256": "87ec484f532efdf24e92f9ca48f12e71f79160fa5e3673dbb2abec98016c261d",
+      "sha256_after": "87ec484f532efdf24e92f9ca48f12e71f79160fa5e3673dbb2abec98016c261d",
       "unchanged": true
     },
     {
@@ -5359,8 +6289,8 @@
       "state": "tracked",
       "tracked": true,
       "ignored": false,
-      "sha256": "db53b39b95ef0788fb09a61649d8216c0a3bf19ba10f8e6dd2f257fa46afebf4",
-      "sha256_after": "db53b39b95ef0788fb09a61649d8216c0a3bf19ba10f8e6dd2f257fa46afebf4",
+      "sha256": "3f5354185080326d224cb3afa07a9ca7716290be4ca1d0e8541c7c960e2432ca",
+      "sha256_after": "3f5354185080326d224cb3afa07a9ca7716290be4ca1d0e8541c7c960e2432ca",
       "unchanged": true
     },
     {
@@ -5369,8 +6299,8 @@
       "state": "tracked",
       "tracked": true,
       "ignored": false,
-      "sha256": "38ec90024198115ee3fd314b25ded03648197ce52b38255cc7ce1b8f234468a4",
-      "sha256_after": "38ec90024198115ee3fd314b25ded03648197ce52b38255cc7ce1b8f234468a4",
+      "sha256": "51a4bf3501307a632aa5e84f9846376a32899f6a01621ce0f8cd54ab56de73ce",
+      "sha256_after": "51a4bf3501307a632aa5e84f9846376a32899f6a01621ce0f8cd54ab56de73ce",
       "unchanged": true
     },
     {
@@ -5379,8 +6309,8 @@
       "state": "tracked",
       "tracked": true,
       "ignored": false,
-      "sha256": "e316dabe33839c1351ff874e64c6a25309fcfc2b55b0f046108c92a14d9f1dce",
-      "sha256_after": "e316dabe33839c1351ff874e64c6a25309fcfc2b55b0f046108c92a14d9f1dce",
+      "sha256": "0805c79a65f08c398d19953cb5f0e9ab821fed3386fd9deccd8481b292fa93c9",
+      "sha256_after": "0805c79a65f08c398d19953cb5f0e9ab821fed3386fd9deccd8481b292fa93c9",
       "unchanged": true
     },
     {
@@ -5389,8 +6319,8 @@
       "state": "tracked",
       "tracked": true,
       "ignored": false,
-      "sha256": "3c2bf87957a240e07c3e5b31a3166674fa9e4c2062ce2d22922cc7024598eefe",
-      "sha256_after": "3c2bf87957a240e07c3e5b31a3166674fa9e4c2062ce2d22922cc7024598eefe",
+      "sha256": "2fd4e8f35d80679b23676e7da7ed2a304a8d2c9105e79323225556de2d6df58f",
+      "sha256_after": "2fd4e8f35d80679b23676e7da7ed2a304a8d2c9105e79323225556de2d6df58f",
       "unchanged": true
     },
     {
@@ -5399,8 +6329,8 @@
       "state": "tracked",
       "tracked": true,
       "ignored": false,
-      "sha256": "a7441e0a1e6ccee02463a567b6d08bb92f2c70fb618d4d71fd3efbdaa23a575b",
-      "sha256_after": "a7441e0a1e6ccee02463a567b6d08bb92f2c70fb618d4d71fd3efbdaa23a575b",
+      "sha256": "86f676c7d505eeec0dea7591a0557902b5e724a174dc412e7709b03d1ad6ee6b",
+      "sha256_after": "86f676c7d505eeec0dea7591a0557902b5e724a174dc412e7709b03d1ad6ee6b",
       "unchanged": true
     },
     {
@@ -5409,8 +6339,8 @@
       "state": "tracked",
       "tracked": true,
       "ignored": false,
-      "sha256": "67fa2f246658b754e39709d2275a94658bca21caba3247c9f20aa343180d9acc",
-      "sha256_after": "67fa2f246658b754e39709d2275a94658bca21caba3247c9f20aa343180d9acc",
+      "sha256": "f3f648648527b11959388f0b4a2955886720dfac66a7ab340fb420c3d7b2ff3d",
+      "sha256_after": "f3f648648527b11959388f0b4a2955886720dfac66a7ab340fb420c3d7b2ff3d",
       "unchanged": true
     },
     {
@@ -5419,8 +6349,8 @@
       "state": "tracked",
       "tracked": true,
       "ignored": false,
-      "sha256": "2e6cca2d34c5ffde94b55608602b2070419611bd9ffd796c955b979c7ce8a42d",
-      "sha256_after": "2e6cca2d34c5ffde94b55608602b2070419611bd9ffd796c955b979c7ce8a42d",
+      "sha256": "cb1f55d835ffb2143b65bc4b2b97beae6f845c1eae83ad435e2e2cfab4341018",
+      "sha256_after": "cb1f55d835ffb2143b65bc4b2b97beae6f845c1eae83ad435e2e2cfab4341018",
       "unchanged": true
     },
     {
@@ -5429,8 +6359,8 @@
       "state": "tracked",
       "tracked": true,
       "ignored": false,
-      "sha256": "9d8eab20d60bd29b9a0d9622ea9d484a22dad5c7d7b1c1dcf910108b8f46e72a",
-      "sha256_after": "9d8eab20d60bd29b9a0d9622ea9d484a22dad5c7d7b1c1dcf910108b8f46e72a",
+      "sha256": "823617d95e1f333038022c8737811b9f880c363b9c7f493cf8b05e5edf2c399d",
+      "sha256_after": "823617d95e1f333038022c8737811b9f880c363b9c7f493cf8b05e5edf2c399d",
       "unchanged": true
     },
     {
@@ -5619,8 +6549,8 @@
       "state": "tracked",
       "tracked": true,
       "ignored": false,
-      "sha256": "163488fb67575af72a80697811064d5f9e0c161159a3b8a4bc68c6c881abcd14",
-      "sha256_after": "163488fb67575af72a80697811064d5f9e0c161159a3b8a4bc68c6c881abcd14",
+      "sha256": "a916bc019d9243259673913b6b55664ca794cf00194683f26e4d25eaf13859ab",
+      "sha256_after": "a916bc019d9243259673913b6b55664ca794cf00194683f26e4d25eaf13859ab",
       "unchanged": true
     },
     {
@@ -5629,8 +6559,8 @@
       "state": "tracked",
       "tracked": true,
       "ignored": false,
-      "sha256": "a60c0aa08c0d67e30be8fe44f53294439a3ab93398928fe8d4db2f728deaacd2",
-      "sha256_after": "a60c0aa08c0d67e30be8fe44f53294439a3ab93398928fe8d4db2f728deaacd2",
+      "sha256": "5ef95122325239bc29a31378ca82eb3969604d16de174d3ad65cc6d46cce140b",
+      "sha256_after": "5ef95122325239bc29a31378ca82eb3969604d16de174d3ad65cc6d46cce140b",
       "unchanged": true
     },
     {
@@ -5639,8 +6569,8 @@
       "state": "tracked",
       "tracked": true,
       "ignored": false,
-      "sha256": "ac121960856be69b8835f9e361bb39befa9f58182ad8788e220dcb943431511b",
-      "sha256_after": "ac121960856be69b8835f9e361bb39befa9f58182ad8788e220dcb943431511b",
+      "sha256": "bc67497d3eed18281ab01bff920977e8e8f74c2041436a6fae92f8e960c1d500",
+      "sha256_after": "bc67497d3eed18281ab01bff920977e8e8f74c2041436a6fae92f8e960c1d500",
       "unchanged": true
     },
     {
@@ -5649,8 +6579,8 @@
       "state": "tracked",
       "tracked": true,
       "ignored": false,
-      "sha256": "6bf88deb9acc912f1fbc2047b2a683ea16d17354cc9cf97f27324fb463dd8329",
-      "sha256_after": "6bf88deb9acc912f1fbc2047b2a683ea16d17354cc9cf97f27324fb463dd8329",
+      "sha256": "61d922872d81157f3ac0b8d9fa983421aaa8263a2f60871dead6013a824f0756",
+      "sha256_after": "61d922872d81157f3ac0b8d9fa983421aaa8263a2f60871dead6013a824f0756",
       "unchanged": true
     },
     {
@@ -5659,8 +6589,8 @@
       "state": "tracked",
       "tracked": true,
       "ignored": false,
-      "sha256": "dba5cfbfb4ac29291636b959c73b991f5edd8c3032b0fdfb2778f6ccbf6582ec",
-      "sha256_after": "dba5cfbfb4ac29291636b959c73b991f5edd8c3032b0fdfb2778f6ccbf6582ec",
+      "sha256": "5a6d0f314afd61f6e76cf29f5692fafa5b38c9975d700bd58fca2c81301bb1c6",
+      "sha256_after": "5a6d0f314afd61f6e76cf29f5692fafa5b38c9975d700bd58fca2c81301bb1c6",
       "unchanged": true
     },
     {
@@ -5669,8 +6599,8 @@
       "state": "tracked",
       "tracked": true,
       "ignored": false,
-      "sha256": "bb8adb89e1c19df843837edd0f8b62d839c5647147ca2a83781eafa2eaea8f1f",
-      "sha256_after": "bb8adb89e1c19df843837edd0f8b62d839c5647147ca2a83781eafa2eaea8f1f",
+      "sha256": "7534ffaa6e72be150bf6190af68370dc8730ecb081d59b469684228ef3138595",
+      "sha256_after": "7534ffaa6e72be150bf6190af68370dc8730ecb081d59b469684228ef3138595",
       "unchanged": true
     },
     {
@@ -5679,8 +6609,8 @@
       "state": "tracked",
       "tracked": true,
       "ignored": false,
-      "sha256": "37e21c857a11da34a662efa90ca9fb95f47eae5d42272f8b147286229dfa0ab9",
-      "sha256_after": "37e21c857a11da34a662efa90ca9fb95f47eae5d42272f8b147286229dfa0ab9",
+      "sha256": "97ef84d082f2de47fcd1d92ed193287bbf03e1e2bf78819938523289e9666fac",
+      "sha256_after": "97ef84d082f2de47fcd1d92ed193287bbf03e1e2bf78819938523289e9666fac",
       "unchanged": true
     },
     {
@@ -5689,8 +6619,8 @@
       "state": "tracked",
       "tracked": true,
       "ignored": false,
-      "sha256": "a0e52275a450adcc2b9261968a7e507b9b1dfea5bd5e641811e05c6320b01fc9",
-      "sha256_after": "a0e52275a450adcc2b9261968a7e507b9b1dfea5bd5e641811e05c6320b01fc9",
+      "sha256": "9bc12d06eb3f78e63e0ae7aafbba7a627898711c61c149d382cfde90b7edef6e",
+      "sha256_after": "9bc12d06eb3f78e63e0ae7aafbba7a627898711c61c149d382cfde90b7edef6e",
       "unchanged": true
     },
     {
@@ -5699,8 +6629,8 @@
       "state": "tracked",
       "tracked": true,
       "ignored": false,
-      "sha256": "ffeaa4d2cce36e7b102abf4f8833b9163f17321693c7bde16c74aebedd5d852c",
-      "sha256_after": "ffeaa4d2cce36e7b102abf4f8833b9163f17321693c7bde16c74aebedd5d852c",
+      "sha256": "d6179617bd60b3bda7cb8f3d621e09326337643605d4f8339f83734429c1029e",
+      "sha256_after": "d6179617bd60b3bda7cb8f3d621e09326337643605d4f8339f83734429c1029e",
       "unchanged": true
     },
     {
@@ -5709,8 +6639,8 @@
       "state": "tracked",
       "tracked": true,
       "ignored": false,
-      "sha256": "d37c2e5f7271650d7dcab7c4180321268e2a53f0ae65878b4d6fc9dfc1ceecb9",
-      "sha256_after": "d37c2e5f7271650d7dcab7c4180321268e2a53f0ae65878b4d6fc9dfc1ceecb9",
+      "sha256": "0f72d5007563db0a7b30c5c1aeee9f23a0505d91c7aa1bfb293c02ad89102c67",
+      "sha256_after": "0f72d5007563db0a7b30c5c1aeee9f23a0505d91c7aa1bfb293c02ad89102c67",
       "unchanged": true
     },
     {
@@ -5719,8 +6649,8 @@
       "state": "tracked",
       "tracked": true,
       "ignored": false,
-      "sha256": "b35a70e976fb67055b0bf8591fa3199ffdeb41a9219e7bbf1b0d2e277468ebec",
-      "sha256_after": "b35a70e976fb67055b0bf8591fa3199ffdeb41a9219e7bbf1b0d2e277468ebec",
+      "sha256": "11d0a4f315592891f12928bb74addef8f4586e46e60a358e96407843b2e11991",
+      "sha256_after": "11d0a4f315592891f12928bb74addef8f4586e46e60a358e96407843b2e11991",
       "unchanged": true
     },
     {
@@ -5729,8 +6659,8 @@
       "state": "tracked",
       "tracked": true,
       "ignored": false,
-      "sha256": "9be1812fbb3ee998a69b3e9676f646f17bb77d60816bb13e902ce08b87dc6b0d",
-      "sha256_after": "9be1812fbb3ee998a69b3e9676f646f17bb77d60816bb13e902ce08b87dc6b0d",
+      "sha256": "d31d8fa2643facde369b8a446814182866b15d681b3b8e01b6b152528d8f0c66",
+      "sha256_after": "d31d8fa2643facde369b8a446814182866b15d681b3b8e01b6b152528d8f0c66",
       "unchanged": true
     },
     {
@@ -5739,8 +6669,8 @@
       "state": "tracked",
       "tracked": true,
       "ignored": false,
-      "sha256": "3d28f0ded2baf03be26256c763339d4544bf6a050323ceb152d930226b119fe2",
-      "sha256_after": "3d28f0ded2baf03be26256c763339d4544bf6a050323ceb152d930226b119fe2",
+      "sha256": "ef9384269d863a61cb1c127371f5ae3fca1cb597359b22507c3ea6b3554884c4",
+      "sha256_after": "ef9384269d863a61cb1c127371f5ae3fca1cb597359b22507c3ea6b3554884c4",
       "unchanged": true
     },
     {
@@ -5749,8 +6679,8 @@
       "state": "tracked",
       "tracked": true,
       "ignored": false,
-      "sha256": "7a7d222d61ef262b1566af1e29bd7581d671ba0053b3fea384623de128b23bd5",
-      "sha256_after": "7a7d222d61ef262b1566af1e29bd7581d671ba0053b3fea384623de128b23bd5",
+      "sha256": "90f1688b8d43e8b1ff12b99dde82d6cf307d97a9b58ff388dfe86d7a6525b73f",
+      "sha256_after": "90f1688b8d43e8b1ff12b99dde82d6cf307d97a9b58ff388dfe86d7a6525b73f",
       "unchanged": true
     },
     {
@@ -5759,8 +6689,8 @@
       "state": "tracked",
       "tracked": true,
       "ignored": false,
-      "sha256": "f559e2e0762241d06ba404de7ae689e445c23fb7aa5a49d32ff03ec56ef143cb",
-      "sha256_after": "f559e2e0762241d06ba404de7ae689e445c23fb7aa5a49d32ff03ec56ef143cb",
+      "sha256": "73b8aa2c509265d6bf2ac4ce1b983b214ce64a00d4b342c08524bdf4fb42220e",
+      "sha256_after": "73b8aa2c509265d6bf2ac4ce1b983b214ce64a00d4b342c08524bdf4fb42220e",
       "unchanged": true
     },
     {
@@ -5769,8 +6699,8 @@
       "state": "tracked",
       "tracked": true,
       "ignored": false,
-      "sha256": "a48056b20a66c4c2e67e425a047e792efa9338b40f3bc26cd7c34bc62ddb7203",
-      "sha256_after": "a48056b20a66c4c2e67e425a047e792efa9338b40f3bc26cd7c34bc62ddb7203",
+      "sha256": "3e087a22e256a2bea8014feb96885881283ab003ec86ce7d93b8657482330230",
+      "sha256_after": "3e087a22e256a2bea8014feb96885881283ab003ec86ce7d93b8657482330230",
       "unchanged": true
     },
     {
@@ -5779,8 +6709,8 @@
       "state": "tracked",
       "tracked": true,
       "ignored": false,
-      "sha256": "0ac35fdbc54ad3f21f0ac356aa52a96bc52276f33a3a62c7fba73a9b8e7e0c68",
-      "sha256_after": "0ac35fdbc54ad3f21f0ac356aa52a96bc52276f33a3a62c7fba73a9b8e7e0c68",
+      "sha256": "1b6474b4f9a4e65520d84c8f828d18b815332d65ca354aa59d367b520d3e00eb",
+      "sha256_after": "1b6474b4f9a4e65520d84c8f828d18b815332d65ca354aa59d367b520d3e00eb",
       "unchanged": true
     },
     {
@@ -5789,8 +6719,8 @@
       "state": "tracked",
       "tracked": true,
       "ignored": false,
-      "sha256": "82c0abf7a04c7e46fd05b5618aa5b2d1a4d3c64a1da44334d7b572b021275f43",
-      "sha256_after": "82c0abf7a04c7e46fd05b5618aa5b2d1a4d3c64a1da44334d7b572b021275f43",
+      "sha256": "ddbf3e2f0324e4299915e0f5ea90c00977632206e105a9b1b11b2319a65c2a95",
+      "sha256_after": "ddbf3e2f0324e4299915e0f5ea90c00977632206e105a9b1b11b2319a65c2a95",
       "unchanged": true
     },
     {
@@ -6079,8 +7009,8 @@
       "state": "tracked",
       "tracked": true,
       "ignored": false,
-      "sha256": "7dafb2dd23560a18779f286f20169681b8cca9fdcd9373ebc193f62883e14b30",
-      "sha256_after": "7dafb2dd23560a18779f286f20169681b8cca9fdcd9373ebc193f62883e14b30",
+      "sha256": "dd29c380c9c9a4a972ac55b0b2970817d5b4bfa8c54ef0d705132fef51b610a8",
+      "sha256_after": "dd29c380c9c9a4a972ac55b0b2970817d5b4bfa8c54ef0d705132fef51b610a8",
       "unchanged": true
     },
     {
@@ -6139,8 +7069,8 @@
       "state": "tracked",
       "tracked": true,
       "ignored": false,
-      "sha256": "1869b3a28ee11dc1a5a055b0340f65946c17bb4dc3b0279bbf1b6aeabc53b748",
-      "sha256_after": "1869b3a28ee11dc1a5a055b0340f65946c17bb4dc3b0279bbf1b6aeabc53b748",
+      "sha256": "f02775bb35d899e9935dbc59b71212a305dfbf0b78494204dba35d2ce9707f8b",
+      "sha256_after": "f02775bb35d899e9935dbc59b71212a305dfbf0b78494204dba35d2ce9707f8b",
       "unchanged": true
     },
     {
@@ -6149,8 +7079,8 @@
       "state": "tracked",
       "tracked": true,
       "ignored": false,
-      "sha256": "82dc5a0f7edf16a6ba071637a13b97266155234c41a0c5cd033e2a307ac92f02",
-      "sha256_after": "82dc5a0f7edf16a6ba071637a13b97266155234c41a0c5cd033e2a307ac92f02",
+      "sha256": "aec24adeb0cd309c7198e9b7b715a8bb7c37435b3a9aae1a02f91d59016db63d",
+      "sha256_after": "aec24adeb0cd309c7198e9b7b715a8bb7c37435b3a9aae1a02f91d59016db63d",
       "unchanged": true
     },
     {
@@ -6753,10 +7683,10 @@
     },
     {
       "path": ".quarantine",
-      "exists": false,
-      "state": "absent",
+      "exists": true,
+      "state": "ignored",
       "tracked": false,
-      "ignored": false,
+      "ignored": true,
       "kind": "local_only"
     },
     {

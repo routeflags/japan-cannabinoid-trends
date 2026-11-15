@@ -235,13 +235,14 @@ def test_form_dictionary_marks_the_unverified_forms() -> None:
         assert "検証済み" in states[term] or "owner 確認" in states[term], term
 
 
-def test_the_batch_section_records_the_promotion_not_a_candidate_list() -> None:
-    """The 27 forms were registered; the section now states that, with no run."""
+def test_the_batch_section_separates_registration_from_collection_status() -> None:
+    """The batch records registration separately from its later coverage."""
 
     section = _section(_text(), BATCH_HEADING)
-    assert "✅" not in section
-    assert "adopted" not in section
-    assert "未収集" in section
+    assert "登録時点" in section
+    assert "19 adopted" in section
+    assert "8 `NO_VIDEOS`" in section
+    assert "NO_DATA" in section
     assert "27" in section
 
     registered = {query["canonical_text"] for query in _registry()}
