@@ -340,7 +340,7 @@ def _tool_text(result) -> str:
     )
 
 
-def parse_tool_result(result) -> ParsedSeries:
+def parse_tool_result(result, *, expected_term: str | None = None) -> ParsedSeries:
     """Parse one verbatim ``interest_over_time`` tool result.
 
     Raises :class:`BoundaryCaptureError` with ``collection_failed`` for error
@@ -376,7 +376,15 @@ def parse_tool_result(result) -> ParsedSeries:
     points = []
     for line in lines:
         if line.startswith("Interest over time for: "):
-            header_terms = [part.strip() for part in line[len("Interest over time for: "):].split(",")]
+            header = line[len("Interest over time for: "):].strip()
+            # Search terms can themselves contain commas (for example, a
+            # stereochemical HHC name). When the caller supplies the exact
+            # registered term, preserve an exact echoed header as one term;
+            # otherwise retain the legacy comma-delimited comparison guard.
+            if isinstance(expected_term, str) and header == expected_term:
+                header_terms = [expected_term]
+            else:
+                header_terms = [part.strip() for part in header.split(",")]
             continue
         if line.startswith("Geo: "):
             body = line[len("Geo: "):]
@@ -729,7 +737,9 @@ def verify_capture_manifest(document) -> list[Capture]:
     captures = load_capture_manifest(document)
     for capture in captures:
         try:
-            capture.parsed = parse_tool_result(capture.result)
+            capture.parsed = parse_tool_result(
+                capture.result, expected_term=capture.term
+            )
         except BoundaryCaptureError as error:
             capture.error = error
             capture.status = (
@@ -798,7 +808,9 @@ def stage_capture(
     """
     if capture.status == "unverified":  # not run through verify_capture_manifest
         try:
-            capture.parsed = parse_tool_result(capture.result)
+            capture.parsed = parse_tool_result(
+                capture.result, expected_term=capture.term
+            )
             capture.status = "parsed"
         except BoundaryCaptureError as error:
             capture.error = error

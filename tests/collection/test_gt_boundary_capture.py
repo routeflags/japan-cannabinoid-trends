@@ -271,6 +271,39 @@ def test_parser_refuses_a_multi_term_comparison_table():
         raise AssertionError("a comparison table must be refused")
 
 
+def test_parser_preserves_commas_in_the_declared_single_search_term():
+    term = "(6aR,9R,10aS)-HHC"
+    text = (
+        f"Interest over time for: {term}\n"
+        "Geo: JP | Timeframe: today 12-m\n\n"
+        f"Date\t{term}\n"
+        "Nov 9 – 15, 2025\t0\n"
+    )
+
+    parsed = parse_tool_result(_envelope(text), expected_term=term)
+
+    assert parsed.terms == (term,)
+    assert [(point.date, point.value) for point in parsed.points] == [
+        ("2025-11-09", 0)
+    ]
+
+
+def test_capture_manifest_supplies_the_expected_comma_containing_term():
+    term = "(6aR,9R,10aS)-HHC"
+    text = (
+        f"Interest over time for: {term}\n"
+        "Geo: JP | Timeframe: today 12-m\n\n"
+        f"Date\t{term}\n"
+        "Nov 9 – 15, 2025\t0\n"
+    )
+    capture = _capture(term=term, result=_envelope(text))
+
+    verified = verify_capture_manifest(_manifest(capture))
+
+    assert verified[0].status == "parsed"
+    assert verified[0].parsed.terms == (term,)
+
+
 def test_parser_refuses_an_impossible_calendar_date():
     """A label can name a day that does not exist; deriving a bucket start from
     it would fabricate an observation (found by the 2026-10-15 review, D1)."""

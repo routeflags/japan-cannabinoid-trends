@@ -227,7 +227,10 @@ class GoogleTrendsMcpAdapter:
             )
 
         try:
-            observations = self.extract_observations(raw)
+            observations = self.extract_observations(
+                raw,
+                expected_term=params["terms"][0] if len(params["terms"]) == 1 else None,
+            )
         except ValueError as error:
             # The server answered, but the answer is not a series the
             # documented rules cover: Google Trends reports a term below its
@@ -303,7 +306,7 @@ class GoogleTrendsMcpAdapter:
             },
         )
 
-    def extract_observations(self, raw) -> list:
+    def extract_observations(self, raw, *, expected_term: str | None = None) -> list:
         """Parse the source response into observations.
 
         Single-term responses become ``{date, value}`` points; a comparison
@@ -344,7 +347,7 @@ class GoogleTrendsMcpAdapter:
                 return [
                     {"date": point.date, **point.values} for point in parsed.points
                 ]
-            parsed = parse_tool_result(raw)
+            parsed = parse_tool_result(raw, expected_term=expected_term)
             return [{"date": point.date, "value": point.value} for point in parsed.points]
         return []
 

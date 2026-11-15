@@ -256,6 +256,33 @@ def test_unparseable_response_keeps_the_verbatim_answer():
     assert "Not enough data" in result.errors[0]["message"]
 
 
+def test_adapter_uses_the_declared_single_term_to_preserve_literal_commas():
+    term = "(6aR,9R,10aS)-HHC"
+    response_text = (
+        f"Interest over time for: {term}\n"
+        "Geo: JP | Timeframe: today 12-m\n\n"
+        f"Date\t{term}\n"
+        "Nov 9 – 15, 2025\t0\n"
+    )
+    response = {"content": [{"type": "text", "text": response_text}], "isError": False}
+    seen = {}
+
+    def call(tool, params):
+        seen["tool"] = tool
+        seen["params"] = params
+        return response
+
+    plan = make_plan()
+    plan["query"] = {"text": term, "geo": "JP", "timeframe": "today 12-m"}
+    adapter = GoogleTrendsMcpAdapter(SessionMcpTransport(call=call))
+    result = adapter.collect(plan)
+
+    assert seen["tool"] == "interest_over_time"
+    assert seen["params"]["terms"] == [term]
+    assert result.status == "success"
+    assert result.observations == [{"date": "2025-11-09", "value": 0}]
+
+
 # ---------------------------------------------------------------------------
 # Comparison plans (shared scale)
 # ---------------------------------------------------------------------------
