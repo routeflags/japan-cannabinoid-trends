@@ -113,6 +113,5 @@ make test
 git diff --check
 ```
 
-データ層・run・被覆を変えていないため、データ系 snapshot（`docs/audits/*`）は再生成していない。
-`docs/audits/g6-git-tracking-inventory.json` の tracked-file hash は、README・methodology・query-design・data README 2 件の変更に合わせて更新した。
-checkout-local の `count` / `extra_count` / `state_summary` / `extras` は再生成せず、`docs/audits/g7-study-inventory.json` の `raw_combined_sha256` も更新していない。
+P0 の crosswalk 修正はデータ層・run・被覆を変えていないため、この P0 commit ではデータ系 snapshot を更新していない。
+後続の別指示による候補収集（`ISS-20261115-COL-034`）で collection-related snapshots が更新され、G6 / G7 の checkout-local 情報もその監査記録として含まれる。収集条件・結果と監査範囲は同 issue を参照する。

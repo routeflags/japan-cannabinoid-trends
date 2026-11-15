@@ -65,8 +65,7 @@ THC の科学的な恒久判断ではない。本 issue はそれを恒久判断
   - 各行が「未登録」「run なし」「未収集」を持ち、query ID を持たない。
   - アセテート・THCH・HHC の行が、法令の構造グループ / WHO レビュー / registry record / 製品分析を区別し、製品同定が無い場合は「未確認」と書く。
   - 被覆表が形式・同一性の列を持たず、concept ごとの general / liquid query を列挙する。
-- `docs/audits/g6-git-tracking-inventory.json`: README と TAX-045 でも変更した 4 ファイルの tracked SHA-256 を更新した。
-  checkout-local の `count` / `extra_count` / `state_summary` / `extras` は更新せず、直前の記録を保持した。
+- `docs/audits/g6-git-tracking-inventory.json`: README と TAX-045 でも変更した 4 ファイルの tracked SHA-256 を更新した。後続の収集監査（`ISS-20261115-COL-034`）では checkout-local の `state_summary` / `extras` もその checkout の記録として更新された。これらの値は checkout 間で比較しない。
 
 ## 候補形式（27 候補）と根拠の範囲
 
