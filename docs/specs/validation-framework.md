@@ -1352,11 +1352,14 @@ run ディレクトリに入っていない payload ファイルは `loose_files
   構造不明の CRDP / CRDH に対する「ヒドロキシ酸類似体」は採用しない。IPTC Media Topics に
   化学構造クラスは無いため `iptc-mapping.yaml` では `not_applicable` として宣言し、推測で
   対応付けない。2 次元の分離は `tests/validation/test_chemical_class_dimension.py` が検査する。
-- `compound_rare` の会員（CBDP / THCP 等）は未登録のまま維持する（ISS-20261015-TAX-027 判断 2026-10-15、issue は OPEN のまま）。
+- `compound_rare` の会員（CBDP 等）は未登録のまま維持する（ISS-20261015-TAX-027 判断 2026-10-15、issue は OPEN のまま）。
   リポジトリ内の証拠は scopeNote の例示名・COA パネルの THCP（ND）・汎用リストの言及のみで、
   収集 run・query-registry・queryDesign・regulatory-status 記録が無いため、日中ラベル・外部 ID・IPTC 対応の
   創作が必要になり見送る。追加の gate と証拠棚卸しは `docs/provenance/compound-taxonomy.md` の TAX-027 節に記録し、
   空・説明付きの状態は `tests/validation/test_compound_rare_membership.py` が固定する。
+  THCP は TAX-040（2026-11-11）で `compound_rare` ではなく管理カテゴリ
+  `compound_identity_unverified` に登録され、同日の追記で C7 同族体ファミリー（Δ8/Δ9 未指定）の
+  検索語範囲が記録された。`compound_rare` は引き続き空である。
 
 ## 24. 未解決 issue の棚卸しと施行（2026-10-13）
 

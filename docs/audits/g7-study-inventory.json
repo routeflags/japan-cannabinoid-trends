@@ -41,8 +41,8 @@
       "research_questions_quoted": [
         "日本におけるカンナビノイド成分へのオンライン関心は、どのように推移しているか？"
       ],
-      "run_count": 93,
-      "catalog_entry_count": 150,
+      "run_count": 97,
+      "catalog_entry_count": 158,
       "layout": [
         "README.md",
         "analysis",
@@ -50,14 +50,15 @@
         "metadata",
         "methodology.md"
       ],
-      "data_file_count": 360,
+      "data_file_count": 376,
       "has_data_raw": true,
-      "data_raw_file_count": 356,
+      "data_raw_file_count": 372,
       "sources": [
         "google-trends",
         "google-trends-mcp"
       ],
       "compound_ids": [
+        "compound_10_oh_hhc",
         "compound_cbc",
         "compound_cbd",
         "compound_cbdv",
@@ -77,15 +78,18 @@
         "compound_hhcpo",
         "compound_thc",
         "compound_thc_o",
+        "compound_thca",
         "compound_thcb",
         "compound_thch",
         "compound_thcjd",
         "compound_thcnm",
         "compound_thcp",
         "compound_thcpo",
-        "compound_thcv"
+        "compound_thcv",
+        "compound_thxe"
       ],
       "query_ids": [
+        "10-oh-hhc-general-ja",
         "cbc-general-ja",
         "cbd-general-ja",
         "cbd-liquid-ja",
@@ -126,6 +130,7 @@
         "thc-liquid-ja",
         "thc-o-general-ja",
         "thc-o-liquid-ja",
+        "thca-general-ja",
         "thcb-general-ja",
         "thch-general-ja",
         "thch-liquid-ja",
@@ -134,7 +139,8 @@
         "thcp-general-ja",
         "thcpo-general-ja",
         "thcv-general-ja",
-        "thcv-liquid-ja"
+        "thcv-liquid-ja",
+        "thxe-general-ja"
       ],
       "timeframes": [
         "today 12-m",
@@ -482,9 +488,9 @@
       ]
     }
   ],
-  "raw_file_count": 358,
+  "raw_file_count": 374,
   "raw_modified": false,
-  "raw_combined_sha256": "fb4d190077fa3506c850a6e70d6a31124d8f716d49d43859d9357131c0d4ae1e",
+  "raw_combined_sha256": "15277ac3e186a82983695f5f50769f4ea56ce4bd72abdf690a6ddd621c3854b1",
   "note": "non-destructive: study boundaries intact, raw and old metadata only read"
 }
 

@@ -474,7 +474,7 @@
         "googleTrends": "THCP"
       },
       "commonScaleSet": null,
-      "identityNote": "化学的同一性は**未確認**。taxonomy の管理上の登録状態カテゴリ `compound_identity_unverified` に `compound_thcp` として置き、経路・由来、天然存在、化学クラス、構造、別名、規制状態のいずれも主張しない。外部識別子（CAS / ChEBI / Wikidata）は記録しない。",
+      "identityNote": "化学的同一性は**未確認**（単一物質として）。2026-11-11 に owner が、登録語 `THCP` の意図された範囲を tetrahydrocannabiphorol（C7）同族体ファミリー（Δ8/Δ9 未指定）と確認した。これは**検索語の範囲**の確認であり、異性体の同定でも、天然存在・合成経路・安全性・臨床効果・規制状態の根拠でもない。taxonomy の管理上の登録状態カテゴリ `compound_identity_unverified` に `compound_thcp` として置き、経路・由来、天然存在、化学クラス、別名、規制状態を主張しない。ファミリー全体を指す単一レコードが無いため `exactMatch` は張らず、各異性体（Δ8 体・Δ9 体）の識別子は docs/provenance/compound-taxonomy.md に記録する。",
       "note": "THCP については ISS-20261015-TAX-027 の非登録判断を本指示が置換した。2026-11-11 の owner 指示で登録化合物集合へ追加した。登録は検索文字列の固定であり、物質の同定ではない。ソース別の adopted 被覆（採用・NO_DATA・HTTP 429・NO_VIDEOS を含む）は datasets/cannabinoid-raw-collection/README.md と `make audit-youtube-coverage` が報告する。この queryDesign は実行状態を持たない。X のクエリは設計していない。正本は metadata/queries/query-registry.json（thcp-general-ja / thcp-liquid-ja）。ISS-20261111-TAX-040。"
     },
     "THCJD": {
@@ -485,7 +485,7 @@
         "googleTrends": "THCJD"
       },
       "commonScaleSet": null,
-      "identityNote": "化学的同一性は**未確認**。taxonomy の管理上の登録状態カテゴリ `compound_identity_unverified` に `compound_thcjd` として置き、経路・由来、天然存在、化学クラス、構造、別名、規制状態のいずれも主張しない。外部識別子（CAS / ChEBI / Wikidata）は記録しない。",
+      "identityNote": "化学的同一性は**未確認**（単一物質として）。2026-11-11 に owner が、登録語 `THCJD` の意図された範囲を THC-JD / 3-octyl-THC（C8）同族体ファミリー（Δ8/Δ9 未指定）と確認した。これは**検索語の範囲**の確認であり、異性体の同定でも、天然存在・合成経路・安全性・臨床効果・規制状態の根拠でもない。taxonomy の管理上の登録状態カテゴリ `compound_identity_unverified` に `compound_thcjd` として置き、経路・由来、天然存在、化学クラス、別名、規制状態を主張しない。ファミリー全体を指す単一レコードが無いため `exactMatch` は張らず、各異性体（Δ8 体・Δ9 体）の識別子は docs/provenance/compound-taxonomy.md に記録する。",
       "note": "2026-11-11 の owner 指示で登録化合物集合へ追加した。登録は検索文字列の固定であり、物質の同定ではない。ソース別の adopted 被覆（採用・NO_DATA・HTTP 429・NO_VIDEOS を含む）は datasets/cannabinoid-raw-collection/README.md と `make audit-youtube-coverage` が報告する。この queryDesign は実行状態を持たない。X のクエリは設計していない。正本は metadata/queries/query-registry.json（thcjd-general-ja / thcjd-liquid-ja）。ISS-20261111-TAX-040。"
     },
     "THCPO": {
@@ -496,19 +496,22 @@
         "googleTrends": "THCPO"
       },
       "commonScaleSet": null,
-      "identityNote": "化学的同一性は**未確認**。taxonomy の管理上の登録状態カテゴリ `compound_identity_unverified` に `compound_thcpo` として置き、経路・由来、天然存在、化学クラス、構造、別名、規制状態のいずれも主張しない。外部識別子（CAS / ChEBI / Wikidata）は記録しない。",
+      "identityNote": "単一物質としての化学的同一性は**未確認**。2026-11-11、owner は確認質問「`THCPO` は THCP-O-acetate を指しますか？」に `y` と回答し、Δ8 体・Δ9 体のいずれの異性体も名指ししなかった。したがって本登録は**異性体未指定の THCP-O-acetate ファミリー**として扱う（ファミリー扱いは回答の登録上の整理であり、owner がファミリーを明示的に確認したものではない）。これは**検索語の範囲**であり、異性体の同定でも、天然存在・合成経路・薬理・安全性の根拠でもない。taxonomy の管理上の登録状態カテゴリ `compound_identity_unverified` に `compound_thcpo` として置き、経路・由来、天然存在、化学クラス、薬理、安全性、別名関係を主張しない。カテゴリ所属自体は同義関係を確立しない。英語 `skos:altLabel` の `THCP-O-acetate` は owner が確認した意図された意味を検索スコープの別名として記録したもので、根拠は概念の scopeNote にあり、単一構造の同義語であるという主張ではない。ファミリー全体を指す単一レコードが無いため `exactMatch` は張らず、各異性体（Δ8 体・Δ9 体）の識別子は docs/provenance/compound-taxonomy.md に記録する。両異性体が 2024 年の厚生労働省令の構造グループに該当することは、省令の「麻薬を除く」除外規定の下での法令上の構造の事実として記録する（個々の製品・検索結果の分類ではなく、owner の同一性確認の一部でもない）。",
       "note": "2026-11-11 の owner 指示で登録化合物集合へ追加した。登録は検索文字列の固定であり、物質の同定ではない。ソース別の adopted 被覆（採用・NO_DATA・HTTP 429・NO_VIDEOS を含む）は datasets/cannabinoid-raw-collection/README.md と `make audit-youtube-coverage` が報告する。この queryDesign は実行状態を持たない。X のクエリは設計していない。正本は metadata/queries/query-registry.json（thcpo-general-ja / thcpo-liquid-ja）。ISS-20261111-TAX-040。"
     },
     "CBE": {
-      "japaneseName": "CBE",
-      "aliases": [],
+      "japaneseName": "カンナビエルソイン",
+      "aliases": [
+        "Cannabielsoin",
+        "Cannabielsoin A"
+      ],
       "queries": {
         "youtube": "CBE リキッド",
         "googleTrends": "CBE"
       },
       "commonScaleSet": null,
-      "identityNote": "化学的同一性は**未確認**。taxonomy の管理上の登録状態カテゴリ `compound_identity_unverified` に `compound_cbe` として置き、経路・由来、天然存在、化学クラス、構造、別名、規制状態のいずれも主張しない。外部識別子（CAS / ChEBI / Wikidata）は記録しない。",
-      "note": "2026-11-11 の owner 指示で登録化合物集合へ追加した。登録は検索文字列の固定であり、物質の同定ではない。ソース別の adopted 被覆（採用・NO_DATA・HTTP 429・NO_VIDEOS を含む）は datasets/cannabinoid-raw-collection/README.md と `make audit-youtube-coverage` が報告する。この queryDesign は実行状態を持たない。X のクエリは設計していない。正本は metadata/queries/query-registry.json（cbe-general-ja / cbe-liquid-ja）。ISS-20261111-TAX-040。"
+      "identityNote": "化学的同一性は **Cannabielsoin（カンナビエルソイン、CBE）**。2026-11-11 に owner が `CBE` を cannabielsoin と確認した。FDA GSRS の承認済み記録（UNII 2ERD6V6652、CAS 52025-76-0、PubChem CID 162113、C21H30O3）と Wikidata Q22668702 で識別子を検証し、taxonomy の `compound_cbe` を `compound_minor`（非主要フィトカンナビノイド）に置いた。化学クラスは未形式化（CBE 型クラスは chemical-class taxonomy に無い）。Google Trends / YouTube の系列は `CBE` / `CBE リキッド` の文字列一致を測るもので、各結果が cannabielsoin を扱うことの確認ではない。",
+      "note": "2026-11-11 の owner 指示で登録化合物集合へ追加し、同日 owner が `CBE` を cannabielsoin と確認した。登録文字列と run は変更していない。ソース別の adopted 被覆（採用・NO_DATA・HTTP 429・NO_VIDEOS を含む）は datasets/cannabinoid-raw-collection/README.md と `make audit-youtube-coverage` が報告する。この queryDesign は実行状態を持たない。X のクエリは設計していない。正本は metadata/queries/query-registry.json（cbe-general-ja / cbe-liquid-ja）。ISS-20261111-TAX-040 追記。"
     },
     "HHCPO": {
       "japaneseName": "HHCPO",
@@ -533,26 +536,31 @@
       "note": "2026-11-11 の owner 指示で登録化合物集合へ追加した。登録は検索文字列の固定であり、物質の同定ではない。ソース別の adopted 被覆（採用・NO_DATA・HTTP 429・NO_VIDEOS を含む）は datasets/cannabinoid-raw-collection/README.md と `make audit-youtube-coverage` が報告する。この queryDesign は実行状態を持たない。X のクエリは設計していない。正本は metadata/queries/query-registry.json（cbnd-general-ja / cbnd-liquid-ja）。ISS-20261111-TAX-040。"
     },
     "CBL": {
-      "japaneseName": "CBL",
-      "aliases": [],
+      "japaneseName": "カンナビシクロール",
+      "aliases": [
+        "Cannabicyclol"
+      ],
       "queries": {
         "youtube": "CBL リキッド",
         "googleTrends": "CBL"
       },
       "commonScaleSet": null,
-      "identityNote": "化学的同一性は**未確認**。taxonomy の管理上の登録状態カテゴリ `compound_identity_unverified` に `compound_cbl` として置き、経路・由来、天然存在、化学クラス、構造、別名、規制状態のいずれも主張しない。外部識別子（CAS / ChEBI / Wikidata）は記録しない。",
-      "note": "2026-11-11 の owner 指示で登録化合物集合へ追加した。登録は検索文字列の固定であり、物質の同定ではない。ソース別の adopted 被覆（採用・NO_DATA・HTTP 429・NO_VIDEOS を含む）は datasets/cannabinoid-raw-collection/README.md と `make audit-youtube-coverage` が報告する。この queryDesign は実行状態を持たない。X のクエリは設計していない。正本は metadata/queries/query-registry.json（cbl-general-ja / cbl-liquid-ja）。ISS-20261111-TAX-040。"
+      "identityNote": "化学的同一性は **Cannabicyclol（カンナビシクロール、CBL）**。2026-11-11 に owner が `CBL` を cannabicyclol と確認した。Wikidata Q907909、FDA GSRS の UNII MP5WZK8M5U 記録（CAS 21366-63-2、PubChem CID 59444380、C21H30O2）、PubChem CID 30607（立体未指定、CAS 67920-00-7）で識別子を検証し、taxonomy の `compound_cbl` を `compound_minor`（非主要フィトカンナビノイド）に置いた。2 つの CAS 番号は立体化学の扱いが異なるため単一 CAS を断定しない。化学クラスは未形式化。Google Trends / YouTube の系列は `CBL` / `CBL リキッド` の文字列一致を測るもので、各結果が cannabicyclol を扱うことの確認ではない。",
+      "note": "2026-11-11 の owner 指示で登録化合物集合へ追加し、同日 owner が `CBL` を cannabicyclol と確認した。登録文字列と run は変更していない。ソース別の adopted 被覆（採用・NO_DATA・HTTP 429・NO_VIDEOS を含む）は datasets/cannabinoid-raw-collection/README.md と `make audit-youtube-coverage` が報告する。この queryDesign は実行状態を持たない。X のクエリは設計していない。正本は metadata/queries/query-registry.json（cbl-general-ja / cbl-liquid-ja）。ISS-20261111-TAX-040 追記。"
     },
     "CBGa": {
-      "japaneseName": "CBGa",
-      "aliases": [],
+      "japaneseName": "カンナビゲロール酸",
+      "aliases": [
+        "Cannabigerolic acid",
+        "CBGA"
+      ],
       "queries": {
         "youtube": "CBGa リキッド",
         "googleTrends": "CBGa"
       },
       "commonScaleSet": null,
-      "identityNote": "化学的同一性は**未確認**。taxonomy の管理上の登録状態カテゴリ `compound_identity_unverified` に `compound_cbga` として置き、経路・由来、天然存在、化学クラス、構造、別名、規制状態のいずれも主張しない。外部識別子（CAS / ChEBI / Wikidata）は記録しない。",
-      "note": "2026-11-11 の owner 指示で登録化合物集合へ追加した。登録は検索文字列の固定であり、物質の同定ではない。ソース別の adopted 被覆（採用・NO_DATA・HTTP 429・NO_VIDEOS を含む）は datasets/cannabinoid-raw-collection/README.md と `make audit-youtube-coverage` が報告する。この queryDesign は実行状態を持たない。X のクエリは設計していない。正本は metadata/queries/query-registry.json（cbga-general-ja / cbga-liquid-ja）。ISS-20261111-TAX-040。"
+      "identityNote": "化学的同一性は **Cannabigerolic acid（カンナビゲロール酸、標準表記 CBGA）**。2026-11-11 に owner が `CBGa` を cannabigerolic acid と確認した。ChEBI 67081、Wikidata Q27135612、FDA GSRS の UNII 80I4ZM847Y 記録（CAS 25555-57-1、PubChem CID 6449999、C22H32O4）で識別子を検証し、taxonomy の `compound_cbga` を `compound_minor`（非主要フィトカンナビノイド）に置いた。CBG は CBGA の脱炭酸体であり別名ではない。owner の表記 `CBGa` は保存し、raw / query 記録に正規化を適用しない。化学クラスは未形式化。Google Trends / YouTube の系列は `CBGa` / `CBGa リキッド` の文字列一致を測るもので、各結果が cannabigerolic acid を扱うことの確認ではない。",
+      "note": "2026-11-11 の owner 指示で登録化合物集合へ追加し、同日 owner が `CBGa` を cannabigerolic acid（CBGA）と確認した。登録文字列（小文字 `a` を含む）と run は変更していない。ソース別の adopted 被覆（採用・NO_DATA・HTTP 429・NO_VIDEOS を含む）は datasets/cannabinoid-raw-collection/README.md と `make audit-youtube-coverage` が報告する。この queryDesign は実行状態を持たない。X のクエリは設計していない。正本は metadata/queries/query-registry.json（cbga-general-ja / cbga-liquid-ja）。ISS-20261111-TAX-040 追記。"
     },
     "CBP": {
       "japaneseName": "CBP",
@@ -597,6 +605,72 @@
       "commonScaleSet": null,
       "identityNote": "化学的同一性は**未確認**。taxonomy の管理上の登録状態カテゴリ `compound_identity_unverified` に `compound_thca` として置き、経路・由来、天然存在、化学クラス、構造、別名、規制状態のいずれも主張しない。外部識別子（CAS / ChEBI / Wikidata）は記録しない。",
       "note": "2026-11-11 の owner 指示で登録化合物集合へ追加した。登録は検索文字列の固定であり、物質の同定ではない。ソース別の adopted 被覆（採用・NO_DATA・HTTP 429・NO_VIDEOS を含む）は datasets/cannabinoid-raw-collection/README.md と `make audit-youtube-coverage` が報告する。この queryDesign は実行状態を持たない。X のクエリは設計していない。正本は metadata/queries/query-registry.json（thca-general-ja / thca-liquid-ja）。ISS-20261111-TAX-040。"
+    },
+    "Δ9-THCA-A": {
+      "japaneseName": "Δ9-THCA-A",
+      "aliases": [],
+      "queries": {
+        "youtube": "Δ9-THCA-A リキッド",
+        "googleTrends": "Δ9-THCA-A"
+      },
+      "commonScaleSet": null,
+      "identityNote": "化学的同一性は**未確認**（単一物質として）。2026-11-11 に owner が、総称 `THCA` の化学解釈を置き換える検索トピックとして `Δ9-THCA-A` を確認した（ISS-20261111-TAX-041）。文献（Moreno-Sanz 2016、DOI 10.1089/can.2016.0008）は Δ9-THCA-A（2-carboxy-THC）を Δ9-THC の酸性前駆体とし、Filer 2021（DOI 10.1089/can.2021.0003、PMCID PMC8612408）は THCA-A と THCA-B を別個の構造異性体とする。ただし本変更は登録文字列の単一外部レコードを検証・選択していない。taxonomy の管理カテゴリ `compound_identity_unverified` に `compound_delta9_thca_a` として置き、経路・天然存在・化学クラス・別名・規制状態を主張しない。`exactMatch` も `compound_thca` / `compound_thc` への `skos:related` も張らない。系列は `Δ9-THCA-A` / `Δ9-THCA-A リキッド` の文字列一致を測るもので、各結果の内容を保証しない。",
+      "note": "2026-11-11 の owner 確認（ISS-20261111-TAX-041）で登録化合物集合へ追加した。登録は検索文字列の固定であり、物質の同定ではない。総称 `THCA` の既存クエリと run は本概念へ付け替えない。ソース別の adopted 被覆（採用・NO_DATA・HTTP 429・NO_VIDEOS を含む）は datasets/cannabinoid-raw-collection/README.md と `make audit-youtube-coverage` が報告する。この queryDesign は実行状態を持たない。X のクエリは設計していない。正本は metadata/queries/query-registry.json（delta9-thca-a-general-ja / delta9-thca-a-liquid-ja）。ISS-20261111-TAX-041。"
+    },
+    "THCA-B": {
+      "japaneseName": "THCA-B",
+      "aliases": [],
+      "queries": {
+        "youtube": "THCA-B リキッド",
+        "googleTrends": "THCA-B"
+      },
+      "commonScaleSet": null,
+      "identityNote": "化学的同一性は**未確認**（単一物質として）。2026-11-11 に owner が、総称 `THCA` の化学解釈を置き換える検索トピックとして `THCA-B` を確認した（ISS-20261111-TAX-041）。Filer 2021（DOI 10.1089/can.2021.0003、PMCID PMC8612408）は THCA-B を THCA-A の構造異性体とし、Moreno-Sanz 2016（DOI 10.1089/can.2016.0008）は 4-carboxy-THC として記録する。THCA-B は THCA-A の別名ではない。ただし本変更は登録文字列の単一外部レコードを検証・選択していない。taxonomy の管理カテゴリ `compound_identity_unverified` に `compound_thca_b` として置き、経路・天然存在・化学クラス・別名・規制状態を主張しない。`exactMatch` も `compound_thca` への `skos:related` も張らない。系列は `THCA-B` / `THCA-B リキッド` の文字列一致を測るもので、各結果の内容を保証しない。",
+      "note": "2026-11-11 の owner 確認（ISS-20261111-TAX-041）で登録化合物集合へ追加した。登録は検索文字列の固定であり、物質の同定ではない。総称 `THCA` の既存クエリと run は本概念へ付け替えない。ソース別の adopted 被覆（採用・NO_DATA・HTTP 429・NO_VIDEOS を含む）は datasets/cannabinoid-raw-collection/README.md と `make audit-youtube-coverage` が報告する。この queryDesign は実行状態を持たない。X のクエリは設計していない。正本は metadata/queries/query-registry.json（thca-b-general-ja / thca-b-liquid-ja）。ISS-20261111-TAX-041。"
+    },
+    "Δ8-THCA": {
+      "japaneseName": "Δ8-THCA",
+      "aliases": [],
+      "queries": {
+        "youtube": "Δ8-THCA リキッド",
+        "googleTrends": "Δ8-THCA"
+      },
+      "commonScaleSet": null,
+      "identityNote": "化学的同一性は**未確認**（単一物質として）。2026-11-11 に owner が、総称 `THCA` の化学解釈を置き換える検索トピックとして `Δ8-THCA` を確認した（ISS-20261111-TAX-041）。本変更では `Δ8-THCA` の構造・命名の出所を検証していない。A/B のカルボキシル配置の区別は Δ9 系列の文献（Moreno-Sanz 2016、DOI 10.1089/can.2016.0008、Filer 2021、DOI 10.1089/can.2021.0003）に基づく記載であり、Δ8 系列へ推測で拡張しない。登録語は Δ8 系列を名指すが A/B を述べないため単一構造を確定しない。taxonomy の管理カテゴリ `compound_identity_unverified` に `compound_delta8_thca` として置き、経路・天然存在・化学クラス・別名・規制状態を主張しない。`exactMatch` も `skos:related` も張らない。系列は `Δ8-THCA` / `Δ8-THCA リキッド` の文字列一致を測るもので、各結果の内容を保証しない。",
+      "note": "2026-11-11 の owner 確認（ISS-20261111-TAX-041）で登録化合物集合へ追加した。登録は検索文字列の固定であり、物質の同定ではない。総称 `THCA` の既存クエリと run は本概念へ付け替えない。ソース別の adopted 被覆（採用・NO_DATA・HTTP 429・NO_VIDEOS を含む）は datasets/cannabinoid-raw-collection/README.md と `make audit-youtube-coverage` が報告する。この queryDesign は実行状態を持たない。X のクエリは設計していない。正本は metadata/queries/query-registry.json（delta8-thca-general-ja / delta8-thca-liquid-ja）。ISS-20261111-TAX-041。"
+    },
+    "Δ8-THCB": {
+      "japaneseName": "Δ8-THCB",
+      "aliases": [],
+      "queries": {
+        "youtube": "Δ8-THCB リキッド",
+        "googleTrends": "Δ8-THCB"
+      },
+      "commonScaleSet": null,
+      "identityNote": "化学的同一性は**未確認**（単一物質として）。2026-11-11 に owner が、総称 `THCB` の化学解釈を置き換える検索トピックとして `Δ8-THCB` を確認した（ISS-20261111-TAX-041）。Tanaka & Kikura-Hanajiri 2024（DOI 10.1248/yakushi.24-00029）は、国内でオンライン流通したオイル製品 5 点から Δ8-THCB を Δ9-THCB と別個に同定した。Linciano et al. 2020（DOI 10.1021/acs.jnatprod.9b00876）は Δ9 体を単離・構造確認しており、Δ8 体についての根拠ではない。本変更は登録文字列の単一外部レコードを検証・選択していない。taxonomy の管理カテゴリ `compound_identity_unverified` に `compound_delta8_thcb` として置き、経路・天然存在・化学クラス・別名・規制状態を主張しない。`exactMatch` も `compound_thcb` / `compound_delta9_thcb` への `skos:related` も張らない。系列は `Δ8-THCB` / `Δ8-THCB リキッド` の文字列一致を測るもので、各結果の異性体归属を保証しない。",
+      "note": "2026-11-11 の owner 確認（ISS-20261111-TAX-041）で登録化合物集合へ追加した。登録は検索文字列の固定であり、物質の同定ではない。総称 `THCB` の既存クエリと run は本概念へ付け替えない。ソース別の adopted 被覆（採用・NO_DATA・HTTP 429・NO_VIDEOS を含む）は datasets/cannabinoid-raw-collection/README.md と `make audit-youtube-coverage` が報告する。この queryDesign は実行状態を持たない。X のクエリは設計していない。正本は metadata/queries/query-registry.json（delta8-thcb-general-ja / delta8-thcb-liquid-ja）。ISS-20261111-TAX-041。"
+    },
+    "Δ9-THCB": {
+      "japaneseName": "Δ9-THCB",
+      "aliases": [],
+      "queries": {
+        "youtube": "Δ9-THCB リキッド",
+        "googleTrends": "Δ9-THCB"
+      },
+      "commonScaleSet": null,
+      "identityNote": "化学的同一性は**未確認**（単一物質として）。2026-11-11 に owner が、総称 `THCB` の化学解釈を置き換える検索トピックとして `Δ9-THCB` を確認した（ISS-20261111-TAX-041）。Linciano et al. 2020（DOI 10.1021/acs.jnatprod.9b00876）は medicinal Cannabis sativa 品種から Δ9-THCB（Δ9-THC のブチル同族体）を単離し構造・絶対配置を確認し、Tanaka & Kikura-Hanajiri 2024（DOI 10.1248/yakushi.24-00029）は Δ9-THCB を Δ8-THCB と別個に同定した。ただし本変更は登録文字列の単一外部レコードを検証・選択していない。taxonomy の管理カテゴリ `compound_identity_unverified` に `compound_delta9_thcb` として置き、経路・天然存在・化学クラス・別名・規制状態を主張しない。`exactMatch` も `compound_thcb` / `compound_delta8_thcb` への `skos:related` も張らない。系列は `Δ9-THCB` / `Δ9-THCB リキッド` の文字列一致を測るもので、各結果の異性体归属を保証しない。",
+      "note": "2026-11-11 の owner 確認（ISS-20261111-TAX-041）で登録化合物集合へ追加した。登録は検索文字列の固定であり、物質の同定ではない。総称 `THCB` の既存クエリと run は本概念へ付け替えない。ソース別の adopted 被覆（採用・NO_DATA・HTTP 429・NO_VIDEOS を含む）は datasets/cannabinoid-raw-collection/README.md と `make audit-youtube-coverage` が報告する。この queryDesign は実行状態を持たない。X のクエリは設計していない。正本は metadata/queries/query-registry.json（delta9-thcb-general-ja / delta9-thcb-liquid-ja）。ISS-20261111-TAX-041。"
+    },
+    "THCB-O-acetate": {
+      "japaneseName": "THCB-O-acetate",
+      "aliases": [],
+      "queries": {
+        "youtube": "THCB-O-acetate リキッド",
+        "googleTrends": "THCB-O-acetate"
+      },
+      "commonScaleSet": null,
+      "identityNote": "化学的同一性は**未確認**（単一物質として）。2026-11-11 に owner が、総称 `THCB` の化学解釈を置き換える検索トピックとして `THCB-O-acetate` を確認した（ISS-20261111-TAX-041）。登録語は Δ8/Δ9 を述べない**異性体未指定のアセテート**であり、単一物質も単一の外部レコードも指さない。2024 年の厚生労働省令（令和6年厚生労働省令第81号）の別紙は、物質群1 に Δ9-THCB-O-acetate（n=4）、物質群2 に Δ8-THCB-O-acetate（n=4）を列挙する。これは異性体についての法令上の構造定義であり、個々の製品・検索結果の内容や規制状態の判断ではない。taxonomy の管理カテゴリ `compound_identity_unverified` に `compound_thcb_o_acetate` として置き、経路・天然存在・化学クラス・薬理・安全性・規制状態を主張しない。`exactMatch` も `compound_thcb` / `compound_thc_o` への `skos:related` も張らない。系列は `THCB-O-acetate` / `THCB-O-acetate リキッド` の文字列一致を測るもので、各結果の内容を保証しない。",
+      "note": "2026-11-11 の owner 確認（ISS-20261111-TAX-041）で登録化合物集合へ追加した。登録は検索文字列の固定であり、物質の同定ではない。総称 `THCB` の既存クエリと run は本概念へ付け替えない。ソース別の adopted 被覆（採用・NO_DATA・HTTP 429・NO_VIDEOS を含む）は datasets/cannabinoid-raw-collection/README.md と `make audit-youtube-coverage` が報告する。この queryDesign は実行状態を持たない。X のクエリは設計していない。正本は metadata/queries/query-registry.json（thcb-o-acetate-general-ja / thcb-o-acetate-liquid-ja）。ISS-20261111-TAX-041。"
     }
     }
   },
@@ -617,7 +691,7 @@
   },
   "dataCoverage": {
     "lastAudit": "2026-10-23",
-    "auditNote": "X/Twitter data is limited to recent tweets due to Apify actor constraints. Historical date range filtering is not supported. Distribution: only Google Trends raw and the aggregate YouTube tables (data/processed/youtube_*.csv, 182 videos) are tracked; the X and YouTube raw payloads are local evidence only (not distributed). The source paths below therefore point to non-distributed local files. The per-compound entries, summary and known issues below record the 2026-10-23 view; they are not a 30-term coverage table. Current 30-term coverage, including adopted runs, NO_DATA, HTTP 429 and unadopted NO_VIDEOS states, is reported in datasets/cannabinoid-raw-collection/README.md (Google Trends and YouTube) and by make audit-youtube-coverage (YouTube). The processed YouTube tables were not refreshed for the expanded batch.",
+    "auditNote": "X/Twitter data is limited to recent tweets due to Apify actor constraints. Historical date range filtering is not supported. Distribution: only Google Trends raw and the aggregate YouTube tables (data/processed/youtube_*.csv, 182 videos) are tracked; the X and YouTube raw payloads are local evidence only (not distributed). The source paths below therefore point to non-distributed local files. The per-compound entries, summary and known issues below record the 2026-10-23 view; they are not a 36-term coverage table. Current 36-term coverage, including adopted runs, NO_DATA, HTTP 429 and unadopted NO_VIDEOS states, is reported in datasets/cannabinoid-raw-collection/README.md (Google Trends and YouTube) and by make audit-youtube-coverage (YouTube). The processed YouTube tables were not refreshed for the expanded batch.",
     "compounds": {
       "CBD": {
         "x": {

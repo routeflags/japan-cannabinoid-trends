@@ -514,6 +514,102 @@
       "status": "active"
     },
     {
+      "query_id": "delta9-thca-a-general-ja",
+      "compound_id": "compound_delta9_thca_a",
+      "intent_id": "compound_general",
+      "language": "ja",
+      "canonical_text": "Δ9-THCA-A",
+      "status": "active"
+    },
+    {
+      "query_id": "delta9-thca-a-liquid-ja",
+      "compound_id": "compound_delta9_thca_a",
+      "intent_id": "product_liquid",
+      "language": "ja",
+      "canonical_text": "Δ9-THCA-A リキッド",
+      "status": "active"
+    },
+    {
+      "query_id": "thca-b-general-ja",
+      "compound_id": "compound_thca_b",
+      "intent_id": "compound_general",
+      "language": "ja",
+      "canonical_text": "THCA-B",
+      "status": "active"
+    },
+    {
+      "query_id": "thca-b-liquid-ja",
+      "compound_id": "compound_thca_b",
+      "intent_id": "product_liquid",
+      "language": "ja",
+      "canonical_text": "THCA-B リキッド",
+      "status": "active"
+    },
+    {
+      "query_id": "delta8-thca-general-ja",
+      "compound_id": "compound_delta8_thca",
+      "intent_id": "compound_general",
+      "language": "ja",
+      "canonical_text": "Δ8-THCA",
+      "status": "active"
+    },
+    {
+      "query_id": "delta8-thca-liquid-ja",
+      "compound_id": "compound_delta8_thca",
+      "intent_id": "product_liquid",
+      "language": "ja",
+      "canonical_text": "Δ8-THCA リキッド",
+      "status": "active"
+    },
+    {
+      "query_id": "delta8-thcb-general-ja",
+      "compound_id": "compound_delta8_thcb",
+      "intent_id": "compound_general",
+      "language": "ja",
+      "canonical_text": "Δ8-THCB",
+      "status": "active"
+    },
+    {
+      "query_id": "delta8-thcb-liquid-ja",
+      "compound_id": "compound_delta8_thcb",
+      "intent_id": "product_liquid",
+      "language": "ja",
+      "canonical_text": "Δ8-THCB リキッド",
+      "status": "active"
+    },
+    {
+      "query_id": "delta9-thcb-general-ja",
+      "compound_id": "compound_delta9_thcb",
+      "intent_id": "compound_general",
+      "language": "ja",
+      "canonical_text": "Δ9-THCB",
+      "status": "active"
+    },
+    {
+      "query_id": "delta9-thcb-liquid-ja",
+      "compound_id": "compound_delta9_thcb",
+      "intent_id": "product_liquid",
+      "language": "ja",
+      "canonical_text": "Δ9-THCB リキッド",
+      "status": "active"
+    },
+    {
+      "query_id": "thcb-o-acetate-general-ja",
+      "compound_id": "compound_thcb_o_acetate",
+      "intent_id": "compound_general",
+      "language": "ja",
+      "canonical_text": "THCB-O-acetate",
+      "status": "active"
+    },
+    {
+      "query_id": "thcb-o-acetate-liquid-ja",
+      "compound_id": "compound_thcb_o_acetate",
+      "intent_id": "product_liquid",
+      "language": "ja",
+      "canonical_text": "THCB-O-acetate リキッド",
+      "status": "active"
+    },
+    {
       "query_id": "comparison-5y-setA",
       "compound_id": "compound_cbd",
       "intent_id": "other",

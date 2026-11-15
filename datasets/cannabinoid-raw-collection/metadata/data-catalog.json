@@ -5,8 +5,8 @@
     "collection-run-v1"
   ],
   "datasets_root": "data",
-  "manifest_count": 96,
-  "count": 160,
+  "manifest_count": 100,
+  "count": 168,
   "errors": [],
   "entries": [
     {
@@ -2748,6 +2748,146 @@
       "record_count": 326,
       "completeness": "complete",
       "path": "data/raw/youtube/20261110T200518Z-youtube-cannabinoid-raw-collection/youtube-dataset-thxe-liquid_KYph4l1SFv45qP10O_2026-11-10.json"
+    },
+    {
+      "artifact_id": "20261110T235526Z-google-trends-10-oh-hhc-5y-retry-payload-json",
+      "study_id": "cannabinoid-raw-collection",
+      "run_id": "20261110T235526Z-google-trends-10-oh-hhc-5y-retry",
+      "source_id": "google-trends",
+      "compound_id": "compound_10_oh_hhc",
+      "query_id": "10-oh-hhc-general-ja",
+      "window_id": "2021-11-07_2026-11-15",
+      "artifact_type": "raw_response",
+      "format": "json",
+      "schema_id": "google-trends-mcp-tool-result-v1",
+      "layer": "raw",
+      "record_count": 262,
+      "completeness": "complete",
+      "path": "data/raw/google_trends/20261110T235526Z-google-trends-10-oh-hhc-5y-retry/payload.json"
+    },
+    {
+      "artifact_id": "20261110T235526Z-google-trends-10-oh-hhc-5y-retry-records-10-oh-hhc-json",
+      "study_id": "cannabinoid-raw-collection",
+      "run_id": "20261110T235526Z-google-trends-10-oh-hhc-5y-retry",
+      "source_id": "google-trends",
+      "compound_id": "compound_10_oh_hhc",
+      "query_id": "10-oh-hhc-general-ja",
+      "window_id": "2021-11-07_2026-11-15",
+      "artifact_type": "timeseries",
+      "format": "json",
+      "schema_id": "google-trends-interest-over-time-v1",
+      "layer": "raw",
+      "record_count": 262,
+      "completeness": "complete",
+      "path": "data/raw/google_trends/20261110T235526Z-google-trends-10-oh-hhc-5y-retry/records_10-oh-hhc.json",
+      "derived_from": [
+        "20261110T235526Z-google-trends-10-oh-hhc-5y-retry-payload-json"
+      ]
+    },
+    {
+      "artifact_id": "20261110T235617Z-google-trends-thxe-5y-retry-payload-json",
+      "study_id": "cannabinoid-raw-collection",
+      "run_id": "20261110T235617Z-google-trends-thxe-5y-retry",
+      "source_id": "google-trends",
+      "compound_id": "compound_thxe",
+      "query_id": "thxe-general-ja",
+      "window_id": "2021-11-07_2026-11-15",
+      "artifact_type": "raw_response",
+      "format": "json",
+      "schema_id": "google-trends-mcp-tool-result-v1",
+      "layer": "raw",
+      "record_count": 262,
+      "completeness": "complete",
+      "path": "data/raw/google_trends/20261110T235617Z-google-trends-thxe-5y-retry/payload.json"
+    },
+    {
+      "artifact_id": "20261110T235617Z-google-trends-thxe-5y-retry-records-thxe-json",
+      "study_id": "cannabinoid-raw-collection",
+      "run_id": "20261110T235617Z-google-trends-thxe-5y-retry",
+      "source_id": "google-trends",
+      "compound_id": "compound_thxe",
+      "query_id": "thxe-general-ja",
+      "window_id": "2021-11-07_2026-11-15",
+      "artifact_type": "timeseries",
+      "format": "json",
+      "schema_id": "google-trends-interest-over-time-v1",
+      "layer": "raw",
+      "record_count": 262,
+      "completeness": "complete",
+      "path": "data/raw/google_trends/20261110T235617Z-google-trends-thxe-5y-retry/records_thxe.json",
+      "derived_from": [
+        "20261110T235617Z-google-trends-thxe-5y-retry-payload-json"
+      ]
+    },
+    {
+      "artifact_id": "20261110T235641Z-google-trends-thca-12m-retry-payload-json",
+      "study_id": "cannabinoid-raw-collection",
+      "run_id": "20261110T235641Z-google-trends-thca-12m-retry",
+      "source_id": "google-trends",
+      "compound_id": "compound_thca",
+      "query_id": "thca-general-ja",
+      "window_id": "2025-11-09_2026-11-15",
+      "artifact_type": "raw_response",
+      "format": "json",
+      "schema_id": "google-trends-mcp-tool-result-v1",
+      "layer": "raw",
+      "record_count": 53,
+      "completeness": "complete",
+      "path": "data/raw/google_trends/20261110T235641Z-google-trends-thca-12m-retry/payload.json"
+    },
+    {
+      "artifact_id": "20261110T235641Z-google-trends-thca-12m-retry-records-thca-json",
+      "study_id": "cannabinoid-raw-collection",
+      "run_id": "20261110T235641Z-google-trends-thca-12m-retry",
+      "source_id": "google-trends",
+      "compound_id": "compound_thca",
+      "query_id": "thca-general-ja",
+      "window_id": "2025-11-09_2026-11-15",
+      "artifact_type": "timeseries",
+      "format": "json",
+      "schema_id": "google-trends-interest-over-time-v1",
+      "layer": "raw",
+      "record_count": 53,
+      "completeness": "complete",
+      "path": "data/raw/google_trends/20261110T235641Z-google-trends-thca-12m-retry/records_thca.json",
+      "derived_from": [
+        "20261110T235641Z-google-trends-thca-12m-retry-payload-json"
+      ]
+    },
+    {
+      "artifact_id": "20261110T235706Z-google-trends-thca-5y-retry-payload-json",
+      "study_id": "cannabinoid-raw-collection",
+      "run_id": "20261110T235706Z-google-trends-thca-5y-retry",
+      "source_id": "google-trends",
+      "compound_id": "compound_thca",
+      "query_id": "thca-general-ja",
+      "window_id": "2021-11-07_2026-11-15",
+      "artifact_type": "raw_response",
+      "format": "json",
+      "schema_id": "google-trends-mcp-tool-result-v1",
+      "layer": "raw",
+      "record_count": 262,
+      "completeness": "complete",
+      "path": "data/raw/google_trends/20261110T235706Z-google-trends-thca-5y-retry/payload.json"
+    },
+    {
+      "artifact_id": "20261110T235706Z-google-trends-thca-5y-retry-records-thca-json",
+      "study_id": "cannabinoid-raw-collection",
+      "run_id": "20261110T235706Z-google-trends-thca-5y-retry",
+      "source_id": "google-trends",
+      "compound_id": "compound_thca",
+      "query_id": "thca-general-ja",
+      "window_id": "2021-11-07_2026-11-15",
+      "artifact_type": "timeseries",
+      "format": "json",
+      "schema_id": "google-trends-interest-over-time-v1",
+      "layer": "raw",
+      "record_count": 262,
+      "completeness": "complete",
+      "path": "data/raw/google_trends/20261110T235706Z-google-trends-thca-5y-retry/records_thca.json",
+      "derived_from": [
+        "20261110T235706Z-google-trends-thca-5y-retry-payload-json"
+      ]
     }
   ]
 }

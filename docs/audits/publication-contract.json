@@ -12,13 +12,19 @@
       "metadata/datapackage.json"
     ]
   },
-  "catalog_run_count": 131,
+  "catalog_run_count": 135,
   "summary": {
-    "artifact_count": 16,
-    "finding_count": 0,
-    "declared_gap_count": 11,
-    "by_rule": {},
-    "by_kind": {}
+    "artifact_count": 31,
+    "finding_count": 16,
+    "declared_gap_count": 26,
+    "by_rule": {
+      "PC-2": 1,
+      "PC-7": 15
+    },
+    "by_kind": {
+      "gt_run_not_named": 1,
+      "publication_review_envelope_missing": 15
+    }
   },
   "implemented_rules": [
     "PC-1",
@@ -33,15 +39,152 @@
     "PC-10"
   ],
   "unimplemented_rules": [],
-  "findings": [],
+  "findings": [
+    {
+      "rule": "PC-7",
+      "kind": "publication_review_envelope_missing",
+      "path": "publication/research_10-oh-hhc.html",
+      "detail": "metadata/publication/research-10-oh-hhc/ is missing"
+    },
+    {
+      "rule": "PC-7",
+      "kind": "publication_review_envelope_missing",
+      "path": "publication/research_cbc.html",
+      "detail": "metadata/publication/research-cbc/ is missing"
+    },
+    {
+      "rule": "PC-7",
+      "kind": "publication_review_envelope_missing",
+      "path": "publication/research_cbdv.html",
+      "detail": "metadata/publication/research-cbdv/ is missing"
+    },
+    {
+      "rule": "PC-7",
+      "kind": "publication_review_envelope_missing",
+      "path": "publication/research_cbe.html",
+      "detail": "metadata/publication/research-cbe/ is missing"
+    },
+    {
+      "rule": "PC-2",
+      "kind": "gt_run_not_named",
+      "path": "publication/research_cbga.html",
+      "detail": "the Google Trends section names no collection run"
+    },
+    {
+      "rule": "PC-7",
+      "kind": "publication_review_envelope_missing",
+      "path": "publication/research_cbga.html",
+      "detail": "metadata/publication/research-cbga/ is missing"
+    },
+    {
+      "rule": "PC-7",
+      "kind": "publication_review_envelope_missing",
+      "path": "publication/research_cbl.html",
+      "detail": "metadata/publication/research-cbl/ is missing"
+    },
+    {
+      "rule": "PC-7",
+      "kind": "publication_review_envelope_missing",
+      "path": "publication/research_cbnd.html",
+      "detail": "metadata/publication/research-cbnd/ is missing"
+    },
+    {
+      "rule": "PC-7",
+      "kind": "publication_review_envelope_missing",
+      "path": "publication/research_cbp.html",
+      "detail": "metadata/publication/research-cbp/ is missing"
+    },
+    {
+      "rule": "PC-7",
+      "kind": "publication_review_envelope_missing",
+      "path": "publication/research_hhcpo.html",
+      "detail": "metadata/publication/research-hhcpo/ is missing"
+    },
+    {
+      "rule": "PC-7",
+      "kind": "publication_review_envelope_missing",
+      "path": "publication/research_thca.html",
+      "detail": "metadata/publication/research-thca/ is missing"
+    },
+    {
+      "rule": "PC-7",
+      "kind": "publication_review_envelope_missing",
+      "path": "publication/research_thcb.html",
+      "detail": "metadata/publication/research-thcb/ is missing"
+    },
+    {
+      "rule": "PC-7",
+      "kind": "publication_review_envelope_missing",
+      "path": "publication/research_thcjd.html",
+      "detail": "metadata/publication/research-thcjd/ is missing"
+    },
+    {
+      "rule": "PC-7",
+      "kind": "publication_review_envelope_missing",
+      "path": "publication/research_thcp.html",
+      "detail": "metadata/publication/research-thcp/ is missing"
+    },
+    {
+      "rule": "PC-7",
+      "kind": "publication_review_envelope_missing",
+      "path": "publication/research_thcpo.html",
+      "detail": "metadata/publication/research-thcpo/ is missing"
+    },
+    {
+      "rule": "PC-7",
+      "kind": "publication_review_envelope_missing",
+      "path": "publication/research_thxe.html",
+      "detail": "metadata/publication/research-thxe/ is missing"
+    }
+  ],
   "declared_gaps": [
+    {
+      "path": "publication/research_10-oh-hhc.html",
+      "kind": "five_year_not_collected",
+      "detail": "the Google Trends section declares 未取得"
+    },
+    {
+      "path": "publication/research_cbc.html",
+      "kind": "five_year_not_collected",
+      "detail": "the Google Trends section declares 未取得"
+    },
+    {
+      "path": "publication/research_cbdv.html",
+      "kind": "five_year_not_collected",
+      "detail": "the Google Trends section declares 未取得"
+    },
+    {
+      "path": "publication/research_cbe.html",
+      "kind": "five_year_not_collected",
+      "detail": "the Google Trends section declares 未取得"
+    },
     {
       "path": "publication/research_cbg.html",
       "kind": "five_year_not_collected",
       "detail": "the Google Trends section declares 未取得"
     },
     {
+      "path": "publication/research_cbga.html",
+      "kind": "five_year_not_collected",
+      "detail": "the Google Trends section declares 未取得"
+    },
+    {
+      "path": "publication/research_cbl.html",
+      "kind": "five_year_not_collected",
+      "detail": "the Google Trends section declares 未取得"
+    },
+    {
       "path": "publication/research_cbn.html",
+      "kind": "five_year_not_collected",
+      "detail": "the Google Trends section declares 未取得"
+    },
+    {
+      "path": "publication/research_cbnd.html",
+      "kind": "five_year_not_collected",
+      "detail": "the Google Trends section declares 未取得"
+    },
+    {
+      "path": "publication/research_cbp.html",
       "kind": "five_year_not_collected",
       "detail": "the Google Trends section declares 未取得"
     },
@@ -76,7 +219,22 @@
       "detail": "the Google Trends section declares 未取得"
     },
     {
+      "path": "publication/research_hhcpo.html",
+      "kind": "five_year_not_collected",
+      "detail": "the Google Trends section declares 未取得"
+    },
+    {
       "path": "publication/research_thc-o.html",
+      "kind": "five_year_not_collected",
+      "detail": "the Google Trends section declares 未取得"
+    },
+    {
+      "path": "publication/research_thca.html",
+      "kind": "five_year_not_collected",
+      "detail": "the Google Trends section declares 未取得"
+    },
+    {
+      "path": "publication/research_thcb.html",
       "kind": "five_year_not_collected",
       "detail": "the Google Trends section declares 未取得"
     },
@@ -86,7 +244,27 @@
       "detail": "the Google Trends section declares 未取得"
     },
     {
+      "path": "publication/research_thcjd.html",
+      "kind": "five_year_not_collected",
+      "detail": "the Google Trends section declares 未取得"
+    },
+    {
+      "path": "publication/research_thcp.html",
+      "kind": "five_year_not_collected",
+      "detail": "the Google Trends section declares 未取得"
+    },
+    {
+      "path": "publication/research_thcpo.html",
+      "kind": "five_year_not_collected",
+      "detail": "the Google Trends section declares 未取得"
+    },
+    {
       "path": "publication/research_thcv.html",
+      "kind": "five_year_not_collected",
+      "detail": "the Google Trends section declares 未取得"
+    },
+    {
+      "path": "publication/research_thxe.html",
       "kind": "five_year_not_collected",
       "detail": "the Google Trends section declares 未取得"
     }

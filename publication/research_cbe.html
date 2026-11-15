@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CBE（カンナビエルソイン）調査データ</title>
+</head>
+<body>
+
+<!-- ===== 調査方法 ===== -->
+<h2 id="methodology">調査方法</h2>
+<p>このセクションでは、本ページの情報がどのように収集・分析されたかを公開しています。</p>
+
+<h3>研究質問</h3>
+<p>「日本における登録検索語 <code>CBE</code>（owner の意図は cannabielsoin）へのオンライン関心は、どのように推移しているか？」</p>
+<p><strong>最終更新:</strong> 2026-11-11。</p>
+<p><strong>登録と同一性:</strong> 本ページの <code>CBE</code> は、owner が 2026-11-11 に <strong>cannabielsoin（カンナビエルソイン）</strong> を指すと確認した登録語である。taxonomy の <code>compound_cbe</code> は FDA GSRS の承認済み記録（UNII <code>2ERD6V6652</code>、CAS <code>52025-76-0</code>、PubChem CID <code>162113</code>、C<sub>21</sub>H<sub>30</sub>O<sub>3</sub>）と Wikidata <code>Q22668702</code> で識別子を検証し、<code>compound_minor</code>（非主要フィトカンナビノイド）に置いている（<code>datasets/cannabinoid-raw-collection/methodology.md</code> §1.3、ISS-20261111-TAX-040 追記）。ただし本ページが測るのは <code>CBE</code> / <code>CBE リキッド</code> という<strong>検索文字列への一致</strong>であり、各結果が cannabielsoin を扱っていることの確認ではない。既存の検索需要・YouTube サンプルは文字列一致の観測であり、内容の関連性の証明ではない。</p>
+<p><strong>本ページの範囲:</strong> Google Trends の単独系列（5年・12ヶ月）と、YouTube の検索結果サンプル 1 run の集計だけを扱う。X は収集していない。規制・COA は扱わない。共通スケール（compare_terms）の要求は、この登録語について未収集である。</p>
+
+<h3>データソース</h3>
+<ul>
+  <li><strong>検索データ:</strong> Google Trends（日本、過去5年・過去12ヶ月）</li>
+  <li><strong>動画データ:</strong> YouTube Search via Apify（検索語「CBE リキッド」、331 件）</li>
+  <li><strong>X:</strong> この登録語では収集していない（0 件の観測ではない）。</li>
+  <li><strong>規制資料:</strong> 本ページでは扱わない（cannabielsoin の規制状態は本ページの対象外で、規制資料を収集・評価していない）。</li>
+  <li><strong>収集手段と collector:</strong> Google Trends は google-trends-mcp 0.1.1（2026-11-10 収集）、YouTube は Apify の <code>streamers/youtube-scraper</code> build 0.0.329（2026-11-10 収集）。</li>
+  <li><strong>合算しない:</strong> Google Trends の相対指数と YouTube の返却サンプル件数は異なる現象であり、合算・換算しない。</li>
+  <li><strong>値の区分:</strong> 観測（run が返した返却点・返却件数）と派生（平均・年次件数・ピーク月・再生数統計）を区別する。推移の解釈は行わない。</li>
+</ul>
+
+<!-- ===== 独自データ：Google Trends 検索需要 ===== -->
+<div>
+  <h2 id="data-search">独自データ: CBE の Google Trends 検索需要 <span>一次データ</span></h2>
+  <p>データソース: Google Trends / 地域: 日本 (JP) / 要求: <code>today 5-y</code>（週次、単独系列）・<code>today 12-m</code>（週次、単独系列） / 取得日: 表ごとの出所を参照</p>
+  <p><strong>検索語の限界:</strong> Google Trends の系列は <code>CBE</code> という文字列の検索需要であり、検索語が cannabielsoin を意図しているか、返却された検索需要が cannabielsoin に関するものかを確認しない。<code>CBE</code> は短い略号で、無関係な語とも一致し得る。</p>
+
+  <div>
+    <p><strong>用語の定義:</strong></p>
+    <ul>
+      <li><strong>単独系列</strong>: 1 語だけを取得した系列。その語のピークが 100。</li>
+      <li><strong>共通スケール</strong>: 複数語を同じ要求で取得した系列。要求内の最大値が 100。登録語間で比べられるのはこちらだけ。</li>
+      <li><strong>興味度スコア</strong>: Google Trends が返す相対指数（0-100）。絶対検索数ではなく、期間内の最大検索量を 100 とした相対値。</li>
+    </ul>
+  </div>
+
+  <h3>5年データサマリー（個別正規化値）</h3>
+  <table>
+    <thead>
+      <tr><th>指標</th><th>値</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>要求条件</td><td>JP / today 5-y</td></tr>
+      <tr><td>観測範囲（返却点の範囲）</td><td>2021-11-07 〜 2026-11-08（262週）</td></tr>
+      <tr><td>5年平均</td><td><strong>13.78</strong></td></tr>
+      <tr><td>ピーク</td><td>2026-03-29（値: 100）</td></tr>
+      <tr><td>最新値</td><td>24</td></tr>
+    </tbody>
+  </table>
+  <p><strong>出所:</strong> run <code>20261110T192132Z-google-trends-cbe-5y</code>（<code>query_id</code> <code>cbe-general-ja</code> / JP / <code>today 5-y</code> / 宣言窓 <code>2021-11-07_2026-11-15</code> / 2026-11-10T19:21:34Z 収集）。記録にある項目: 初出 2022-02-06（値 40）、非ゼロ 76 週 / ゼロ 186 週、データあり期間 2021-11-07 〜 2026-11-08（262 週）。</p>
+  <p><strong>補足:</strong> 宣言窓は収集時刻で解決される実際の境界が未検証のため近似である。5年平均は週次 262 点の算術平均（小数第 2 位）。0 は相対指数の最小値（閾値未満）への丸めであり、検索が存在しなかったことや欠測を意味しない。</p>
+
+  <h3>12ヶ月データサマリー（個別正規化値）</h3>
+  <table>
+    <thead>
+      <tr><th>キーワード</th><th>12ヶ月平均</th><th>12ヶ月最高</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>CBE</strong></td><td>44.2</td><td>100</td></tr>
+    </tbody>
+  </table>
+  <p><strong>出所:</strong> run <code>20261110T192045Z-google-trends-cbe-12m</code>（<code>query_id</code> <code>cbe-general-ja</code> / JP / <code>today 12-m</code> / 宣言窓 <code>2025-11-09_2026-11-15</code> / 2026-11-10T19:20:47Z 収集）。観測範囲 2025-11-09 〜 2026-11-08（53週）。表示値 44.2 は週次 53 点の算術平均（小数第 1 位）。ピークは 2026-03-29（値 100）。</p>
+  <p><strong>補足:</strong> 単独系列であり、5年系列・共通スケールとは別の物差しである。非ゼロ 44 週 / ゼロ 9 週。0 は相対指数の最小値への丸めであり、需要ゼロの観測ではない。</p>
+
+  <h3>共通スケール比較（未取得）</h3>
+  <p>共通スケールは、<code>CBD</code>・<code>THC</code> を同一の <code>compare_terms</code> 要求に含み、同じ geo / timeframe / 窓で取得した系列だけで比較できる。この登録語 <code>CBE</code> について、その要求は<strong>未取得</strong>である（単独系列の値で代用しない）。</p>
+  <table>
+    <thead><tr><th>項目</th><th>状態</th></tr></thead>
+    <tbody>
+      <tr><td>5年共通スケール（compare_terms）</td><td><strong>未取得</strong></td></tr>
+      <tr><td>12ヶ月共通スケール（compare_terms）</td><td><strong>未取得</strong></td></tr>
+      <tr><td>理由</td><td>登録語を含み CBD・THC をアンカーとする要求が未収集</td></tr>
+      <tr><td>代替</td><td>なし（単独系列は要求内の最大=100 ではなく、換算できない）</td></tr>
+    </tbody>
+  </table>
+  <p><strong>方針:</strong> 被覆方針は <code>datasets/cannabinoid-raw-collection/metadata/query-design.json</code> の <code>gt-5y-common-scale-cbd-thc</code> / <code>gt-12m-common-scale-cbd-thc</code> にあり、登録語は自動的に被覆対象になる。未取得は被覆の完了ではない。</p>
+  <p><strong>制約:</strong> 単独系列の相対指数と共通スケールの値は換算できない。要求間・run 間の平均は比較しない。5年と12ヶ月は窓が異なるため、両者の平均を比較しない。</p>
+
+</div>
+
+<!-- ===== 独自データ：YouTube 月次公開日件数 ===== -->
+<div>
+<h2 id="data-youtube-monthly">独自データ: CBE リキッドの月次公開日件数（date_filter=all 別集計） <span>一次データ（観測 + 派生）</span></h2>
+<p>データソース: YouTube Search via Apify（actor build 0.0.329） / 検索クエリ: 「CBE リキッド」（日本語・製品語による近似的な日本市場限定） / query_id: <code>cbe-liquid-ja</code></p>
+<p>1 run を単独で集計した（他の検索語・run と合算しない）。返却件数・観測公開日範囲は観測、年次件数・ピーク月・再生数統計は派生である。値は返却サンプル内の公開日件数であり、YouTube 全体のピークではない。<code>date_filter</code> の異なる run 間は比較しない。</p>
+<h3>収集: date_filter=all（331 件）</h3>
+<table>
+  <thead><tr><th>指標</th><th>値</th></tr></thead>
+  <tbody>
+    <tr><td>run</td><td><code>20261110T192628Z-youtube-cannabinoid-raw-collection</code></td></tr>
+    <tr><td>query_id</td><td><code>cbe-liquid-ja</code>（検索語「CBE リキッド」）</td></tr>
+    <tr><td>date_filter（API 要求条件）</td><td><code>all</code>（<code>dateFilter</code> を指定しない無制限要求）</td></tr>
+    <tr><td>地理条件（API）</td><td>指定なし（日本語の製品語「リキッド」による近似的な日本市場限定で、geo フィルタではない）</td></tr>
+    <tr><td>収集開始 / 収集終了</td><td>2026-11-10T19:26:28Z / 2026-11-10T19:36:44Z（UTC）</td></tr>
+    <tr><td>実行状態</td><td>partial（Apify の要求 354 件中 351 件成功、3 件失敗）</td></tr>
+    <tr><td>返却件数</td><td><strong>331 件</strong>（実行状態 partial）</td></tr>
+    <tr><td>観測公開日範囲</td><td>2009-01-05 〜 2026-11-10（UTC、返却レコードの公開日）</td></tr>
+    <tr><td>観測窓（半開区間）</td><td>[2009-01-05, 2026-11-11)</td></tr>
+    <tr><td>ピーク月（返却サンプル内、同点併記）</td><td><strong>2018-09（11 件）</strong></td></tr>
+    <tr><td>再生数 最大 / 中央値 / 平均 / 最小</td><td>22,059,423 / 4,219 / 323,979.83 / 0（取得時点の値）</td></tr>
+    <tr><td>動画長 平均 / 最短 / 最長</td><td>579.9 秒 / 6 秒 / 17761 秒（返却レコードの <code>duration</code>）</td></tr>
+  </tbody>
+</table>
+
+<h3>年次分布</h3>
+<table>
+  <thead><tr><th>年</th><th>件数</th></tr></thead>
+  <tbody>
+    <tr><td>2009</td><td>1</td></tr>
+    <tr><td>2011</td><td>2</td></tr>
+    <tr><td>2012</td><td>5</td></tr>
+    <tr><td>2013</td><td>6</td></tr>
+    <tr><td>2014</td><td>3</td></tr>
+    <tr><td>2015</td><td>9</td></tr>
+    <tr><td>2016</td><td>15</td></tr>
+    <tr><td>2017</td><td>7</td></tr>
+    <tr><td>2018</td><td>27</td></tr>
+    <tr><td>2019</td><td>23</td></tr>
+    <tr><td>2020</td><td>20</td></tr>
+    <tr><td>2021</td><td>58</td></tr>
+    <tr><td>2022</td><td>26</td></tr>
+    <tr><td>2023</td><td>25</td></tr>
+    <tr><td>2024</td><td>17</td></tr>
+    <tr><td>2025</td><td>35</td></tr>
+    <tr><td>2026</td><td>52</td></tr>
+  </tbody>
+</table>
+
+<p><strong>部分年:</strong> 2009・2026 は、その年の観測日数分の件数であり、年間全体の件数ではない。公開日がサンプルにない年は行を作らない（未取得を 0 にしない）。</p>
+<p><strong>制約:</strong> 月次・年次件数は返却サンプル内の公開日件数であり、YouTube 全体の投稿数を表さない（全動画を網羅するものではない）。結果上限は宣言に <code>maxResults=500</code> と記録され、返却件数はその上限未満である。ただし返却サンプルは一致する動画の総数ではなく、検索の到達範囲も記録からは確定できない。再生数は取得日時点の値であり、変動する可能性がある。0 の再生数は返却値であり欠測ではない。未取得を 0 観測として扱わない。他の検索語・run と合算せず、<code>date_filter</code> の異なる run 間は比較しない。動画単位の行（動画 ID・タイトル・チャンネル・URL・再生数）は公開しない（集計のみ、ISS-20261015-COL-030 §4.1）。</p>
+<p><strong>partial の扱い:</strong> 実行状態が partial のため、返却サンプルは完全ではない。年次・月次件数は返却された 331 件の中の件数であり、欠けた要求の分を補完しない。</p>
+<p><strong>検索語の限界:</strong> 返却は検索語「CBE リキッド」の文字列一致によるサンプルであり、動画の内容が cannabielsoin を扱っていることを確認していない（略号・一般語との衝突を含む）。日本語の製品語「リキッド」は近似的な日本市場限定で、geo フィルタではない。</p>
+<p><strong>出所:</strong> run <code>20261110T192628Z-youtube-cannabinoid-raw-collection</code>（<code>date_filter=all</code> / 2026-11-10T19:26:28Z 開始・2026-11-10T19:36:44Z 終了、返却 331 件）。採用宣言は <code>metadata/provenance/declarations/20261110-youtube-cbe-cannabinoid-raw-collection.json</code> の該当 run で、payload SHA-256 は同宣言の <code>environment.payload_sha256</code>（<code>4e1c225a…ebbf3b</code>）。raw payload と run 記録は Git 非追跡・非公開のため、本節の年次・月次件数と再生数統計は収集時 payload の集計値であり、リポジトリからは再計算できない（採用宣言はリポジトリにある）。</p>
+<p><strong>照合:</strong> 年次合計は返却件数と一致する（331）。ピーク月は返却サンプル内の最多月で、同点の月は併記する（2018-09 が 11 件）。再生数統計は返却レコードの値の単純集計（平均は算術平均、中央値は件数が偶数のとき中央 2 値の平均）。月次全点は掲載せず、年次分布とピーク月のみを載せる。</p>
+</div>
+
+<!-- ===== 公開状態 ===== -->
+<div>
+<h2 id="publication-status">公開状態</h2>
+<p><strong>公開状態: 公開審査待ち（<code>requires_review</code>）。</strong>本ページは 2026-11-11 に作成したドラフトである。公開契約の review envelope（<code>metadata/publication/research-cbe/</code>）はまだ無く、公開判断・hash の固定は行っていない。</p>
+<p>図は差し込んでいない（5年推移・年次分布・共通スケールのいずれも未作成）。図の生成は、ページ記載値と raw の照合に加えて、5年 <code>compare_terms</code> 要求（CBD・THC を同一要求に含む）を必要とする。この登録語についてその要求が未収集のため、図の生成・差し込みは行っていない。</p>
+<p>公開する場合は、C1〜C45 の内容レビュー、review envelope の作成、図の生成・差し込み、hash の再固定、公開契約監査の再実行が必要である。</p>
+</div>
+
+<!-- ===== 引用情報 ===== -->
+<div>
+<h2 id="citation">引用 (How to Cite)</h2>
+<p>
+  KATO, Kyoji（2026）.<br>
+  「Japan Cannabinoid Platform Trends Dataset 2026: Google Trends and YouTube Evidence from Japan」.<br>
+  Version 1.14.9<br>
+  Routeflags Co., Ltd.<br>
+  [Dataset].<br>
+  DOI: <a href="https://doi.org/10.5281/zenodo.23390594">10.5281/zenodo.23390594</a>
+</p>
+<p>
+  <a href="https://doi.org/10.5281/zenodo.23390594">
+    <img src="https://zenodo.org/badge/1375618430.svg" alt="DOI">
+  </a>
+</p>
+</div>
+
+</body>
+</html>

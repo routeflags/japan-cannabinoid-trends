@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>THCP 調査データ</title>
+</head>
+<body>
+
+<!-- ===== 調査方法 ===== -->
+<h2 id="methodology">調査方法</h2>
+<p>このセクションでは、本ページの情報がどのように収集・分析されたかを公開しています。</p>
+
+<h3>研究質問</h3>
+<p>「日本におけるTHCP（登録検索語）へのオンライン関心は、どのように推移しているか？」</p>
+<p><strong>最終更新:</strong> 2026-11-11。</p>
+<p><strong>登録と同一性:</strong> 本ページの <code>THCP</code> は、study の管理上の登録状態カテゴリ <code>compound_identity_unverified</code> に登録された検索文字列である。2026-11-11 に owner が、<code>THCP</code> の意図された範囲を <strong>tetrahydrocannabiphorol（C7）同族体ファミリー（Δ8/Δ9 未指定）</strong>と確認した（<code>ISS-20261111-TAX-040</code> 追記）。これは<strong>検索語の範囲の確認</strong>であり、異性体の同定ではない。Δ8-THCP と Δ9-THCP は別物質で、本ページは個々の検索結果・動画をどちらかの異性体へ割り当てない。単一物質としての化学的同一性は未確認で、本ページは経路／由来・天然存在・化学クラス・別名・規制状態を主張しない（<code>datasets/cannabinoid-raw-collection/methodology.md</code> §1.3）。測っているのは登録文字列に一致する検索需要と検索結果サンプルである。</p>
+<p><strong>本ページの範囲:</strong> Google Trends の単独系列（5年・12ヶ月）と、YouTube の検索結果サンプル 1 run の集計だけを扱う。X は収集していない。規制・COA は扱わない。共通スケール（compare_terms）の要求は、この登録語について未収集である。</p>
+
+<h3>データソース</h3>
+<ul>
+  <li><strong>検索データ:</strong> Google Trends（日本、過去5年・過去12ヶ月）</li>
+  <li><strong>動画データ:</strong> YouTube Search via Apify（検索語「THCP リキッド」、419 件）</li>
+  <li><strong>X:</strong> この登録語では収集していない（0 件の観測ではない）。</li>
+  <li><strong>規制資料:</strong> 本ページでは扱わない（登録語は異性体未指定の同族体ファミリーであり、単一物質の同一性が未確認のため、規制状態を推定しない）。</li>
+  <li><strong>収集手段と collector:</strong> Google Trends は google-trends-mcp 0.1.1（2026-11-10 収集）、YouTube は Apify の <code>streamers/youtube-scraper</code> build 0.0.329（2026-11-10 収集）。</li>
+  <li><strong>合算しない:</strong> Google Trends の相対指数と YouTube の返却サンプル件数は異なる現象であり、合算・換算しない。</li>
+  <li><strong>値の区分:</strong> 観測（run が返した返却点・返却件数）と派生（平均・年次件数・ピーク月・再生数統計）を区別する。推移の解釈は行わない。</li>
+</ul>
+
+<!-- ===== 独自データ：Google Trends 検索需要 ===== -->
+<div>
+  <h2 id="data-search">独自データ: THCP の Google Trends 検索需要 <span>一次データ</span></h2>
+  <p>データソース: Google Trends / 地域: 日本 (JP) / 要求: <code>today 5-y</code>（週次、単独系列）・<code>today 12-m</code>（週次、単独系列） / 取得日: 表ごとの出所を参照</p>
+
+  <div>
+    <p><strong>用語の定義:</strong></p>
+    <ul>
+      <li><strong>単独系列</strong>: 1 語だけを取得した系列。その語のピークが 100。</li>
+      <li><strong>共通スケール</strong>: 複数語を同じ要求で取得した系列。要求内の最大値が 100。登録語間で比べられるのはこちらだけ。</li>
+      <li><strong>興味度スコア</strong>: Google Trends が返す相対指数（0-100）。絶対検索数ではなく、期間内の最大検索量を 100 とした相対値。</li>
+    </ul>
+  </div>
+
+  <h3>5年データサマリー（個別正規化値）</h3>
+  <table>
+    <thead>
+      <tr><th>指標</th><th>値</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>要求条件</td><td>JP / today 5-y</td></tr>
+      <tr><td>観測範囲（返却点の範囲）</td><td>2021-11-07 〜 2026-11-08（262週）</td></tr>
+      <tr><td>5年平均</td><td><strong>2.20</strong></td></tr>
+      <tr><td>ピーク</td><td>2021-12-19（値: 100）</td></tr>
+      <tr><td>最新値</td><td>0</td></tr>
+    </tbody>
+  </table>
+  <p><strong>出所:</strong> run <code>20261110T191412Z-google-trends-thcp-5y</code>（<code>query_id</code> <code>thcp-general-ja</code> / JP / <code>today 5-y</code> / 宣言窓 <code>2021-11-07_2026-11-15</code> / 2026-11-10T19:14:14Z 収集）。記録にある項目: 初出 2021-12-19（値 100）、非ゼロ 11 週 / ゼロ 251 週、データあり期間 2021-11-07 〜 2026-11-08（262 週）。</p>
+  <p><strong>補足:</strong> 宣言窓は収集時刻で解決される実際の境界が未検証のため近似である。5年平均は週次 262 点の算術平均（小数第 2 位）。0 は相対指数の最小値（閾値未満）への丸めであり、検索が存在しなかったことや欠測を意味しない。</p>
+  <p><strong>最新値 0 の扱い:</strong> 最新週の値 0 は、その週に検索需要が無かったという観測ではなく、相対指数の最小値への丸めである。非ゼロ週が少数の系列では、この 0 を「検索が無い」と読まない。</p>
+
+  <h3>12ヶ月データサマリー（個別正規化値）</h3>
+  <table>
+    <thead>
+      <tr><th>キーワード</th><th>12ヶ月平均</th><th>12ヶ月最高</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>THCP</strong></td><td>1.9</td><td>100</td></tr>
+    </tbody>
+  </table>
+  <p><strong>出所:</strong> run <code>20261110T191350Z-google-trends-thcp-12m</code>（<code>query_id</code> <code>thcp-general-ja</code> / JP / <code>today 12-m</code> / 宣言窓 <code>2025-11-09_2026-11-15</code> / 2026-11-10T19:13:52Z 収集）。観測範囲 2025-11-09 〜 2026-11-08（53週）。表示値 1.9 は週次 53 点の算術平均（小数第 1 位）。ピークは 2026-04-05（値 100）。</p>
+  <p><strong>補足:</strong> 単独系列であり、5年系列・共通スケールとは別の物差しである。非ゼロ 1 週 / ゼロ 52 週。0 は相対指数の最小値への丸めであり、需要ゼロの観測ではない。</p>
+
+  <h3>共通スケール比較（未取得）</h3>
+  <p>共通スケールは、<code>CBD</code>・<code>THC</code> を同一の <code>compare_terms</code> 要求に含み、同じ geo / timeframe / 窓で取得した系列だけで比較できる。この登録語 <code>THCP</code> について、その要求は<strong>未取得</strong>である（単独系列の値で代用しない）。</p>
+  <table>
+    <thead><tr><th>項目</th><th>状態</th></tr></thead>
+    <tbody>
+      <tr><td>5年共通スケール（compare_terms）</td><td><strong>未取得</strong></td></tr>
+      <tr><td>12ヶ月共通スケール（compare_terms）</td><td><strong>未取得</strong></td></tr>
+      <tr><td>理由</td><td>登録語を含み CBD・THC をアンカーとする要求が未収集</td></tr>
+      <tr><td>代替</td><td>なし（単独系列は要求内の最大=100 ではなく、換算できない）</td></tr>
+    </tbody>
+  </table>
+  <p><strong>方針:</strong> 被覆方針は <code>datasets/cannabinoid-raw-collection/metadata/query-design.json</code> の <code>gt-5y-common-scale-cbd-thc</code> / <code>gt-12m-common-scale-cbd-thc</code> にあり、登録語は自動的に被覆対象になる。未取得は被覆の完了ではない。</p>
+  <p><strong>制約:</strong> 単独系列の相対指数と共通スケールの値は換算できない。要求間・run 間の平均は比較しない。5年と12ヶ月は窓が異なるため、両者の平均を比較しない。</p>
+
+</div>
+
+<!-- ===== 独自データ：YouTube 月次公開日件数 ===== -->
+<div>
+<h2 id="data-youtube-monthly">独自データ: THCP リキッドの月次公開日件数（date_filter=all 別集計） <span>一次データ（観測 + 派生）</span></h2>
+<p>データソース: YouTube Search via Apify（actor build 0.0.329） / 検索クエリ: 「THCP リキッド」（日本語・製品語による近似的な日本市場限定） / query_id: <code>thcp-liquid-ja</code></p>
+<p>1 run を単独で集計した（他の検索語・run と合算しない）。返却件数・観測公開日範囲は観測、年次件数・ピーク月・再生数統計は派生である。値は返却サンプル内の公開日件数であり、YouTube 全体のピークではない。<code>date_filter</code> の異なる run 間は比較しない。</p>
+<h3>収集: date_filter=all（419 件）</h3>
+<table>
+  <thead><tr><th>指標</th><th>値</th></tr></thead>
+  <tbody>
+    <tr><td>run</td><td><code>20261110T191712Z-youtube-cannabinoid-raw-collection</code></td></tr>
+    <tr><td>query_id</td><td><code>thcp-liquid-ja</code>（検索語「THCP リキッド」）</td></tr>
+    <tr><td>date_filter（API 要求条件）</td><td><code>all</code>（<code>dateFilter</code> を指定しない無制限要求）</td></tr>
+    <tr><td>地理条件（API）</td><td>指定なし（日本語の製品語「リキッド」による近似的な日本市場限定で、geo フィルタではない）</td></tr>
+    <tr><td>収集開始 / 収集終了</td><td>2026-11-10T19:17:12Z / 2026-11-10T19:24:07Z（UTC）</td></tr>
+    <tr><td>実行状態</td><td>success（Apify の要求はすべて成功）</td></tr>
+    <tr><td>返却件数</td><td><strong>419 件</strong>（実行状態 success）</td></tr>
+    <tr><td>観測公開日範囲</td><td>2021-02-13 〜 2026-10-28（UTC、返却レコードの公開日）</td></tr>
+    <tr><td>観測窓（半開区間）</td><td>[2021-02-13, 2026-10-29)</td></tr>
+    <tr><td>ピーク月（返却サンプル内、同点併記）</td><td><strong>2024-08（17 件）</strong></td></tr>
+    <tr><td>再生数 最大 / 中央値 / 平均 / 最小</td><td>5,452,370 / 2,206 / 45,263.39 / 18（取得時点の値）</td></tr>
+    <tr><td>動画長 平均 / 最短 / 最長</td><td>646.9 秒 / 10 秒 / 39711 秒（返却レコードの <code>duration</code>）</td></tr>
+  </tbody>
+</table>
+
+<h3>年次分布</h3>
+<table>
+  <thead><tr><th>年</th><th>件数</th></tr></thead>
+  <tbody>
+    <tr><td>2021</td><td>11</td></tr>
+    <tr><td>2022</td><td>42</td></tr>
+    <tr><td>2023</td><td>105</td></tr>
+    <tr><td>2024</td><td>127</td></tr>
+    <tr><td>2025</td><td>101</td></tr>
+    <tr><td>2026</td><td>33</td></tr>
+  </tbody>
+</table>
+
+<p><strong>部分年:</strong> 2021・2026 は、その年の観測日数分の件数であり、年間全体の件数ではない。公開日がサンプルにない年は行を作らない（未取得を 0 にしない）。</p>
+<p><strong>制約:</strong> 月次・年次件数は返却サンプル内の公開日件数であり、YouTube 全体の投稿数を表さない（全動画を網羅するものではない）。結果上限は宣言に <code>maxResults=500</code> と記録され、返却件数はその上限未満である。ただし返却サンプルは一致する動画の総数ではなく、検索の到達範囲も記録からは確定できない。再生数は取得日時点の値であり、変動する可能性がある。0 の再生数は返却値であり欠測ではない。未取得を 0 観測として扱わない。他の検索語・run と合算せず、<code>date_filter</code> の異なる run 間は比較しない。動画単位の行（動画 ID・タイトル・チャンネル・URL・再生数）は公開しない（集計のみ、ISS-20261015-COL-030 §4.1）。</p>
+<p><strong>検索語の限界:</strong> 返却は検索語「THCP リキッド」の文字列一致によるサンプルであり、動画の内容が登録語の物質を扱っていることを確認していない（略号・一般語との衝突を含む）。Δ8-THCP と Δ9-THCP のどちらを扱うかも判定していない。日本語の製品語「リキッド」は近似的な日本市場限定で、geo フィルタではない。</p>
+<p><strong>出所:</strong> run <code>20261110T191712Z-youtube-cannabinoid-raw-collection</code>（<code>date_filter=all</code> / 2026-11-10T19:17:12Z 開始・2026-11-10T19:24:07Z 終了、返却 419 件）。採用宣言は <code>metadata/provenance/declarations/20261110-youtube-thcp-cannabinoid-raw-collection.json</code> の該当 run で、payload SHA-256 は同宣言の <code>environment.payload_sha256</code>（<code>27fa6fc6…772972</code>）。raw payload と run 記録は Git 非追跡・非公開のため、本節の年次・月次件数と再生数統計は収集時 payload の集計値であり、リポジトリからは再計算できない（採用宣言はリポジトリにある）。</p>
+<p><strong>照合:</strong> 年次合計は返却件数と一致する（419）。ピーク月は返却サンプル内の最多月で、同点の月は併記する（2024-08 が 17 件）。再生数統計は返却レコードの値の単純集計（平均は算術平均、中央値は件数が偶数のとき中央 2 値の平均）。月次全点は掲載せず、年次分布とピーク月のみを載せる。</p>
+</div>
+
+<!-- ===== 公開状態 ===== -->
+<div>
+<h2 id="publication-status">公開状態</h2>
+<p><strong>公開状態: 公開審査待ち（<code>requires_review</code>）。</strong>本ページは 2026-11-11 に作成したドラフトである。公開契約の review envelope（<code>metadata/publication/research-thcp/</code>）はまだ無く、公開判断・hash の固定は行っていない。</p>
+<p>図は差し込んでいない（5年推移・年次分布・共通スケールのいずれも未作成）。図の生成は、ページ記載値と raw の照合に加えて、5年 <code>compare_terms</code> 要求（CBD・THC を同一要求に含む）を必要とする。この登録語についてその要求が未収集のため、図の生成・差し込みは行っていない。</p>
+<p>公開する場合は、C1〜C45 の内容レビュー、review envelope の作成、図の生成・差し込み、hash の再固定、公開契約監査の再実行が必要である。</p>
+</div>
+
+<!-- ===== 引用情報 ===== -->
+<div>
+<h2 id="citation">引用 (How to Cite)</h2>
+<p>
+  KATO, Kyoji（2026）.<br>
+  「Japan Cannabinoid Platform Trends Dataset 2026: Google Trends and YouTube Evidence from Japan」.<br>
+  Version 1.14.9<br>
+  Routeflags Co., Ltd.<br>
+  [Dataset].<br>
+  DOI: <a href="https://doi.org/10.5281/zenodo.23390594">10.5281/zenodo.23390594</a>
+</p>
+<p>
+  <a href="https://doi.org/10.5281/zenodo.23390594">
+    <img src="https://zenodo.org/badge/1375618430.svg" alt="DOI">
+  </a>
+</p>
+</div>
+
+</body>
+</html>

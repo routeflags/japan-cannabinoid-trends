@@ -4,8 +4,8 @@
   "schema_id": "query-registry-v1",
   "registry_version": "1.0.0",
   "target_glob": "datasets/**/run_metadata.json",
-  "count": 93,
-  "query_count": 139,
+  "count": 97,
+  "query_count": 143,
   "raw_modified": false,
   "states": {
     "exact_match": "the collected text equals a registered canonical_text",
@@ -15,7 +15,7 @@
     "unmapped": "no registered correspondence and no compound token"
   },
   "summary": {
-    "exact_match": 133,
+    "exact_match": 137,
     "variant_match": 5,
     "semantic_match_candidate": 1,
     "ambiguous": 0,
@@ -2591,6 +2591,94 @@
           "state": "exact_match",
           "classification": "relevant",
           "query_id": "cbp-general-ja",
+          "variant_id": null,
+          "detail": "registered_canonical",
+          "source_fields": [
+            "query_provenance.submitted_query"
+          ]
+        }
+      ]
+    },
+    {
+      "run_id": "20261110T235526Z-google-trends-10-oh-hhc-5y-retry",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261110T235526Z-google-trends-10-oh-hhc-5y-retry/run_metadata.json",
+      "status": "read",
+      "sha256": "935a756750d48375c96882d7df5f4412a841ff97914542b0feec47ef8799e42c",
+      "sha256_after": "935a756750d48375c96882d7df5f4412a841ff97914542b0feec47ef8799e42c",
+      "unchanged": true,
+      "extracted_query_count": 1,
+      "queries": [
+        {
+          "text": "10-OH-HHC",
+          "state": "exact_match",
+          "classification": "relevant",
+          "query_id": "10-oh-hhc-general-ja",
+          "variant_id": null,
+          "detail": "registered_canonical",
+          "source_fields": [
+            "query_provenance.submitted_query"
+          ]
+        }
+      ]
+    },
+    {
+      "run_id": "20261110T235617Z-google-trends-thxe-5y-retry",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261110T235617Z-google-trends-thxe-5y-retry/run_metadata.json",
+      "status": "read",
+      "sha256": "cf0ebe6af5adb9bd54f3078a274467f654236fa60bf736704849f6d5581c6265",
+      "sha256_after": "cf0ebe6af5adb9bd54f3078a274467f654236fa60bf736704849f6d5581c6265",
+      "unchanged": true,
+      "extracted_query_count": 1,
+      "queries": [
+        {
+          "text": "THXE",
+          "state": "exact_match",
+          "classification": "relevant",
+          "query_id": "thxe-general-ja",
+          "variant_id": null,
+          "detail": "registered_canonical",
+          "source_fields": [
+            "query_provenance.submitted_query"
+          ]
+        }
+      ]
+    },
+    {
+      "run_id": "20261110T235641Z-google-trends-thca-12m-retry",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261110T235641Z-google-trends-thca-12m-retry/run_metadata.json",
+      "status": "read",
+      "sha256": "ac55d215bbe8def82b980c001599d1b0eba181620e5adfdb5b3f92d85c2c62f9",
+      "sha256_after": "ac55d215bbe8def82b980c001599d1b0eba181620e5adfdb5b3f92d85c2c62f9",
+      "unchanged": true,
+      "extracted_query_count": 1,
+      "queries": [
+        {
+          "text": "THCA",
+          "state": "exact_match",
+          "classification": "relevant",
+          "query_id": "thca-general-ja",
+          "variant_id": null,
+          "detail": "registered_canonical",
+          "source_fields": [
+            "query_provenance.submitted_query"
+          ]
+        }
+      ]
+    },
+    {
+      "run_id": "20261110T235706Z-google-trends-thca-5y-retry",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261110T235706Z-google-trends-thca-5y-retry/run_metadata.json",
+      "status": "read",
+      "sha256": "2c45eaead0b8b1787ab2de36dc80ffe1d6a6282dc2e96c43d8b47329467c21e8",
+      "sha256_after": "2c45eaead0b8b1787ab2de36dc80ffe1d6a6282dc2e96c43d8b47329467c21e8",
+      "unchanged": true,
+      "extracted_query_count": 1,
+      "queries": [
+        {
+          "text": "THCA",
+          "state": "exact_match",
+          "classification": "relevant",
+          "query_id": "thca-general-ja",
           "variant_id": null,
           "detail": "registered_canonical",
           "source_fields": [

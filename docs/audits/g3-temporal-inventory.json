@@ -3,10 +3,10 @@
   "profile": "g3_temporal_inventory",
   "spec": "docs/plans/20261013c.md §15 (local plan; not tracked)",
   "target_glob": "datasets/**/run_metadata.json",
-  "count": 93,
+  "count": 97,
   "raw_modified": false,
   "classification_summary": {
-    "verified": 64,
+    "verified": 68,
     "inferred": 29,
     "unknown": 0,
     "ambiguous": 0
@@ -2623,6 +2623,106 @@
       "reference": {
         "value": "2026-11-10T19:29:44.740451Z",
         "source": "records_cbp.json"
+      },
+      "observed_bounds": {
+        "start": "2021-11-07T00:00:00Z",
+        "end_exclusive": "2026-11-15T00:00:00Z",
+        "basis": "bucket_labels"
+      },
+      "pagination": true,
+      "completeness_evidence": [],
+      "classification": "verified",
+      "resolved_absolute_window": null,
+      "resolution_note": "not derived: conversion of legacy relative periods into absolute windows is prohibited (P1, c.md §15)"
+    },
+    {
+      "run_id": "20261110T235526Z-google-trends-10-oh-hhc-5y-retry",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261110T235526Z-google-trends-10-oh-hhc-5y-retry/run_metadata.json",
+      "sha256": "935a756750d48375c96882d7df5f4412a841ff97914542b0feec47ef8799e42c",
+      "timeframes": [
+        {
+          "value": "today 5-y",
+          "source": "records_10-oh-hhc.json"
+        }
+      ],
+      "reference": {
+        "value": "2026-11-10T23:55:27.538571Z",
+        "source": "records_10-oh-hhc.json"
+      },
+      "observed_bounds": {
+        "start": "2021-11-07T00:00:00Z",
+        "end_exclusive": "2026-11-15T00:00:00Z",
+        "basis": "bucket_labels"
+      },
+      "pagination": true,
+      "completeness_evidence": [],
+      "classification": "verified",
+      "resolved_absolute_window": null,
+      "resolution_note": "not derived: conversion of legacy relative periods into absolute windows is prohibited (P1, c.md §15)"
+    },
+    {
+      "run_id": "20261110T235617Z-google-trends-thxe-5y-retry",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261110T235617Z-google-trends-thxe-5y-retry/run_metadata.json",
+      "sha256": "cf0ebe6af5adb9bd54f3078a274467f654236fa60bf736704849f6d5581c6265",
+      "timeframes": [
+        {
+          "value": "today 5-y",
+          "source": "records_thxe.json"
+        }
+      ],
+      "reference": {
+        "value": "2026-11-10T23:56:18.126942Z",
+        "source": "records_thxe.json"
+      },
+      "observed_bounds": {
+        "start": "2021-11-07T00:00:00Z",
+        "end_exclusive": "2026-11-15T00:00:00Z",
+        "basis": "bucket_labels"
+      },
+      "pagination": true,
+      "completeness_evidence": [],
+      "classification": "verified",
+      "resolved_absolute_window": null,
+      "resolution_note": "not derived: conversion of legacy relative periods into absolute windows is prohibited (P1, c.md §15)"
+    },
+    {
+      "run_id": "20261110T235641Z-google-trends-thca-12m-retry",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261110T235641Z-google-trends-thca-12m-retry/run_metadata.json",
+      "sha256": "ac55d215bbe8def82b980c001599d1b0eba181620e5adfdb5b3f92d85c2c62f9",
+      "timeframes": [
+        {
+          "value": "today 12-m",
+          "source": "records_thca.json"
+        }
+      ],
+      "reference": {
+        "value": "2026-11-10T23:56:42.987270Z",
+        "source": "records_thca.json"
+      },
+      "observed_bounds": {
+        "start": "2025-11-09T00:00:00Z",
+        "end_exclusive": "2026-11-15T00:00:00Z",
+        "basis": "bucket_labels"
+      },
+      "pagination": true,
+      "completeness_evidence": [],
+      "classification": "verified",
+      "resolved_absolute_window": null,
+      "resolution_note": "not derived: conversion of legacy relative periods into absolute windows is prohibited (P1, c.md §15)"
+    },
+    {
+      "run_id": "20261110T235706Z-google-trends-thca-5y-retry",
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261110T235706Z-google-trends-thca-5y-retry/run_metadata.json",
+      "sha256": "2c45eaead0b8b1787ab2de36dc80ffe1d6a6282dc2e96c43d8b47329467c21e8",
+      "timeframes": [
+        {
+          "value": "today 5-y",
+          "source": "records_thca.json"
+        }
+      ],
+      "reference": {
+        "value": "2026-11-10T23:57:07.707538Z",
+        "source": "records_thca.json"
       },
       "observed_bounds": {
         "start": "2021-11-07T00:00:00Z",

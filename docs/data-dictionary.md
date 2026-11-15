@@ -297,9 +297,9 @@
 | カテゴリ（notation） | カテゴリ名（ja） | 成分 |
 |-------------|------|--------------|
 | `compound_major` | 主要フィトカンナビノイド | `compound_cbd`, `compound_thc` |
-| `compound_minor` | 主要フィトカンナビノイド以外のフィトカンナビノイド | `compound_cbg`, `compound_cbn`, `compound_cbc`, `compound_thcv`, `compound_cbdv`, `compound_cbx`, `compound_thch` |
+| `compound_minor` | 主要フィトカンナビノイド以外のフィトカンナビノイド | `compound_cbg`, `compound_cbn`, `compound_cbc`, `compound_cbe`, `compound_thcv`, `compound_cbdv`, `compound_cbx`, `compound_thch`, `compound_cbl`, `compound_cbga` |
 | `compound_rare` | レアカンナビノイド | （なし。**意図的に空**。`skos:scopeNote` 参照） |
-| `compound_identity_unverified` | 同一性未確認の登録語（登録状態） | `compound_thcb`, `compound_thcp`, `compound_thcjd`, `compound_thcpo`, `compound_cbe`, `compound_hhcpo`, `compound_cbnd`, `compound_cbl`, `compound_cbga`, `compound_cbp`, `compound_10_oh_hhc`, `compound_thxe`, `compound_thca` |
+| `compound_identity_unverified` | 同一性未確認の登録語（登録状態） | `compound_thcb`, `compound_thcp`, `compound_thcjd`, `compound_thcpo`, `compound_hhcpo`, `compound_cbnd`, `compound_cbp`, `compound_10_oh_hhc`, `compound_thxe`, `compound_thca`, `compound_delta9_thca_a`, `compound_thca_b`, `compound_delta8_thca`, `compound_delta8_thcb`, `compound_delta9_thcb`, `compound_thcb_o_acetate` |
 | `compound_semisynthetic` | 半合成カンナビノイド | `compound_hhc`, `compound_thc_o`, `compound_h4cbh`, `compound_hhbd`, `compound_thcnm` |
 | `compound_synthetic` | 合成カンナビノイド | `compound_hhch`, `compound_crdp`, `compound_crdh` |
 | `compound_endocannabinoid` | エンドカンナビノイド | `compound_anandamide`, `compound_2ag` |
@@ -313,10 +313,48 @@
 > `compound_identity_unverified` は**経路分類ではなく管理上の登録状態カテゴリ**である
 > （ISS-20261111-TAX-040）。members は owner が名指しした検索語のうち化学的同一性が
 > 未確認のもので、この配置は経路・由来、天然存在、化学クラス、構造、別名、規制状態に
-> ついて**何も主張しない**。希少・マイナー・半合成・合成のいずれの分類の代替でもなく、
+> ついて**何も主張しない**。**カテゴリ所属自体は同義関係を確立しない**：member の
+> `skos:altLabel` は概念レベルの記録であり、owner が確認した別名・検索トピックの表記には
+> その概念の scopeNote に独自の根拠を要する（`compound_thcpo` の英語
+> `skos:altLabel` `THCP-O-acetate` はこの規則による検索スコープの別名で、単一構造の
+> 同義語ではない）。ただし、異性体未指定のファミリーとして登録した語の
+> scopeNote は、異性体ごとの物質が法令上の構造グループに該当することを記録する場合が
+> ある。それは当該異性体についての記載であり、この配置が規制分類を行うものではない。希少・マイナー・半合成・合成のいずれの分類の代替でもなく、
 > 根拠が得られた語はその根拠が支えるカテゴリへ移す。`compound_thcp` は 2026-10-15 の
 > TAX-027 が「登録しない」と判断した語だが、2026-11-11 の owner 指示がその判断を
 > 置換した（ISS-20261111-TAX-040）。`compound_rare` は引き続き空である。
+> `compound_cbe` は 2026-11-11 に owner が cannabielsoin と確認した語で、FDA GSRS
+> （UNII 2ERD6V6652、CAS 52025-76-0、PubChem CID 162113、C21H30O3）と
+> Wikidata Q22668702 を根拠に `compound_minor` へ移した。`compound_cbl` は同日
+> cannabicyclol と確認し（Wikidata Q907909、FDA GSRS UNII MP5WZK8M5U、PubChem CID
+> 30607 / 59444380、C21H30O2）、`compound_cbga` は cannabigerolic acid（標準表記
+> CBGA）と確認した（ChEBI 67081、Wikidata Q27135612、FDA GSRS UNII 80I4ZM847Y、
+> PubChem CID 6449999、C22H32O4）。両語も `compound_minor` へ移した。CBL の 2 つの
+> CAS 番号（21366-63-2 / 67920-00-7）は立体化学の扱いが異なるため、単一の CAS を
+> 識別子として断定しない。CBG は CBGA の脱炭酸体であり別名ではない。Google Trends /
+> YouTube の系列は `CBE` / `CBE リキッド`、`CBL` / `CBL リキッド`、`CBGa` /
+> `CBGa リキッド` の文字列一致を測るもので、意図された同一性が確認されても各結果の
+> 内容を保証しない（ISS-20261111-TAX-040 追記）。`compound_thcp`・`compound_thcjd` は
+> 2026-11-11 に owner が意図された範囲を、それぞれ tetrahydrocannabiphorol（C7）同族体
+> ファミリー・THC-JD / 3-octyl-THC（C8）同族体ファミリー（Δ8/Δ9 未指定）と確認した。
+> `compound_thcpo` は owner が確認質問「`THCPO` は THCP-O-acetate を指しますか？」に `y`
+> と回答し、異性体を指定しなかったため、登録を**異性体未指定の THCP-O-acetate ファミリー**
+> として扱う（ファミリー扱いは回答の登録上の整理であり、owner がファミリーを明示的に
+> 確認したものではない）。いずれも単一物質の同定ではなく、Δ8 体と Δ9 体は別物質であるため、3 語には単一
+> レコードを指す `exactMatch` も識別子も付けず、各異性体の識別子は
+> `docs/provenance/compound-taxonomy.md` に記録する。`THCPO` の Δ8/Δ9 両異性体は
+> 2024 年の厚生労働省令の構造グループに該当するが、それは省令の**「麻薬を除く」除外規定**
+> の下での法令上の構造の事実であり、個々の製品・検索結果の分類ではなく、規制判断でも、
+> owner の同一性確認の一部でもない。系列は
+> `THCP` / `THCP リキッド`、`THCJD` / `THCJD リキッド`、`THCPO` / `THCPO リキッド` の
+> 文字列一致を測るもので、各結果をどの異性体に帰属させられるかは未確認である。
+
+> `compound_thca` / `compound_thcb` は、2026-11-11 の owner 確認により総称の化学解釈から 6 つの検索トピック概念へ分かれた
+> （`Δ9-THCA-A` / `THCA-B` / `Δ8-THCA`、`Δ8-THCB` / `Δ9-THCB` / `THCB-O-acetate`。ISS-20261111-TAX-041）。6 概念はすべて
+> `compound_identity_unverified` に置き、単一の検証済み外部識別子を選択していないため `exactMatch` を張らず、
+> `compound_thca` / `compound_thcb` / `compound_thc` や相互の `skos:related` も張らない。総称の 2 概念は文字列 `THCA` / `THCB` の
+> 登録として残り、既存の run とクエリは付け替えない。Google Trends / YouTube の系列は各登録文字列の一致を測るもので、
+> Δ8/Δ9 や A/B の内容を保証しない。
 
 ### 6.5 化学クラス（第 2 次元）
 

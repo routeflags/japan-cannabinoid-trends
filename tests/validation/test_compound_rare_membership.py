@@ -16,13 +16,21 @@ The rule, in two parts, because the two categories answer different questions:
    together. In particular ``compound_cbdp`` stays unregistered: the owner named no
    such term and the repository has no evidence for it.
 
-2. The owner-named batch terms are registered in
-   ``compound_identity_unverified``, an ADMINISTRATIVE registration-state category.
-   That placement states no route/origin, natural occurrence, chemical class,
-   structure, synonym or regulatory claim, carries no external identifier, and is
-   never a substitute for a route category. ``compound_thcp`` exists because the
-   owner directed it; TAX-027's prior non-registration decision is superseded by the
-   dated record, not silently dropped.
+2. The owner-named batch terms whose identities remain unresolved are registered
+   in ``compound_identity_unverified``, an ADMINISTRATIVE registration-state
+   category. That placement states no route/origin, natural occurrence, chemical
+   class, structure, synonym or regulatory claim, carries no external identifier,
+   and is never a substitute for a route category. ``compound_thcp`` exists because
+   the owner directed it; TAX-027's prior non-registration decision is superseded by
+   the dated record, not silently dropped. ``CBE``, ``CBL`` and ``CBGa`` left this
+   category on 2026-11-11 when the owner confirmed them as cannabielsoin,
+   cannabicyclol and cannabigerolic acid; they are now in ``compound_minor``
+   with verified identifiers.
+
+On 2026-11-11 the owner also split the generic THCA and THCB readings into six
+specific search topics (``ISS-20261111-TAX-041``). Those six strings joined the
+same administrative category without an identifier; the generic ``compound_thca``
+and ``compound_thcb`` concepts remain separate literal-string registrations.
 
 Both decisions are pinned explicitly: removing a member, moving one into
 ``compound_rare``, inventing an identifier, or dropping the supersession record
@@ -66,6 +74,36 @@ BATCH_NOTATIONS = tuple(notation for _, notation in BATCH)
 BATCH_IDS = tuple(
     "jptr:compound-" + notation[len("compound_"):].replace("_", "-")
     for notation in BATCH_NOTATIONS
+)
+# CBE, CBL and CBGa were registered with this batch but identified the same day.
+CBE = ("CBE", "compound_cbe")
+CBL = ("CBL", "compound_cbl")
+CBGA = ("CBGa", "compound_cbga")
+CONFIRMED = {CBE[0], CBL[0], CBGA[0]}
+# The THCA / THCB search-topic concepts registered on 2026-11-11
+# (ISS-20261111-TAX-041) joined the same administrative category: six specific
+# strings whose single-substance identity was not established by the owner's
+# confirmation.  Delta signs and hyphens are kept exactly.
+THCA_THCB_TOPICS = (
+    ("Δ9-THCA-A", "compound_delta9_thca_a"),
+    ("THCA-B", "compound_thca_b"),
+    ("Δ8-THCA", "compound_delta8_thca"),
+    ("Δ8-THCB", "compound_delta8_thcb"),
+    ("Δ9-THCB", "compound_delta9_thcb"),
+    ("THCB-O-acetate", "compound_thcb_o_acetate"),
+)
+TOPIC_NOTATIONS = tuple(notation for _, notation in THCA_THCB_TOPICS)
+TOPIC_IDS = tuple(
+    "jptr:compound-" + notation[len("compound_"):].replace("_", "-")
+    for notation in TOPIC_NOTATIONS
+)
+ADMIN_BATCH = (
+    tuple(item for item in BATCH if item[0] not in CONFIRMED) + THCA_THCB_TOPICS
+)
+ADMIN_BATCH_NOTATIONS = tuple(notation for _, notation in ADMIN_BATCH)
+ADMIN_BATCH_IDS = tuple(
+    "jptr:compound-" + notation[len("compound_"):].replace("_", "-")
+    for notation in ADMIN_BATCH_NOTATIONS
 )
 # Named by the 2026-10-15 decision as *not* to be invented; CBDP stays that way.
 STILL_UNREGISTERED = ("compound_cbdp", "jptr:compound-cbdp")
@@ -141,7 +179,7 @@ def test_the_batch_is_registered_in_the_administrative_category() -> None:
     """Every owner term resolves to exactly one concept, under the new category."""
 
     notations = _by_notation()
-    for term, notation in BATCH:
+    for term, notation in ADMIN_BATCH:
         concept = notations[notation]
         assert concept.get("skos:broader") == ADMIN_CATEGORY_ID, notation
         assert _label_values(concept, "skos:prefLabel") == [term, term], notation
@@ -149,7 +187,7 @@ def test_the_batch_is_registered_in_the_administrative_category() -> None:
 
     category = _by_id()[ADMIN_CATEGORY_ID]
     assert category["skos:notation"] == ADMIN_CATEGORY_NOTATION
-    assert sorted(category["skos:narrower"]) == sorted(BATCH_IDS)
+    assert sorted(category["skos:narrower"]) == sorted(ADMIN_BATCH_IDS)
     assert category.get("skos:topConceptOf") == "jptr:compound-taxonomy"
     assert category.get("skos:broader") is None
 
@@ -203,7 +241,67 @@ def test_members_carry_no_identifier_or_chemical_class_link() -> None:
             assert target not in chemclass_ids, (node["@id"], target)
         note = _scope_note_value(node)
         assert "UNCONFIRMED" in note, node["@id"]
-        assert "ISS-20261111-TAX-040" in note, node["@id"]
+        # Each member records the decision that placed it: the 2026-11-11
+        # registration batch or the same-day THCA / THCB topic split.
+        assert (
+            "ISS-20261111-TAX-040" in note or "ISS-20261111-TAX-041" in note
+        ), node["@id"]
+
+
+def test_cbl_and_cbga_left_the_administrative_category_for_a_source_backed_placement() -> None:
+    """The move condition was met for CBL and CBGa; both are documented identities."""
+
+    notations = _by_notation()
+    admin_members = _by_id()[ADMIN_CATEGORY_ID]["skos:narrower"]
+    for term, notation in (CBL, CBGA):
+        concept = notations[notation]
+        assert concept.get("skos:broader") == "jptr:compound-minor", term
+        assert concept["@id"] not in admin_members, term
+    cbl = notations[CBL[1]]
+    assert cbl["skos:exactMatch"] == "wikidata:Q907909"
+    assert _label_values(cbl, "skos:prefLabel") == [
+        "Cannabicyclol (CBL)",
+        "カンナビシクロール (CBL)",
+    ]
+    assert "skos:related" not in cbl
+    cbl_note = _scope_note_value(cbl)
+    assert "cannabicyclol" in cbl_note.lower()
+    assert "21366-63-2" in cbl_note and "67920-00-7" in cbl_note
+    assert "literal" in cbl_note and "ISS-20261111-TAX-040" in cbl_note
+    cbga = notations[CBGA[1]]
+    assert set(cbga["skos:exactMatch"]) == {
+        "chebi:67081",
+        "wikidata:Q27135612",
+        "https://identifiers.org/unii:80I4ZM847Y",
+    }
+    assert _label_values(cbga, "skos:prefLabel") == [
+        "Cannabigerolic acid (CBGA)",
+        "カンナビゲロール酸 (CBGA)",
+    ]
+    # CBGA is distinct from CBG; the precursor relation is prose only.
+    assert "skos:related" not in cbga
+    cbga_note = _scope_note_value(cbga)
+    assert "cannabigerolic acid" in cbga_note.lower()
+    assert "compound_cbg" in cbga_note
+    assert "literal" in cbga_note and "ISS-20261111-TAX-040" in cbga_note
+
+
+def test_cbe_left_the_administrative_category_for_a_source_backed_placement() -> None:
+    """The move condition was met; CBE is not an unverified registration anymore."""
+
+    cbe = _by_notation()[CBE[1]]
+    assert cbe.get("skos:broader") == "jptr:compound-minor"
+    assert "jptr:compound-cbe" not in _by_id()[ADMIN_CATEGORY_ID]["skos:narrower"]
+    assert set(cbe["skos:exactMatch"]) == {
+        "wikidata:Q22668702",
+        "https://identifiers.org/unii:2ERD6V6652",
+    }
+    labels = _label_values(cbe, "skos:prefLabel")
+    assert "Cannabielsoin (CBE)" in labels
+    note = _scope_note_value(cbe)
+    assert "cannabielsoin" in note.lower()
+    assert "literal" in note
+    assert "ISS-20261111-TAX-040" in note
 
 
 def test_thcp_records_the_superseding_decision() -> None:
@@ -224,16 +322,16 @@ def test_thcp_records_the_superseding_decision() -> None:
 
 
 def test_batch_members_are_declared_outside_iptc_subjects() -> None:
-    """No identifier, so no IPTC subject: the coverage says so explicitly."""
+    """No IPTC subject is guessed, with or without an identifier."""
 
     coverage = _iptc_coverage()
     assert ADMIN_CATEGORY_ID in coverage["not_applicable"]
     assert ADMIN_CATEGORY_ID not in coverage["mapped"]
-    for concept_id in BATCH_IDS:
+    for concept_id in (*BATCH_IDS, *TOPIC_IDS):
         assert concept_id in coverage["deliberately_unmapped"], concept_id
         assert concept_id not in coverage["mapped"], concept_id
     text = IPTC_MAPPING.read_text(encoding="utf-8")
-    for concept_id in (ADMIN_CATEGORY_ID, *BATCH_IDS):
+    for concept_id in (ADMIN_CATEGORY_ID, *BATCH_IDS, *TOPIC_IDS):
         assert f'- skos_id: "{concept_id}"' not in text, concept_id
 
 
@@ -249,8 +347,11 @@ def test_data_dictionary_mirrors_both_categories() -> None:
     rows = {match.group(1): match.group(3) for match in row.finditer(section)}
     assert re.findall(r"`(compound_[a-z_0-9]+)`", rows["compound_rare"]) == []
     assert sorted(re.findall(r"`(compound_[a-z_0-9]+)`", rows[ADMIN_CATEGORY_NOTATION])) == sorted(
-        BATCH_NOTATIONS
+        ADMIN_BATCH_NOTATIONS
     )
+    minor_members = re.findall(r"`(compound_[a-z_0-9]+)`", rows["compound_minor"])
+    for confirmed in ("compound_cbe", "compound_cbl", "compound_cbga"):
+        assert confirmed in minor_members, confirmed
 
 
 def test_provenance_records_the_superseding_decision() -> None:

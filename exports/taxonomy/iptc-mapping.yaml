@@ -33,9 +33,37 @@
 #               13 語は化学的同一性が未確認で識別子も未検証のため deliberately_unmapped、
 #               カテゴリは主題分類ではないため not_applicable。IPTC 語彙の外部照会は
 #               行っていない（推測で対応付けない）。version 1.3.0 → 1.4.0。
+#   2026-11-11: CBE を cannabielsoin として同一性確認（FDA GSRS / Wikidata）。
+#               compound-cbe を上記 13 語群から分離し、識別子はあるが IPTC 主題は
+#               外部確認していないため deliberately_unmapped の別群に記録。
+#               version 1.4.0 → 1.5.0。
+#   2026-11-11: CBL を cannabicyclol、CBGa を cannabigerolic acid として同一性
+#               確認（Wikidata / FDA GSRS / PubChem / ChEBI）。両語を 12 語群から
+#               分離し、識別子はあるが IPTC 主題は外部確認していないため
+#               deliberately_unmapped の別群に記録。version 1.5.0 → 1.6.0。
+#   2026-11-11: THCP と THCJD について、owner が意図された範囲を C7 / C8 同族体ファミリー
+#               （Δ8/Δ9 未指定）と確認した（ISS-20261111-TAX-040 追記）。10 語群の理由を
+#               8 語（同一性未確認）+ 2 語（ファミリー範囲確認、単一レコード無し）に分けて
+#               記述し、IPTC 主題は引き続き割り当てない。version 1.6.0 → 1.7.0。
+#   2026-11-11: THCPO について、owner が意図された範囲を THCP-O-acetate（Δ8/Δ9
+#               未指定）と確認した（ISS-20261111-TAX-040 追記）。管理カテゴリの
+#               10 語群の理由を 7 語（同一性未確認）+ 3 語（ファミリー範囲確認、
+#               単一レコード無し）に分けて記述し、IPTC 主題は引き続き割り当てな
+#               い。version 1.7.0 → 1.8.0。
+#   2026-11-11: owner が THCA を Δ9-THCA-A / THCA-B / Δ8-THCA、THCB を
+#               Δ8-THCB / Δ9-THCB / THCB-O-acetate の検索トピック概念に分ける
+#               ことを確認した（ISS-20261111-TAX-041）。6 概念を deliberately_
+#               unmapped の別群に加え、IPTC 主題は外部確認していないため割り当て
+#               ない。総称の compound-thca / compound-thcb は既存群に残す。
+#               version 1.8.0 → 1.9.0。
+#   2026-11-11: THCPO の記述を修正。owner の回答は「THCPO は THCP-O-acetate を指す」
+#               であり異性体の指定が無いため、登録を異性体未指定の THCP-O-acetate ファミリー
+#               として扱う（owner がファミリーを明示的に確認したものではない）。
+#               カテゴリ所属は同義関係を確立しないことを明記。IPTC 主題は引き続き割り当てない。
+#               version 1.9.0 → 1.9.1。
 # =============================================================================
 
-version: "1.4.0"
+version: "1.9.1"
 last_updated: "2026-11-11"
 
 # IPTC Media Topics の URI スキーム
@@ -224,22 +252,40 @@ compound_mapping:
 coverage:
   status: "partial"
   scope_note: |
-    対応対象は末端概念（化合物 32 + content 14 = 46）。
+    対応対象は末端概念（化合物 38 + content 14 = 52）。
     カテゴリノード（7）は階層構造上の上位概念であり主題分類ではないため、対応対象外とする。
     化学クラス 2 概念（chemclass-hydrogenated / chemclass-acetate）は TAX-026 (a) で
     追加された第 2 次元の側面値であり、IPTC Media Topics に対応する主題が無いため
-    not_applicable として宣言する（下記）。概念総数は 55（compound 39 + content 14 + chemclass 2）。
+    not_applicable として宣言する（下記）。概念総数は 61（compound 45 + content 14 + chemclass 2）。
     TAX-025（2026-10-15）で 17 末端概念の区分を確定した: intent 4 と format 4 は
     主題以外の次元（投稿意図・表現形式）であり IPTC の主題語彙に対応する概念を持たないため
     not_applicable（TAX-026 の次元分離規則を適用）。化合物 9 は deliberately_unmapped のまま
     2 群に分けて群ごとに理由を記録した。化合物単位の IPTC 主題はリポジトリ内の証拠になく、
     外部語彙の確認は未実施のため推測で対応付けない。確認方法は verification を参照。
     2026-11-11 の owner 指示バッチ（ISS-20261111-TAX-040）で 13 化合物と管理上の
-    登録状態カテゴリ 1 概念を追加した。13 化合物は deliberately_unmapped の第 3 群
-    （識別子未検証）に加え、カテゴリは not_applicable に加えた。化合物単位の
-    IPTC 対応付けは依然として行わない。
+    登録状態カテゴリ 1 概念を追加した。13 化合物は deliberately_unmapped に加え、
+    カテゴリは not_applicable に加えた。同日、owner が CBE・CBL・CBGa の意図された
+    同一性を確認し、3 語は識別子を検証して taxonomy の compound_minor へ移したが、
+    化合物単位の IPTC 主題は外部確認していないため deliberately_unmapped のまま
+    別群に記録する。残る 10 語は管理カテゴリの群に残し、うち THCP・THCJD は owner が異性体未指定
+    のファミリー範囲を確認し、THCPO は owner が THCP-O-acetate を指すことのみ確認して
+    異性体を指定しなかったため、登録を異性体未指定ファミリーとして扱う（Δ8/Δ9 の各異性体は
+    別物質で、ファミリーの単一レコードは無い。カテゴリ所属は同義関係を確立しない）。
+    化合物単位の IPTC 対応付けは依然として行わない。
+    2026-11-11 の owner 決定（ISS-20261111-TAX-041）で、THCA を Δ9-THCA-A /
+    THCA-B / Δ8-THCA、THCB を Δ8-THCB / Δ9-THCB / THCB-O-acetate の検索トピックへ
+    分ける 6 概念を追加した。いずれも deliberately_unmapped の別群に加え、IPTC
+    主題は割り当てない。総称の compound-thca / compound-thcb は既存の群に残す。
 
   deliberately_unmapped:
+    - concepts:
+        - "jptr:compound-delta9-thca-a"
+        - "jptr:compound-thca-b"
+        - "jptr:compound-delta8-thca"
+        - "jptr:compound-delta8-thcb"
+        - "jptr:compound-delta9-thcb"
+        - "jptr:compound-thcb-o-acetate"
+      reason: "2026-11-11 の owner 決定（ISS-20261111-TAX-041）で登録した、THCA / THCB の総称的な化学解釈を置き換える 6 つの検索トピック概念。Δ9-THCA-A・THCA-B は Moreno-Sanz 2016（DOI 10.1089/can.2016.0008）と Filer 2021（DOI 10.1089/can.2021.0003、PMCID PMC8612408）が命名・構造を記録し、Δ8-THCB・Δ9-THCB は Linciano et al. 2020（DOI 10.1021/acs.jnatprod.9b00876）と Tanaka & Kikura-Hanajiri 2024（DOI 10.1248/yakushi.24-00029）が分析物質として記録し、THCB-O-acetate の Δ8/Δ9 両異性体は 2024 年の厚生労働省令（令和6年厚生労働省令第81号）の構造グループに列挙されている。ただし登録文字列について単一の検証済み外部識別子を選択しておらず（Δ8-THCA は構造・命名の出所も未検証）、IPTC Media Topics の化合物単位の主題も外部確認していない。対応付けは推測になるため deliberately_unmapped のままとする。"
     - concepts:
         - "jptr:compound-cbc"
         - "jptr:compound-cbdv"
@@ -258,16 +304,20 @@ coverage:
         - "jptr:compound-thcp"
         - "jptr:compound-thcjd"
         - "jptr:compound-thcpo"
-        - "jptr:compound-cbe"
         - "jptr:compound-hhcpo"
         - "jptr:compound-cbnd"
-        - "jptr:compound-cbl"
-        - "jptr:compound-cbga"
         - "jptr:compound-cbp"
         - "jptr:compound-10-oh-hhc"
         - "jptr:compound-thxe"
         - "jptr:compound-thca"
-      reason: "2026-11-11 の owner 指示で登録した 13 語（ISS-20261111-TAX-040）。いずれも化学的同一性が未確認で、ChEBI / Wikidata / CAS / PubChem の識別子は検証されておらず、外部照会も行っていない。所属カテゴリ jptr:compound-identity-unverified は管理上の登録状態カテゴリであり、route・化学クラス・天然存在・規制状態のいずれの根拠でもない。識別子が未検証の概念に IPTC 主題を割り当てることは推測になるため、識別子の検証と IPTC 語彙の外部確認が済むまで対応付けない。"
+      reason: "2026-11-11 の owner 指示で登録した 13 語のうち、管理カテゴリ jptr:compound-identity-unverified に残る 10 語（ISS-20261111-TAX-040）。うち 7 語（THCB / HHCPO / CBND / CBP / 10-OH-HHC / THXE / THCA）は化学的同一性が未確認で、識別子も検証していない。`THCP`・`THCJD` は 2026-11-11 に owner が意図された範囲を C7 同族体（tetrahydrocannabiphorol）・C8 同族体（THC-JD / 3-octyl-THC）の異性体未指定ファミリーと確認した。`THCPO` は owner が確認質問「`THCPO` は THCP-O-acetate を指しますか？」に `y` と回答し、異性体を名指ししなかったため、登録を異性体未指定の THCP-O-acetate ファミリーとして扱う（ファミリー扱いは回答の登録上の整理であり、owner がファミリーを明示的に確認したものではない）。各異性体の識別子は docs/provenance/compound-taxonomy.md に記録したが、登録語は単一物質でも単一レコードでもないため family への exactMatch は張らない。カテゴリ所属は同義関係を確立せず、英語 skos:altLabel `THCP-O-acetate` は概念の scopeNote に根拠を記録した検索スコープの別名である。THCPO の両異性体が 2024 年の厚生労働省令の構造グループに該当することも台帳に記録したが、それは省令の「麻薬を除く」除外規定の下での法令上の構造の事実であり、個々の製品・検索結果の分類ではなく、規制判断でも、owner の同一性確認の一部でもない。所属カテゴリは管理上の登録状態カテゴリであり、route・化学クラス・天然存在の根拠でも、それ自体が規制分類を行うものでもない。化合物主題の割り当ては単一異性体を選ぶことになり、IPTC 語彙の外部確認も行っていないため、対応付けない。"
+    - concepts:
+        - "jptr:compound-cbe"
+      reason: "CBE は 2026-11-11 に owner が cannabielsoin と確認し、FDA GSRS（UNII 2ERD6V6652 / CAS 52025-76-0 / PubChem CID 162113）と Wikidata Q22668702 で識別子を検証した。taxonomy では compound_minor に置く。ただし IPTC Media Topics はニュース主題語彙であり、化合物単位の主題対応は外部確認していない。対応付けは推測になるため deliberately_unmapped のままとする。"
+    - concepts:
+        - "jptr:compound-cbl"
+        - "jptr:compound-cbga"
+      reason: "CBL は cannabicyclol（Wikidata Q907909 / FDA GSRS UNII MP5WZK8M5U / PubChem CID 30607・59444380）、CBGa は cannabigerolic acid（ChEBI 67081 / Wikidata Q27135612 / FDA GSRS UNII 80I4ZM847Y / PubChem CID 6449999）として、2026-11-11 に owner が意図された同一性を確認し、識別子を検証した。taxonomy では両語とも compound_minor に置く。ただし IPTC Media Topics はニュース主題語彙であり、化合物単位の主題対応は外部確認していない。対応付けは推測になるため deliberately_unmapped のままとする。"
   not_applicable:
     - concepts:
         - "jptr:compound-endocannabinoid"
@@ -279,7 +329,7 @@ coverage:
       reason: "taxonomy の上位概念（カテゴリ）。主題分類ではないため IPTC との対応は定義しない。"
     - concepts:
         - "jptr:compound-identity-unverified"
-      reason: "経路・由来のカテゴリではなく、owner が名指しした登録語のうち化学的同一性が未確認のものをまとめる**管理上の登録状態カテゴリ**（ISS-20261111-TAX-040）。カテゴリノードであり主題分類ではないため IPTC 主題を定義しない。members の同一性が未確認であるため、このカテゴリから members への IPTC 主題割り当ても行わない（members は deliberately_unmapped に別途宣言）。"
+      reason: "経路・由来のカテゴリではなく、owner が名指しした登録語のうち化学的同一性が未確認のものをまとめる**管理上の登録状態カテゴリ**（ISS-20261111-TAX-040）。カテゴリノードであり主題分類ではないため IPTC 主題を定義しない。members は単一物質としての同一性が未確認であるため（`THCP` と `THCJD` は異性体未指定のファミリー範囲のみ確認）、このカテゴリから members への IPTC 主題割り当ても行わない（members は deliberately_unmapped に別途宣言）。"
     - concepts:
         - "jptr:intent-commercial"
         - "jptr:intent-experiential"
@@ -300,9 +350,10 @@ coverage:
 limitations:
   - "IPTC Media Topics はニュース記事向けの語彙であり、SNS コンテンツ分類には完全に適用できない場合がある"
   - "closeMatch マッピングは概念的に近いが完全に同一ではない"
-  - "一部のカンナビノイド化合物（CBX, H4CBH, HHBD, THCNM、および 2026-11-11 に登録した 13 語）は ChEBI / Wikidata に対応エントリがない"
+  - "一部のカンナビノイド化合物（CBX, H4CBH, HHBD, THCNM、および 2026-11-11 に登録した語のうち同一性が未確認の 10 語）は ChEBI / Wikidata の対応エントリを確認していない（不在の断定ではない）"
+  - "CBE・CBL・CBGa は識別子を検証済みだが、化合物単位の IPTC 主題は外部確認していないため deliberately_unmapped である（識別子の有無と IPTC 主題の有無は別）"
   - "投稿意図（intent 4）・表現形式（format 4）に IPTC Media Topics の対応概念は無い。IPTC はニュース主題語彙であり、意図・形式は別次元のため対応付けない（TAX-025 記録 2026-10-15）"
-  - "化合物 22 概念の IPTC 対応付けには IPTC 語彙の外部確認が必要であり未実施。リポジトリ内の証拠だけでは化合物単位の主題を特定できないため推測で対応付けない。化合物識別子の正本は ChEBI / Wikidata（taxonomy の exactMatch）である"
+  - "化合物 28 概念の IPTC 対応付けには IPTC 語彙の外部確認が必要であり未実施。リポジトリ内の証拠だけでは化合物単位の主題を特定できないため推測で対応付けない。化合物識別子の正本は ChEBI / Wikidata（taxonomy の exactMatch）である"
   - "化学クラス（水素化・アセテート体）に IPTC Media Topics の対応概念は無い。IPTC はニュース主題語彙であり化学構造クラスを持たないため、推測で対応付けない（TAX-026 記録 2026-10-15）"
   - "IPTC Topic ID は変更される可能性があるため、定期的な検証が必要"
 
@@ -326,6 +377,10 @@ verification:
     2026-11-11 の登録バッチ（ISS-20261111-TAX-040）もリポジトリ内の証拠だけで判定し、
     IPTC / ChEBI / Wikidata への live 照会は行っていない。13 語の化学的同一性が未確認で
     識別子も未検証のため、主題の有無を判定せず deliberately_unmapped に置いた。
+    2026-11-11 の THCA / THCB 検索トピック分割（ISS-20261111-TAX-041）は、
+    文献の DOI / PMCID と厚生労働省令の別紙をリポジトリ内で確認して判定した。
+    6 概念はいずれも登録文字列について単一の検証済み外部識別子を選択していないため、
+    化合物単位の IPTC 主題は割り当てず deliberately_unmapped に置いた。
   iptc_source: "https://cv.iptc.org/newscodes/mediatopic/"
   chebi_source: "https://www.ebi.ac.uk/chebi/"
   wikidata_source: "https://www.wikidata.org/"

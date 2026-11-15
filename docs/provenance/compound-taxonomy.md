@@ -270,6 +270,9 @@ owner の明示的な scope 決定（2026-11-11 の列挙 15 語）に基づき�
   `10-OH-HHC` のハイフンを保持）。コード名を化学名に置き換えない（H4CBH / HHBD / THCNM の前例）。
 - `skos:altLabel` は `{term} リキッド` のみ。研究設計が `product_liquid` を required primary
   query としていることだけが根拠であり、他の綴りは根拠が無いので追加していない。
+  （登録時点の規則。2026-11-11 の THCPO 追記で `compound_thcpo` に限り、owner が確認した
+  意図された意味を当該概念の scopeNote に根拠として記録したうえで英語の別名を追加した。
+  カテゴリ所属は同義関係を確立しない。下の該当節）
 - `skos:related` は付けない。`CBGa` と `compound_cbg`、`THCA` と `compound_thc`、
   `10-OH-HHC` と `compound_hhc`、`THCPO` / `HHCPO` と他の語の関係は、リポジトリ内に
   根拠が無いため**主張しない**（別概念・下位・別名のいずれとも決めていない）。
@@ -329,11 +332,476 @@ study README / methodology、`project.json` の `queryDesign`（写し）、
 - `CBGa` / `THCA` / `10-OH-HHC` と既存概念の関係、`THCPO` / `HHCPO` の構造。
   いずれも根拠が得られるまで主張しない。
 
+## 2026-11-11 — owner の意図確認: `CBE` = cannabielsoin（ISS-20261111-TAX-040 追記）
+
+owner は 2026-11-11、`CBE` が cannabielsoin を指すかという確認に `y` と回答した。
+これは `compound_cbe` の化学的同一性を「未確認」から **cannabielsoin** へ更新する
+明示的な決定である。登録時の履歴（本台帳の 2026-11-11 節と
+ISS-20261111-TAX-040 の元の登録表・未決事項）は**書き換えず**、この節と issue の
+追記に新しい決定と根拠を記録する。
+
+### 検証した出所と、支える範囲
+
+| 出所 | 記録されている内容 | 支える主張 / 支えない主張 |
+|---|---|---|
+| FDA GSRS 承認済み CANNABIELSOIN 記録（UNII 2ERD6V6652） | `substanceClass: chemical`、`definitionLevel: COMPLETE`、version 7。名称 CANNABIELSOIN / CANNABIELSOIN A / CANNABIELSOIN I / CBE。コード CAS 52025-76-0、PubChem 162113、UNII 2ERD6V6652。分子式 C21H30O3 | 化学的同一性と識別子を支える。天然存在・経路／由来・国内市場の存在は支えない |
+| Wikidata Q22668702 | en label `cannabielsoin`、ja label `カンナビエルソイン`、別名 `cannabielsoin A`。CAS 52025-76-0、UNII 2ERD6V6652、PubChem 162113、分子式 C21H30O3 | ラベルと `skos:exactMatch` を支える。天然存在の独立した根拠ではない |
+| PubMed 3254981（Yamamoto et al. 1988, J Pharmacobiodyn 11:833-838） | guinea pig の肝ミクロソームで CBD から CBE が新規代謝物として生成。CBE は pentobarbital 睡眠・体温への活性がほとんどない | CBE = cannabielsoin と、CBD からの代謝生成を支える。植物体内の天然存在やクエリ結果の内容は支えない |
+| PubMed 2614640（Yamamoto et al. 1989, J Pharmacobiodyn 12:488-494） | CBE の生物学的生成機構。肝ミクロソーム、NADPH・分子状酸素要求、P-450 阻害剤で抑制、種差（guinea pig > mouse ≧ rabbit ≧ rat） | CBD からの代謝生成経路を支える |
+| PubMed 1806944（Yamamoto et al. 1991, Pharmacol Biochem Behav 40:541-546） | CBE が哺乳類で CBD の新規代謝物として同定されたこと、CBE 型代謝物の生成 | 哺乳類代謝物としての CBE を支える |
+| DOI 10.1055/s-2007-969870（Hartsel et al. 1983, Planta Med 48:17-19） | Cannabis sativa と Saccharum officinarum の懸濁培養が CBD を CBE へ生物変換し、C-1 の両立体異性体を生成 | 植物培養系での生成を支える。intact plant における天然存在の証明ではない |
+| PubMed 39062125 / PMC11275175 / DOI 10.3390/biomedicines12071551（Haghdoost et al. 2024, Biomedicines 12:1551） | 序文: CBE は「非酵素的フィトカンナビノイド」で、Cannabis sativa への天然存在が確立している。CBE は CBD の酸化生成物・哺乳類の minor metabolite でもある。in-vitro で S-CBE が CB1 の cAMP アゴニスト（EC50 3.7 µM）、β-arrestin アゴニスト活性は 12 µM までなし | `compound_minor`（主要フィトカンナビノイド以外のフィトカンナビノイド）の配置を支える。in-vitro 薬理は国内市場・検索結果の内容を支えない |
+
+### 決定した値
+
+| 項目 | 記録した値 | 根拠 |
+|---|---|---|
+| `skos:prefLabel` | en `Cannabielsoin (CBE)` / ja `カンナビエルソイン (CBE)` | GSRS・Wikidata の名称。既存の CBD / CBG と同じ「名称 (略号)」形式 |
+| `skos:altLabel` | `CBE`, `Cannabielsoin A`（en）/ `カンナビエルソイン`, `CBE リキッド`（ja） | CBE は owner の登録語。Cannabielsoin A は GSRS / PubChem の別名。`CBE リキッド` は study の `product_liquid` クエリ表記 |
+| `skos:exactMatch` | `wikidata:Q22668702`、`https://identifiers.org/unii:2ERD6V6652` | Wikidata と FDA UNII。CAS 52025-76-0、PubChem CID 162113、C21H30O3 は scopeNote に記録 |
+| `skos:broader` | `jptr:compound-minor` | カテゴリ定義は「主要な2化合物以外のフィトカンナビノイド」。2024 年論文が CBE を非酵素的フィトカンナビノイドと明記し、天然存在が確立しているとするため |
+| 化学クラス | **リンクしない**（未形式化） | `chemical-class-taxonomy` には水素化・アセテートの 2 クラスしかなく、CBE 型クラスは無い。推測で第 2 次元を作らない |
+| 規制状態 | **主張しない** | 本変更は規制資料を収集・評価していない |
+
+- `compound_identity_unverified` の移動条件（「検証済み外部識別子を伴う文書化された化学名、
+  または物質名と経路／由来を記録した出所」）を満たしたため、`compound_cbe` を
+  同カテゴリの `skos:narrower` から外した。members は 13 → 12 語になる。
+- `compound_minor` の `skos:scopeNote` の列挙と `skos:narrower` に CBE を追加した。
+  これは新しいクラスの創設ではなく、既存カテゴリ定義に合致するメンバーの追加である。
+- `skos:related` は張らない。CBD との関係は scopeNote に文章で記録するが、
+  「同一」「下位」「別名」のいずれの構造的主張もしない。
+- `compound_cbe` の scopeNote（en / ja）に、owner の確認、GSRS / Wikidata の識別子、
+  2024 年論文のフィトカンナビノイド記述、CBD 代謝物・酸化生成物という別の由来、
+  化学クラス未形式化、そして**クエリ文字列の限界**を記録した。
+
+### 変更しないもの
+
+- `metadata/queries/query-registry.json` の `cbe-general-ja` / `cbe-liquid-ja` の
+  canonical_text と status は変更しない。Google Trends / YouTube が測るのは
+  `CBE` / `CBE リキッド` の文字列一致であり、各結果が cannabielsoin を扱うことの
+  確認ではない。
+- raw 観測、run metadata、catalog、件数、CBE 331 件・CBL 269 件の partial 状態、
+  収集計画は変更しない。
+- 公開ページ `publication/research_cbe.html` は `requires_review` のままとする。
+  review envelope、承認・decision / evidence hash、DOI、version / release status、
+  図、外部 release は作成・変更しない。
+- 本変更は収集を伴わない。
+
+### 限界と再検討条件
+
+- 2024 年論文の「天然存在が確立している」という記述は二次的な序文の記述であり、
+  一次分離文献の再確認は行っていない。1983 年論文は Cannabis の懸濁培養による
+  生物変換を支えるが、intact plant からの単離を直接には支えない。
+- したがって `compound_minor` の配置は上記の出所が支える範囲での判断である。
+  一次分離記録または公的レジストリが天然存在を否定・修正した場合は、本節を
+  更新して配置を再検討する。
+- `CBE` は短い略号であり、無関係な語とも一致し得る。既存の検索需要・YouTube
+  サンプルは文字列一致の観測であって、内容が cannabielsoin であることの証明ではない。
+
+### 同時に更新した層
+
+- `metadata/taxonomy/compound-taxonomy.skos.jsonld`（CBE のラベル・識別子・scopeNote・
+  `skos:broader`、minor / identity-unverified の membership）
+- `metadata/taxonomy/iptc-mapping.yaml`（CBE を 12 語群から分離し、識別子はあるが
+  IPTC 主題は未対応の別群に記録。version 1.5.0）
+- `docs/data-dictionary.md` §6.4（写し）
+- `docs/provenance/query-inventory.md`（CBE の 2 query の根拠）
+- `datasets/cannabinoid-raw-collection/metadata/query-design.json`（registration_basis /
+  identity_caveat）
+- `datasets/cannabinoid-raw-collection/methodology.md`（対象化合物表・限界）
+- `project.json` の `queryDesign`（写し）
+- `metadata/provenance/evidence-registry.json`（外部出所と taxonomy hash）
+- `exports/taxonomy/*`（再生成）
+- テスト: `tests/validation/test_registration_state_batch.py` /
+  `tests/validation/test_compound_rare_membership.py`
+- `ISS-20261111-TAX-040` の追記（元の本文は履歴として保持）
+
+## 2026-11-11 — owner の意図確認: `CBL` = cannabicyclol, `CBGa` = cannabigerolic acid（ISS-20261111-TAX-040 追記）
+
+owner は 2026-11-11、`CBL` が cannabicyclol を指すかという確認に `go`、`CBGa` が
+cannabigerolic acid（標準表記 `CBGA`）を指すかという確認に `y` と回答した。これは
+`compound_cbl` / `compound_cbga` の化学的同一性を「未確認」から確定へ更新する明示的な
+決定である。登録時の履歴（本台帳の 2026-11-11 節と ISS-20261111-TAX-040 の元の登録表・
+未決事項）と CBE の節は**書き換えず**、この節と issue の追記に新しい決定と根拠を記録する。
+
+### 検証した出所と、支える範囲
+
+| 出所 | 記録されている内容 | 支える主張 / 支えない主張 |
+|---|---|---|
+| Wikidata Q907909 | en `cannabicyclol`、ja `カンナビシクロ`、CAS 21366-63-2、PubChem CID 30607、C21H30O2 | 名称と `skos:exactMatch` を支える。立体化学と CAS の一意性は支えない |
+| FDA GSRS の UNII `MP5WZK8M5U` 記録 | `substanceClass: chemical`、`definitionLevel: COMPLETE`、version 10。名称 CANNABICYCLOL / CANNABIPINOL / PENTYLCANNABICYCLOL、CAS 21366-63-2、PubChem 59444380、C21H30O2 | 化学的同一性と識別子を支える。天然存在・経路／由来・規制状態は支えない |
+| PubChem CID 30607 | 立体未指定の `(+/-)-Cannabicyclol`、CAS 様の別名 67920-00-7、C21H30O2 | 立体未指定の識別子を支える。単一 CAS での同定は支えない |
+| PubChem CID 59444380 | `Cannabicyclol`、立体指定の IUPAC 名、CAS 21366-63-2、UNII MP5WZK8M5U | 立体指定記録の識別子を支える |
+| PubMed 39811943（Haghdoost et al. 2025, J Nat Prod, DOI 10.1021/acs.jnatprod.4c00977） | 要旨が CBL を「a minor phytocannabinoid」と記述。CBC から酸触媒（モンモリロナイト K30）で CBL への変換（収率 60%）、X 線結晶構造で構造確認。in vitro の 5-HT1A PAM | `compound_minor` の配置と名称を支える。酵素的な生合成・植物体内の存在量・規制状態・検索結果の内容は支えない |
+| PubMed 33839545（Forensic Sci Int 2021） | 押収大麻・医療用大麻等で 16 種のフィトカンナビノイド（cannabicyclol、cannabigerolic acid を含む）を定量 | CBL・CBGA が植物材料で検出されるフィトカンナビノイドであることを支える。収穫後変換や製造工程は排除しない |
+| Wikidata Q27135612 | en `cannabigerolic acid`、CAS 25555-57-1、PubChem CID 6449999、ChEBI 67081、C22H32O4 | 名称と `skos:exactMatch` を支える |
+| ChEBI 67081 | `cannabigerolic acid`（olivetolic acid の 3 位に geranyl）。定義は「Δ9-THC の生合成前駆体」 | 同一性・前駆体の記述・`skos:exactMatch` を支える。CBG への脱炭酸はこの定義では支えない |
+| FDA GSRS の UNII `80I4ZM847Y` 記録 | `substanceClass: chemical`、`definitionLevel: COMPLETE`、version 10。名称 CANNABIGEROLIC ACID / CBGA、CAS 25555-57-1、PubChem 6449999、C22H32O4 | 同一性と識別子を支える。天然存在量・経路／由来・規制状態は支えない |
+| PubChem CID 6449999 | `Cannabigerolic Acid`、C22H32O4、CAS 25555-57-1、ChEBI:67081、UNII 80I4ZM847Y | 同一性と識別子を支える |
+| PubMed 31686510（J Nat Prod 2019） | フィトカンナビノイドは中性体と酸性前駆体として存在し、酸性体が植物中で dominant。CBGA をフィトカンナビノイド酸として列挙 | `compound_minor` の配置を支える。国内市場・検索結果の内容は支えない |
+| PubMed 35887277（Int J Mol Sci 2022） | CBG は CBGA の非酵素的脱炭酸で生成する。CBGA はフィトカンナビノイド生合成の鍵となる前駆体 | CBGA と CBG が別概念であることを支える。`skos:related` の根拠にはしない |
+| 厚生労働科学研究の報告書（2023、`mhlw-grants.niph.go.jp`） | 日本語で「カンナビシクロール（CBL）」「カンナビエルソイン（CBE）」と表記し、カンナビゲロール酸を CBD/THC 経路の起点として図示 | 日本語ラベルを支える。規制状態は支えない |
+| J-GLOBAL（JST） | `カンナビゲロール酸 / Cannabigerolic acid`、C22H32O4、InChIKey、別名 CBGA | 日本語ラベルと識別子を支える |
+
+### 決定した値
+
+| 項目 | `compound_cbl` | `compound_cbga` |
+|---|---|---|
+| `skos:prefLabel` | en `Cannabicyclol (CBL)` / ja `カンナビシクロール (CBL)` | en `Cannabigerolic acid (CBGA)` / ja `カンナビゲロール酸 (CBGA)` |
+| `skos:altLabel` | en `CBL` / ja `CBL リキッド` | en `CBGA`, `CBGa` / ja `CBGa リキッド` |
+| `skos:exactMatch` | `wikidata:Q907909` | `chebi:67081`, `wikidata:Q27135612`, `https://identifiers.org/unii:80I4ZM847Y` |
+| `skos:broader` | `jptr:compound-minor` | `jptr:compound-minor` |
+| 化学クラス | リンクしない（CBL 型クラスは taxonomy に無い） | リンクしない（CBGA 型クラスは taxonomy に無い） |
+| 規制状態 | 主張しない | 主張しない |
+
+- CBL は CAS 21366-63-2（GSRS / Wikidata / 立体指定 PubChem）と 67920-00-7（立体未指定
+  PubChem の別名）が併存するため、`skos:exactMatch` に CAS を採らず、scopeNote に
+  両方と立体化学の差を記録した。単一 CAS を本概念の識別子として断定しない。
+- CBL の ja ラベルは日本語の科学技術報告での表記（カンナビシクロール）に従った。
+  Wikidata の ja ラベルは `カンナビシクロ` であり、表記が異なることを scopeNote に記した。
+- CBGA は `CBGa` を owner の表記として altLabel に残し、登録クエリ文字列（`CBGa` /
+  `CBGa リキッド`）と raw / query 記録は変更しない。大文字小文字の正規化は行わない。
+- `compound_identity_unverified` の members は 12 語から 10 語になった。`compound_minor`
+  の `skos:narrower` と scopeNote の列挙に両語を追加した。新しいクラスは作っていない。
+- `skos:related` は張らない。CBL と `compound_cbc`（CBC からの変換）、CBGA と
+  `compound_cbg`（酸性前駆体 / 脱炭酸体）の関係は scopeNote の文章に留める。CBG の
+  外部識別子の対応は未解決であり、関係を構造化する前に別途修正する（下記の既知事項）。
+
+### 変更しないもの
+
+- `metadata/queries/query-registry.json` の `cbl-general-ja` / `cbl-liquid-ja` /
+  `cbga-general-ja` / `cbga-liquid-ja` の canonical_text と status。
+- raw 観測、run metadata、catalog、件数、CBL 269 件・CBE 331 件の partial 状態、CBGa の
+  NO_DATA、収集計画。**本変更は収集を伴わない。**
+- 公開ページ `publication/research_cbl.html` / `publication/research_cbga.html` は
+  `requires_review` のまま。review envelope、承認、decision / evidence hash、DOI、
+  version / release status、図、外部 release は作成・変更しない。
+- 既存の `compound_cbg` / `compound_thc` 等の外部識別子は修正しない（下記の既知事項）。
+
+### 限界と再検討条件
+
+- CBL の立体化学と CAS の対応は一意でない。一次分離文献または公的レジストリが対応を
+  訂正した場合は、本節と scopeNote を更新して再検討する。
+- 2025 年論文は酸触媒による CBC→CBL 変換を示すが、生体内の酵素合成や intact な植物での
+  存在を確立しない。`compound_minor` の配置は「フィトカンナビノイドであり主要 2 化合物
+  以外」という範囲の判断である。
+- CBGA と CBG の前駆体／脱炭酸体の関係は文章で記録し、`skos:related` は張らない。
+  構造化するには taxonomy の関係規則と CBG 側の識別子修正が必要である。
+- `CBL` と `CBGa` は短い略号である。Google Trends / YouTube の系列は文字列一致の観測で
+  あり、意図された同一性が確認されても各結果がその物質を扱うことの証明ではない。
+
+### 同時に更新した層
+
+- `metadata/taxonomy/compound-taxonomy.skos.jsonld`（両語のラベル・識別子・scopeNote・
+  `skos:broader`、minor / identity-unverified の membership）
+- `metadata/taxonomy/iptc-mapping.yaml`（両語を 10 語群から分離し、識別子はあるが IPTC
+  主題は未対応の別群に記録。version 1.6.0）
+- `docs/data-dictionary.md` §6.4（写し）
+- `docs/provenance/query-inventory.md`（両語の 2 query の根拠）
+- `datasets/cannabinoid-raw-collection/metadata/query-design.json`（registration_basis /
+  identity_caveat）
+- `datasets/cannabinoid-raw-collection/README.md`・`methodology.md`（対象化合物表・限界）
+- `project.json` の `queryDesign`（写し）
+- `metadata/provenance/evidence-registry.json`（外部出所と taxonomy hash）
+- `exports/taxonomy/*`（再生成）
+- 公開ページ `publication/research_cbl.html` / `publication/research_cbga.html`（同一性の
+  記述のみ。`requires_review` は維持）
+- テスト: `tests/validation/test_registration_state_batch.py` /
+  `tests/validation/test_compound_rare_membership.py`
+- `ISS-20261111-TAX-040` の追記（元の本文は履歴として保持）
+
+## 2026-11-11 — owner の意図確認: `THCP` = C7 同族体ファミリー、`THCJD` = C8 同族体ファミリー（Δ8/Δ9 未指定。ISS-20261111-TAX-040 追記）
+
+owner は 2026-11-11、登録語の意図された意味を次のように確認した。
+
+- `THCP` = **tetrahydrocannabiphorol（C7）同族体ファミリー、Δ8/Δ9 未指定**
+- `THCJD` = **THC-JD / 3-octyl-THC（C8）同族体ファミリー、Δ8/Δ9 未指定**
+
+これは**検索トピックのファミリー範囲の確認**であり、個々の Google Trends / YouTube 結果が
+どちらの異性体を扱うかの確認ではない。Δ8 体と Δ9 体は別物質であり、ハイフンなしの `THCJD`
+は owner の検索文字列であって権威ある登録名ではない。登録文字列（`THCP` / `THCP リキッド`、
+`THCJD` / `THCJD リキッド`）は変更しない。
+
+### 検証した出所と、支える範囲
+
+| 出所 | 記録されている内容 | 支える主張 / 支えない主張 |
+|---|---|---|
+| Citti et al. 2019, Sci Rep, DOI `10.1038/s41598-019-56785-1` | Cannabis sativa から Δ9-THCP を分離し、C7 同族体（tetrahydrocannabiphorol）として同定。CB1 結合親和性は Δ9-THC の約 33 倍 | `THCP` が C7 同族体ファミリーを含むこと、Δ9 体の名称と結合親和性。ファミリー全体の天然存在、Δ8 体の天然存在、ヒトでの効力、国内市場の存在は支えない |
+| FDA GSRS レコード UNII `WTK87HN3LG`（Δ9-THCP） | CAS `54763-99-4`、PubChem CID `6453074` | Δ9 体の識別子。登録語 `THCP` の識別子ではない |
+| Wikidata `Q85806080`（Δ9-THCP） | 上記識別子を持つ項目 | Δ9 体の項目。ファミリーの識別子ではない |
+| PubChem CID `44307335` / Wikidata `Q141317106`（Δ8-THCP） | CAS `51768-60-6` を持つ Δ8 体の独立レコード | Δ8 体が Δ9 体と別物質であること。登録語の識別子ではない |
+| Tanaka & Kikura-Hanajiri 2024, 薬学雑誌, DOI `10.1248/yakushi.24-00029` | Δ8/Δ9 の 3-octyl-THC を "THCjd" として扱う | `THCJD` の C8 同族体ファミリーとしての範囲と名称。単一異性体の同定、天然存在、規制状態は支えない |
+| Munger et al. 2026, DOI `10.26828/cannabis/2026/000348` | 販売製品の表示と内容の重大な不一致。「19 倍」は業界の主張 | ラベル・内容不一致という限界。効力の測定値、規制状態、天然存在は支えない |
+
+### 決定した値
+
+| 項目 | 記録した値 | 根拠 |
+|---|---|---|
+| taxonomy 配置 | `compound_identity_unverified`（変更なし） | ファミリーは単一物質ではなく、経路／由来の分類を支持する根拠が無い |
+| `skos:prefLabel` / `skos:altLabel` / `skos:notation` | 変更なし（`THCP` / `THCJD` と `{term} リキッド`） | owner の登録表記と study の `product_liquid` 設計 |
+| `skos:exactMatch` | **張らない** | ファミリー全体を表す単一レコードが無い。Δ9 体・Δ8 体のレコードは異性体の識別子であり、登録語の識別子ではない |
+| 外部識別子の記載箇所 | 本台帳のみ（taxonomy の概念には書かない） | 管理カテゴリの member は識別子を持たない規則。ファミリーに単一識別子は無い |
+| 化学クラス | リンクしない | 同族体ファミリーは `chemical-class-taxonomy` の形式化されたクラスではない |
+| 天然存在・合成経路・安全性・臨床効果・規制状態 | **主張しない** | owner の確認は検索トピックの範囲であり、これらの根拠ではない |
+| 単一物質としての化学的同一性 | **未確認** | 異性体が指定されていないため、単一物質を同定できない |
+
+### `compound_minor` / `compound_rare` へ移さない理由
+
+- `compound_minor` は「主要 2 化合物以外の**フィトカンナビノイド**」という経路／由来の分類である。
+  Δ9-THCP が Cannabis sativa から報告されていることは Δ9 体についての根拠であり、**Δ8/Δ9 未指定の
+  検索語全体**の天然存在を支えない。さらに登録文字列はファミリー外の製品・内容とも一致する
+  （Munger et al. 2026 の表示・内容不一致）。したがって配置は根拠を超える。
+- `compound_rare` は「微量にのみ存在する」という天然存在の主張を含み、意図的に空のまま維持している
+  （ISS-20261015-TAX-027）。THCP を入れるとその判断と固定テストを壊す。
+- `chemical-class-taxonomy` にも同族体ファミリーのクラスは無く、推測で第 2 次元を作らない。
+- したがって、ファミリー範囲は**管理カテゴリ内の文書化された検索語の範囲**として scopeNote に記録し、
+  経路・化学クラス・天然存在の主張は行わない。
+
+### 変更しないもの
+
+- `metadata/queries/query-registry.json` の canonical_text（`THCP` / `THCP リキッド`、`THCJD` /
+  `THCJD リキッド`）と status。系列が測るのは文字列一致である。
+- `query-design.json` の `registration_basis` の `identity_state`（`compound_identity_unverified`）。
+  単一物質の同一性が未確認であることに変わりはない。
+- raw 観測、run metadata、catalog、件数、収集計画。
+- 公開ページ `publication/research_thcp.html` / `publication/research_thcjd.html` は `requires_review`
+  のまま。review envelope、承認・decision / evidence hash、DOI、version / release status、図は
+  作成・変更しない。
+- 分類（`skos:broader`）とカテゴリの membership。`compound_identity_unverified` の members は 10 語のまま。
+
+### 限界と再検討条件
+
+- 個々の Google Trends / YouTube 結果の異性体归属は未確認である。系列は登録文字列の一致を測る。
+- ファミリーの存在は公表文献に依拠し、本変更は一次分離を再確認していない。Δ8 体の天然存在・合成経路・
+  安全性・臨床効果は未評価である。
+- 「33 倍」は CB1 結合親和性の比、「19 倍」は業界の主張（Munger et al. 2026）であり、いずれも
+  ヒトでの効力の測定値ではない。
+- 規制状態は本変更の対象外である。規制資料は本変更で評価していない。2023 年の厚生労働省の
+  構造グループが C8 側鎖を含むという指摘は一次資料を確認していないため、根拠欄にも taxonomy にも
+  記載しない（必要なら別作業で確認する）。
+- ファミリーを形式化する taxonomy の state（カテゴリ）を持つかは design decision であり、本変更では
+  決めない。現状は管理カテゴリ内の文書化された範囲として扱う。
+
+### 同時に更新した層
+
+- `metadata/taxonomy/compound-taxonomy.skos.jsonld`（`compound_thcp` / `compound_thcjd` の
+  scopeNote、管理カテゴリの scopeNote、scheme description の単一物質表現）
+- `docs/data-dictionary.md` §6.4（写し）
+- `docs/specs/validation-framework.md` §23.4（TAX-027 の引き継ぎ記述を THCP の現状に合わせる）
+- `docs/provenance/query-inventory.md`（両語の 2 query の証拠欄）
+- `datasets/cannabinoid-raw-collection/metadata/query-design.json`（`identity_caveat` /
+  `limitations` / `distribution.reason`）
+- `datasets/cannabinoid-raw-collection/README.md`・`methodology.md`（対象化合物表・注記）
+- `project.json` の `queryDesign`（写し）
+- `metadata/taxonomy/iptc-mapping.yaml`（10 語群の理由を 8 語 + 2 語に分けて記述。version 1.7.0）
+- `metadata/provenance/evidence-registry.json`（taxonomy hash の再観測）
+- `exports/taxonomy/*`（再生成）
+- 公開ページ `publication/research_thcp.html` / `research_thcjd.html`（同一性の記述のみ。
+  `requires_review` は維持）
+- テスト: `tests/validation/test_registration_state_batch.py`
+- `ISS-20261111-TAX-040` の追記（元の本文は履歴として保持）
+
+## 2026-11-11 — owner の意図確認: `THCPO` = THCP-O-acetate（異性体の指定なし。登録は異性体未指定ファミリーとして扱う。ISS-20261111-TAX-040 追記）
+
+2026-11-11、owner は確認質問「`THCPO` は THCP-O-acetate を指しますか？」に `y` と回答し、**Δ8 体・Δ9 体のいずれの異性体も名指ししなかった**（ISS-20261111-TAX-040 追記）。したがって本登録は **異性体未指定の THCP-O-acetate ファミリー**として扱う。このファミリー扱いは回答の登録上の整理であり、**owner がファミリーを明示的に確認したものではない**。二つの異性体は別物質として区別し、個々の Google Trends / YouTube 結果がどちらの異性体を扱うかは確認しない。登録文字列（`THCPO` / `THCPO リキッド`）は変更しない。
+
+`THCPO` と他の概念との関係は主張しない。`compound_thc_o` は別に登録された市場・総称の概念で、独自の同一性留保を持ち（単一の検証済み構造ではない）、本節はそこへ特定の構造を割り当てない。`THCP-O-butanoate` は Tanaka et al. 2025 が Δ9-THCP-O-acetate と並んで同定した別のエステルであり、本概念の別名ではない。`compound_hhcpo` は別に登録された語で、化学的同一性は未確認である。本概念との別名・関連（`skos:related`）・`exactMatch` は張らない。
+
+### 検証した出所と、支える範囲
+
+| 出所 | 記録されている内容 | 支える主張 / 支えない主張 |
+|---|---|---|
+| 厚生労働省「指定薬物を指定する省令が公布されました」（2024-05-01 公布、2024-05-11 施行。令和6年厚生労働省令第81号） | 物質群1 = 6a,7,8,10a-テトラヒドロ-6,6,9-トリメチル-6H-ジベンゾ[b,d]ピランの1位に水酸基又はアセトキシ基が一つ、3位に直鎖 C3–C8 アルキル、他の置換基なし（麻薬を除く）。物質群2 = 同じ定義（麻薬を除く）の 6a,7,10,10a-テトラヒドロ（Δ8）系列。別紙は n=7 として Δ9-THCP-O-acetate / Δ8-THCP-O-acetate を列挙 | 両異性体が省令の「麻薬を除く」除外規定の下で 2024 年の構造グループに該当すること（法令上の構造の事実）。個々の製品・検索結果の分類ではなく、規制判断でも、owner の同一性確認の一部でもない。経路、天然存在、薬理、安全性は支えない |
+| Tanaka et al. 2025, Drug Test Anal 17(9):1795-1802, DOI `10.1002/dta.3883`, PMID 40075559 | オンライン流通のオイル製品 7 点とハーブ製品 1 点を GC-MS / LC-PDA-MS / NMR で分析し、Δ9-THCP-O（アセテート）と Δ9-THCP-O-butanoate を同定した。あわせて **Δ8-THC-O（アセテート、C5 同族体）** も同定しており、これは Δ8-THCP-O-acetate ではない | Δ9 アセテートと butanoate が分析対象の製品に存在すること、および両者が別のエステルであること。Δ8-THCP-O-acetate、ファミリー全体、検索結果の内容は支えない |
+| PubChem CID `172677450`（Δ9-THCP acetate） | `C25H36O3`、IUPAC 名 `[(6aR,10aR)-3-heptyl-6,6,9-trimethyl-6a,7,8,10a-tetrahydrobenzo[c]chromen-1-yl] acetate`、InChIKey `OXMUZNKOOOITQD-NHCUHLMSSA-N`、別名に CAS `2829292-82-0` | Δ9 体の独立レコードと識別子。ファミリーの識別子ではない |
+| PubChem CID `172874392`（delta8-THCP acetate） | `C25H36O3`、InChIKey `FDKCGSRFVKINQD-NHCUHLMSSA-N`、CAS の別名なし | Δ8 体が Δ9 体と別レコードであること。CAS は確認していない |
+| Wikidata `Q122689235` | en label `THCP-O-acetate`、ja label なし。InChIKey `OXMUZNKOOOITQD-NHCUHLMSSA-N`、PubChem CID `172677450`。CAS の主張なし | Δ9 体に対応する項目であること。ラベルはファミリー名だが、ファミリーの識別子ではない |
+| ChEBI | 記録した検索語は `THCP` のみで、該当なし | その検索で該当が無かったこと。アセテート体・ファミリーの ChEBI レコードの不在の証明ではなく、ファミリーに対する `exactMatch` も割り当てていない |
+| FDA GSRS | 名称検索 `Tetrahydrocannabiphorol` で親化合物（UNII `WTK87HN3LG`）のみ。THCP-O-acetate のレコードは得られず | その名称検索で THCP-O-acetate の識別子を確認していないこと。不在の証明ではない |
+
+- MHLW: <https://www.mhlw.go.jp/seisakunitsuite/bunya/kenkou_iryou/iyakuhin/yakubuturanyou/oshirase/20240807-1.html>、別紙 <https://www.mhlw.go.jp/content/11126000/001250830.pdf>
+- PubChem: <https://pubchem.ncbi.nlm.nih.gov/compound/172677450>、<https://pubchem.ncbi.nlm.nih.gov/compound/172874392>
+- Wikidata: <https://www.wikidata.org/wiki/Q122689235>
+
+### 決定した値
+
+| 項目 | 記録した値 | 根拠 |
+|---|---|---|
+| taxonomy 配置 | `compound_identity_unverified`（変更なし） | ファミリーは単一物質ではなく、経路／由来の分類を支持する根拠が無い |
+| `skos:prefLabel` / `skos:notation` | 変更なし（`THCPO` en/ja、`compound_thcpo`） | owner の登録表記。テストが owner 表記を固定している |
+| `skos:altLabel` | `THCP-O-acetate`（en）を追加、`THCPO リキッド`（ja）を維持 | owner が確認した意図された意味を記録する**検索スコープの別名**。根拠は当該概念の scopeNote にあり、カテゴリ所属から導かれる同義でも、ファミリーが単一構造であるという主張でもない（`THCPO リキッド` は study の `product_liquid` 設計） |
+| `skos:exactMatch` | **張らない** | ファミリー全体を表す単一レコードが無い。Δ9・Δ8 のレコードは異性体の識別子であり、登録語の識別子ではない |
+| 外部識別子の記載箇所 | 本台帳のみ（taxonomy の概念には書かない） | 管理カテゴリの member は単一物質の識別子を持たない規則 |
+| 化学クラス | リンクしない | アセテートは `chemical-class-taxonomy` の `chemclass-acetate` に構造クラスとして存在するが、本概念は単一物質ではなく、クラスへのリンクは経路・分類の主張になる。`skos:related` も張らない |
+| 規制状態 | **両異性体が 2024 年の厚生労働省令の構造グループに該当**すると記録（省令の**「麻薬を除く」除外規定の下での法令上の構造の事実**） | MHLW の省令・別紙。個々の製品・検索結果の分類ではなく、規制判断でも、owner の同一性確認の一部でもない |
+| 天然存在・合成経路・薬理・安全性・臨床効果 | **主張しない** | owner の確認と上記出所はこれらの根拠ではない |
+| 単一物質としての化学的同一性 | **未確認** | 異性体が指定されていないため、単一物質を同定できない |
+
+### `compound_minor` / `compound_rare` / `compound_semisynthetic` へ移さない理由
+
+- `compound_minor` は「主要 2 化合物以外のフィトカンナビノイド」という経路／由来の分類である。Δ9 アセテートが分析対象の製品から同定されたことは Δ9 体についての分析結果であり、Δ8/Δ9 未指定の検索語全体の天然存在を支えない。
+- `compound_semisynthetic` は「天然対応物を化学修飾した」という経路の主張を含む。アセテート構造は owner の確認と文献に記録されているが、本変更は合成経路・原料を検証していないため、経路分類へ移さない。
+- `compound_rare` は「微量にのみ存在する」という天然存在の主張を含み、意図的に空のまま維持している（ISS-20261015-TAX-027）。`compound_thcpo` は owner が名指しした語であり、rare の受け皿ではない。
+- したがって、ファミリー範囲と規制上の構造グループ該当は**管理カテゴリ内の文書化された事実**として scopeNote と本台帳に記録し、経路・化学クラス・天然存在の主張は行わない。
+
+### `compound_identity_unverified` の移動条件との関係
+
+- カテゴリの移動条件は「検証済み外部識別子を伴う文書化された化学名、または単一物質名と経路／由来を記録した出所」。本語は**化学名と異性体ごとの識別子**を持つが、**単一物質を指さない**ため条件を満たさない。THCP / THCJD と同じ扱いである。
+- カテゴリの scopeNote に、異性体未指定のエステル（アセテート）体ファミリーもここに置くこと、ファミリーの scopeNote が法令上の構造グループ該当を記録する場合があることを追記した。あわせて、**カテゴリ所属自体は同義関係を確立しない**こと、member の `skos:altLabel` は概念レベルの記録で当該概念の scopeNote に独自の根拠を要することを明記した。`compound_thcpo` の英語別名はこの規則に従う。カテゴリ ID・階層・membership は変えない。
+
+### 変更しないもの
+
+- `metadata/queries/query-registry.json` の `thcpo-general-ja` / `thcpo-liquid-ja` の canonical_text（`THCPO` / `THCPO リキッド`）と status。系列が測るのは文字列一致である。
+- `query-design.json` の `registration_basis` の `identity_state`（`compound_identity_unverified`）。単一物質の同一性が未確認であることに変わりはない。
+- raw 観測、run metadata、catalog、件数（Google Trends 5年 262 週、YouTube 33 件）、収集計画。**本変更は収集を伴わない。**
+- 公開ページ `publication/research_thcpo.html` は `requires_review` のまま。review envelope、承認・decision / evidence hash、DOI、version / release status、図は作成・変更しない。
+- `compound_thc_o` / `compound_hhcpo` 等の既存概念の識別子・分類・scopeNote は変更しない。
+
+### 限界と再検討条件
+
+- 個々の Google Trends / YouTube 結果の異性体归属は未確認である。系列は登録文字列の一致を測る。
+- Δ8-THCP-O-acetate を同定した分析文献は本変更では確認していない。Tanaka et al. 2025 が同定した Δ8 アセテートは **Δ8-THC-O（アセテート、C5 同族体）** であり、Δ8-THCP-O-acetate ではない（同論文は Δ9-THCP-O-acetate と Δ9-THCP-O-butanoate を同定）。Δ8-THCP-O-acetate の存在・天然存在・合成経路は未評価である。
+- Wikidata の `THCP-O-acetate` 項目はラベルがファミリー名だが、構造キーと PubChem CID は Δ9 レコードに対応する。ラベルだけを根拠にファミリーの識別子として使わない。
+- CAS `2829292-82-0` は PubChem の Δ9 レコードの別名として記録されている。CAS Registry の独立照会（Common Chemistry）は認証を要求したため実施しておらず、Δ8 体の CAS は確認していない。
+- 2024 年の厚生労働省令の構造グループ該当は、省令の**「麻薬を除く」除外規定の下での、物質の構造に基づく法令上の事実**である。個々の製品の適法性、含有量、安全性、薬理作用を判定するものではなく、owner の同一性確認の一部でもない。
+- ファミリーを形式化する taxonomy の state（カテゴリ）を持つかは design decision であり、本変更では決めない。
+
+### 同時に更新した層
+
+- `metadata/taxonomy/compound-taxonomy.skos.jsonld`（`compound_thcpo` の altLabel・scopeNote、管理カテゴリの scopeNote）
+- `metadata/taxonomy/iptc-mapping.yaml`（10 語群の理由と coverage の記述、THCPO の記述の修正。version 1.9.1）
+- `docs/data-dictionary.md` §6.4（写し）
+- `docs/provenance/query-inventory.md`（`thcpo-general-ja` / `thcpo-liquid-ja` の証拠欄、版 1.7.6）
+- `datasets/cannabinoid-raw-collection/metadata/query-design.json`（`registration_basis` / `identity_caveat` / `limitations`）
+- 同 study の `README.md`・`methodology.md`（対象化合物表・注記）
+- `project.json` の `queryDesign`（写し）
+- `metadata/provenance/evidence-registry.json`（taxonomy hash の再観測）
+- `exports/taxonomy/*`（再生成）
+- 公開ページ `publication/research_thcpo.html`（同一性の記述のみ。`requires_review` は維持）
+- テスト: `tests/validation/test_registration_state_batch.py`（THCPO の登録範囲・カテゴリ所属と非マッピング、カテゴリ所属が同義を確立しないこと、別名の根拠を固定）
+- `ISS-20261111-TAX-040` の追記（元の本文は履歴として保持）
+
+## 2026-11-11 — owner の意図確認: `THCA` と `THCB` をそれぞれ 3 つの検索トピックへ分割（ISS-20261111-TAX-041）
+
+owner は 2026-11-11、`THCA` の総称的な化学解釈を **Δ9-THCA-A / THCA-B / Δ8-THCA** の 3 つの検索トピックに、
+`THCB` を **Δ8-THCB / Δ9-THCB / THCB-O-acetate** の 3 つの検索トピックに置き換えることを確認した。
+これは**検索トピックの範囲の確認**であり、各登録文字列が単一の物質・単一の外部レコードを指すことの確認ではない。
+`compound_thca` / `compound_thcb` は総称文字列の登録として残り、既存の `thca-*` / `thcb-*` クエリと run は付け替えない。
+本変更は登録のみで、収集・raw・declaration・run id・件数・release slice を変更しない。
+
+### 登録した 6 概念
+
+| 語（owner 表記） | notation | `@id` | prefLabel | 配置（`skos:broader`） | 外部識別子 | 化学クラス | 登録時の収集状態 |
+|---|---|---|---|---|---|---|---|
+| `Δ9-THCA-A` | `compound_delta9_thca_a` | `jptr:compound-delta9-thca-a` | `Δ9-THCA-A`（en / ja） | `compound_identity_unverified` | なし | 未形式化 | 登録時点で未収集（run 0） |
+| `THCA-B` | `compound_thca_b` | `jptr:compound-thca-b` | `THCA-B`（en / ja） | `compound_identity_unverified` | なし | 未形式化 | 登録時点で未収集（run 0） |
+| `Δ8-THCA` | `compound_delta8_thca` | `jptr:compound-delta8-thca` | `Δ8-THCA`（en / ja） | `compound_identity_unverified` | なし | 未形式化 | 登録時点で未収集（run 0） |
+| `Δ8-THCB` | `compound_delta8_thcb` | `jptr:compound-delta8-thcb` | `Δ8-THCB`（en / ja） | `compound_identity_unverified` | なし | 未形式化 | 登録時点で未収集（run 0） |
+| `Δ9-THCB` | `compound_delta9_thcb` | `jptr:compound-delta9-thcb` | `Δ9-THCB`（en / ja） | `compound_identity_unverified` | なし | 未形式化 | 登録時点で未収集（run 0） |
+| `THCB-O-acetate` | `compound_thcb_o_acetate` | `jptr:compound-thcb-o-acetate` | `THCB-O-acetate`（en / ja） | `compound_identity_unverified` | なし | 未形式化 | 登録時点で未収集（run 0） |
+
+- `skos:prefLabel` は **owner の表記をそのまま** en / ja に置いた。`Δ` と数字・ハイフンを保持し、
+  ASCII 表記（`Delta9-...` 等）への正規化は行わない。
+- `skos:altLabel` は `{term} リキッド` のみ。研究設計が `product_liquid` を required primary query と
+  していることだけが根拠であり、他の綴りは追加しない。
+- `skos:related` は付けない。総称概念（`compound_thca` / `compound_thcb`）・相互（Δ8/Δ9、A/B）・
+  `compound_thc` との関係は scopeNote の文章に留め、構造化した関係は主張しない。
+  Δ9-THCA-A が Δ9-THC の酸性前駆体であることは文献に記録があるが、方向性のある関係を
+  対称な `skos:related` で表さない（CBGA/CBG と同じ扱い）。
+- 6 語はすべて管理カテゴリ `compound_identity_unverified` に置く。単一の検証済み外部識別子を
+  選択していないため、`exactMatch`・CAS 番号・PubChem CID・UNII・IUPAC 名を概念に付けない。
+  異性体ごとのレコードを確認した場合は本台帳にのみ記録し、概念の識別子として代用しない。
+
+### 検証した出所と、支える範囲
+
+| 出所 | 記録されている内容 | 支える主張 / 支えない主張 |
+|---|---|---|
+| Moreno-Sanz 2016, Cannabis Cannabinoid Res 1:124-130, DOI `10.1089/can.2016.0008` | Δ9-THCA-A（2-carboxy-THC）を Δ9-THC の酸性前駆体とし、Cannabis の腺毛で生合成・蓄積されると記述。文献が `THCA` を複数の酸性誘導体に曖昧に用いてきたことを指摘。THCA-B（4-carboxy-THC）を THCA-A の少量異性体として記録し、後続研究がその存在を確認できなかったことも記録 | Δ9-THCA-A と THCA-B の名称・構造上の区別、総称 `THCA` の曖昧さを支える。Δ8-THCA の構造、天然存在、国内市場、検索結果・製品の内容は支えない |
+| Filer 2021, Cannabis Cannabinoid Res 6(5):446-448, DOI `10.1089/can.2021.0003`, PMCID `PMC8612408` | THCA-B を THCA-A の構造異性体とし、1969 年の単離・特性評価と 1975 年の X 線研究を記録。両者の脱炭酸挙動の差を議論 | THCA-A と THCA-B が別物質であり、THCA-B が THCA-A の別名でないことを支える。Δ8-THCA、天然存在、内容は支えない |
+| Linciano et al. 2020, J Nat Prod 83(1):88-98, DOI `10.1021/acs.jnatprod.9b00876` | medicinal Cannabis sativa 品種から Δ9-THCB（Δ9-THC のブチル同族体）を単離し、分光分析と立体選択的合成の比較で構造・絶対配置を確認 | Δ9 体の名称と構造を支える。Δ8 体、総称 `THCB`、天然存在、製品・検索結果の内容は支えない |
+| Tanaka & Kikura-Hanajiri 2024, 薬学雑誌 144(8):823-837, DOI `10.1248/yakushi.24-00029` | 2022〜2023 年に国内でオンライン流通したオイル製品 5 点から、C-3 位のアルキル鎖長が異なる Δ8/Δ9 THC アナログとして Δ8-THCB と Δ9-THCB をそれぞれ同定 | 両異性体が別物質であり、分析対象の製品に存在したことを支える。天然存在、合成経路、規制状態、個々の検索結果の異性体归属は支えない |
+| 厚生労働省 令和6年厚生労働省令第81号（2024-05-01 公布、2024-05-11 施行）別紙「新たに指定された指定薬物の名称」 | 物質群1（6a,7,8,10a-テトラヒドロ）と物質群2（6a,7,10,10a-テトラヒドロ）は、1 位の水酸基又はアセトキシ基、3 位の直鎖 C3–C8 アルキル、他の置換基なしを範囲とする。別紙は物質群1 に Δ9-THCB-O-acetate（n=4）、物質群2 に Δ8-THCB-O-acetate（n=4）を明記 | 両異性体が法令上の構造グループに該当することを支える。個々の製品の適法性・含有量・安全性、経路、天然存在、検索結果の内容は支えない |
+| `Δ8-THCA` の出所 | 本変更では構造・命名の出所を確認していない。A/B のカルボキシル配置の区別は Δ9 系列の文献に基づく記載であり、Δ8 系列へ推測で拡張しない | `Δ8-THCA` が単一構造を指すことは支えない。識別子を推測しない |
+
+### 決定した値
+
+| 項目 | 記録した値 | 根拠 |
+|---|---|---|
+| taxonomy 配置 | 6 語すべて `compound_identity_unverified`（変更なしの管理カテゴリ） | 単一物質の同定ではなく、経路・化学クラス・天然存在の根拠が無いため |
+| `skos:prefLabel` | owner 表記そのまま（en / ja） | 登録語の表記を保存する既存規約 |
+| `skos:altLabel` | `{term} リキッド`（ja）のみ | study の `product_liquid` 設計 |
+| `skos:exactMatch` / 概念の識別子 | **張らない**。CAS・PubChem CID・UNII・ChEBI ID・Wikidata QID を概念に書かない | 登録文字列について単一の検証済みレコードを選択していない。Δ8-THCA は構造・命名の出所も未検証。異性体ごとの事実は本台帳のみ |
+| `skos:related` | 張らない | 総称・相互・`compound_thc` との関係は文章に留める。方向性のある前駆体関係を対称リンクで表さない |
+| 化学クラス | リンクしない | 同族体・位置異性体・アセテートは `chemical-class-taxonomy` の形式化されたクラスではない |
+| 単一物質としての化学的同一性 | **未確認**（Δ9-THCA-A / THCA-B / Δ8-THCB / Δ9-THCB は文献名を持つが、登録文字列の単一レコードは未確認。Δ8-THCA は構造・命名の出所も未検証。THCB-O-acetate は異性体未指定） | 上記の出所。文献が分析対象の物質を記録しても、検索文字列の内容や単一レコードを確定しない |
+| 規制状態 | THCB-O-acetate の Δ8/Δ9 両異性体が 2024 年省令の構造グループに該当することのみ記録。その他の規制状態は主張しない | 厚生労働省令・別紙。個々の製品・結果の判断ではない |
+
+### 総称概念と既存 run の扱い
+
+- `compound_thca` / `compound_thcb` の `skos:notation`・`@id`・prefLabel・`skos:broader` は変更しない。
+  scopeNote に、owner が総称の化学解釈を 6 つの検索トピックへ置き換えたこと、総称概念は文字列の登録として
+  残ること、既存 run を付け替えないことを追記した。
+- `thca-general-ja` / `thca-liquid-ja` / `thcb-general-ja` / `thcb-liquid-ja` の `query_id`・
+  `canonical_text`・`status` は変更しない。非推奨化も再ターゲットも行わない。
+- 既存の `THCA` / `THCB` の Google Trends / YouTube run は元の文字列クエリに付いたままで、
+  6 つの新概念へ割り当てない。公開ページ `research_thca.html` / `research_thcb.html` は
+  総称文字列のページとして残し、サンプルが新概念へ割り当てられていないことを明記した。
+
+### 変更しないもの
+
+- 既存の query registry エントリ（`thca-*` / `thcb-*`）の ID・文字列・status。新規 12 query のみ追加。
+- raw 観測、run metadata、catalog、`staging-declaration`、run id、件数、収集計画。
+  **本変更は収集を伴わない。**
+- 公開ページの `requires_review` 状態、review envelope、承認・decision / evidence hash、DOI、
+  version / release status、図。新概念用の空ページは作成しない（データが無いため）。
+- release slice。6 概念は登録のみで、いずれの配布物にも追加しない。
+- `compound_thcp` / `compound_thcjd` / `compound_thcpo` の owner 確認済みの記述（本節はそれらを変更しない）。
+
+### 同時に更新した層
+
+- `metadata/taxonomy/compound-taxonomy.skos.jsonld`（6 概念、管理カテゴリの narrower と scopeNote、
+  総称 2 概念の scopeNote）
+- `metadata/taxonomy/iptc-mapping.yaml`（6 概念を `deliberately_unmapped` の別群に追加。version 1.9.0）
+- `metadata/queries/query-registry.json`（12 query）
+- `docs/data-dictionary.md` §6.4（写し）
+- `docs/provenance/query-inventory.md`（6 語の 2 query の証拠欄）
+- `datasets/cannabinoid-raw-collection/metadata/query-design.json`（`registration_basis` /
+  `identity_caveat` / `limitations` / `distribution.reason`）
+- 同 study の `README.md`・`methodology.md`（対象化合物表・被覆件数・未収集の注記）
+- `project.json` の `queryDesign`（写し）と `dataCoverage.auditNote`
+- `metadata/provenance/evidence-registry.json`（出所 5 件の追加、taxonomy / query registry の hash 再観測）
+- `exports/taxonomy/*`（再生成）
+- 公開ページ `publication/research_thca.html` / `research_thcb.html`（位置づけの記述のみ。
+  `requires_review` は維持）
+- `tests/validation/test_registration_state_batch.py` と新規テスト
+- `ISS-20261111-TAX-041`（新規 issue）
+
+### 限界と再検討条件
+
+- 個々の Google Trends / YouTube 結果を Δ8 体・Δ9 体、THCA-A・THCA-B のどちらかに帰属させられない。
+  系列は登録文字列の一致を測る。
+- Δ8-THCA は構造・命名の出所を本変更で確認していない。Δ8 系列の A/B 配置、Δ8-THCB の立体化学、
+  各語の CAS は未検証である。
+- 天然存在、合成経路、薬理、安全性、臨床効果は主張しない。THCB-O-acetate の構造グループ該当は
+  法令上の構造定義であり、それらの主張ではない。
+- 各語について検証済み外部識別子が得られた場合は、本台帳に根拠を追記し、その根拠が支えるカテゴリへ
+  移すかどうかを判断する。Δ8-THCA は構造・命名の出所の確認が先である。
+- 6 概念の収集は別作業であり、計画・窓・staging declaration・L1 gate・採用を必要とする。
+
+---
+
 ## 未修正の既知事項（本変更では触っていない）
 
 1. `metadata/taxonomy/iptc-mapping.yaml` の `compound_mapping` は部分収載（`cbc`/`thcv`/`cbdv`/`crdh` も未収載）。
 2. `THCH` の日本語名は文書間で表記ゆれがある（`THCH.md` を標準として採用）。
 3. `compound_rare` は `skos:narrower` を持たない空カテゴリ（現状の登録化合物には該当なし）。
+4. **化合物 taxonomy の ChEBI `skos:exactMatch` は検証されていない。** ChEBI の API で
+   確認したところ、`chebi:32927` は nonadecane（`compound_cbg` と `compound_thc` が
+   参照）、`chebi:33669` は metallacycloalkanes（`compound_cbd`）、`chebi:52384` は
+   zymosteryl oleate（`compound_anandamide`）、`chebi:64901` は mygalin
+   （`compound_2ag`）であり、いずれも参照先の化合物ではない。本変更では修正せず、
+   別の issue で全 ChEBI 対応の監査と修正を行う。CBGA の `chebi:67081` は本変更で
+   別途検証済み（cannabigerolic acid）。
 
 ## 派生物の同期
 
@@ -347,3 +815,6 @@ study README / methodology、`project.json` の `queryDesign`（写し）、
   （10件。証拠は `docs/provenance/query-inventory.md` §1）。
 - `compound_thcnm` の収集は 2026-11-04 に開始した（Google Trends の 12ヶ月・5年、YouTube の `THCNM リキッド` / `THA リキッド`）。収集は登録文字列への一致を測るものであり、同一性の確認ではない。同一性は未確認のままで、構造の確認は別作業（ISS-20261104-TAX-028）。
 - 上記「未修正の既知事項」の扱いを決める。
+- `compound_thcp` / `compound_thcjd` / `compound_thcpo` の「異性体未指定のファミリー（同族体、およびそのエステル体）」を taxonomy の
+  独立した state として形式化するかを決める（本台帳 2026-11-11 節の未決事項）。現状は管理
+  カテゴリ内の文書化された検索語の範囲として扱っており、新しいカテゴリは作っていない。

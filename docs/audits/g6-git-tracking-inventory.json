@@ -4,13 +4,13 @@
   "spec": "docs/plans/20261013f.md §15 (local plan; not tracked)",
   "target_root": "datasets",
   "include_private": false,
-  "count": 565,
+  "count": 594,
   "extra_count": 44,
   "raw_modified": false,
   "state_summary": {
     "absent": 14,
     "ignored": 2,
-    "tracked": 593
+    "tracked": 622
   },
   "entries": [
     {
@@ -139,8 +139,8 @@
       "state": "tracked",
       "tracked": true,
       "ignored": false,
-      "sha256": "9b1325911e2496047c607ced101b6f8655f00dab7391d3e5579b30afaf4206ee",
-      "sha256_after": "9b1325911e2496047c607ced101b6f8655f00dab7391d3e5579b30afaf4206ee",
+      "sha256": "adbb5cb05b8358c286e88a3dd38bcf0b550dfd699ecebec29c5af6694fd6e6a1",
+      "sha256_after": "adbb5cb05b8358c286e88a3dd38bcf0b550dfd699ecebec29c5af6694fd6e6a1",
       "unchanged": true
     },
     {
@@ -959,8 +959,8 @@
       "state": "tracked",
       "tracked": true,
       "ignored": false,
-      "sha256": "020c831c8f2880cd06a81c6ca32eb2c394c69a38dcd5596b8fa46c90f4b4c59b",
-      "sha256_after": "020c831c8f2880cd06a81c6ca32eb2c394c69a38dcd5596b8fa46c90f4b4c59b",
+      "sha256": "ae3ce8cd4d1bf814ff1f150bff6224ee5f983a1fdfa145c6eb8061bdc26c30f5",
+      "sha256_after": "ae3ce8cd4d1bf814ff1f150bff6224ee5f983a1fdfa145c6eb8061bdc26c30f5",
       "unchanged": true
     },
     {
@@ -4534,13 +4534,173 @@
       "unchanged": true
     },
     {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261110T235526Z-google-trends-10-oh-hhc-5y-retry/artifact-manifest.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "455b1b51e68f3617116230b90d126ae944067f0516f9ad40551d62aaa115fe66",
+      "sha256_after": "455b1b51e68f3617116230b90d126ae944067f0516f9ad40551d62aaa115fe66",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261110T235526Z-google-trends-10-oh-hhc-5y-retry/payload.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "f90c914ffec1efa7dadcaa52d7ad9ba9f40185403820186fd9c02c66df43f885",
+      "sha256_after": "f90c914ffec1efa7dadcaa52d7ad9ba9f40185403820186fd9c02c66df43f885",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261110T235526Z-google-trends-10-oh-hhc-5y-retry/records_10-oh-hhc.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "137075701def8e14ceb722592d9472f10e7cd23ecb4a39eeae4690e2a30afe07",
+      "sha256_after": "137075701def8e14ceb722592d9472f10e7cd23ecb4a39eeae4690e2a30afe07",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261110T235526Z-google-trends-10-oh-hhc-5y-retry/run_metadata.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "935a756750d48375c96882d7df5f4412a841ff97914542b0feec47ef8799e42c",
+      "sha256_after": "935a756750d48375c96882d7df5f4412a841ff97914542b0feec47ef8799e42c",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261110T235617Z-google-trends-thxe-5y-retry/artifact-manifest.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "97dcd4ef15d4579648c09c4680fa3f0dd5d936409cf46aa773378a8077d7ad19",
+      "sha256_after": "97dcd4ef15d4579648c09c4680fa3f0dd5d936409cf46aa773378a8077d7ad19",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261110T235617Z-google-trends-thxe-5y-retry/payload.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "0eee7f073e78c378bda74c3b08f0846d5ac066d48ddd50f75fd16bc055230107",
+      "sha256_after": "0eee7f073e78c378bda74c3b08f0846d5ac066d48ddd50f75fd16bc055230107",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261110T235617Z-google-trends-thxe-5y-retry/records_thxe.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "63babe85688099466f4f332e93fcd546eb8bbdc4f9d3783aa4a908aca13aad61",
+      "sha256_after": "63babe85688099466f4f332e93fcd546eb8bbdc4f9d3783aa4a908aca13aad61",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261110T235617Z-google-trends-thxe-5y-retry/run_metadata.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "cf0ebe6af5adb9bd54f3078a274467f654236fa60bf736704849f6d5581c6265",
+      "sha256_after": "cf0ebe6af5adb9bd54f3078a274467f654236fa60bf736704849f6d5581c6265",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261110T235641Z-google-trends-thca-12m-retry/artifact-manifest.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "a67b248e5ec7c323fb292283790b2b3a0901a5d736e3247c33167a51e28785c8",
+      "sha256_after": "a67b248e5ec7c323fb292283790b2b3a0901a5d736e3247c33167a51e28785c8",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261110T235641Z-google-trends-thca-12m-retry/payload.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "8507d98628325daf7d9c078c079ed1a84f2ab2d0184905bc778ba24992f0df9a",
+      "sha256_after": "8507d98628325daf7d9c078c079ed1a84f2ab2d0184905bc778ba24992f0df9a",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261110T235641Z-google-trends-thca-12m-retry/records_thca.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "e2792d024ce98bc659838b90959e4d6e12e05e467f345342f14233556b05f4b2",
+      "sha256_after": "e2792d024ce98bc659838b90959e4d6e12e05e467f345342f14233556b05f4b2",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261110T235641Z-google-trends-thca-12m-retry/run_metadata.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "ac55d215bbe8def82b980c001599d1b0eba181620e5adfdb5b3f92d85c2c62f9",
+      "sha256_after": "ac55d215bbe8def82b980c001599d1b0eba181620e5adfdb5b3f92d85c2c62f9",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261110T235706Z-google-trends-thca-5y-retry/artifact-manifest.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "a1a0ceb04a2f11f4853f77558229c8331048dbe2b7b4bfaf575b3a243f4a09b1",
+      "sha256_after": "a1a0ceb04a2f11f4853f77558229c8331048dbe2b7b4bfaf575b3a243f4a09b1",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261110T235706Z-google-trends-thca-5y-retry/payload.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "9e04ec0b91d7f1500f3ff1be91db606c1b1be08bcb66c396a693c3a8f994c1dd",
+      "sha256_after": "9e04ec0b91d7f1500f3ff1be91db606c1b1be08bcb66c396a693c3a8f994c1dd",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261110T235706Z-google-trends-thca-5y-retry/records_thca.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "dd4c211e19aa86104978cc28f148f89136051a0eb010bc0383a19f79dfd07eff",
+      "sha256_after": "dd4c211e19aa86104978cc28f148f89136051a0eb010bc0383a19f79dfd07eff",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/20261110T235706Z-google-trends-thca-5y-retry/run_metadata.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "2c45eaead0b8b1787ab2de36dc80ffe1d6a6282dc2e96c43d8b47329467c21e8",
+      "sha256_after": "2c45eaead0b8b1787ab2de36dc80ffe1d6a6282dc2e96c43d8b47329467c21e8",
+      "unchanged": true
+    },
+    {
       "path": "datasets/cannabinoid-raw-collection/data/raw/google_trends/README.md",
       "exists": true,
       "state": "tracked",
       "tracked": true,
       "ignored": false,
-      "sha256": "c686cc6219a3a71c3340c081a5cdef9c3d58eb1c255f57115cc4d39e29e22a18",
-      "sha256_after": "c686cc6219a3a71c3340c081a5cdef9c3d58eb1c255f57115cc4d39e29e22a18",
+      "sha256": "a1e4a81e62563e2a17406241f169a95ee12d5b94b12a6625226bdfe35dfd4432",
+      "sha256_after": "a1e4a81e62563e2a17406241f169a95ee12d5b94b12a6625226bdfe35dfd4432",
       "unchanged": true
     },
     {
@@ -4549,8 +4709,8 @@
       "state": "tracked",
       "tracked": true,
       "ignored": false,
-      "sha256": "846b9038a8297b630fa494cc4cac3fb7793b1101d61b1360d6955411d38a99d2",
-      "sha256_after": "846b9038a8297b630fa494cc4cac3fb7793b1101d61b1360d6955411d38a99d2",
+      "sha256": "86c711f8c9bef5fc93488ead8c27f0c93a4ffb5bfe79ef6e32eddcfe93b33295",
+      "sha256_after": "86c711f8c9bef5fc93488ead8c27f0c93a4ffb5bfe79ef6e32eddcfe93b33295",
       "unchanged": true
     },
     {
@@ -4561,6 +4721,16 @@
       "ignored": false,
       "sha256": "442607a29c445ba98176129ad730f52ae80723f36ecba82477e334c1ccbeabda",
       "sha256_after": "442607a29c445ba98176129ad730f52ae80723f36ecba82477e334c1ccbeabda",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/metadata/plans/gt-12m-10-oh-hhc-retry-20261111.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "1d11575e0c38d454280fb744e6da44f67c5fbdef91b0b97864bf68e40f1eb594",
+      "sha256_after": "1d11575e0c38d454280fb744e6da44f67c5fbdef91b0b97864bf68e40f1eb594",
       "unchanged": true
     },
     {
@@ -4584,6 +4754,16 @@
       "unchanged": true
     },
     {
+      "path": "datasets/cannabinoid-raw-collection/metadata/plans/gt-12m-cbdv-retry-20261111.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "38b975a4775e5fbfe06bb169bc14459a56991b7a1c2a84155bd6bbbc48bd29b1",
+      "sha256_after": "38b975a4775e5fbfe06bb169bc14459a56991b7a1c2a84155bd6bbbc48bd29b1",
+      "unchanged": true
+    },
+    {
       "path": "datasets/cannabinoid-raw-collection/metadata/plans/gt-12m-cbe-20261110.json",
       "exists": true,
       "state": "tracked",
@@ -4601,6 +4781,16 @@
       "ignored": false,
       "sha256": "2f4a0a42a8da7ac54cf9f6399212dbfdabe17d3e7cc3be91f4c156493a041afe",
       "sha256_after": "2f4a0a42a8da7ac54cf9f6399212dbfdabe17d3e7cc3be91f4c156493a041afe",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/metadata/plans/gt-12m-cbga-retry-20261111.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "3884398b0c3a0424d376939c111148c6ecd095c8888b9b0aff3652060e40e1a7",
+      "sha256_after": "3884398b0c3a0424d376939c111148c6ecd095c8888b9b0aff3652060e40e1a7",
       "unchanged": true
     },
     {
@@ -4661,6 +4851,16 @@
       "ignored": false,
       "sha256": "579e406ef1af5f3df025d99cc104cc6fea4aeb4ac28f3825696fda93cd7a440d",
       "sha256_after": "579e406ef1af5f3df025d99cc104cc6fea4aeb4ac28f3825696fda93cd7a440d",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/metadata/plans/gt-12m-hhcpo-retry-20261111.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "1e07fdfd52c4226de06e0e3690f746a3723056dc380cc88b7cceb1436a747170",
+      "sha256_after": "1e07fdfd52c4226de06e0e3690f746a3723056dc380cc88b7cceb1436a747170",
       "unchanged": true
     },
     {
@@ -4744,6 +4944,16 @@
       "unchanged": true
     },
     {
+      "path": "datasets/cannabinoid-raw-collection/metadata/plans/gt-12m-thca-retry-20261111.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "9c125f1b717d7a8af01c7eb142f36fed96881d4308a01bf5f9b23253a987bbf5",
+      "sha256_after": "9c125f1b717d7a8af01c7eb142f36fed96881d4308a01bf5f9b23253a987bbf5",
+      "unchanged": true
+    },
+    {
       "path": "datasets/cannabinoid-raw-collection/metadata/plans/gt-12m-thcb-20261110.json",
       "exists": true,
       "state": "tracked",
@@ -4754,6 +4964,16 @@
       "unchanged": true
     },
     {
+      "path": "datasets/cannabinoid-raw-collection/metadata/plans/gt-12m-thcb-retry-20261111.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "6e6d4cd17b5c4632f516f2a82152038bf3fe2407dbe7acea77cb0cda3d030d71",
+      "sha256_after": "6e6d4cd17b5c4632f516f2a82152038bf3fe2407dbe7acea77cb0cda3d030d71",
+      "unchanged": true
+    },
+    {
       "path": "datasets/cannabinoid-raw-collection/metadata/plans/gt-12m-thcjd-20261110.json",
       "exists": true,
       "state": "tracked",
@@ -4761,6 +4981,16 @@
       "ignored": false,
       "sha256": "02d36c80427f74911d5655245eada9ae828693a04f52dd7f60002bed6b3cf1fb",
       "sha256_after": "02d36c80427f74911d5655245eada9ae828693a04f52dd7f60002bed6b3cf1fb",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/metadata/plans/gt-12m-thcjd-retry-20261111.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "4821561ea34a205610af4be3e63dc63e42c87fcbd24413b03c9df3b309345063",
+      "sha256_after": "4821561ea34a205610af4be3e63dc63e42c87fcbd24413b03c9df3b309345063",
       "unchanged": true
     },
     {
@@ -4794,6 +5024,16 @@
       "unchanged": true
     },
     {
+      "path": "datasets/cannabinoid-raw-collection/metadata/plans/gt-12m-thcpo-retry-20261111.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "5e262447d12313be9e87036c582f792cf9823865ba4942b7826cc243a1f91c60",
+      "sha256_after": "5e262447d12313be9e87036c582f792cf9823865ba4942b7826cc243a1f91c60",
+      "unchanged": true
+    },
+    {
       "path": "datasets/cannabinoid-raw-collection/metadata/plans/gt-12m-thxe-20261110.json",
       "exists": true,
       "state": "tracked",
@@ -4801,6 +5041,16 @@
       "ignored": false,
       "sha256": "aa667545e1a58474c1c55a9b9d40ddb88ecb3d18a5005b2f7d819caa6f84b51b",
       "sha256_after": "aa667545e1a58474c1c55a9b9d40ddb88ecb3d18a5005b2f7d819caa6f84b51b",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/metadata/plans/gt-12m-thxe-retry-20261111.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "34aee82dd3888374856344f6c228178297c39c08ca36f256c1e2be0cfaf5f036",
+      "sha256_after": "34aee82dd3888374856344f6c228178297c39c08ca36f256c1e2be0cfaf5f036",
       "unchanged": true
     },
     {
@@ -4821,6 +5071,16 @@
       "ignored": false,
       "sha256": "67e295303a1104d936ea300b2317f1203129ce3e33f42b8e1c3c524f11418ea2",
       "sha256_after": "67e295303a1104d936ea300b2317f1203129ce3e33f42b8e1c3c524f11418ea2",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/metadata/plans/gt-5y-10-oh-hhc-retry-20261111.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "98d86cf16a140f5e3724b3a55e0469ca57ea6ccd137fd20dd6abf88b76241110",
+      "sha256_after": "98d86cf16a140f5e3724b3a55e0469ca57ea6ccd137fd20dd6abf88b76241110",
       "unchanged": true
     },
     {
@@ -4861,6 +5121,16 @@
       "ignored": false,
       "sha256": "17ed85b8f80d39eba64ad409f89aff83f58189338a29ce1f26eefaa7846ec4da",
       "sha256_after": "17ed85b8f80d39eba64ad409f89aff83f58189338a29ce1f26eefaa7846ec4da",
+      "unchanged": true
+    },
+    {
+      "path": "datasets/cannabinoid-raw-collection/metadata/plans/gt-5y-cbga-retry-20261111.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "717ce007580ab4e114fe8b9c69ab137283f173f4f78372045e23af576bec56c8",
+      "sha256_after": "717ce007580ab4e114fe8b9c69ab137283f173f4f78372045e23af576bec56c8",
       "unchanged": true
     },
     {
@@ -5244,6 +5514,16 @@
       "unchanged": true
     },
     {
+      "path": "datasets/cannabinoid-raw-collection/metadata/plans/gt-5y-thca-retry-20261111.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "1f5bf6d3256e9320c5884e53e93470c156d7ebe3b6b14077d91f99395a140a16",
+      "sha256_after": "1f5bf6d3256e9320c5884e53e93470c156d7ebe3b6b14077d91f99395a140a16",
+      "unchanged": true
+    },
+    {
       "path": "datasets/cannabinoid-raw-collection/metadata/plans/gt-5y-thcb-20261110.json",
       "exists": true,
       "state": "tracked",
@@ -5304,13 +5584,23 @@
       "unchanged": true
     },
     {
+      "path": "datasets/cannabinoid-raw-collection/metadata/plans/gt-5y-thxe-retry-20261111.json",
+      "exists": true,
+      "state": "tracked",
+      "tracked": true,
+      "ignored": false,
+      "sha256": "cbcccd3e16b6ba5c22796686a813f3aefb2ca964c4112a73694f379410cb1a1d",
+      "sha256_after": "cbcccd3e16b6ba5c22796686a813f3aefb2ca964c4112a73694f379410cb1a1d",
+      "unchanged": true
+    },
+    {
       "path": "datasets/cannabinoid-raw-collection/metadata/query-design.json",
       "exists": true,
       "state": "tracked",
       "tracked": true,
       "ignored": false,
-      "sha256": "64780ff8c689b6c98b1727109672f9ff94753f51132e6590aba5a6336f772f06",
-      "sha256_after": "64780ff8c689b6c98b1727109672f9ff94753f51132e6590aba5a6336f772f06",
+      "sha256": "d651286306486c2a7859c5c41e6e872f7bb23a575b756e74a3beff3596e5ca30",
+      "sha256_after": "d651286306486c2a7859c5c41e6e872f7bb23a575b756e74a3beff3596e5ca30",
       "unchanged": true
     },
     {
@@ -5319,8 +5609,8 @@
       "state": "tracked",
       "tracked": true,
       "ignored": false,
-      "sha256": "b0a639831c598dd5e164d0b94c6e895486ad41372453847cea541d03e2f24760",
-      "sha256_after": "b0a639831c598dd5e164d0b94c6e895486ad41372453847cea541d03e2f24760",
+      "sha256": "cddbad7ef7de9e670de73677fd2538d35983edffab13cbd824239ffa7c88e383",
+      "sha256_after": "cddbad7ef7de9e670de73677fd2538d35983edffab13cbd824239ffa7c88e383",
       "unchanged": true
     },
     {

@@ -23,7 +23,7 @@
         }
       ],
       "dct:description": {
-        "@value": "Taxonomy of cannabinoid compounds tracked in this research project. Route/origin dimension; chemical class lives in a second dimension (jptr:chemical-class-taxonomy, owner decision (a) ISS-20261015-TAX-026). The scheme also carries one ADMINISTRATIVE registration-state category (jptr:compound-identity-unverified) for owner-named terms whose chemical identity is unverified; it states no route or chemical claim (ISS-20261111-TAX-040).",
+        "@value": "Taxonomy of cannabinoid compounds tracked in this research project. Route/origin dimension; chemical class lives in a second dimension (jptr:chemical-class-taxonomy, owner decision (a) ISS-20261015-TAX-026). The scheme also carries one ADMINISTRATIVE registration-state category (jptr:compound-identity-unverified) for owner-named terms whose single-substance chemical identity is unverified; it states no route or chemical claim (ISS-20261111-TAX-040).",
         "@language": "en"
       },
       "dct:creator": "Routeflags Co., Ltd.",
@@ -82,16 +82,20 @@
       ],
       "skos:notation": "compound_minor",
       "skos:scopeNote": {
-        "@value": "Phytocannabinoids other than the major pair: CBG, CBN, CBC, THCV, CBDV, CBX and THCH.",
+        "@value": "Phytocannabinoids other than the major pair: CBG, CBN, CBC, THCV, CBDV, CBX, THCH, CBE (cannabielsoin), CBL (cannabicyclol) and CBGA (cannabigerolic acid).",
         "@language": "en"
       },
-      "skos:narrower": [        "jptr:compound-cbg",
+      "skos:narrower": [
+        "jptr:compound-cbg",
         "jptr:compound-cbn",
         "jptr:compound-cbc",
+        "jptr:compound-cbe",
         "jptr:compound-thcv",
         "jptr:compound-cbdv",
         "jptr:compound-cbx",
-        "jptr:compound-thch"
+        "jptr:compound-thch",
+        "jptr:compound-cbl",
+        "jptr:compound-cbga"
       ]
     },
     {
@@ -135,7 +139,8 @@
         "@value": "Cannabinoids obtained by chemically modifying a natural cannabinoid: HHC, THC-O, H4CBH, HHBD and THCNM. Classified by production route, which is why HHC sits here although it is also a hydrogenated cannabinoid. Chemical class is a separate dimension (jptr:chemical-class-taxonomy): HHC, H4CBH and HHBD are chemclass_hydrogenated, THC-O is chemclass_acetate, and THCNM has no formalized chemical class. THCNM's placement is provisional: both market-reported identities describe a substituted derivative of a phytocannabinoid, but the identity itself is unconfirmed (see its scopeNote).",
         "@language": "en"
       },
-      "skos:narrower": [        "jptr:compound-hhc",
+      "skos:narrower": [
+        "jptr:compound-hhc",
         "jptr:compound-thc-o",
         "jptr:compound-h4cbh",
         "jptr:compound-hhbd",
@@ -162,7 +167,8 @@
         "@value": "Cannabinoids with no natural counterpart: HHCH, CRDP and CRDH.",
         "@language": "en"
       },
-      "skos:narrower": [        "jptr:compound-hhch",
+      "skos:narrower": [
+        "jptr:compound-hhch",
         "jptr:compound-crdp",
         "jptr:compound-crdh"
       ]
@@ -187,7 +193,8 @@
         "@value": "Endogenous signalling molecules of the endocannabinoid system: anandamide and 2-AG. Listed because they are described in the same literature, not because they are administered products.",
         "@language": "en"
       },
-      "skos:narrower": [        "jptr:compound-anandamide",
+      "skos:narrower": [
+        "jptr:compound-anandamide",
         "jptr:compound-2ag"
       ]
     },
@@ -209,11 +216,11 @@
       "skos:notation": "compound_identity_unverified",
       "skos:scopeNote": [
         {
-          "@value": "An ADMINISTRATIVE registration-state category, not a route/origin or chemical classification. Its members are search terms the owner named for this study whose chemical identity is UNCONFIRMED in this repository. Placing a term here records only that the string is registered and queryable: it makes no claim about route or origin, natural occurrence, chemical class, structure, synonym relationships or regulatory status, and it neither asserts that the term names a distinct substance nor that a substance behind the string exists. Membership is not a judgement that a term is rare, minor, semi-synthetic or synthetic, and it never substitutes for one of those categories; when evidence arrives, move the term to the category that evidence supports. Members carry no skos:exactMatch, CAS number, PubChem or IUPAC name and no chemical-class link until an identifier is verified. A term is registered here because the owner named it, not because its identity was established. Decision record: ISS-20261111-TAX-040, which supersedes the ISS-20261015-TAX-027 non-registration decision for THCP.",
+          "@value": "An ADMINISTRATIVE registration-state category, not a route/origin or chemical classification. Its members are search terms the owner named for this study whose single-substance chemical identity is UNCONFIRMED in this repository. Placing a term here records only that the string is registered and queryable: it makes no claim about route or origin, natural occurrence, chemical class, structure, synonym relationships or regulatory status, and it neither asserts that the term names a distinct substance nor that a substance behind the string exists. Membership is not a judgement that a term is rare, minor, semi-synthetic or synthetic, and it never substitutes for one of those categories; when evidence arrives, move the term to the category that evidence supports. Members carry no skos:exactMatch, CAS number, PubChem CID, UNII or IUPAC name and no chemical-class link; per-isomer registry records for a family-scoped member belong in the provenance ledger, never on the concept. Membership itself establishes no synonym relationship. A member's skos:altLabel is a concept-level record: an alternate or search-topic label that the owner confirmed needs its own recorded basis in that concept's scopeNote (for example an owner-confirmed intended meaning), and it is neither implied by, nor does it add a synonym claim to, this administrative placement. For a family-scoped member such a label does not assert that the family denotes one chemical structure. A term is registered here because the owner named it, not because its identity was established. Decision record: ISS-20261111-TAX-040, which supersedes the ISS-20261015-TAX-027 non-registration decision for THCP. A member may also be a term the owner confirmed only as an isomer-unspecified homologue family, or as an isomer-unspecified ester (acetate) of one: the term then denotes no single substance and no single external record, so it stays here and its own scopeNote records the family scope; that statement is the term's documented search scope, not a route/origin placement, not a chemical-class link, and not a claim about any individual result. A family-scoped member's scopeNote may also record that its per-isomer substances fall within a documented statutory structural group; that is a statement about those isomers, not a regulatory classification performed by this placement. A member may also be a specific positional-isomer designation (for example a Δ8 or Δ9 term) that the owner confirmed as a search topic, where this change did not verify a single external registry record for the registered string: the term then records the search topic and the published nomenclature, while the category still makes no chemical claim and carries no identifier.",
           "@language": "en"
         },
         {
-          "@value": "経路・由来や化学分類ではなく、**管理上の登録状態**カテゴリ。members は owner が本研究のために名指しした検索語のうち、リポジトリ内で化学的同一性が**未確認**のものである。ここに置くことは「その文字列を登録し照会可能にした」ことだけを記録する。経路・由来、天然存在、化学クラス、構造、別名関係、規制状態について何も主張せず、語が別個の物質を指すことや、文字列の背後に物質が存在することの主張でもない。希少・マイナー・半合成・合成のいずれかであるという判断でもなく、これらのカテゴリの代替にもならない。根拠が得られたら、その根拠が支えるカテゴリへ移す。識別子が検証されるまで `skos:exactMatch`・CAS 番号・PubChem / IUPAC 名・化学クラスへのリンクを付けない。ここへの登録は owner が語を名指ししたことが理由であり、同一性が確定したことが理由ではない。決定記録: ISS-20261111-TAX-040（THCP については ISS-20261015-TAX-027 の非登録判断を置換）。",
+          "@value": "経路・由来や化学分類ではなく、**管理上の登録状態**カテゴリ。members は owner が本研究のために名指しした検索語のうち、リポジトリ内で**単一物質としての**化学的同一性が**未確認**のものである。ここに置くことは「その文字列を登録し照会可能にした」ことだけを記録する。経路・由来、天然存在、化学クラス、構造、別名関係、規制状態について何も主張せず、語が別個の物質を指すことや、文字列の背後に物質が存在することの主張でもない。希少・マイナー・半合成・合成のいずれかであるという判断でもなく、これらのカテゴリの代替にもならない。根拠が得られたら、その根拠が支えるカテゴリへ移す。`skos:exactMatch`・CAS 番号・PubChem CID・UNII・IUPAC 名・化学クラスへのリンクは付けない。ファミリーとして登録した語の異性体ごとのレジストリ記録は台帳に置き、概念には付けない。membership 自体は同義関係を確立しない。member の `skos:altLabel` は概念レベルの記録であり、owner が確認した別名・検索トピックの表記には、その概念の scopeNote に独自の根拠（例: owner が確認した意図された意味）を要する。カテゴリ所属から導かれるものでも、所属に同義の主張を加えるものでもない。ファミリーとして登録した語では、そうした別名はファミリーが単一の化学構造を指す主張ではない。ここへの登録は owner が語を名指ししたことが理由であり、同一性が確定したことが理由ではない。決定記録: ISS-20261111-TAX-040（THCP については ISS-20261015-TAX-027 の非登録判断を置換）。また、owner が**異性体未指定の同族体ファミリー**、またはその異性体未指定のエステル（アセテート）体としてのみ確認した語もここに置く。その語は単一物質も単一の外部レコードも指さないため本カテゴリに留まり、ファミリーの範囲は当該概念の scopeNote に記録する。その記載は検索語の文書化された範囲であり、経路／由来の配置でも、化学クラスへのリンクでも、個々の検索結果についての主張でもない。ファミリーとして登録した語の scopeNote は、異性体ごとの物質が文書化された法令上の構造グループに該当することを記録する場合があるが、それは当該異性体についての記載であり、本配置が行う規制分類ではない。また、owner が**位置異性体を明示した検索トピック**（例: Δ8 体・Δ9 体の語）として確認し、本変更では登録文字列について単一の外部レジストリ記録を検証していない語もここに置く。その場合、当該概念は検索トピックと公表された命名を記録するが、本カテゴリは化学的主張を行わず、識別子も持たない。",
           "@language": "ja"
         }
       ],
@@ -222,15 +229,18 @@
         "jptr:compound-thcp",
         "jptr:compound-thcjd",
         "jptr:compound-thcpo",
-        "jptr:compound-cbe",
         "jptr:compound-hhcpo",
         "jptr:compound-cbnd",
-        "jptr:compound-cbl",
-        "jptr:compound-cbga",
         "jptr:compound-cbp",
         "jptr:compound-10-oh-hhc",
         "jptr:compound-thxe",
-        "jptr:compound-thca"
+        "jptr:compound-thca",
+        "jptr:compound-delta9-thca-a",
+        "jptr:compound-thca-b",
+        "jptr:compound-delta8-thca",
+        "jptr:compound-delta8-thcb",
+        "jptr:compound-delta9-thcb",
+        "jptr:compound-thcb-o-acetate"
       ]
     },
     {
@@ -947,11 +957,11 @@
       "skos:notation": "compound_thcb",
       "skos:scopeNote": [
         {
-          "@value": "'THCB' is the owner's term, registered as a search string on 2026-11-11 by owner direction (ISS-20261111-TAX-040). Its chemical identity is UNCONFIRMED: the repository records no verified chemical name, structure, chemical class, natural occurrence, route/origin, synonym relation or regulatory status for this term, and no external identifier (CAS, ChEBI, Wikidata, PubChem) was verified - none is recorded here and none may be inferred from the query string. The term sits in compound_identity_unverified, an administrative registration-state category, so this placement asserts no route or chemical classification. What the code 'THCB' expands to is not recorded anywhere in this repository, so no chemical name is supplied. Evidence that would move the term out of this category: a documented chemical name with a verified external identifier, or a recorded source naming the substance and its route/origin; the basis belongs in docs/provenance/compound-taxonomy.md.",
+          "@value": "'THCB' is the owner's term, registered as a search string on 2026-11-11 by owner direction (ISS-20261111-TAX-040). Its chemical identity is UNCONFIRMED: the repository records no verified chemical name, structure, chemical class, natural occurrence, route/origin, synonym relation or regulatory status for this term, and no external identifier (CAS, ChEBI, Wikidata, PubChem) was verified - none is recorded here and none may be inferred from the query string. The term sits in compound_identity_unverified, an administrative registration-state category, so this placement asserts no route or chemical classification. What the code 'THCB' expands to is not recorded anywhere in this repository, so no chemical name is supplied. On 2026-11-11 the owner confirmed that the generic chemical interpretation of `THCB` is replaced by three distinct search-topic concepts: `Δ8-THCB`, `Δ9-THCB` and `THCB-O-acetate` (ISS-20261111-TAX-041). This concept remains the registration of the literal string `THCB`: the `thcb-general-ja` / `thcb-liquid-ja` query entries and every adopted or preserved run stay attached to this concept and are not reassigned to any new concept. The generic term is neither a synonym of nor a parent of the three concepts, and no `skos:related` or `skos:exactMatch` link is asserted; the new concepts are separate registrations. Evidence that would move the term out of this category: a documented chemical name with a verified external identifier, or a recorded source naming the substance and its route/origin; the basis belongs in docs/provenance/compound-taxonomy.md.",
           "@language": "en"
         },
         {
-          "@value": "owner が記した表記 `THCB` を、2026-11-11 の owner 指示で検索文字列として登録したもの（ISS-20261111-TAX-040）。化学的同一性は**未確認**である。名称・構造・化学クラス・天然存在・経路／由来・別名関係・規制状態のいずれも、リポジトリ内に検証済みの記録が無く、外部識別子（CAS / ChEBI / Wikidata / PubChem）の確認も行っていない。したがって記載せず、検索文字列から推測もしない。配置先 `compound_identity_unverified` は**管理上の登録状態カテゴリ**であり、この配置は経路・化学分類の主張ではない。略号 `THCB` の展開はリポジトリ内に記録が無く、化学名を補わない。 本カテゴリから移す条件は、検証済み外部識別子を伴う文書化された化学名、または物質名と経路／由来を記録した出所が得られた場合で、根拠は docs/provenance/compound-taxonomy.md に記録する。",
+          "@value": "owner が記した表記 `THCB` を、2026-11-11 の owner 指示で検索文字列として登録したもの（ISS-20261111-TAX-040）。化学的同一性は**未確認**である。名称・構造・化学クラス・天然存在・経路／由来・別名関係・規制状態のいずれも、リポジトリ内に検証済みの記録が無く、外部識別子（CAS / ChEBI / Wikidata / PubChem）の確認も行っていない。したがって記載せず、検索文字列から推測もしない。配置先 `compound_identity_unverified` は**管理上の登録状態カテゴリ**であり、この配置は経路・化学分類の主張ではない。略号 `THCB` の展開はリポジトリ内に記録が無く、化学名を補わない。 2026-11-11、owner は `THCB` の総称的な化学解釈を、`Δ8-THCB`・`Δ9-THCB`・`THCB-O-acetate` の 3 つの検索トピック概念に置き換えることを確認した（ISS-20261111-TAX-041）。本概念は文字列 `THCB` の登録として残り、`thcb-general-ja` / `thcb-liquid-ja` のクエリと、採用済みまたは保持済みの全 run は本概念に付いたままで、新しい概念へ付け替えない。総称語は 3 概念の別名でも親でもなく、`skos:related` / `skos:exactMatch` も張らない。新しい概念は別の登録である。本カテゴリから移す条件は、検証済み外部識別子を伴う文書化された化学名、または物質名と経路／由来を記録した出所が得られた場合で、根拠は docs/provenance/compound-taxonomy.md に記録する。",
           "@language": "ja"
         }
       ]
@@ -980,11 +990,11 @@
       "skos:notation": "compound_thcp",
       "skos:scopeNote": [
         {
-          "@value": "'THCP' is the owner's term, registered as a search string on 2026-11-11 by owner direction (ISS-20261111-TAX-040). Its chemical identity is UNCONFIRMED: the repository records no verified chemical name, structure, chemical class, natural occurrence, route/origin, synonym relation or regulatory status for this term, and no external identifier (CAS, ChEBI, Wikidata, PubChem) was verified - none is recorded here and none may be inferred from the query string. The term sits in compound_identity_unverified, an administrative registration-state category, so this placement asserts no route or chemical classification. ISS-20261015-TAX-027 recorded a decision not to register this term because no name, route placement or identifier evidence existed; the owner's 2026-11-11 scope decision supersedes that decision for this term (ISS-20261111-TAX-040). Registering the string does not settle what it denotes. The COA panel entry records THCP as not detected in one sample, which is an observation about that sample, not a placement basis. Evidence that would move the term out of this category: a documented chemical name with a verified external identifier, or a recorded source naming the substance and its route/origin; the basis belongs in docs/provenance/compound-taxonomy.md.",
+          "@value": "`THCP` is the owner's term, registered as a search string on 2026-11-11 by owner direction (ISS-20261111-TAX-040). On 2026-11-11 the owner confirmed the intended meaning of the registered term: the tetrahydrocannabiphorol C7 homologue family, with the Δ8/Δ9 positional isomer UNSPECIFIED (ISS-20261111-TAX-040 addendum). This fixes the search-topic family only. Δ8-THCP and Δ9-THCP are separate substances, the registered string identifies neither isomer, and no Google Trends or YouTube result is attributed to an isomer. No single external record denotes the family, so this concept carries no skos:exactMatch and no CAS number, PubChem CID, UNII, ChEBI ID or Wikidata QID: the per-isomer records are documented in docs/provenance/compound-taxonomy.md as evidence about the isomers, never as this concept's identifier. The single-substance chemical identity remains UNCONFIRMED and the term stays in compound_identity_unverified, an administrative registration-state category, so this placement asserts no route/origin, natural occurrence, chemical class, synonym or regulatory status; the family scope recorded here is the term's documented scope, not a chemical-class link. The published chemistry is recorded in the ledger with its limits: Citti et al. 2019 (DOI 10.1038/s41598-019-56785-1) reports Δ9-THCP as a C7 homologue, and the frequently repeated 33-fold figure is a CB1 binding-affinity ratio, not human potency. ISS-20261015-TAX-027 recorded a decision not to register this term because no name, route placement or identifier evidence existed; the owner's 2026-11-11 scope decision supersedes that decision for this term (ISS-20261111-TAX-040). The COA panel entry records THCP as not detected in one sample, which is an observation about that sample, not a placement basis. **Query limitation:** Google Trends and YouTube series for `THCP` / `THCP リキッド` measure occurrences of those literal strings; `THCP` is an acronym that can match unrelated text, and a matching result is not evidence of tetrahydrocannabiphorol content. Evidence that would move the term out of this category: a documented single chemical name with a verified external identifier, or a recorded source naming the single substance and its route/origin; the basis belongs in docs/provenance/compound-taxonomy.md.",
           "@language": "en"
         },
         {
-          "@value": "owner が記した表記 `THCP` を、2026-11-11 の owner 指示で検索文字列として登録したもの（ISS-20261111-TAX-040）。化学的同一性は**未確認**である。名称・構造・化学クラス・天然存在・経路／由来・別名関係・規制状態のいずれも、リポジトリ内に検証済みの記録が無く、外部識別子（CAS / ChEBI / Wikidata / PubChem）の確認も行っていない。したがって記載せず、検索文字列から推測もしない。配置先 `compound_identity_unverified` は**管理上の登録状態カテゴリ**であり、この配置は経路・化学分類の主張ではない。ISS-20261015-TAX-027 は名称・経路配置・識別子の根拠が無いとして本語を登録しないと判断したが、2026-11-11 の owner による scope 決定が本語についてその判断を置換した（ISS-20261111-TAX-040）。文字列の登録は、それが何を指すかを確定しない。COA パネルの THCP は 1 検体での未検出（ND）記録であり、当該検体についての観測であって配置の根拠ではない。 本カテゴリから移す条件は、検証済み外部識別子を伴う文書化された化学名、または物質名と経路／由来を記録した出所が得られた場合で、根拠は docs/provenance/compound-taxonomy.md に記録する。",
+          "@value": "`THCP` は owner が 2026-11-11 の指示で検索文字列として登録した語である（ISS-20261111-TAX-040）。2026-11-11、owner は登録語の意図された意味を **tetrahydrocannabiphorol の C7 同族体ファミリー、Δ8/Δ9 の位置異性体は未指定** と確認した（ISS-20261111-TAX-040 追記）。これは**検索トピックのファミリー範囲**を確定するものであり、異性体の同定でも物質の同定でもない。Δ8-THCP と Δ9-THCP は別物質であり、登録文字列はどちらの異性体も指さず、Google Trends / YouTube の個々の結果を異性体へ割り当てもしない。ファミリー全体を表す単一の外部レコードは無いため、本概念は `skos:exactMatch` を張らず、CAS 番号・PubChem CID・UNII・ChEBI ID・Wikidata QID も記載しない。各異性体のレコードは**異性体についての根拠**として docs/provenance/compound-taxonomy.md に記録し、本概念の識別子として代用しない。単一物質としての化学的同一性は**未確認**であり、本語は管理上の登録状態カテゴリ `compound_identity_unverified` に留まる。したがってこの配置は経路／由来、天然存在、化学クラス、別名、規制状態を主張せず、ここに記すファミリー範囲は検索語の文書化された範囲であって化学クラスへのリンクではない。公表された化学の根拠は限界とともに台帳へ記録する: Citti et al. 2019（DOI 10.1038/s41598-019-56785-1）は Δ9-THCP を C7 同族体として報告し、しばしば引用される 33 倍という値は CB1 結合親和性の比であってヒトでの効力ではない。ISS-20261015-TAX-027 は名称・経路配置・識別子の根拠が無いとして本語を登録しないと判断したが、2026-11-11 の owner による scope 決定が本語についてその判断を置換した（ISS-20261111-TAX-040）。COA パネルの THCP は 1 検体での未検出（ND）記録であり、当該検体についての観測であって配置の根拠ではない。**クエリの限界:** Google Trends / YouTube の `THCP` / `THCP リキッド` 系列が測るのは、登録文字列との**文字列一致**だけである。`THCP` は無関係な語とも一致し得る略号であり、一致した結果は tetrahydrocannabiphorol の内容の証明ではない。本カテゴリから移す条件は、検証済み外部識別子を伴う単一の文書化された化学名、または単一の物質名と経路／由来を記録した出所が得られた場合で、根拠は docs/provenance/compound-taxonomy.md に記録する。",
           "@language": "ja"
         }
       ]
@@ -1013,11 +1023,11 @@
       "skos:notation": "compound_thcjd",
       "skos:scopeNote": [
         {
-          "@value": "'THCJD' is the owner's term, registered as a search string on 2026-11-11 by owner direction (ISS-20261111-TAX-040). Its chemical identity is UNCONFIRMED: the repository records no verified chemical name, structure, chemical class, natural occurrence, route/origin, synonym relation or regulatory status for this term, and no external identifier (CAS, ChEBI, Wikidata, PubChem) was verified - none is recorded here and none may be inferred from the query string. The term sits in compound_identity_unverified, an administrative registration-state category, so this placement asserts no route or chemical classification. The letters 'JD' are not expanded anywhere in this repository, so no compound identity is inferred from the code. Evidence that would move the term out of this category: a documented chemical name with a verified external identifier, or a recorded source naming the substance and its route/origin; the basis belongs in docs/provenance/compound-taxonomy.md.",
+          "@value": "`THCJD` is the owner's term, registered as a search string on 2026-11-11 by owner direction (ISS-20261111-TAX-040). On 2026-11-11 the owner confirmed the intended meaning of the registered term: the THC-JD / 3-octyl-THC C8 homologue family, with the Δ8/Δ9 positional isomer UNSPECIFIED (ISS-20261111-TAX-040 addendum). This fixes the search-topic family only. The spelling `THCJD` (no hyphen) is the owner's search string, not an authoritative registry name; the naming and the Δ8/Δ9 3-octyl-THC identification are recorded in Tanaka & Kikura-Hanajiri 2024 (DOI 10.1248/yakushi.24-00029). The Δ8 and Δ9 3-octyl-THC forms are separate substances, the registered string identifies neither isomer, and no Google Trends or YouTube result is attributed to an isomer. No single external record denotes the family, so this concept carries no skos:exactMatch and no CAS number, PubChem CID, UNII, ChEBI ID or Wikidata QID: the per-isomer records are documented in docs/provenance/compound-taxonomy.md as evidence about the isomers, never as this concept's identifier. The single-substance chemical identity remains UNCONFIRMED and the term stays in compound_identity_unverified, an administrative registration-state category, so this placement asserts no route/origin, natural occurrence, chemical class, synonym or regulatory status; the family scope recorded here is the term's documented scope, not a chemical-class link. Regulatory status is not claimed: no regulatory source was evaluated for this change, so the family confirmation neither sets nor implies one. Commercial products sold under this kind of label have shown severe label/content mismatches (Munger et al. 2026, DOI 10.26828/cannabis/2026/000348), and the 19-fold potency figure circulating in that market is an industry claim, not a measured human potency. **Query limitation:** Google Trends and YouTube series for `THCJD` / `THCJD リキッド` measure occurrences of those literal strings; `THCJD` is an acronym that can match unrelated text, and a matching result is not evidence of 3-octyl-THC content. Evidence that would move the term out of this category: a documented single chemical name with a verified external identifier, or a recorded source naming the single substance and its route/origin; the basis belongs in docs/provenance/compound-taxonomy.md.",
           "@language": "en"
         },
         {
-          "@value": "owner が記した表記 `THCJD` を、2026-11-11 の owner 指示で検索文字列として登録したもの（ISS-20261111-TAX-040）。化学的同一性は**未確認**である。名称・構造・化学クラス・天然存在・経路／由来・別名関係・規制状態のいずれも、リポジトリ内に検証済みの記録が無く、外部識別子（CAS / ChEBI / Wikidata / PubChem）の確認も行っていない。したがって記載せず、検索文字列から推測もしない。配置先 `compound_identity_unverified` は**管理上の登録状態カテゴリ**であり、この配置は経路・化学分類の主張ではない。`JD` が何を指す略号かはリポジトリ内に記録が無く、略号から化合物の同一性を推測しない。 本カテゴリから移す条件は、検証済み外部識別子を伴う文書化された化学名、または物質名と経路／由来を記録した出所が得られた場合で、根拠は docs/provenance/compound-taxonomy.md に記録する。",
+          "@value": "`THCJD` は owner が 2026-11-11 の指示で検索文字列として登録した語である（ISS-20261111-TAX-040）。2026-11-11、owner は登録語の意図された意味を **THC-JD / 3-octyl-THC の C8 同族体ファミリー、Δ8/Δ9 の位置異性体は未指定** と確認した（ISS-20261111-TAX-040 追記）。これは**検索トピックのファミリー範囲**を確定するものであり、異性体の同定でも物質の同定でもない。ハイフンなしの `THCJD` は owner の検索文字列であって権威ある登録名ではなく、名称と Δ8/Δ9 の 3-octyl-THC という同定は Tanaka & Kikura-Hanajiri 2024（DOI 10.1248/yakushi.24-00029）に記録がある。Δ8 体と Δ9 体の 3-octyl-THC は別物質であり、登録文字列はどちらの異性体も指さず、Google Trends / YouTube の個々の結果を異性体へ割り当てもしない。ファミリー全体を表す単一の外部レコードは無いため、本概念は `skos:exactMatch` を張らず、CAS 番号・PubChem CID・UNII・ChEBI ID・Wikidata QID も記載しない。各異性体のレコードは**異性体についての根拠**として docs/provenance/compound-taxonomy.md に記録し、本概念の識別子として代用しない。単一物質としての化学的同一性は**未確認**であり、本語は管理上の登録状態カテゴリ `compound_identity_unverified` に留まる。したがってこの配置は経路／由来、天然存在、化学クラス、別名、規制状態を主張せず、ここに記すファミリー範囲は検索語の文書化された範囲であって化学クラスへのリンクではない。規制状態は主張しない。本変更では規制資料を評価していないため、ファミリー範囲の確認は規制状態を定めないし、示唆もしない。この種の表示で販売された製品には表示と内容の重大な不一致が報告されており（Munger et al. 2026、DOI 10.26828/cannabis/2026/000348）、市場で流布する 19 倍という値は業界の主張であって測定されたヒトでの効力ではない。**クエリの限界:** Google Trends / YouTube の `THCJD` / `THCJD リキッド` 系列が測るのは、登録文字列との**文字列一致**だけである。`THCJD` は無関係な語とも一致し得る略語であり、一致した結果は 3-octyl-THC の内容の証明ではない。本カテゴリから移す条件は、検証済み外部識別子を伴う単一の文書化された化学名、または単一の物質名と経路／由来を記録した出所が得られた場合で、根拠は docs/provenance/compound-taxonomy.md に記録する。",
           "@language": "ja"
         }
       ]
@@ -1039,6 +1049,10 @@
       ],
       "skos:altLabel": [
         {
+          "@value": "THCP-O-acetate",
+          "@language": "en"
+        },
+        {
           "@value": "THCPO リキッド",
           "@language": "ja"
         }
@@ -1046,11 +1060,11 @@
       "skos:notation": "compound_thcpo",
       "skos:scopeNote": [
         {
-          "@value": "'THCPO' is the owner's term, registered as a search string on 2026-11-11 by owner direction (ISS-20261111-TAX-040). Its chemical identity is UNCONFIRMED: the repository records no verified chemical name, structure, chemical class, natural occurrence, route/origin, synonym relation or regulatory status for this term, and no external identifier (CAS, ChEBI, Wikidata, PubChem) was verified - none is recorded here and none may be inferred from the query string. The term sits in compound_identity_unverified, an administrative registration-state category, so this placement asserts no route or chemical classification. Whether this term denotes an acetate/ester form of THCP, a positional variant or an unrelated substance is not recorded and is not inferred; no relationship to any other concept is asserted. Evidence that would move the term out of this category: a documented chemical name with a verified external identifier, or a recorded source naming the substance and its route/origin; the basis belongs in docs/provenance/compound-taxonomy.md.",
+          "@value": "'THCPO' is the owner's term, registered as a search string on 2026-11-11 by owner direction (ISS-20261111-TAX-040). On 2026-11-11 the owner answered `y` to the confirmation question 'Does `THCPO` mean THCP-O-acetate?' and named no Δ8 or Δ9 isomer. The registration is therefore treated as an isomer-unspecified THCP-O-acetate family: that family scope is this repository's registration-level reading of the answer, not a family the owner explicitly confirmed. Δ8-THCP-O-acetate and Δ9-THCP-O-acetate are separate substances, the registered string identifies neither isomer, and no Google Trends or YouTube result is attributed to an isomer. The English `skos:altLabel` 'THCP-O-acetate' records the owner-confirmed intended meaning as a search-scope label; its basis is this scopeNote, it is not implied by the administrative category's membership, and it is not a claim that the family is one chemical structure. No relation is asserted to `compound_thc_o` (a separately registered market/family concept with its own identity caveat, to which no single verified structure is assigned here), to THCP-O-butanoate (a different ester that Tanaka et al. 2025 identified alongside the Δ9 acetate), or to `compound_hhcpo` (a different registered term whose chemical identity is not established). No single external record denotes the family: chemical registries hold per-isomer records (one for the Δ9 acetate and one for the Δ8 acetate), the Wikidata item labelled 'THCP-O-acetate' is keyed to the Δ9 record, the recorded ChEBI search for the term `THCP` returned no match, and an FDA GSRS name search for `Tetrahydrocannabiphorol` returned only the parent record (UNII WTK87HN3LG); neither search established a THCP-O-acetate record. Therefore this concept carries no skos:exactMatch and no CAS number, PubChem CID, UNII, ChEBI ID or Wikidata QID: the per-isomer records are evidence about the isomers, documented in docs/provenance/compound-taxonomy.md, never this concept's identifier. The single-substance chemical identity remains UNCONFIRMED and the term stays in compound_identity_unverified, an administrative registration-state category, so this placement asserts no route/origin, natural occurrence, chemical class, pharmacology, safety or synonym relationship. Regulatory status of the two isomers: the 2024 MHLW amendment (令和6年厚生労働省令第81号, promulgated 2024-05-01, in force 2024-05-11) defines generic structural groups that include the C1-acetoxy, C3 straight-chain C7 member in both the 6a,7,8,10a-tetrahydro (Δ9) and the 6a,7,10,10a-tetrahydro (Δ8) series, subject to the ordinance's exclusion of narcotics (麻薬を除く). That is a statutory structural fact about those structures under that exclusion; it is not a classification of any product or search result, not a regulatory determination made here, and not part of the owner's identity confirmation. Tanaka et al. 2025 (DOI 10.1002/dta.3883, PMID 40075559) identified Δ9-THCP-O (acetate) and Δ9-THCP-O-butanoate in seven oil products and one herbal product distributed online, and also Δ8-THC-O (acetate), the C5 analogue, which is not Δ8-THCP-O-acetate; that supports the Δ9 acetate and the butanoate as analysed substances, not a Δ8 THCP acetate and not the content of any search result. **Query limitation:** Google Trends and YouTube series for `THCPO` / `THCPO リキッド` measure occurrences of those literal strings; `THCPO` is an acronym that can match unrelated text, and a matching result is not evidence of THCP-O-acetate content. Evidence that would move the term out of this category: an owner-confirmed single substance with a verified external identifier, or a recorded source naming a single substance and its route/origin; the basis belongs in docs/provenance/compound-taxonomy.md.",
           "@language": "en"
         },
         {
-          "@value": "owner が記した表記 `THCPO` を、2026-11-11 の owner 指示で検索文字列として登録したもの（ISS-20261111-TAX-040）。化学的同一性は**未確認**である。名称・構造・化学クラス・天然存在・経路／由来・別名関係・規制状態のいずれも、リポジトリ内に検証済みの記録が無く、外部識別子（CAS / ChEBI / Wikidata / PubChem）の確認も行っていない。したがって記載せず、検索文字列から推測もしない。配置先 `compound_identity_unverified` は**管理上の登録状態カテゴリ**であり、この配置は経路・化学分類の主張ではない。`THCPO` が THCP のアセテート体・位置異性体・別物質のいずれを指すかは記録が無く、推測しない。他のどの概念との関係も主張しない。 本カテゴリから移す条件は、検証済み外部識別子を伴う文書化された化学名、または物質名と経路／由来を記録した出所が得られた場合で、根拠は docs/provenance/compound-taxonomy.md に記録する。",
+          "@value": "`THCPO` は owner が 2026-11-11 の指示で検索文字列として登録した語である（ISS-20261111-TAX-040）。2026-11-11、owner は確認質問「`THCPO` は THCP-O-acetate を指しますか？」に `y` と回答し、Δ8 体・Δ9 体のいずれの異性体も名指ししなかった。したがって本登録は **異性体未指定の THCP-O-acetate ファミリー**として扱う。このファミリー扱いは回答の登録上の整理であり、owner がファミリーを明示的に確認したものではない。Δ8-THCP-O-acetate と Δ9-THCP-O-acetate は別物質であり、登録文字列はどちらの異性体も指さず、Google Trends / YouTube の個々の結果を異性体へ割り当てもしない。英語 `skos:altLabel` の `THCP-O-acetate` は、owner が確認した意図された意味を**検索スコープの別名**として記録したもので、根拠は本 scopeNote にある。管理カテゴリの所属から導かれるものでも、ファミリーが単一の化学構造であるという主張でもない。`compound_thc_o`（別に登録された市場・総称の概念で、独自の同一性留保を持ち、ここで単一構造を割り当てない）、THCP-O-butanoate（Tanaka et al. 2025 が Δ9 アセテートと並んで同定した別のエステル）、`compound_hhcpo`（別に登録された語で化学的同一性は未確認）との関係は主張しない。ファミリー全体を表す単一の外部レコードは無い。化学レジストリの記録は異性体ごと（Δ9 アセテートと Δ8 アセテート）に分かれ、`THCP-O-acetate` というラベルの Wikidata 項目も Δ9 レコードに対応する。記録した ChEBI 検索は語 `THCP` に対して該当なしで、FDA GSRS の `Tetrahydrocannabiphorol` 名称検索は親レコード（UNII WTK87HN3LG）のみを返した。いずれも THCP-O-acetate のレコードを確立したものではない。したがって本概念は `skos:exactMatch` を張らず、CAS 番号・PubChem CID・UNII・ChEBI ID・Wikidata QID も記載しない。各異性体のレコードは**異性体についての根拠**として docs/provenance/compound-taxonomy.md に記録し、本概念の識別子として代用しない。単一物質としての化学的同一性は**未確認**であり、本語は管理上の登録状態カテゴリ `compound_identity_unverified` に留まる。したがってこの配置は経路／由来、天然存在、化学クラス、薬理、安全性、別名関係を主張しない。二つの異性体の規制状態: 2024 年の厚生労働省令改正（令和6年厚生労働省令第81号、2024-05-01 公布、2024-05-11 施行）は、6a,7,8,10a-テトラヒドロ（Δ9）系列と 6a,7,10,10a-テトラヒドロ（Δ8）系列の双方について、1位アセトキシ・3位直鎖 C7 の構造を包括的な構造グループに含めている。ただしこれは**麻薬を除く**という省令の除外規定の下での**法令上の構造の事実**であり、個々の製品・検索結果の分類でも、本変更が行う規制判断でも、owner の同一性確認の一部でもない。Tanaka et al. 2025（DOI 10.1002/dta.3883、PMID 40075559）はオンライン流通のオイル製品 7 点とハーブ製品 1 点から Δ9-THCP-O（アセテート）と Δ9-THCP-O-butanoate を同定し、あわせて Δ8-THC-O（アセテート、C5 同族体）も同定した。後者は Δ8-THCP-O-acetate ではない。これは Δ9 アセテートと butanoate が分析対象の物質として存在することを支えるもので、Δ8 体の THCP アセテートや個々の検索結果の内容を支えない。**クエリの限界:** Google Trends / YouTube の `THCPO` / `THCPO リキッド` 系列が測るのは、登録文字列との**文字列一致**だけである。`THCPO` は無関係な語とも一致し得る略語であり、一致した結果は THCP-O-acetate の内容の証明ではない。本カテゴリから移す条件は、owner が確認した単一物質に検証済み外部識別子が伴う場合、または単一の物質名と経路／由来を記録した出所が得られた場合で、根拠は docs/provenance/compound-taxonomy.md に記録する。",
           "@language": "ja"
         }
       ]
@@ -1059,18 +1073,30 @@
       "@id": "jptr:compound-cbe",
       "@type": "skos:Concept",
       "skos:inScheme": "jptr:compound-taxonomy",
-      "skos:broader": "jptr:compound-identity-unverified",
+      "skos:broader": "jptr:compound-minor",
       "skos:prefLabel": [
+        {
+          "@value": "Cannabielsoin (CBE)",
+          "@language": "en"
+        },
+        {
+          "@value": "カンナビエルソイン (CBE)",
+          "@language": "ja"
+        }
+      ],
+      "skos:altLabel": [
         {
           "@value": "CBE",
           "@language": "en"
         },
         {
-          "@value": "CBE",
+          "@value": "Cannabielsoin A",
+          "@language": "en"
+        },
+        {
+          "@value": "カンナビエルソイン",
           "@language": "ja"
-        }
-      ],
-      "skos:altLabel": [
+        },
         {
           "@value": "CBE リキッド",
           "@language": "ja"
@@ -1079,13 +1105,17 @@
       "skos:notation": "compound_cbe",
       "skos:scopeNote": [
         {
-          "@value": "'CBE' is the owner's term, registered as a search string on 2026-11-11 by owner direction (ISS-20261111-TAX-040). Its chemical identity is UNCONFIRMED: the repository records no verified chemical name, structure, chemical class, natural occurrence, route/origin, synonym relation or regulatory status for this term, and no external identifier (CAS, ChEBI, Wikidata, PubChem) was verified - none is recorded here and none may be inferred from the query string. The term sits in compound_identity_unverified, an administrative registration-state category, so this placement asserts no route or chemical classification. What the code 'CBE' expands to is not recorded anywhere in this repository, so no chemical name is supplied. Evidence that would move the term out of this category: a documented chemical name with a verified external identifier, or a recorded source naming the substance and its route/origin; the basis belongs in docs/provenance/compound-taxonomy.md.",
+          "@value": "`CBE` is the owner's search term for **cannabielsoin**. On 2026-11-11 the owner confirmed that CBE is intended to mean cannabielsoin. The chemical identity and identifiers were verified against the FDA GSRS approved record for CANNABIELSOIN (UNII 2ERD6V6652; CAS 52025-76-0; PubChem CID 162113; formula C21H30O3) and Wikidata Q22668702 (en label 'cannabielsoin', ja label 'カンナビエルソイン'). The owner's term and the query strings remain unchanged. Cannabielsoin is described as a non-enzymatic phytocannabinoid whose natural presence in Cannabis sativa has been established (Haghdoost et al. 2024, Biomedicines 12:1551, DOI 10.3390/biomedicines12071551); it is also an oxidation product and mammalian metabolite of cannabidiol (Yamamoto et al. 1988, PMID 3254981; 1989, PMID 2614640; 1991, PMID 1806944; Hartsel et al. 1983, DOI 10.1055/s-2007-969870). It is therefore placed in compound-minor, the category for phytocannabinoids other than the major pair. This is a route/origin placement, not a chemical-class claim: the chemical-class taxonomy has no CBE-type class, so no chemical-class link is asserted. The 2024 in-vitro CB1 study is cited only as pharmacological context, not as evidence about Japanese market presence. **Query limitation:** Google Trends and YouTube series for `CBE` / `CBE リキッド` measure occurrences of those literal strings. They do not verify that a result concerns cannabielsoin, and `CBE` is a short acronym that can match unrelated text. The existing samples are string-match observations, not proof of content relevance. Basis and source record: docs/provenance/compound-taxonomy.md (ISS-20261111-TAX-040 addendum).",
           "@language": "en"
         },
         {
-          "@value": "owner が記した表記 `CBE` を、2026-11-11 の owner 指示で検索文字列として登録したもの（ISS-20261111-TAX-040）。化学的同一性は**未確認**である。名称・構造・化学クラス・天然存在・経路／由来・別名関係・規制状態のいずれも、リポジトリ内に検証済みの記録が無く、外部識別子（CAS / ChEBI / Wikidata / PubChem）の確認も行っていない。したがって記載せず、検索文字列から推測もしない。配置先 `compound_identity_unverified` は**管理上の登録状態カテゴリ**であり、この配置は経路・化学分類の主張ではない。略号 `CBE` の展開はリポジトリ内に記録が無く、化学名を補わない。 本カテゴリから移す条件は、検証済み外部識別子を伴う文書化された化学名、または物質名と経路／由来を記録した出所が得られた場合で、根拠は docs/provenance/compound-taxonomy.md に記録する。",
+          "@value": "`CBE` は owner が **cannabielsoin（カンナビエルソイン）** を指す語として登録した検索文字列である。2026-11-11、owner は `CBE` が cannabielsoin を意味することを確認した。化学的同一性と識別子は、FDA GSRS の承認済み CANNABIELSOIN 記録（UNII 2ERD6V6652、CAS 52025-76-0、PubChem CID 162113、分子式 C21H30O3）および Wikidata Q22668702（en: cannabielsoin、ja: カンナビエルソイン）で検証した。owner の表記とクエリ文字列は変更しない。cannabielsoin は、Cannabis sativa への天然存在が確認されている非酵素的フィトカンナビノイドと記述され（Haghdoost et al. 2024, Biomedicines 12:1551, DOI 10.3390/biomedicines12071551）、また CBD の酸化生成物・哺乳類代謝物である（Yamamoto et al. 1988, PMID 3254981 / 1989, PMID 2614640 / 1991, PMID 1806944、Hartsel et al. 1983, DOI 10.1055/s-2007-969870）。したがって、主要フィトカンナビノイド以外のフィトカンナビノイドを表す `compound_minor` に置く。これは経路／由来の配置であり、化学クラスの主張ではない。`chemical-class-taxonomy` に CBE 型クラスは無いため、化学クラスへのリンクは張らない。2024 年の in-vitro CB1 研究は薬理学的文脈の出所であり、国内市場での存在の根拠ではない。**クエリの限界:** Google Trends / YouTube の `CBE` / `CBE リキッド` 系列が測るのは、これらの文字列への一致である。各結果が cannabielsoin を扱っていることの確認ではなく、`CBE` は無関係な語とも一致し得る短い略号である。既存のサンプルは文字列一致の観測であり、内容の関連性の証明ではない。根拠と出所は docs/provenance/compound-taxonomy.md（ISS-20261111-TAX-040 追記）。",
           "@language": "ja"
         }
+      ],
+      "skos:exactMatch": [
+        "wikidata:Q22668702",
+        "https://identifiers.org/unii:2ERD6V6652"
       ]
     },
     {
@@ -1158,18 +1188,22 @@
       "@id": "jptr:compound-cbl",
       "@type": "skos:Concept",
       "skos:inScheme": "jptr:compound-taxonomy",
-      "skos:broader": "jptr:compound-identity-unverified",
+      "skos:broader": "jptr:compound-minor",
       "skos:prefLabel": [
         {
-          "@value": "CBL",
+          "@value": "Cannabicyclol (CBL)",
           "@language": "en"
         },
         {
-          "@value": "CBL",
+          "@value": "カンナビシクロール (CBL)",
           "@language": "ja"
         }
       ],
       "skos:altLabel": [
+        {
+          "@value": "CBL",
+          "@language": "en"
+        },
         {
           "@value": "CBL リキッド",
           "@language": "ja"
@@ -1178,31 +1212,40 @@
       "skos:notation": "compound_cbl",
       "skos:scopeNote": [
         {
-          "@value": "'CBL' is the owner's term, registered as a search string on 2026-11-11 by owner direction (ISS-20261111-TAX-040). Its chemical identity is UNCONFIRMED: the repository records no verified chemical name, structure, chemical class, natural occurrence, route/origin, synonym relation or regulatory status for this term, and no external identifier (CAS, ChEBI, Wikidata, PubChem) was verified - none is recorded here and none may be inferred from the query string. The term sits in compound_identity_unverified, an administrative registration-state category, so this placement asserts no route or chemical classification. What the code 'CBL' expands to is not recorded anywhere in this repository, so no chemical name is supplied. Evidence that would move the term out of this category: a documented chemical name with a verified external identifier, or a recorded source naming the substance and its route/origin; the basis belongs in docs/provenance/compound-taxonomy.md.",
+          "@value": "`CBL` is the owner's term for **cannabicyclol**, confirmed by the owner on 2026-11-11. Identity and identifiers were verified against Wikidata Q907909 (en label 'cannabicyclol', CAS 21366-63-2, PubChem CID 30607, formula C21H30O2), the FDA GSRS record for UNII MP5WZK8M5U (substanceClass chemical, definitionLevel COMPLETE; names CANNABICYCLOL / CANNABIPINOL / PENTYLCANNABICYCLOL; CAS 21366-63-2, PubChem CID 59444380, formula C21H30O2) and PubChem CID 59444380 ('Cannabicyclol', stereospecified). PubChem CID 30607 is the stereo-unspecified / (+/-) record and carries CAS 67920-00-7 as a synonym, so the two CAS numbers circulate with different stereochemistry; this concept asserts no single CAS number as its identifier. The owner's query strings `CBL` and `CBL リキッド` are unchanged. The 2025 study of CBL describes it as a minor phytocannabinoid and reports acid-catalysed conversion of cannabichromene (CBC) to CBL, with the structure confirmed by X-ray crystallography (Haghdoost et al. 2025, J Nat Prod, DOI 10.1021/acs.jnatprod.4c00977, PMID 39811943); cannabicyclol has also been quantified among phytocannabinoids in cannabis material (PMID 33839545). Those detections do not establish enzymatic biosynthesis or occurrence in the intact living plant, and no biosynthetic route is asserted here. Placement in compound-minor therefore records only 'a phytocannabinoid other than the major pair'. The ja label follows the Japanese rendering used in Japanese-language scientific reporting (Wikidata's ja label is different); no chemical-class link is asserted because the chemical-class taxonomy has no CBL-type class, and no regulatory status is claimed. **Query limitation:** Google Trends and YouTube series for `CBL` measure occurrences of that literal string, not verified cannabicyclol content, and `CBL` is a short acronym that can match unrelated text. The existing samples are string-match observations, not proof of content relevance. Basis and source record: docs/provenance/compound-taxonomy.md (ISS-20261111-TAX-040 addendum).",
           "@language": "en"
         },
         {
-          "@value": "owner が記した表記 `CBL` を、2026-11-11 の owner 指示で検索文字列として登録したもの（ISS-20261111-TAX-040）。化学的同一性は**未確認**である。名称・構造・化学クラス・天然存在・経路／由来・別名関係・規制状態のいずれも、リポジトリ内に検証済みの記録が無く、外部識別子（CAS / ChEBI / Wikidata / PubChem）の確認も行っていない。したがって記載せず、検索文字列から推測もしない。配置先 `compound_identity_unverified` は**管理上の登録状態カテゴリ**であり、この配置は経路・化学分類の主張ではない。略号 `CBL` の展開はリポジトリ内に記録が無く、化学名を補わない。 本カテゴリから移す条件は、検証済み外部識別子を伴う文書化された化学名、または物質名と経路／由来を記録した出所が得られた場合で、根拠は docs/provenance/compound-taxonomy.md に記録する。",
+          "@value": "`CBL` は owner が **cannabicyclol（カンナビシクロール）** を指す語として 2026-11-11 に確認した登録語である。同一性と識別子は Wikidata Q907909（en: cannabicyclol、CAS 21366-63-2、PubChem CID 30607、分子式 C21H30O2）、FDA GSRS の UNII MP5WZK8M5U 記録（substanceClass chemical、definitionLevel COMPLETE、名称 CANNABICYCLOL / CANNABIPINOL / PENTYLCANNABICYCLOL、CAS 21366-63-2、PubChem CID 59444380、分子式 C21H30O2）、PubChem CID 59444380（Cannabicyclol、立体指定あり）で検証した。PubChem CID 30607 は立体未指定（(±) 体）の記録で CAS 67920-00-7 を別名に持ち、2 つの CAS 番号は立体化学の扱いが異なるまま流通している。したがって単一の CAS 番号を本概念の識別子として断定しない。owner のクエリ文字列 `CBL` / `CBL リキッド` は変更しない。2025 年の CBL 研究は CBL を minor フィトカンナビノイドと記述し、cannabichromene（CBC）から酸触媒で CBL への変換を報告して X 線結晶構造で構造を確認している（Haghdoost et al. 2025, J Nat Prod, DOI 10.1021/acs.jnatprod.4c00977, PMID 39811943）。cannabicyclol はカンナビス材料中のフィトカンナビノイドとして定量もされている（PMID 33839545）。これらの検出は酵素的な生合成や intact な生植物での存在を確立するものではなく、本概念は生合成経路を主張しない。したがって `compound_minor` への配置は「主要な 2 化合物以外のフィトカンナビノイド」という範囲だけを記録する。日本語名は日本語の科学技術報告での表記に従う（Wikidata の ja ラベルとは表記が異なる）。`chemical-class-taxonomy` に CBL 型クラスは無いため化学クラスへのリンクは張らず、規制状態も主張しない。**クエリの限界:** Google Trends / YouTube の `CBL` 系列が測るのは文字列への一致であり、cannabicyclol の内容の確認ではない。`CBL` は無関係な語とも一致し得る短い略号であり、既存サンプルは文字列一致の観測である。根拠と出所は docs/provenance/compound-taxonomy.md（ISS-20261111-TAX-040 追記）。",
           "@language": "ja"
         }
-      ]
+      ],
+      "skos:exactMatch": "wikidata:Q907909"
     },
     {
       "@id": "jptr:compound-cbga",
       "@type": "skos:Concept",
       "skos:inScheme": "jptr:compound-taxonomy",
-      "skos:broader": "jptr:compound-identity-unverified",
+      "skos:broader": "jptr:compound-minor",
       "skos:prefLabel": [
         {
-          "@value": "CBGa",
+          "@value": "Cannabigerolic acid (CBGA)",
           "@language": "en"
         },
         {
-          "@value": "CBGa",
+          "@value": "カンナビゲロール酸 (CBGA)",
           "@language": "ja"
         }
       ],
       "skos:altLabel": [
+        {
+          "@value": "CBGA",
+          "@language": "en"
+        },
+        {
+          "@value": "CBGa",
+          "@language": "en"
+        },
         {
           "@value": "CBGa リキッド",
           "@language": "ja"
@@ -1211,13 +1254,18 @@
       "skos:notation": "compound_cbga",
       "skos:scopeNote": [
         {
-          "@value": "'CBGa' is the owner's term, registered as a search string on 2026-11-11 by owner direction (ISS-20261111-TAX-040). Its chemical identity is UNCONFIRMED: the repository records no verified chemical name, structure, chemical class, natural occurrence, route/origin, synonym relation or regulatory status for this term, and no external identifier (CAS, ChEBI, Wikidata, PubChem) was verified - none is recorded here and none may be inferred from the query string. The term sits in compound_identity_unverified, an administrative registration-state category, so this placement asserts no route or chemical classification. The lowercase 'a' is the owner's spelling and is preserved exactly. The repository holds no record of what the term denotes, so no relationship to compound_cbg is asserted. Evidence that would move the term out of this category: a documented chemical name with a verified external identifier, or a recorded source naming the substance and its route/origin; the basis belongs in docs/provenance/compound-taxonomy.md.",
+          "@value": "`CBGa` is the owner's term for **cannabigerolic acid** (standard spelling CBGA), confirmed by the owner on 2026-11-11. Identity and identifiers were verified against ChEBI 67081 (cannabigerolic acid), Wikidata Q27135612 (en label 'cannabigerolic acid', CAS 25555-57-1, PubChem CID 6449999, ChEBI 67081, formula C22H32O4), the FDA GSRS record for UNII 80I4ZM847Y (substanceClass chemical, definitionLevel COMPLETE; names CANNABIGEROLIC ACID / CBGA; CAS 25555-57-1, PubChem CID 6449999, formula C22H32O4) and PubChem CID 6449999 ('Cannabigerolic Acid', C22H32O4). The owner's spelling `CBGa` (lowercase 'a') is preserved exactly in the labels and in the registered query strings; it names the same substance as CBGA, is not a second substance, and no case normalization is applied to raw or query records. CBGA is an acidic phytocannabinoid and the biosynthetic precursor from which other cannabinoid acids are formed (ChEBI: 'a biosynthetic precursor to delta-9-tetrahydrocannabinol'; PMID 31686510 describes the phytocannabinoid acids, including CBGA, as the dominant forms in the plant; PMID 35887277). CBG is the decarboxylated neutral product of CBGA, not a synonym: heating converts CBGA to CBG (PMID 35887277; PMID 36397993), so the two are recorded as distinct concepts. Placement in compound-minor records only 'a phytocannabinoid other than the major pair'; no chemical-class link is asserted and no regulatory status is claimed. **No skos:related link to compound_cbg is asserted:** the precursor/product relation is recorded in this note only, and the compound_cbg external-identifier mapping is unresolved (separate follow-up). **Query limitation:** Google Trends and YouTube series for `CBGa` measure occurrences of that literal string, not verified cannabigerolic acid content; the two Google Trends attempts returned no series (NO_DATA), and the existing samples are string-match observations. Basis and source record: docs/provenance/compound-taxonomy.md (ISS-20261111-TAX-040 addendum).",
           "@language": "en"
         },
         {
-          "@value": "owner が記した表記 `CBGa` を、2026-11-11 の owner 指示で検索文字列として登録したもの（ISS-20261111-TAX-040）。化学的同一性は**未確認**である。名称・構造・化学クラス・天然存在・経路／由来・別名関係・規制状態のいずれも、リポジトリ内に検証済みの記録が無く、外部識別子（CAS / ChEBI / Wikidata / PubChem）の確認も行っていない。したがって記載せず、検索文字列から推測もしない。配置先 `compound_identity_unverified` は**管理上の登録状態カテゴリ**であり、この配置は経路・化学分類の主張ではない。小文字の `a` は owner の表記であり、そのまま保存する。本語が何を指すかの記録はリポジトリ内に無く、`compound_cbg` との関係を主張しない。 本カテゴリから移す条件は、検証済み外部識別子を伴う文書化された化学名、または物質名と経路／由来を記録した出所が得られた場合で、根拠は docs/provenance/compound-taxonomy.md に記録する。",
+          "@value": "`CBGa` は owner が **cannabigerolic acid（カンナビゲロール酸、標準表記 CBGA）** を指す語として 2026-11-11 に確認した登録語である。同一性と識別子は ChEBI 67081（cannabigerolic acid）、Wikidata Q27135612（en: cannabigerolic acid、CAS 25555-57-1、PubChem CID 6449999、ChEBI 67081、分子式 C22H32O4）、FDA GSRS の UNII 80I4ZM847Y 記録（substanceClass chemical、definitionLevel COMPLETE、名称 CANNABIGEROLIC ACID / CBGA、CAS 25555-57-1、PubChem CID 6449999、分子式 C22H32O4）、PubChem CID 6449999（Cannabigerolic Acid、C22H32O4）で検証した。owner の表記 `CBGa`（小文字の `a`）はラベルと登録クエリ文字列でそのまま保存し、同じ物質を指す表記であって別物質ではなく、raw / query 記録に大文字小文字の正規化も適用しない。CBGA は他のカンナビノイド酸が生成される前段の酸性フィトカンナビノイドで（ChEBI: Δ9-THC の生合成前駆体、PMID 31686510 は CBGA を含むフィトカンナビノイド酸を植物中の主要な存在形と記述、PMID 35887277）、CBG は CBGA が脱炭酸した中性体であって別名ではない（加熱で CBGA から CBG が生じる。PMID 35887277 / PMID 36397993）。したがって両者を別概念として記録する。`compound_minor` への配置は「主要な 2 化合物以外のフィトカンナビノイド」という範囲だけを記録し、化学クラスへのリンクも規制状態も主張しない。**`compound_cbg` への `skos:related` は張らない:** 前駆体／生成物の関係は本 scopeNote の文章に留め、`compound_cbg` の外部識別子の対応は未解決である（別途の確認待ち）。**クエリの限界:** Google Trends / YouTube の `CBGa` 系列が測るのは文字列への一致であり、cannabigerolic acid の内容の確認ではない。Google Trends の 2 試行は NO_DATA を返し、既存サンプルは文字列一致の観測である。根拠と出所は docs/provenance/compound-taxonomy.md（ISS-20261111-TAX-040 追記）。",
           "@language": "ja"
         }
+      ],
+      "skos:exactMatch": [
+        "chebi:67081",
+        "wikidata:Q27135612",
+        "https://identifiers.org/unii:80I4ZM847Y"
       ]
     },
     {
@@ -1343,11 +1391,209 @@
       "skos:notation": "compound_thca",
       "skos:scopeNote": [
         {
-          "@value": "'THCA' is the owner's term, registered as a search string on 2026-11-11 by owner direction (ISS-20261111-TAX-040). Its chemical identity is UNCONFIRMED: the repository records no verified chemical name, structure, chemical class, natural occurrence, route/origin, synonym relation or regulatory status for this term, and no external identifier (CAS, ChEBI, Wikidata, PubChem) was verified - none is recorded here and none may be inferred from the query string. The term sits in compound_identity_unverified, an administrative registration-state category, so this placement asserts no route or chemical classification. The repository mentions 'Δ9-THC + Δ9-THCA-A' only as a measurement baseline in research/regulatory-status (CBD, CBG, CBX). That does not establish what 'THCA' denotes here, and no relationship to compound_thc is asserted. Evidence that would move the term out of this category: a documented chemical name with a verified external identifier, or a recorded source naming the substance and its route/origin; the basis belongs in docs/provenance/compound-taxonomy.md.",
+          "@value": "'THCA' is the owner's term, registered as a search string on 2026-11-11 by owner direction (ISS-20261111-TAX-040). Its chemical identity is UNCONFIRMED: the repository records no verified chemical name, structure, chemical class, natural occurrence, route/origin, synonym relation or regulatory status for this term, and no external identifier (CAS, ChEBI, Wikidata, PubChem) was verified - none is recorded here and none may be inferred from the query string. The term sits in compound_identity_unverified, an administrative registration-state category, so this placement asserts no route or chemical classification. The repository mentions 'Δ9-THC + Δ9-THCA-A' only as a measurement baseline in research/regulatory-status (CBD, CBG, CBX). That does not establish what 'THCA' denotes here, and no relationship to compound_thc is asserted. On 2026-11-11 the owner confirmed that the generic chemical interpretation of `THCA` is replaced by three distinct search-topic concepts: `Δ9-THCA-A`, `THCA-B` and `Δ8-THCA` (ISS-20261111-TAX-041). This concept remains the registration of the literal string `THCA`: the `thca-general-ja` / `thca-liquid-ja` query entries and every adopted or preserved run stay attached to this concept and are not reassigned to any new concept. The generic term is neither a synonym of nor a parent of the three concepts, and no `skos:related` or `skos:exactMatch` link is asserted; the new concepts are separate registrations. Evidence that would move the term out of this category: a documented chemical name with a verified external identifier, or a recorded source naming the substance and its route/origin; the basis belongs in docs/provenance/compound-taxonomy.md.",
           "@language": "en"
         },
         {
-          "@value": "owner が記した表記 `THCA` を、2026-11-11 の owner 指示で検索文字列として登録したもの（ISS-20261111-TAX-040）。化学的同一性は**未確認**である。名称・構造・化学クラス・天然存在・経路／由来・別名関係・規制状態のいずれも、リポジトリ内に検証済みの記録が無く、外部識別子（CAS / ChEBI / Wikidata / PubChem）の確認も行っていない。したがって記載せず、検索文字列から推測もしない。配置先 `compound_identity_unverified` は**管理上の登録状態カテゴリ**であり、この配置は経路・化学分類の主張ではない。リポジトリ内の `Δ9-THC + Δ9-THCA-A` は research/regulatory-status（CBD・CBG・CBX）の測定基準としての言及に限られる。本語が何を指すかを確定するものではなく、`compound_thc` との関係を主張しない。 本カテゴリから移す条件は、検証済み外部識別子を伴う文書化された化学名、または物質名と経路／由来を記録した出所が得られた場合で、根拠は docs/provenance/compound-taxonomy.md に記録する。",
+          "@value": "owner が記した表記 `THCA` を、2026-11-11 の owner 指示で検索文字列として登録したもの（ISS-20261111-TAX-040）。化学的同一性は**未確認**である。名称・構造・化学クラス・天然存在・経路／由来・別名関係・規制状態のいずれも、リポジトリ内に検証済みの記録が無く、外部識別子（CAS / ChEBI / Wikidata / PubChem）の確認も行っていない。したがって記載せず、検索文字列から推測もしない。配置先 `compound_identity_unverified` は**管理上の登録状態カテゴリ**であり、この配置は経路・化学分類の主張ではない。リポジトリ内の `Δ9-THC + Δ9-THCA-A` は research/regulatory-status（CBD・CBG・CBX）の測定基準としての言及に限られる。本語が何を指すかを確定するものではなく、`compound_thc` との関係を主張しない。 2026-11-11、owner は `THCA` の総称的な化学解釈を、`Δ9-THCA-A`・`THCA-B`・`Δ8-THCA` の 3 つの検索トピック概念に置き換えることを確認した（ISS-20261111-TAX-041）。本概念は文字列 `THCA` の登録として残り、`thca-general-ja` / `thca-liquid-ja` のクエリと、採用済みまたは保持済みの全 run は本概念に付いたままで、新しい概念へ付け替えない。総称語は 3 概念の別名でも親でもなく、`skos:related` / `skos:exactMatch` も張らない。新しい概念は別の登録である。本カテゴリから移す条件は、検証済み外部識別子を伴う文書化された化学名、または物質名と経路／由来を記録した出所が得られた場合で、根拠は docs/provenance/compound-taxonomy.md に記録する。",
+          "@language": "ja"
+        }
+      ]
+    },
+    {
+      "@id": "jptr:compound-delta9-thca-a",
+      "@type": "skos:Concept",
+      "skos:inScheme": "jptr:compound-taxonomy",
+      "skos:broader": "jptr:compound-identity-unverified",
+      "skos:prefLabel": [
+        {
+          "@value": "Δ9-THCA-A",
+          "@language": "en"
+        },
+        {
+          "@value": "Δ9-THCA-A",
+          "@language": "ja"
+        }
+      ],
+      "skos:altLabel": [
+        {
+          "@value": "Δ9-THCA-A リキッド",
+          "@language": "ja"
+        }
+      ],
+      "skos:notation": "compound_delta9_thca_a",
+      "skos:scopeNote": [
+        {
+          "@value": "`Δ9-THCA-A` is the owner's search term, registered on 2026-11-11 (ISS-20261111-TAX-041) as one of three distinct search-topic concepts that replace the generic chemical interpretation of `THCA`; `compound_thca` remains the separate registration of the literal string `THCA`. The term is registered as a search string, not as a substance identification. The single-substance chemical identity remains UNCONFIRMED. The cited sources document the chemistry and nomenclature: Moreno-Sanz 2016 (DOI 10.1089/can.2016.0008) describes Δ9-tetrahydrocannabinolic acid A (2-carboxy-THC) as the acidic precursor of Δ9-THC, biosynthesized and accumulated in Cannabis glandular trichomes, and notes that the literature has used 'THCA' loosely for several acidic derivatives; Filer 2021 (DOI 10.1089/can.2021.0003, PMCID PMC8612408) treats THCA-A and THCA-B as distinct structural isomers. Those statements concern chemistry and nomenclature, not the content of any Google Trends or YouTube result and not any product sold under the term. This concept carries no skos:exactMatch and no CAS number, PubChem CID, UNII, ChEBI ID or Wikidata QID: this change did not verify or select a single external record for the registered string, and the owner's confirmation fixes the query topic, not result-level substance identity. It stays in compound_identity_unverified, an administrative registration-state category, so the placement asserts no route/origin, natural occurrence, chemical class, structure, synonym or regulatory status. No skos:related link to compound_thca, compound_thc or another new concept is asserted; the precursor relation to Δ9-THC is recorded in this note only. **Query limitation:** Google Trends and YouTube series for `Δ9-THCA-A` / `Δ9-THCA-A リキッド` measure occurrences of those literal strings; a matching result is not evidence of Δ9-THCA-A content. Evidence that would move the term out of this category: a verified external identifier for the named isomer (a documented chemical name with a verified identifier), after which the category that evidence supports can be assigned; the basis belongs in docs/provenance/compound-taxonomy.md.",
+          "@language": "en"
+        },
+        {
+          "@value": "`Δ9-THCA-A` は owner が 2026-11-11 に登録した検索語であり（ISS-20261111-TAX-041）、`THCA` の総称的な化学解釈を置き換える 3 つの検索トピック概念の 1 つである。`compound_thca` は文字列 `THCA` の登録として別に残る。本語は検索文字列の登録であり、物質の同定ではない。単一物質としての化学的同一性は**未確認**である。引用した出所は化学と命名を記録する: Moreno-Sanz 2016（DOI 10.1089/can.2016.0008）は Δ9-tetrahydrocannabinolic acid A（2-carboxy-THC）を Δ9-THC の酸性前駆体とし、Cannabis の腺毛で生合成・蓄積されると記述し、文献が `THCA` を複数の酸性誘導体に曖昧に用いてきたことを指摘する。Filer 2021（DOI 10.1089/can.2021.0003、PMCID PMC8612408）は THCA-A と THCA-B を別個の構造異性体として扱う。これらは化学・命名についての記載であり、Google Trends / YouTube の個々の結果の内容や、本語で販売される製品についての主張ではない。本概念は `skos:exactMatch` を張らず、CAS 番号・PubChem CID・UNII・ChEBI ID・Wikidata QID も記載しない。本変更では登録文字列について単一の外部レコードを検証・選択しておらず、owner の確認は検索トピックを確定するもので、結果レベルの物質同一性を確定するものではない。本語は管理上の登録状態カテゴリ `compound_identity_unverified` に留まるため、この配置は経路／由来、天然存在、化学クラス、構造、別名、規制状態を主張しない。`compound_thca`・`compound_thc`・他の新概念への `skos:related` は張らない。Δ9-THC との前駆体関係は本 scopeNote の文章にのみ記録する。**クエリの限界:** Google Trends / YouTube の `Δ9-THCA-A` / `Δ9-THCA-A リキッド` 系列が測るのは、これらの文字列への一致だけであり、一致した結果は Δ9-THCA-A の内容の証明ではない。本カテゴリから移す条件は、名指しした異性体についての検証済み外部識別子（文書化された化学名と検証済み識別子）が得られ、その根拠が支えるカテゴリを割り当てられる場合で、根拠は docs/provenance/compound-taxonomy.md に記録する。",
+          "@language": "ja"
+        }
+      ]
+    },
+    {
+      "@id": "jptr:compound-thca-b",
+      "@type": "skos:Concept",
+      "skos:inScheme": "jptr:compound-taxonomy",
+      "skos:broader": "jptr:compound-identity-unverified",
+      "skos:prefLabel": [
+        {
+          "@value": "THCA-B",
+          "@language": "en"
+        },
+        {
+          "@value": "THCA-B",
+          "@language": "ja"
+        }
+      ],
+      "skos:altLabel": [
+        {
+          "@value": "THCA-B リキッド",
+          "@language": "ja"
+        }
+      ],
+      "skos:notation": "compound_thca_b",
+      "skos:scopeNote": [
+        {
+          "@value": "`THCA-B` is the owner's search term, registered on 2026-11-11 (ISS-20261111-TAX-041) as one of three distinct search-topic concepts that replace the generic chemical interpretation of `THCA`; `compound_thca` remains the separate registration of the literal string `THCA`. The term is registered as a search string, not as a substance identification. The single-substance chemical identity remains UNCONFIRMED. The cited sources document the nomenclature and structure: Filer 2021 (DOI 10.1089/can.2021.0003, PMCID PMC8612408) records THCA-B as a structural isomer of THCA-A, first isolated and characterized by Mechoulam et al. in 1969 and corroborated by an X-ray study in 1975, and discusses its markedly different decarboxylation behaviour; Moreno-Sanz 2016 (DOI 10.1089/can.2016.0008) identifies THCA-B as 4-carboxy-THC, the minor isomer of THCA-A, and records that later studies could not confirm its occurrence. Those are statements about the published chemistry and about the literature, not a natural-occurrence claim by this repository, and not the content of any result. This concept carries no skos:exactMatch and no CAS number, PubChem CID, UNII, ChEBI ID or Wikidata QID: this change did not verify or select a single external record for the registered string, and the owner's confirmation fixes the query topic, not result-level substance identity. It stays in compound_identity_unverified, an administrative registration-state category, so the placement asserts no route/origin, natural occurrence, chemical class, structure, synonym or regulatory status. No skos:related link to compound_thca or another new concept is asserted; THCA-B is not a synonym of THCA-A, and the isomeric relation is recorded in this note only. **Query limitation:** Google Trends and YouTube series for `THCA-B` / `THCA-B リキッド` measure occurrences of those literal strings; a matching result is not evidence of THCA-B content. Evidence that would move the term out of this category: a verified external identifier for the named isomer (a documented chemical name with a verified identifier), after which the category that evidence supports can be assigned; the basis belongs in docs/provenance/compound-taxonomy.md.",
+          "@language": "en"
+        },
+        {
+          "@value": "`THCA-B` は owner が 2026-11-11 に登録した検索語であり（ISS-20261111-TAX-041）、`THCA` の総称的な化学解釈を置き換える 3 つの検索トピック概念の 1 つである。`compound_thca` は文字列 `THCA` の登録として別に残る。本語は検索文字列の登録であり、物質の同定ではない。単一物質としての化学的同一性は**未確認**である。引用した出所は命名と構造を記録する: Filer 2021（DOI 10.1089/can.2021.0003、PMCID PMC8612408）は THCA-B を THCA-A の構造異性体とし、1969 年に Mechoulam らが単離・特性評価し、1975 年の X 線研究で裏付けられたこと、両者の脱炭酸挙動が大きく異なることを記録する。Moreno-Sanz 2016（DOI 10.1089/can.2016.0008）は THCA-B を 4-carboxy-THC、THCA-A の少量異性体とし、後続研究がその存在を確認できなかったことを記録する。これらは公表された化学と文献についての記載であり、本リポジトリによる天然存在の主張でも、個々の結果の内容の主張でもない。本概念は `skos:exactMatch` を張らず、CAS 番号・PubChem CID・UNII・ChEBI ID・Wikidata QID も記載しない。本変更では登録文字列について単一の外部レコードを検証・選択しておらず、owner の確認は検索トピックを確定するもので、結果レベルの物質同一性を確定するものではない。本語は管理上の登録状態カテゴリ `compound_identity_unverified` に留まるため、この配置は経路／由来、天然存在、化学クラス、構造、別名、規制状態を主張しない。`compound_thca` や他の新概念への `skos:related` は張らない。THCA-B は THCA-A の別名ではなく、異性体関係は本 scopeNote の文章にのみ記録する。**クエリの限界:** Google Trends / YouTube の `THCA-B` / `THCA-B リキッド` 系列が測るのは、これらの文字列への一致だけであり、一致した結果は THCA-B の内容の証明ではない。本カテゴリから移す条件は、名指しした異性体についての検証済み外部識別子（文書化された化学名と検証済み識別子）が得られ、その根拠が支えるカテゴリを割り当てられる場合で、根拠は docs/provenance/compound-taxonomy.md に記録する。",
+          "@language": "ja"
+        }
+      ]
+    },
+    {
+      "@id": "jptr:compound-delta8-thca",
+      "@type": "skos:Concept",
+      "skos:inScheme": "jptr:compound-taxonomy",
+      "skos:broader": "jptr:compound-identity-unverified",
+      "skos:prefLabel": [
+        {
+          "@value": "Δ8-THCA",
+          "@language": "en"
+        },
+        {
+          "@value": "Δ8-THCA",
+          "@language": "ja"
+        }
+      ],
+      "skos:altLabel": [
+        {
+          "@value": "Δ8-THCA リキッド",
+          "@language": "ja"
+        }
+      ],
+      "skos:notation": "compound_delta8_thca",
+      "skos:scopeNote": [
+        {
+          "@value": "`Δ8-THCA` is the owner's search term, registered on 2026-11-11 (ISS-20261111-TAX-041) as one of three distinct search-topic concepts that replace the generic chemical interpretation of `THCA`; `compound_thca` remains the separate registration of the literal string `THCA`. The term is registered as a search string, not as a substance identification. The single-substance chemical identity remains UNCONFIRMED. This change did not verify a structural or registry source for `Δ8-THCA`: the sources cited for the other two THCA topics document the Δ9 series only, where THCA-A (2-carboxy-THC) and THCA-B (4-carboxy-THC) are distinct isomers (Moreno-Sanz 2016, DOI 10.1089/can.2016.0008; Filer 2021, DOI 10.1089/can.2021.0003, PMCID PMC8612408). The registered term names a Δ8 series but does not state the A or B carboxyl arrangement, so it does not establish a single structure; no identifier is inferred from the Δ9 nomenclature. This concept carries no skos:exactMatch and no CAS number, PubChem CID, UNII, ChEBI ID or Wikidata QID: this change did not verify or select a single external record for the registered string, and the owner's confirmation fixes the query topic, not result-level substance identity. It stays in compound_identity_unverified, an administrative registration-state category, so the placement asserts no route/origin, natural occurrence, chemical class, structure, synonym or regulatory status. No skos:related link to compound_thca, compound_thc, the neutral Δ8-THC compound (which has no taxonomy concept) or another new concept is asserted. **Query limitation:** Google Trends and YouTube series for `Δ8-THCA` / `Δ8-THCA リキッド` measure occurrences of those literal strings; a matching result is not evidence of Δ8-THCA content. Evidence that would move the term out of this category: a documented structural or nomenclatural source that fixes the Δ8 acid's carboxyl arrangement, together with a verified external identifier; the basis belongs in docs/provenance/compound-taxonomy.md.",
+          "@language": "en"
+        },
+        {
+          "@value": "`Δ8-THCA` は owner が 2026-11-11 に登録した検索語であり（ISS-20261111-TAX-041）、`THCA` の総称的な化学解釈を置き換える 3 つの検索トピック概念の 1 つである。`compound_thca` は文字列 `THCA` の登録として別に残る。本語は検索文字列の登録であり、物質の同定ではない。単一物質としての化学的同一性は**未確認**である。本変更では `Δ8-THCA` の構造・レジストリ出所を検証していない。他の 2 つの THCA トピックに引用した出所は Δ9 系列のみを扱い、そこでは THCA-A（2-carboxy-THC）と THCA-B（4-carboxy-THC）が別個の異性体である（Moreno-Sanz 2016、DOI 10.1089/can.2016.0008、Filer 2021、DOI 10.1089/can.2021.0003、PMCID PMC8612408）。登録語は Δ8 系列を名指すが、カルボキシル基の A / B 配置を述べないため単一構造を確定せず、Δ9 の命名から識別子を推測しない。本概念は `skos:exactMatch` を張らず、CAS 番号・PubChem CID・UNII・ChEBI ID・Wikidata QID も記載しない。本変更では登録文字列について単一の外部レコードを検証・選択しておらず、owner の確認は検索トピックを確定するもので、結果レベルの物質同一性を確定するものではない。本語は管理上の登録状態カテゴリ `compound_identity_unverified` に留まるため、この配置は経路／由来、天然存在、化学クラス、構造、別名、規制状態を主張しない。`compound_thca`・`compound_thc`・中性の Δ8-THC（taxonomy 概念を持たない）・他の新概念への `skos:related` は張らない。**クエリの限界:** Google Trends / YouTube の `Δ8-THCA` / `Δ8-THCA リキッド` 系列が測るのは、これらの文字列への一致だけであり、一致した結果は Δ8-THCA の内容の証明ではない。本カテゴリから移す条件は、Δ8 酸のカルボキシル配置を確定する文書化された構造・命名の出所と検証済み外部識別子が得られた場合で、根拠は docs/provenance/compound-taxonomy.md に記録する。",
+          "@language": "ja"
+        }
+      ]
+    },
+    {
+      "@id": "jptr:compound-delta8-thcb",
+      "@type": "skos:Concept",
+      "skos:inScheme": "jptr:compound-taxonomy",
+      "skos:broader": "jptr:compound-identity-unverified",
+      "skos:prefLabel": [
+        {
+          "@value": "Δ8-THCB",
+          "@language": "en"
+        },
+        {
+          "@value": "Δ8-THCB",
+          "@language": "ja"
+        }
+      ],
+      "skos:altLabel": [
+        {
+          "@value": "Δ8-THCB リキッド",
+          "@language": "ja"
+        }
+      ],
+      "skos:notation": "compound_delta8_thcb",
+      "skos:scopeNote": [
+        {
+          "@value": "`Δ8-THCB` is the owner's search term, registered on 2026-11-11 (ISS-20261111-TAX-041) as one of three distinct search-topic concepts that replace the generic chemical interpretation of `THCB`; `compound_thcb` remains the separate registration of the literal string `THCB`. The term is registered as a search string, not as a substance identification. The single-substance chemical identity remains UNCONFIRMED. The cited sources document the compound: Tanaka & Kikura-Hanajiri 2024 (DOI 10.1248/yakushi.24-00029) identified Δ8-THCB, and separately Δ9-THCB, among Δ8/Δ9 THC analogues with different C-3 alkyl-chain lengths in five oil products distributed online in Japan from 2022 to 2023; Linciano et al. 2020 (DOI 10.1021/acs.jnatprod.9b00876) isolated and structurally characterized Δ9-THCB, the butyl homologue of Δ9-THC, from a medicinal Cannabis sativa variety, which is evidence about the Δ9 isomer, not the Δ8 one. Those statements concern analysed substances and products, not the content of any Google Trends or YouTube result and not any product generally. This concept carries no skos:exactMatch and no CAS number, PubChem CID, UNII, ChEBI ID or Wikidata QID: this change did not verify or select a single external record for the registered string, and the owner's confirmation fixes the query topic, not result-level substance identity. It stays in compound_identity_unverified, an administrative registration-state category, so the placement asserts no route/origin, natural occurrence, chemical class, structure, synonym or regulatory status. No skos:related link to compound_thcb, compound_delta9_thcb, compound_thc or another new concept is asserted; the Δ8/Δ9 positional-isomer distinction is recorded in this note and in the provenance ledger only. **Query limitation:** Google Trends and YouTube series for `Δ8-THCB` / `Δ8-THCB リキッド` measure occurrences of those literal strings; a matching result is not evidence of Δ8-THCB content. Evidence that would move the term out of this category: a verified external identifier for the named isomer (a documented chemical name with a verified identifier), after which the category that evidence supports can be assigned; the basis belongs in docs/provenance/compound-taxonomy.md.",
+          "@language": "en"
+        },
+        {
+          "@value": "`Δ8-THCB` は owner が 2026-11-11 に登録した検索語であり（ISS-20261111-TAX-041）、`THCB` の総称的な化学解釈を置き換える 3 つの検索トピック概念の 1 つである。`compound_thcb` は文字列 `THCB` の登録として別に残る。本語は検索文字列の登録であり、物質の同定ではない。単一物質としての化学的同一性は**未確認**である。引用した出所は当該化合物を記録する: Tanaka & Kikura-Hanajiri 2024（DOI 10.1248/yakushi.24-00029）は、2022〜2023 年に国内でオンライン流通したオイル製品 5 点から、C-3 位のアルキル鎖長が異なる Δ8/Δ9 THC アナログの一つとして Δ8-THCB を、Δ9-THCB とは別に同定した。Linciano et al. 2020（DOI 10.1021/acs.jnatprod.9b00876）は medicinal Cannabis sativa 品種から Δ9-THCB（Δ9-THC のブチル同族体）を単離し構造を特性評価したが、これは Δ9 体についての根拠であり Δ8 体ではない。これらは分析された物質・製品についての記載であり、Google Trends / YouTube の個々の結果の内容や、一般の製品についての主張ではない。本概念は `skos:exactMatch` を張らず、CAS 番号・PubChem CID・UNII・ChEBI ID・Wikidata QID も記載しない。本変更では登録文字列について単一の外部レコードを検証・選択しておらず、owner の確認は検索トピックを確定するもので、結果レベルの物質同一性を確定するものではない。本語は管理上の登録状態カテゴリ `compound_identity_unverified` に留まるため、この配置は経路／由来、天然存在、化学クラス、構造、別名、規制状態を主張しない。`compound_thcb`・`compound_delta9_thcb`・`compound_thc`・他の新概念への `skos:related` は張らない。Δ8/Δ9 の位置異性体の区別は本 scopeNote と台帳の文章にのみ記録する。**クエリの限界:** Google Trends / YouTube の `Δ8-THCB` / `Δ8-THCB リキッド` 系列が測るのは、これらの文字列への一致だけであり、一致した結果は Δ8-THCB の内容の証明ではない。本カテゴリから移す条件は、名指しした異性体についての検証済み外部識別子（文書化された化学名と検証済み識別子）が得られ、その根拠が支えるカテゴリを割り当てられる場合で、根拠は docs/provenance/compound-taxonomy.md に記録する。",
+          "@language": "ja"
+        }
+      ]
+    },
+    {
+      "@id": "jptr:compound-delta9-thcb",
+      "@type": "skos:Concept",
+      "skos:inScheme": "jptr:compound-taxonomy",
+      "skos:broader": "jptr:compound-identity-unverified",
+      "skos:prefLabel": [
+        {
+          "@value": "Δ9-THCB",
+          "@language": "en"
+        },
+        {
+          "@value": "Δ9-THCB",
+          "@language": "ja"
+        }
+      ],
+      "skos:altLabel": [
+        {
+          "@value": "Δ9-THCB リキッド",
+          "@language": "ja"
+        }
+      ],
+      "skos:notation": "compound_delta9_thcb",
+      "skos:scopeNote": [
+        {
+          "@value": "`Δ9-THCB` is the owner's search term, registered on 2026-11-11 (ISS-20261111-TAX-041) as one of three distinct search-topic concepts that replace the generic chemical interpretation of `THCB`; `compound_thcb` remains the separate registration of the literal string `THCB`. The term is registered as a search string, not as a substance identification. The single-substance chemical identity remains UNCONFIRMED. The cited sources document the compound: Linciano et al. 2020 (DOI 10.1021/acs.jnatprod.9b00876) isolated Δ9-THCB, the butyl homologue of Δ9-THC, from a medicinal Cannabis sativa variety and confirmed its structure and absolute configuration by comparison with a stereoselective synthesis; Tanaka & Kikura-Hanajiri 2024 (DOI 10.1248/yakushi.24-00029) identified Δ9-THCB, and separately Δ8-THCB, among Δ8/Δ9 THC analogues in five oil products distributed online in Japan from 2022 to 2023. Those statements concern analysed substances and products, not the content of any Google Trends or YouTube result and not any product generally. This concept carries no skos:exactMatch and no CAS number, PubChem CID, UNII, ChEBI ID or Wikidata QID: this change did not verify or select a single external record for the registered string, and the owner's confirmation fixes the query topic, not result-level substance identity. It stays in compound_identity_unverified, an administrative registration-state category, so the placement asserts no route/origin, natural occurrence, chemical class, structure, synonym or regulatory status. No skos:related link to compound_thcb, compound_delta8_thcb, compound_thc or another new concept is asserted; the Δ8/Δ9 positional-isomer distinction is recorded in this note and in the provenance ledger only. **Query limitation:** Google Trends and YouTube series for `Δ9-THCB` / `Δ9-THCB リキッド` measure occurrences of those literal strings; a matching result is not evidence of Δ9-THCB content. Evidence that would move the term out of this category: a verified external identifier for the named isomer (a documented chemical name with a verified identifier), after which the category that evidence supports can be assigned; the basis belongs in docs/provenance/compound-taxonomy.md.",
+          "@language": "en"
+        },
+        {
+          "@value": "`Δ9-THCB` は owner が 2026-11-11 に登録した検索語であり（ISS-20261111-TAX-041）、`THCB` の総称的な化学解釈を置き換える 3 つの検索トピック概念の 1 つである。`compound_thcb` は文字列 `THCB` の登録として別に残る。本語は検索文字列の登録であり、物質の同定ではない。単一物質としての化学的同一性は**未確認**である。引用した出所は当該化合物を記録する: Linciano et al. 2020（DOI 10.1021/acs.jnatprod.9b00876）は medicinal Cannabis sativa 品種から Δ9-THCB（Δ9-THC のブチル同族体）を単離し、立体選択的合成との比較で構造と絶対配置を確認した。Tanaka & Kikura-Hanajiri 2024（DOI 10.1248/yakushi.24-00029）は、2022〜2023 年に国内でオンライン流通したオイル製品 5 点から、Δ8/Δ9 THC アナログの一つとして Δ9-THCB を、Δ8-THCB とは別に同定した。これらは分析された物質・製品についての記載であり、Google Trends / YouTube の個々の結果の内容や、一般の製品についての主張ではない。本概念は `skos:exactMatch` を張らず、CAS 番号・PubChem CID・UNII・ChEBI ID・Wikidata QID も記載しない。本変更では登録文字列について単一の外部レコードを検証・選択しておらず、owner の確認は検索トピックを確定するもので、結果レベルの物質同一性を確定するものではない。本語は管理上の登録状態カテゴリ `compound_identity_unverified` に留まるため、この配置は経路／由来、天然存在、化学クラス、構造、別名、規制状態を主張しない。`compound_thcb`・`compound_delta8_thcb`・`compound_thc`・他の新概念への `skos:related` は張らない。Δ8/Δ9 の位置異性体の区別は本 scopeNote と台帳の文章にのみ記録する。**クエリの限界:** Google Trends / YouTube の `Δ9-THCB` / `Δ9-THCB リキッド` 系列が測るのは、これらの文字列への一致だけであり、一致した結果は Δ9-THCB の内容の証明ではない。本カテゴリから移す条件は、名指しした異性体についての検証済み外部識別子（文書化された化学名と検証済み識別子）が得られ、その根拠が支えるカテゴリを割り当てられる場合で、根拠は docs/provenance/compound-taxonomy.md に記録する。",
+          "@language": "ja"
+        }
+      ]
+    },
+    {
+      "@id": "jptr:compound-thcb-o-acetate",
+      "@type": "skos:Concept",
+      "skos:inScheme": "jptr:compound-taxonomy",
+      "skos:broader": "jptr:compound-identity-unverified",
+      "skos:prefLabel": [
+        {
+          "@value": "THCB-O-acetate",
+          "@language": "en"
+        },
+        {
+          "@value": "THCB-O-acetate",
+          "@language": "ja"
+        }
+      ],
+      "skos:altLabel": [
+        {
+          "@value": "THCB-O-acetate リキッド",
+          "@language": "ja"
+        }
+      ],
+      "skos:notation": "compound_thcb_o_acetate",
+      "skos:scopeNote": [
+        {
+          "@value": "`THCB-O-acetate` is the owner's search term, registered on 2026-11-11 (ISS-20261111-TAX-041) as one of three distinct search-topic concepts that replace the generic chemical interpretation of `THCB`; `compound_thcb` remains the separate registration of the literal string `THCB`. The term is registered as a search string, not as a substance identification. The single-substance chemical identity remains UNCONFIRMED. It is an isomer-unspecified acetate: it does not state Δ8 or Δ9, so it denotes no single substance and no single external record. The 2024 MHLW amendment (令和6年厚生労働省令第81号, promulgated 2024-05-01, in force 2024-05-11) defines generic structural groups: group 1 (6a,7,8,10a-tetrahydro, the Δ9 series) and group 2 (6a,7,10,10a-tetrahydro, the Δ8 series) each cover a C1 hydroxy or acetoxy group and a C3 straight-chain C3–C8 alkyl group with no other substituents; the attached list (別紙) explicitly lists Δ9-THCB-O-acetate (n=4) and Δ8-THCB-O-acetate (n=4) among the newly designated substances. That is a statutory structural definition covering both isomers; it is not a determination about any product, search result or the query string, and it is not a route, natural-occurrence, pharmacology or safety claim. The concept is not a synonym of THC-O-acetate (the C5 pentyl analogue, compound_thc_o) or any other ester, and no relation to compound_thcb, compound_thc_o or another new concept is asserted. This concept carries no skos:exactMatch and no CAS number, PubChem CID, UNII, ChEBI ID or Wikidata QID: no single external record denotes the family, and the per-isomer records belong in docs/provenance/compound-taxonomy.md, never on the concept. It stays in compound_identity_unverified, an administrative registration-state category, so the placement asserts no route/origin, natural occurrence, chemical class, pharmacology, safety or regulatory status. **Query limitation:** Google Trends and YouTube series for `THCB-O-acetate` / `THCB-O-acetate リキッド` measure occurrences of those literal strings; a matching result is not evidence of either acetate isomer. Evidence that would move the term out of this category: an owner-confirmed single isomer with a verified external identifier, or a recorded source naming a single substance and its route/origin; the basis belongs in docs/provenance/compound-taxonomy.md.",
+          "@language": "en"
+        },
+        {
+          "@value": "`THCB-O-acetate` は owner が 2026-11-11 に登録した検索語であり（ISS-20261111-TAX-041）、`THCB` の総称的な化学解釈を置き換える 3 つの検索トピック概念の 1 つである。`compound_thcb` は文字列 `THCB` の登録として別に残る。本語は検索文字列の登録であり、物質の同定ではない。単一物質としての化学的同一性は**未確認**である。異性体未指定のアセテートであり、Δ8 / Δ9 のいずれも述べないため、単一物質も単一の外部レコードも指さない。2024 年の厚生労働省令改正（令和6年厚生労働省令第81号、2024-05-01 公布、2024-05-11 施行）は包括的な構造グループを定める: 物質群1（6a,7,8,10a-テトラヒドロ、Δ9 系列）と物質群2（6a,7,10,10a-テトラヒドロ、Δ8 系列）は、いずれも 1 位の水酸基又はアセトキシ基、3 位の直鎖 C3–C8 アルキル基、その他の置換基なしを範囲とする。別紙は新たに指定する物質として Δ9-THCB-O-acetate（n=4）と Δ8-THCB-O-acetate（n=4）を明記している。これは両異性体を対象とする**法令上の構造定義**であり、個々の製品・検索結果・登録文字列についての判断ではなく、経路・天然存在・薬理・安全性の主張でもない。本概念は THC-O-acetate（C5 ペンチル同族体のアセテート、`compound_thc_o`）、その他のエステルの別名ではなく、`compound_thcb`・`compound_thc_o`・他の新概念との関係も主張しない。本概念は `skos:exactMatch` を張らず、CAS 番号・PubChem CID・UNII・ChEBI ID・Wikidata QID も記載しない。ファミリー全体を表す単一の外部レコードは無く、異性体ごとのレコードは docs/provenance/compound-taxonomy.md に置き、概念には付けない。本語は管理上の登録状態カテゴリ `compound_identity_unverified` に留まるため、この配置は経路／由来、天然存在、化学クラス、薬理、安全性、規制状態を主張しない。**クエリの限界:** Google Trends / YouTube の `THCB-O-acetate` / `THCB-O-acetate リキッド` 系列が測るのは、これらの文字列への一致だけであり、一致した結果はどちらのアセテート異性体の内容の証明でもない。本カテゴリから移す条件は、owner が確認した単一異性体に検証済み外部識別子が伴う場合、または単一の物質名と経路／由来を記録した出所が得られた場合で、根拠は docs/provenance/compound-taxonomy.md に記録する。",
           "@language": "ja"
         }
       ]
