@@ -100,7 +100,43 @@ TOPIC_IDS = tuple(
 ADMIN_BATCH = (
     tuple(item for item in BATCH if item[0] not in CONFIRMED) + THCA_THCB_TOPICS
 )
-ADMIN_BATCH_NOTATIONS = tuple(notation for _, notation in ADMIN_BATCH)
+# The 27 forms the owner registered on 2026-11-15 from the study README's
+# candidate-form table (ISS-20261115-TAX-045).  They join the same
+# administrative registration-state category: each is a registered search topic
+# whose single-substance identity this repository has not established, and the
+# category asserts no route, structure, synonym or regulatory claim.
+FORM_BATCH = (
+    ("Δ8-THCP", "compound_delta8_thcp"),
+    ("Δ9-THCP", "compound_delta9_thcp"),
+    ("Δ8-THCJD", "compound_delta8_thcjd"),
+    ("Δ9-THCJD", "compound_delta9_thcjd"),
+    ("Δ8-THCP-O-acetate", "compound_delta8_thcp_o_acetate"),
+    ("Δ9-THCP-O-acetate", "compound_delta9_thcp_o_acetate"),
+    ("Δ8-THCB-O-acetate", "compound_delta8_thcb_o_acetate"),
+    ("Δ9-THCB-O-acetate", "compound_delta9_thcb_o_acetate"),
+    ("Δ8-THC", "compound_delta8_thc"),
+    ("Δ6a(10a)-THC", "compound_delta6a_10a_thc"),
+    ("Δ6a(7)-THC", "compound_delta6a_7_thc"),
+    ("Δ7-THC", "compound_delta7_thc"),
+    ("Δ10-THC", "compound_delta10_thc"),
+    ("Δ9(11)-THC", "compound_delta9_11_thc"),
+    ("Δ9-THCV", "compound_delta9_thcv"),
+    ("Δ8-THCV", "compound_delta8_thcv"),
+    ("THCJD-O-acetate", "compound_thcjd_o_acetate"),
+    ("Δ8-THCH", "compound_delta8_thch"),
+    ("Δ9-THCH", "compound_delta9_thch"),
+    ("9(R)-HHC", "compound_9_r_hhc"),
+    ("9(S)-HHC", "compound_9_s_hhc"),
+    ("(6aS,9S,10aS)-HHC", "compound_6as_9s_10as_hhc"),
+    ("(6aS,9R,10aS)-HHC", "compound_6as_9r_10as_hhc"),
+    ("(6aS,9S,10aR)-HHC", "compound_6as_9s_10ar_hhc"),
+    ("(6aS,9R,10aR)-HHC", "compound_6as_9r_10ar_hhc"),
+    ("(6aR,9S,10aS)-HHC", "compound_6ar_9s_10as_hhc"),
+    ("(6aR,9R,10aS)-HHC", "compound_6ar_9r_10as_hhc"),
+)
+ADMIN_BATCH_NOTATIONS = tuple(
+    notation for _, notation in ADMIN_BATCH + FORM_BATCH
+)
 ADMIN_BATCH_IDS = tuple(
     "jptr:compound-" + notation[len("compound_"):].replace("_", "-")
     for notation in ADMIN_BATCH_NOTATIONS
@@ -242,9 +278,12 @@ def test_members_carry_no_identifier_or_chemical_class_link() -> None:
         note = _scope_note_value(node)
         assert "UNCONFIRMED" in note, node["@id"]
         # Each member records the decision that placed it: the 2026-11-11
-        # registration batch or the same-day THCA / THCB topic split.
+        # registration batch, the same-day THCA / THCB topic split, or the
+        # 2026-11-15 candidate-form registration.
         assert (
-            "ISS-20261111-TAX-040" in note or "ISS-20261111-TAX-041" in note
+            "ISS-20261111-TAX-040" in note
+            or "ISS-20261111-TAX-041" in note
+            or "ISS-20261115-TAX-045" in note
         ), node["@id"]
 
 

@@ -1,5 +1,5 @@
 # RDF/Turtle export
-# Generated: 2026-11-11T22:50:53.360672Z
+# Generated: 2026-11-15T08:41:42.352246Z
 # Source: SKOS JSON-LD
 
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .

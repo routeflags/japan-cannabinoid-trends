@@ -21,64 +21,94 @@ Google Trends の追加 15 語の窓は `today 12-m` / `today 5-y` を reference
 
 ### 1.3 対象化合物
 
-Google Trends は**登録 36 語のうち 29 語が 5年、21 語が 12ヶ月で adopted 系列**を持つ。既存 15 化合物はすべてこの study 自身の raw で、CBX は 2026-11-04 の owner 決定で `cbx-search-trends` から所有を移管した（単独系列 5年・12ヶ月と boundary probe 4、2026-10-01 の legacy 4。§2.1.6）。YouTube は **liquid-only primary の 31 run / 29 化合物**がこの study の own raw で、required primary query 37 本のうち 30 本に adopted run がある（欠けは `compound_thca` の `NO_VIDEOS` と 6 検索トピックの 6 本）。THCNM（別名 THA）は 2 本の required primary query（`THCNM リキッド` / `THA リキッド`）を各 1 run で持つ。
+Google Trends は**登録 63 語のうち 29 語が 5年、21 語が 12ヶ月で adopted 系列**を持つ（2026-11-15 に登録した 27 語は未収集）。既存 15 化合物はすべてこの study 自身の raw で、CBX は 2026-11-04 の owner 決定で `cbx-search-trends` から所有を移管した（単独系列 5年・12ヶ月と boundary probe 4、2026-10-01 の legacy 4。§2.1.6）。YouTube は **liquid-only primary の 31 run / 29 化合物**がこの study の own raw で、required primary query 64 本のうち 30 本に adopted run がある（欠けは `compound_thca` の `NO_VIDEOS`、6 検索トピックの 6 本、2026-11-15 登録 27 語の 27 本）。27 語の登録は検索文字列の固定であり、収集の許可ではない（ISS-20261115-TAX-045）。THCNM（別名 THA）は 2 本の required primary query（`THCNM リキッド` / `THA リキッド`）を各 1 run で持つ。
 
-登録集合は **36 語**。既存 15 化合物（CBX, CBD, THC, CBG, HHC, THCV, THC-O, THCH, CBN, CRDH, CRDP, H4CBH, HHBD, HHCH, THCNM）に、追加 15 語（CBC, CBDV, THCB, THCP, THCJD, THCPO, CBE, HHCPO, CBND, CBL, CBGa, CBP, 10-OH-HHC, THXE, THCA）と、2026-11-11 に owner が総称 `THCA` / `THCB` の化学的解釈を置き換える検索トピックとして確認した 6 語（`Δ9-THCA-A`, `THCA-B`, `Δ8-THCA`, `Δ8-THCB`, `Δ9-THCB`, `THCB-O-acetate`）を加えた。CBC・CBDV は taxonomy に既存の canonical concept（`compound_cbc` / `compound_cbdv`）があるためその ID を再利用し、残り 13 語のうち 10 語は**管理上の登録状態カテゴリ `compound_identity_unverified`** に登録した。うち `THCP`・`THCJD` は 2026-11-11 に owner が意図された範囲を C7 同族体（tetrahydrocannabiphorol）・C8 同族体（THC-JD / 3-octyl-THC）の異性体未指定ファミリーと確認した。`THCPO` は owner が確認質問「`THCPO` は THCP-O-acetate を指しますか？」に `y` と回答し、異性体を名指ししなかったため、登録を**異性体未指定の THCP-O-acetate ファミリー**として扱う（ファミリー扱いは回答の登録上の整理であり、owner がファミリーを明示的に確認したものではない）。いずれも単一物質の同定ではなく、管理カテゴリに留まる。`THCPO` の両異性体が 2024 年の厚生労働省令の構造グループに該当することは、省令の**「麻薬を除く」除外規定**の下での法令上の構造の事実として台帳に記録する（個々の製品・検索結果の分類ではなく、owner の同一性確認の一部でもない）。カテゴリ所属は同義関係を確立せず、`compound_thcpo` の英語 `skos:altLabel` `THCP-O-acetate` は scopeNote に根拠を記録した検索スコープの別名である。`CBE` は 2026-11-11 に owner が cannabielsoin と確認し、taxonomy の `compound_cbe` を `compound_minor`（非主要フィトカンナビノイド）へ移した。`CBL` は cannabicyclol、`CBGa` は cannabigerolic acid（標準表記 CBGA）と同日に確認し、`compound_cbl` / `compound_cbga` も `compound_minor` へ移した。owner の依頼文は「17 物質」だが列挙は 15 語で、不足する 2 語は推測で補っていない。
+2026-11-11 時点の登録集合は **36 語**。既存 15 化合物（CBX, CBD, THC, CBG, HHC, THCV, THC-O, THCH, CBN, CRDH, CRDP, H4CBH, HHBD, HHCH, THCNM）に、追加 15 語（CBC, CBDV, THCB, THCP, THCJD, THCPO, CBE, HHCPO, CBND, CBL, CBGa, CBP, 10-OH-HHC, THXE, THCA）と、2026-11-11 に owner が総称 `THCA` / `THCB` の化学的解釈を置き換える検索トピックとして確認した 6 語（`Δ9-THCA-A`, `THCA-B`, `Δ8-THCA`, `Δ8-THCB`, `Δ9-THCB`, `THCB-O-acetate`）を加えた。CBC・CBDV は taxonomy に既存の canonical concept（`compound_cbc` / `compound_cbdv`）があるためその ID を再利用し、残り 13 語のうち 10 語は**管理上の登録状態カテゴリ `compound_identity_unverified`** に登録した。うち `THCP`・`THCJD` は 2026-11-11 に owner が意図された範囲を C7 同族体（tetrahydrocannabiphorol）・C8 同族体（THC-JD / 3-octyl-THC）の異性体未指定ファミリーと確認した。`THCPO` は owner が確認質問「`THCPO` は THCP-O-acetate を指しますか？」に `y` と回答し、異性体を名指ししなかったため、登録を**異性体未指定の THCP-O-acetate ファミリー**として扱う（ファミリー扱いは回答の登録上の整理であり、owner がファミリーを明示的に確認したものではない）。いずれも単一物質の同定ではなく、管理カテゴリに留まる。`THCPO` の両異性体が 2024 年の厚生労働省令の構造グループに該当することは、省令の**「麻薬を除く」除外規定**の下での法令上の構造の事実として台帳に記録する（個々の製品・検索結果の分類ではなく、owner の同一性確認の一部でもない）。カテゴリ所属は同義関係を確立せず、`compound_thcpo` の英語 `skos:altLabel` `THCP-O-acetate` は scopeNote に根拠を記録した検索スコープの別名である。`CBE` は 2026-11-11 に owner が cannabielsoin と確認し、taxonomy の `compound_cbe` を `compound_minor`（非主要フィトカンナビノイド）へ移した。`CBL` は cannabicyclol、`CBGa` は cannabigerolic acid（標準表記 CBGA）と同日に確認し、`compound_cbl` / `compound_cbga` も `compound_minor` へ移した。owner の依頼文は「17 物質」だが列挙は 15 語で、不足する 2 語は推測で補っていない。さらに 2026-11-15 に候補表の 27 形式を登録し、現在の登録集合は **63 トピック**である（27 形式はいずれも未収集）。
 
 | 範囲 | 5年 | 12ヶ月 |
 |---|---:|---:|
 | 既存 15 化合物 | 15/15 | 14/15（THC-O は NO_DATA） |
 | 追加 15 語 | 14/15（NO_DATA 1） | 7/15（NO_DATA 8） |
 | 追加 6 検索トピック（2026-11-11 登録） | 0/6（未収集） | 0/6（未収集） |
-| **登録 36 語** | **29/36** | **21/36** |
+| 追加 27 検索トピック（2026-11-15 登録） | 0/27（未収集） | 0/27（未収集） |
+| **登録 63 語** | **29/63** | **21/63** |
+
+12ヶ月の分子 21/63 は既存の被覆記録を引き継いだ**既存値**であり、この checkout の `metadata/data-catalog.json` だけでは再構成できない。古い run には `query_id` / 観測窓 ID を持たない記録があり、本変更で新たに照合した数ではない。推測で件数を補正せず、run-level の事実は catalog・採用宣言・§2.1.3 を正本とする。
 
 初回の追加収集では13語バッチが **14/26 adopted**（5年 9/13・12ヶ月 5/13）、CBC・CBDV が4 run中3採用だった。失敗窓13件を各1回再取得し、4系列を追加採用、残る9試行は NO_DATA として quarantine に保持した。先行失敗runも上書きせず保持する。NO_DATA は0観測ではない（§2.1.2・§2.1.3）。
 
 CBX を化合物集合に含めるかと、CBX の Google Trends raw をどちらが所有するかは [`ISS-20261024-COL-016`](../../docs/issues/active/30-production-collection-expansion/20261024_p2_cbx-in-scope.md) の決定事項である。2026-11-04 の owner 決定で **CBX の Google Trends raw もこの study が所有する**（§2.1.6）。YouTube の所有は [`ISS-20261101-YT-019`](../../docs/issues/active/30-production-collection-expansion/20261101_p2_youtube-liquid-batch-usage-cap.md) が記録する。
 
-| No. | キーワード | SKOS notation | 分類（`skos:broader`） | 12ヶ月単独 | 5年系列 |
-|---:|-----------|----------------|---------|:------:|:------:|
-| 1 | CBX | `compound_cbx` | minor | ✅ | ✅ |
-| 2 | CBD | `compound_cbd` | major | ✅ | ✅ |
-| 3 | THC | `compound_thc` | major | ✅ | ✅ |
-| 4 | CBG | `compound_cbg` | minor | ✅ | ✅ |
-| 5 | HHC | `compound_hhc` | semisynthetic | ✅ | ✅ |
-| 6 | THCV | `compound_thcv` | minor | ✅ | ✅ |
-| 7 | THC-O | `compound_thc_o` | semisynthetic | データなし | ✅ |
-| 8 | THCH | `compound_thch` | minor | ✅ | ✅ |
-| 9 | CBN | `compound_cbn` | minor | ✅ | ✅ |
-| 10 | CRDH | `compound_crdh` | synthetic | ✅ | ✅ |
-| 11 | CRDP | `compound_crdp` | synthetic | ✅ | ✅ |
-| 12 | H4CBH | `compound_h4cbh` | semisynthetic | ✅ | ✅ |
-| 13 | HHBD | `compound_hhbd` | semisynthetic | ✅ | ✅ |
-| 14 | HHCH | `compound_hhch` | synthetic | ✅ | ✅ |
-| 15 | THCNM（別名 THA） | `compound_thcnm` | semisynthetic（暫定） | ✅ | ✅ |
-| 16 | CBC | `compound_cbc` | minor | ✅ | ✅ |
-| 17 | CBDV | `compound_cbdv` | minor | データなし | ✅ |
-| 18 | THCB | `compound_thcb` | 未確認（登録状態） | データなし | ✅ |
-| 19 | THCP | `compound_thcp` | 単一物質として未確認（C7同族体ファミリー範囲確認済み、Δ8/Δ9未指定） | ✅ | ✅ |
-| 20 | THCJD | `compound_thcjd` | 単一物質として未確認（C8同族体ファミリー範囲確認済み、Δ8/Δ9未指定） | データなし | ✅ |
-| 21 | THCPO | `compound_thcpo` | 単一物質として未確認（owner 確認は THCP-O-acetate の意味のみ、異性体未指定のファミリーとして登録） | データなし | ✅ |
-| 22 | CBE（cannabielsoin） | `compound_cbe` | minor | ✅ | ✅ |
-| 23 | HHCPO | `compound_hhcpo` | 未確認（登録状態） | データなし | ✅ |
-| 24 | CBND | `compound_cbnd` | 未確認（登録状態） | ✅ | ✅ |
-| 25 | CBL（cannabicyclol） | `compound_cbl` | minor | ✅ | ✅ |
-| 26 | CBGa（cannabigerolic acid） | `compound_cbga` | minor | データなし | データなし |
-| 27 | CBP | `compound_cbp` | 未確認（登録状態） | ✅ | ✅ |
-| 28 | 10-OH-HHC | `compound_10_oh_hhc` | 未確認（登録状態） | データなし | ✅ |
-| 29 | THXE | `compound_thxe` | 未確認（登録状態） | データなし | ✅ |
-| 30 | THCA | `compound_thca` | 未確認（登録状態） | ✅ | ✅ |
-| 31 | Δ9-THCA-A | `compound_delta9_thca_a` | 未確認（登録状態） | 未収集 | 未収集 |
-| 32 | THCA-B | `compound_thca_b` | 未確認（登録状態） | 未収集 | 未収集 |
-| 33 | Δ8-THCA | `compound_delta8_thca` | 未確認（登録状態） | 未収集 | 未収集 |
-| 34 | Δ8-THCB | `compound_delta8_thcb` | 未確認（登録状態） | 未収集 | 未収集 |
-| 35 | Δ9-THCB | `compound_delta9_thcb` | 未確認（登録状態） | 未収集 | 未収集 |
-| 36 | THCB-O-acetate | `compound_thcb_o_acetate` | 未確認（登録状態） | 未収集 | 未収集 |
+| No. | キーワード | SKOS notation | 分類（`skos:broader`） | canonical general（`compound_general`） | canonical liquid（`product_liquid`） | 12ヶ月単独 | 5年系列 | X |
+|---:|-----------|----------------|---------|---------|---------|:------:|:------:|:------:|
+| 1 | CBX | `compound_cbx` | minor | `CBX; CBX カンナビノイド; CBX 大麻` | `CBX リキッド` | ✅ | ✅ | 設計外 |
+| 2 | CBD | `compound_cbd` | major | `CBD` | `CBD リキッド` | ✅ | ✅ | ✅ |
+| 3 | THC | `compound_thc` | major | `THC` | `THC リキッド` | ✅ | ✅ | ✅ |
+| 4 | CBG | `compound_cbg` | minor | `CBG` | `CBG リキッド` | ✅ | ✅ | ✅ |
+| 5 | HHC | `compound_hhc` | semisynthetic | `HHC` | `HHC リキッド` | ✅ | ✅ | ✅ |
+| 6 | THCV | `compound_thcv` | minor | `THCV` | `THCV リキッド` | ✅ | ✅ | ✅ |
+| 7 | THC-O | `compound_thc_o` | semisynthetic | `THC-O` | `THC-O リキッド` | データなし | ✅ | ✅ |
+| 8 | THCH | `compound_thch` | minor | `THCH` | `THCH リキッド` | ✅ | ✅ | ✅ |
+| 9 | CBN | `compound_cbn` | minor | `CBN` | `CBN リキッド` | ✅ | ✅ | 設計外 |
+| 10 | CRDH | `compound_crdh` | synthetic | `CRDH` | `CRDH リキッド` | ✅ | ✅ | 設計外 |
+| 11 | CRDP | `compound_crdp` | synthetic | `CRDP` | `CRDP リキッド` | ✅ | ✅ | 設計外 |
+| 12 | H4CBH | `compound_h4cbh` | semisynthetic | `H4CBH` | `H4CBH リキッド` | ✅ | ✅ | 設計外 |
+| 13 | HHBD | `compound_hhbd` | semisynthetic | `HHBD` | `HHBD リキッド` | ✅ | ✅ | 設計外 |
+| 14 | HHCH | `compound_hhch` | synthetic | `HHCH` | `HHCH リキッド` | ✅ | ✅ | 設計外 |
+| 15 | THCNM（別名 THA） | `compound_thcnm` | semisynthetic（暫定） | `THCNM` | `THCNM リキッド; THA リキッド` | ✅ | ✅ | 設計外 |
+| 16 | CBC | `compound_cbc` | minor | `CBC` | `CBC リキッド` | ✅ | ✅ | 設計外 |
+| 17 | CBDV | `compound_cbdv` | minor | `CBDV` | `CBDV リキッド` | データなし | ✅ | 設計外 |
+| 18 | THCB | `compound_thcb` | 未確認（登録状態） | `THCB` | `THCB リキッド` | データなし | ✅ | 設計外 |
+| 19 | THCP | `compound_thcp` | 単一物質として未確認（C7同族体ファミリー範囲確認済み、Δ8/Δ9未指定） | `THCP` | `THCP リキッド` | ✅ | ✅ | 設計外 |
+| 20 | THCJD | `compound_thcjd` | 単一物質として未確認（C8同族体ファミリー範囲確認済み、Δ8/Δ9未指定） | `THCJD` | `THCJD リキッド` | データなし | ✅ | 設計外 |
+| 21 | THCPO | `compound_thcpo` | 単一物質として未確認（owner 確認は THCP-O-acetate の意味のみ、異性体未指定のファミリーとして登録） | `THCPO` | `THCPO リキッド` | データなし | ✅ | 設計外 |
+| 22 | CBE（cannabielsoin） | `compound_cbe` | minor | `CBE` | `CBE リキッド` | ✅ | ✅ | 設計外 |
+| 23 | HHCPO | `compound_hhcpo` | 未確認（登録状態） | `HHCPO` | `HHCPO リキッド` | データなし | ✅ | 設計外 |
+| 24 | CBND | `compound_cbnd` | 未確認（登録状態） | `CBND` | `CBND リキッド` | ✅ | ✅ | 設計外 |
+| 25 | CBL（cannabicyclol） | `compound_cbl` | minor | `CBL` | `CBL リキッド` | ✅ | ✅ | 設計外 |
+| 26 | CBGa（cannabigerolic acid） | `compound_cbga` | minor | `CBGa` | `CBGa リキッド` | データなし | データなし | 設計外 |
+| 27 | CBP | `compound_cbp` | 未確認（登録状態） | `CBP` | `CBP リキッド` | ✅ | ✅ | 設計外 |
+| 28 | 10-OH-HHC | `compound_10_oh_hhc` | 未確認（登録状態） | `10-OH-HHC` | `10-OH-HHC リキッド` | データなし | ✅ | 設計外 |
+| 29 | THXE | `compound_thxe` | 未確認（登録状態） | `THXE` | `THXE リキッド` | データなし | ✅ | 設計外 |
+| 30 | THCA | `compound_thca` | 未確認（登録状態） | `THCA` | `THCA リキッド` | ✅ | ✅ | 設計外 |
+| 31 | Δ9-THCA-A | `compound_delta9_thca_a` | 未確認（登録状態） | `Δ9-THCA-A` | `Δ9-THCA-A リキッド` | 未収集 | 未収集 | 設計外 |
+| 32 | THCA-B | `compound_thca_b` | 未確認（登録状態） | `THCA-B` | `THCA-B リキッド` | 未収集 | 未収集 | 設計外 |
+| 33 | Δ8-THCA | `compound_delta8_thca` | 未確認（登録状態） | `Δ8-THCA` | `Δ8-THCA リキッド` | 未収集 | 未収集 | 設計外 |
+| 34 | Δ8-THCB | `compound_delta8_thcb` | 未確認（登録状態） | `Δ8-THCB` | `Δ8-THCB リキッド` | 未収集 | 未収集 | 設計外 |
+| 35 | Δ9-THCB | `compound_delta9_thcb` | 未確認（登録状態） | `Δ9-THCB` | `Δ9-THCB リキッド` | 未収集 | 未収集 | 設計外 |
+| 36 | THCB-O-acetate | `compound_thcb_o_acetate` | 未確認（登録状態） | `THCB-O-acetate` | `THCB-O-acetate リキッド` | 未収集 | 未収集 | 設計外 |
+| 37 | Δ8-THCP | `compound_delta8_thcp` | 未確認（登録状態） | `Δ8-THCP` | `Δ8-THCP リキッド` | 未収集 | 未収集 | 設計外 |
+| 38 | Δ9-THCP | `compound_delta9_thcp` | 未確認（登録状態） | `Δ9-THCP` | `Δ9-THCP リキッド` | 未収集 | 未収集 | 設計外 |
+| 39 | Δ8-THCJD | `compound_delta8_thcjd` | 未確認（登録状態） | `Δ8-THCJD` | `Δ8-THCJD リキッド` | 未収集 | 未収集 | 設計外 |
+| 40 | Δ9-THCJD | `compound_delta9_thcjd` | 未確認（登録状態） | `Δ9-THCJD` | `Δ9-THCJD リキッド` | 未収集 | 未収集 | 設計外 |
+| 41 | Δ8-THCP-O-acetate | `compound_delta8_thcp_o_acetate` | 未確認（登録状態） | `Δ8-THCP-O-acetate` | `Δ8-THCP-O-acetate リキッド` | 未収集 | 未収集 | 設計外 |
+| 42 | Δ9-THCP-O-acetate | `compound_delta9_thcp_o_acetate` | 未確認（登録状態） | `Δ9-THCP-O-acetate` | `Δ9-THCP-O-acetate リキッド` | 未収集 | 未収集 | 設計外 |
+| 43 | Δ8-THCB-O-acetate | `compound_delta8_thcb_o_acetate` | 未確認（登録状態） | `Δ8-THCB-O-acetate` | `Δ8-THCB-O-acetate リキッド` | 未収集 | 未収集 | 設計外 |
+| 44 | Δ9-THCB-O-acetate | `compound_delta9_thcb_o_acetate` | 未確認（登録状態） | `Δ9-THCB-O-acetate` | `Δ9-THCB-O-acetate リキッド` | 未収集 | 未収集 | 設計外 |
+| 45 | Δ8-THC | `compound_delta8_thc` | 未確認（登録状態） | `Δ8-THC` | `Δ8-THC リキッド` | 未収集 | 未収集 | 設計外 |
+| 46 | Δ6a(10a)-THC | `compound_delta6a_10a_thc` | 未確認（登録状態） | `Δ6a(10a)-THC` | `Δ6a(10a)-THC リキッド` | 未収集 | 未収集 | 設計外 |
+| 47 | Δ6a(7)-THC | `compound_delta6a_7_thc` | 未確認（登録状態） | `Δ6a(7)-THC` | `Δ6a(7)-THC リキッド` | 未収集 | 未収集 | 設計外 |
+| 48 | Δ7-THC | `compound_delta7_thc` | 未確認（登録状態） | `Δ7-THC` | `Δ7-THC リキッド` | 未収集 | 未収集 | 設計外 |
+| 49 | Δ10-THC | `compound_delta10_thc` | 未確認（登録状態） | `Δ10-THC` | `Δ10-THC リキッド` | 未収集 | 未収集 | 設計外 |
+| 50 | Δ9(11)-THC | `compound_delta9_11_thc` | 未確認（登録状態） | `Δ9(11)-THC` | `Δ9(11)-THC リキッド` | 未収集 | 未収集 | 設計外 |
+| 51 | Δ9-THCV | `compound_delta9_thcv` | 未確認（登録状態） | `Δ9-THCV` | `Δ9-THCV リキッド` | 未収集 | 未収集 | 設計外 |
+| 52 | Δ8-THCV | `compound_delta8_thcv` | 未確認（登録状態） | `Δ8-THCV` | `Δ8-THCV リキッド` | 未収集 | 未収集 | 設計外 |
+| 53 | THCJD-O-acetate | `compound_thcjd_o_acetate` | 未確認（登録状態） | `THCJD-O-acetate` | `THCJD-O-acetate リキッド` | 未収集 | 未収集 | 設計外 |
+| 54 | Δ8-THCH | `compound_delta8_thch` | 未確認（登録状態） | `Δ8-THCH` | `Δ8-THCH リキッド` | 未収集 | 未収集 | 設計外 |
+| 55 | Δ9-THCH | `compound_delta9_thch` | 未確認（登録状態） | `Δ9-THCH` | `Δ9-THCH リキッド` | 未収集 | 未収集 | 設計外 |
+| 56 | 9(R)-HHC | `compound_9_r_hhc` | 未確認（登録状態） | `9(R)-HHC` | `9(R)-HHC リキッド` | 未収集 | 未収集 | 設計外 |
+| 57 | 9(S)-HHC | `compound_9_s_hhc` | 未確認（登録状態） | `9(S)-HHC` | `9(S)-HHC リキッド` | 未収集 | 未収集 | 設計外 |
+| 58 | (6aS,9S,10aS)-HHC | `compound_6as_9s_10as_hhc` | 未確認（登録状態） | `(6aS,9S,10aS)-HHC` | `(6aS,9S,10aS)-HHC リキッド` | 未収集 | 未収集 | 設計外 |
+| 59 | (6aS,9R,10aS)-HHC | `compound_6as_9r_10as_hhc` | 未確認（登録状態） | `(6aS,9R,10aS)-HHC` | `(6aS,9R,10aS)-HHC リキッド` | 未収集 | 未収集 | 設計外 |
+| 60 | (6aS,9S,10aR)-HHC | `compound_6as_9s_10ar_hhc` | 未確認（登録状態） | `(6aS,9S,10aR)-HHC` | `(6aS,9S,10aR)-HHC リキッド` | 未収集 | 未収集 | 設計外 |
+| 61 | (6aS,9R,10aR)-HHC | `compound_6as_9r_10ar_hhc` | 未確認（登録状態） | `(6aS,9R,10aR)-HHC` | `(6aS,9R,10aR)-HHC リキッド` | 未収集 | 未収集 | 設計外 |
+| 62 | (6aR,9S,10aS)-HHC | `compound_6ar_9s_10as_hhc` | 未確認（登録状態） | `(6aR,9S,10aS)-HHC` | `(6aR,9S,10aS)-HHC リキッド` | 未収集 | 未収集 | 設計外 |
+| 63 | (6aR,9R,10aS)-HHC | `compound_6ar_9r_10as_hhc` | 未確認（登録状態） | `(6aR,9R,10aS)-HHC` | `(6aR,9R,10aS)-HHC リキッド` | 未収集 | 未収集 | 設計外 |
 
 - **「データなし」**: 取得はしたが Google Trends が閾値未満として系列を返さなかった（`NO_DATA`）。欠測であって 0 観測ではない。
 - **「失敗（429）」**: HTTP 429 で取得に失敗し、adopted run が無い。試行は quarantine に残る。0 観測でも欠測でもない。
 - **「未採用（NO_VIDEOS）」**: YouTube actor は SUCCEEDED だが `NO_VIDEOS` で動画行が 0。絶対窓を導けないため採用しない。世界全体の 0 ではない。
-- **16 語の分類欄「未確認（登録状態）」** は taxonomy の管理カテゴリ `compound_identity_unverified` を指し、経路・化学クラス・天然存在・別名・規制状態を主張しない。管理カテゴリの 10 語の adopted 系列が測るのは登録文字列に一致する検索需要であり、物質の同定ではない。`THCP`・`THCJD` は owner が検索語の範囲（C7 / C8 同族体ファミリー、いずれも Δ8/Δ9 未指定）を確認した。`THCPO` は owner が THCP-O-acetate を指すことのみ確認して異性体を名指ししなかったため、登録を異性体未指定のファミリーとして扱う。いずれも単一物質の同定ではない。`THCPO` の両異性体の 2024 年厚生労働省令の構造グループ該当は、省令の「麻薬を除く」除外規定の下での法令上の構造の事実として台帳に記録する（個々の製品・検索結果の分類ではなく、owner の同一性確認の一部でもない）。カテゴリ所属は同義関係を確立しない。`CBE`・`CBL`・`CBGa` はそれぞれ cannabielsoin・cannabicyclol・cannabigerolic acid と同定済みで `minor` に置いたが、それらの系列も `CBE` / `CBE リキッド`、`CBL` / `CBL リキッド`、`CBGa` / `CBGa リキッド` の文字列一致を測るもので、各結果がその物質を扱うことの確認ではない。2026-11-11 に登録した 6 検索トピック（`Δ9-THCA-A`, `THCA-B`, `Δ8-THCA`, `Δ8-THCB`, `Δ9-THCB`, `THCB-O-acetate`）も同じ管理カテゴリにあり、`compound_thca` / `compound_thcb` の総称概念とは別の登録である。
+- **43 語の分類欄「未確認（登録状態）」** は taxonomy の管理カテゴリ `compound_identity_unverified` を指し、経路・化学クラス・天然存在・別名・規制状態を主張しない。管理カテゴリのうち 2026-11-11 登録の 10 語の adopted 系列が測るのは登録文字列に一致する検索需要であり、物質の同定ではない。`THCP`・`THCJD` は owner が検索語の範囲（C7 / C8 同族体ファミリー、いずれも Δ8/Δ9 未指定）を確認した。`THCPO` は owner が THCP-O-acetate を指すことのみ確認して異性体を名指ししなかったため、登録を異性体未指定のファミリーとして扱う。いずれも単一物質の同定ではない。`THCPO` の両異性体の 2024 年厚生労働省令の構造グループ該当は、省令の「麻薬を除く」除外規定の下での法令上の構造の事実として台帳に記録する（個々の製品・検索結果の分類ではなく、owner の同一性確認の一部でもない）。カテゴリ所属は同義関係を確立しない。`CBE`・`CBL`・`CBGa` はそれぞれ cannabielsoin・cannabicyclol・cannabigerolic acid と同定済みで `minor` に置いたが、それらの系列も `CBE` / `CBE リキッド`、`CBL` / `CBL リキッド`、`CBGa` / `CBGa リキッド` の文字列一致を測るもので、各結果がその物質を扱うことの確認ではない。2026-11-11 に登録した 6 検索トピック（`Δ9-THCA-A`, `THCA-B`, `Δ8-THCA`, `Δ8-THCB`, `Δ9-THCB`, `THCB-O-acetate`）も同じ管理カテゴリにあり、`compound_thca` / `compound_thcb` の総称概念とは別の登録である。2026-11-15 に登録した 27 形式も同じカテゴリにあり、いずれも run を持たない（未収集）。
 - **THCNM の系列が測っているもの**: 登録 `canonical_text`（Google Trends は `THCNM`）に一致する検索需要であり、同定された物質の存在ではない。同一性が未確認の間、本系列の解釈はこの限界に拘束される（下の同じ identity 注記）。
 - **THCNM の同一性と分類**: `skos:broader` は `compound_semisynthetic`（暫定）。供給元・市場の記載は 2 通りあり（`Tetrahydrocannabinol-N-methyl` / `1′-Dimethyl-Δ9-THCH`）、いずれも「フィトカンナビノイドを化学修飾した置換誘導体」を記述しているため、`compound_synthetic`（天然対応物を持たない）ではなく半合成に置いた。**構造の検証結果ではなく、未確認の同一性に基づく暫定配置**である（[`ISS-20261104-TAX-028`](../../docs/issues/active/50-taxonomy-standards/20261104_p2_thcnm-identity-unconfirmed.md)）。`THA` は同じ化合物の別名・商業名として登録し、別物質とも同一物質とも断定しない。外部識別子（CAS / ChEBI / Wikidata）は記録していない。
 - **CBC・CBDV の追加（2026-11-10）**: taxonomy に既存の canonical concept（`compound_cbc` = Cannabichromene / `compound_cbdv` = Cannabidivarin、いずれも `compound_minor` 配下で Wikidata `exactMatch` 付き）を再利用し、query registry に `cbc-general-ja` / `cbc-liquid-ja` / `cbdv-general-ja` / `cbdv-liquid-ja` を登録した。**CBC は 12ヶ月 53 週・5年 262 週、CBDV は 5年 262 週を adopted**。CBDV の 12ヶ月は記録された HTTP 429 の後に NO_DATA となり、adopted 系列は無い。分類は taxonomy の既存 `skos:broader` をそのまま写し、新しい分類判断をしていない。`CBC` はカナダ放送協会など化合物以外の略号と衝突するため、登録文字列は物質の同定ではない（[`ISS-20261110-TAX-039`](../../docs/issues/active/50-taxonomy-standards/20261110_p2_compound-expansion-batch.md)）。
@@ -88,8 +118,8 @@ CBX を化合物集合に含めるかと、CBX の Google Trends raw をどち�
 - **THCP と THCJD の検索トピック範囲（2026-11-11 追加確認）**: owner は、`THCP` は tetrahydrocannabiphorol（C7）同族体ファミリー、`THCJD` は THC-JD / 3-octyl-THC（C8）同族体ファミリーを指し、いずれも **Δ8/Δ9 未指定**であることを確認した。これは**検索語の範囲**の確認であり、異性体の同定ではない。Δ8 体と Δ9 体は別物質であり、Google Trends / YouTube の個々の結果を異性体へ割り当てない。taxonomy は単一レコードを指さないため `exactMatch` を張らず、CAS / PubChem / Wikidata の識別子は各異性体のものとして `docs/provenance/compound-taxonomy.md` にのみ記録する。天然存在・合成経路・安全性・臨床効果・規制状態はこの確認から推定しない。しばしば引用される「33 倍」は CB1 結合親和性の比（Citti et al. 2019, DOI `10.1038/s41598-019-56785-1`）、「19 倍」は業界の主張（Munger et al. 2026, DOI `10.26828/cannabis/2026/000348`）であり、ヒトでの効力の測定値ではない。**クエリ文字列と run は変更していない。**
 - **THCPO の検索トピック範囲（2026-11-11 追加確認）**: owner は確認質問「`THCPO` は THCP-O-acetate を指しますか？」に `y` と回答し、異性体を指定しなかった。したがって本登録は**異性体未指定の THCP-O-acetate ファミリー**として扱う（ファミリー扱いは回答の登録上の整理であり、owner がファミリーを明示的に確認したものではない）。これは**検索語の範囲**であり、異性体の同定ではない。Δ8 体と Δ9 体は別物質であり、Google Trends / YouTube の個々の結果を異性体へ割り当てない。taxonomy は単一レコードを指さないため `exactMatch` を張らず、CAS / PubChem / Wikidata の識別子は各異性体のものとして `docs/provenance/compound-taxonomy.md` にのみ記録する。英語 `skos:altLabel` の `THCP-O-acetate` は scopeNote に根拠を記録した検索スコープの別名で、カテゴリ所属が同義を確立するものではなく、ファミリーが単一構造であるという主張でもない。2024 年の厚生労働省令（令和6年厚生労働省令第81号、2024-05-11 施行）の構造グループは、**「麻薬を除く」除外規定**の下で Δ9/Δ8 双方の C1-アセトキシ・C3 直鎖 C7 体を含む。両異性体の該当は法令上の構造の事実であり、個々の製品・結果の分類ではなく、規制判断でも、owner の同一性確認の一部でもなく、天然存在、合成経路、薬理、安全性を主張しない。Tanaka et al. 2025（DOI `10.1002/dta.3883`）はオンライン流通のオイル製品・ハーブ製品から Δ9-THCP-O（アセテート）と Δ9-THCP-O-butanoate を同定し、あわせて **Δ8-THC-O（アセテート、C5 同族体）** も同定した。これは **Δ8-THCP-O-acetate ではなく**、後者は同定されていない。**クエリ文字列と run は変更していない。**
 - **THCA / THCB の検索トピック分割（2026-11-11 追加確認）**: owner は、`THCA` の総称的な化学解釈を `Δ9-THCA-A` / `THCA-B` / `Δ8-THCA` に、`THCB` を `Δ8-THCB` / `Δ9-THCB` / `THCB-O-acetate` に置き換えることを確認した（`ISS-20261111-TAX-041`）。6 語はすべて管理カテゴリ `compound_identity_unverified` に置き、登録文字列の単一外部レコードを選択していないため `exactMatch`・CAS・PubChem / IUPAC 名を付けず、`skos:related` も張らない。`Δ8-THCA` は構造・命名の出所も本変更で未検証である。`Δ9-THCA-A` / `THCA-B` は Moreno-Sanz 2016（DOI `10.1089/can.2016.0008`）と Filer 2021（DOI `10.1089/can.2021.0003`、PMCID `PMC8612408`）が、`Δ8-THCB` / `Δ9-THCB` は Linciano et al. 2020（DOI `10.1021/acs.jnatprod.9b00876`）と Tanaka & Kikura-Hanajiri 2024（DOI `10.1248/yakushi.24-00029`）が記録する。`THCB-O-acetate` の Δ8/Δ9 両異性体は 2024 年の厚生労働省令（令和6年厚生労働省令第81号）の別紙に列挙されている。これらは化学・命名・分析物質についての記載であり、検索結果や製品の内容を保証しない。総称の `THCA` / `THCB` の既存 run は 6 語へ付け替えない。**クエリ文字列と run は変更していない。**
-- **5年系列は登録 36 語のうち 29 語が週次 raw を持つ**（既存 15/15、追加 14/15、2026-11-11 登録の 6 検索トピック 0/6。§2.1.2）。追加語で未採用なのは CBGa（NO_DATA）のみ。10-OH-HHC・THXE・THCA の先行 HTTP 429 run は quarantine に残り、別の後続 run が採用されている。summary-only だった旧 baseline run（§2.1.1）は raw に残るが、どの化合物の引用元でもない。
-- **12ヶ月系列は登録 36 語のうち 21 語が週次 raw を持つ**（既存 14/15、追加 7/15、2026-11-11 登録の 6 検索トピック 0/6。THC-O は NO_DATA。§2.1.3）。追加語で未採用の8系列は最新の再取得が NO_DATA。CBDV・THCJD・THXE の先行 HTTP 429 run も別の失敗証跡として残る。CRDH の旧 summary（`records_crdh_12m.json`）は証跡として残るが、正本は週次系列の run。
+- **5年系列は登録 63 語のうち 29 語が週次 raw を持つ**（既存 15/15、追加 14/15、2026-11-11 登録の 6 検索トピック 0/6、2026-11-15 登録の 27 語 0/27。§2.1.2）。追加語で未採用なのは CBGa（NO_DATA）のみ。10-OH-HHC・THXE・THCA の先行 HTTP 429 run は quarantine に残り、別の後続 run が採用されている。summary-only だった旧 baseline run（§2.1.1）は raw に残るが、どの化合物の引用元でもない。
+- **12ヶ月系列は登録 63 語のうち 21 語が週次 raw を持つ**（既存 14/15、追加 7/15、2026-11-11 登録の 6 検索トピック 0/6、2026-11-15 登録の 27 語 0/27。THC-O は NO_DATA。§2.1.3）。追加語で未採用の8系列は最新の再取得が NO_DATA。CBDV・THCJD・THXE の先行 HTTP 429 run も別の失敗証跡として残る。CRDH の旧 summary（`records_crdh_12m.json`）は証跡として残るが、正本は週次系列の run。
 - 分類は [`metadata/taxonomy/compound-taxonomy.skos.jsonld`](../../metadata/taxonomy/compound-taxonomy.skos.jsonld) の `skos:broader`（major / minor / semisynthetic / synthetic）に従う。
 - **CBX の Google Trends は 2026-11-04 から own raw**: 12ヶ月・5年の正本は `data/raw/google_trends/20261015T042853Z-google-trends-boundary-12m` / `20261015T042857Z-google-trends-boundary-5y`。これらは `cbx-search-trends` から run id と payload バイトを変えずに移管したもので、観測のやり直しではない（§2.1.6）。YouTube の CBX リキッド run はこの study の own raw である。
 - 12ヶ月・5年以外に、比較セット（12ヶ月 `common-scale-*` / 5年 `5y-common-scale-set*` / CBX bridge の `comparison_cbx-cbd-thc.json`）と「リキッド」系クエリの run もある（`data/raw/google_trends/`）。
@@ -173,7 +203,7 @@ CBX を化合物集合に含めるかと、CBX の Google Trends raw をどち�
 
 ### 2.1.2 5年系列（週次 raw）
 
-5年系列は登録 36 語のうち **29 語が週次 raw を持つ**（既存 15/15、追加 14/15、2026-11-11 登録の 6 検索トピック 0/6）。既存 15 化合物はすべて週次 raw を持ち（`ISS-20261012-CBD-004`）。追加 15 語の初回は11語が adopted だったが、10-OH-HHC・THXE・THCA の再取得で3系列が加わり、現在の未採用は CBGa（NO_DATA）のみである。先行 HTTP 429 run は quarantine に保持する。CBX の正本 run は `20261015T042857Z-google-trends-boundary-5y`（2026-11-04 に `cbx-search-trends` から所有を移管。§2.1.6）で、観測範囲 2021-10-10 〜 2026-10-11・262 週・平均 48.3244・非ゼロ 262 週。2026-10-14 以降に追加した既存 5 化合物の run:
+5年系列は登録 63 語のうち **29 語が週次 raw を持つ**（既存 15/15、追加 14/15、2026-11-11 登録の 6 検索トピック 0/6、2026-11-15 登録の 27 語 0/27）。既存 15 化合物はすべて週次 raw を持ち（`ISS-20261012-CBD-004`）。追加 15 語の初回は11語が adopted だったが、10-OH-HHC・THXE・THCA の再取得で3系列が加わり、現在の未採用は CBGa（NO_DATA）のみである。先行 HTTP 429 run は quarantine に保持する。CBX の正本 run は `20261015T042857Z-google-trends-boundary-5y`（2026-11-04 に `cbx-search-trends` から所有を移管。§2.1.6）で、観測範囲 2021-10-10 〜 2026-10-11・262 週・平均 48.3244・非ゼロ 262 週。2026-10-14 以降に追加した既存 5 化合物の run:
 
 | 化合物 | run（`data/raw/google_trends/`） | `window_id` | 週数 | 平均 | ゼロ週 |
 |---|---|---|---:|---:|---:|
@@ -231,7 +261,7 @@ CBX を化合物集合に含めるかと、CBX の Google Trends raw をどち�
 
 ### 2.1.3 12ヶ月系列（週次 raw）
 
-12ヶ月系列は登録 36 語のうち **21 語が週次 raw を持つ**（既存 14/15、追加 7/15、2026-11-11 登録の 6 検索トピック 0/6）。既存の THC-O は Google Trends が系列を返さない（NO_DATA）。追加語の未採用8系列は最新再取得がすべて NO_DATA。
+12ヶ月系列は登録 63 語のうち **21 語が週次 raw を持つ**（既存 14/15、追加 7/15、2026-11-11 登録の 6 検索トピック 0/6、2026-11-15 登録の 27 語 0/27）。既存の THC-O は Google Trends が系列を返さない（NO_DATA）。追加語の未採用8系列は最新再取得がすべて NO_DATA。
 収集は `today 12-m` / geo JP、1 化合物 1 run、窓 [`metadata/windows/`](../../metadata/windows/)、
 計画書 `metadata/plans/gt-12m-recollect-*.json`（追加 15 語は `gt-12m-<term>-20261110.json`）。値は各 run の `records_<term>.json` から算出:
 
@@ -514,7 +544,7 @@ CBX は化合物集合には含まれていたが、Google Trends raw は [`data
 - 理由: (a) Actor input に geo filter はない、(b) 日本語の製品語「リキッド」が検索語ベースで日本市場向け製品コンテンツを近似的に絞り込む、(c) これは geo 保証ではない。裸の化合物語は (b) を持たず、日本語製品コンテンツに限定されないため primary 外。
 - **「化合物語と製品語を必ず対で取る」規則はこの study にはない。** 裸の `HHC` run は保持された out-of-scope 証跡であり、`HHC リキッド` の必須 companion ではない。
 
-採用済み YouTube raw は catalog / declaration 上 **32 run**（primary 31 + retained 1）。primary は liquid-only `<compound> リキッド` の **31 run / 29 化合物**、primary 外の裸語 `HHC` が 1 run。required primary query は **37 本**で、**30 本に adopted run がある**。うち `compound_thcnm` が 2 本（`thcnm-liquid-ja` = `THCNM リキッド`、`tha-liquid-ja` = `THA リキッド`）を持ち、**2 本とも adopted run がある**（各 1 run）。**`thca-liquid-ja`（`THCA リキッド`）が `NO_VIDEOS` で未採用**であり、2026-11-11 登録の 6 検索トピックの liquid 6 本は未収集である。化合物被覆は **29/36**・クエリ被覆は **30/37**。CBE 331（3/354 actor requests 失敗）と CBL 269（5/296 失敗）は **partial** であり、完全な census ではない。13 語のリキッドが測るのは owner の表記に一致する検索文字列であり、物質の同定ではない。`CBE` は cannabielsoin と同定済みだが、系列自体は文字列一致サンプルであり、各動画の内容を保証しない。
+採用済み YouTube raw は catalog / declaration 上 **32 run**（primary 31 + retained 1）。primary は liquid-only `<compound> リキッド` の **31 run / 29 化合物**、primary 外の裸語 `HHC` が 1 run。required primary query は **64 本**で、**30 本に adopted run がある**。うち `compound_thcnm` が 2 本（`thcnm-liquid-ja` = `THCNM リキッド`、`tha-liquid-ja` = `THA リキッド`）を持ち、**2 本とも adopted run がある**（各 1 run）。**`thca-liquid-ja`（`THCA リキッド`）が `NO_VIDEOS` で未採用**であり、2026-11-11 登録の 6 検索トピックの liquid 6 本と 2026-11-15 登録の 27 本は未収集である。化合物被覆は **29/63**・クエリ被覆は **30/64**。CBE 331（3/354 actor requests 失敗）と CBL 269（5/296 失敗）は **partial** であり、完全な census ではない。13 語のリキッドが測るのは owner の表記に一致する検索文字列であり、物質の同定ではない。`CBE` は cannabielsoin と同定済みだが、系列自体は文字列一致サンプルであり、各動画の内容を保証しない。
 
 **checkout と catalog の差**: YouTube raw は machine-local。追加 14 run（CBC・CBDV + 追加 12 クエリ）のディレクトリは一次 checkout にあり、歴史的 18 run の payload は Git 非追跡のため clone には含まれない。いずれも catalog / declaration には残り、raw の有無は被覆判定（`make audit-youtube-coverage`）に影響しない。
 
@@ -687,6 +717,6 @@ X raw は Git 管理外のため、run の件数はローカル証跡でしか�
 
 cbx-search-trends は CBX 製品軸（CBX リキッド等の製品需要）の研究であり、cannabinoid-raw-collection は成分横断軸（CBD・THC・CBG・CBN・HHC 等の成分間比較）の研究である。両者は観測対象の軸が異なるため、クエリー設計・比較スケール・解釈を分離する。日本語「○○ リキッド」拡張（GTJA-20261012）は成分横断軸に属する。
 
-CBX の Google Trends は 2026-11-04 から **この study の own raw** である（§2.1.6）。したがって Google Trends の被覆は**登録 36 語のうち 5年 29/36・12ヶ月 21/36**（既存 15 語は 5年 15/15・12ヶ月 14/15）で、「参照込み」と「own raw」を分けて数える必要はない（§1.3）。追加15語は現在5年14/15・12ヶ月7/15を採用し、再取得でなおNO_DATAとなった試行はquarantineに残る。CBX リキッドは製品語であり、CBX 化合物語の系列とは別観測である。CBX の Google Trends の扱いは [`ISS-20261024-COL-016`](../../docs/issues/active/30-production-collection-expansion/20261024_p2_cbx-in-scope.md) の決定事項であり、CBX YouTube の所有は 2026-11-01 の owner 決定で本 study に確定した（[`ISS-20261101-YT-019`](../../docs/issues/active/30-production-collection-expansion/20261101_p2_youtube-liquid-batch-usage-cap.md)）。
+CBX の Google Trends は 2026-11-04 から **この study の own raw** である（§2.1.6）。したがって Google Trends の被覆は**登録 63 語のうち 5年 29/63・12ヶ月 21/63**（既存 15 語は 5年 15/15・12ヶ月 14/15）で、「参照込み」と「own raw」を分けて数える必要はない（§1.3）。追加15語は現在5年14/15・12ヶ月7/15を採用し、再取得でなおNO_DATAとなった試行はquarantineに残る。CBX リキッドは製品語であり、CBX 化合物語の系列とは別観測である。CBX の Google Trends の扱いは [`ISS-20261024-COL-016`](../../docs/issues/active/30-production-collection-expansion/20261024_p2_cbx-in-scope.md) の決定事項であり、CBX YouTube の所有は 2026-11-01 の owner 決定で本 study に確定した（[`ISS-20261101-YT-019`](../../docs/issues/active/30-production-collection-expansion/20261101_p2_youtube-liquid-batch-usage-cap.md)）。
 
 YouTube のクエリ設計は [`metadata/query-design.json`](metadata/query-design.json) が正本。primary は liquid-only であり、裸の化合物語は保持しても primary coverage に数えない（§2.3）。

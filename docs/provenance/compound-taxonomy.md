@@ -909,13 +909,133 @@ CBDV の ChEBI レコードは 1 件だけで、`CHEBI:182159` は `(1R,6R)` の
 
 ---
 
-## 未修正の既知事項（本変更では触っていない）
+## 2026-11-15 — 辞書全体の形式精度を標準化（ISS-20261115-TAX-044）
+
+2026-11-15、owner は study の辞書全体（登録 36 検索トピック）に精度基準を一貫適用することを指示した。
+各辞書項目は証拠が支える個別の構造形式を表し、位置異性体（Δ8 / Δ9、A / B）、酸／中性／エステル、立体化学は
+出所が支える粒度までしか区別しない。総称語・ファミリー語・市場語は個別形式と分け、証拠が形式を支えても owner が
+登録語として列挙していないものは未登録・未収集の候補として明示する。既存 raw run と query / run の割当ては保持する。
+
+**本節は文書と台帳の記録である。** taxonomy の概念・分類・label・`exactMatch`、query registry、raw、catalog、被覆、
+release slice、公開状態を変更していない。新しい概念・query・run も作成していない。
+
+### 分離した軸
+
+1. **検索語** — owner が登録した文字列。系列はその文字列への一致を測る。
+2. **構造形式** — 位置異性体・酸／中性／エステル・立体化学。出所が支える粒度まで。
+3. **被覆状態** — adopted run の有無。形式・同一性の状態と同じ列に置かない。
+
+README は「構造形式辞書」（概念が表す 40 形式）、「検索語 → 形式 crosswalk」（63 行、語の範囲 5 値）、
+「term-to-query map」（concept・query・被覆のみ）、「未登録・未収集の候補形式」（初期 27 行、後続の ISS-20261115-TAX-045 で登録済み）に分かれた。
+term-to-query map から `skos:broader` 列を外したが、行の語・concept・query ID・被覆状態は変更していない。
+
+### 形式辞書の粒度
+
+個別形式として載せたのは、検証済み外部レコードに対応する 9 形式（`Δ9-THC` / `CBD` / `CBG` / `CBGA` / `CBN` / `CBC` /
+`CBE` / `CBL` / `CBDV`）と、owner が検索トピックとして形式名を登録した 5 形式（`Δ9-THCA-A` / `THCA-B` / `Δ8-THCA` /
+`Δ8-THCB` / `Δ9-THCB`）である。後者は単一の外部レコードを選択していないため「同一性未確認」とし、`Δ8-THCA` は
+A/B カルボキシル配置の出所が無いため「部分指定」とした。
+
+異性体未指定のファミリー（`THCP` / `THCJD` / `THCPO` / `THCB-O-acetate`）と `THCV` / `THCH`、市場語・未確認語は形式辞書に
+載せていない。形式が確定しない語を形式の一覧に混ぜないためである。`THCB-O-acetate` は 2 つの異性体を包含する
+family であり、個別形式ではない。
+
+立体化学は、レコードが天然の立体異性体を指す場合でも概念名が特定の立体異性体を指定する主張ではない、という
+2026-11-15 節「粒度の扱い」の判断を維持した。CBN・CBC はレコードに立体化学層が無いため未指定、CBDV は
+立体異性体グループ（Q1104117）、CBL は立体化学の扱いが異なる 2 CAS が併存するため未指定とした。
+`compound_thcv` の粒度（Δ9 に狭めるか）は未決のままである（同節、ISS-20261115-TAX-043）。
+
+### TAX-044 時点の未登録候補インベントリ（TAX-045 で 27 行を登録済み）
+
+2026-11-15 の初期棚卸し時点では未登録だった 27 形式と証拠根拠を記録する。その後の owner 指示 ISS-20261115-TAX-045 により、
+27 形式すべてを taxonomy concept / query として登録した。以下の表の「候補」は初期棚卸し時の状態を指し、現行状態は後続節に記す。
+既存系列をこれらの形式へ帰属させない。
+
+| 親の登録語 | 候補形式 | 記録済みの根拠（再掲） |
+|---|---|---|
+| `THCP` | `Δ8-THCP` / `Δ9-THCP` | Δ9: PubChem CID 6453074 / CAS 54763-99-4 / UNII WTK87HN3LG / Wikidata Q85806080。Δ8: PubChem CID 44307335 / CAS 51768-60-6 / UNII Q6P6W9SNR2 / Wikidata Q141317106。Δ9 は植物からの単離（Citti et al. 2019）、Δ8 は 2026 年の製品検出（TAX-042） |
+| `THCJD` | `Δ8-THCJD` / `Δ9-THCJD` | Δ9: PubChem CID 155318984 / CAS 2552798-63-5。Δ8: PubChem CID 102024084 / CAS 431041-39-3 / Wikidata Q114242092。国内流通製品から NMR 同定（Tanaka & Kikura-Hanajiri 2024、TAX-042） |
+| `THCPO` | `Δ8-THCP-O-acetate` / `Δ9-THCP-O-acetate` | 両形式とも令和6年厚生労働省令第81号の別添に構造グループとして列挙。Δ9: PubChem CID 172677450 / CAS 2829292-82-0 / Wikidata Q122689235（製品同定あり、Tanaka et al. 2025）。Δ8: PubChem CID 172874392（CAS / GSRS / Wikidata 未確認、製品同定は未確認）（TAX-042） |
+| `THCB-O-acetate` | `Δ8-THCB-O-acetate` / `Δ9-THCB-O-acetate` | PubChem CID 172871934 / 172875699。令和6年厚生労働省令第81号の別添に列挙。製品中の分析同定は未確認。Tanaka et al. 2025 の `Δ9-THCB-O-butanoate` は別エステルで、acetate 行に含めない（TAX-042） |
+| `THC` | `Δ8-THC` | 命名標準の位置異性体（`docs/specs/thc-nomenclature-standard.md` の 7 分類）。2024 年厚生労働省令は Δ9 系列（6a,7,8,10a-テトラヒドロ）と Δ8 系列（6a,7,10,10a-テトラヒドロ）を別の構造グループとして定義する（麻薬を除く）。知識グラフは CAS 5957-75-7 と天然存在 confirmed を記録するが、form-level の外部 record は taxonomy に未選択 |
+| `THC` | `Δ6a(10a)-THC` / `Δ6a(7)-THC` / `Δ7-THC` / `Δ10-THC` / `Δ9(11)-THC` | 命名標準の 7 分類（WHO Annex 1）。`metadata/taxonomy/thc-regulatory-knowledge-graph.json` は各形式に規制区分「麻薬」・天然存在未確認を記録し、Δ10 のみ CAS 50554-36-6。他の 4 形式は form-level 外部識別子を未選択。法令・規制の記録で、製品分析同定ではない |
+| `THCV` | `Δ9-THCV` / `Δ8-THCV` | Δ9: ChEBI 755032 / Wikidata Q76009679（CAS 31262-37-0、PubChem CID 93147）、立体化学未指定の Q254768。Δ8: 規制資料の列挙のみで registry record 未確認（TAX-043） |
+| `THCJD`（C8） | `THCJD-O-acetate` | MHLW 資料（2024 年の指定薬物関連資料）に記載。法令の構造グループで、製品同定ではない。Δ8/Δ9 の別個の構造は確認しておらず、TAX-045 で異性体未指定の検索トピックとして登録した。今後 Δ8/Δ9 を分割する場合は追加の owner 決定を要する |
+| `THCH` | `Δ8-THCH` / `Δ9-THCH` | `research/regulatory-status/THCH.md` §1 が消費者庁資料に基づき Δ8/Δ9 を指定薬物の対象として記録（個別指定 2023-08-04、包括指定 2023-09-10）。法令の構造グループで、製品分析同定ではない。form-level 外部識別子は未選択 |
+| `HHC` | `9(R)-HHC` | PubChem CID 11067065 / CAS 36403-90-4、立体配置 (6aR,9R,10aR)。WHO 47th ECDD (2024) §2C が CBD 由来製品の主要エピマーの一つとして記録。特定製品の分析同定ではない |
+| `HHC` | `9(S)-HHC` | PubChem CID 14378541 / CAS 36403-91-5、立体配置 (6aR,9S,10aR)。WHO 47th ECDD (2024) §2C が CBD 由来製品の主要エピマーの一つとして記録。特定製品の分析同定ではない |
+| `HHC` | `(6aS,9S,10aS)-HHC` | WHO 47th ECDD (2024) §2C が 8 立体異性体の一つとして図示。6a=S / 9=S / 10a=S。(6aR,9R,10aR)-HHC のエナンチオマー。個別 registry record・製品同定は未確認 |
+| `HHC` | `(6aS,9R,10aS)-HHC` | WHO 47th ECDD (2024) §2C が 8 立体異性体の一つとして図示。6a=S / 9=R / 10a=S。(6aR,9S,10aR)-HHC のエナンチオマー。個別 registry record・製品同定は未確認 |
+| `HHC` | `(6aS,9S,10aR)-HHC` | WHO 47th ECDD (2024) §2C が 8 立体異性体の一つとして図示。6a=S / 9=S / 10a=R。(6aR,9R,10aS)-HHC のエナンチオマー。個別 registry record・製品同定は未確認 |
+| `HHC` | `(6aS,9R,10aR)-HHC` | WHO 47th ECDD (2024) §2C が 8 立体異性体の一つとして図示。6a=S / 9=R / 10a=R。(6aR,9S,10aS)-HHC のエナンチオマー。個別 registry record・製品同定は未確認 |
+| `HHC` | `(6aR,9S,10aS)-HHC` | WHO 47th ECDD (2024) §2C が 8 立体異性体の一つとして図示。6a=R / 9=S / 10a=S。(6aS,9R,10aR)-HHC のエナンチオマー。個別 registry record・製品同定は未確認 |
+| `HHC` | `(6aR,9R,10aS)-HHC` | WHO 47th ECDD (2024) §2C が 8 立体異性体の一つとして図示。6a=R / 9=R / 10a=S。(6aS,9S,10aR)-HHC のエナンチオマー。個別 registry record・製品同定は未確認 |
+
+この表は、今回のレビュー範囲で証拠が支える候補を列挙する。THC の他の位置異性体 5 形式は命名標準・知識グラフの記録で、form-level の外部識別子を検証していない。
+THCH の Δ8/Δ9 は法令の構造グループの記録で、製品同定ではない。HHC は 9(R)/9(S) の 2 エピマーに加え、WHO が可能な配置として図示する他の 6 立体異性体も
+各 1 行で列挙し、各配置とエナンチオマー関係を明記した上で、製品成分としての証拠が無いことを記す。**列挙は登録・収集・公開の許可ではない。**
+
+### HHC 立体異性体の外部確認（2026-11-15）
+
+リポジトリ内の [`research/regulatory-status/HHC.md`](../../research/regulatory-status/HHC.md) は HHC を指定薬物としてグループ単位で記録し、
+化学名を示すが、立体異性体の配置・数・個別 record は列挙しない。`compound_hhc` の scopeNote もグループ単位である。
+このため、候補表の HHC 行は次の外部資料で確認した。
+
+- **WHO 47th ECDD (2024) critical review, “Hexahydrocannabinol” §2C Stereoisomers**（Geneva, 14–18 October 2024、advance copy、
+  https://cdn.who.int/media/docs/default-source/controlled-substances/47th-ecdd/hexahydrocannabinol-47th-ecdd-critical-review-public-version.pdf）。
+  HHC は 3 個の立体中心（6a, 9, 10a）を持ち、8 立体異性体（4 対のエナンチオマー）が可能である。6a/10a を (−)-trans-Δ9-THC と同じ
+  (6aR,10aR) に保つ 2 エピマー、(6aR,9R,10aR)（9R / 9β-HHC）と (6aR,9S,10aR)（9S / 9α-HHC）が CBD 由来製品の主要成分とされる。
+  WHO の同 review は市販品の平均 9R:9S 比を 1.4:1 と記録する（Executive summary）。CAS 36403-90-4（9R）、36403-91-5（9S）。他の 6 配置は
+  (6aS,9S,10aS) / (6aS,9R,10aS) / (6aS,9S,10aR) / (6aS,9R,10aR) / (6aR,9S,10aS) / (6aR,9R,10aS) で、
+  可能な立体異性体として図示されるが、製品成分としての記載はない。
+- **PubChem PUG REST（2026-11-15 観測）**: name query `9(R)-hexahydrocannabinol` → CID 11067065、
+  IUPAC `(6aR,9R,10aR)-6,6,9-trimethyl-3-pentyl-6a,7,8,9,10,10a-hexahydrobenzo[c]chromen-1-ol`、InChIKey `XKRHRBJLCLXSGE-DJIMGWMZSA-N`。
+  `9(S)-hexahydrocannabinol` → CID 14378541、IUPAC `(6aR,9S,10aR)-...`、InChIKey `XKRHRBJLCLXSGE-USXIJHARSA-N`。
+  CAS 36403-90-4 / 36403-91-5 の name query も同じ CID を返した。C9 未指定の PubChem CID 16050328（CAS 946512-74-9、
+  IUPAC `(6aR,10aR)-...`、C9 未指定）は候補行に使っていない。
+- **証拠レベルの区別**: WHO の記述は化学・市販品組成に関する review であり、本 study が収集・分析した製品の同定ではない。
+  PubChem は registry record であり、市場流通・製品含量の証拠ではない。法令・規制記録（HHC.md の指定薬物指定）は構造グループの規制状態で、
+  立体異性体の同定ではない。候補表の「製品分析」列は、文献が特定製品を分析した場合だけその事実を書き、WHO の市販品組成記述を
+  本 study の製品同定に読み替えない。
+- **限界**: 他の 6 配置の個別 CAS / PubChem record は選択していない。WHO の図示は可能な配置の列挙であり、市場製品での存在証明ではない。
+  初期インベントリでは他の 6 配置を 1 グループ行にまとめたが、owner 指示 ISS-20261115-TAX-045 により各配置を個別の concept/query として登録し、README でも 1 配置 1 行に分けた。外部 record は 2026-11-15 の応答で、将来の変更を監視しない。
+
+### ISS-044 の変更対象外
+
+- `metadata/taxonomy/compound-taxonomy.skos.jsonld` の概念・分類・label・`exactMatch`・scopeNote、`exports/taxonomy/*`。
+- `metadata/queries/query-registry.json` / `query-variants.json` の query ID・canonical_text・status・variant。
+- raw run、run metadata、catalog、declaration、被覆状態、収集計画、release slice、公開状態。
+- `ISS-20261115-TAX-043` の crosswalk 修正とその evidence / テスト。
+- P1（TAX-040）の経路／カテゴリ評価。
+
+### ISS-044 終了時点の未決事項
+
+- `compound_thcv` の粒度（Δ9 に狭めるか、異性体未指定のままか）。
+- `Δ8-THCA` の A/B カルボキシル配置を確定する構造・命名の出所。
+- `Δ8-THCP-O-acetate` / `Δ8-THCB-O-acetate` / `Δ9-THCB-O-acetate` の製品中の分析同定。
+- `THCJD-O-acetate` は後続の ISS-20261115-TAX-045 で異性体未指定の検索トピックとして登録済み。Δ8/Δ9 に分割するかは別判断である。
+- `Δ8-THC` / `Δ8-THCV` の外部識別子の検証。`Δ8-THC` は知識グラフの CAS 5957-75-7 を記載したが外部 record は未再検証。
+- **新たに列挙した候補の未解決点**: THC の他の位置異性体 5 形式は form-level 外部識別子を検証していない（Δ10 は知識グラフの CAS 50554-36-6 のみ）。
+  THCH の Δ8/Δ9 は法令の構造グループの記録で、製品分析同定ではない。HHC の他の 6 立体異性体は WHO が可能な配置として図示するが、
+  製品成分としての証拠・個別 registry record は無い。9(R)/9(S) および他の 6 配置は ISS-20261115-TAX-045 で個別 concept/query として登録済みだが、登録は製品同定や収集を意味しない。
+- **既知の mirror 不一致**: `project.json` の `queryDesign.compounds` に `CBX` が無く、registry との不一致が残る。
+  `Δ8-THC` は ISS-20261115-TAX-045 で登録され、mirror の既存記載にも query ID と未収集状態の注記を加えた。27 語の登録により `CBX` 以外の scope 同期は行った。
+
+### 同時に更新した層
+
+- `datasets/cannabinoid-raw-collection/README.md`（概要の四層化、形式辞書、crosswalk、初期候補表（27 行、後続 ISS-045 で登録）、注記、被覆表の列整理、関連）
+- `docs/provenance/query-inventory.md`（台帳の対象範囲の 1 文）
+- `tests/validation/test_dictionary_form_precision.py`（新規、候補表の 27 行・重複なし・証拠種別を固定）
+- `docs/audits/g6-git-tracking-inventory.json`（README ハッシュのみ）
+- `ISS-20261115-TAX-044`
+
+## 未修正の既知事項
 
 1. `metadata/taxonomy/iptc-mapping.yaml` の `compound_mapping` は部分収載（`cbc`/`thcv`/`cbdv`/`crdh` も未収載）。
 2. `THCH` の日本語名は文書間で表記ゆれがある（`THCH.md` を標準として採用）。
 3. `compound_rare` は `skos:narrower` を持たない空カテゴリ（現状の登録化合物には該当なし）。
 4. `compound_thcv` は外部識別子が未対応である。概念が Δ8/Δ9 と立体化学を指定せず、
-   検証済みレコードはいずれも Δ9 のため（本台帳 2026-11-15 節、ISS-20261115-TAX-043）。
+   検証済みレコードがいずれも Δ9 のため（本台帳 2026-11-15 節、ISS-20261115-TAX-043）。
    CBGA の `chebi:67081` は 2026-11-11 に検証済み（cannabigerolic acid）。
 
 ## 派生物の同期
@@ -933,3 +1053,62 @@ CBDV の ChEBI レコードは 1 件だけで、`CHEBI:182159` は `(1R,6R)` の
 - `compound_thcp` / `compound_thcjd` / `compound_thcpo` の「異性体未指定のファミリー（同族体、およびそのエステル体）」を taxonomy の
   独立した state として形式化するかを決める（本台帳 2026-11-11 節の未決事項）。現状は管理
   カテゴリ内の文書化された検索語の範囲として扱っており、新しいカテゴリは作っていない。
+
+## 2026-11-15 — 候補形式 27 形式の登録（ISS-20261115-TAX-045）
+
+owner は 2026-11-15、study README の「未登録・未収集の候補形式」に棚卸しした **27 行を検索トピックとして登録する**ことを明示した。本節は登録の根拠と限界を台帳に固定する。登録は検索文字列の固定であり、物質の同定でも収集の許可でもない。
+
+### 命名規則
+
+`skos:notation` は `compound_` + owner の語を小文字化し `Δ`→`delta`、非英数字の**連続**を 1 つの `_` に置換し前後の `_` を除いたもの。既存の `compound_delta9_thca_a` / `compound_10_oh_hhc` / `compound_thc_o` と同じ規則で、連続置換の明示だけが追加の明確化である（`Δ6a(10a)-THC` のような括弧とハイフンが隣接する語で二重 `_` を作らない）。`@id` は notation の `_` を `-` にした `jptr:compound-…`。query ID の slug は語を小文字化し `Δ`→`delta` としたうえで、既存の 27 語で実際に使った次の規則で作る。
+
+1. 立体配置を囲む先頭の括弧と C-9 エピマーの括弧は外す（`(6aS,9S,10aS)-HHC` → `6as-9s-10as-hhc`、`9(R)-HHC` → `9r-hhc`）。
+2. 位置番号を囲む括弧は、内側の locant の前に `-` を置く（`Δ6a(10a)-THC` → `delta6a-10a-thc`、`Δ6a(7)-THC` → `delta6a-7-thc`、`Δ9(11)-THC` → `delta9-11-thc`）。
+3. `,` と既存の `-` は `-` とし、連続する `-` を 1 つに畳み、前後の `-` を除く。既存のハイフンは保持する（`Δ8-THCP-O-acetate` → `delta8-thcp-o-acetate`）。
+
+これに `-general-ja` / `-liquid-ja` を付ける。**安定した既存 query ID は改名しない。**
+
+### 配置
+
+27 概念はすべて `jptr:compound-identity-unverified`（管理上の登録状態カテゴリ）に置き、カテゴリの `skos:scopeNote` に「配置ごとの registry record も製品同定も無い特定の立体配置」と「個々の位置異性体の構造を列挙していない異性体未指定アセテート」の 2 ケースを追加した。配置は経路／由来・天然存在・化学クラス・構造・別名・規制状態を主張しない。27 概念には識別子プロパティも `skos:exactMatch` も割り当てず、`skos:related` も張らない。scopeNote に引用した CAS・PubChem CID・UNII・ChEBI ID・Wikidata QID・IUPAC 名は台帳の記録であり、概念の識別子ではない。棚卸し上の親語（`THC` / `THCP` / `THCJD` / `THCPO` / `THCB-O-acetate` / `THCH` / `HHC` / `THCV`）との関係は候補表の整理であり、構造・同義の主張ではない。
+
+### 形式ごとの根拠の種類と限界
+
+先行レビューが記録した識別子は以下に保持するが、**本変更で外部 registry に対して再検証していない**。したがって概念には付けない（不在の断定ではない）。
+
+| 形式 | 根拠の種類 | 先行レビューが記録した識別子（本変更では未再検証） | 残る未確認 |
+|---|---|---|---|
+| `Δ8-THCP` | registry record + 製品検出（文献） | PubChem CID 44307335 / CAS 51768-60-6 / UNII Q6P6W9SNR2 / Wikidata Q141317106 | 単一レコードの選択、本研究の製品分析 |
+| `Δ9-THCP` | registry record + 植物単離（Citti et al. 2019） | PubChem CID 6453074 / CAS 54763-99-4 / UNII WTK87HN3LG / Wikidata Q85806080 | 単一レコードの選択 |
+| `Δ8-THCJD` / `Δ9-THCJD` | registry record + 製品分析（Tanaka & Kikura-Hanajiri 2024） | CID 102024084 / CAS 431041-39-3 / Wikidata Q114242092；CID 155318984 / CAS 2552798-63-5 | 単一レコードの選択、本研究の観測 |
+| `Δ8-THCP-O-acetate` | 法令の構造グループ（令和6年厚生労働省令第81号 別紙、麻薬を除く）+ registry record | PubChem CID 172874392 | CAS / GSRS / Wikidata、製品同定 |
+| `Δ9-THCP-O-acetate` | 同上 + 製品分析（Tanaka et al. 2025、DOI 10.1002/dta.3883） | PubChem CID 172677450 / CAS 2829292-82-0 / Wikidata Q122689235 | 単一レコードの選択 |
+| `Δ8-THCB-O-acetate` | 法令の構造グループ + registry record | PubChem CID 172871934 | CAS / GSRS / Wikidata、製品同定 |
+| `Δ9-THCB-O-acetate` | 法令の構造グループ + registry record | PubChem CID 172875699 | CAS / GSRS / Wikidata、製品同定（同定済みの `Δ9-THCB-O-butanoate` は**別エステル**で本項の対象外） |
+| `Δ8-THC` | 命名標準 + 知識グラフ + 法令の構造グループ（Δ8 系列 6a,7,10,10a-テトラヒドロ） | 知識グラフの CAS 5957-75-7 | form-level 外部レコードの選択 |
+| `Δ6a(10a)-THC` / `Δ6a(7)-THC` / `Δ7-THC` / `Δ9(11)-THC` | 命名標準（7 分類）+ 知識グラフ | なし（CAS 未記録） | form-level 外部識別子、製品分析 |
+| `Δ10-THC` | 命名標準 + 知識グラフ | 知識グラフの CAS 50554-36-6（**未再検証**） | 外部レコードの再検証、製品分析 |
+| `Δ9-THCV` | registry record（TAX-043 が検証） | ChEBI 755032 / Wikidata Q76009679（CAS 31262-37-0、PubChem CID 93147）。立体化学未指定の Q254768 もある | `compound_thcv` の粒度（owner 判断） |
+| `Δ8-THCV` | 規制資料（指定薬物の列挙） | なし（2026-11-15 の ChEBI 検索は 0 件） | registry record |
+| `THCJD-O-acetate` | 法令の構造グループ（MHLW の指定薬物関連資料） | なし | Δ8/Δ9 の構造の列挙、製品同定 |
+| `Δ8-THCH` / `Δ9-THCH` | 法令の構造グループ（消費者庁の THCH 資料。個別指定 2023-08-04・包括指定 2023-09-10） | なし | registry record、製品同定 |
+| `9(R)-HHC` / `9(S)-HHC` | registry record + WHO 47th ECDD (2024) §2C（主要 2 エピマー） | CID 11067065 / CAS 36403-90-4 / InChIKey `XKRHRBJLCLXSGE-DJIMGWMZSA-N`；CID 14378541 / CAS 36403-91-5 / InChIKey `XKRHRBJLCLXSGE-USXIJHARSA-N` | 単一レコードの選択、特定製品の同定 |
+| 他の 6 立体配置 | WHO 47th ECDD (2024) §2C（8 立体異性体の図示） | 個別に選択していない | 配置ごとの registry record、製品同定 |
+
+### 証拠の種類を混ぜない
+
+- 法令の構造グループへの該当は**法令上の構造の事実**であり、製品検出でも、本研究の観測でも、検索結果の分類でもない。
+- WHO 47th ECDD (2024) §2C は**可能な配置の集合を示すレビュー**であり、配置ごとの registry record でも製品同定でもない。
+- 知識グラフの記載は規制・命名の記録であり、form-level の構造同定ではない。
+- 製品分析（文献）は特定製品についての報告であり、本研究の製品分析でも、任意の検索結果についての主張でもない。
+
+### 変更しない層
+
+既存 query の `query_id`・`canonical_text`・`status`・run 割当ては変更していない。総称 `THC` / `THCA` / `THCB`、ファミリー `THCP` / `THCJD` / `THCPO` / `THCB-O-acetate`、`THCV` / `THCH` / `HHC` の概念・分類・query も据え置く。`compound_thcv` の粒度、`compound_hhc` の立体異性体粒度は本変更の対象外である。raw・catalog・declaration・被覆状態・release slice・公開状態は変更していない。
+
+### 未決事項
+
+1. **管理カテゴリからの移動条件**: 27 概念はいずれも単一の検証済み外部レコードを選択していない。候補は (a) `Δ9-THCV` / `Δ9-THCP` / `9(R)-HHC` / `9(S)-HHC` に検証済み識別子を付けるか、(b) 管理カテゴリのまま検索語の記録に留めるか。識別子の選択は別作業である。
+2. **`THCJD-O-acetate` の Δ8/Δ9 分割**: 法令の別個の構造が確認できれば分割は可能だが、本変更では分割せず、owner の追加判断を要する。
+3. **`Δ8-THCA` の構造・命名の出所**（TAX-044 からの継続）と、`Δ8` エステル体の製品分析証拠（`Δ8-THCP-O-acetate` / `Δ8-THCB-O-acetate` / `Δ9-THCB-O-acetate`）は引き続き未確認である。
+4. **`project.json` mirror の既知の不一致**: `CBX` は registry にあるが mirror に無い（本変更では触れていない）。`Δ8-THC` は本変更で query を得たため「mirror にあるが query が無い」状態は解消した。

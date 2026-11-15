@@ -216,11 +216,11 @@
       "skos:notation": "compound_identity_unverified",
       "skos:scopeNote": [
         {
-          "@value": "An ADMINISTRATIVE registration-state category, not a route/origin or chemical classification. Its members are search terms the owner named for this study whose single-substance chemical identity is UNCONFIRMED in this repository. Placing a term here records only that the string is registered and queryable: it makes no claim about route or origin, natural occurrence, chemical class, structure, synonym relationships or regulatory status, and it neither asserts that the term names a distinct substance nor that a substance behind the string exists. Membership is not a judgement that a term is rare, minor, semi-synthetic or synthetic, and it never substitutes for one of those categories; when evidence arrives, move the term to the category that evidence supports. Members carry no skos:exactMatch, CAS number, PubChem CID, UNII or IUPAC name and no chemical-class link; per-isomer registry records for a family-scoped member belong in the provenance ledger, never on the concept. Membership itself establishes no synonym relationship. A member's skos:altLabel is a concept-level record: an alternate or search-topic label that the owner confirmed needs its own recorded basis in that concept's scopeNote (for example an owner-confirmed intended meaning), and it is neither implied by, nor does it add a synonym claim to, this administrative placement. For a family-scoped member such a label does not assert that the family denotes one chemical structure. A term is registered here because the owner named it, not because its identity was established. Decision record: ISS-20261111-TAX-040, which supersedes the ISS-20261015-TAX-027 non-registration decision for THCP. A member may also be a term the owner confirmed only as an isomer-unspecified homologue family, or as an isomer-unspecified ester (acetate) of one: the term then denotes no single substance and no single external record, so it stays here and its own scopeNote records the family scope; that statement is the term's documented search scope, not a route/origin placement, not a chemical-class link, and not a claim about any individual result. A family-scoped member's scopeNote may also record that its per-isomer substances fall within a documented statutory structural group; that is a statement about those isomers, not a regulatory classification performed by this placement. A member may also be a specific positional-isomer designation (for example a Δ8 or Δ9 term) that the owner confirmed as a search topic, where this change did not verify a single external registry record for the registered string: the term then records the search topic and the published nomenclature, while the category still makes no chemical claim and carries no identifier.",
+          "@value": "An ADMINISTRATIVE registration-state category, not a route/origin or chemical classification. Its members are search terms the owner named for this study whose single-substance chemical identity is UNCONFIRMED in this repository. Placing a term here records only that the string is registered and queryable: it makes no claim about route or origin, natural occurrence, chemical class, structure, synonym relationships or regulatory status, and it neither asserts that the term names a distinct substance nor that a substance behind the string exists. Membership is not a judgement that a term is rare, minor, semi-synthetic or synthetic, and it never substitutes for one of those categories; when evidence arrives, move the term to the category that evidence supports. No identifier property and no `skos:exactMatch` are assigned to a member's taxonomy concept, and no chemical-class link is asserted; CAS / PubChem / UNII / ChEBI / Wikidata / IUPAC values quoted in a member's scopeNote are recorded evidence in `docs/provenance/compound-taxonomy.md`, not identifier properties, and per-isomer registry records for a family-scoped member belong in the provenance ledger, never on the concept. Membership itself establishes no synonym relationship. A member's skos:altLabel is a concept-level record: an alternate or search-topic label that the owner confirmed needs its own recorded basis in that concept's scopeNote (for example an owner-confirmed intended meaning), and it is neither implied by, nor does it add a synonym claim to, this administrative placement. For a family-scoped member such a label does not assert that the family denotes one chemical structure. A term is registered here because the owner named it, not because its identity was established. Decision record: ISS-20261111-TAX-040, which supersedes the ISS-20261015-TAX-027 non-registration decision for THCP. A member may also be a term the owner confirmed only as an isomer-unspecified homologue family, or as an isomer-unspecified ester (acetate) of one: the term then denotes no single substance and no single external record, so it stays here and its own scopeNote records the family scope; that statement is the term's documented search scope, not a route/origin placement, not a chemical-class link, and not a claim about any individual result. A family-scoped member's scopeNote may also record that its per-isomer substances fall within a documented statutory structural group; that is a statement about those isomers, not a regulatory classification performed by this placement. A member may also be a specific positional-isomer designation (for example a Δ8 or Δ9 term) that the owner confirmed as a search topic, where this change did not verify a single external registry record for the registered string: the term then records the search topic and the published nomenclature, while the category still makes no chemical claim and assigns no identifier property. This batch also registered a specifically named stereochemical configuration whose only recorded basis is a nomenclature or WHO review of possible configurations, with no per-configuration registry record and no product identification, and an isomer-unspecified acetate of a homologue family whose individual positional structures the repository does not enumerate: in both cases the concept records the search topic and the published nomenclature, and this category still makes no chemical, route, regulatory or product claim.",
           "@language": "en"
         },
         {
-          "@value": "経路・由来や化学分類ではなく、**管理上の登録状態**カテゴリ。members は owner が本研究のために名指しした検索語のうち、リポジトリ内で**単一物質としての**化学的同一性が**未確認**のものである。ここに置くことは「その文字列を登録し照会可能にした」ことだけを記録する。経路・由来、天然存在、化学クラス、構造、別名関係、規制状態について何も主張せず、語が別個の物質を指すことや、文字列の背後に物質が存在することの主張でもない。希少・マイナー・半合成・合成のいずれかであるという判断でもなく、これらのカテゴリの代替にもならない。根拠が得られたら、その根拠が支えるカテゴリへ移す。`skos:exactMatch`・CAS 番号・PubChem CID・UNII・IUPAC 名・化学クラスへのリンクは付けない。ファミリーとして登録した語の異性体ごとのレジストリ記録は台帳に置き、概念には付けない。membership 自体は同義関係を確立しない。member の `skos:altLabel` は概念レベルの記録であり、owner が確認した別名・検索トピックの表記には、その概念の scopeNote に独自の根拠（例: owner が確認した意図された意味）を要する。カテゴリ所属から導かれるものでも、所属に同義の主張を加えるものでもない。ファミリーとして登録した語では、そうした別名はファミリーが単一の化学構造を指す主張ではない。ここへの登録は owner が語を名指ししたことが理由であり、同一性が確定したことが理由ではない。決定記録: ISS-20261111-TAX-040（THCP については ISS-20261015-TAX-027 の非登録判断を置換）。また、owner が**異性体未指定の同族体ファミリー**、またはその異性体未指定のエステル（アセテート）体としてのみ確認した語もここに置く。その語は単一物質も単一の外部レコードも指さないため本カテゴリに留まり、ファミリーの範囲は当該概念の scopeNote に記録する。その記載は検索語の文書化された範囲であり、経路／由来の配置でも、化学クラスへのリンクでも、個々の検索結果についての主張でもない。ファミリーとして登録した語の scopeNote は、異性体ごとの物質が文書化された法令上の構造グループに該当することを記録する場合があるが、それは当該異性体についての記載であり、本配置が行う規制分類ではない。また、owner が**位置異性体を明示した検索トピック**（例: Δ8 体・Δ9 体の語）として確認し、本変更では登録文字列について単一の外部レジストリ記録を検証していない語もここに置く。その場合、当該概念は検索トピックと公表された命名を記録するが、本カテゴリは化学的主張を行わず、識別子も持たない。",
+          "@value": "経路・由来や化学分類ではなく、**管理上の登録状態**カテゴリ。members は owner が本研究のために名指しした検索語のうち、リポジトリ内で**単一物質としての**化学的同一性が**未確認**のものである。ここに置くことは「その文字列を登録し照会可能にした」ことだけを記録する。経路・由来、天然存在、化学クラス、構造、別名関係、規制状態について何も主張せず、語が別個の物質を指すことや、文字列の背後に物質が存在することの主張でもない。希少・マイナー・半合成・合成のいずれかであるという判断でもなく、これらのカテゴリの代替にもならない。根拠が得られたら、その根拠が支えるカテゴリへ移す。member の taxonomy 概念には識別子プロパティも `skos:exactMatch` も割り当てず、化学クラスへのリンクも主張しない。member の scopeNote に引用した CAS 番号・PubChem CID・UNII・ChEBI ID・Wikidata QID・IUPAC 名は `docs/provenance/compound-taxonomy.md` に記録された証拠であり、識別子プロパティではない。ファミリーとして登録した語の異性体ごとのレジストリ記録は台帳に置き、概念には付けない。membership 自体は同義関係を確立しない。member の `skos:altLabel` は概念レベルの記録であり、owner が確認した別名・検索トピックの表記には、その概念の scopeNote に独自の根拠（例: owner が確認した意図された意味）を要する。カテゴリ所属から導かれるものでも、所属に同義の主張を加えるものでもない。ファミリーとして登録した語では、そうした別名はファミリーが単一の化学構造を指す主張ではない。ここへの登録は owner が語を名指ししたことが理由であり、同一性が確定したことが理由ではない。決定記録: ISS-20261111-TAX-040（THCP については ISS-20261015-TAX-027 の非登録判断を置換）。また、owner が**異性体未指定の同族体ファミリー**、またはその異性体未指定のエステル（アセテート）体としてのみ確認した語もここに置く。その語は単一物質も単一の外部レコードも指さないため本カテゴリに留まり、ファミリーの範囲は当該概念の scopeNote に記録する。その記載は検索語の文書化された範囲であり、経路／由来の配置でも、化学クラスへのリンクでも、個々の検索結果についての主張でもない。ファミリーとして登録した語の scopeNote は、異性体ごとの物質が文書化された法令上の構造グループに該当することを記録する場合があるが、それは当該異性体についての記載であり、本配置が行う規制分類ではない。また、owner が**位置異性体を明示した検索トピック**（例: Δ8 体・Δ9 体の語）として確認し、本変更では登録文字列について単一の外部レジストリ記録を検証していない語もここに置く。その場合、当該概念は検索トピックと公表された命名を記録するが、本カテゴリは化学的主張を行わず、識別子プロパティも割り当てない。また本バッチは、記録された根拠が命名標準または WHO の可能な配置のレビューのみで、配置ごとの registry record も製品同定も無い**特定の立体配置**、および個々の位置異性体の構造をリポジトリが列挙していない**同族体ファミリーの異性体未指定アセテート**も登録した。いずれの場合も概念は検索トピックと公表された命名を記録するものであり、本カテゴリは化学・経路・規制・製品について何も主張しない。",
           "@language": "ja"
         }
       ],
@@ -240,7 +240,34 @@
         "jptr:compound-delta8-thca",
         "jptr:compound-delta8-thcb",
         "jptr:compound-delta9-thcb",
-        "jptr:compound-thcb-o-acetate"
+        "jptr:compound-thcb-o-acetate",
+        "jptr:compound-delta8-thcp",
+        "jptr:compound-delta9-thcp",
+        "jptr:compound-delta8-thcjd",
+        "jptr:compound-delta9-thcjd",
+        "jptr:compound-delta8-thcp-o-acetate",
+        "jptr:compound-delta9-thcp-o-acetate",
+        "jptr:compound-delta8-thcb-o-acetate",
+        "jptr:compound-delta9-thcb-o-acetate",
+        "jptr:compound-delta8-thc",
+        "jptr:compound-delta6a-10a-thc",
+        "jptr:compound-delta6a-7-thc",
+        "jptr:compound-delta7-thc",
+        "jptr:compound-delta10-thc",
+        "jptr:compound-delta9-11-thc",
+        "jptr:compound-delta9-thcv",
+        "jptr:compound-delta8-thcv",
+        "jptr:compound-thcjd-o-acetate",
+        "jptr:compound-delta8-thch",
+        "jptr:compound-delta9-thch",
+        "jptr:compound-9-r-hhc",
+        "jptr:compound-9-s-hhc",
+        "jptr:compound-6as-9s-10as-hhc",
+        "jptr:compound-6as-9r-10as-hhc",
+        "jptr:compound-6as-9s-10ar-hhc",
+        "jptr:compound-6as-9r-10ar-hhc",
+        "jptr:compound-6ar-9s-10as-hhc",
+        "jptr:compound-6ar-9r-10as-hhc"
       ]
     },
     {
@@ -1619,6 +1646,897 @@
         },
         {
           "@value": "`THCB-O-acetate` は owner が 2026-11-11 に登録した検索語であり（ISS-20261111-TAX-041）、`THCB` の総称的な化学解釈を置き換える 3 つの検索トピック概念の 1 つである。`compound_thcb` は文字列 `THCB` の登録として別に残る。本語は検索文字列の登録であり、物質の同定ではない。単一物質としての化学的同一性は**未確認**である。異性体未指定のアセテートであり、Δ8 / Δ9 のいずれも述べないため、単一物質も単一の外部レコードも指さない。2024 年の厚生労働省令改正（令和6年厚生労働省令第81号、2024-05-01 公布、2024-05-11 施行）は包括的な構造グループを定める: 物質群1（6a,7,8,10a-テトラヒドロ、Δ9 系列）と物質群2（6a,7,10,10a-テトラヒドロ、Δ8 系列）は、いずれも 1 位の水酸基又はアセトキシ基、3 位の直鎖 C3–C8 アルキル基、その他の置換基なしを範囲とする。別紙は新たに指定する物質として Δ9-THCB-O-acetate（n=4）と Δ8-THCB-O-acetate（n=4）を明記している。これは両異性体を対象とする**法令上の構造定義**であり、個々の製品・検索結果・登録文字列についての判断ではなく、経路・天然存在・薬理・安全性の主張でもない。本概念は THC-O-acetate（C5 ペンチル同族体のアセテート、`compound_thc_o`）、その他のエステルの別名ではなく、`compound_thcb`・`compound_thc_o`・他の新概念との関係も主張しない。本概念は `skos:exactMatch` を張らず、CAS 番号・PubChem CID・UNII・ChEBI ID・Wikidata QID も記載しない。ファミリー全体を表す単一の外部レコードは無く、異性体ごとのレコードは docs/provenance/compound-taxonomy.md に置き、概念には付けない。本語は管理上の登録状態カテゴリ `compound_identity_unverified` に留まるため、この配置は経路／由来、天然存在、化学クラス、薬理、安全性、規制状態を主張しない。**クエリの限界:** Google Trends / YouTube の `THCB-O-acetate` / `THCB-O-acetate リキッド` 系列が測るのは、これらの文字列への一致だけであり、一致した結果はどちらのアセテート異性体の内容の証明でもない。本カテゴリから移す条件は、owner が確認した単一異性体に検証済み外部識別子が伴う場合、または単一の物質名と経路／由来を記録した出所が得られた場合で、根拠は docs/provenance/compound-taxonomy.md に記録する。",
+          "@language": "ja"
+        }
+      ]
+    },
+    {
+      "@id": "jptr:compound-delta8-thcp",
+      "@type": "skos:Concept",
+      "skos:inScheme": "jptr:compound-taxonomy",
+      "skos:broader": "jptr:compound-identity-unverified",
+      "skos:prefLabel": [
+        {
+          "@value": "Δ8-THCP",
+          "@language": "en"
+        },
+        {
+          "@value": "Δ8-THCP",
+          "@language": "ja"
+        }
+      ],
+      "skos:altLabel": [
+        {
+          "@value": "Δ8-THCP リキッド",
+          "@language": "ja"
+        }
+      ],
+      "skos:notation": "compound_delta8_thcp",
+      "skos:scopeNote": [
+        {
+          "@value": "`Δ8-THCP` is the owner's search term, registered on 2026-11-15 (ISS-20261115-TAX-045) as one of the 27 forms the owner enumerated for registration from the study's candidate-form inventory in `datasets/cannabinoid-raw-collection`. The term is a registered search string, not a substance identification: the single-substance chemical identity remains UNCONFIRMED. The evidence recorded for this form in the study inventory is a registry record together with a product-detection report: PubChem CID 44307335, CAS 51768-60-6, UNII Q6P6W9SNR2 and Wikidata Q141317106, and a 2026 report detecting the Δ8 form in products (ISS-20261111-TAX-042). Neither is this study's own product analysis, and the registry record does not establish that the search string is used for this form. No identifier property and no `skos:exactMatch` are assigned to this taxonomy concept: any CAS / PubChem / UNII / ChEBI / Wikidata / IUPAC values quoted in this note are recorded evidence in `docs/provenance/compound-taxonomy.md`, were not re-verified in this change, and were not selected for the registered query. It stays in compound_identity_unverified, an administrative registration-state category, so this placement asserts no route/origin, natural occurrence, chemical class, structure, synonym, pharmacology, safety or regulatory status, and it asserts no relation to the inventory parent term `THCP`: that grouping in the candidate table organised the rows and is not a structural or synonym claim. **Query limitation:** Google Trends and YouTube series for `Δ8-THCP` / `Δ8-THCP リキッド` measure occurrences of those literal strings; a matching result is not evidence of the Δ8 form content. Evidence that would move the term out of this category: a verified external record selected for the registered string, or a recorded source naming this form and its route/origin; the basis belongs in docs/provenance/compound-taxonomy.md.",
+          "@language": "en"
+        },
+        {
+          "@value": "`Δ8-THCP` は owner が 2026-11-15 に登録した検索語であり（ISS-20261115-TAX-045）、`datasets/cannabinoid-raw-collection` の候補形式棚卸しから owner が登録対象として列挙した 27 形式の 1 つである。本語は検索文字列の登録であり、物質の同定ではない。単一物質としての化学的同一性は**未確認**である。本研究の棚卸しで本形式について記録された証拠は、registry record と製品検出報告である: PubChem CID 44307335、CAS 51768-60-6、UNII Q6P6W9SNR2、Wikidata Q141317106、および 2026 年の報告が製品から Δ8 体を検出した（ISS-20261111-TAX-042）。いずれも本研究自身の製品分析ではなく、registry record は検索文字列が本形式に用いられることを確定しない。 本概念には識別子プロパティも `skos:exactMatch` も割り当てない。本注記に引用した CAS 番号・PubChem CID・UNII・ChEBI ID・Wikidata QID・IUPAC 名は `docs/provenance/compound-taxonomy.md` に記録された証拠であり、本変更では再検証しておらず、登録文字列のために選択もしていない。本語は管理上の登録状態カテゴリ `compound_identity_unverified` に留まるため、この配置は経路／由来、天然存在、化学クラス、構造、別名、薬理、安全性、規制状態を主張せず、棚卸し上の親語 `THCP` との関係も主張しない。候補表の親語は行の整理であり、構造や同義の主張ではない。**クエリの限界:** Google Trends / YouTube の `Δ8-THCP` / `Δ8-THCP リキッド` 系列が測るのは、これらの文字列への一致だけであり、一致した結果はΔ8 体の内容の証明ではない。本カテゴリから移す条件は、登録文字列について選択された検証済み外部レコード、または本形式と経路／由来を記録した出所ことであり、根拠は docs/provenance/compound-taxonomy.md に記録する。",
+          "@language": "ja"
+        }
+      ]
+    },
+    {
+      "@id": "jptr:compound-delta9-thcp",
+      "@type": "skos:Concept",
+      "skos:inScheme": "jptr:compound-taxonomy",
+      "skos:broader": "jptr:compound-identity-unverified",
+      "skos:prefLabel": [
+        {
+          "@value": "Δ9-THCP",
+          "@language": "en"
+        },
+        {
+          "@value": "Δ9-THCP",
+          "@language": "ja"
+        }
+      ],
+      "skos:altLabel": [
+        {
+          "@value": "Δ9-THCP リキッド",
+          "@language": "ja"
+        }
+      ],
+      "skos:notation": "compound_delta9_thcp",
+      "skos:scopeNote": [
+        {
+          "@value": "`Δ9-THCP` is the owner's search term, registered on 2026-11-15 (ISS-20261115-TAX-045) as one of the 27 forms the owner enumerated for registration from the study's candidate-form inventory in `datasets/cannabinoid-raw-collection`. The term is a registered search string, not a substance identification: the single-substance chemical identity remains UNCONFIRMED. The evidence recorded for this form in the study inventory is a registry record together with a plant-isolation study: PubChem CID 6453074, CAS 54763-99-4, UNII WTK87HN3LG and Wikidata Q85806080, and Citti et al. 2019, which isolated and structurally confirmed the Δ9 form from plant material (ISS-20261111-TAX-042). The isolation report is not this study's analysis and says nothing about any search result. No identifier property and no `skos:exactMatch` are assigned to this taxonomy concept: any CAS / PubChem / UNII / ChEBI / Wikidata / IUPAC values quoted in this note are recorded evidence in `docs/provenance/compound-taxonomy.md`, were not re-verified in this change, and were not selected for the registered query. It stays in compound_identity_unverified, an administrative registration-state category, so this placement asserts no route/origin, natural occurrence, chemical class, structure, synonym, pharmacology, safety or regulatory status, and it asserts no relation to the inventory parent term `THCP`: that grouping in the candidate table organised the rows and is not a structural or synonym claim. **Query limitation:** Google Trends and YouTube series for `Δ9-THCP` / `Δ9-THCP リキッド` measure occurrences of those literal strings; a matching result is not evidence of the Δ9 form content. Evidence that would move the term out of this category: a verified external record selected for the registered string, or a recorded source naming this form and its route/origin; the basis belongs in docs/provenance/compound-taxonomy.md.",
+          "@language": "en"
+        },
+        {
+          "@value": "`Δ9-THCP` は owner が 2026-11-15 に登録した検索語であり（ISS-20261115-TAX-045）、`datasets/cannabinoid-raw-collection` の候補形式棚卸しから owner が登録対象として列挙した 27 形式の 1 つである。本語は検索文字列の登録であり、物質の同定ではない。単一物質としての化学的同一性は**未確認**である。本研究の棚卸しで本形式について記録された証拠は、registry record と植物からの単離研究である: PubChem CID 6453074、CAS 54763-99-4、UNII WTK87HN3LG、Wikidata Q85806080、および Citti et al. 2019 が植物材料から Δ9 体を単離し構造確認した（ISS-20261111-TAX-042）。単離報告は本研究の分析ではなく、検索結果について何も述べない。 本概念には識別子プロパティも `skos:exactMatch` も割り当てない。本注記に引用した CAS 番号・PubChem CID・UNII・ChEBI ID・Wikidata QID・IUPAC 名は `docs/provenance/compound-taxonomy.md` に記録された証拠であり、本変更では再検証しておらず、登録文字列のために選択もしていない。本語は管理上の登録状態カテゴリ `compound_identity_unverified` に留まるため、この配置は経路／由来、天然存在、化学クラス、構造、別名、薬理、安全性、規制状態を主張せず、棚卸し上の親語 `THCP` との関係も主張しない。候補表の親語は行の整理であり、構造や同義の主張ではない。**クエリの限界:** Google Trends / YouTube の `Δ9-THCP` / `Δ9-THCP リキッド` 系列が測るのは、これらの文字列への一致だけであり、一致した結果はΔ9 体の内容の証明ではない。本カテゴリから移す条件は、登録文字列について選択された検証済み外部レコード、または本形式と経路／由来を記録した出所ことであり、根拠は docs/provenance/compound-taxonomy.md に記録する。",
+          "@language": "ja"
+        }
+      ]
+    },
+    {
+      "@id": "jptr:compound-delta8-thcjd",
+      "@type": "skos:Concept",
+      "skos:inScheme": "jptr:compound-taxonomy",
+      "skos:broader": "jptr:compound-identity-unverified",
+      "skos:prefLabel": [
+        {
+          "@value": "Δ8-THCJD",
+          "@language": "en"
+        },
+        {
+          "@value": "Δ8-THCJD",
+          "@language": "ja"
+        }
+      ],
+      "skos:altLabel": [
+        {
+          "@value": "Δ8-THCJD リキッド",
+          "@language": "ja"
+        }
+      ],
+      "skos:notation": "compound_delta8_thcjd",
+      "skos:scopeNote": [
+        {
+          "@value": "`Δ8-THCJD` is the owner's search term, registered on 2026-11-15 (ISS-20261115-TAX-045) as one of the 27 forms the owner enumerated for registration from the study's candidate-form inventory in `datasets/cannabinoid-raw-collection`. The term is a registered search string, not a substance identification: the single-substance chemical identity remains UNCONFIRMED. The evidence recorded for this form in the study inventory is a registry record together with a product analysis: PubChem CID 102024084, CAS 431041-39-3 and Wikidata Q114242092, and Tanaka & Kikura-Hanajiri 2024, which identified the Δ8 form by NMR in products distributed in Japan (ISS-20261111-TAX-042). That is an analysis of specific products, not this study's observation and not a claim about any query result; the study term is the C8 homologue designation, and this row is the Δ8 positional form only. No identifier property and no `skos:exactMatch` are assigned to this taxonomy concept: any CAS / PubChem / UNII / ChEBI / Wikidata / IUPAC values quoted in this note are recorded evidence in `docs/provenance/compound-taxonomy.md`, were not re-verified in this change, and were not selected for the registered query. It stays in compound_identity_unverified, an administrative registration-state category, so this placement asserts no route/origin, natural occurrence, chemical class, structure, synonym, pharmacology, safety or regulatory status, and it asserts no relation to the inventory parent term `THCJD`: that grouping in the candidate table organised the rows and is not a structural or synonym claim. **Query limitation:** Google Trends and YouTube series for `Δ8-THCJD` / `Δ8-THCJD リキッド` measure occurrences of those literal strings; a matching result is not evidence of the Δ8 positional form content. Evidence that would move the term out of this category: a verified external record selected for the registered string, or a recorded source naming this form and its route/origin; the basis belongs in docs/provenance/compound-taxonomy.md.",
+          "@language": "en"
+        },
+        {
+          "@value": "`Δ8-THCJD` は owner が 2026-11-15 に登録した検索語であり（ISS-20261115-TAX-045）、`datasets/cannabinoid-raw-collection` の候補形式棚卸しから owner が登録対象として列挙した 27 形式の 1 つである。本語は検索文字列の登録であり、物質の同定ではない。単一物質としての化学的同一性は**未確認**である。本研究の棚卸しで本形式について記録された証拠は、registry record と製品分析である: PubChem CID 102024084、CAS 431041-39-3、Wikidata Q114242092、および Tanaka & Kikura-Hanajiri 2024 が国内流通製品から NMR で Δ8 体を同定した（ISS-20261111-TAX-042）。これは特定製品の分析であり、本研究の観測でも、検索結果についての主張でもない。本研究の語は C8 同族体の称呼であり、本行は Δ8 位置異性体のみである。 本概念には識別子プロパティも `skos:exactMatch` も割り当てない。本注記に引用した CAS 番号・PubChem CID・UNII・ChEBI ID・Wikidata QID・IUPAC 名は `docs/provenance/compound-taxonomy.md` に記録された証拠であり、本変更では再検証しておらず、登録文字列のために選択もしていない。本語は管理上の登録状態カテゴリ `compound_identity_unverified` に留まるため、この配置は経路／由来、天然存在、化学クラス、構造、別名、薬理、安全性、規制状態を主張せず、棚卸し上の親語 `THCJD` との関係も主張しない。候補表の親語は行の整理であり、構造や同義の主張ではない。**クエリの限界:** Google Trends / YouTube の `Δ8-THCJD` / `Δ8-THCJD リキッド` 系列が測るのは、これらの文字列への一致だけであり、一致した結果はΔ8 位置異性体の内容の証明ではない。本カテゴリから移す条件は、登録文字列について選択された検証済み外部レコード、または本形式と経路／由来を記録した出所ことであり、根拠は docs/provenance/compound-taxonomy.md に記録する。",
+          "@language": "ja"
+        }
+      ]
+    },
+    {
+      "@id": "jptr:compound-delta9-thcjd",
+      "@type": "skos:Concept",
+      "skos:inScheme": "jptr:compound-taxonomy",
+      "skos:broader": "jptr:compound-identity-unverified",
+      "skos:prefLabel": [
+        {
+          "@value": "Δ9-THCJD",
+          "@language": "en"
+        },
+        {
+          "@value": "Δ9-THCJD",
+          "@language": "ja"
+        }
+      ],
+      "skos:altLabel": [
+        {
+          "@value": "Δ9-THCJD リキッド",
+          "@language": "ja"
+        }
+      ],
+      "skos:notation": "compound_delta9_thcjd",
+      "skos:scopeNote": [
+        {
+          "@value": "`Δ9-THCJD` is the owner's search term, registered on 2026-11-15 (ISS-20261115-TAX-045) as one of the 27 forms the owner enumerated for registration from the study's candidate-form inventory in `datasets/cannabinoid-raw-collection`. The term is a registered search string, not a substance identification: the single-substance chemical identity remains UNCONFIRMED. The evidence recorded for this form in the study inventory is a registry record together with a product analysis: PubChem CID 155318984 and CAS 2552798-63-5, and Tanaka & Kikura-Hanajiri 2024, which identified the Δ9 form by NMR in products distributed in Japan (ISS-20261111-TAX-042). That is an analysis of specific products, not this study's observation and not a claim about any query result; this row is the Δ9 positional form only. No identifier property and no `skos:exactMatch` are assigned to this taxonomy concept: any CAS / PubChem / UNII / ChEBI / Wikidata / IUPAC values quoted in this note are recorded evidence in `docs/provenance/compound-taxonomy.md`, were not re-verified in this change, and were not selected for the registered query. It stays in compound_identity_unverified, an administrative registration-state category, so this placement asserts no route/origin, natural occurrence, chemical class, structure, synonym, pharmacology, safety or regulatory status, and it asserts no relation to the inventory parent term `THCJD`: that grouping in the candidate table organised the rows and is not a structural or synonym claim. **Query limitation:** Google Trends and YouTube series for `Δ9-THCJD` / `Δ9-THCJD リキッド` measure occurrences of those literal strings; a matching result is not evidence of the Δ9 positional form content. Evidence that would move the term out of this category: a verified external record selected for the registered string, or a recorded source naming this form and its route/origin; the basis belongs in docs/provenance/compound-taxonomy.md.",
+          "@language": "en"
+        },
+        {
+          "@value": "`Δ9-THCJD` は owner が 2026-11-15 に登録した検索語であり（ISS-20261115-TAX-045）、`datasets/cannabinoid-raw-collection` の候補形式棚卸しから owner が登録対象として列挙した 27 形式の 1 つである。本語は検索文字列の登録であり、物質の同定ではない。単一物質としての化学的同一性は**未確認**である。本研究の棚卸しで本形式について記録された証拠は、registry record と製品分析である: PubChem CID 155318984、CAS 2552798-63-5、および Tanaka & Kikura-Hanajiri 2024 が国内流通製品から NMR で Δ9 体を同定した（ISS-20261111-TAX-042）。これは特定製品の分析であり、本研究の観測でも、検索結果についての主張でもない。本行は Δ9 位置異性体のみである。 本概念には識別子プロパティも `skos:exactMatch` も割り当てない。本注記に引用した CAS 番号・PubChem CID・UNII・ChEBI ID・Wikidata QID・IUPAC 名は `docs/provenance/compound-taxonomy.md` に記録された証拠であり、本変更では再検証しておらず、登録文字列のために選択もしていない。本語は管理上の登録状態カテゴリ `compound_identity_unverified` に留まるため、この配置は経路／由来、天然存在、化学クラス、構造、別名、薬理、安全性、規制状態を主張せず、棚卸し上の親語 `THCJD` との関係も主張しない。候補表の親語は行の整理であり、構造や同義の主張ではない。**クエリの限界:** Google Trends / YouTube の `Δ9-THCJD` / `Δ9-THCJD リキッド` 系列が測るのは、これらの文字列への一致だけであり、一致した結果はΔ9 位置異性体の内容の証明ではない。本カテゴリから移す条件は、登録文字列について選択された検証済み外部レコード、または本形式と経路／由来を記録した出所ことであり、根拠は docs/provenance/compound-taxonomy.md に記録する。",
+          "@language": "ja"
+        }
+      ]
+    },
+    {
+      "@id": "jptr:compound-delta8-thcp-o-acetate",
+      "@type": "skos:Concept",
+      "skos:inScheme": "jptr:compound-taxonomy",
+      "skos:broader": "jptr:compound-identity-unverified",
+      "skos:prefLabel": [
+        {
+          "@value": "Δ8-THCP-O-acetate",
+          "@language": "en"
+        },
+        {
+          "@value": "Δ8-THCP-O-acetate",
+          "@language": "ja"
+        }
+      ],
+      "skos:altLabel": [
+        {
+          "@value": "Δ8-THCP-O-acetate リキッド",
+          "@language": "ja"
+        }
+      ],
+      "skos:notation": "compound_delta8_thcp_o_acetate",
+      "skos:scopeNote": [
+        {
+          "@value": "`Δ8-THCP-O-acetate` is the owner's search term, registered on 2026-11-15 (ISS-20261115-TAX-045) as one of the 27 forms the owner enumerated for registration from the study's candidate-form inventory in `datasets/cannabinoid-raw-collection`. The term is a registered search string, not a substance identification: the single-substance chemical identity remains UNCONFIRMED. The evidence recorded for this form in the study inventory is a statutory structural group and a registry record: the attached list (別紙) of the 2024 MHLW ordinance (令和6年厚生労働省令第81号) lists the Δ8 acetate structure among newly designated substances, subject to the ordinance's narcotics exclusion, and PubChem CID 172874392 was recorded (ISS-20261111-TAX-042). CAS, GSRS and Wikidata were not confirmed, and product analytical identification of this isomer was not confirmed. A statutory structural listing is a legal structural fact, not a product detection, not this study's observation and not a classification of any result or query string. No identifier property and no `skos:exactMatch` are assigned to this taxonomy concept: any CAS / PubChem / UNII / ChEBI / Wikidata / IUPAC values quoted in this note are recorded evidence in `docs/provenance/compound-taxonomy.md`, were not re-verified in this change, and were not selected for the registered query. It stays in compound_identity_unverified, an administrative registration-state category, so this placement asserts no route/origin, natural occurrence, chemical class, structure, synonym, pharmacology, safety or regulatory status, and it asserts no relation to the inventory parent term `THCPO`: that grouping in the candidate table organised the rows and is not a structural or synonym claim. **Query limitation:** Google Trends and YouTube series for `Δ8-THCP-O-acetate` / `Δ8-THCP-O-acetate リキッド` measure occurrences of those literal strings; a matching result is not evidence of this Δ8 acetate isomer content. Evidence that would move the term out of this category: a verified external record selected for the registered string, or a recorded product identification or route/origin source for this isomer; the basis belongs in docs/provenance/compound-taxonomy.md.",
+          "@language": "en"
+        },
+        {
+          "@value": "`Δ8-THCP-O-acetate` は owner が 2026-11-15 に登録した検索語であり（ISS-20261115-TAX-045）、`datasets/cannabinoid-raw-collection` の候補形式棚卸しから owner が登録対象として列挙した 27 形式の 1 つである。本語は検索文字列の登録であり、物質の同定ではない。単一物質としての化学的同一性は**未確認**である。本研究の棚卸しで本形式について記録された証拠は、法令上の構造グループと registry record である: 2024 年の厚生労働省令（令和6年厚生労働省令第81号）の別紙は、麻薬を除く除外規定の下で、Δ8 アセテート構造を新たに指定する物質として列挙し、PubChem CID 172874392 が記録された（ISS-20261111-TAX-042）。CAS・GSRS・Wikidata は未確認で、本異性体の製品中の分析同定も未確認である。法令上の構造の列挙は法令上の構造の事実であり、製品検出でも、本研究の観測でも、検索結果や検索文字列の分類でもない。 本概念には識別子プロパティも `skos:exactMatch` も割り当てない。本注記に引用した CAS 番号・PubChem CID・UNII・ChEBI ID・Wikidata QID・IUPAC 名は `docs/provenance/compound-taxonomy.md` に記録された証拠であり、本変更では再検証しておらず、登録文字列のために選択もしていない。本語は管理上の登録状態カテゴリ `compound_identity_unverified` に留まるため、この配置は経路／由来、天然存在、化学クラス、構造、別名、薬理、安全性、規制状態を主張せず、棚卸し上の親語 `THCPO` との関係も主張しない。候補表の親語は行の整理であり、構造や同義の主張ではない。**クエリの限界:** Google Trends / YouTube の `Δ8-THCP-O-acetate` / `Δ8-THCP-O-acetate リキッド` 系列が測るのは、これらの文字列への一致だけであり、一致した結果は本 Δ8 アセテート異性体の内容の証明ではない。本カテゴリから移す条件は、登録文字列について選択された検証済み外部レコード、または本異性体の製品同定もしくは経路／由来の出所ことであり、根拠は docs/provenance/compound-taxonomy.md に記録する。",
+          "@language": "ja"
+        }
+      ]
+    },
+    {
+      "@id": "jptr:compound-delta9-thcp-o-acetate",
+      "@type": "skos:Concept",
+      "skos:inScheme": "jptr:compound-taxonomy",
+      "skos:broader": "jptr:compound-identity-unverified",
+      "skos:prefLabel": [
+        {
+          "@value": "Δ9-THCP-O-acetate",
+          "@language": "en"
+        },
+        {
+          "@value": "Δ9-THCP-O-acetate",
+          "@language": "ja"
+        }
+      ],
+      "skos:altLabel": [
+        {
+          "@value": "Δ9-THCP-O-acetate リキッド",
+          "@language": "ja"
+        }
+      ],
+      "skos:notation": "compound_delta9_thcp_o_acetate",
+      "skos:scopeNote": [
+        {
+          "@value": "`Δ9-THCP-O-acetate` is the owner's search term, registered on 2026-11-15 (ISS-20261115-TAX-045) as one of the 27 forms the owner enumerated for registration from the study's candidate-form inventory in `datasets/cannabinoid-raw-collection`. The term is a registered search string, not a substance identification: the single-substance chemical identity remains UNCONFIRMED. The evidence recorded for this form in the study inventory is a statutory structural group, a registry record and a product analysis: the attached list of the 2024 MHLW ordinance (令和6年厚生労働省令第81号) lists the Δ9 acetate structure, PubChem CID 172677450, CAS 2829292-82-0 and Wikidata Q122689235 were recorded, and Tanaka et al. 2025 (DOI 10.1002/dta.3883) identified this isomer in products (ISS-20261111-TAX-042). The statutory listing is not a product detection, the product analysis is not this study's observation, and none of it is a claim about any query result. No identifier property and no `skos:exactMatch` are assigned to this taxonomy concept: any CAS / PubChem / UNII / ChEBI / Wikidata / IUPAC values quoted in this note are recorded evidence in `docs/provenance/compound-taxonomy.md`, were not re-verified in this change, and were not selected for the registered query. It stays in compound_identity_unverified, an administrative registration-state category, so this placement asserts no route/origin, natural occurrence, chemical class, structure, synonym, pharmacology, safety or regulatory status, and it asserts no relation to the inventory parent term `THCPO`: that grouping in the candidate table organised the rows and is not a structural or synonym claim. **Query limitation:** Google Trends and YouTube series for `Δ9-THCP-O-acetate` / `Δ9-THCP-O-acetate リキッド` measure occurrences of those literal strings; a matching result is not evidence of this Δ9 acetate isomer content. Evidence that would move the term out of this category: a verified external record selected for the registered string, or a recorded source naming this isomer and its route/origin; the basis belongs in docs/provenance/compound-taxonomy.md.",
+          "@language": "en"
+        },
+        {
+          "@value": "`Δ9-THCP-O-acetate` は owner が 2026-11-15 に登録した検索語であり（ISS-20261115-TAX-045）、`datasets/cannabinoid-raw-collection` の候補形式棚卸しから owner が登録対象として列挙した 27 形式の 1 つである。本語は検索文字列の登録であり、物質の同定ではない。単一物質としての化学的同一性は**未確認**である。本研究の棚卸しで本形式について記録された証拠は、法令上の構造グループ、registry record、製品分析である: 2024 年の厚生労働省令（令和6年厚生労働省令第81号）の別紙が Δ9 アセテート構造を列挙し、PubChem CID 172677450、CAS 2829292-82-0、Wikidata Q122689235 が記録され、Tanaka et al. 2025（DOI 10.1002/dta.3883）が製品から本異性体を同定した（ISS-20261111-TAX-042）。法令上の列挙は製品検出ではなく、製品分析は本研究の観測ではなく、いずれも検索結果についての主張ではない。 本概念には識別子プロパティも `skos:exactMatch` も割り当てない。本注記に引用した CAS 番号・PubChem CID・UNII・ChEBI ID・Wikidata QID・IUPAC 名は `docs/provenance/compound-taxonomy.md` に記録された証拠であり、本変更では再検証しておらず、登録文字列のために選択もしていない。本語は管理上の登録状態カテゴリ `compound_identity_unverified` に留まるため、この配置は経路／由来、天然存在、化学クラス、構造、別名、薬理、安全性、規制状態を主張せず、棚卸し上の親語 `THCPO` との関係も主張しない。候補表の親語は行の整理であり、構造や同義の主張ではない。**クエリの限界:** Google Trends / YouTube の `Δ9-THCP-O-acetate` / `Δ9-THCP-O-acetate リキッド` 系列が測るのは、これらの文字列への一致だけであり、一致した結果は本 Δ9 アセテート異性体の内容の証明ではない。本カテゴリから移す条件は、登録文字列について選択された検証済み外部レコード、または本異性体と経路／由来を記録した出所ことであり、根拠は docs/provenance/compound-taxonomy.md に記録する。",
+          "@language": "ja"
+        }
+      ]
+    },
+    {
+      "@id": "jptr:compound-delta8-thcb-o-acetate",
+      "@type": "skos:Concept",
+      "skos:inScheme": "jptr:compound-taxonomy",
+      "skos:broader": "jptr:compound-identity-unverified",
+      "skos:prefLabel": [
+        {
+          "@value": "Δ8-THCB-O-acetate",
+          "@language": "en"
+        },
+        {
+          "@value": "Δ8-THCB-O-acetate",
+          "@language": "ja"
+        }
+      ],
+      "skos:altLabel": [
+        {
+          "@value": "Δ8-THCB-O-acetate リキッド",
+          "@language": "ja"
+        }
+      ],
+      "skos:notation": "compound_delta8_thcb_o_acetate",
+      "skos:scopeNote": [
+        {
+          "@value": "`Δ8-THCB-O-acetate` is the owner's search term, registered on 2026-11-15 (ISS-20261115-TAX-045) as one of the 27 forms the owner enumerated for registration from the study's candidate-form inventory in `datasets/cannabinoid-raw-collection`. The term is a registered search string, not a substance identification: the single-substance chemical identity remains UNCONFIRMED. The evidence recorded for this form in the study inventory is a statutory structural group and a registry record: the attached list of the 2024 MHLW ordinance (令和6年厚生労働省令第81号) lists the Δ8 acetate structure among newly designated substances, subject to the ordinance's narcotics exclusion, and PubChem CID 172871934 was recorded (ISS-20261111-TAX-042). CAS, GSRS and Wikidata were not confirmed and product analytical identification was not confirmed. A statutory structural listing is a legal structural fact, not a product detection and not a claim about any query result. No identifier property and no `skos:exactMatch` are assigned to this taxonomy concept: any CAS / PubChem / UNII / ChEBI / Wikidata / IUPAC values quoted in this note are recorded evidence in `docs/provenance/compound-taxonomy.md`, were not re-verified in this change, and were not selected for the registered query. It stays in compound_identity_unverified, an administrative registration-state category, so this placement asserts no route/origin, natural occurrence, chemical class, structure, synonym, pharmacology, safety or regulatory status, and it asserts no relation to the inventory parent term `THCB-O-acetate`: that grouping in the candidate table organised the rows and is not a structural or synonym claim. **Query limitation:** Google Trends and YouTube series for `Δ8-THCB-O-acetate` / `Δ8-THCB-O-acetate リキッド` measure occurrences of those literal strings; a matching result is not evidence of this Δ8 acetate isomer content. Evidence that would move the term out of this category: a verified external record selected for the registered string, or a recorded product identification or route/origin source for this isomer; the basis belongs in docs/provenance/compound-taxonomy.md.",
+          "@language": "en"
+        },
+        {
+          "@value": "`Δ8-THCB-O-acetate` は owner が 2026-11-15 に登録した検索語であり（ISS-20261115-TAX-045）、`datasets/cannabinoid-raw-collection` の候補形式棚卸しから owner が登録対象として列挙した 27 形式の 1 つである。本語は検索文字列の登録であり、物質の同定ではない。単一物質としての化学的同一性は**未確認**である。本研究の棚卸しで本形式について記録された証拠は、法令上の構造グループと registry record である: 2024 年の厚生労働省令（令和6年厚生労働省令第81号）の別紙は、麻薬を除く除外規定の下で Δ8 アセテート構造を新たに指定する物質として列挙し、PubChem CID 172871934 が記録された（ISS-20261111-TAX-042）。CAS・GSRS・Wikidata は未確認で、製品中の分析同定も未確認である。法令上の列挙は法令上の構造の事実であり、製品検出でも、検索結果についての主張でもない。 本概念には識別子プロパティも `skos:exactMatch` も割り当てない。本注記に引用した CAS 番号・PubChem CID・UNII・ChEBI ID・Wikidata QID・IUPAC 名は `docs/provenance/compound-taxonomy.md` に記録された証拠であり、本変更では再検証しておらず、登録文字列のために選択もしていない。本語は管理上の登録状態カテゴリ `compound_identity_unverified` に留まるため、この配置は経路／由来、天然存在、化学クラス、構造、別名、薬理、安全性、規制状態を主張せず、棚卸し上の親語 `THCB-O-acetate` との関係も主張しない。候補表の親語は行の整理であり、構造や同義の主張ではない。**クエリの限界:** Google Trends / YouTube の `Δ8-THCB-O-acetate` / `Δ8-THCB-O-acetate リキッド` 系列が測るのは、これらの文字列への一致だけであり、一致した結果は本 Δ8 アセテート異性体の内容の証明ではない。本カテゴリから移す条件は、登録文字列について選択された検証済み外部レコード、または本異性体の製品同定もしくは経路／由来の出所ことであり、根拠は docs/provenance/compound-taxonomy.md に記録する。",
+          "@language": "ja"
+        }
+      ]
+    },
+    {
+      "@id": "jptr:compound-delta9-thcb-o-acetate",
+      "@type": "skos:Concept",
+      "skos:inScheme": "jptr:compound-taxonomy",
+      "skos:broader": "jptr:compound-identity-unverified",
+      "skos:prefLabel": [
+        {
+          "@value": "Δ9-THCB-O-acetate",
+          "@language": "en"
+        },
+        {
+          "@value": "Δ9-THCB-O-acetate",
+          "@language": "ja"
+        }
+      ],
+      "skos:altLabel": [
+        {
+          "@value": "Δ9-THCB-O-acetate リキッド",
+          "@language": "ja"
+        }
+      ],
+      "skos:notation": "compound_delta9_thcb_o_acetate",
+      "skos:scopeNote": [
+        {
+          "@value": "`Δ9-THCB-O-acetate` is the owner's search term, registered on 2026-11-15 (ISS-20261115-TAX-045) as one of the 27 forms the owner enumerated for registration from the study's candidate-form inventory in `datasets/cannabinoid-raw-collection`. The term is a registered search string, not a substance identification: the single-substance chemical identity remains UNCONFIRMED. The evidence recorded for this form in the study inventory is a statutory structural group and a registry record: the attached list of the 2024 MHLW ordinance (令和6年厚生労働省令第81号) lists the Δ9 acetate structure, subject to the ordinance's narcotics exclusion, and PubChem CID 172875699 was recorded (ISS-20261111-TAX-042). CAS, GSRS and Wikidata were not confirmed and product analytical identification was not confirmed; the ester Tanaka et al. 2025 identified is Δ9-THCB-O-butanoate, a different ester that this row does not cover. A statutory structural listing is a legal structural fact, not a product detection and not a claim about any query result. No identifier property and no `skos:exactMatch` are assigned to this taxonomy concept: any CAS / PubChem / UNII / ChEBI / Wikidata / IUPAC values quoted in this note are recorded evidence in `docs/provenance/compound-taxonomy.md`, were not re-verified in this change, and were not selected for the registered query. It stays in compound_identity_unverified, an administrative registration-state category, so this placement asserts no route/origin, natural occurrence, chemical class, structure, synonym, pharmacology, safety or regulatory status, and it asserts no relation to the inventory parent term `THCB-O-acetate`: that grouping in the candidate table organised the rows and is not a structural or synonym claim. **Query limitation:** Google Trends and YouTube series for `Δ9-THCB-O-acetate` / `Δ9-THCB-O-acetate リキッド` measure occurrences of those literal strings; a matching result is not evidence of this Δ9 acetate isomer content. Evidence that would move the term out of this category: a verified external record selected for the registered string, or a recorded product identification or route/origin source for this isomer; the basis belongs in docs/provenance/compound-taxonomy.md.",
+          "@language": "en"
+        },
+        {
+          "@value": "`Δ9-THCB-O-acetate` は owner が 2026-11-15 に登録した検索語であり（ISS-20261115-TAX-045）、`datasets/cannabinoid-raw-collection` の候補形式棚卸しから owner が登録対象として列挙した 27 形式の 1 つである。本語は検索文字列の登録であり、物質の同定ではない。単一物質としての化学的同一性は**未確認**である。本研究の棚卸しで本形式について記録された証拠は、法令上の構造グループと registry record である: 2024 年の厚生労働省令（令和6年厚生労働省令第81号）の別紙は、麻薬を除く除外規定の下で Δ9 アセテート構造を列挙し、PubChem CID 172875699 が記録された（ISS-20261111-TAX-042）。CAS・GSRS・Wikidata は未確認で、製品中の分析同定も未確認である。Tanaka et al. 2025 が同定したのは別エステルの Δ9-THCB-O-butanoate であり、本行はこれを対象としない。法令上の列挙は法令上の構造の事実であり、製品検出でも、検索結果についての主張でもない。 本概念には識別子プロパティも `skos:exactMatch` も割り当てない。本注記に引用した CAS 番号・PubChem CID・UNII・ChEBI ID・Wikidata QID・IUPAC 名は `docs/provenance/compound-taxonomy.md` に記録された証拠であり、本変更では再検証しておらず、登録文字列のために選択もしていない。本語は管理上の登録状態カテゴリ `compound_identity_unverified` に留まるため、この配置は経路／由来、天然存在、化学クラス、構造、別名、薬理、安全性、規制状態を主張せず、棚卸し上の親語 `THCB-O-acetate` との関係も主張しない。候補表の親語は行の整理であり、構造や同義の主張ではない。**クエリの限界:** Google Trends / YouTube の `Δ9-THCB-O-acetate` / `Δ9-THCB-O-acetate リキッド` 系列が測るのは、これらの文字列への一致だけであり、一致した結果は本 Δ9 アセテート異性体の内容の証明ではない。本カテゴリから移す条件は、登録文字列について選択された検証済み外部レコード、または本異性体の製品同定もしくは経路／由来の出所ことであり、根拠は docs/provenance/compound-taxonomy.md に記録する。",
+          "@language": "ja"
+        }
+      ]
+    },
+    {
+      "@id": "jptr:compound-delta8-thc",
+      "@type": "skos:Concept",
+      "skos:inScheme": "jptr:compound-taxonomy",
+      "skos:broader": "jptr:compound-identity-unverified",
+      "skos:prefLabel": [
+        {
+          "@value": "Δ8-THC",
+          "@language": "en"
+        },
+        {
+          "@value": "Δ8-THC",
+          "@language": "ja"
+        }
+      ],
+      "skos:altLabel": [
+        {
+          "@value": "Δ8-THC リキッド",
+          "@language": "ja"
+        }
+      ],
+      "skos:notation": "compound_delta8_thc",
+      "skos:scopeNote": [
+        {
+          "@value": "`Δ8-THC` is the owner's search term, registered on 2026-11-15 (ISS-20261115-TAX-045) as one of the 27 forms the owner enumerated for registration from the study's candidate-form inventory in `datasets/cannabinoid-raw-collection`. The term is a registered search string, not a substance identification: the single-substance chemical identity remains UNCONFIRMED. The evidence recorded for this form in the study inventory is the published nomenclature standard together with the regulatory knowledge graph: the Δ8 series is one of the seven positions the standard distinguishes, the 2024 MHLW ordinance defines the Δ8 series (6a,7,10,10a-tetrahydro) as a structural group separate from the Δ9 series (6a,7,8,10a-tetrahydro) subject to the ordinance's narcotics exclusion, and the knowledge graph records CAS 5957-75-7 with natural occurrence confirmed (ISS-20261111-TAX-042). No form-level external registry record was selected for the taxonomy. The knowledge-graph entry and the statutory group definition are not this study's product analysis, not a product detection and not a statement about any result. No identifier property and no `skos:exactMatch` are assigned to this taxonomy concept: any CAS / PubChem / UNII / ChEBI / Wikidata / IUPAC values quoted in this note are recorded evidence in `docs/provenance/compound-taxonomy.md`, were not re-verified in this change, and were not selected for the registered query. It stays in compound_identity_unverified, an administrative registration-state category, so this placement asserts no route/origin, natural occurrence, chemical class, structure, synonym, pharmacology, safety or regulatory status, and it asserts no relation to the inventory parent term `THC`: that grouping in the candidate table organised the rows and is not a structural or synonym claim. **Query limitation:** Google Trends and YouTube series for `Δ8-THC` / `Δ8-THC リキッド` measure occurrences of those literal strings; a matching result is not evidence of the Δ8 positional isomer content. Evidence that would move the term out of this category: a verified form-level external record selected for the registered string, or a recorded source naming this isomer and its route/origin; the basis belongs in docs/provenance/compound-taxonomy.md.",
+          "@language": "en"
+        },
+        {
+          "@value": "`Δ8-THC` は owner が 2026-11-15 に登録した検索語であり（ISS-20261115-TAX-045）、`datasets/cannabinoid-raw-collection` の候補形式棚卸しから owner が登録対象として列挙した 27 形式の 1 つである。本語は検索文字列の登録であり、物質の同定ではない。単一物質としての化学的同一性は**未確認**である。本研究の棚卸しで本形式について記録された証拠は、公表された命名標準と規制知識グラフである: Δ8 系列は命名標準が区別する 7 つの位置の一つであり、2024 年の厚生労働省令は Δ9 系列（6a,7,8,10a-テトラヒドロ）と Δ8 系列（6a,7,10,10a-テトラヒドロ）を、麻薬を除く除外規定の下で別個の構造グループとして定義し、知識グラフは CAS 5957-75-7 と天然存在 confirmed を記録する（ISS-20261111-TAX-042）。taxonomy には form-level の外部 registry record を選択していない。知識グラフの記載と法令上の構造グループの定義は、本研究の製品分析でも、製品検出でも、検索結果についての記述でもない。 本概念には識別子プロパティも `skos:exactMatch` も割り当てない。本注記に引用した CAS 番号・PubChem CID・UNII・ChEBI ID・Wikidata QID・IUPAC 名は `docs/provenance/compound-taxonomy.md` に記録された証拠であり、本変更では再検証しておらず、登録文字列のために選択もしていない。本語は管理上の登録状態カテゴリ `compound_identity_unverified` に留まるため、この配置は経路／由来、天然存在、化学クラス、構造、別名、薬理、安全性、規制状態を主張せず、棚卸し上の親語 `THC` との関係も主張しない。候補表の親語は行の整理であり、構造や同義の主張ではない。**クエリの限界:** Google Trends / YouTube の `Δ8-THC` / `Δ8-THC リキッド` 系列が測るのは、これらの文字列への一致だけであり、一致した結果はΔ8 位置異性体の内容の証明ではない。本カテゴリから移す条件は、登録文字列について選択された form-level の検証済み外部レコード、または本異性体と経路／由来を記録した出所ことであり、根拠は docs/provenance/compound-taxonomy.md に記録する。",
+          "@language": "ja"
+        }
+      ]
+    },
+    {
+      "@id": "jptr:compound-delta6a-10a-thc",
+      "@type": "skos:Concept",
+      "skos:inScheme": "jptr:compound-taxonomy",
+      "skos:broader": "jptr:compound-identity-unverified",
+      "skos:prefLabel": [
+        {
+          "@value": "Δ6a(10a)-THC",
+          "@language": "en"
+        },
+        {
+          "@value": "Δ6a(10a)-THC",
+          "@language": "ja"
+        }
+      ],
+      "skos:altLabel": [
+        {
+          "@value": "Δ6a(10a)-THC リキッド",
+          "@language": "ja"
+        }
+      ],
+      "skos:notation": "compound_delta6a_10a_thc",
+      "skos:scopeNote": [
+        {
+          "@value": "`Δ6a(10a)-THC` is the owner's search term, registered on 2026-11-15 (ISS-20261115-TAX-045) as one of the 27 forms the owner enumerated for registration from the study's candidate-form inventory in `datasets/cannabinoid-raw-collection`. The term is a registered search string, not a substance identification: the single-substance chemical identity remains UNCONFIRMED. The evidence recorded for this form in the study inventory is the published nomenclature standard together with the regulatory knowledge graph: it is one of the seven positions the standard distinguishes (older name Δ3-THC), and the knowledge graph records its listing on the MHLW controlled-substances list, the regulatory class 麻薬, and natural occurrence unconfirmed (ISS-20261111-TAX-042). No form-level external identifier was selected (no CAS number is recorded) and product analysis was not confirmed. A statutory listing is a legal record, not a product detection, not this study's observation and not a claim about any result. No identifier property and no `skos:exactMatch` are assigned to this taxonomy concept: any CAS / PubChem / UNII / ChEBI / Wikidata / IUPAC values quoted in this note are recorded evidence in `docs/provenance/compound-taxonomy.md`, were not re-verified in this change, and were not selected for the registered query. It stays in compound_identity_unverified, an administrative registration-state category, so this placement asserts no route/origin, natural occurrence, chemical class, structure, synonym, pharmacology, safety or regulatory status, and it asserts no relation to the inventory parent term `THC`: that grouping in the candidate table organised the rows and is not a structural or synonym claim. **Query limitation:** Google Trends and YouTube series for `Δ6a(10a)-THC` / `Δ6a(10a)-THC リキッド` measure occurrences of those literal strings; a matching result is not evidence of this positional isomer content. Evidence that would move the term out of this category: a verified form-level external record selected for the registered string, or a recorded source naming this isomer and its route/origin; the basis belongs in docs/provenance/compound-taxonomy.md.",
+          "@language": "en"
+        },
+        {
+          "@value": "`Δ6a(10a)-THC` は owner が 2026-11-15 に登録した検索語であり（ISS-20261115-TAX-045）、`datasets/cannabinoid-raw-collection` の候補形式棚卸しから owner が登録対象として列挙した 27 形式の 1 つである。本語は検索文字列の登録であり、物質の同定ではない。単一物質としての化学的同一性は**未確認**である。本研究の棚卸しで本形式について記録された証拠は、公表された命名標準と規制知識グラフである: 命名標準が区別する 7 つの位置の一つ（旧式名 Δ3-THC）であり、知識グラフは厚労省統制物質一覧への記載、規制区分「麻薬」、天然存在未確認を記録する（ISS-20261111-TAX-042）。form-level の外部識別子は選択しておらず（CAS 未記録）、製品分析も未確認である。法令上の記載は法令の記録であり、製品検出でも、本研究の観測でも、検索結果についての主張でもない。 本概念には識別子プロパティも `skos:exactMatch` も割り当てない。本注記に引用した CAS 番号・PubChem CID・UNII・ChEBI ID・Wikidata QID・IUPAC 名は `docs/provenance/compound-taxonomy.md` に記録された証拠であり、本変更では再検証しておらず、登録文字列のために選択もしていない。本語は管理上の登録状態カテゴリ `compound_identity_unverified` に留まるため、この配置は経路／由来、天然存在、化学クラス、構造、別名、薬理、安全性、規制状態を主張せず、棚卸し上の親語 `THC` との関係も主張しない。候補表の親語は行の整理であり、構造や同義の主張ではない。**クエリの限界:** Google Trends / YouTube の `Δ6a(10a)-THC` / `Δ6a(10a)-THC リキッド` 系列が測るのは、これらの文字列への一致だけであり、一致した結果は本位置異性体の内容の証明ではない。本カテゴリから移す条件は、登録文字列について選択された form-level の検証済み外部レコード、または本異性体と経路／由来を記録した出所ことであり、根拠は docs/provenance/compound-taxonomy.md に記録する。",
+          "@language": "ja"
+        }
+      ]
+    },
+    {
+      "@id": "jptr:compound-delta6a-7-thc",
+      "@type": "skos:Concept",
+      "skos:inScheme": "jptr:compound-taxonomy",
+      "skos:broader": "jptr:compound-identity-unverified",
+      "skos:prefLabel": [
+        {
+          "@value": "Δ6a(7)-THC",
+          "@language": "en"
+        },
+        {
+          "@value": "Δ6a(7)-THC",
+          "@language": "ja"
+        }
+      ],
+      "skos:altLabel": [
+        {
+          "@value": "Δ6a(7)-THC リキッド",
+          "@language": "ja"
+        }
+      ],
+      "skos:notation": "compound_delta6a_7_thc",
+      "skos:scopeNote": [
+        {
+          "@value": "`Δ6a(7)-THC` is the owner's search term, registered on 2026-11-15 (ISS-20261115-TAX-045) as one of the 27 forms the owner enumerated for registration from the study's candidate-form inventory in `datasets/cannabinoid-raw-collection`. The term is a registered search string, not a substance identification: the single-substance chemical identity remains UNCONFIRMED. The evidence recorded for this form in the study inventory is the published nomenclature standard together with the regulatory knowledge graph: it is one of the seven positions the standard distinguishes (older name Δ4-THC), the knowledge graph records natural occurrence unconfirmed and existing chemical syntheses, and no form-level external identifier was selected (no CAS number is recorded) (ISS-20261111-TAX-042). Product analysis was not confirmed. A recorded synthesis is not this study's analysis, not a product detection and not a claim about any result. No identifier property and no `skos:exactMatch` are assigned to this taxonomy concept: any CAS / PubChem / UNII / ChEBI / Wikidata / IUPAC values quoted in this note are recorded evidence in `docs/provenance/compound-taxonomy.md`, were not re-verified in this change, and were not selected for the registered query. It stays in compound_identity_unverified, an administrative registration-state category, so this placement asserts no route/origin, natural occurrence, chemical class, structure, synonym, pharmacology, safety or regulatory status, and it asserts no relation to the inventory parent term `THC`: that grouping in the candidate table organised the rows and is not a structural or synonym claim. **Query limitation:** Google Trends and YouTube series for `Δ6a(7)-THC` / `Δ6a(7)-THC リキッド` measure occurrences of those literal strings; a matching result is not evidence of this positional isomer content. Evidence that would move the term out of this category: a verified form-level external record selected for the registered string, or a recorded source naming this isomer and its route/origin; the basis belongs in docs/provenance/compound-taxonomy.md.",
+          "@language": "en"
+        },
+        {
+          "@value": "`Δ6a(7)-THC` は owner が 2026-11-15 に登録した検索語であり（ISS-20261115-TAX-045）、`datasets/cannabinoid-raw-collection` の候補形式棚卸しから owner が登録対象として列挙した 27 形式の 1 つである。本語は検索文字列の登録であり、物質の同定ではない。単一物質としての化学的同一性は**未確認**である。本研究の棚卸しで本形式について記録された証拠は、公表された命名標準と規制知識グラフである: 命名標準が区別する 7 つの位置の一つ（旧式名 Δ4-THC）であり、知識グラフは天然存在未確認と化学合成例の存在を記録し、form-level の外部識別子は選択していない（CAS 未記録）（ISS-20261111-TAX-042）。製品分析は未確認である。記録された合成例は本研究の分析でも、製品検出でも、検索結果についての主張でもない。 本概念には識別子プロパティも `skos:exactMatch` も割り当てない。本注記に引用した CAS 番号・PubChem CID・UNII・ChEBI ID・Wikidata QID・IUPAC 名は `docs/provenance/compound-taxonomy.md` に記録された証拠であり、本変更では再検証しておらず、登録文字列のために選択もしていない。本語は管理上の登録状態カテゴリ `compound_identity_unverified` に留まるため、この配置は経路／由来、天然存在、化学クラス、構造、別名、薬理、安全性、規制状態を主張せず、棚卸し上の親語 `THC` との関係も主張しない。候補表の親語は行の整理であり、構造や同義の主張ではない。**クエリの限界:** Google Trends / YouTube の `Δ6a(7)-THC` / `Δ6a(7)-THC リキッド` 系列が測るのは、これらの文字列への一致だけであり、一致した結果は本位置異性体の内容の証明ではない。本カテゴリから移す条件は、登録文字列について選択された form-level の検証済み外部レコード、または本異性体と経路／由来を記録した出所ことであり、根拠は docs/provenance/compound-taxonomy.md に記録する。",
+          "@language": "ja"
+        }
+      ]
+    },
+    {
+      "@id": "jptr:compound-delta7-thc",
+      "@type": "skos:Concept",
+      "skos:inScheme": "jptr:compound-taxonomy",
+      "skos:broader": "jptr:compound-identity-unverified",
+      "skos:prefLabel": [
+        {
+          "@value": "Δ7-THC",
+          "@language": "en"
+        },
+        {
+          "@value": "Δ7-THC",
+          "@language": "ja"
+        }
+      ],
+      "skos:altLabel": [
+        {
+          "@value": "Δ7-THC リキッド",
+          "@language": "ja"
+        }
+      ],
+      "skos:notation": "compound_delta7_thc",
+      "skos:scopeNote": [
+        {
+          "@value": "`Δ7-THC` is the owner's search term, registered on 2026-11-15 (ISS-20261115-TAX-045) as one of the 27 forms the owner enumerated for registration from the study's candidate-form inventory in `datasets/cannabinoid-raw-collection`. The term is a registered search string, not a substance identification: the single-substance chemical identity remains UNCONFIRMED. The evidence recorded for this form in the study inventory is the published nomenclature standard together with the regulatory knowledge graph: it is one of the seven positions the standard distinguishes, an old name Δ5-THC has a correspondence example whose structure still needs confirmation, the knowledge graph records natural occurrence unconfirmed, and no form-level external identifier was selected (no CAS number is recorded) (ISS-20261111-TAX-042). Product analysis was not confirmed, and the name correspondence is not an identity result. No identifier property and no `skos:exactMatch` are assigned to this taxonomy concept: any CAS / PubChem / UNII / ChEBI / Wikidata / IUPAC values quoted in this note are recorded evidence in `docs/provenance/compound-taxonomy.md`, were not re-verified in this change, and were not selected for the registered query. It stays in compound_identity_unverified, an administrative registration-state category, so this placement asserts no route/origin, natural occurrence, chemical class, structure, synonym, pharmacology, safety or regulatory status, and it asserts no relation to the inventory parent term `THC`: that grouping in the candidate table organised the rows and is not a structural or synonym claim. **Query limitation:** Google Trends and YouTube series for `Δ7-THC` / `Δ7-THC リキッド` measure occurrences of those literal strings; a matching result is not evidence of this positional isomer content. Evidence that would move the term out of this category: a verified form-level external record selected for the registered string, or a recorded source naming this isomer and its route/origin; the basis belongs in docs/provenance/compound-taxonomy.md.",
+          "@language": "en"
+        },
+        {
+          "@value": "`Δ7-THC` は owner が 2026-11-15 に登録した検索語であり（ISS-20261115-TAX-045）、`datasets/cannabinoid-raw-collection` の候補形式棚卸しから owner が登録対象として列挙した 27 形式の 1 つである。本語は検索文字列の登録であり、物質の同定ではない。単一物質としての化学的同一性は**未確認**である。本研究の棚卸しで本形式について記録された証拠は、公表された命名標準と規制知識グラフである: 命名標準が区別する 7 つの位置の一つであり、旧式名 Δ5-THC には対応例があるが構造確認を要し、知識グラフは天然存在未確認を記録し、form-level の外部識別子は選択していない（CAS 未記録）（ISS-20261111-TAX-042）。製品分析は未確認であり、名称の対応は同一性の結論ではない。 本概念には識別子プロパティも `skos:exactMatch` も割り当てない。本注記に引用した CAS 番号・PubChem CID・UNII・ChEBI ID・Wikidata QID・IUPAC 名は `docs/provenance/compound-taxonomy.md` に記録された証拠であり、本変更では再検証しておらず、登録文字列のために選択もしていない。本語は管理上の登録状態カテゴリ `compound_identity_unverified` に留まるため、この配置は経路／由来、天然存在、化学クラス、構造、別名、薬理、安全性、規制状態を主張せず、棚卸し上の親語 `THC` との関係も主張しない。候補表の親語は行の整理であり、構造や同義の主張ではない。**クエリの限界:** Google Trends / YouTube の `Δ7-THC` / `Δ7-THC リキッド` 系列が測るのは、これらの文字列への一致だけであり、一致した結果は本位置異性体の内容の証明ではない。本カテゴリから移す条件は、登録文字列について選択された form-level の検証済み外部レコード、または本異性体と経路／由来を記録した出所ことであり、根拠は docs/provenance/compound-taxonomy.md に記録する。",
+          "@language": "ja"
+        }
+      ]
+    },
+    {
+      "@id": "jptr:compound-delta10-thc",
+      "@type": "skos:Concept",
+      "skos:inScheme": "jptr:compound-taxonomy",
+      "skos:broader": "jptr:compound-identity-unverified",
+      "skos:prefLabel": [
+        {
+          "@value": "Δ10-THC",
+          "@language": "en"
+        },
+        {
+          "@value": "Δ10-THC",
+          "@language": "ja"
+        }
+      ],
+      "skos:altLabel": [
+        {
+          "@value": "Δ10-THC リキッド",
+          "@language": "ja"
+        }
+      ],
+      "skos:notation": "compound_delta10_thc",
+      "skos:scopeNote": [
+        {
+          "@value": "`Δ10-THC` is the owner's search term, registered on 2026-11-15 (ISS-20261115-TAX-045) as one of the 27 forms the owner enumerated for registration from the study's candidate-form inventory in `datasets/cannabinoid-raw-collection`. The term is a registered search string, not a substance identification: the single-substance chemical identity remains UNCONFIRMED. The evidence recorded for this form in the study inventory is the published nomenclature standard together with the regulatory knowledge graph: it is one of the seven positions the standard distinguishes, an old name Δ2-THC still needs structural confirmation, the knowledge graph records natural occurrence unconfirmed and CAS 50554-36-6 (ISS-20261111-TAX-042). That CAS number was recorded by the earlier review and was not re-verified against an external registry in this change, so no form-level identifier is attached to this concept. Product analysis was not confirmed, and the recorded CAS is not a product detection. No identifier property and no `skos:exactMatch` are assigned to this taxonomy concept: any CAS / PubChem / UNII / ChEBI / Wikidata / IUPAC values quoted in this note are recorded evidence in `docs/provenance/compound-taxonomy.md`, were not re-verified in this change, and were not selected for the registered query. It stays in compound_identity_unverified, an administrative registration-state category, so this placement asserts no route/origin, natural occurrence, chemical class, structure, synonym, pharmacology, safety or regulatory status, and it asserts no relation to the inventory parent term `THC`: that grouping in the candidate table organised the rows and is not a structural or synonym claim. **Query limitation:** Google Trends and YouTube series for `Δ10-THC` / `Δ10-THC リキッド` measure occurrences of those literal strings; a matching result is not evidence of this positional isomer content. Evidence that would move the term out of this category: a verified form-level external record selected for the registered string, or a recorded source naming this isomer and its route/origin; the basis belongs in docs/provenance/compound-taxonomy.md.",
+          "@language": "en"
+        },
+        {
+          "@value": "`Δ10-THC` は owner が 2026-11-15 に登録した検索語であり（ISS-20261115-TAX-045）、`datasets/cannabinoid-raw-collection` の候補形式棚卸しから owner が登録対象として列挙した 27 形式の 1 つである。本語は検索文字列の登録であり、物質の同定ではない。単一物質としての化学的同一性は**未確認**である。本研究の棚卸しで本形式について記録された証拠は、公表された命名標準と規制知識グラフである: 命名標準が区別する 7 つの位置の一つであり、旧式名 Δ2-THC は構造確認を要し、知識グラフは天然存在未確認と CAS 50554-36-6 を記録する（ISS-20261111-TAX-042）。この CAS 番号は先行レビューの記録であり、本変更で外部 registry に対して再検証していないため、本概念には form-level の識別子を付けない。製品分析は未確認であり、記録された CAS は製品検出ではない。 本概念には識別子プロパティも `skos:exactMatch` も割り当てない。本注記に引用した CAS 番号・PubChem CID・UNII・ChEBI ID・Wikidata QID・IUPAC 名は `docs/provenance/compound-taxonomy.md` に記録された証拠であり、本変更では再検証しておらず、登録文字列のために選択もしていない。本語は管理上の登録状態カテゴリ `compound_identity_unverified` に留まるため、この配置は経路／由来、天然存在、化学クラス、構造、別名、薬理、安全性、規制状態を主張せず、棚卸し上の親語 `THC` との関係も主張しない。候補表の親語は行の整理であり、構造や同義の主張ではない。**クエリの限界:** Google Trends / YouTube の `Δ10-THC` / `Δ10-THC リキッド` 系列が測るのは、これらの文字列への一致だけであり、一致した結果は本位置異性体の内容の証明ではない。本カテゴリから移す条件は、登録文字列について選択された form-level の検証済み外部レコード、または本異性体と経路／由来を記録した出所ことであり、根拠は docs/provenance/compound-taxonomy.md に記録する。",
+          "@language": "ja"
+        }
+      ]
+    },
+    {
+      "@id": "jptr:compound-delta9-11-thc",
+      "@type": "skos:Concept",
+      "skos:inScheme": "jptr:compound-taxonomy",
+      "skos:broader": "jptr:compound-identity-unverified",
+      "skos:prefLabel": [
+        {
+          "@value": "Δ9(11)-THC",
+          "@language": "en"
+        },
+        {
+          "@value": "Δ9(11)-THC",
+          "@language": "ja"
+        }
+      ],
+      "skos:altLabel": [
+        {
+          "@value": "Δ9(11)-THC リキッド",
+          "@language": "ja"
+        }
+      ],
+      "skos:notation": "compound_delta9_11_thc",
+      "skos:scopeNote": [
+        {
+          "@value": "`Δ9(11)-THC` is the owner's search term, registered on 2026-11-15 (ISS-20261115-TAX-045) as one of the 27 forms the owner enumerated for registration from the study's candidate-form inventory in `datasets/cannabinoid-raw-collection`. The term is a registered search string, not a substance identification: the single-substance chemical identity remains UNCONFIRMED. The evidence recorded for this form in the study inventory is the published nomenclature standard together with the regulatory knowledge graph: it is one of the seven positions the standard distinguishes, with the older name Δ1(7)-THC and the common names Δ11-THC and exo-THC; the knowledge graph records natural occurrence unconfirmed, and no form-level external identifier was selected (no CAS number is recorded) (ISS-20261111-TAX-042). Product analysis was not confirmed, and the common names are recorded nomenclature, not an identity result. No identifier property and no `skos:exactMatch` are assigned to this taxonomy concept: any CAS / PubChem / UNII / ChEBI / Wikidata / IUPAC values quoted in this note are recorded evidence in `docs/provenance/compound-taxonomy.md`, were not re-verified in this change, and were not selected for the registered query. It stays in compound_identity_unverified, an administrative registration-state category, so this placement asserts no route/origin, natural occurrence, chemical class, structure, synonym, pharmacology, safety or regulatory status, and it asserts no relation to the inventory parent term `THC`: that grouping in the candidate table organised the rows and is not a structural or synonym claim. **Query limitation:** Google Trends and YouTube series for `Δ9(11)-THC` / `Δ9(11)-THC リキッド` measure occurrences of those literal strings; a matching result is not evidence of this positional isomer content. Evidence that would move the term out of this category: a verified form-level external record selected for the registered string, or a recorded source naming this isomer and its route/origin; the basis belongs in docs/provenance/compound-taxonomy.md.",
+          "@language": "en"
+        },
+        {
+          "@value": "`Δ9(11)-THC` は owner が 2026-11-15 に登録した検索語であり（ISS-20261115-TAX-045）、`datasets/cannabinoid-raw-collection` の候補形式棚卸しから owner が登録対象として列挙した 27 形式の 1 つである。本語は検索文字列の登録であり、物質の同定ではない。単一物質としての化学的同一性は**未確認**である。本研究の棚卸しで本形式について記録された証拠は、公表された命名標準と規制知識グラフである: 命名標準が区別する 7 つの位置の一つで、旧式名 Δ1(7)-THC、慣用名 Δ11-THC / exo-THC をもつ。知識グラフは天然存在未確認を記録し、form-level の外部識別子は選択していない（CAS 未記録）（ISS-20261111-TAX-042）。製品分析は未確認であり、慣用名は命名の記録であって同一性の結論ではない。 本概念には識別子プロパティも `skos:exactMatch` も割り当てない。本注記に引用した CAS 番号・PubChem CID・UNII・ChEBI ID・Wikidata QID・IUPAC 名は `docs/provenance/compound-taxonomy.md` に記録された証拠であり、本変更では再検証しておらず、登録文字列のために選択もしていない。本語は管理上の登録状態カテゴリ `compound_identity_unverified` に留まるため、この配置は経路／由来、天然存在、化学クラス、構造、別名、薬理、安全性、規制状態を主張せず、棚卸し上の親語 `THC` との関係も主張しない。候補表の親語は行の整理であり、構造や同義の主張ではない。**クエリの限界:** Google Trends / YouTube の `Δ9(11)-THC` / `Δ9(11)-THC リキッド` 系列が測るのは、これらの文字列への一致だけであり、一致した結果は本位置異性体の内容の証明ではない。本カテゴリから移す条件は、登録文字列について選択された form-level の検証済み外部レコード、または本異性体と経路／由来を記録した出所ことであり、根拠は docs/provenance/compound-taxonomy.md に記録する。",
+          "@language": "ja"
+        }
+      ]
+    },
+    {
+      "@id": "jptr:compound-delta9-thcv",
+      "@type": "skos:Concept",
+      "skos:inScheme": "jptr:compound-taxonomy",
+      "skos:broader": "jptr:compound-identity-unverified",
+      "skos:prefLabel": [
+        {
+          "@value": "Δ9-THCV",
+          "@language": "en"
+        },
+        {
+          "@value": "Δ9-THCV",
+          "@language": "ja"
+        }
+      ],
+      "skos:altLabel": [
+        {
+          "@value": "Δ9-THCV リキッド",
+          "@language": "ja"
+        }
+      ],
+      "skos:notation": "compound_delta9_thcv",
+      "skos:scopeNote": [
+        {
+          "@value": "`Δ9-THCV` is the owner's search term, registered on 2026-11-15 (ISS-20261115-TAX-045) as one of the 27 forms the owner enumerated for registration from the study's candidate-form inventory in `datasets/cannabinoid-raw-collection`. The term is a registered search string, not a substance identification: the single-substance chemical identity remains UNCONFIRMED. The evidence recorded for this form in the study inventory is a registry record: ChEBI 755032 and Wikidata Q76009679 (CAS 31262-37-0, PubChem CID 93147), with a stereo-unspecified Wikidata item Q254768 also recorded (ISS-20261115-TAX-043). Those records were verified by the earlier crosswalk review, not by this change, and none of them establishes that the search string names this form. Whether `compound_thcv` should be narrowed to this form remains a separate owner decision, and this concept does not narrow it. No identifier property and no `skos:exactMatch` are assigned to this taxonomy concept: any CAS / PubChem / UNII / ChEBI / Wikidata / IUPAC values quoted in this note are recorded evidence in `docs/provenance/compound-taxonomy.md`, were not re-verified in this change, and were not selected for the registered query. It stays in compound_identity_unverified, an administrative registration-state category, so this placement asserts no route/origin, natural occurrence, chemical class, structure, synonym, pharmacology, safety or regulatory status, and it asserts no relation to the inventory parent term `THCV`: that grouping in the candidate table organised the rows and is not a structural or synonym claim. **Query limitation:** Google Trends and YouTube series for `Δ9-THCV` / `Δ9-THCV リキッド` measure occurrences of those literal strings; a matching result is not evidence of the Δ9 form content. Evidence that would move the term out of this category: a verified external record selected for the registered string together with an owner decision on the granularity of `compound_thcv`; the basis belongs in docs/provenance/compound-taxonomy.md.",
+          "@language": "en"
+        },
+        {
+          "@value": "`Δ9-THCV` は owner が 2026-11-15 に登録した検索語であり（ISS-20261115-TAX-045）、`datasets/cannabinoid-raw-collection` の候補形式棚卸しから owner が登録対象として列挙した 27 形式の 1 つである。本語は検索文字列の登録であり、物質の同定ではない。単一物質としての化学的同一性は**未確認**である。本研究の棚卸しで本形式について記録された証拠は registry record である: ChEBI 755032、Wikidata Q76009679（CAS 31262-37-0、PubChem CID 93147）で、立体化学未指定の Wikidata Q254768 も記録されている（ISS-20261115-TAX-043）。これらの記録は先行 crosswalk レビューが検証したもので本変更ではない。検索文字列が本形式を指すことを確定するものでもない。`compound_thcv` を本形式に狭めるかは別の owner 判断であり、本概念はそれを狭めない。 本概念には識別子プロパティも `skos:exactMatch` も割り当てない。本注記に引用した CAS 番号・PubChem CID・UNII・ChEBI ID・Wikidata QID・IUPAC 名は `docs/provenance/compound-taxonomy.md` に記録された証拠であり、本変更では再検証しておらず、登録文字列のために選択もしていない。本語は管理上の登録状態カテゴリ `compound_identity_unverified` に留まるため、この配置は経路／由来、天然存在、化学クラス、構造、別名、薬理、安全性、規制状態を主張せず、棚卸し上の親語 `THCV` との関係も主張しない。候補表の親語は行の整理であり、構造や同義の主張ではない。**クエリの限界:** Google Trends / YouTube の `Δ9-THCV` / `Δ9-THCV リキッド` 系列が測るのは、これらの文字列への一致だけであり、一致した結果はΔ9 体の内容の証明ではない。本カテゴリから移す条件は、登録文字列について選択された検証済み外部レコードと、`compound_thcv` の粒度についての owner 判断ことであり、根拠は docs/provenance/compound-taxonomy.md に記録する。",
+          "@language": "ja"
+        }
+      ]
+    },
+    {
+      "@id": "jptr:compound-delta8-thcv",
+      "@type": "skos:Concept",
+      "skos:inScheme": "jptr:compound-taxonomy",
+      "skos:broader": "jptr:compound-identity-unverified",
+      "skos:prefLabel": [
+        {
+          "@value": "Δ8-THCV",
+          "@language": "en"
+        },
+        {
+          "@value": "Δ8-THCV",
+          "@language": "ja"
+        }
+      ],
+      "skos:altLabel": [
+        {
+          "@value": "Δ8-THCV リキッド",
+          "@language": "ja"
+        }
+      ],
+      "skos:notation": "compound_delta8_thcv",
+      "skos:scopeNote": [
+        {
+          "@value": "`Δ8-THCV` is the owner's search term, registered on 2026-11-15 (ISS-20261115-TAX-045) as one of the 27 forms the owner enumerated for registration from the study's candidate-form inventory in `datasets/cannabinoid-raw-collection`. The term is a registered search string, not a substance identification: the single-substance chemical identity remains UNCONFIRMED. The evidence recorded for this form in the study inventory is a regulatory document: domestic regulatory material records Δ8-THCV and Δ9-THCV as designated substances (research/regulatory-status/THCV.md). A registry record was not confirmed: the 2026-11-15 ChEBI search returned no entry (ISS-20261115-TAX-043). A regulatory listing is a legal record, not a registry record, not a product detection and not a claim about any result. No identifier property and no `skos:exactMatch` are assigned to this taxonomy concept: any CAS / PubChem / UNII / ChEBI / Wikidata / IUPAC values quoted in this note are recorded evidence in `docs/provenance/compound-taxonomy.md`, were not re-verified in this change, and were not selected for the registered query. It stays in compound_identity_unverified, an administrative registration-state category, so this placement asserts no route/origin, natural occurrence, chemical class, structure, synonym, pharmacology, safety or regulatory status, and it asserts no relation to the inventory parent term `THCV`: that grouping in the candidate table organised the rows and is not a structural or synonym claim. **Query limitation:** Google Trends and YouTube series for `Δ8-THCV` / `Δ8-THCV リキッド` measure occurrences of those literal strings; a matching result is not evidence of the Δ8 form content. Evidence that would move the term out of this category: a verified external registry record for this form, selected for the registered string; the basis belongs in docs/provenance/compound-taxonomy.md.",
+          "@language": "en"
+        },
+        {
+          "@value": "`Δ8-THCV` は owner が 2026-11-15 に登録した検索語であり（ISS-20261115-TAX-045）、`datasets/cannabinoid-raw-collection` の候補形式棚卸しから owner が登録対象として列挙した 27 形式の 1 つである。本語は検索文字列の登録であり、物質の同定ではない。単一物質としての化学的同一性は**未確認**である。本研究の棚卸しで本形式について記録された証拠は規制資料である: 国内の規制資料が Δ8-THCV / Δ9-THCV を指定薬物として記録する（research/regulatory-status/THCV.md）。registry record は未確認で、2026-11-15 の ChEBI 検索は該当なしだった（ISS-20261115-TAX-043）。規制上の列挙は法令の記録であり、registry record でも、製品検出でも、検索結果についての主張でもない。 本概念には識別子プロパティも `skos:exactMatch` も割り当てない。本注記に引用した CAS 番号・PubChem CID・UNII・ChEBI ID・Wikidata QID・IUPAC 名は `docs/provenance/compound-taxonomy.md` に記録された証拠であり、本変更では再検証しておらず、登録文字列のために選択もしていない。本語は管理上の登録状態カテゴリ `compound_identity_unverified` に留まるため、この配置は経路／由来、天然存在、化学クラス、構造、別名、薬理、安全性、規制状態を主張せず、棚卸し上の親語 `THCV` との関係も主張しない。候補表の親語は行の整理であり、構造や同義の主張ではない。**クエリの限界:** Google Trends / YouTube の `Δ8-THCV` / `Δ8-THCV リキッド` 系列が測るのは、これらの文字列への一致だけであり、一致した結果はΔ8 体の内容の証明ではない。本カテゴリから移す条件は、本形式についての検証済み外部 registry record を登録文字列に対して選択することことであり、根拠は docs/provenance/compound-taxonomy.md に記録する。",
+          "@language": "ja"
+        }
+      ]
+    },
+    {
+      "@id": "jptr:compound-thcjd-o-acetate",
+      "@type": "skos:Concept",
+      "skos:inScheme": "jptr:compound-taxonomy",
+      "skos:broader": "jptr:compound-identity-unverified",
+      "skos:prefLabel": [
+        {
+          "@value": "THCJD-O-acetate",
+          "@language": "en"
+        },
+        {
+          "@value": "THCJD-O-acetate",
+          "@language": "ja"
+        }
+      ],
+      "skos:altLabel": [
+        {
+          "@value": "THCJD-O-acetate リキッド",
+          "@language": "ja"
+        }
+      ],
+      "skos:notation": "compound_thcjd_o_acetate",
+      "skos:scopeNote": [
+        {
+          "@value": "`THCJD-O-acetate` is the owner's search term, registered on 2026-11-15 (ISS-20261115-TAX-045) as one of the 27 forms the owner enumerated for registration from the study's candidate-form inventory in `datasets/cannabinoid-raw-collection`. The term is a registered search string, not a substance identification: the single-substance chemical identity remains UNCONFIRMED. The evidence recorded for this form in the study inventory is a statutory structural group: MHLW material on the 2024 designated substances records this acetate of the C8 homologue (ISS-20261111-TAX-042). It is registered here as the literal, isomer-unspecified acetate topic: the repository does not enumerate Δ8 and Δ9 structures for it, no isomer is named by the term, and this concept does not split it. Product analysis was not confirmed, the earlier four-family isomer review did not include it, and its inclusion required the owner's 2026-11-15 decision. A statutory structural listing is not a product detection. No identifier property and no `skos:exactMatch` are assigned to this taxonomy concept: any CAS / PubChem / UNII / ChEBI / Wikidata / IUPAC values quoted in this note are recorded evidence in `docs/provenance/compound-taxonomy.md`, were not re-verified in this change, and were not selected for the registered query. It stays in compound_identity_unverified, an administrative registration-state category, so this placement asserts no route/origin, natural occurrence, chemical class, structure, synonym, pharmacology, safety or regulatory status, and it asserts no relation to the inventory parent term `THCJD`: that grouping in the candidate table organised the rows and is not a structural or synonym claim. **Query limitation:** Google Trends and YouTube series for `THCJD-O-acetate` / `THCJD-O-acetate リキッド` measure occurrences of those literal strings; a matching result is not evidence of either acetate isomer content. Evidence that would move the term out of this category: an owner decision naming a single isomer, or recorded Δ8 / Δ9 structures for this acetate, plus a verified external record; the basis belongs in docs/provenance/compound-taxonomy.md.",
+          "@language": "en"
+        },
+        {
+          "@value": "`THCJD-O-acetate` は owner が 2026-11-15 に登録した検索語であり（ISS-20261115-TAX-045）、`datasets/cannabinoid-raw-collection` の候補形式棚卸しから owner が登録対象として列挙した 27 形式の 1 つである。本語は検索文字列の登録であり、物質の同定ではない。単一物質としての化学的同一性は**未確認**である。本研究の棚卸しで本形式について記録された証拠は法令上の構造グループである: 2024 年の指定薬物関連の厚生労働省資料が C8 同族体の本アセテートを記載する（ISS-20261111-TAX-042）。本概念は文字列どおりの**異性体未指定**アセテートのトピックとして登録し、リポジトリは本語について Δ8 / Δ9 の構造を列挙せず、語も異性体を名指さず、本概念はそれを分割しない。製品分析は未確認で、先行の 4 ファミリーレビューの対象外であり、追加には 2026-11-15 の owner 決定を要した。法令上の構造の列挙は製品検出ではない。 本概念には識別子プロパティも `skos:exactMatch` も割り当てない。本注記に引用した CAS 番号・PubChem CID・UNII・ChEBI ID・Wikidata QID・IUPAC 名は `docs/provenance/compound-taxonomy.md` に記録された証拠であり、本変更では再検証しておらず、登録文字列のために選択もしていない。本語は管理上の登録状態カテゴリ `compound_identity_unverified` に留まるため、この配置は経路／由来、天然存在、化学クラス、構造、別名、薬理、安全性、規制状態を主張せず、棚卸し上の親語 `THCJD` との関係も主張しない。候補表の親語は行の整理であり、構造や同義の主張ではない。**クエリの限界:** Google Trends / YouTube の `THCJD-O-acetate` / `THCJD-O-acetate リキッド` 系列が測るのは、これらの文字列への一致だけであり、一致した結果はいずれかのアセテート異性体の内容の証明ではない。本カテゴリから移す条件は、単一異性体を名指す owner 判断、または本アセテートの Δ8 / Δ9 構造の記録、および検証済み外部レコードことであり、根拠は docs/provenance/compound-taxonomy.md に記録する。",
+          "@language": "ja"
+        }
+      ]
+    },
+    {
+      "@id": "jptr:compound-delta8-thch",
+      "@type": "skos:Concept",
+      "skos:inScheme": "jptr:compound-taxonomy",
+      "skos:broader": "jptr:compound-identity-unverified",
+      "skos:prefLabel": [
+        {
+          "@value": "Δ8-THCH",
+          "@language": "en"
+        },
+        {
+          "@value": "Δ8-THCH",
+          "@language": "ja"
+        }
+      ],
+      "skos:altLabel": [
+        {
+          "@value": "Δ8-THCH リキッド",
+          "@language": "ja"
+        }
+      ],
+      "skos:notation": "compound_delta8_thch",
+      "skos:scopeNote": [
+        {
+          "@value": "`Δ8-THCH` is the owner's search term, registered on 2026-11-15 (ISS-20261115-TAX-045) as one of the 27 forms the owner enumerated for registration from the study's candidate-form inventory in `datasets/cannabinoid-raw-collection`. The term is a registered search string, not a substance identification: the single-substance chemical identity remains UNCONFIRMED. The evidence recorded for this form in the study inventory is a statutory structural group: Consumer Affairs Agency material on THCH as a designated substance records Δ8-THCH and Δ9-THCH as covered (individual designation 2023-08-04, generic designation 2023-09-10) (research/regulatory-status/THCH.md §1). No registry record was selected and product analytical identification was not confirmed in this repository. A statutory structural listing is a legal structural fact, not a product detection and not a claim about any result. No identifier property and no `skos:exactMatch` are assigned to this taxonomy concept: any CAS / PubChem / UNII / ChEBI / Wikidata / IUPAC values quoted in this note are recorded evidence in `docs/provenance/compound-taxonomy.md`, were not re-verified in this change, and were not selected for the registered query. It stays in compound_identity_unverified, an administrative registration-state category, so this placement asserts no route/origin, natural occurrence, chemical class, structure, synonym, pharmacology, safety or regulatory status, and it asserts no relation to the inventory parent term `THCH`: that grouping in the candidate table organised the rows and is not a structural or synonym claim. **Query limitation:** Google Trends and YouTube series for `Δ8-THCH` / `Δ8-THCH リキッド` measure occurrences of those literal strings; a matching result is not evidence of the Δ8 form content. Evidence that would move the term out of this category: a verified external record selected for the registered string, or a recorded product identification for this form; the basis belongs in docs/provenance/compound-taxonomy.md.",
+          "@language": "en"
+        },
+        {
+          "@value": "`Δ8-THCH` は owner が 2026-11-15 に登録した検索語であり（ISS-20261115-TAX-045）、`datasets/cannabinoid-raw-collection` の候補形式棚卸しから owner が登録対象として列挙した 27 形式の 1 つである。本語は検索文字列の登録であり、物質の同定ではない。単一物質としての化学的同一性は**未確認**である。本研究の棚卸しで本形式について記録された証拠は法令上の構造グループである: 消費者庁の THCH 指定薬物資料が Δ8-THCH / Δ9-THCH を対象として記録する（個別指定 2023-08-04、包括指定 2023-09-10）（research/regulatory-status/THCH.md §1）。registry record は選択しておらず、製品中の分析同定も本リポジトリでは未確認である。法令上の構造の列挙は法令上の構造の事実であり、製品検出でも、検索結果についての主張でもない。 本概念には識別子プロパティも `skos:exactMatch` も割り当てない。本注記に引用した CAS 番号・PubChem CID・UNII・ChEBI ID・Wikidata QID・IUPAC 名は `docs/provenance/compound-taxonomy.md` に記録された証拠であり、本変更では再検証しておらず、登録文字列のために選択もしていない。本語は管理上の登録状態カテゴリ `compound_identity_unverified` に留まるため、この配置は経路／由来、天然存在、化学クラス、構造、別名、薬理、安全性、規制状態を主張せず、棚卸し上の親語 `THCH` との関係も主張しない。候補表の親語は行の整理であり、構造や同義の主張ではない。**クエリの限界:** Google Trends / YouTube の `Δ8-THCH` / `Δ8-THCH リキッド` 系列が測るのは、これらの文字列への一致だけであり、一致した結果はΔ8 体の内容の証明ではない。本カテゴリから移す条件は、登録文字列について選択された検証済み外部レコード、または本形式の製品同定の記録ことであり、根拠は docs/provenance/compound-taxonomy.md に記録する。",
+          "@language": "ja"
+        }
+      ]
+    },
+    {
+      "@id": "jptr:compound-delta9-thch",
+      "@type": "skos:Concept",
+      "skos:inScheme": "jptr:compound-taxonomy",
+      "skos:broader": "jptr:compound-identity-unverified",
+      "skos:prefLabel": [
+        {
+          "@value": "Δ9-THCH",
+          "@language": "en"
+        },
+        {
+          "@value": "Δ9-THCH",
+          "@language": "ja"
+        }
+      ],
+      "skos:altLabel": [
+        {
+          "@value": "Δ9-THCH リキッド",
+          "@language": "ja"
+        }
+      ],
+      "skos:notation": "compound_delta9_thch",
+      "skos:scopeNote": [
+        {
+          "@value": "`Δ9-THCH` is the owner's search term, registered on 2026-11-15 (ISS-20261115-TAX-045) as one of the 27 forms the owner enumerated for registration from the study's candidate-form inventory in `datasets/cannabinoid-raw-collection`. The term is a registered search string, not a substance identification: the single-substance chemical identity remains UNCONFIRMED. The evidence recorded for this form in the study inventory is a statutory structural group: Consumer Affairs Agency material on THCH as a designated substance records Δ8-THCH and Δ9-THCH as covered (individual designation 2023-08-04, generic designation 2023-09-10) (research/regulatory-status/THCH.md §1). No registry record was selected and product analytical identification was not confirmed in this repository. A statutory structural listing is a legal structural fact, not a product detection and not a claim about any result. No identifier property and no `skos:exactMatch` are assigned to this taxonomy concept: any CAS / PubChem / UNII / ChEBI / Wikidata / IUPAC values quoted in this note are recorded evidence in `docs/provenance/compound-taxonomy.md`, were not re-verified in this change, and were not selected for the registered query. It stays in compound_identity_unverified, an administrative registration-state category, so this placement asserts no route/origin, natural occurrence, chemical class, structure, synonym, pharmacology, safety or regulatory status, and it asserts no relation to the inventory parent term `THCH`: that grouping in the candidate table organised the rows and is not a structural or synonym claim. **Query limitation:** Google Trends and YouTube series for `Δ9-THCH` / `Δ9-THCH リキッド` measure occurrences of those literal strings; a matching result is not evidence of the Δ9 form content. Evidence that would move the term out of this category: a verified external record selected for the registered string, or a recorded product identification for this form; the basis belongs in docs/provenance/compound-taxonomy.md.",
+          "@language": "en"
+        },
+        {
+          "@value": "`Δ9-THCH` は owner が 2026-11-15 に登録した検索語であり（ISS-20261115-TAX-045）、`datasets/cannabinoid-raw-collection` の候補形式棚卸しから owner が登録対象として列挙した 27 形式の 1 つである。本語は検索文字列の登録であり、物質の同定ではない。単一物質としての化学的同一性は**未確認**である。本研究の棚卸しで本形式について記録された証拠は法令上の構造グループである: 消費者庁の THCH 指定薬物資料が Δ8-THCH / Δ9-THCH を対象として記録する（個別指定 2023-08-04、包括指定 2023-09-10）（research/regulatory-status/THCH.md §1）。registry record は選択しておらず、製品中の分析同定も本リポジトリでは未確認である。法令上の構造の列挙は法令上の構造の事実であり、製品検出でも、検索結果についての主張でもない。 本概念には識別子プロパティも `skos:exactMatch` も割り当てない。本注記に引用した CAS 番号・PubChem CID・UNII・ChEBI ID・Wikidata QID・IUPAC 名は `docs/provenance/compound-taxonomy.md` に記録された証拠であり、本変更では再検証しておらず、登録文字列のために選択もしていない。本語は管理上の登録状態カテゴリ `compound_identity_unverified` に留まるため、この配置は経路／由来、天然存在、化学クラス、構造、別名、薬理、安全性、規制状態を主張せず、棚卸し上の親語 `THCH` との関係も主張しない。候補表の親語は行の整理であり、構造や同義の主張ではない。**クエリの限界:** Google Trends / YouTube の `Δ9-THCH` / `Δ9-THCH リキッド` 系列が測るのは、これらの文字列への一致だけであり、一致した結果はΔ9 体の内容の証明ではない。本カテゴリから移す条件は、登録文字列について選択された検証済み外部レコード、または本形式の製品同定の記録ことであり、根拠は docs/provenance/compound-taxonomy.md に記録する。",
+          "@language": "ja"
+        }
+      ]
+    },
+    {
+      "@id": "jptr:compound-9-r-hhc",
+      "@type": "skos:Concept",
+      "skos:inScheme": "jptr:compound-taxonomy",
+      "skos:broader": "jptr:compound-identity-unverified",
+      "skos:prefLabel": [
+        {
+          "@value": "9(R)-HHC",
+          "@language": "en"
+        },
+        {
+          "@value": "9(R)-HHC",
+          "@language": "ja"
+        }
+      ],
+      "skos:altLabel": [
+        {
+          "@value": "9(R)-HHC リキッド",
+          "@language": "ja"
+        }
+      ],
+      "skos:notation": "compound_9_r_hhc",
+      "skos:scopeNote": [
+        {
+          "@value": "`9(R)-HHC` is the owner's search term, registered on 2026-11-15 (ISS-20261115-TAX-045) as one of the 27 forms the owner enumerated for registration from the study's candidate-form inventory in `datasets/cannabinoid-raw-collection`. The term is a registered search string, not a substance identification: the single-substance chemical identity remains UNCONFIRMED. The evidence recorded for this form in the study inventory is a registry record together with the WHO critical review: PubChem CID 11067065, CAS 36403-90-4 and InChIKey XKRHRBJLCLXSGE-DJIMGWMZSA-N, and the WHO 47th ECDD (2024) §2C, which records (6aR,9R,10aR)-HHC, also called 9β-HHC, as one of the two main epimers of CBD-derived product (ISS-20261111-TAX-042). That is a review statement about product composition, not an identification of any specific product, not this study's analysis and not a claim about any result. The registry record was verified by the earlier review, not by this change. No identifier property and no `skos:exactMatch` are assigned to this taxonomy concept: any CAS / PubChem / UNII / ChEBI / Wikidata / IUPAC values quoted in this note are recorded evidence in `docs/provenance/compound-taxonomy.md`, were not re-verified in this change, and were not selected for the registered query. It stays in compound_identity_unverified, an administrative registration-state category, so this placement asserts no route/origin, natural occurrence, chemical class, structure, synonym, pharmacology, safety or regulatory status, and it asserts no relation to the inventory parent term `HHC`: that grouping in the candidate table organised the rows and is not a structural or synonym claim. **Query limitation:** Google Trends and YouTube series for `9(R)-HHC` / `9(R)-HHC リキッド` measure occurrences of those literal strings; a matching result is not evidence of this stereochemical configuration content. Evidence that would move the term out of this category: a verified external record selected for the registered string together with a recorded product identification or an owner decision on the granularity of `compound_hhc`; the basis belongs in docs/provenance/compound-taxonomy.md.",
+          "@language": "en"
+        },
+        {
+          "@value": "`9(R)-HHC` は owner が 2026-11-15 に登録した検索語であり（ISS-20261115-TAX-045）、`datasets/cannabinoid-raw-collection` の候補形式棚卸しから owner が登録対象として列挙した 27 形式の 1 つである。本語は検索文字列の登録であり、物質の同定ではない。単一物質としての化学的同一性は**未確認**である。本研究の棚卸しで本形式について記録された証拠は registry record と WHO critical review である: PubChem CID 11067065、CAS 36403-90-4、InChIKey XKRHRBJLCLXSGE-DJIMGWMZSA-N、および WHO 47th ECDD (2024) §2C が (6aR,9R,10aR)-HHC（9β-HHC）を CBD 由来製品の主要 2 エピマーの一つとして記録する（ISS-20261111-TAX-042）。これは製品組成についてのレビューの記載であり、特定製品の同定でも、本研究の分析でも、検索結果についての主張でもない。registry record は先行レビューが検証したもので本変更ではない。 本概念には識別子プロパティも `skos:exactMatch` も割り当てない。本注記に引用した CAS 番号・PubChem CID・UNII・ChEBI ID・Wikidata QID・IUPAC 名は `docs/provenance/compound-taxonomy.md` に記録された証拠であり、本変更では再検証しておらず、登録文字列のために選択もしていない。本語は管理上の登録状態カテゴリ `compound_identity_unverified` に留まるため、この配置は経路／由来、天然存在、化学クラス、構造、別名、薬理、安全性、規制状態を主張せず、棚卸し上の親語 `HHC` との関係も主張しない。候補表の親語は行の整理であり、構造や同義の主張ではない。**クエリの限界:** Google Trends / YouTube の `9(R)-HHC` / `9(R)-HHC リキッド` 系列が測るのは、これらの文字列への一致だけであり、一致した結果は本立体配置の内容の証明ではない。本カテゴリから移す条件は、登録文字列について選択された検証済み外部レコードと、製品同定の記録または `compound_hhc` の粒度についての owner 判断ことであり、根拠は docs/provenance/compound-taxonomy.md に記録する。",
+          "@language": "ja"
+        }
+      ]
+    },
+    {
+      "@id": "jptr:compound-9-s-hhc",
+      "@type": "skos:Concept",
+      "skos:inScheme": "jptr:compound-taxonomy",
+      "skos:broader": "jptr:compound-identity-unverified",
+      "skos:prefLabel": [
+        {
+          "@value": "9(S)-HHC",
+          "@language": "en"
+        },
+        {
+          "@value": "9(S)-HHC",
+          "@language": "ja"
+        }
+      ],
+      "skos:altLabel": [
+        {
+          "@value": "9(S)-HHC リキッド",
+          "@language": "ja"
+        }
+      ],
+      "skos:notation": "compound_9_s_hhc",
+      "skos:scopeNote": [
+        {
+          "@value": "`9(S)-HHC` is the owner's search term, registered on 2026-11-15 (ISS-20261115-TAX-045) as one of the 27 forms the owner enumerated for registration from the study's candidate-form inventory in `datasets/cannabinoid-raw-collection`. The term is a registered search string, not a substance identification: the single-substance chemical identity remains UNCONFIRMED. The evidence recorded for this form in the study inventory is a registry record together with the WHO critical review: PubChem CID 14378541, CAS 36403-91-5 and InChIKey XKRHRBJLCLXSGE-USXIJHARSA-N, and the WHO 47th ECDD (2024) §2C, which records (6aR,9S,10aR)-HHC, also called 9α-HHC, as the second of the two main epimers of CBD-derived product (ISS-20261111-TAX-042). That is a review statement about product composition, not an identification of any specific product, not this study's analysis and not a claim about any result. The registry record was verified by the earlier review, not by this change. No identifier property and no `skos:exactMatch` are assigned to this taxonomy concept: any CAS / PubChem / UNII / ChEBI / Wikidata / IUPAC values quoted in this note are recorded evidence in `docs/provenance/compound-taxonomy.md`, were not re-verified in this change, and were not selected for the registered query. It stays in compound_identity_unverified, an administrative registration-state category, so this placement asserts no route/origin, natural occurrence, chemical class, structure, synonym, pharmacology, safety or regulatory status, and it asserts no relation to the inventory parent term `HHC`: that grouping in the candidate table organised the rows and is not a structural or synonym claim. **Query limitation:** Google Trends and YouTube series for `9(S)-HHC` / `9(S)-HHC リキッド` measure occurrences of those literal strings; a matching result is not evidence of this stereochemical configuration content. Evidence that would move the term out of this category: a verified external record selected for the registered string together with a recorded product identification or an owner decision on the granularity of `compound_hhc`; the basis belongs in docs/provenance/compound-taxonomy.md.",
+          "@language": "en"
+        },
+        {
+          "@value": "`9(S)-HHC` は owner が 2026-11-15 に登録した検索語であり（ISS-20261115-TAX-045）、`datasets/cannabinoid-raw-collection` の候補形式棚卸しから owner が登録対象として列挙した 27 形式の 1 つである。本語は検索文字列の登録であり、物質の同定ではない。単一物質としての化学的同一性は**未確認**である。本研究の棚卸しで本形式について記録された証拠は registry record と WHO critical review である: PubChem CID 14378541、CAS 36403-91-5、InChIKey XKRHRBJLCLXSGE-USXIJHARSA-N、および WHO 47th ECDD (2024) §2C が (6aR,9S,10aR)-HHC（9α-HHC）を CBD 由来製品の主要 2 エピマーの一つとして記録する（ISS-20261111-TAX-042）。これは製品組成についてのレビューの記載であり、特定製品の同定でも、本研究の分析でも、検索結果についての主張でもない。registry record は先行レビューが検証したもので本変更ではない。 本概念には識別子プロパティも `skos:exactMatch` も割り当てない。本注記に引用した CAS 番号・PubChem CID・UNII・ChEBI ID・Wikidata QID・IUPAC 名は `docs/provenance/compound-taxonomy.md` に記録された証拠であり、本変更では再検証しておらず、登録文字列のために選択もしていない。本語は管理上の登録状態カテゴリ `compound_identity_unverified` に留まるため、この配置は経路／由来、天然存在、化学クラス、構造、別名、薬理、安全性、規制状態を主張せず、棚卸し上の親語 `HHC` との関係も主張しない。候補表の親語は行の整理であり、構造や同義の主張ではない。**クエリの限界:** Google Trends / YouTube の `9(S)-HHC` / `9(S)-HHC リキッド` 系列が測るのは、これらの文字列への一致だけであり、一致した結果は本立体配置の内容の証明ではない。本カテゴリから移す条件は、登録文字列について選択された検証済み外部レコードと、製品同定の記録または `compound_hhc` の粒度についての owner 判断ことであり、根拠は docs/provenance/compound-taxonomy.md に記録する。",
+          "@language": "ja"
+        }
+      ]
+    },
+    {
+      "@id": "jptr:compound-6as-9s-10as-hhc",
+      "@type": "skos:Concept",
+      "skos:inScheme": "jptr:compound-taxonomy",
+      "skos:broader": "jptr:compound-identity-unverified",
+      "skos:prefLabel": [
+        {
+          "@value": "(6aS,9S,10aS)-HHC",
+          "@language": "en"
+        },
+        {
+          "@value": "(6aS,9S,10aS)-HHC",
+          "@language": "ja"
+        }
+      ],
+      "skos:altLabel": [
+        {
+          "@value": "(6aS,9S,10aS)-HHC リキッド",
+          "@language": "ja"
+        }
+      ],
+      "skos:notation": "compound_6as_9s_10as_hhc",
+      "skos:scopeNote": [
+        {
+          "@value": "`(6aS,9S,10aS)-HHC` is the owner's search term, registered on 2026-11-15 (ISS-20261115-TAX-045) as one of the 27 forms the owner enumerated for registration from the study's candidate-form inventory in `datasets/cannabinoid-raw-collection`. The term is a registered search string, not a substance identification: the single-substance chemical identity remains UNCONFIRMED. The evidence recorded for this configuration in the study inventory is the WHO critical review: the WHO 47th ECDD (2024) §2C sets out the eight stereoisomers of HHC as possible configurations, and this one is one of the six beyond the two C-9 epimers recorded as the main components of CBD-derived product (configuration 6a=S / 9=S / 10a=S; the enantiomer of (6aR,9R,10aR)-HHC) (ISS-20261111-TAX-042). The review presents a set of possible configurations; it is not per-configuration registry evidence, not a product detection, not this study's analysis and not a claim about any result. No individual registry record was selected for this configuration and product identification of it was not confirmed. No identifier property and no `skos:exactMatch` are assigned to this taxonomy concept: any CAS / PubChem / UNII / ChEBI / Wikidata / IUPAC values quoted in this note are recorded evidence in `docs/provenance/compound-taxonomy.md`, were not re-verified in this change, and were not selected for the registered query. It stays in compound_identity_unverified, an administrative registration-state category, so this placement asserts no route/origin, natural occurrence, chemical class, structure, synonym, pharmacology, safety or regulatory status, and it asserts no relation to the inventory parent term `HHC`: that grouping in the candidate table organised the rows and is not a structural or synonym claim. **Query limitation:** Google Trends and YouTube series for `(6aS,9S,10aS)-HHC` / `(6aS,9S,10aS)-HHC リキッド` measure occurrences of those literal strings; a matching result is not evidence of this stereochemical configuration content. Evidence that would move the term out of this category: a per-configuration verified external record selected for the registered string, or a recorded product identification for this configuration; the basis belongs in docs/provenance/compound-taxonomy.md.",
+          "@language": "en"
+        },
+        {
+          "@value": "`(6aS,9S,10aS)-HHC` は owner が 2026-11-15 に登録した検索語であり（ISS-20261115-TAX-045）、`datasets/cannabinoid-raw-collection` の候補形式棚卸しから owner が登録対象として列挙した 27 形式の 1 つである。本語は検索文字列の登録であり、物質の同定ではない。単一物質としての化学的同一性は**未確認**である。本研究の棚卸しで本立体配置について記録された証拠は WHO critical review である: WHO 47th ECDD (2024) §2C は HHC の 8 立体異性体を可能な配置として図示し、本配置は CBD 由来製品の主要成分として記録された 2 つの C-9 エピマー以外の 6 配置の一つである（配置 6a=S / 9=S / 10a=S、(6aR,9R,10aR)-HHC のエナンチオマー）（ISS-20261111-TAX-042）。レビューは可能な配置の集合を示すもので、配置ごとの registry 証拠でも、製品検出でも、本研究の分析でも、検索結果についての主張でもない。本配置について個別の registry record は選択しておらず、製品中の同定も未確認である。 本概念には識別子プロパティも `skos:exactMatch` も割り当てない。本注記に引用した CAS 番号・PubChem CID・UNII・ChEBI ID・Wikidata QID・IUPAC 名は `docs/provenance/compound-taxonomy.md` に記録された証拠であり、本変更では再検証しておらず、登録文字列のために選択もしていない。本語は管理上の登録状態カテゴリ `compound_identity_unverified` に留まるため、この配置は経路／由来、天然存在、化学クラス、構造、別名、薬理、安全性、規制状態を主張せず、棚卸し上の親語 `HHC` との関係も主張しない。候補表の親語は行の整理であり、構造や同義の主張ではない。**クエリの限界:** Google Trends / YouTube の `(6aS,9S,10aS)-HHC` / `(6aS,9S,10aS)-HHC リキッド` 系列が測るのは、これらの文字列への一致だけであり、一致した結果は本立体配置の内容の証明ではない。本カテゴリから移す条件は、本配置についての検証済み外部レコードを登録文字列に対して選択すること、または本配置の製品同定の記録ことであり、根拠は docs/provenance/compound-taxonomy.md に記録する。",
+          "@language": "ja"
+        }
+      ]
+    },
+    {
+      "@id": "jptr:compound-6as-9r-10as-hhc",
+      "@type": "skos:Concept",
+      "skos:inScheme": "jptr:compound-taxonomy",
+      "skos:broader": "jptr:compound-identity-unverified",
+      "skos:prefLabel": [
+        {
+          "@value": "(6aS,9R,10aS)-HHC",
+          "@language": "en"
+        },
+        {
+          "@value": "(6aS,9R,10aS)-HHC",
+          "@language": "ja"
+        }
+      ],
+      "skos:altLabel": [
+        {
+          "@value": "(6aS,9R,10aS)-HHC リキッド",
+          "@language": "ja"
+        }
+      ],
+      "skos:notation": "compound_6as_9r_10as_hhc",
+      "skos:scopeNote": [
+        {
+          "@value": "`(6aS,9R,10aS)-HHC` is the owner's search term, registered on 2026-11-15 (ISS-20261115-TAX-045) as one of the 27 forms the owner enumerated for registration from the study's candidate-form inventory in `datasets/cannabinoid-raw-collection`. The term is a registered search string, not a substance identification: the single-substance chemical identity remains UNCONFIRMED. The evidence recorded for this configuration in the study inventory is the WHO critical review: the WHO 47th ECDD (2024) §2C sets out the eight stereoisomers of HHC as possible configurations, and this one is one of the six beyond the two C-9 epimers recorded as the main components of CBD-derived product (configuration 6a=S / 9=R / 10a=S; the enantiomer of (6aR,9S,10aR)-HHC) (ISS-20261111-TAX-042). The review presents a set of possible configurations; it is not per-configuration registry evidence, not a product detection, not this study's analysis and not a claim about any result. No individual registry record was selected for this configuration and product identification of it was not confirmed. No identifier property and no `skos:exactMatch` are assigned to this taxonomy concept: any CAS / PubChem / UNII / ChEBI / Wikidata / IUPAC values quoted in this note are recorded evidence in `docs/provenance/compound-taxonomy.md`, were not re-verified in this change, and were not selected for the registered query. It stays in compound_identity_unverified, an administrative registration-state category, so this placement asserts no route/origin, natural occurrence, chemical class, structure, synonym, pharmacology, safety or regulatory status, and it asserts no relation to the inventory parent term `HHC`: that grouping in the candidate table organised the rows and is not a structural or synonym claim. **Query limitation:** Google Trends and YouTube series for `(6aS,9R,10aS)-HHC` / `(6aS,9R,10aS)-HHC リキッド` measure occurrences of those literal strings; a matching result is not evidence of this stereochemical configuration content. Evidence that would move the term out of this category: a per-configuration verified external record selected for the registered string, or a recorded product identification for this configuration; the basis belongs in docs/provenance/compound-taxonomy.md.",
+          "@language": "en"
+        },
+        {
+          "@value": "`(6aS,9R,10aS)-HHC` は owner が 2026-11-15 に登録した検索語であり（ISS-20261115-TAX-045）、`datasets/cannabinoid-raw-collection` の候補形式棚卸しから owner が登録対象として列挙した 27 形式の 1 つである。本語は検索文字列の登録であり、物質の同定ではない。単一物質としての化学的同一性は**未確認**である。本研究の棚卸しで本立体配置について記録された証拠は WHO critical review である: WHO 47th ECDD (2024) §2C は HHC の 8 立体異性体を可能な配置として図示し、本配置は CBD 由来製品の主要成分として記録された 2 つの C-9 エピマー以外の 6 配置の一つである（配置 6a=S / 9=R / 10a=S、(6aR,9S,10aR)-HHC のエナンチオマー）（ISS-20261111-TAX-042）。レビューは可能な配置の集合を示すもので、配置ごとの registry 証拠でも、製品検出でも、本研究の分析でも、検索結果についての主張でもない。本配置について個別の registry record は選択しておらず、製品中の同定も未確認である。 本概念には識別子プロパティも `skos:exactMatch` も割り当てない。本注記に引用した CAS 番号・PubChem CID・UNII・ChEBI ID・Wikidata QID・IUPAC 名は `docs/provenance/compound-taxonomy.md` に記録された証拠であり、本変更では再検証しておらず、登録文字列のために選択もしていない。本語は管理上の登録状態カテゴリ `compound_identity_unverified` に留まるため、この配置は経路／由来、天然存在、化学クラス、構造、別名、薬理、安全性、規制状態を主張せず、棚卸し上の親語 `HHC` との関係も主張しない。候補表の親語は行の整理であり、構造や同義の主張ではない。**クエリの限界:** Google Trends / YouTube の `(6aS,9R,10aS)-HHC` / `(6aS,9R,10aS)-HHC リキッド` 系列が測るのは、これらの文字列への一致だけであり、一致した結果は本立体配置の内容の証明ではない。本カテゴリから移す条件は、本配置についての検証済み外部レコードを登録文字列に対して選択すること、または本配置の製品同定の記録ことであり、根拠は docs/provenance/compound-taxonomy.md に記録する。",
+          "@language": "ja"
+        }
+      ]
+    },
+    {
+      "@id": "jptr:compound-6as-9s-10ar-hhc",
+      "@type": "skos:Concept",
+      "skos:inScheme": "jptr:compound-taxonomy",
+      "skos:broader": "jptr:compound-identity-unverified",
+      "skos:prefLabel": [
+        {
+          "@value": "(6aS,9S,10aR)-HHC",
+          "@language": "en"
+        },
+        {
+          "@value": "(6aS,9S,10aR)-HHC",
+          "@language": "ja"
+        }
+      ],
+      "skos:altLabel": [
+        {
+          "@value": "(6aS,9S,10aR)-HHC リキッド",
+          "@language": "ja"
+        }
+      ],
+      "skos:notation": "compound_6as_9s_10ar_hhc",
+      "skos:scopeNote": [
+        {
+          "@value": "`(6aS,9S,10aR)-HHC` is the owner's search term, registered on 2026-11-15 (ISS-20261115-TAX-045) as one of the 27 forms the owner enumerated for registration from the study's candidate-form inventory in `datasets/cannabinoid-raw-collection`. The term is a registered search string, not a substance identification: the single-substance chemical identity remains UNCONFIRMED. The evidence recorded for this configuration in the study inventory is the WHO critical review: the WHO 47th ECDD (2024) §2C sets out the eight stereoisomers of HHC as possible configurations, and this one is one of the six beyond the two C-9 epimers recorded as the main components of CBD-derived product (configuration 6a=S / 9=S / 10a=R; the enantiomer of (6aR,9R,10aS)-HHC) (ISS-20261111-TAX-042). The review presents a set of possible configurations; it is not per-configuration registry evidence, not a product detection, not this study's analysis and not a claim about any result. No individual registry record was selected for this configuration and product identification of it was not confirmed. No identifier property and no `skos:exactMatch` are assigned to this taxonomy concept: any CAS / PubChem / UNII / ChEBI / Wikidata / IUPAC values quoted in this note are recorded evidence in `docs/provenance/compound-taxonomy.md`, were not re-verified in this change, and were not selected for the registered query. It stays in compound_identity_unverified, an administrative registration-state category, so this placement asserts no route/origin, natural occurrence, chemical class, structure, synonym, pharmacology, safety or regulatory status, and it asserts no relation to the inventory parent term `HHC`: that grouping in the candidate table organised the rows and is not a structural or synonym claim. **Query limitation:** Google Trends and YouTube series for `(6aS,9S,10aR)-HHC` / `(6aS,9S,10aR)-HHC リキッド` measure occurrences of those literal strings; a matching result is not evidence of this stereochemical configuration content. Evidence that would move the term out of this category: a per-configuration verified external record selected for the registered string, or a recorded product identification for this configuration; the basis belongs in docs/provenance/compound-taxonomy.md.",
+          "@language": "en"
+        },
+        {
+          "@value": "`(6aS,9S,10aR)-HHC` は owner が 2026-11-15 に登録した検索語であり（ISS-20261115-TAX-045）、`datasets/cannabinoid-raw-collection` の候補形式棚卸しから owner が登録対象として列挙した 27 形式の 1 つである。本語は検索文字列の登録であり、物質の同定ではない。単一物質としての化学的同一性は**未確認**である。本研究の棚卸しで本立体配置について記録された証拠は WHO critical review である: WHO 47th ECDD (2024) §2C は HHC の 8 立体異性体を可能な配置として図示し、本配置は CBD 由来製品の主要成分として記録された 2 つの C-9 エピマー以外の 6 配置の一つである（配置 6a=S / 9=S / 10a=R、(6aR,9R,10aS)-HHC のエナンチオマー）（ISS-20261111-TAX-042）。レビューは可能な配置の集合を示すもので、配置ごとの registry 証拠でも、製品検出でも、本研究の分析でも、検索結果についての主張でもない。本配置について個別の registry record は選択しておらず、製品中の同定も未確認である。 本概念には識別子プロパティも `skos:exactMatch` も割り当てない。本注記に引用した CAS 番号・PubChem CID・UNII・ChEBI ID・Wikidata QID・IUPAC 名は `docs/provenance/compound-taxonomy.md` に記録された証拠であり、本変更では再検証しておらず、登録文字列のために選択もしていない。本語は管理上の登録状態カテゴリ `compound_identity_unverified` に留まるため、この配置は経路／由来、天然存在、化学クラス、構造、別名、薬理、安全性、規制状態を主張せず、棚卸し上の親語 `HHC` との関係も主張しない。候補表の親語は行の整理であり、構造や同義の主張ではない。**クエリの限界:** Google Trends / YouTube の `(6aS,9S,10aR)-HHC` / `(6aS,9S,10aR)-HHC リキッド` 系列が測るのは、これらの文字列への一致だけであり、一致した結果は本立体配置の内容の証明ではない。本カテゴリから移す条件は、本配置についての検証済み外部レコードを登録文字列に対して選択すること、または本配置の製品同定の記録ことであり、根拠は docs/provenance/compound-taxonomy.md に記録する。",
+          "@language": "ja"
+        }
+      ]
+    },
+    {
+      "@id": "jptr:compound-6as-9r-10ar-hhc",
+      "@type": "skos:Concept",
+      "skos:inScheme": "jptr:compound-taxonomy",
+      "skos:broader": "jptr:compound-identity-unverified",
+      "skos:prefLabel": [
+        {
+          "@value": "(6aS,9R,10aR)-HHC",
+          "@language": "en"
+        },
+        {
+          "@value": "(6aS,9R,10aR)-HHC",
+          "@language": "ja"
+        }
+      ],
+      "skos:altLabel": [
+        {
+          "@value": "(6aS,9R,10aR)-HHC リキッド",
+          "@language": "ja"
+        }
+      ],
+      "skos:notation": "compound_6as_9r_10ar_hhc",
+      "skos:scopeNote": [
+        {
+          "@value": "`(6aS,9R,10aR)-HHC` is the owner's search term, registered on 2026-11-15 (ISS-20261115-TAX-045) as one of the 27 forms the owner enumerated for registration from the study's candidate-form inventory in `datasets/cannabinoid-raw-collection`. The term is a registered search string, not a substance identification: the single-substance chemical identity remains UNCONFIRMED. The evidence recorded for this configuration in the study inventory is the WHO critical review: the WHO 47th ECDD (2024) §2C sets out the eight stereoisomers of HHC as possible configurations, and this one is one of the six beyond the two C-9 epimers recorded as the main components of CBD-derived product (configuration 6a=S / 9=R / 10a=R; the enantiomer of (6aR,9S,10aS)-HHC) (ISS-20261111-TAX-042). The review presents a set of possible configurations; it is not per-configuration registry evidence, not a product detection, not this study's analysis and not a claim about any result. No individual registry record was selected for this configuration and product identification of it was not confirmed. No identifier property and no `skos:exactMatch` are assigned to this taxonomy concept: any CAS / PubChem / UNII / ChEBI / Wikidata / IUPAC values quoted in this note are recorded evidence in `docs/provenance/compound-taxonomy.md`, were not re-verified in this change, and were not selected for the registered query. It stays in compound_identity_unverified, an administrative registration-state category, so this placement asserts no route/origin, natural occurrence, chemical class, structure, synonym, pharmacology, safety or regulatory status, and it asserts no relation to the inventory parent term `HHC`: that grouping in the candidate table organised the rows and is not a structural or synonym claim. **Query limitation:** Google Trends and YouTube series for `(6aS,9R,10aR)-HHC` / `(6aS,9R,10aR)-HHC リキッド` measure occurrences of those literal strings; a matching result is not evidence of this stereochemical configuration content. Evidence that would move the term out of this category: a per-configuration verified external record selected for the registered string, or a recorded product identification for this configuration; the basis belongs in docs/provenance/compound-taxonomy.md.",
+          "@language": "en"
+        },
+        {
+          "@value": "`(6aS,9R,10aR)-HHC` は owner が 2026-11-15 に登録した検索語であり（ISS-20261115-TAX-045）、`datasets/cannabinoid-raw-collection` の候補形式棚卸しから owner が登録対象として列挙した 27 形式の 1 つである。本語は検索文字列の登録であり、物質の同定ではない。単一物質としての化学的同一性は**未確認**である。本研究の棚卸しで本立体配置について記録された証拠は WHO critical review である: WHO 47th ECDD (2024) §2C は HHC の 8 立体異性体を可能な配置として図示し、本配置は CBD 由来製品の主要成分として記録された 2 つの C-9 エピマー以外の 6 配置の一つである（配置 6a=S / 9=R / 10a=R、(6aR,9S,10aS)-HHC のエナンチオマー）（ISS-20261111-TAX-042）。レビューは可能な配置の集合を示すもので、配置ごとの registry 証拠でも、製品検出でも、本研究の分析でも、検索結果についての主張でもない。本配置について個別の registry record は選択しておらず、製品中の同定も未確認である。 本概念には識別子プロパティも `skos:exactMatch` も割り当てない。本注記に引用した CAS 番号・PubChem CID・UNII・ChEBI ID・Wikidata QID・IUPAC 名は `docs/provenance/compound-taxonomy.md` に記録された証拠であり、本変更では再検証しておらず、登録文字列のために選択もしていない。本語は管理上の登録状態カテゴリ `compound_identity_unverified` に留まるため、この配置は経路／由来、天然存在、化学クラス、構造、別名、薬理、安全性、規制状態を主張せず、棚卸し上の親語 `HHC` との関係も主張しない。候補表の親語は行の整理であり、構造や同義の主張ではない。**クエリの限界:** Google Trends / YouTube の `(6aS,9R,10aR)-HHC` / `(6aS,9R,10aR)-HHC リキッド` 系列が測るのは、これらの文字列への一致だけであり、一致した結果は本立体配置の内容の証明ではない。本カテゴリから移す条件は、本配置についての検証済み外部レコードを登録文字列に対して選択すること、または本配置の製品同定の記録ことであり、根拠は docs/provenance/compound-taxonomy.md に記録する。",
+          "@language": "ja"
+        }
+      ]
+    },
+    {
+      "@id": "jptr:compound-6ar-9s-10as-hhc",
+      "@type": "skos:Concept",
+      "skos:inScheme": "jptr:compound-taxonomy",
+      "skos:broader": "jptr:compound-identity-unverified",
+      "skos:prefLabel": [
+        {
+          "@value": "(6aR,9S,10aS)-HHC",
+          "@language": "en"
+        },
+        {
+          "@value": "(6aR,9S,10aS)-HHC",
+          "@language": "ja"
+        }
+      ],
+      "skos:altLabel": [
+        {
+          "@value": "(6aR,9S,10aS)-HHC リキッド",
+          "@language": "ja"
+        }
+      ],
+      "skos:notation": "compound_6ar_9s_10as_hhc",
+      "skos:scopeNote": [
+        {
+          "@value": "`(6aR,9S,10aS)-HHC` is the owner's search term, registered on 2026-11-15 (ISS-20261115-TAX-045) as one of the 27 forms the owner enumerated for registration from the study's candidate-form inventory in `datasets/cannabinoid-raw-collection`. The term is a registered search string, not a substance identification: the single-substance chemical identity remains UNCONFIRMED. The evidence recorded for this configuration in the study inventory is the WHO critical review: the WHO 47th ECDD (2024) §2C sets out the eight stereoisomers of HHC as possible configurations, and this one is one of the six beyond the two C-9 epimers recorded as the main components of CBD-derived product (configuration 6a=R / 9=S / 10a=S; the enantiomer of (6aS,9R,10aR)-HHC) (ISS-20261111-TAX-042). The review presents a set of possible configurations; it is not per-configuration registry evidence, not a product detection, not this study's analysis and not a claim about any result. No individual registry record was selected for this configuration and product identification of it was not confirmed. No identifier property and no `skos:exactMatch` are assigned to this taxonomy concept: any CAS / PubChem / UNII / ChEBI / Wikidata / IUPAC values quoted in this note are recorded evidence in `docs/provenance/compound-taxonomy.md`, were not re-verified in this change, and were not selected for the registered query. It stays in compound_identity_unverified, an administrative registration-state category, so this placement asserts no route/origin, natural occurrence, chemical class, structure, synonym, pharmacology, safety or regulatory status, and it asserts no relation to the inventory parent term `HHC`: that grouping in the candidate table organised the rows and is not a structural or synonym claim. **Query limitation:** Google Trends and YouTube series for `(6aR,9S,10aS)-HHC` / `(6aR,9S,10aS)-HHC リキッド` measure occurrences of those literal strings; a matching result is not evidence of this stereochemical configuration content. Evidence that would move the term out of this category: a per-configuration verified external record selected for the registered string, or a recorded product identification for this configuration; the basis belongs in docs/provenance/compound-taxonomy.md.",
+          "@language": "en"
+        },
+        {
+          "@value": "`(6aR,9S,10aS)-HHC` は owner が 2026-11-15 に登録した検索語であり（ISS-20261115-TAX-045）、`datasets/cannabinoid-raw-collection` の候補形式棚卸しから owner が登録対象として列挙した 27 形式の 1 つである。本語は検索文字列の登録であり、物質の同定ではない。単一物質としての化学的同一性は**未確認**である。本研究の棚卸しで本立体配置について記録された証拠は WHO critical review である: WHO 47th ECDD (2024) §2C は HHC の 8 立体異性体を可能な配置として図示し、本配置は CBD 由来製品の主要成分として記録された 2 つの C-9 エピマー以外の 6 配置の一つである（配置 6a=R / 9=S / 10a=S、(6aS,9R,10aR)-HHC のエナンチオマー）（ISS-20261111-TAX-042）。レビューは可能な配置の集合を示すもので、配置ごとの registry 証拠でも、製品検出でも、本研究の分析でも、検索結果についての主張でもない。本配置について個別の registry record は選択しておらず、製品中の同定も未確認である。 本概念には識別子プロパティも `skos:exactMatch` も割り当てない。本注記に引用した CAS 番号・PubChem CID・UNII・ChEBI ID・Wikidata QID・IUPAC 名は `docs/provenance/compound-taxonomy.md` に記録された証拠であり、本変更では再検証しておらず、登録文字列のために選択もしていない。本語は管理上の登録状態カテゴリ `compound_identity_unverified` に留まるため、この配置は経路／由来、天然存在、化学クラス、構造、別名、薬理、安全性、規制状態を主張せず、棚卸し上の親語 `HHC` との関係も主張しない。候補表の親語は行の整理であり、構造や同義の主張ではない。**クエリの限界:** Google Trends / YouTube の `(6aR,9S,10aS)-HHC` / `(6aR,9S,10aS)-HHC リキッド` 系列が測るのは、これらの文字列への一致だけであり、一致した結果は本立体配置の内容の証明ではない。本カテゴリから移す条件は、本配置についての検証済み外部レコードを登録文字列に対して選択すること、または本配置の製品同定の記録ことであり、根拠は docs/provenance/compound-taxonomy.md に記録する。",
+          "@language": "ja"
+        }
+      ]
+    },
+    {
+      "@id": "jptr:compound-6ar-9r-10as-hhc",
+      "@type": "skos:Concept",
+      "skos:inScheme": "jptr:compound-taxonomy",
+      "skos:broader": "jptr:compound-identity-unverified",
+      "skos:prefLabel": [
+        {
+          "@value": "(6aR,9R,10aS)-HHC",
+          "@language": "en"
+        },
+        {
+          "@value": "(6aR,9R,10aS)-HHC",
+          "@language": "ja"
+        }
+      ],
+      "skos:altLabel": [
+        {
+          "@value": "(6aR,9R,10aS)-HHC リキッド",
+          "@language": "ja"
+        }
+      ],
+      "skos:notation": "compound_6ar_9r_10as_hhc",
+      "skos:scopeNote": [
+        {
+          "@value": "`(6aR,9R,10aS)-HHC` is the owner's search term, registered on 2026-11-15 (ISS-20261115-TAX-045) as one of the 27 forms the owner enumerated for registration from the study's candidate-form inventory in `datasets/cannabinoid-raw-collection`. The term is a registered search string, not a substance identification: the single-substance chemical identity remains UNCONFIRMED. The evidence recorded for this configuration in the study inventory is the WHO critical review: the WHO 47th ECDD (2024) §2C sets out the eight stereoisomers of HHC as possible configurations, and this one is one of the six beyond the two C-9 epimers recorded as the main components of CBD-derived product (configuration 6a=R / 9=R / 10a=S; the enantiomer of (6aS,9S,10aR)-HHC) (ISS-20261111-TAX-042). The review presents a set of possible configurations; it is not per-configuration registry evidence, not a product detection, not this study's analysis and not a claim about any result. No individual registry record was selected for this configuration and product identification of it was not confirmed. No identifier property and no `skos:exactMatch` are assigned to this taxonomy concept: any CAS / PubChem / UNII / ChEBI / Wikidata / IUPAC values quoted in this note are recorded evidence in `docs/provenance/compound-taxonomy.md`, were not re-verified in this change, and were not selected for the registered query. It stays in compound_identity_unverified, an administrative registration-state category, so this placement asserts no route/origin, natural occurrence, chemical class, structure, synonym, pharmacology, safety or regulatory status, and it asserts no relation to the inventory parent term `HHC`: that grouping in the candidate table organised the rows and is not a structural or synonym claim. **Query limitation:** Google Trends and YouTube series for `(6aR,9R,10aS)-HHC` / `(6aR,9R,10aS)-HHC リキッド` measure occurrences of those literal strings; a matching result is not evidence of this stereochemical configuration content. Evidence that would move the term out of this category: a per-configuration verified external record selected for the registered string, or a recorded product identification for this configuration; the basis belongs in docs/provenance/compound-taxonomy.md.",
+          "@language": "en"
+        },
+        {
+          "@value": "`(6aR,9R,10aS)-HHC` は owner が 2026-11-15 に登録した検索語であり（ISS-20261115-TAX-045）、`datasets/cannabinoid-raw-collection` の候補形式棚卸しから owner が登録対象として列挙した 27 形式の 1 つである。本語は検索文字列の登録であり、物質の同定ではない。単一物質としての化学的同一性は**未確認**である。本研究の棚卸しで本立体配置について記録された証拠は WHO critical review である: WHO 47th ECDD (2024) §2C は HHC の 8 立体異性体を可能な配置として図示し、本配置は CBD 由来製品の主要成分として記録された 2 つの C-9 エピマー以外の 6 配置の一つである（配置 6a=R / 9=R / 10a=S、(6aS,9S,10aR)-HHC のエナンチオマー）（ISS-20261111-TAX-042）。レビューは可能な配置の集合を示すもので、配置ごとの registry 証拠でも、製品検出でも、本研究の分析でも、検索結果についての主張でもない。本配置について個別の registry record は選択しておらず、製品中の同定も未確認である。 本概念には識別子プロパティも `skos:exactMatch` も割り当てない。本注記に引用した CAS 番号・PubChem CID・UNII・ChEBI ID・Wikidata QID・IUPAC 名は `docs/provenance/compound-taxonomy.md` に記録された証拠であり、本変更では再検証しておらず、登録文字列のために選択もしていない。本語は管理上の登録状態カテゴリ `compound_identity_unverified` に留まるため、この配置は経路／由来、天然存在、化学クラス、構造、別名、薬理、安全性、規制状態を主張せず、棚卸し上の親語 `HHC` との関係も主張しない。候補表の親語は行の整理であり、構造や同義の主張ではない。**クエリの限界:** Google Trends / YouTube の `(6aR,9R,10aS)-HHC` / `(6aR,9R,10aS)-HHC リキッド` 系列が測るのは、これらの文字列への一致だけであり、一致した結果は本立体配置の内容の証明ではない。本カテゴリから移す条件は、本配置についての検証済み外部レコードを登録文字列に対して選択すること、または本配置の製品同定の記録ことであり、根拠は docs/provenance/compound-taxonomy.md に記録する。",
           "@language": "ja"
         }
       ]

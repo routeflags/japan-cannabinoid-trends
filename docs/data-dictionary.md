@@ -299,7 +299,7 @@
 | `compound_major` | 主要フィトカンナビノイド | `compound_cbd`, `compound_thc` |
 | `compound_minor` | 主要フィトカンナビノイド以外のフィトカンナビノイド | `compound_cbg`, `compound_cbn`, `compound_cbc`, `compound_cbe`, `compound_thcv`, `compound_cbdv`, `compound_cbx`, `compound_thch`, `compound_cbl`, `compound_cbga` |
 | `compound_rare` | レアカンナビノイド | （なし。**意図的に空**。`skos:scopeNote` 参照） |
-| `compound_identity_unverified` | 同一性未確認の登録語（登録状態） | `compound_thcb`, `compound_thcp`, `compound_thcjd`, `compound_thcpo`, `compound_hhcpo`, `compound_cbnd`, `compound_cbp`, `compound_10_oh_hhc`, `compound_thxe`, `compound_thca`, `compound_delta9_thca_a`, `compound_thca_b`, `compound_delta8_thca`, `compound_delta8_thcb`, `compound_delta9_thcb`, `compound_thcb_o_acetate` |
+| `compound_identity_unverified` | 同一性未確認の登録語（登録状態） | `compound_thcb`, `compound_thcp`, `compound_thcjd`, `compound_thcpo`, `compound_hhcpo`, `compound_cbnd`, `compound_cbp`, `compound_10_oh_hhc`, `compound_thxe`, `compound_thca`, `compound_delta9_thca_a`, `compound_thca_b`, `compound_delta8_thca`, `compound_delta8_thcb`, `compound_delta9_thcb`, `compound_thcb_o_acetate`, `compound_delta8_thcp`, `compound_delta9_thcp`, `compound_delta8_thcjd`, `compound_delta9_thcjd`, `compound_delta8_thcp_o_acetate`, `compound_delta9_thcp_o_acetate`, `compound_delta8_thcb_o_acetate`, `compound_delta9_thcb_o_acetate`, `compound_delta8_thc`, `compound_delta6a_10a_thc`, `compound_delta6a_7_thc`, `compound_delta7_thc`, `compound_delta10_thc`, `compound_delta9_11_thc`, `compound_delta9_thcv`, `compound_delta8_thcv`, `compound_thcjd_o_acetate`, `compound_delta8_thch`, `compound_delta9_thch`, `compound_9_r_hhc`, `compound_9_s_hhc`, `compound_6as_9s_10as_hhc`, `compound_6as_9r_10as_hhc`, `compound_6as_9s_10ar_hhc`, `compound_6as_9r_10ar_hhc`, `compound_6ar_9s_10as_hhc`, `compound_6ar_9r_10as_hhc` |
 | `compound_semisynthetic` | 半合成カンナビノイド | `compound_hhc`, `compound_thc_o`, `compound_h4cbh`, `compound_hhbd`, `compound_thcnm` |
 | `compound_synthetic` | 合成カンナビノイド | `compound_hhch`, `compound_crdp`, `compound_crdh` |
 | `compound_endocannabinoid` | エンドカンナビノイド | `compound_anandamide`, `compound_2ag` |
@@ -355,6 +355,18 @@
 > `compound_thca` / `compound_thcb` / `compound_thc` や相互の `skos:related` も張らない。総称の 2 概念は文字列 `THCA` / `THCB` の
 > 登録として残り、既存の run とクエリは付け替えない。Google Trends / YouTube の系列は各登録文字列の一致を測るもので、
 > Δ8/Δ9 や A/B の内容を保証しない。
+>
+> 2026-11-15 の owner 指示で、study README の「未登録・未収集の候補形式」27 行を検索トピックとして
+> 登録した（`ISS-20261115-TAX-045`）。内訳は THC の位置異性体 6 形式、THCP・THCJD・THCPO・
+> THCB-O-acetate・THCH・THCV の個別異性体と `THCJD-O-acetate`（異性体未指定）の 13 形式、HHC の
+> 立体異性体 8 形式である（6 + 13 + 8 = 27）。27 概念はいずれも `compound_identity_unverified` に置き、単一の
+> 検証済み外部レコードを選択していないため、27 概念には識別子プロパティも `skos:exactMatch` も割り当てず、
+> `skos:related` も張らない。棚卸し上の親語（`THC`・`THCP`・`HHC` 等）との
+> 関係は整理上の対応であり、構造・同義の主張ではない。証拠の種類は registry record・法令の
+> 構造グループ（令和6年厚生労働省令第81号、消費者庁の THCH 指定薬物資料）・命名標準と知識グラフ・
+> WHO 47th ECDD (2024) §2C の可能な配置のレビュー・製品分析に分かれ、法令上の列挙は製品検出ではなく、
+> WHO のレビューは配置ごとの registry record でも製品同定でもない。27 語はいずれも未収集で、
+> 0 観測でも欠測でもない。既存の query・run の割当ては変更していない。
 
 ### 6.5 化学クラス（第 2 次元）
 

@@ -1,6 +1,6 @@
 ---
 name: study-compound-extension
-description: Add one compound, or an owner-specified batch of compounds, to a declared research study across taxonomy identity, query design, source-specific collection, provenance, adoption, coverage, documentation, and downstream scope. Use when expanding a study's compound set.
+description: Extend a declared research study's compound set or standardize its dictionary at evidence-supported form granularity, including unregistered and uncollected candidates. Use when adding compounds, separating generic or family search terms from structural forms, or updating their taxonomy, queries, coverage documentation, and provenance.
 ---
 
 # Extend a study's compound set
@@ -9,7 +9,40 @@ This adds compounds to a study that already exists. It does not run a collection
 
 Keep two things apart throughout. A **term** is a substance name the owner wrote (for example `THCB`). A **compound** is the taxonomy concept that term resolves to. A term is a search string; a concept is a registered identity. Registering a term does not establish a chemical identity, and the classification it carries is a registration label that must be marked when it is provisional (section 2).
 
-## 1. Fix ownership and scope
+## Query-topic granularity and chemical identity
+
+Record the **scope of the search topic** separately from the **strength of chemical identity evidence**. A term can be clearly scoped as a family while still lacking a single-substance identity; a specific-form query still does not establish that returned search results concern that form.
+
+Use these distinctions in the owner decision record and concept `skos:scopeNote`:
+
+- **Literal / generic string:** the owner named a term but did not define its chemical expansion. Do not infer a family, synonym, isomer, structure, or constituent from the spelling.
+- **Family scope:** a term intentionally covers more than one substance (for example, a homologue family or an acetate family) without selecting one member. Record whether the owner explicitly confirmed that family, or whether it is only treated as isomer-unspecified because the owner confirmed the base name but named no isomer. Do not report the latter as an owner-confirmed family.
+- **Form-level inventory candidate:** a source-supported distinction such as Δ8 versus Δ9, an acid versus neutral form, or an acetate is a separate dictionary row even when it is not yet a registered search topic or has never been collected. Record its evidence level and gaps; if it is not registered, say `unregistered`, `no query`, and `no run` rather than omitting it.
+- **Registered form-specific topic:** a named distinction becomes a study search topic when the owner enumerates or explicitly authorizes it for registration. Register only the authorized forms; do not silently turn every literature-known variant into an active registry concept.
+- **Single-substance / stereochemical identity:** assert a specific structure or identifier only when the source evidence supports that exact level, including stereochemistry where the identifier requires it. A taxonomy route/category label is not evidence of isomer resolution; unspecified stereochemistry is a recorded evidence limit, not a reason to omit the form from the inventory.
+
+If an owner explicitly splits a generic or family term, keep the prior broad term and its query/run history as a separate literal or family-level topic. Add new concepts and query IDs for the specified forms; never retarget an old query or distribute its historical runs among the new forms. Do not assert a `skos:broader`, `skos:narrower`, `skos:related`, or `skos:exactMatch` relationship merely because the names share a stem. Changing the old broad query's lifecycle status is a separate scope decision. When active `compound_general` queries feed comparison policies, report the additional design requirements they create; these are not collection failures or observations.
+
+## Required order for form-level standardization
+
+Follow this order; **do not require registration before documenting a supported form**.
+
+1. **Capture the owner baseline and scope.** Determine which dictionary or study is in scope and whether the request is to inventory forms, register search topics, collect, or some combination. Do not treat a past task-specific restriction as a permanent decision unless the owner made it one.
+2. **Build the evidence-first form inventory.** Start from every in-scope dictionary term and inspect the repository's authoritative evidence. List each structurally distinct form the evidence supports within the bounded scope, including forms with no query and no run. Record the position isomer and acid / neutral / ester distinction where supported; specify stereochemistry only as far as the source does. Distinguish registry or nomenclature records, legal structural listings, and analytical identification in products; do not imply they establish the same fact.
+3. **Mark uncertainty instead of blocking rows.** For each inventory row, record source, what it establishes, and what remains unresolved. Use `unregistered`, `no query`, and `no run (uncollected)` for a supported candidate not authorized as a search topic. A missing identifier, product detection, query, or collection does not by itself exclude a supported candidate from the inventory. If a name is too ambiguous to resolve to a structure, record it in a separate unresolved-terms view rather than inventing a form.
+4. **Crosswalk terms to forms.** Keep generic, family, and market-language terms as their own search-topic scope. Map a term to a specific form only when evidence supports that relationship; otherwise write `unresolved` or `isomer unspecified`. Preserve existing broad queries and historical runs; never redistribute them among forms.
+5. **Promote inventory rows to registered topics only within owner-authorized scope.** If the owner enumerates forms or explicitly authorizes a bounded candidate list for registration, register those forms as separate concepts and queries even when they are uncollected. Do not create query IDs for candidates that are inventory-only, and do not wait for collection before documenting authorized registered queries as uncollected.
+6. **Update downstream design and documentation.** For registered topics, update taxonomy, query registry, study query design, provenance, README crosswalk, coverage display, tests, and exports as applicable. Report comparison-policy and required-coverage effects. Candidate inventory rows remain separate from registry coverage.
+7. **Collect only under separate authorization.** Registration or an uncollected inventory row is not permission to collect, adopt, or publish.
+
+## Instruction order and decision continuity
+
+1. Track owner directions by **decision, scope, and sequence** in the current conversation and the owning issue record. A later explicit scope or baseline decision supersedes earlier open questions or provisional proposals within that scope; do not keep asking a question the owner has already answered.
+2. Treat an unambiguous `yes` / `y` / `ok` as acceptance of the immediately preceding single recommendation. If the preceding message offered multiple alternatives, do not guess which one was accepted: restate the one unresolved choice once, narrowly.
+3. A request to "report only" or not edit is scoped to that response/task; it does not cancel an explicit later request to update a file. Conversely, a request for a proposal or report does not itself authorize file edits, collection, publication, or a lifecycle change.
+4. When the owner sets a precision baseline for a whole group, apply it consistently across the in-scope dictionary and mapping views, not only to the last example. Use the required form-level order above: prepare a bounded, evidence-backed inventory before registry changes; include supported unregistered/uncollected forms as explicit rows; mark evidence gaps; and never present an inventory candidate as a registered topic without owner authorization.
+5. Separate decisions that have different consequences: taxonomy/form granularity, query-registry lifecycle, source coverage design, collection authorization, and publication approval. A decision on one does not imply the others. Preserve family-level queries and existing run assignments when adding more-specific forms unless the owner explicitly changes that policy.
+6. Before asking a follow-up, check the latest applicable owner decision, the relevant issue record, and the query/taxonomy registries. Ask only about a specific unresolved boundary or authorization; state the recommended default and its effects once.
 
 1. Record the study ID, the terms being added, the sources being extended, and who decided the scope. Work only in the owning study; do not fill gaps from another study's records.
 2. Read the study's `README.md`, `methodology.md`, its context contract under `docs/domain/contracts/`, and `docs/specs/raw-data-policy.md`. Confirm the study already covers the source; adding a source is a separate decision.
@@ -45,19 +78,20 @@ A query cannot exist without the concept: G2 rejects a registry row whose `compo
 4. Add spelling or wording variants to `metadata/queries/query-variants.json` only when a collector uses them or a recorded basis exists; do not pre-create variants for strings that have never been collected (CBC / CBDV precedent).
 5. Register the new queries as `active`, the lifecycle state used for a registered but uncollected query; `status` does not carry identity uncertainty.
 6. Validate the registry before a collector or declaration refers to a new ID: `make gates GATE=registries`.
+7. When a family term is split into specific forms, keep its existing `query_id`, `canonical_text`, status, and run assignments unchanged. Create new stable IDs for the owner-enumerated forms. Do not add the specific forms as `skos:altLabel` variants of the family or reuse the family query's coverage for them. The owner must decide separately if the family query should remain active for future coverage or become deprecated.
 
 ## 4. Update the study query design
 
 1. Update `datasets/<study-id>/metadata/query-design.json`, the authoritative declaration of what counts as primary coverage for that study and source.
-2. Declare each newly registered compound that has no adopted run in `compound_set.declared_not_yet_collected` with `compound_id`, `query_ids`, `state: "not_collected"`, `decided`, `decided_by`, and the reason (the owner's instruction, plus whether the identity was reused or newly registered). Do not use `excluded_compound_ids` for a compound that is merely uncollected; exclusion is a comparison decision.
+2. Treat the design as a declaration of coverage requirements, not a run-state snapshot. Do not add `declared_not_yet_collected`, `not_collected`, run counts, or similar per-query state to `compound_set`; the current validation contract explicitly forbids those stale-state fields (`tests/validation/test_registration_state_batch.py`). Record a newly registered query with no run in the study README and query inventory, and let the source audit report current coverage. Use `excluded_compound_ids` only for an explicit comparison-scope decision, not to hide an uncollected query.
 3. Record the primary intent(s) and every out-of-primary intent. A retained run outside the design stays raw evidence: it never completes coverage for the compound and is never a required companion run.
-4. In the current cannabinoid study, YouTube's primary intent is the liquid product term (`<compound> リキッド`, `product_liquid`); bare compound terms are retained out-of-scope evidence. This is an example only: the study's declaration is authoritative, and other studies or sources may declare a different design. Registering a term expands the required-query set, so `make audit-youtube-coverage` will report the new compounds as missing until runs exist — that is the declared state, not a measurement.
-5. Put the identity caveat where a reader of the design meets it (`limitations`, `coverage_state_note`) and keep it out of the coverage counts.
+4. In the current cannabinoid study, YouTube's primary intent is the liquid product term (`<compound> リキッド`, `product_liquid`); bare compound terms are retained out-of-scope evidence. This is an example only: the study's declaration is authoritative, and other studies or sources may declare a different design. Registering an active primary term expands the required-query set, so `make audit-youtube-coverage` will report it as uncovered until a run exists — that is coverage state, not a zero observation. Active `compound_general` queries may also expand every comparison policy that uses the query registry as its authority; report that design impact separately.
+5. Put the identity/scope caveat where a reader of the design meets it using fields supported by that design (for example `identity_caveat` and `limitations`). Do not invent `coverage_state_note` or other schema fields, and do not put run-state data into coverage counts.
 6. Update project-level mirrors such as `project.json` `queryDesign` only where the repository keeps them; they must not become a second source of truth for coverage.
 
 ## 5. Classify retention, then collect through the source-specific workflow
 
-Registration is not collection. A registered term with no run stays `not_collected`: do not report it as zero, missing, failed or partial, and do not collect as part of a registration change.
+Registration is not collection. A registered term with no run is uncollected: do not report it as zero, collection-failed, or partial, and do not collect as part of a registration change. This state belongs in reader-facing documentation and coverage audits, not as a per-term run-state field in `query-design.json`.
 
 1. **Classify raw retention first** (`docs/specs/raw-data-policy.md` §5). The two states are `git_tracked` (the payload is committed Repository Storage) and `git_untracked` (the payload is not committed; a local copy may exist, and the repository keeps only non-content provenance). They describe Git tracking, not whether a local raw copy exists.
    - Use the `config/storage-policies.json` default for the source kind. If an owner, legal, or publication review decision sets a different state, record `metadata/provenance/retention/<date>-<slug>.json` (`record: "raw_retention_decision"`) with `retention_status`, `reason`, `decision_reference`, `decided_by`, `decided_at`, and a separate `publication_status`. Do not infer a legal conclusion; record the decision that exists.

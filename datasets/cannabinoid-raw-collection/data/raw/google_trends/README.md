@@ -6,7 +6,7 @@
 
 ## 現在の構成
 
-- **catalog 採用 68 run**: `artifact-manifest.json` を持ち、[`metadata/data-catalog.json`](../../../metadata/data-catalog.json) に載る。登録 36 語の Google Trends 被覆は 5年 29/36・12ヶ月 21/36（追加 15 語は 5年 14/15・12ヶ月 7/15。2026-11-11 登録の 6 検索トピックは未収集）。
+- **catalog 採用 68 run**: `artifact-manifest.json` を持ち、[`metadata/data-catalog.json`](../../../metadata/data-catalog.json) に載る。登録 63 トピックの Google Trends 被覆は 5年 29/63・12ヶ月 21/63（追加 15 語は 5年 14/15・12ヶ月 7/15。2026-11-11 登録の 6 検索トピックと 2026-11-15 登録の 27 形式は未収集。21/63 は既存の被覆記録を引き継ぐ既存値）。
 - **manifest を持たない 32 run**: catalog 外（2026-10-01 / 10-02 / 10-05 / 10-08 / 10-12 の run）。raw は不変の証跡として残す。
 - **追加 15 語の 21 adopted run**: 12ヶ月 7 + 5年 14。窓は 12ヶ月 `2025-11-09_2026-11-15`（観測 2025-11-09 〜 2026-11-08）、5年 `2021-11-07_2026-11-15`（観測 2021-11-07 〜 2026-11-08）で、いずれも `today 12-m` / `today 5-y` を reference time で nominal に解決した**近似窓**。各系列は自分のピーク=100 に正規化され、化合物間で比較できない。
 - **採用外 9 本**: 失敗窓 13 件（13 語バッチ 12 本と CBDV 12ヶ月）を各 1 回再取得し、10-OH-HHC 5年・THXE 5年・THCA 12ヶ月・THCA 5年の 4 系列を採用した。残る 9 試行は NO_DATA として `.quarantine/` に残り、catalog にも raw にも入らない（先行の HTTP 429 run も保持）。**0 観測でも欠測でもない**。

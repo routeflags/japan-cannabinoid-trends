@@ -61,9 +61,22 @@
 #               として扱う（owner がファミリーを明示的に確認したものではない）。
 #               カテゴリ所属は同義関係を確立しないことを明記。IPTC 主題は引き続き割り当てない。
 #               version 1.9.0 → 1.9.1。
+#   2026-11-15: P0 修正（ISS-20261115-TAX-043）。compound_mapping の ChEBI / Wikidata
+#               識別子を live registry（ChEBI API・Wikidata API）で再検証し、実体と一致
+#               しない対応を修正した。CBD / THC / CBG / CBN / CBC / anandamide / 2-AG
+#               は検証済みレコードへ差し替え、THCV は概念が Δ8/Δ9 と立体化学を指定して
+#               いないため対応を削除、CBDV は立体異性体グループの Wikidata のみとする。
+#               IPTC 語彙への live 照会は引き続き行っていない（化合物識別子の検証と
+#               IPTC 主題の対応付けは別）。version 1.9.1 → 1.10.0。
+#   2026-11-15: 候補形式 27 形式の登録（ISS-20261115-TAX-045）。owner が study README の
+#               未登録候補 27 行を検索トピックとして登録することを確認した。27 語は管理カテゴリ
+#               jptr:compound-identity-unverified に新規概念として置き、IPTC 主題は外部確認して
+#               いないため deliberately_unmapped の別群に加える。証拠の種類（registry record /
+#               法令の構造グループ / 命名標準・知識グラフ / WHO レビュー / 製品分析）は区別し、
+#               単一の検証済み外部識別子は選択していない。version 1.10.0 → 1.11.0。
 # =============================================================================
 
-version: "1.10.0"
+version: "1.11.0"
 last_updated: "2026-11-15"
 
 # IPTC Media Topics の URI スキーム
@@ -254,11 +267,11 @@ compound_mapping:
 coverage:
   status: "partial"
   scope_note: |
-    対応対象は末端概念（化合物 38 + content 14 = 52）。
+    対応対象は末端概念（化合物 65 + content 14 = 79）。
     カテゴリノード（7）は階層構造上の上位概念であり主題分類ではないため、対応対象外とする。
     化学クラス 2 概念（chemclass-hydrogenated / chemclass-acetate）は TAX-026 (a) で
     追加された第 2 次元の側面値であり、IPTC Media Topics に対応する主題が無いため
-    not_applicable として宣言する（下記）。概念総数は 61（compound 45 + content 14 + chemclass 2）。
+    not_applicable として宣言する（下記）。概念総数は 88（compound 72 + content 14 + chemclass 2）。
     TAX-025（2026-10-15）で 17 末端概念の区分を確定した: intent 4 と format 4 は
     主題以外の次元（投稿意図・表現形式）であり IPTC の主題語彙に対応する概念を持たないため
     not_applicable（TAX-026 の次元分離規則を適用）。化合物 9 は deliberately_unmapped のまま
@@ -279,7 +292,43 @@ coverage:
     分ける 6 概念を追加した。いずれも deliberately_unmapped の別群に加え、IPTC
     主題は割り当てない。総称の compound-thca / compound-thcb は既存の群に残す。
 
+    2026-11-15 の候補形式登録（ISS-20261115-TAX-045）で 27 形式を登録した。内訳は THC の位置異性体 6 形式
+    （Δ8-THC / Δ6a(10a)-THC / Δ6a(7)-THC / Δ7-THC / Δ10-THC / Δ9(11)-THC）、THCP・THCJD・THCPO・
+    THCB-O-acetate・THCH・THCV の個別異性体と THCJD-O-acetate の 13 形式、HHC の立体異性体 8 形式である。
+    証拠の種類は registry record・法令の構造グループ・命名標準と知識グラフ・WHO レビュー・製品分析に
+    分かれ、いずれも登録文字列について単一の検証済み外部レコードを選択していないため、27 概念を
+    deliberately_unmapped の別群に加え、IPTC 主題は割り当てない。登録は検索文字列の固定であり、
+    既存の語・query・run の割当ては変更していない。
   deliberately_unmapped:
+    - concepts:
+        - "jptr:compound-delta8-thcp"
+        - "jptr:compound-delta9-thcp"
+        - "jptr:compound-delta8-thcjd"
+        - "jptr:compound-delta9-thcjd"
+        - "jptr:compound-delta8-thcp-o-acetate"
+        - "jptr:compound-delta9-thcp-o-acetate"
+        - "jptr:compound-delta8-thcb-o-acetate"
+        - "jptr:compound-delta9-thcb-o-acetate"
+        - "jptr:compound-delta8-thc"
+        - "jptr:compound-delta6a-10a-thc"
+        - "jptr:compound-delta6a-7-thc"
+        - "jptr:compound-delta7-thc"
+        - "jptr:compound-delta10-thc"
+        - "jptr:compound-delta9-11-thc"
+        - "jptr:compound-delta9-thcv"
+        - "jptr:compound-delta8-thcv"
+        - "jptr:compound-thcjd-o-acetate"
+        - "jptr:compound-delta8-thch"
+        - "jptr:compound-delta9-thch"
+        - "jptr:compound-9-r-hhc"
+        - "jptr:compound-9-s-hhc"
+        - "jptr:compound-6as-9s-10as-hhc"
+        - "jptr:compound-6as-9r-10as-hhc"
+        - "jptr:compound-6as-9s-10ar-hhc"
+        - "jptr:compound-6as-9r-10ar-hhc"
+        - "jptr:compound-6ar-9s-10as-hhc"
+        - "jptr:compound-6ar-9r-10as-hhc"
+      reason: "2026-11-15 の候補形式登録（ISS-20261115-TAX-045）で登録した 27 検索トピック概念。THC の位置異性体 6 形式（Δ8-THC / Δ6a(10a)-THC / Δ6a(7)-THC / Δ7-THC / Δ10-THC / Δ9(11)-THC）、THCP・THCJD・THCPO・THCB-O-acetate・THCH・THCV の個別異性体と THCJD-O-acetate の計 13 形式、HHC の立体異性体 8 形式（9(R)-HHC / 9(S)-HHC と WHO が示す他の 6 配置）からなる。証拠の種類は一定でない: Δ8-THCP・Δ9-THCP・Δ9-THCV・9(R)-HHC・9(S)-HHC は先行レビューがregistry record を記録し、Δ8-THCJD・Δ9-THCJD・Δ9-THCP-O-acetate は製品分析の報告があり、Δ8-THCP-O-acetate・Δ9-THCP-O-acetate・Δ8-THCB-O-acetate・Δ9-THCB-O-acetate・Δ8-THCH・Δ9-THCH・THCJD-O-acetate は令和6年厚生労働省令第81号または指定薬物資料の構造グループであり、THC の 6 位置異性体は命名標準と知識グラフ、HHC の 6 配置は WHO 47th ECDD (2024) §2C の可能な配置のレビューに基づく。いずれも登録文字列について単一の検証済み外部レコードを選択しておらず、Δ8/Δ9 の系列やアセテートの異性体を区別する単一レコードも無いため、27 概念には exactMatch を張らない。法令の構造グループ該当は製品分析同定ではなく、WHO の配置レビューは配置ごとの registry record でも製品同定でもない。IPTC Media Topics はニュース主題語彙であり、化合物単位の主題対応は外部確認していないため、推測で対応付けずdeliberately_unmapped とする。既存の総称語（THC / THCA / THCB / THCV / THCH / HHC / THCP / THCJD / THCPO / THCB-O-acetate）の query と run の割当ては変更していない。"
     - concepts:
         - "jptr:compound-delta9-thca-a"
         - "jptr:compound-thca-b"
@@ -356,9 +405,9 @@ limitations:
   - "closeMatch マッピングは概念的に近いが完全に同一ではない"
   - "一部のカンナビノイド化合物（CBX, H4CBH, HHBD, THCNM、および 2026-11-11 に登録した語のうち同一性が未確認の 10 語）は ChEBI / Wikidata の対応エントリを確認していない（不在の断定ではない）"
   - "CBE・CBL・CBGa は識別子を検証済みだが、化合物単位の IPTC 主題は外部確認していないため deliberately_unmapped である（識別子の有無と IPTC 主題の有無は別）"
-  - "投稿意図（intent 4）・表現形式（format 4）に IPTC Media Topics の対応概念は無い。IPTC はニュース主題語彙であり、意図・形式は別次元のため対応付けない（TAX-025 記録 2026-10-15）"
   - "THCV は `skos:exactMatch` を持たない。概念が Δ8/Δ9 の位置異性体と立体化学を指定しておらず、検証済みレコードは Δ9 のみのため（ISS-20261115-TAX-043）"
-  - "化合物 28 概念の IPTC 対応付けには IPTC 語彙の外部確認が必要であり未実施。リポジトリ内の証拠だけでは化合物単位の主題を特定できないため推測で対応付けない。化合物識別子の正本は ChEBI / Wikidata（taxonomy の exactMatch）である"
+  - "投稿意図（intent 4）・表現形式（format 4）に IPTC Media Topics の対応概念は無い。IPTC はニュース主題語彙であり、意図・形式は別次元のため対応付けない（TAX-025 記録 2026-10-15）"
+  - "化合物 55 概念の IPTC 対応付けには IPTC 語彙の外部確認が必要であり未実施。リポジトリ内の証拠だけでは化合物単位の主題を特定できないため推測で対応付けない。化合物識別子の正本は ChEBI / Wikidata（taxonomy の exactMatch）である"
   - "化学クラス（水素化・アセテート体）に IPTC Media Topics の対応概念は無い。IPTC はニュース主題語彙であり化学構造クラスを持たないため、推測で対応付けない（TAX-026 記録 2026-10-15）"
   - "IPTC Topic ID は変更される可能性があるため、定期的な検証が必要"
 

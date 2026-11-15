@@ -110,6 +110,39 @@ FAMILY_SCOPED = (
 )
 
 
+#: The 27 forms registered on 2026-11-15 from the candidate-form table
+#: (ISS-20261115-TAX-045); a separate registration basis group.
+FORM_BATCH_IDS = (
+    "compound_delta8_thcp",
+    "compound_delta9_thcp",
+    "compound_delta8_thcjd",
+    "compound_delta9_thcjd",
+    "compound_delta8_thcp_o_acetate",
+    "compound_delta9_thcp_o_acetate",
+    "compound_delta8_thcb_o_acetate",
+    "compound_delta9_thcb_o_acetate",
+    "compound_delta8_thc",
+    "compound_delta6a_10a_thc",
+    "compound_delta6a_7_thc",
+    "compound_delta7_thc",
+    "compound_delta10_thc",
+    "compound_delta9_11_thc",
+    "compound_delta9_thcv",
+    "compound_delta8_thcv",
+    "compound_thcjd_o_acetate",
+    "compound_delta8_thch",
+    "compound_delta9_thch",
+    "compound_9_r_hhc",
+    "compound_9_s_hhc",
+    "compound_6as_9s_10as_hhc",
+    "compound_6as_9r_10as_hhc",
+    "compound_6as_9s_10ar_hhc",
+    "compound_6as_9r_10ar_hhc",
+    "compound_6ar_9s_10as_hhc",
+    "compound_6ar_9r_10as_hhc",
+)
+
+
 def _registry() -> list[dict]:
     document = json.loads(REGISTRY.read_text(encoding="utf-8"))
     return document["queries"]
@@ -506,7 +539,8 @@ def test_design_registration_basis_covers_the_batch() -> None:
         for compound_id in item["compound_ids"]
     }
     assert sorted(by_compound) == sorted(
-        compound_id for _, compound_id, _ in BATCH + THCA_THCB_TOPICS
+        [compound_id for _, compound_id, _ in BATCH + THCA_THCB_TOPICS]
+        + list(FORM_BATCH_IDS)
     )
     for _, compound_id, _ in EXISTING:
         item = by_compound[compound_id]

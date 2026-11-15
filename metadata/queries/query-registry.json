@@ -672,6 +672,438 @@
       "language": "ja",
       "canonical_text": "CBD vs THC vs HHCH vs THC-O vs THCNM",
       "status": "active"
+    },
+    {
+      "query_id": "delta8-thcp-general-ja",
+      "compound_id": "compound_delta8_thcp",
+      "intent_id": "compound_general",
+      "language": "ja",
+      "canonical_text": "Δ8-THCP",
+      "status": "active"
+    },
+    {
+      "query_id": "delta8-thcp-liquid-ja",
+      "compound_id": "compound_delta8_thcp",
+      "intent_id": "product_liquid",
+      "language": "ja",
+      "canonical_text": "Δ8-THCP リキッド",
+      "status": "active"
+    },
+    {
+      "query_id": "delta9-thcp-general-ja",
+      "compound_id": "compound_delta9_thcp",
+      "intent_id": "compound_general",
+      "language": "ja",
+      "canonical_text": "Δ9-THCP",
+      "status": "active"
+    },
+    {
+      "query_id": "delta9-thcp-liquid-ja",
+      "compound_id": "compound_delta9_thcp",
+      "intent_id": "product_liquid",
+      "language": "ja",
+      "canonical_text": "Δ9-THCP リキッド",
+      "status": "active"
+    },
+    {
+      "query_id": "delta8-thcjd-general-ja",
+      "compound_id": "compound_delta8_thcjd",
+      "intent_id": "compound_general",
+      "language": "ja",
+      "canonical_text": "Δ8-THCJD",
+      "status": "active"
+    },
+    {
+      "query_id": "delta8-thcjd-liquid-ja",
+      "compound_id": "compound_delta8_thcjd",
+      "intent_id": "product_liquid",
+      "language": "ja",
+      "canonical_text": "Δ8-THCJD リキッド",
+      "status": "active"
+    },
+    {
+      "query_id": "delta9-thcjd-general-ja",
+      "compound_id": "compound_delta9_thcjd",
+      "intent_id": "compound_general",
+      "language": "ja",
+      "canonical_text": "Δ9-THCJD",
+      "status": "active"
+    },
+    {
+      "query_id": "delta9-thcjd-liquid-ja",
+      "compound_id": "compound_delta9_thcjd",
+      "intent_id": "product_liquid",
+      "language": "ja",
+      "canonical_text": "Δ9-THCJD リキッド",
+      "status": "active"
+    },
+    {
+      "query_id": "delta8-thcp-o-acetate-general-ja",
+      "compound_id": "compound_delta8_thcp_o_acetate",
+      "intent_id": "compound_general",
+      "language": "ja",
+      "canonical_text": "Δ8-THCP-O-acetate",
+      "status": "active"
+    },
+    {
+      "query_id": "delta8-thcp-o-acetate-liquid-ja",
+      "compound_id": "compound_delta8_thcp_o_acetate",
+      "intent_id": "product_liquid",
+      "language": "ja",
+      "canonical_text": "Δ8-THCP-O-acetate リキッド",
+      "status": "active"
+    },
+    {
+      "query_id": "delta9-thcp-o-acetate-general-ja",
+      "compound_id": "compound_delta9_thcp_o_acetate",
+      "intent_id": "compound_general",
+      "language": "ja",
+      "canonical_text": "Δ9-THCP-O-acetate",
+      "status": "active"
+    },
+    {
+      "query_id": "delta9-thcp-o-acetate-liquid-ja",
+      "compound_id": "compound_delta9_thcp_o_acetate",
+      "intent_id": "product_liquid",
+      "language": "ja",
+      "canonical_text": "Δ9-THCP-O-acetate リキッド",
+      "status": "active"
+    },
+    {
+      "query_id": "delta8-thcb-o-acetate-general-ja",
+      "compound_id": "compound_delta8_thcb_o_acetate",
+      "intent_id": "compound_general",
+      "language": "ja",
+      "canonical_text": "Δ8-THCB-O-acetate",
+      "status": "active"
+    },
+    {
+      "query_id": "delta8-thcb-o-acetate-liquid-ja",
+      "compound_id": "compound_delta8_thcb_o_acetate",
+      "intent_id": "product_liquid",
+      "language": "ja",
+      "canonical_text": "Δ8-THCB-O-acetate リキッド",
+      "status": "active"
+    },
+    {
+      "query_id": "delta9-thcb-o-acetate-general-ja",
+      "compound_id": "compound_delta9_thcb_o_acetate",
+      "intent_id": "compound_general",
+      "language": "ja",
+      "canonical_text": "Δ9-THCB-O-acetate",
+      "status": "active"
+    },
+    {
+      "query_id": "delta9-thcb-o-acetate-liquid-ja",
+      "compound_id": "compound_delta9_thcb_o_acetate",
+      "intent_id": "product_liquid",
+      "language": "ja",
+      "canonical_text": "Δ9-THCB-O-acetate リキッド",
+      "status": "active"
+    },
+    {
+      "query_id": "delta8-thc-general-ja",
+      "compound_id": "compound_delta8_thc",
+      "intent_id": "compound_general",
+      "language": "ja",
+      "canonical_text": "Δ8-THC",
+      "status": "active"
+    },
+    {
+      "query_id": "delta8-thc-liquid-ja",
+      "compound_id": "compound_delta8_thc",
+      "intent_id": "product_liquid",
+      "language": "ja",
+      "canonical_text": "Δ8-THC リキッド",
+      "status": "active"
+    },
+    {
+      "query_id": "delta6a-10a-thc-general-ja",
+      "compound_id": "compound_delta6a_10a_thc",
+      "intent_id": "compound_general",
+      "language": "ja",
+      "canonical_text": "Δ6a(10a)-THC",
+      "status": "active"
+    },
+    {
+      "query_id": "delta6a-10a-thc-liquid-ja",
+      "compound_id": "compound_delta6a_10a_thc",
+      "intent_id": "product_liquid",
+      "language": "ja",
+      "canonical_text": "Δ6a(10a)-THC リキッド",
+      "status": "active"
+    },
+    {
+      "query_id": "delta6a-7-thc-general-ja",
+      "compound_id": "compound_delta6a_7_thc",
+      "intent_id": "compound_general",
+      "language": "ja",
+      "canonical_text": "Δ6a(7)-THC",
+      "status": "active"
+    },
+    {
+      "query_id": "delta6a-7-thc-liquid-ja",
+      "compound_id": "compound_delta6a_7_thc",
+      "intent_id": "product_liquid",
+      "language": "ja",
+      "canonical_text": "Δ6a(7)-THC リキッド",
+      "status": "active"
+    },
+    {
+      "query_id": "delta7-thc-general-ja",
+      "compound_id": "compound_delta7_thc",
+      "intent_id": "compound_general",
+      "language": "ja",
+      "canonical_text": "Δ7-THC",
+      "status": "active"
+    },
+    {
+      "query_id": "delta7-thc-liquid-ja",
+      "compound_id": "compound_delta7_thc",
+      "intent_id": "product_liquid",
+      "language": "ja",
+      "canonical_text": "Δ7-THC リキッド",
+      "status": "active"
+    },
+    {
+      "query_id": "delta10-thc-general-ja",
+      "compound_id": "compound_delta10_thc",
+      "intent_id": "compound_general",
+      "language": "ja",
+      "canonical_text": "Δ10-THC",
+      "status": "active"
+    },
+    {
+      "query_id": "delta10-thc-liquid-ja",
+      "compound_id": "compound_delta10_thc",
+      "intent_id": "product_liquid",
+      "language": "ja",
+      "canonical_text": "Δ10-THC リキッド",
+      "status": "active"
+    },
+    {
+      "query_id": "delta9-11-thc-general-ja",
+      "compound_id": "compound_delta9_11_thc",
+      "intent_id": "compound_general",
+      "language": "ja",
+      "canonical_text": "Δ9(11)-THC",
+      "status": "active"
+    },
+    {
+      "query_id": "delta9-11-thc-liquid-ja",
+      "compound_id": "compound_delta9_11_thc",
+      "intent_id": "product_liquid",
+      "language": "ja",
+      "canonical_text": "Δ9(11)-THC リキッド",
+      "status": "active"
+    },
+    {
+      "query_id": "delta9-thcv-general-ja",
+      "compound_id": "compound_delta9_thcv",
+      "intent_id": "compound_general",
+      "language": "ja",
+      "canonical_text": "Δ9-THCV",
+      "status": "active"
+    },
+    {
+      "query_id": "delta9-thcv-liquid-ja",
+      "compound_id": "compound_delta9_thcv",
+      "intent_id": "product_liquid",
+      "language": "ja",
+      "canonical_text": "Δ9-THCV リキッド",
+      "status": "active"
+    },
+    {
+      "query_id": "delta8-thcv-general-ja",
+      "compound_id": "compound_delta8_thcv",
+      "intent_id": "compound_general",
+      "language": "ja",
+      "canonical_text": "Δ8-THCV",
+      "status": "active"
+    },
+    {
+      "query_id": "delta8-thcv-liquid-ja",
+      "compound_id": "compound_delta8_thcv",
+      "intent_id": "product_liquid",
+      "language": "ja",
+      "canonical_text": "Δ8-THCV リキッド",
+      "status": "active"
+    },
+    {
+      "query_id": "thcjd-o-acetate-general-ja",
+      "compound_id": "compound_thcjd_o_acetate",
+      "intent_id": "compound_general",
+      "language": "ja",
+      "canonical_text": "THCJD-O-acetate",
+      "status": "active"
+    },
+    {
+      "query_id": "thcjd-o-acetate-liquid-ja",
+      "compound_id": "compound_thcjd_o_acetate",
+      "intent_id": "product_liquid",
+      "language": "ja",
+      "canonical_text": "THCJD-O-acetate リキッド",
+      "status": "active"
+    },
+    {
+      "query_id": "delta8-thch-general-ja",
+      "compound_id": "compound_delta8_thch",
+      "intent_id": "compound_general",
+      "language": "ja",
+      "canonical_text": "Δ8-THCH",
+      "status": "active"
+    },
+    {
+      "query_id": "delta8-thch-liquid-ja",
+      "compound_id": "compound_delta8_thch",
+      "intent_id": "product_liquid",
+      "language": "ja",
+      "canonical_text": "Δ8-THCH リキッド",
+      "status": "active"
+    },
+    {
+      "query_id": "delta9-thch-general-ja",
+      "compound_id": "compound_delta9_thch",
+      "intent_id": "compound_general",
+      "language": "ja",
+      "canonical_text": "Δ9-THCH",
+      "status": "active"
+    },
+    {
+      "query_id": "delta9-thch-liquid-ja",
+      "compound_id": "compound_delta9_thch",
+      "intent_id": "product_liquid",
+      "language": "ja",
+      "canonical_text": "Δ9-THCH リキッド",
+      "status": "active"
+    },
+    {
+      "query_id": "9r-hhc-general-ja",
+      "compound_id": "compound_9_r_hhc",
+      "intent_id": "compound_general",
+      "language": "ja",
+      "canonical_text": "9(R)-HHC",
+      "status": "active"
+    },
+    {
+      "query_id": "9r-hhc-liquid-ja",
+      "compound_id": "compound_9_r_hhc",
+      "intent_id": "product_liquid",
+      "language": "ja",
+      "canonical_text": "9(R)-HHC リキッド",
+      "status": "active"
+    },
+    {
+      "query_id": "9s-hhc-general-ja",
+      "compound_id": "compound_9_s_hhc",
+      "intent_id": "compound_general",
+      "language": "ja",
+      "canonical_text": "9(S)-HHC",
+      "status": "active"
+    },
+    {
+      "query_id": "9s-hhc-liquid-ja",
+      "compound_id": "compound_9_s_hhc",
+      "intent_id": "product_liquid",
+      "language": "ja",
+      "canonical_text": "9(S)-HHC リキッド",
+      "status": "active"
+    },
+    {
+      "query_id": "6as-9s-10as-hhc-general-ja",
+      "compound_id": "compound_6as_9s_10as_hhc",
+      "intent_id": "compound_general",
+      "language": "ja",
+      "canonical_text": "(6aS,9S,10aS)-HHC",
+      "status": "active"
+    },
+    {
+      "query_id": "6as-9s-10as-hhc-liquid-ja",
+      "compound_id": "compound_6as_9s_10as_hhc",
+      "intent_id": "product_liquid",
+      "language": "ja",
+      "canonical_text": "(6aS,9S,10aS)-HHC リキッド",
+      "status": "active"
+    },
+    {
+      "query_id": "6as-9r-10as-hhc-general-ja",
+      "compound_id": "compound_6as_9r_10as_hhc",
+      "intent_id": "compound_general",
+      "language": "ja",
+      "canonical_text": "(6aS,9R,10aS)-HHC",
+      "status": "active"
+    },
+    {
+      "query_id": "6as-9r-10as-hhc-liquid-ja",
+      "compound_id": "compound_6as_9r_10as_hhc",
+      "intent_id": "product_liquid",
+      "language": "ja",
+      "canonical_text": "(6aS,9R,10aS)-HHC リキッド",
+      "status": "active"
+    },
+    {
+      "query_id": "6as-9s-10ar-hhc-general-ja",
+      "compound_id": "compound_6as_9s_10ar_hhc",
+      "intent_id": "compound_general",
+      "language": "ja",
+      "canonical_text": "(6aS,9S,10aR)-HHC",
+      "status": "active"
+    },
+    {
+      "query_id": "6as-9s-10ar-hhc-liquid-ja",
+      "compound_id": "compound_6as_9s_10ar_hhc",
+      "intent_id": "product_liquid",
+      "language": "ja",
+      "canonical_text": "(6aS,9S,10aR)-HHC リキッド",
+      "status": "active"
+    },
+    {
+      "query_id": "6as-9r-10ar-hhc-general-ja",
+      "compound_id": "compound_6as_9r_10ar_hhc",
+      "intent_id": "compound_general",
+      "language": "ja",
+      "canonical_text": "(6aS,9R,10aR)-HHC",
+      "status": "active"
+    },
+    {
+      "query_id": "6as-9r-10ar-hhc-liquid-ja",
+      "compound_id": "compound_6as_9r_10ar_hhc",
+      "intent_id": "product_liquid",
+      "language": "ja",
+      "canonical_text": "(6aS,9R,10aR)-HHC リキッド",
+      "status": "active"
+    },
+    {
+      "query_id": "6ar-9s-10as-hhc-general-ja",
+      "compound_id": "compound_6ar_9s_10as_hhc",
+      "intent_id": "compound_general",
+      "language": "ja",
+      "canonical_text": "(6aR,9S,10aS)-HHC",
+      "status": "active"
+    },
+    {
+      "query_id": "6ar-9s-10as-hhc-liquid-ja",
+      "compound_id": "compound_6ar_9s_10as_hhc",
+      "intent_id": "product_liquid",
+      "language": "ja",
+      "canonical_text": "(6aR,9S,10aS)-HHC リキッド",
+      "status": "active"
+    },
+    {
+      "query_id": "6ar-9r-10as-hhc-general-ja",
+      "compound_id": "compound_6ar_9r_10as_hhc",
+      "intent_id": "compound_general",
+      "language": "ja",
+      "canonical_text": "(6aR,9R,10aS)-HHC",
+      "status": "active"
+    },
+    {
+      "query_id": "6ar-9r-10as-hhc-liquid-ja",
+      "compound_id": "compound_6ar_9r_10as_hhc",
+      "intent_id": "product_liquid",
+      "language": "ja",
+      "canonical_text": "(6aR,9R,10aS)-HHC リキッド",
+      "status": "active"
     }
   ]
 }

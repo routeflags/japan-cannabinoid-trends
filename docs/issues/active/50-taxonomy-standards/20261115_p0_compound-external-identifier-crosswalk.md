@@ -114,6 +114,5 @@ git diff --check
 ```
 
 データ層・run・被覆を変えていないため、データ系 snapshot（`docs/audits/*`）は再生成していない。
-README を更新したため `docs/audits/g6-git-tracking-inventory.json` の README ハッシュだけを
-`python -m validation.cli audit-git-tracking` で更新した（他チェックアウトのローカル状態を表す
-extras / state_summary は変更しない）。
+`docs/audits/g6-git-tracking-inventory.json` の tracked-file hash は、README・methodology・query-design・data README 2 件の変更に合わせて更新した。
+checkout-local の `count` / `extra_count` / `state_summary` / `extras` は再生成せず、`docs/audits/g7-study-inventory.json` の `raw_combined_sha256` も更新していない。

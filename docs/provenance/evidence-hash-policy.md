@@ -70,8 +70,11 @@ observation event rather than back-filling the older 2026-10-13 timestamp. If an
 referenced file changes, the evidence entry must be updated as a new witnessed
 observation (new hash + observation time + registrar note), not patched silently.
 The compound taxonomy was re-observed on 2026-11-04 (the THCNM change, then the
-`compound_thc_o` identity caveat) and several times on 2026-11-11 (the registration
+`compound_thc_o` identity caveat), several times on 2026-11-11 (the registration
 batch, the CBE / CBL / CBGa confirmations, the THCP / THCJD families, the THCPO
-scope, the THCA / THCB split, and the THCPO consistency correction); each
+scope, the THCA / THCB split, and the THCPO consistency correction), and on
+2026-11-15 (the compound external-identifier crosswalk correction,
+ISS-20261115-TAX-043, and the candidate-form registration with its audit-correction
+scopeNote wording refresh, ISS-20261115-TAX-045); each
 re-observation updated `sha256`, `observed_at` and the note together, as this rule
 requires.
