@@ -57,7 +57,7 @@ description: |
 外部公開・release を求められた場合は、まず監査結果を見て、未解消の所見があれば公開しない理由を finding code と次の必要作業で説明する。`publication/` に HTML があることや branch を push したことは、公開承認・web deployment・release を意味しない。
 
 - `requires_review` はドラフト状態である。公開状態を `approved` にしたり review envelope を作成・補完したりしてはならない。
-- **PC-2**: Google Trends の数値主張には対応する採用済み collection `run_id` が必要。未特定なら ID を推測せず、実際の収集状態を「未取得」等として保持し、ページをレビュー待ちにする。再収集は別途許可された collection 手順・plan に従う。待機後の retry が指示されている場合は、指定された間隔を確認し、採用結果が確定するまで公開しない。`NO_DATA`、HTTP error、未収集を 0 観測に置き換えない。
+- **PC-2**: Google Trends の数値主張には対応する採用済み collection `run_id` が必要。未特定なら ID を推測せず、実際の収集状態を「未取得」等として保持し、ページをレビュー待ちにする。ページやplotを作る依頼、「不足データを取得」の一般的な依頼だけで複数source / timeframe / planを実行しない。登録済みstudyの収集は [study-compound-extension skill](../../../.agents/skills/study-compound-extension/SKILL.md) の owner-confirmed serial checkpoints に従い、1 plan / attempt の結果ごとに停止して確認する。待機後の retry が指示されている場合は、指定された間隔を確認し、採用結果が確定するまで公開しない。`NO_DATA`、HTTP error、未収集を 0 観測に置き換えない。
 - **PC-7**: 対象ページの正確な SHA-256 に結び付いた人の review envelope（artifact / evidence / decision）が必要。envelope の欠落は人の審査が未記録であることを示す。agent は hash、decision、承認者を捏造・自動設定しない。
 - 記録のみの declared gap と release を阻む finding は区別する。所見を解消できない場合は、owner が許容・延期等の disposition を明示し、契約に記録するまで release を止める。
 - 説明には `PC-2` / `PC-7` 等の finding code、対象ページ、未充足の証拠を挙げ、次に必要な人の確認や収集・記録作業を示す。監査結果だけで承認されたように書かない。

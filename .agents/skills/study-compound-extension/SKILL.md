@@ -93,11 +93,25 @@ A query cannot exist without the concept: G2 rejects a registry row whose `compo
 
 Registration is not collection. A registered term with no run is uncollected: do not report it as zero, collection-failed, or partial, and do not collect as part of a registration change. This state belongs in reader-facing documentation and coverage audits, not as a per-term run-state field in `query-design.json`.
 
+### Owner-confirmed serial collection checkpoints
+
+Collection scope is the exact tuple `(compound / term, source, query_id, plan/window, attempt)`. A page/plot request or a broad request to “get missing data” does not authorize every missing source, period, or plan.
+
+When the owner requests one compound at a time or confirmation between steps:
+
+1. Before a live request, state the exact registered term and `query_id`, source, plan ID, geo, timeframe/window, whether it is a first attempt or retry, and the known prior outcome. Run the plan gate before collection.
+2. Execute only that one confirmed plan/attempt. Do not chain the same compound’s other periods or sources, and do not fan out across the remaining compounds.
+3. Report the `run_id`, observed status, and L1 outcome immediately, then stop for owner confirmation before the next plan, retry, source, or compound.
+4. “Wait, then retry” requires the owner’s stated wait interval or an explicit later signal. If the interval is missing, ask; never retry immediately or choose an interval on the owner’s behalf.
+5. A failed / `NO_DATA` / quarantined attempt is not adopted data, not zero, and not plot input. Preserve it in quarantine and wait for the next decision.
+
+### Collection workflow
+
 1. **Classify raw retention first** (`docs/specs/raw-data-policy.md` §5). The two states are `git_tracked` (the payload is committed Repository Storage) and `git_untracked` (the payload is not committed; a local copy may exist, and the repository keeps only non-content provenance). They describe Git tracking, not whether a local raw copy exists.
    - Use the `config/storage-policies.json` default for the source kind. If an owner, legal, or publication review decision sets a different state, record `metadata/provenance/retention/<date>-<slug>.json` (`record: "raw_retention_decision"`) with `retention_status`, `reason`, `decision_reference`, `decided_by`, `decided_at`, and a separate `publication_status`. Do not infer a legal conclusion; record the decision that exists.
    - `git_tracked`: keep the payload immutable and commit it with the run; a clone must substantiate it.
    - `git_untracked`: never add raw rows to Git. The local payload may stay under `data/raw/<source>/<run-id>/` (ignored). The repository keeps the declaration, the retention decision, the catalog/aggregates, and any available SHA-256; when the payload is absent from a clone, report the run as `not_repository_retained`, not missing.
-2. Use the source's adapter (`src/collection/adapters/<source>/` or `src/collection/<source>/`), its collector configuration, and the matching `.github/skills/apify-*` or `.agents/skills/*` workflow.
+2. Use the source's adapter (`src/collection/adapters/<source>/` or `src/collection/<source>/`), its collector configuration, and the matching source workflow in `.github/skills/` or `.agents/skills/`. For Google Trends, use `.github/skills/research-google-trends/SKILL.md` and the repository pipeline.
 3. Write a new `data/raw/<source>/<run-id>/` directory. Never edit, normalize, or deduplicate raw data in place, and never replace a failed collection with a later successful one. For a `git_untracked` run this directory is local only; never add it to Git (staging into `.staging/` is local).
 4. Record request conditions separately from the observed data range. A Japanese query is not a geographic filter, and a returned date range is not the search window.
 5. Gate the new run with `scripts/validation/run-gates.sh run <run_metadata.json>`; a rejected run is quarantined, not deleted (`docs/specs/collection-pipeline.md` §5-6).

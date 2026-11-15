@@ -183,7 +183,9 @@ datasets/<study-id>/data/raw/google_trends/
 
 ## 低ボリュームクエリへの対処
 
-「CBX リキッド」のようなニッチキーワードで Google Trends がデータを返さない場合：
+「CBX リキッド」のようなニッチキーワードで Google Trends がデータを返さない場合、次表は**候補となる別の問い**であり、自動実行する手順ではない。
+
+登録済み study の query・geo・timeframe を変える、比較語を足す、別sourceを収集する、または retry するには、それぞれ owner が認めた plan が必要。既存 plan が複数あっても一括実行せず、owner が「1語ずつ確認」と指示した場合は1 plan / 1 attempt の実行結果を報告して停止する。「時間をあけて retry」は間隔または後続の明示指示が確認できるまで待つ。収集後は `run_id` と `NO_DATA` / failure / adopted の状態を区別し、失敗を0観測やplot入力にしない。Repository run は netloom の探索出力でなく `make collect --live --plan <file>` を通す。study拡張時の再確認規則は [study-compound-extension skill](../../../.agents/skills/study-compound-extension/SKILL.md) を参照。
 
 | 対策 | 説明 |
 |------|------|
