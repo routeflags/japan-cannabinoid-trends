@@ -336,7 +336,7 @@ YouTube（liquid-only primary）:
 - required primaryは`product_liquid`全query **64本**（2026-11-11に6本、2026-11-15に27本追加）。**49本にadopted runがあり、50 primary run /48化合物**を被覆する（CBDのみ2 run、THCNMのみ2 query）。
 - **未被覆は15 query**: `thca-liquid-ja` の `NO_VIDEOS`1本、6先行検索トピックの6本、候補形式の `NO_VIDEOS`8本。候補形式の残る19 queryはadopted。
 - **被覆はquery単位とcompound単位**で報告する。`make audit-youtube-coverage` は primary runs=50、compounds=48/63、queries=49/64、partial_compounds=0、missing_compounds=15、retained_out_of_scope=1、violations=0。THCNMは2/2。
-- catalog / declaration 上の adopted run は 32（primary 31 + retained 1）。raw は Git 非追跡・公開対象外（「YouTube の収集と追跡」）。
+- catalog / declaration上のadopted runは51（primary50 + retained1）。rawは`git_untracked`・公開対象外（「YouTubeの収集と追跡」）。
 
 X (Twitter):
 

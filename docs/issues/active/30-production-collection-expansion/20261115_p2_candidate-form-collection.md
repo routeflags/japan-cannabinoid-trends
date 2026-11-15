@@ -28,18 +28,19 @@
 
 ## Retention と再現性
 
-- Google Trends の採用9 runは `raw-search-tracked` policy に従い Git 追跡対象。run metadata と manifest の全18 artifact hash / byte size を再検証済み。現在の9 raw directories と catalog / documentation 更新は作業 branch 上にあり、未commit。
+- Google Trendsの採用9 runは`raw-search-tracked` policyに従いGit追跡対象。run metadataとmanifestの全18 artifact hash / byte sizeを再検証済み。9 raw directoriesと対応するcatalog / documentation更新はローカルbranchにcommit済み。
+
 - YouTube の採用19 raw runsは `raw-social-default` に従い `git_untracked`。19 declaration と raw manifest / hash / record count / query ID / catalog entry は相互照合済み。raw payloadは公開・Git追跡しない。
 - Google Trends の失敗・停止run（quarantine 22件）、収集ログ、YouTube `NO_VIDEOS` payload はローカルの `.quarantine/` / `.staging/` 証跡であり、tracked rawや採用runではない。元raw・失敗証跡を置換しない。
 - `today 12-m` の9新系列は54週（最終観測日 2026-11-15）。inherited baseline 21系列は53週で終端 2026-11-08。登録63トピックの12ヶ月合計30/63はこの異なる週バケット範囲を含む。両群を同じ週次窓の比較可能な系列と扱わず、比較用途は boundary verification の完了まで制限する。
-- YouTube の候補形式19 rawは機械ローカルであり、採用宣言とcatalogは追跡対象。raw-completeness / retention audits は、Google Trends rawをGit追跡するまでは該当9 runを policy violation と報告する。
+- YouTubeの候補形式19 rawは機械ローカルであり、採用宣言とcatalogは追跡対象。commit後のraw-completeness / retention auditsはretention violation 0、YouTube rawのlocal-only presence 19を報告する。
 
-## 次の作業
+## 完了済み作業と未解決事項
 
-1. 9 adopted Google Trends raw directories と更新済みcatalog / coverage documentationを確認し、許可された範囲内でローカルbranchへcommitする。
-2. `make audit-youtube-coverage`, `make audit-raw-completeness`, `make audit-raw-retention`, `make audit-adoption`, `make audit-new-runs` を実行して結果を突合する。
-3. 監査スナップショットと登録時点を固定するテストを現行状態に合わせる。collection run を登録操作そのものに帰属させない。
-4. 5年未試行26 queryの再試行は既存計画・窓・rate-limit条件の確認を行い、必要なら新しい実行判断を求める。push、公開、releaseは別途承認なしに実施しない。
+- 9 adopted Google Trends raw directories、catalog、coverage documentation、監査snapshots、登録時点と採用状態を分けるテストをローカルbranchにcommitした。
+- YouTube coverage、raw completeness / retention、adoption、new-run auditsを実行し、YouTube候補19 rawのlocal-only retentionと、Google Trends rawのtracked policyへの適合を確認した。
+- 5年候補形式は0/27 adopted。26 queryは未試行であり、1 queryはHTTP 429が3回。現在のplan/windowとrate limitを確認せず再試行しない。再試行する場合は必要に応じ新しいplan/windowとcollection判断を用意する。
+- push、外部公開、releaseは許可されておらず、実施していない。
 
 ## References
 
