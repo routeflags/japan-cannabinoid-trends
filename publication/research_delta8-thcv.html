@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Δ8-THCV 調査データ</title>
+</head>
+<body>
+
+<!-- ===== 調査方法 ===== -->
+<h2 id="methodology">調査方法</h2>
+<p>このセクションでは、本ページの情報がどのように収集・分析されたかを公開しています。</p>
+
+<h3>研究質問</h3>
+<p>「日本における<code>Δ8-THCV</code>（登録検索語）へのオンライン関心は、どのように推移しているか？」</p>
+<p><strong>最終更新:</strong> 2026-11-15。</p>
+<p><strong>study ID:</strong> <code>cannabinoid-raw-collection</code>。</p>
+<p><strong>登録と同一性:</strong> 本ページの <code>Δ8-THCV</code> は、2026-11-15 に候補表の 27 形式の一つとして検索トピックに登録された検索文字列であり、検証済みの化学的同一性ではない（<a href="../docs/issues/active/50-taxonomy-standards/20261115_p2_candidate-form-registration.md"><code>ISS-20261115-TAX-045</code></a>）。taxonomy の管理カテゴリ <code>compound_identity_unverified</code> に置かれ、構造・化学クラス・天然存在・経路／由来・別名・規制状態・安全性・製品同一性を主張しない（<a href="../datasets/cannabinoid-raw-collection/methodology.md">methodology.md</a> §1.3）。測るのは登録文字列に一致する検索需要と検索結果サンプルである。</p>
+<p><strong>本ページの範囲:</strong> Google Trends の12ヶ月単独系列の状態と、YouTube の liquid-only primary 1 query の状態だけを記録する。X は設計外（収集していない）。規制・COA は扱わない。5年系列と共通スケールは adopted 系列が無いため、値・図を掲載しない。</p>
+
+<h3>データソース</h3>
+<ul>
+  <li><strong>検索データ:</strong> Google Trends（日本、過去12ヶ月、単独系列）</li>
+  <li><strong>動画データ:</strong> YouTube Search via Apify（検索語「Δ8-THCV リキッド」、liquid-only primary）</li>
+  <li><strong>X:</strong> この登録語では収集していない（X 設計外。0 件の観測ではない）。</li>
+  <li><strong>規制資料:</strong> 本ページでは扱わない（登録語の同一性が未確認のため、規制状態を推定しない）。</li>
+  <li><strong>収集手段と collector:</strong> Google Trends は google-trends-mcp 0.1.1（2026-11-15 に実行）、YouTube は Apify の <code>streamers/youtube-scraper</code>（2026-11-15 に実行）。</li>
+  <li><strong>合算しない:</strong> Google Trends の相対指数と YouTube の返却サンプル件数は異なる現象であり、合算・換算しない。</li>
+</ul>
+
+<h3>登録クエリ</h3>
+<table>
+  <thead><tr><th>用途</th><th>検索語</th><th>query_id</th><th>status</th></tr></thead>
+  <tbody>
+    <tr><td>general（<code>compound_general</code>）</td><td><code>Δ8-THCV</code></td><td><code>delta8-thcv-general-ja</code></td><td><code>active</code></td></tr>
+    <tr><td>liquid（<code>product_liquid</code>）</td><td><code>Δ8-THCV リキッド</code></td><td><code>delta8-thcv-liquid-ja</code></td><td><code>active</code></td></tr>
+  </tbody>
+</table>
+<p><strong>出所:</strong> <a href="../metadata/queries/query-registry.json">metadata/queries/query-registry.json</a>（<code>language: ja</code> は登録メタデータであり、API／ソースの言語フィルタではない。いずれも <code>active</code>）。検索語は登録時の表記のままで、別表記・別異性体へ読み替えない。general は Google Trends の12ヶ月系列、liquid は YouTube の liquid-only primary に対応する。</p>
+
+<!-- ===== 独自データ：Google Trends 検索需要 ===== -->
+<div>
+<h2 id="data-search">独自データ: Google Trends 検索需要（状態の記録） <span>一次データ（状態）</span></h2>
+<p>データソース: Google Trends / 地域: 日本 (JP) / 要求: <code>today 12-m</code>（週次、単独系列） / 取得日: 2026-11-15。</p>
+
+<h3>12ヶ月（割当状態）</h3>
+<table>
+  <thead><tr><th>項目</th><th>状態</th></tr></thead>
+  <tbody>
+    <tr><td>系列の種類</td><td>単独系列（個別正規化。その語のピーク = 100）</td></tr>
+    <tr><td>要求条件</td><td>JP / <code>today 12-m</code></td></tr>
+    <tr><td>12ヶ月の状態</td><td><strong><code>NO_DATA</code></strong></td></tr>
+    <tr><td>採用 run</td><td>なし</td></tr>
+    <tr><td>観測範囲・平均・ピーク</td><td>掲載しない（系列が返っていない）</td></tr>
+  </tbody>
+</table>
+<p><strong><code>NO_DATA</code> の意味:</strong> Google Trends の取得は試行されたが、閾値未満として系列が返らなかった状態である。<strong>0 観測ではなく、欠測でもない。</strong>この状態を「検索需要が 0」と読まない。</p>
+<p><strong>出所:</strong> 被覆状態は <a href="../datasets/cannabinoid-raw-collection/README.md">datasets/cannabinoid-raw-collection/README.md</a> の被覆表と <a href="../docs/issues/active/30-production-collection-expansion/20261115_p2_candidate-form-collection.md"><code>ISS-20261115-COL-034</code></a>、系列の扱いは <a href="../datasets/cannabinoid-raw-collection/methodology.md">methodology.md</a> §2.1.3。NO_DATA の試行は quarantine に残り、catalog の adopted run ではない。</p>
+<p><strong>制約:</strong> Google Trends の要求は <code>geo=JP</code>・<code>today 12-m</code>・登録文字列で、言語フィルタは指定していない（<code>language: ja</code> は登録メタデータ）。返すのは 0–100 の相対指数で、絶対検索数ではない。また、この要求は日本語話者だけに限定しない。返却値の 0 は相対指数の最小値への丸めであり、検索が存在しなかったことや欠測を意味しない。</p>
+
+<h3>5年・共通スケール（未取得）</h3>
+<table>
+  <thead><tr><th>項目</th><th>状態</th></tr></thead>
+  <tbody>
+    <tr><td>5年単独系列</td><td><strong>未試行</strong>（収集計画のみ。adopted 系列なし）</td></tr>
+    <tr><td>5年共通スケール（<code>compare_terms</code>）</td><td><strong>未取得</strong></td></tr>
+    <tr><td>12ヶ月共通スケール（<code>compare_terms</code>）</td><td><strong>未取得</strong></td></tr>
+    <tr><td>代替</td><td>なし（単独系列は共通スケールへ換算できない）</td></tr>
+  </tbody>
+</table>
+<p>候補形式の共通スケール run は無い。単独系列の値で代用せず、5年の値・推移図・共通スケールの図も作らない。5年が未試行であることは、検索需要が 0 であることを意味しない。</p>
+</div>
+
+<!-- ===== 独自データ：YouTube 検索結果サンプル ===== -->
+<div>
+<h2 id="data-youtube-liquid">独自データ: YouTube 検索結果サンプル（liquid-only primary） <span>一次データ（状態の記録）</span></h2>
+<p>データソース: YouTube Search via Apify / 検索クエリ: 「Δ8-THCV リキッド」 / query_id: <code>delta8-thcv-liquid-ja</code> / 実行日: 2026-11-15。</p>
+<p>この query は liquid-only primary として 1 run が採用されている。返却サンプルは検索結果の一部であり、YouTube 全体の動画数を表さない。</p>
+
+<h3>収集結果（採用 run）</h3>
+<table>
+  <thead><tr><th>項目</th><th>状態</th></tr></thead>
+  <tbody>
+    <tr><td>状態</td><td><strong>採用済み（adopted）</strong></td></tr>
+    <tr><td>採用 run</td><td><code>20261115T121950Z-youtube-cannabinoid-raw-collection-delta8-thcv-liquid-ja</code></td></tr>
+    <tr><td>要求条件</td><td>1 run 1 query / <code>dateFilter</code> なし / geo filter なし / <code>maxResults</code> 500</td></tr>
+    <tr><td>raw の保管</td><td><code>git_untracked</code>（machine-local）。公開審査待ち</td></tr>
+  </tbody>
+</table>
+<p>候補形式の YouTube 集計は公開審査前のため、以下の項目は値・集計を追加しない。</p>
+<h3>公開審査まで掲載しない項目</h3>
+<table>
+  <thead><tr><th>項目</th><th>扱い</th></tr></thead>
+  <tbody>
+    <tr><td>動画単位の行（動画 ID・タイトル・チャンネル・URL・再生数）</td><td>公開審査まで掲載しない</td></tr>
+    <tr><td>返却件数（返却レコード数）</td><td>公開審査まで掲載しない</td></tr>
+    <tr><td>観測公開日範囲</td><td>公開審査まで掲載しない</td></tr>
+    <tr><td>年次・月次件数、再生数統計などの集計</td><td>公開審査まで追加しない</td></tr>
+  </tbody>
+</table>
+<p><strong>出所:</strong> 採用宣言 <a href="../metadata/provenance/declarations/20261115-youtube-candidate-form-delta8-thcv-cannabinoid-raw-collection.json"><code>20261115-youtube-candidate-form-delta8-thcv-cannabinoid-raw-collection.json</code></a>。raw は machine-local で Git 非追跡、公開・再配布しない。</p>
+<p><strong>制約:</strong> 返却サンプルは検索結果の一部であり、全動画の census ではない。動画単位の行（動画 ID・タイトル・チャンネル・URL・再生数）は公開しない（<code>ISS-20261015-COL-030</code> §4.1）。候補形式の YouTube 集計は公開審査前のため、年次・月次・再生数などの集計を本ページに追加しない。日本語の製品語「リキッド」は検索語ベースの近似的な日本市場限定であり、言語フィルタでも geo フィルタでもない。返却サンプルを 0 件の観測や全件の census と読み替えない。</p>
+</div>
+
+<!-- ===== 公開状態 ===== -->
+<div>
+<h2 id="publication-status">公開状態</h2>
+<p><strong>公開状態: 公開審査待ち（<code>requires_review</code>）。</strong>本ページは 2026-11-15 に作成したドラフトである。本ページの公開契約 review envelope、<code>decision.json</code>、artifact hash、公開監査の記録はまだ無い。</p>
+<p>図は差し込んでいない。5年系列・共通スケールが無く、YouTube の候補形式集計は公開審査前のため、図の生成・差し込みは行っていない。</p>
+<p>公開する場合は、C1〜C45 の内容レビュー、review envelope の作成、図の要否の判断、hash の固定、公開契約監査の実行が必要である。</p>
+</div>
+
+<!-- ===== 引用情報 ===== -->
+<div>
+<h2 id="citation">引用 (How to Cite)</h2>
+<p>
+  KATO, Kyoji（2026）.<br>
+  「Japan Cannabinoid Platform Trends Dataset 2026: Google Trends and YouTube Evidence from Japan」.<br>
+  Version 1.14.9<br>
+  Routeflags Co., Ltd.<br>
+  [Dataset].<br>
+  DOI: <a href="https://doi.org/10.5281/zenodo.23390594">10.5281/zenodo.23390594</a>
+</p>
+<p>
+  <a href="https://doi.org/10.5281/zenodo.23390594">
+    <img src="https://zenodo.org/badge/1375618430.svg" alt="DOI">
+  </a>
+</p>
+</div>
+
+</body>
+</html>

@@ -61,8 +61,11 @@ python -m validation.cli audit-publication --output docs/audits/publication-cont
 
 ## 研究ページ
 
-現行の公開記事は `research_*.html` と、それらが参照する `figures/<compound>/` で構成する。
-旧ガイドページ `guide_cbx_rewrite.html` は現行公開物から削除した。過去の収集・分析記録に
+調査ページは `research_*.html` と、それらが参照する `figures/<compound>/` で構成する。ページが `publication/` にあること自体は公開承認を意味しない。公開状態はページ内の `publication-status` と対応する review envelope に従い、release 前に hash 単位の承認が必要である。
+
+2026-11-15 に登録した27候補形式のページはドラフトで、全て `requires_review`。それらの Google Trends 5年系列・compare_terms run は未採用で、YouTube 集計値も公開審査前のため載せていない。新規ページには figures を作成・差し込みしていない。承認・hash 固定・release は行っていない（収集と登録の状態は `ISS-20261115-COL-034`）。
+
+旧ガイドページ `guide_cbx_rewrite.html` は現行ページ群から削除した。過去の収集・分析記録に
 残る同ファイルへの参照は、履歴・出所記録として保持する。
 
 **Instagram / TikTok**: Instagram の定点観測は 2026-10-01 に廃止された（カンナビノイド関連 0 件、
