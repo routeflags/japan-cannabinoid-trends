@@ -32,17 +32,19 @@ Google Trends fixture).
 | `external_unverifiable` | Outside this repository (cloud actor-run URLs, dataset handles, URNs). Cannot be re-checked locally; recorded but never hashed. | cloud-evidence entries (ISS-20261015-PRV-013) and the 37 registry / literature / regulator records listed under Current registry disposition below |
 | `reference_unresolvable` | The local reference does not resolve. Fix the reference first (owned as `EVIDENCE_REFERENCE_MISSING` by `check_evidence_registry`); hashing is not applicable. | — (none currently) |
 
-## Current registry disposition (2026-11-11, verified offline)
+## Current registry disposition (2026-11-15, verified offline)
 
-Of 45 entries in `metadata/provenance/evidence-registry.json`, 7 are pinned, 37 are
+Of 63 entries in `metadata/provenance/evidence-registry.json`, 7 are pinned, 55 are
 external references that are cited by URL and observation time and never hashed, and
 1 is the regenerated audit output cited by reference instead of hash. No entry needs
 a witnessed observation (`needs_witnessed_observation`) at this time.
 
-The 37 external entries are the THC-O / THCO query-variant evidence set
-(ISS-20261104-TAX-029, 2026-11-04) plus four evidence sets recorded on 2026-11-11:
-the CBE confirmation, the CBL / CBGa confirmations, the THCPO family scope, and
-the THCA / THCB topics (ISS-20261111-TAX-040 / TAX-041).
+The 55 external entries are the THC-O / THCO query-variant evidence set
+(ISS-20261104-TAX-029, 2026-11-04), four evidence sets recorded on 2026-11-11 (the
+CBE confirmation, the CBL / CBGa confirmations, the THCPO family scope, and the
+THCA / THCB topics; ISS-20261111-TAX-040 / TAX-041), and the 18 ChEBI / Wikidata
+records verified for the 2026-11-15 compound crosswalk correction
+(ISS-20261115-TAX-043).
 
 | `evidence_id` | Reference | Status | Owner action |
 |---|---|---|---|
@@ -59,6 +61,7 @@ the THCA / THCB topics (ISS-20261111-TAX-040 / TAX-041).
 | `ev-wikidata-q907909` / `ev-gsrs-cannabicyclol` / `ev-pubchem-cid-30607` / `ev-pubchem-cid-59444380` / `ev-pubmed-39811943` / `ev-pubmed-33839545` / `ev-wikidata-q27135612` / `ev-gsrs-cannabigerolic-acid` / `ev-chebi-67081` / `ev-pubchem-cid-6449999` / `ev-pubmed-31686510` / `ev-pubmed-35887277` / `ev-mhlw-2023-edible-report` / `ev-jglobal-cannabigerolic-acid` | CBL / CBGa identity evidence (registries, literature, Japanese references) | `external_unverifiable` — never hash | none; re-check the URL when citing |
 | `ev-mhlw-2024-r6-81` / `ev-pubmed-40075559` / `ev-pubchem-cid-172677450` / `ev-pubchem-cid-172874392` / `ev-wikidata-q122689235` | THCPO structural-group and per-isomer records | `external_unverifiable` — never hash | none; re-check the URL when citing |
 | `ev-doi-10-1089-can-2016-0008` / `ev-doi-10-1089-can-2021-0003` / `ev-doi-10-1021-acs-jnatprod-9b00876` / `ev-doi-10-1248-yakushi-24-00029` / `ev-mhlw-2024-r6-81-besshi` | THCA / THCB topic literature and the ordinance appendix | `external_unverifiable` — never hash | none; re-check the URL when citing |
+| `ev-chebi-69478` / `ev-wikidata-q422917` / `ev-chebi-66964` / `ev-wikidata-q190067` / `ev-chebi-69477` / `ev-wikidata-q412122` / `ev-chebi-3360` / `ev-wikidata-q265831` / `ev-chebi-3357` / `ev-wikidata-q410949` / `ev-chebi-755032` / `ev-wikidata-q254768` / `ev-wikidata-q76009679` / `ev-wikidata-q1104117` / `ev-chebi-2700` / `ev-wikidata-q410228` / `ev-chebi-52392` / `ev-wikidata-q209320` | Compound crosswalk records (ChEBI, Wikidata) for ISS-20261115-TAX-043 | `external_unverifiable` — never hash | none; re-check the URL when citing |
 
 The six registry/window/artifact entries and the taxonomy entry were observed and
 pinned on 2026-10-15 under owner instruction for ISS-20261015-PRV-011 (the replay

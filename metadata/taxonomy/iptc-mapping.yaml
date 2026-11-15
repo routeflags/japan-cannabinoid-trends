@@ -63,8 +63,8 @@
 #               version 1.9.0 → 1.9.1。
 # =============================================================================
 
-version: "1.9.1"
-last_updated: "2026-11-11"
+version: "1.10.0"
+last_updated: "2026-11-15"
 
 # IPTC Media Topics の URI スキーム
 iptc_uri_scheme: "http://cv.iptc.org/newscodes/mediatopic/"
@@ -152,53 +152,55 @@ compound_mapping:
 
   - skos_id: "jptr:compound-cbd"
     skos_prefLabel_en: "Cannabidiol (CBD)"
-    chebi_id: "33669"
-    chebi_uri: "http://purl.obolibrary.org/obo/chebi_33669"
-    wikidata_id: "Q141452"
-    wikidata_uri: "http://www.wikidata.org/entity/Q141452"
+    chebi_id: "69478"
+    chebi_uri: "http://purl.obolibrary.org/obo/chebi_69478"
+    wikidata_id: "Q422917"
+    wikidata_uri: "http://www.wikidata.org/entity/Q422917"
     mapping_type: "exactMatch"
     confidence: "high"
 
   - skos_id: "jptr:compound-thc"
     skos_prefLabel_en: "Δ9-Tetrahydrocannabinol (THC)"
-    chebi_id: "32927"
-    chebi_uri: "http://purl.obolibrary.org/obo/chebi_32927"
-    wikidata_id: "Q141629"
-    wikidata_uri: "http://www.wikidata.org/entity/Q141629"
+    chebi_id: "66964"
+    chebi_uri: "http://purl.obolibrary.org/obo/chebi_66964"
+    wikidata_id: "Q190067"
+    wikidata_uri: "http://www.wikidata.org/entity/Q190067"
     mapping_type: "exactMatch"
     confidence: "high"
 
   - skos_id: "jptr:compound-cbg"
     skos_prefLabel_en: "Cannabigerol (CBG)"
-    wikidata_id: "Q422432"
-    wikidata_uri: "http://www.wikidata.org/entity/Q422432"
+    chebi_id: "69477"
+    chebi_uri: "http://purl.obolibrary.org/obo/chebi_69477"
+    wikidata_id: "Q412122"
+    wikidata_uri: "http://www.wikidata.org/entity/Q412122"
     mapping_type: "exactMatch"
-    confidence: "medium"
-    notes: "ChEBI ID 未確認"
+    confidence: "high"
 
   - skos_id: "jptr:compound-cbn"
     skos_prefLabel_en: "Cannabinol (CBN)"
-    wikidata_id: "Q415237"
-    wikidata_uri: "http://www.wikidata.org/entity/Q415237"
+    chebi_id: "3360"
+    chebi_uri: "http://purl.obolibrary.org/obo/chebi_3360"
+    wikidata_id: "Q265831"
+    wikidata_uri: "http://www.wikidata.org/entity/Q265831"
     mapping_type: "exactMatch"
-    confidence: "medium"
-    notes: "ChEBI ID 未確認"
+    confidence: "high"
 
   - skos_id: "jptr:compound-anandamide"
     skos_prefLabel_en: "Anandamide (AEA)"
-    chebi_id: "52384"
-    chebi_uri: "http://purl.obolibrary.org/obo/chebi_52384"
-    wikidata_id: "Q409339"
-    wikidata_uri: "http://www.wikidata.org/entity/Q409339"
+    chebi_id: "2700"
+    chebi_uri: "http://purl.obolibrary.org/obo/chebi_2700"
+    wikidata_id: "Q410228"
+    wikidata_uri: "http://www.wikidata.org/entity/Q410228"
     mapping_type: "exactMatch"
     confidence: "high"
 
   - skos_id: "jptr:compound-2ag"
     skos_prefLabel_en: "2-Arachidonoylglycerol (2-AG)"
-    chebi_id: "64901"
-    chebi_uri: "http://purl.obolibrary.org/obo/chebi_64901"
-    wikidata_id: "Q295793"
-    wikidata_uri: "http://www.wikidata.org/entity/Q295793"
+    chebi_id: "52392"
+    chebi_uri: "http://purl.obolibrary.org/obo/chebi_52392"
+    wikidata_id: "Q209320"
+    wikidata_uri: "http://www.wikidata.org/entity/Q209320"
     mapping_type: "exactMatch"
     confidence: "high"
 
@@ -289,8 +291,10 @@ coverage:
     - concepts:
         - "jptr:compound-cbc"
         - "jptr:compound-cbdv"
+      reason: "マイナー・フィトカンナビノイド。taxonomy の識別子は 2026-11-15 に検証済み（CBC = ChEBI 3357 / Wikidata Q410949、CBDV = 立体異性体グループの Wikidata Q1104117。CBDV の ChEBI 182159 は立体化学を定義したレコードのため付けない。ISS-20261115-TAX-043）が、IPTC Media Topics 側の対応主題はリポジトリ内の証拠に無い。対応済みの 6 主題はいずれも化合物単位ではない広いニュース主題である。化合物単位の IPTC 対応付けには IPTC 語彙の外部確認が必要であり、未実施のため推測で対応付けない。"
+    - concepts:
         - "jptr:compound-thcv"
-      reason: "マイナー・フィトカンナビノイド。taxonomy が Wikidata exactMatch を持つ（化合物識別子としての根拠あり）が、IPTC Media Topics 側の対応主題はリポジトリ内の証拠に無い。対応済みの 6 主題はいずれも化合物単位ではない広いニュース主題である。化合物単位の IPTC 対応付けには IPTC 語彙の外部確認が必要であり、未実施のため推測で対応付けない。"
+      reason: "THCV は taxonomy に `skos:exactMatch` を持たない（ISS-20261115-TAX-043）。概念が Δ8/Δ9 の位置異性体と立体化学を指定しておらず、検証済みの外部レコード（CHEBI:755032、Wikidata Q76009679、Wikidata Q254768）はいずれも Δ9 を指すため。化合物識別子が未確定の概念に IPTC 主題を割り当てない。"
     - concepts:
         - "jptr:compound-thch"
         - "jptr:compound-hhc"
@@ -353,6 +357,7 @@ limitations:
   - "一部のカンナビノイド化合物（CBX, H4CBH, HHBD, THCNM、および 2026-11-11 に登録した語のうち同一性が未確認の 10 語）は ChEBI / Wikidata の対応エントリを確認していない（不在の断定ではない）"
   - "CBE・CBL・CBGa は識別子を検証済みだが、化合物単位の IPTC 主題は外部確認していないため deliberately_unmapped である（識別子の有無と IPTC 主題の有無は別）"
   - "投稿意図（intent 4）・表現形式（format 4）に IPTC Media Topics の対応概念は無い。IPTC はニュース主題語彙であり、意図・形式は別次元のため対応付けない（TAX-025 記録 2026-10-15）"
+  - "THCV は `skos:exactMatch` を持たない。概念が Δ8/Δ9 の位置異性体と立体化学を指定しておらず、検証済みレコードは Δ9 のみのため（ISS-20261115-TAX-043）"
   - "化合物 28 概念の IPTC 対応付けには IPTC 語彙の外部確認が必要であり未実施。リポジトリ内の証拠だけでは化合物単位の主題を特定できないため推測で対応付けない。化合物識別子の正本は ChEBI / Wikidata（taxonomy の exactMatch）である"
   - "化学クラス（水素化・アセテート体）に IPTC Media Topics の対応概念は無い。IPTC はニュース主題語彙であり化学構造クラスを持たないため、推測で対応付けない（TAX-026 記録 2026-10-15）"
   - "IPTC Topic ID は変更される可能性があるため、定期的な検証が必要"
@@ -362,7 +367,7 @@ limitations:
 # =============================================================================
 
 verification:
-  last_verified: "2026-10-15"
+  last_verified: "2026-11-15"
   verified_by: "Routeflags Co., Ltd."
   method: |
     TAX-025（2026-10-15）の確認はリポジトリ内の証拠のみで行い、IPTC への live 照会は
@@ -381,6 +386,12 @@ verification:
     文献の DOI / PMCID と厚生労働省令の別紙をリポジトリ内で確認して判定した。
     6 概念はいずれも登録文字列について単一の検証済み外部識別子を選択していないため、
     化合物単位の IPTC 主題は割り当てず deliberately_unmapped に置いた。
+    2026-11-15 の P0 crosswalk 修正（ISS-20261115-TAX-043）は、化合物の ChEBI /
+    Wikidata 識別子だけを live API で検証した。ChEBI は backend API
+    `/chebi/backend/api/public/compound/<id>/`、Wikidata は wbgetentities と SPARQL
+    を用い、Wikidata の P683（ChEBI ID）と標準 InChIKey が同一構造を指すことを
+    突き合わせた。IPTC 語彙への live 照会は今回も行っておらず、化合物単位の IPTC 主題の
+    判定は上記のまま据え置く。
   iptc_source: "https://cv.iptc.org/newscodes/mediatopic/"
   chebi_source: "https://www.ebi.ac.uk/chebi/"
   wikidata_source: "https://www.wikidata.org/"

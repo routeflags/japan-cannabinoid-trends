@@ -48,9 +48,9 @@ compound_id は compound-taxonomy の `skos:notation`（例 `compound_cbx`）。
 | `thcnm-general-ja` | `compound_thcnm` | compound_general | THCNM | active | Google Trends の 12ヶ月・5年（`20261104T115425Z-google-trends-thcnm-12m` / `20261104T115431Z-google-trends-thcnm-5y`）。taxonomy 概念 `compound_thcnm`（`THA` は別名・商業名。ISS-20261104-TAX-028） |
 | `thcnm-liquid-ja` | `compound_thcnm` | product_liquid | THCNM リキッド | active | YouTube 1 run（`20261104T120627Z-youtube-cannabinoid-raw-collection`、30 件。2026-11-04）。`datasets/cannabinoid-raw-collection/metadata/query-design.json` の required primary query |
 | `tha-liquid-ja` | `compound_thcnm` | product_liquid | THA リキッド | active | YouTube 1 run（`20261104T120805Z-youtube-cannabinoid-raw-collection`、311 件。2026-11-04）。`THA` は `compound_thcnm` の別名・商業名（ISS-20261104-TAX-028）であり、別化合物の集合ではない。同じ化合物の 2 本目の required primary query |
-| `cbc-general-ja` | `compound_cbc` | compound_general | CBC | active | 登録根拠: taxonomy の既存概念 `compound_cbc`（`compound_minor`、`wikidata:Q422441`）を根拠に 2026-11-10 に登録（ISS-20261110-TAX-039）。**run 実績は登録根拠ではない** |
+| `cbc-general-ja` | `compound_cbc` | compound_general | CBC | active | 登録根拠: taxonomy の既存概念 `compound_cbc`（`compound_minor`、`chebi:3357` / `wikidata:Q410949`）を根拠に 2026-11-10 に登録（ISS-20261110-TAX-039）。**run 実績は登録根拠ではない** |
 | `cbc-liquid-ja` | `compound_cbc` | product_liquid | CBC リキッド | active | 登録根拠: 同上（`product_liquid` の required primary query 設計。run 実績ではない） |
-| `cbdv-general-ja` | `compound_cbdv` | compound_general | CBDV | active | 登録根拠: taxonomy の既存概念 `compound_cbdv`（`compound_minor`、`wikidata:Q422426`）を根拠に 2026-11-10 に登録（ISS-20261110-TAX-039）。**run 実績は登録根拠ではない** |
+| `cbdv-general-ja` | `compound_cbdv` | compound_general | CBDV | active | 登録根拠: taxonomy の既存概念 `compound_cbdv`（`compound_minor`、`wikidata:Q1104117`）を根拠に 2026-11-10 に登録（ISS-20261110-TAX-039）。**run 実績は登録根拠ではない** |
 | `cbdv-liquid-ja` | `compound_cbdv` | product_liquid | CBDV リキッド | active | 登録根拠: 同上（`product_liquid` の required primary query 設計。run 実績ではない） |
 | `thcb-general-ja` | `compound_thcb` | compound_general | THCB | active | 登録根拠: 管理カテゴリ `compound_identity_unverified` の新規概念 `compound_thcb`（化学的同一性未確認）を根拠に 2026-11-11 に登録（ISS-20261111-TAX-040）。**run 実績は登録根拠ではない** |
 | `thcb-liquid-ja` | `compound_thcb` | product_liquid | THCB リキッド | active | 登録根拠: 同上（`product_liquid` の required primary query 設計。run 実績ではない） |

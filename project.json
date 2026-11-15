@@ -235,7 +235,7 @@
     "maintainer": "ROUTE FLAGS Co., Ltd."
   },
   "queryDesign": {
-    "lastUpdated": "2026-11-11",
+    "lastUpdated": "2026-11-15",
     "principle": "MECE: Each compound has unique queries per media type, avoiding overlap",
     "mediaTypes": {
       "x": {
@@ -441,7 +441,7 @@
           "googleTrends": "CBC"
         },
         "commonScaleSet": null,
-        "identityNote": "canonical identity は metadata/taxonomy/compound-taxonomy.skos.jsonld の既存 concept `compound_cbc`（Cannabichromene、Wikidata Q422441 の exactMatch 付き）。今回の追加で ID・分類を新設していない。",
+        "identityNote": "canonical identity は metadata/taxonomy/compound-taxonomy.skos.jsonld の既存 concept `compound_cbc`（Cannabichromene、ChEBI 3357 / Wikidata Q410949 の exactMatch 付き）。今回の追加で ID・分類を新設していない。",
         "note": "2026-11-10 に study の登録化合物集合へ追加した。`CBC` はカナダ放送協会など化合物以外の略号と衝突する。登録は検索文字列の固定であり、物質の同定ではない。ソース別の adopted 被覆（採用・NO_DATA・HTTP 429・NO_VIDEOS を含む）は datasets/cannabinoid-raw-collection/README.md と `make audit-youtube-coverage` が報告する。この queryDesign は実行状態を持たない。X のクエリは設計していない。正本は metadata/queries/query-registry.json（cbc-general-ja / cbc-liquid-ja）。ISS-20261110-TAX-039。"
       },
       "CBDV": {
@@ -452,7 +452,7 @@
           "googleTrends": "CBDV"
         },
         "commonScaleSet": null,
-        "identityNote": "canonical identity は metadata/taxonomy/compound-taxonomy.skos.jsonld の既存 concept `compound_cbdv`（Cannabidivarin、Wikidata Q422426 の exactMatch 付き）。今回の追加で ID・分類を新設していない。",
+        "identityNote": "canonical identity は metadata/taxonomy/compound-taxonomy.skos.jsonld の既存 concept `compound_cbdv`（Cannabidivarin、Wikidata Q1104117 の exactMatch 付き。Q1104117 は立体異性体グループのレコードで、立体化学を定義した ChEBI 182159 は付けない）。今回の追加で ID・分類を新設していない。",
         "note": "2026-11-10 に study の登録化合物集合へ追加した。登録は検索文字列の固定であり、物質の同定ではない。ソース別の adopted 被覆（採用・NO_DATA・HTTP 429・NO_VIDEOS を含む）は datasets/cannabinoid-raw-collection/README.md と `make audit-youtube-coverage` が報告する。この queryDesign は実行状態を持たない。X のクエリは設計していない。正本は metadata/queries/query-registry.json（cbdv-general-ja / cbdv-liquid-ja）。ISS-20261110-TAX-039。"
       },
     "THCB": {

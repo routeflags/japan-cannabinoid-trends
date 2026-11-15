@@ -37,9 +37,9 @@
       "evidence_id": "ev-compound-taxonomy",
       "evidence_type": "taxonomy",
       "reference": "metadata/taxonomy/compound-taxonomy.skos.jsonld",
-      "sha256": "285468c94fb3d95a4922b858f0d178b6e8821c922bce7186127425fd27efbe02",
-      "observed_at": "2026-11-11T22:41:49Z",
-      "note": "SKOS compound taxonomy backing query semantics. Re-observed 2026-11-04 by a Delta agent in the japan-cannabinoid-trends worktree under the owner request recorded as ISS-20261104-TAX-029 (THC-O / THCO query-variant evidence and identity caveat); the hash observes the bytes after the `compound_thc_o` scopeNote gained the identity caveat, and no CAS/ChEBI/Wikidata/PubChem identifier was added to the concept. This entry was already re-observed earlier the same day for the THCNM change (ISS-20261104-TAX-028); that history is kept in this note instead of being rewritten, and earlier hashes were never patched silently: each re-observation records its own time and note. Re-observed after the owner-directed registration batch (2026-11-11, ISS-20261111-TAX-040): one administrative registration-state category (jptr:compound-identity-unverified / compound_identity_unverified) and thirteen owner-named compound concepts (THCB, THCP, THCJD, THCPO, CBE, HHCPO, CBND, CBL, CBGa, CBP, 10-OH-HHC, THXE, THCA) were added. The members carry no skos:exactMatch, CAS number, PubChem/IUPAC name or chemical-class link, and the category states no route, natural-occurrence, chemical-class, structure, synonym or regulatory claim. The earlier ISS-20261015-TAX-027 non-registration decision for THCP is superseded by the dated decision record, not patched away. Re-observed 2026-11-11 after the owner confirmed that the study term CBE is intended to mean cannabielsoin (ISS-20261111-TAX-040 addendum): compound_cbe now carries prefLabel 'Cannabielsoin (CBE)' / 'カンナビエルソイン (CBE)', exactMatch wikidata:Q22668702 and UNII 2ERD6V6652, and skos:broader jptr:compound-minor; compound_identity_unverified now has twelve members. No raw data, run metadata, query string or count changed. The earlier hashes were not patched silently; this is a new witnessed observation. Re-observed 2026-11-11 after the owner confirmed that the study terms CBL and CBGa are intended to mean cannabicyclol and cannabigerolic acid (ISS-20261111-TAX-040 addendum): compound_cbl now carries prefLabel 'Cannabicyclol (CBL)' / 'カンナビシクロール (CBL)', exactMatch wikidata:Q907909 and skos:broader jptr:compound-minor; compound_cbga now carries prefLabel 'Cannabigerolic acid (CBGA)' / 'カンナビゲロール酸 (CBGA)', exactMatch chebi:67081 / wikidata:Q27135612 / UNII 80I4ZM847Y and skos:broader jptr:compound-minor. compound_identity_unverified now has ten members. CBL's two circulating CAS numbers (21366-63-2 and 67920-00-7) are recorded without choosing one. No raw data, run metadata, query string or count changed. The earlier hashes were not patched silently; this is a new witnessed observation. Re-observed 2026-11-11 after the owner confirmed that the study terms THCP and THCJD are intended to mean the isomer-unspecified C7 (tetrahydrocannabiphorol) and C8 (THC-JD / 3-octyl-THC) homologue families (ISS-20261111-TAX-040 addendum): compound_thcp and compound_thcjd keep their labels, notations and skos:broader jptr:compound-identity-unverified and carry no skos:exactMatch or per-isomer identifier; their scopeNotes now record the owner-confirmed family scope, the Δ8/Δ9 distinction, the absence of a single family record and the literal-string query limit. The administrative category scopeNote now states that an owner-confirmed isomer-unspecified family stays there, and the scheme description says single-substance chemical identity. No raw data, run metadata, query string, membership or count changed. The earlier hashes were not patched silently; this is a new witnessed observation. Re-observed 2026-11-11 after the owner confirmed that the study term THCPO is intended to mean THCP-O-acetate with the Δ8/Δ9 positional isomer unspecified (ISS-20261111-TAX-040 addendum): compound_thcpo keeps its THCPO label, notation and skos:broader jptr:compound-identity-unverified, gains the English altLabel 'THCP-O-acetate', and carries no skos:exactMatch, CAS number, PubChem CID, UNII, ChEBI ID or Wikidata QID. Its scopeNote records the THCP-O-acetate family scope, the Δ8/Δ9 distinction, the 2024 MHLW structural-group coverage of both isomers (令和6年厚生労働省令第81号; the Δ9 and Δ8 acetate groups), the Tanaka et al. 2025 identification of the Δ9 acetate in seven oil products and one herbal product distributed online, and the literal-string query limit; the per-isomer registry records stay in docs/provenance/compound-taxonomy.md. The administrative category scopeNote now covers an isomer-unspecified ester (acetate) family and permits a member to record statutory structural-group coverage of its isomers. No raw data, run metadata, query string, membership or count changed. The earlier hashes were not patched silently; this is a new witnessed observation. Re-observed 2026-11-11 after the owner confirmed that THCA and THCB are replaced by six specific search-topic concepts (ISS-20261111-TAX-041): compound_delta9_thca_a, compound_thca_b, compound_delta8_thca, compound_delta8_thcb, compound_delta9_thcb and compound_thcb_o_acetate were added under jptr:compound-identity-unverified; each carries no skos:exactMatch, CAS number, PubChem CID, UNII, ChEBI ID or IUPAC name, no chemical-class link and no skos:related link. compound_thca and compound_thcb remain separate literal-string registrations with unchanged labels, notations and queries. The administrative category scopeNote now also covers a specific positional-isomer designation whose single external record was not verified. No raw data, run metadata, query string or count changed. The earlier hashes were not patched silently; this is a new witnessed observation. Final re-observation for ISS-20261111-TAX-041 after the last two scopeNote edits in the six new concepts (removing an uncited ester name; adding the explicit 'single-substance chemical identity remains UNCONFIRMED' sentence in both languages so the administrative category is stated uniformly) and after regenerating the taxonomy exports; the hash observes the final source bytes. No identifier, category membership, query string or count changed. Re-observed 2026-11-11 after the THCPO consistency correction (ISS-20261111-TAX-040 addendum): the compound_thcpo scopeNote now records the owner's `y` answer and states that the isomer-unspecified family scope is this repository's registration-level reading, not a family the owner explicitly confirmed; it marks the English altLabel `THCP-O-acetate` as a concept-level search-scope label with its own basis in the scopeNote and not a structure-synonym implied by category membership; it drops the unsupported HHCPO and exo-THCP analogue claims and describes those terms neutrally; it narrows the ChEBI / FDA GSRS wording to the searches actually recorded (ChEBI term `THCP`, GSRS name `Tetrahydrocannabiphorol`); it states the 2024 MHLW structural-group coverage subject to the ordinance's narcotics exclusion (麻薬を除く) as a statutory structural fact that is not a product/result classification or part of the owner's identity confirmation; and it records that the Δ8 acetate Tanaka et al. 2025 identified is Δ8-THC-O (the C5 analogue), not Δ8-THCP-O-acetate. The administrative category scopeNote now states that membership establishes no synonym and that a concept-level alternate label needs its own recorded basis. No identifier, category membership, query string or count changed. The earlier hashes were not patched silently; this is a new witnessed observation."
+      "sha256": "cf068b7896e71ec532bf752cba50ac30b2f734c18a9cf07ab8a427679cf919c0",
+      "observed_at": "2026-11-15T14:43:27Z",
+      "note": "SKOS compound taxonomy backing query semantics. Re-observed 2026-11-04 by a Delta agent in the japan-cannabinoid-trends worktree under the owner request recorded as ISS-20261104-TAX-029 (THC-O / THCO query-variant evidence and identity caveat); the hash observes the bytes after the `compound_thc_o` scopeNote gained the identity caveat, and no CAS/ChEBI/Wikidata/PubChem identifier was added to the concept. This entry was already re-observed earlier the same day for the THCNM change (ISS-20261104-TAX-028); that history is kept in this note instead of being rewritten, and earlier hashes were never patched silently: each re-observation records its own time and note. Re-observed after the owner-directed registration batch (2026-11-11, ISS-20261111-TAX-040): one administrative registration-state category (jptr:compound-identity-unverified / compound_identity_unverified) and thirteen owner-named compound concepts (THCB, THCP, THCJD, THCPO, CBE, HHCPO, CBND, CBL, CBGa, CBP, 10-OH-HHC, THXE, THCA) were added. The members carry no skos:exactMatch, CAS number, PubChem/IUPAC name or chemical-class link, and the category states no route, natural-occurrence, chemical-class, structure, synonym or regulatory claim. The earlier ISS-20261015-TAX-027 non-registration decision for THCP is superseded by the dated decision record, not patched away. Re-observed 2026-11-11 after the owner confirmed that the study term CBE is intended to mean cannabielsoin (ISS-20261111-TAX-040 addendum): compound_cbe now carries prefLabel 'Cannabielsoin (CBE)' / 'カンナビエルソイン (CBE)', exactMatch wikidata:Q22668702 and UNII 2ERD6V6652, and skos:broader jptr:compound-minor; compound_identity_unverified now has twelve members. No raw data, run metadata, query string or count changed. The earlier hashes were not patched silently; this is a new witnessed observation. Re-observed 2026-11-11 after the owner confirmed that the study terms CBL and CBGa are intended to mean cannabicyclol and cannabigerolic acid (ISS-20261111-TAX-040 addendum): compound_cbl now carries prefLabel 'Cannabicyclol (CBL)' / 'カンナビシクロール (CBL)', exactMatch wikidata:Q907909 and skos:broader jptr:compound-minor; compound_cbga now carries prefLabel 'Cannabigerolic acid (CBGA)' / 'カンナビゲロール酸 (CBGA)', exactMatch chebi:67081 / wikidata:Q27135612 / UNII 80I4ZM847Y and skos:broader jptr:compound-minor. compound_identity_unverified now has ten members. CBL's two circulating CAS numbers (21366-63-2 and 67920-00-7) are recorded without choosing one. No raw data, run metadata, query string or count changed. The earlier hashes were not patched silently; this is a new witnessed observation. Re-observed 2026-11-11 after the owner confirmed that the study terms THCP and THCJD are intended to mean the isomer-unspecified C7 (tetrahydrocannabiphorol) and C8 (THC-JD / 3-octyl-THC) homologue families (ISS-20261111-TAX-040 addendum): compound_thcp and compound_thcjd keep their labels, notations and skos:broader jptr:compound-identity-unverified and carry no skos:exactMatch or per-isomer identifier; their scopeNotes now record the owner-confirmed family scope, the Δ8/Δ9 distinction, the absence of a single family record and the literal-string query limit. The administrative category scopeNote now states that an owner-confirmed isomer-unspecified family stays there, and the scheme description says single-substance chemical identity. No raw data, run metadata, query string, membership or count changed. The earlier hashes were not patched silently; this is a new witnessed observation. Re-observed 2026-11-11 after the owner confirmed that the study term THCPO is intended to mean THCP-O-acetate with the Δ8/Δ9 positional isomer unspecified (ISS-20261111-TAX-040 addendum): compound_thcpo keeps its THCPO label, notation and skos:broader jptr:compound-identity-unverified, gains the English altLabel 'THCP-O-acetate', and carries no skos:exactMatch, CAS number, PubChem CID, UNII, ChEBI ID or Wikidata QID. Its scopeNote records the THCP-O-acetate family scope, the Δ8/Δ9 distinction, the 2024 MHLW structural-group coverage of both isomers (令和6年厚生労働省令第81号; the Δ9 and Δ8 acetate groups), the Tanaka et al. 2025 identification of the Δ9 acetate in seven oil products and one herbal product distributed online, and the literal-string query limit; the per-isomer registry records stay in docs/provenance/compound-taxonomy.md. The administrative category scopeNote now covers an isomer-unspecified ester (acetate) family and permits a member to record statutory structural-group coverage of its isomers. No raw data, run metadata, query string, membership or count changed. The earlier hashes were not patched silently; this is a new witnessed observation. Re-observed 2026-11-11 after the owner confirmed that THCA and THCB are replaced by six specific search-topic concepts (ISS-20261111-TAX-041): compound_delta9_thca_a, compound_thca_b, compound_delta8_thca, compound_delta8_thcb, compound_delta9_thcb and compound_thcb_o_acetate were added under jptr:compound-identity-unverified; each carries no skos:exactMatch, CAS number, PubChem CID, UNII, ChEBI ID or IUPAC name, no chemical-class link and no skos:related link. compound_thca and compound_thcb remain separate literal-string registrations with unchanged labels, notations and queries. The administrative category scopeNote now also covers a specific positional-isomer designation whose single external record was not verified. No raw data, run metadata, query string or count changed. The earlier hashes were not patched silently; this is a new witnessed observation. Final re-observation for ISS-20261111-TAX-041 after the last two scopeNote edits in the six new concepts (removing an uncited ester name; adding the explicit 'single-substance chemical identity remains UNCONFIRMED' sentence in both languages so the administrative category is stated uniformly) and after regenerating the taxonomy exports; the hash observes the final source bytes. No identifier, category membership, query string or count changed. Re-observed 2026-11-11 after the THCPO consistency correction (ISS-20261111-TAX-040 addendum): the compound_thcpo scopeNote now records the owner's `y` answer and states that the isomer-unspecified family scope is this repository's registration-level reading, not a family the owner explicitly confirmed; it marks the English altLabel `THCP-O-acetate` as a concept-level search-scope label with its own basis in the scopeNote and not a structure-synonym implied by category membership; it drops the unsupported HHCPO and exo-THCP analogue claims and describes those terms neutrally; it narrows the ChEBI / FDA GSRS wording to the searches actually recorded (ChEBI term `THCP`, GSRS name `Tetrahydrocannabiphorol`); it states the 2024 MHLW structural-group coverage subject to the ordinance's narcotics exclusion (麻薬を除く) as a statutory structural fact that is not a product/result classification or part of the owner's identity confirmation; and it records that the Δ8 acetate Tanaka et al. 2025 identified is Δ8-THC-O (the C5 analogue), not Δ8-THCP-O-acetate. The administrative category scopeNote now states that membership establishes no synonym and that a concept-level alternate label needs its own recorded basis. No identifier, category membership, query string or count changed. The earlier hashes were not patched silently; this is a new witnessed observation. Re-observed for the separate P0 crosswalk commit (ISS-20261115-TAX-043); this hash records the taxonomy bytes after the nine identifier corrections and before the later candidate-form registration (ISS-20261115-TAX-045)."
     },
     {
       "evidence_id": "ev-window-2025-2026",
@@ -360,6 +360,150 @@
       "sha256": null,
       "observed_at": "2026-11-11T22:00:34Z",
       "note": "MHLW 2024 別紙 (list of newly designated substances under 令和6年厚生労働省令第81号, promulgated 2024-05-01, in force 2024-05-11): structural group 1 (6a,7,8,10a-tetrahydro, the Δ9 series) and group 2 (6a,7,10,10a-tetrahydro, the Δ8 series) each cover a C1 hydroxy or acetoxy group with a C3 straight-chain C3-C8 alkyl group and no other substituents; the list explicitly enumerates Δ9-THCB-O-acetate (n=4) and Δ8-THCB-O-acetate (n=4) among the newly designated substances. Supports the statutory structural-group coverage of both isomers. It does not determine the content, legality, safety, route or natural occurrence of any product or query result, and it is not a single registry record for the family (ISS-20261111-TAX-041). External reference: recorded by URL and observation time, never hashed (external_unverifiable)."
+    },
+    {
+      "evidence_id": "ev-chebi-69478",
+      "evidence_type": "database_record",
+      "reference": "https://www.ebi.ac.uk/chebi/searchId.do?chebiId=CHEBI:69478",
+      "sha256": null,
+      "observed_at": "2026-11-15T05:02:00Z",
+      "note": "ChEBI 69478 'cannabidiol': a cannabinoid whose IUPAC name is (1'R,2'R)-5'-methyl-4-pentyl-2'-(prop-1-en-2-yl)-1',2',3',4'-tetrahydrobiphenyl-2,6-diol; formula C21H30O2, standard InChIKey QHMBSVQNZZTUGM-ZWKOTPCHSA-N. The record is the stereo-defined (-)-trans enantiomer while its unqualified name matches the concept's unqualified name, which is why compound_cbd carries it. Replaces chebi:33669 (metallacycloalkanes), which named no compound. External reference: no hash (external_unverifiable)."
+    },
+    {
+      "evidence_id": "ev-wikidata-q422917",
+      "evidence_type": "database_record",
+      "reference": "https://www.wikidata.org/wiki/Q422917",
+      "sha256": null,
+      "observed_at": "2026-11-15T05:02:00Z",
+      "note": "Wikidata Q422917: en label 'cannabidiol', ja label 'カンナビジオール', description 'chemical compound'; P683 ChEBI ID 69478, P231 CAS 13956-29-1, P235 InChIKey QHMBSVQNZZTUGM-ZWKOTPCHSA-N, P662 PubChem CID 644019. The P683 cross-reference and the standard InChIKey agree with CHEBI:69478, so it replaces Q141452 (Disraeli, a city in Quebec, Canada). External reference: no hash (external_unverifiable)."
+    },
+    {
+      "evidence_id": "ev-chebi-66964",
+      "evidence_type": "database_record",
+      "reference": "https://www.ebi.ac.uk/chebi/searchId.do?chebiId=CHEBI:66964",
+      "sha256": null,
+      "observed_at": "2026-11-15T05:02:00Z",
+      "note": "ChEBI 66964 'Δ9-tetrahydrocannabinol': a diterpenoid (6a,7,8,10a-tetrahydro-6H-benzo[c]chromene substituted at position 1 by hydroxy, positions 6,6,9 by methyl and position 3 by pentyl), the principal psychoactive constituent of cannabis; formula C21H30O2, standard InChIKey CYQFCXCEBYINGO-IAGOWNOFSA-N. Matches compound_thc's Δ9 label and replaces chebi:32927 (nonadecane), which was also attached to compound_cbg. External reference: no hash (external_unverifiable)."
+    },
+    {
+      "evidence_id": "ev-wikidata-q190067",
+      "evidence_type": "database_record",
+      "reference": "https://www.wikidata.org/wiki/Q190067",
+      "sha256": null,
+      "observed_at": "2026-11-15T05:02:00Z",
+      "note": "Wikidata Q190067: en label 'tetrahydrocannabinol', ja label 'テトラヒドロカンナビノール', description 'chemical compound'; P683 ChEBI ID 66964, P231 CAS 1972-08-3, P235 InChIKey CYQFCXCEBYINGO-IAGOWNOFSA-N, P662 PubChem CID 16078. The P683 cross-reference and the standard InChIKey agree with CHEBI:66964, so it replaces Q141629 (Reifenberg, a municipality in Germany). External reference: no hash (external_unverifiable)."
+    },
+    {
+      "evidence_id": "ev-chebi-69477",
+      "evidence_type": "database_record",
+      "reference": "https://www.ebi.ac.uk/chebi/searchId.do?chebiId=CHEBI:69477",
+      "sha256": null,
+      "observed_at": "2026-11-15T05:02:00Z",
+      "note": "ChEBI 69477 'cannabigerol': a resorcinol substituted by a (2E)-3,7-dimethylocta-2,6-dien-1-yl group and a pentyl group, a natural product of Cannabis sativa; formula C21H32O2, standard InChIKey QXACEHWTBCFNSA-SFQUDFHCSA-N. Used for compound_cbg and replaces chebi:32927 (nonadecane). External reference: no hash (external_unverifiable)."
+    },
+    {
+      "evidence_id": "ev-wikidata-q412122",
+      "evidence_type": "database_record",
+      "reference": "https://www.wikidata.org/wiki/Q412122",
+      "sha256": null,
+      "observed_at": "2026-11-15T05:02:00Z",
+      "note": "Wikidata Q412122: en label 'cannabigerol', ja label 'カンナビゲロール', description 'chemical compound'; P683 ChEBI ID 69477, P231 CAS 25654-31-3, P235 InChIKey QXACEHWTBCFNSA-SFQUDFHCSA-N, P662 PubChem CID 5315659. The P683 cross-reference and the standard InChIKey agree with CHEBI:69477, so it replaces Q422432 (Aktion Regen, an aid organisation). External reference: no hash (external_unverifiable)."
+    },
+    {
+      "evidence_id": "ev-chebi-3360",
+      "evidence_type": "database_record",
+      "reference": "https://www.ebi.ac.uk/chebi/searchId.do?chebiId=CHEBI:3360",
+      "sha256": null,
+      "observed_at": "2026-11-15T05:02:00Z",
+      "note": "ChEBI 3360 'Cannabinol': formula C21H26O2, standard InChIKey VBGLYOIFKLUMQG-UHFFFAOYSA-N (no stereochemistry layer, matching the concept that specifies none). New ChEBI match for compound_cbn; the concept previously carried no ChEBI id. External reference: no hash (external_unverifiable)."
+    },
+    {
+      "evidence_id": "ev-wikidata-q265831",
+      "evidence_type": "database_record",
+      "reference": "https://www.wikidata.org/wiki/Q265831",
+      "sha256": null,
+      "observed_at": "2026-11-15T05:02:00Z",
+      "note": "Wikidata Q265831: en label 'cannabinol', ja label 'カンナビノール', description 'naturally-occuring cannabinoid'; P683 ChEBI ID 3360, P231 CAS 521-35-7, P235 InChIKey VBGLYOIFKLUMQG-UHFFFAOYSA-N, P662 PubChem CID 2543. The P683 cross-reference and the standard InChIKey agree with CHEBI:3360, so it replaces Q415237 (a Wikimedia disambiguation page). External reference: no hash (external_unverifiable)."
+    },
+    {
+      "evidence_id": "ev-chebi-3357",
+      "evidence_type": "database_record",
+      "reference": "https://www.ebi.ac.uk/chebi/searchId.do?chebiId=CHEBI:3357",
+      "sha256": null,
+      "observed_at": "2026-11-15T05:02:00Z",
+      "note": "ChEBI 3357 'Cannabichromene': formula C21H30O2, standard InChIKey UVOLYTDXHDXWJU-UHFFFAOYSA-N (no stereochemistry layer, matching the concept that specifies none). New ChEBI match for compound_cbc; the concept previously carried no ChEBI id. External reference: no hash (external_unverifiable)."
+    },
+    {
+      "evidence_id": "ev-wikidata-q410949",
+      "evidence_type": "database_record",
+      "reference": "https://www.wikidata.org/wiki/Q410949",
+      "sha256": null,
+      "observed_at": "2026-11-15T05:02:00Z",
+      "note": "Wikidata Q410949: en label 'cannabichromene', ja label 'カンナビクロメン', description 'chemical compound'; P683 ChEBI ID 3357, P231 CAS 20675-51-8, P235 InChIKey UVOLYTDXHDXWJU-UHFFFAOYSA-N, P662 PubChem CID 30219. The P683 cross-reference and the standard InChIKey agree with CHEBI:3357, so it replaces Q422441 (a Wikimedia disambiguation page). External reference: no hash (external_unverifiable)."
+    },
+    {
+      "evidence_id": "ev-chebi-755032",
+      "evidence_type": "database_record",
+      "reference": "https://www.ebi.ac.uk/chebi/searchId.do?chebiId=CHEBI:755032",
+      "sha256": null,
+      "observed_at": "2026-11-15T05:02:00Z",
+      "note": "ChEBI 755032 'tetrahydrocannabivarin': formula C19H26O2, standard InChIKey ZROLHBHDLIHEMS-HUUCEWRRSA-N (stereo-defined), synonym '.delta.9-tetrahydrocannabivarin'. The OLS4 ChEBI search for 'tetrahydrocannabivarin' returned this single record and 'delta-8-tetrahydrocannabivarin' returned none on 2026-11-15 (a negative result, not proof of absence). It is Δ9 and stereo-defined, so it is not attached to compound_thcv, whose concept specifies neither. External reference: no hash (external_unverifiable)."
+    },
+    {
+      "evidence_id": "ev-wikidata-q254768",
+      "evidence_type": "database_record",
+      "reference": "https://www.wikidata.org/wiki/Q254768",
+      "sha256": null,
+      "observed_at": "2026-11-15T05:02:00Z",
+      "note": "Wikidata Q254768: en label 'tetrahydrocannabivarin', description 'chemical compound'; P231 CAS 28172-17-0, P235 InChIKey ZROLHBHDLIHEMS-UHFFFAOYSA-N (the Δ9 constitution with the stereochemistry unspecified), P662 PubChem CID 34180 (6a,7,8,10a-tetrahydro-6,6,9-trimethyl-3-propyl-6H-dibenzo(b,d)pyran-1-ol). Not attached to compound_thcv: the concept does not specify the Δ8/Δ9 positional isomer, so the record would still assert Δ9. External reference: no hash (external_unverifiable)."
+    },
+    {
+      "evidence_id": "ev-wikidata-q76009679",
+      "evidence_type": "database_record",
+      "reference": "https://www.wikidata.org/wiki/Q76009679",
+      "sha256": null,
+      "observed_at": "2026-11-15T05:02:00Z",
+      "note": "Wikidata Q76009679: en label 'Tetrahydrocannabivarin', description 'chemical compound'; P231 CAS 31262-37-0, P235 InChIKey ZROLHBHDLIHEMS-HUUCEWRRSA-N (the same stereo-defined Δ9 structure as CHEBI:755032), P662 PubChem CID 93147. Not attached to compound_thcv for the same reason as CHEBI:755032: it fixes both Δ9 and the stereochemistry. External reference: no hash (external_unverifiable)."
+    },
+    {
+      "evidence_id": "ev-wikidata-q1104117",
+      "evidence_type": "database_record",
+      "reference": "https://www.wikidata.org/wiki/Q1104117",
+      "sha256": null,
+      "observed_at": "2026-11-15T05:02:00Z",
+      "note": "Wikidata Q1104117: en label 'cannabidivarin', description 'group of stereoisomers'; P231 CAS 24274-48-4, P235 InChIKey REOZWEGFPHTFEI-UHFFFAOYSA-N (no stereochemistry layer), P662 PubChem CID 91158. It is the verified record at the concept's granularity, so it is compound_cbdv's exactMatch. The stereo-defined counterpart is CHEBI:182159 / Wikidata Q76421750 (standard InChIKey REOZWEGFPHTFEI-JKSUJKDBSA-N, PubChem CID 11601669); it is not attached because the concept specifies no stereochemistry. Replaces Q422426 (potassium fluoride). External reference: no hash (external_unverifiable)."
+    },
+    {
+      "evidence_id": "ev-chebi-2700",
+      "evidence_type": "database_record",
+      "reference": "https://www.ebi.ac.uk/chebi/searchId.do?chebiId=CHEBI:2700",
+      "sha256": null,
+      "observed_at": "2026-11-15T05:02:00Z",
+      "note": "ChEBI 2700 'anandamide': an N-acylethanolamine 20:4 formed from arachidonic acid and ethanolamine (IUPAC (5Z,8Z,11Z,14Z)-N-(2-hydroxyethyl)-5,8,11,14-eicosatetraenamide); formula C22H37NO2, standard InChIKey LGEQQWMQCRIYKG-DOFZRALJSA-N. Used for compound_anandamide and replaces chebi:52384 (zymosteryl oleate). External reference: no hash (external_unverifiable)."
+    },
+    {
+      "evidence_id": "ev-wikidata-q410228",
+      "evidence_type": "database_record",
+      "reference": "https://www.wikidata.org/wiki/Q410228",
+      "sha256": null,
+      "observed_at": "2026-11-15T05:02:00Z",
+      "note": "Wikidata Q410228: en label 'anandamide', description 'chemical compound'; P683 ChEBI ID 2700, P231 CAS 94421-68-8, P235 InChIKey LGEQQWMQCRIYKG-DOFZRALJSA-N, P662 PubChem CID 5281969. The P683 cross-reference and the standard InChIKey agree with CHEBI:2700; it replaces Q409339, which Wikidata returns as 'missing' (no such item). Adopted beyond the audit's candidate list and flagged for owner review in ISS-20261115-TAX-043. External reference: no hash (external_unverifiable)."
+    },
+    {
+      "evidence_id": "ev-chebi-52392",
+      "evidence_type": "database_record",
+      "reference": "https://www.ebi.ac.uk/chebi/searchId.do?chebiId=CHEBI:52392",
+      "sha256": null,
+      "observed_at": "2026-11-15T05:02:00Z",
+      "note": "ChEBI 52392 '2-arachidonoylglycerol': an endocannabinoid and endogenous agonist of CB1 and CB2, the ester of arachidonic acid with glycerol (IUPAC 1,3-dihydroxypropan-2-yl (5Z,8Z,11Z,14Z)-icosa-5,8,11,14-tetraenoate); formula C23H38O4, standard InChIKey RCRCTBLIHCHWDZ-DOFZRALJSA-N. Used for compound_2ag and replaces chebi:64901 (mygalin). External reference: no hash (external_unverifiable)."
+    },
+    {
+      "evidence_id": "ev-wikidata-q209320",
+      "evidence_type": "database_record",
+      "reference": "https://www.wikidata.org/wiki/Q209320",
+      "sha256": null,
+      "observed_at": "2026-11-15T05:02:00Z",
+      "note": "Wikidata Q209320: en label 'glyceryl 2-arachidonate', description 'chemical compound'; P683 ChEBI ID 52392, P231 CAS 53847-30-6, P235 InChIKey RCRCTBLIHCHWDZ-DOFZRALJSA-N, P662 PubChem CID 5282280. The P683 cross-reference and the standard InChIKey agree with CHEBI:52392, even though the label differs from the concept's name; it replaces Q295793, which Wikidata returns as 'missing' (no such item). Adopted beyond the audit's candidate list and flagged for owner review in ISS-20261115-TAX-043. External reference: no hash (external_unverifiable)."
     }
   ]
 }

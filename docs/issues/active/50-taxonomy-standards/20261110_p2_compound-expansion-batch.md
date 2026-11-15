@@ -37,6 +37,9 @@ staging 採用・公開・release slice の拡張は**含まない**。外部 UR
 
 - 両 concept は `skos:exactMatch`（CBC = `wikidata:Q422441`、CBDV = `wikidata:Q422426`）を既に持つ。
   今回の変更で taxonomy・IPTC 対応・data dictionary を触っていない（既登録のため）。
+  **2026-11-15 追記:** この 2 つの識別子は識別子監査で誤りと判明した（Q422441 は曖昧さ回避ページ、
+  Q422426 は potassium fluoride）。CBC = `chebi:3357` / `wikidata:Q410949`、CBDV = `wikidata:Q1104117`
+  に修正した（`ISS-20261115-TAX-043`）。本 issue の登録判断・query・run は変えない。
 - **未収集は 0 観測でも欠測でもない。** raw run・adopted run・staging declaration はいずれも 0 件で、
   `data-catalog.json` にも追加していない。
 - 表記ゆれ（`CBCリキッド` 等）は `query-variants.json` に登録していない。variant は観測された表記の

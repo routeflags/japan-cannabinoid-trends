@@ -181,6 +181,7 @@
         "THCV",
         "THCv"
       ],
+      "schema:description": "No skos:exactMatch is asserted: this concept leaves the Δ8/Δ9 positional isomer and the stereochemistry unspecified, while every verified registry record is more specific. CHEBI:755032 and Wikidata Q76009679 denote a stereo-defined Δ9-THCV, and Wikidata Q254768 denotes Δ9-THCV with the stereochemistry unspecified; none denotes an isomer-unspecified THCV, so attaching one would assert Δ9. The records, their identifiers and the open mapping scope are documented in docs/provenance/compound-taxonomy.md (ISS-20261115-TAX-043). This note states no chemical identity for any query result.",
       "schema:termCode": "compound_thcv"
     },
     {
@@ -195,6 +196,7 @@
         "カンナビジバリン (CBDV)",
         "CBDV"
       ],
+      "schema:description": "The concept leaves the stereochemistry unspecified, so its skos:exactMatch is Wikidata Q1104117, the item explicitly typed as a group of stereoisomers, not the stereo-defined record (CHEBI:182159 / Wikidata Q76421750). No ChEBI exactMatch is asserted because the only ChEBI entry for cannabidivarin is the stereo-defined one. Basis and records: docs/provenance/compound-taxonomy.md (ISS-20261115-TAX-043).",
       "schema:termCode": "compound_cbdv"
     },
     {

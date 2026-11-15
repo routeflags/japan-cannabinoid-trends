@@ -201,7 +201,7 @@ query registry、study 文書の層に限る。
 | `compound_id` | `compound_cbc` / `compound_cbdv` | 既存 `skos:notation`。新設していない |
 | 名称 | Cannabichromene (CBC) / Cannabidivarin (CBDV) | 既存 `skos:prefLabel`（en / ja） |
 | 分類 | `compound_minor` | 既存 `skos:broader`。新しい分類判断をしていない |
-| 外部識別子 | `wikidata:Q422441` / `wikidata:Q422426` | 既存 `skos:exactMatch`。追加の照会はしていない |
+| 外部識別子 | `wikidata:Q422441` / `wikidata:Q422426` | 既存 `skos:exactMatch`。追加の照会はしていない。**2026-11-15 注記:** この 2 値は識別子監査で誤りと判明し、CBC = `chebi:3357` / `wikidata:Q410949`、CBDV = `wikidata:Q1104117` に修正した（本台帳 2026-11-15 節、ISS-20261115-TAX-043）。登録判断自体は変えない |
 | 登録 query | `cbc-general-ja` / `cbc-liquid-ja` / `cbdv-general-ja` / `cbdv-liquid-ja` | 既存規約（`<compound>-general-ja` / `<compound>-liquid-ja`）の適用 |
 | 登録時の収集状態 | 未収集（run 0） | 依頼は対象集合とクエリ設計の拡張であり、収集を含まない |
 
@@ -790,18 +790,133 @@ owner は 2026-11-11、`THCA` の総称的な化学解釈を **Δ9-THCA-A / THCA
 
 ---
 
+## 2026-11-15 — 化合物の外部識別子 crosswalk を registry 照合で修正（ISS-20261115-TAX-043）
+
+識別子監査で指摘された 9 概念（`compound_cbd` / `compound_thc` / `compound_cbg` /
+`compound_cbn` / `compound_cbc` / `compound_thcv` / `compound_cbdv` /
+`compound_anandamide` / `compound_2ag`）の `skos:exactMatch` を、2026-11-15 に ChEBI と
+Wikidata の live record と照合した。9 概念すべてで旧値は参照先の化合物と一致しなかった。
+本節は修正後の値、旧値の実体、検証方法、未決の範囲を記録する。対象は化合物識別子と
+その写し（IPTC 対応表）だけで、経路／由来の分類、query、run、被覆、公開状態は変えていない。
+
+### 旧値が実際に指していたもの
+
+| concept | 旧 `skos:exactMatch` | 旧値の実体（2026-11-15 照会） | 修正後 |
+|---|---|---|---|
+| `compound_cbd` | `chebi:33669` / `wikidata:Q141452` | metallacycloalkanes（金属を環員とする化合物クラス。構造なし）/ Disraeli（ケベック州の都市） | `chebi:69478` / `wikidata:Q422917` |
+| `compound_thc` | `chebi:32927` / `wikidata:Q141629` | nonadecane（C19H40）/ Reifenberg（ラインラント＝プファルツ州の自治体） | `chebi:66964` / `wikidata:Q190067` |
+| `compound_cbg` | `chebi:32927` / `wikidata:Q422432` | nonadecane / Aktion Regen（開発協力団体） | `chebi:69477` / `wikidata:Q412122` |
+| `compound_cbn` | `wikidata:Q415237` | Wikimedia の曖昧さ回避ページ | `chebi:3360` / `wikidata:Q265831` |
+| `compound_cbc` | `wikidata:Q422441` | Wikimedia の曖昧さ回避ページ | `chebi:3357` / `wikidata:Q410949` |
+| `compound_thcv` | `wikidata:Q422449` | mycotoxins（マイコトキシンのクラス、ChEBI 25442） | なし（下記） |
+| `compound_cbdv` | `wikidata:Q422426` | potassium fluoride（KF、ChEBI 66872） | `wikidata:Q1104117` |
+| `compound_anandamide` | `chebi:52384` / `wikidata:Q409339` | zymosteryl oleate（C45H76O2）/ Wikidata が `missing` を返す（項目なし） | `chebi:2700` / `wikidata:Q410228` |
+| `compound_2ag` | `chebi:64901` / `wikidata:Q295793` | mygalin（C21H27N3O6）/ Wikidata が `missing` を返す（項目なし） | `chebi:52392` / `wikidata:Q209320` |
+
+`chebi:32927`（nonadecane）は CBG と THC の 2 概念が共有していた。`Q409339` と
+`Q295793` は存在しない ID であり、監査では独立検証されていなかった。
+
+### 採用したレコードと交差確認
+
+ChEBI の accession・名称・標準 InChIKey と、Wikidata の label・P683（ChEBI ID）・
+標準 InChIKey が同一構造を指すことを確認した。Wikidata の P683 が採用した ChEBI
+accession と一致し、InChIKey が一致するものを採用した。
+
+| concept | 採用レコード（evidence_id） | 名称 | 標準 InChIKey | 交差確認 |
+|---|---|---|---|---|
+| `compound_cbd` | `ev-chebi-69478` / `ev-wikidata-q422917` | cannabidiol | `QHMBSVQNZZTUGM-ZWKOTPCHSA-N` | Q422917 の P683 = 69478、PubChem CID 644019 |
+| `compound_thc` | `ev-chebi-66964` / `ev-wikidata-q190067` | Δ9-tetrahydrocannabinol | `CYQFCXCEBYINGO-IAGOWNOFSA-N` | Q190067 の P683 = 66964、PubChem CID 16078 |
+| `compound_cbg` | `ev-chebi-69477` / `ev-wikidata-q412122` | cannabigerol | `QXACEHWTBCFNSA-SFQUDFHCSA-N` | Q412122 の P683 = 69477、PubChem CID 5315659 |
+| `compound_cbn` | `ev-chebi-3360` / `ev-wikidata-q265831` | Cannabinol | `VBGLYOIFKLUMQG-UHFFFAOYSA-N` | Q265831 の P683 = 3360、PubChem CID 2543 |
+| `compound_cbc` | `ev-chebi-3357` / `ev-wikidata-q410949` | Cannabichromene | `UVOLYTDXHDXWJU-UHFFFAOYSA-N` | Q410949 の P683 = 3357、PubChem CID 30219 |
+| `compound_cbdv` | `ev-wikidata-q1104117` | cannabidivarin（description が `group of stereoisomers`） | `REOZWEGFPHTFEI-UHFFFAOYSA-N` | CAS 24274-48-4、PubChem CID 91158 |
+| `compound_anandamide` | `ev-chebi-2700` / `ev-wikidata-q410228` | anandamide | `LGEQQWMQCRIYKG-DOFZRALJSA-N` | Q410228 の P683 = 2700、PubChem CID 5281969 |
+| `compound_2ag` | `ev-chebi-52392` / `ev-wikidata-q209320` | 2-arachidonoylglycerol | `RCRCTBLIHCHWDZ-DOFZRALJSA-N` | Q209320（label `glyceryl 2-arachidonate`）の P683 = 52392、PubChem CID 5282280 |
+
+**粒度の扱い。** CBN と CBC のレコードは標準 InChIKey に立体化学層を持たず、立体化学を
+指定しない概念と粒度が一致する。CBD・THC・CBG のレコードは天然の立体異性体を指すが、
+レコードの名称自体が修飾なしの物質名（`cannabidiol` / `Δ9-tetrahydrocannabinol` /
+`cannabigerol`）であり、taxonomy の概念名と一致する。CBD と THC の概念名が特定の
+立体異性体を指すという主張ではなく、registry の修飾なしレコードとの対応である。
+
+**anandamide / 2-AG の Wikidata 値。** `Q409339` / `Q295793` は存在しないため削除した。
+採用した `Q410228` / `Q209320` は監査の候補一覧には無かったが、Wikidata の P683 と
+標準 InChIKey の 2 系統で ChEBI レコードと一致したため採用した。この 2 件の採用は
+監査の候補範囲を超える判断であり、owner のレビュー対象として issue に明記する。
+
+### 未決の範囲: `compound_thcv`
+
+`compound_thcv` は `skos:exactMatch` を持たない。概念は「Tetrahydrocannabivarin (THCV)」
+という修飾なしの名称で、Δ8/Δ9 の位置異性体も立体化学も指定していない。検証した
+レコードはいずれも Δ9 を指す:
+
+- `ev-chebi-755032` tetrahydrocannabivarin: 標準 InChIKey `ZROLHBHDLIHEMS-HUUCEWRRSA-N`（Δ9、立体化学定義あり）。
+- `ev-wikidata-q76009679` Tetrahydrocannabivarin: 同じ InChIKey。CAS 31262-37-0、PubChem CID 93147。
+- `ev-wikidata-q254768` tetrahydrocannabivarin: `ZROLHBHDLIHEMS-UHFFFAOYSA-N`（Δ9 の骨格、立体化学未指定）。CAS 28172-17-0、PubChem CID 34180（6a,7,8,10a-tetrahydro-6,6,9-trimethyl-3-propyl-6H-dibenzo(b,d)pyran-1-ol）。
+
+いずれかを付けると概念が Δ9 を指すという主張になる（ChEBI と Q76009679 はさらに
+立体化学も固定する）ため、対応を削除して概念の scopeNote に理由を記録した。
+2026-11-15 の OLS4 ChEBI 検索は `tetrahydrocannabivarin` に 1 件、
+`delta-8-tetrahydrocannabivarin` に 0 件、Wikidata の `wbsearchentities` は 2 件
+（Q254768 / Q76009679）を返した。これはその時点の応答であり、不在の証明ではない。
+owner が概念を Δ9-THCV に狭める場合は `chebi:755032` と `Q76009679` の組が候補になる。
+異性体未指定のファミリーのままにする場合は、Δ8 側を含む単一レコードが無いため
+未対応を維持する。
+
+### `compound_cbdv` を立体異性体グループにした理由
+
+CBDV の ChEBI レコードは 1 件だけで、`CHEBI:182159` は `(1R,6R)` の立体化学を定義した
+レコードである（`REOZWEGFPHTFEI-JKSUJKDBSA-N`、Wikidata `Q76421750` が同じ構造）。
+概念は立体化学を指定しないため、立体異性体のグループとして明示された
+`Q1104117`（`REOZWEGFPHTFEI-UHFFFAOYSA-N`）を `skos:exactMatch` とし、ChEBI の
+立体特異的レコードと `Q76421750` は付けない。この判断は「概念の粒度と一致する
+グループが検証できた場合はグループを使う」という規則による。
+
+### 変更しないもの
+
+- `compound_identity_unverified` の membership と logic、および P1 の経路／カテゴリ評価
+  （`CBX`、`CRDH`、`CRDP`、`H4CBH`、`HHBD`、`HHCH`、`THCNM`、`THC-O`、`THCP`、`THCJD`、
+  `THCPO`、THCA / THCB の 6 個別トピック等）。
+- query ID、検索語と概念の対応、run ID、catalog、raw data、source coverage、family scope、
+  collection design、release scope、publication status。
+- `compound_thcv` の label・altLabel・query。scopeNote の追加と exactMatch の削除だけを行う。
+- `compound_cbdv` の label・altLabel・query。
+
+### 限界と再検討条件
+
+- 確認したのは ChEBI と Wikidata の record だけである。CAS は Wikidata の P231 経由で
+  参照した値であり、CAS Registry を直接照会していない。PubChem は Wikidata の P662 と
+  PubChem PUG REST の応答で確認した。
+- レコードの名称・構造が一致しても、検索結果や製品の内容を同定する根拠にはならない。
+  系列が測るのは登録文字列への一致だけである。
+- 今回は 9 概念の外部識別子だけを対象とした。他の概念の crosswalk の再監査は別作業である。
+- `compound_thcv` の粒度（Δ9 に狭めるか、異性体未指定ファミリーを維持するか）は owner の
+  scope 判断であり、本変更では決めていない。
+- registry は更新されるため、再検証の時期と対象は issue に残す。
+
+### 同時に更新した層
+
+- `metadata/taxonomy/compound-taxonomy.skos.jsonld`（9 概念の `skos:exactMatch`、
+  `compound_thcv` / `compound_cbdv` の scopeNote、scheme の `dct:modified`）
+- `metadata/taxonomy/iptc-mapping.yaml`（写しの識別子、coverage の理由、version 1.10.0）
+- `exports/taxonomy/*`（`bash scripts/export/export-taxonomy.sh` で再生成）
+- `tests/validation/test_registration_state_batch.py`（CBC / CBDV の固定値を更新）
+- `tests/validation/test_compound_identifier_crosswalk.py`（新規）
+- `datasets/cannabinoid-raw-collection/README.md`、`project.json` の identityNote、
+  `docs/provenance/query-inventory.md`（写しの QID）
+- `metadata/provenance/evidence-registry.json`（ChEBI / Wikidata の record と taxonomy の再観測）
+- `ISS-20261115-TAX-043`
+
+---
+
 ## 未修正の既知事項（本変更では触っていない）
 
 1. `metadata/taxonomy/iptc-mapping.yaml` の `compound_mapping` は部分収載（`cbc`/`thcv`/`cbdv`/`crdh` も未収載）。
 2. `THCH` の日本語名は文書間で表記ゆれがある（`THCH.md` を標準として採用）。
 3. `compound_rare` は `skos:narrower` を持たない空カテゴリ（現状の登録化合物には該当なし）。
-4. **化合物 taxonomy の ChEBI `skos:exactMatch` は検証されていない。** ChEBI の API で
-   確認したところ、`chebi:32927` は nonadecane（`compound_cbg` と `compound_thc` が
-   参照）、`chebi:33669` は metallacycloalkanes（`compound_cbd`）、`chebi:52384` は
-   zymosteryl oleate（`compound_anandamide`）、`chebi:64901` は mygalin
-   （`compound_2ag`）であり、いずれも参照先の化合物ではない。本変更では修正せず、
-   別の issue で全 ChEBI 対応の監査と修正を行う。CBGA の `chebi:67081` は本変更で
-   別途検証済み（cannabigerolic acid）。
+4. `compound_thcv` は外部識別子が未対応である。概念が Δ8/Δ9 と立体化学を指定せず、
+   検証済みレコードはいずれも Δ9 のため（本台帳 2026-11-15 節、ISS-20261115-TAX-043）。
+   CBGA の `chebi:67081` は 2026-11-11 に検証済み（cannabigerolic acid）。
 
 ## 派生物の同期
 

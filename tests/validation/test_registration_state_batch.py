@@ -197,8 +197,11 @@ def test_cbc_and_cbdv_keep_their_existing_identity_and_classification() -> None:
         concept = concepts["jptr:compound-" + compound_id[len("compound_"):].replace("_", "-")]
         assert concept["skos:broader"] == "jptr:compound-minor"
         assert concept.get("skos:exactMatch"), compound_id
-    assert concepts["jptr:compound-cbc"]["skos:exactMatch"] == "wikidata:Q422441"
-    assert concepts["jptr:compound-cbdv"]["skos:exactMatch"] == "wikidata:Q422426"
+    assert set(concepts["jptr:compound-cbc"]["skos:exactMatch"]) == {
+        "chebi:3357",
+        "wikidata:Q410949",
+    }
+    assert concepts["jptr:compound-cbdv"]["skos:exactMatch"] == "wikidata:Q1104117"
 
 
 def test_unresolved_new_terms_stay_in_the_identity_unverified_category() -> None:

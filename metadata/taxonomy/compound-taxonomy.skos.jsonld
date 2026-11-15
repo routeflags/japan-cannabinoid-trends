@@ -28,7 +28,7 @@
       },
       "dct:creator": "Routeflags Co., Ltd.",
       "dct:created": "2026-10-02",
-      "dct:modified": "2026-11-11",
+      "dct:modified": "2026-11-15",
       "dct:license": "https://creativecommons.org/licenses/by/4.0/",
       "skos:hasTopConcept": [
         "jptr:compound-major",
@@ -274,8 +274,8 @@
         "@language": "en"
       },
       "skos:exactMatch": [
-        "chebi:33669",
-        "wikidata:Q141452"
+        "chebi:69478",
+        "wikidata:Q422917"
       ]
     },
     {
@@ -309,8 +309,8 @@
         "@language": "en"
       },
       "skos:exactMatch": [
-        "chebi:32927",
-        "wikidata:Q141629"
+        "chebi:66964",
+        "wikidata:Q190067"
       ]
     },
     {
@@ -344,8 +344,8 @@
         "@language": "en"
       },
       "skos:exactMatch": [
-        "chebi:32927",
-        "wikidata:Q422432"
+        "chebi:69477",
+        "wikidata:Q412122"
       ]
     },
     {
@@ -378,7 +378,10 @@
         "@value": "A minor phytocannabinoid. Degradation product of THC.",
         "@language": "en"
       },
-      "skos:exactMatch": "wikidata:Q415237"
+      "skos:exactMatch": [
+        "chebi:3360",
+        "wikidata:Q265831"
+      ]
     },
     {
       "@id": "jptr:compound-cbc",
@@ -406,7 +409,10 @@
         }
       ],
       "skos:notation": "compound_cbc",
-      "skos:exactMatch": "wikidata:Q422441"
+      "skos:exactMatch": [
+        "chebi:3357",
+        "wikidata:Q410949"
+      ]
     },
     {
       "@id": "jptr:compound-thcv",
@@ -434,7 +440,16 @@
         }
       ],
       "skos:notation": "compound_thcv",
-      "skos:exactMatch": "wikidata:Q422449"
+      "skos:scopeNote": [
+        {
+          "@value": "No skos:exactMatch is asserted: this concept leaves the Δ8/Δ9 positional isomer and the stereochemistry unspecified, while every verified registry record is more specific. CHEBI:755032 and Wikidata Q76009679 denote a stereo-defined Δ9-THCV, and Wikidata Q254768 denotes Δ9-THCV with the stereochemistry unspecified; none denotes an isomer-unspecified THCV, so attaching one would assert Δ9. The records, their identifiers and the open mapping scope are documented in docs/provenance/compound-taxonomy.md (ISS-20261115-TAX-043). This note states no chemical identity for any query result.",
+          "@language": "en"
+        },
+        {
+          "@value": "`skos:exactMatch` は張らない。本概念は Δ8/Δ9 の位置異性体と立体化学を指定しておらず、検証済みの外部レコードはいずれもより特定的である。CHEBI:755032 と Wikidata Q76009679 は立体化学を定義した Δ9-THCV を、Wikidata Q254768 は立体化学を未指定にした Δ9-THCV を指す。異性体未指定の THCV を指す単一レコードは無いため、いずれかを付けると Δ9 を主張することになる。レコード・識別子・未決の範囲は docs/provenance/compound-taxonomy.md に記録した（ISS-20261115-TAX-043）。本記載は検索結果の化学的同一性を主張しない。",
+          "@language": "ja"
+        }
+      ]
     },
     {
       "@id": "jptr:compound-cbdv",
@@ -458,7 +473,17 @@
         }
       ],
       "skos:notation": "compound_cbdv",
-      "skos:exactMatch": "wikidata:Q422426"
+      "skos:scopeNote": [
+        {
+          "@value": "The concept leaves the stereochemistry unspecified, so its skos:exactMatch is Wikidata Q1104117, the item explicitly typed as a group of stereoisomers, not the stereo-defined record (CHEBI:182159 / Wikidata Q76421750). No ChEBI exactMatch is asserted because the only ChEBI entry for cannabidivarin is the stereo-defined one. Basis and records: docs/provenance/compound-taxonomy.md (ISS-20261115-TAX-043).",
+          "@language": "en"
+        },
+        {
+          "@value": "本概念は立体化学を指定していないため、`skos:exactMatch` は立体異性体のグループとして明示された Wikidata Q1104117 とし、立体化学を定義したレコード（CHEBI:182159 / Wikidata Q76421750）は付けない。ChEBI の cannabidivarin は立体化学を定義した 1 件のみのため、ChEBI への `exactMatch` は張らない。根拠とレコードは docs/provenance/compound-taxonomy.md に記録した（ISS-20261115-TAX-043）。",
+          "@language": "ja"
+        }
+      ],
+      "skos:exactMatch": "wikidata:Q1104117"
     },
     {
       "@id": "jptr:compound-cbx",
@@ -898,8 +923,8 @@
       ],
       "skos:notation": "compound_anandamide",
       "skos:exactMatch": [
-        "chebi:52384",
-        "wikidata:Q409339"
+        "chebi:2700",
+        "wikidata:Q410228"
       ]
     },
     {
@@ -929,8 +954,8 @@
       ],
       "skos:notation": "compound_2ag",
       "skos:exactMatch": [
-        "chebi:64901",
-        "wikidata:Q295793"
+        "chebi:52392",
+        "wikidata:Q209320"
       ]
     },
     {
