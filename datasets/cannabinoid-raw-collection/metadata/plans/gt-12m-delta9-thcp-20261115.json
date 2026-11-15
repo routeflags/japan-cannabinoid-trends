@@ -1,0 +1,26 @@
+{
+  "plan_id": "gt-12m-delta9-thcp-20261115",
+  "study_id": "cannabinoid-raw-collection",
+  "source_id": "google-trends",
+  "collector_id": "google-trends-mcp",
+  "query_id": "delta9-thcp-general-ja",
+  "query": {
+    "text": "Δ9-THCP",
+    "geo": "JP",
+    "timeframe": "today 12-m",
+    "compound_id": "compound_delta9_thcp"
+  },
+  "required_capabilities": [
+    "geo_filter",
+    "relative_date_range"
+  ],
+  "window": {
+    "window_id": "2025-11-09_2026-11-15",
+    "start": "2025-11-09T00:00:00Z",
+    "end_exclusive": "2026-11-15T00:00:00Z",
+    "granularity": "week",
+    "week_start": "sunday",
+    "timezone": "Asia/Tokyo"
+  },
+  "purpose": "Owner-authorized collection of the exact registered query string Δ9-THCP for 12m standalone Google Trends (ISS-20261115-TAX-045). This is a literal-string measurement, not a result-level chemical identification. Taxonomy identity remains unconfirmed; the window is a declared approximation of the registered relative timeframe."
+}
