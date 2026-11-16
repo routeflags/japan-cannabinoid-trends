@@ -102,7 +102,7 @@ description: |
   **解決順（issue #51）**: ①`GOOGLE_TOKEN_FILE`（設定されていればそれを使う）→ ②ソース既定パス `~/.config/netloom/google-<name>.json`（**存在的きのみ** = auth google の書込先と対称。apps-script の既定名は `gas`）→ ③`GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET` / `GOOGLE_REFRESH_TOKEN`。**Google の交換が失敗したときだけ**、失敗行に「どの credential を使ったか」（パスまたは変数名。値は出さない）が 1 つ足される（切り分け用）。`env check` の門は既定パスが存在的きときも満たされる。
   交換の証跡（2 frame）は `--cassette FILE` で caller の記録置き場に置ける（例: `data/gsc/cassettes/<YYYYMMDD>-auth-gsc.jsonl`。issue #22）。
   すべての往復は VCR カセットに残り、カセットからオフライン再現できる（証跡付きの収集）。
-netloom-version: 0.24.0
+netloom-version: 0.24.1
 ---
 
 # netloom（第三者 API の収集プロキシ）
@@ -1339,7 +1339,7 @@ make product-material-purchases ID=1 LIMIT=20                 # text は一覧�
 - **省略したキーは変更しない**（`PUT` は部分更新）。**配列のキーは「与えたときだけ丸ごと置換」**
 - **`categories` の要素は `{"id": N}`**（裸の `1` ではない — 要素の形は `ID_ENTRY_KEYS` が決める。要素の形違いは API の 400）
 - **事故を避ける手順（置換なので）**: `product get --id N` で今の集合を読み、**残したい id を全部**含めて送る。1 件足すつもりで 1 件だけ送ると、他の紐付けが静かに外れる
-- **根拠は EC 側のコード**（`PAYLOAD_KEYS` / `ID_ENTRY_KEYS` / `validateUpdatePayload` / `ProductWriteRelationService::replaceCategories`、2026-11-15）。**netloom 経由の実測は未**（dev の商品 1 件で 1 往復すれば、置換と祖先付与を数字で確かめられる。設計 §11 N53）
+- **根拠は EC 側のコード**（`PAYLOAD_KEYS` / `ID_ENTRY_KEYS` / `validateUpdatePayload` / `ProductWriteRelationService::replaceCategories`、2026-11-15）。**実測でも確かめています**（dev の商品 158、2026-11-15、起票元 = seo-operations、netloom 0.21.0）: 4 件 `[16, 20, 39, 49]` に `{"categories":[{"id":57}]}` を PUT すると **2 件 `[48, 57]`** になり（**元の 4 件は 1 件も残らず、送っていない親 48 が付く**）、**`categories` と `update_date` 以外の列は不変**、元の 4 件に戻せた。**整数の配列（`[16, 17]` のような形）は 400**（`categories[0].id は正の整数で指定してください`）— **`[{"id": N}]` のオブジェクト配列が正しい形**です
 - **`--dry-run`（`product update` だけ）** は**送らずに** `--input` のキーをこの契約に照らします: 契約に無いキー（`product get` の応答をそのまま `--input` にすると `id` / `create_date` など）を名指しして **exit 1**、送れるなら **exit 0**。値は出さず**サイズ（`N B`）だけ**を出し、配列のキーがあれば「**丸ごと置換（送らなかった id は外れる）**」と 1 行出します（`--cassette` / `--replay` は exit 2、`--env prod` の確認は置換と同じで必要）。
 
 ```sh
