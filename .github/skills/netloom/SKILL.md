@@ -28,6 +28,10 @@ description: |
   mysql は EC-CUBE の MySQL を SSH トンネル経由で **読み取り専用**で見る
   （`mysql tunnel` でトンネルを起動（冪等）・`mysql tunnel-status` で状態・`mysql query --sql 'SELECT …'` で 1 文 = 1 往復。
   書き込みは無い。証跡はカセットに残り `--replay` でオフライン再現できる）。
+  logs は自サイトのログ（EC-CUBE の env 別ログとパイプラインの実行ログ）を **ssh 1 往復で取ってくる**
+  （`logs files --source app|pipeline [--genre G] [--date YYYYMMDD]` で `ls -l`、`logs read … [--name BASENAME] [--out FILE]` で 1 ファイルを `cat`。
+  **netloom は解析しない** — 行の選択・時間窓・level・複数ファイルのマージは textloom の `log` 層（issue #44）。
+  カセットは無く（`--cassette` / `--replay` / `--format` / `--grep` / `--since` / `--until` は exit 2）、証跡は `--out`。`SSH_ALIAS` が必須）。
   bigquery は BigQuery の**読み取り専用クエリ**を jobs.query の REST で直接実行する
   （`bigquery query --sql 'SELECT …' [--dry-run] [--max-rows N] [--project ID]`。**1 コマンド = 認証 1 + クエリ 1 の 2 往復**。
   `SELECT` / `WITH … SELECT` だけ。書き込みは無い。**BigQuery は課金が発生しうる**: まず `--dry-run`（課金なしの見積もり）。
@@ -66,8 +70,10 @@ description: |
   **公開（DOI 登録）だけが不可逆**なので、`zenodo deposition-publish --id ID --allow-publish` は **`--allow-publish` が無ければ 1 往復も送らず exit 2**（`--replay` は不要）。下書きの書き込みには門を付けない。
   csv は無く、`deposition-files` は**配列**・`deposition-delete` は**文書無し**なので `text` も無い（json / verbatim の 2 形。`--format text` は exit 2）。
   lighthouse は**ローカル計測**（Node の lighthouse を exec）で、1 コマンド = N 回（既定 5）の計測を回し、**生 JSON を --out の run1.json 〜 runN.json に置くだけ**（解釈しない。issue #46）
-  （`lighthouse run --url URL --out DIR [--runs N] [--form-factor mobile|desktop] [--chrome-path PATH] [--lighthouse-version V]`。run ごとに Chrome プロファイルを分ける。
+  （`lighthouse run --url URL --out DIR [--runs N] [--form-factor mobile|desktop] [--only-categories LIST] [--chrome-path PATH] [--lighthouse-version V]`。run ごとに Chrome プロファイルを分ける。
+  **既定のカテゴリは Lighthouse 自身の 4 つ = performance / accessibility / best-practices / seo**（`--only-categories` を名指さなければ netloom は引数を付けない。`--only-categories performance,seo` は書いたまま渡る pass-through）。**プロファイルは run ごとに新規**・版は `--lighthouse-version` で固定（既定 13.5.0）。
   **カセットは無く `--cassette` / `--replay` / `--format` は exit 2**（証跡は `--out`。新規は 0600）。`node` / `npx` が無ければ exit 127、ツールの失敗は exit 1（`--runs` は続ける）。
+  同じ送信元に **`lighthouse doctor [--chrome-path PATH] [--lighthouse-version V] [--probe]`**（issue #93）— node / npx / Chrome のパスと版・Lighthouse の版を**値を 1 行ずつ**出すだけ（**判定語を出さない**。0 = 値が全部読めた / 2 = 欠けている（名指しで 1 行）/ 127 = node・npx が無い）。**`--probe` のときだけ** Chrome を 1 回 headless で起動して終わり方を出す（失敗 = exit 1）。計測前の前提確認はこれ（`chrome_diagnostic.sh` / `test_chrome.sh` の置き換え）。
   **psi / crux とは別測定系** — ローカル Lighthouse が consumer の測定の正で、混ぜない）。live は実測済み（親の 2026-10-19 実測: exit 0・約 21 秒・161 audits・`run1.json` 921,296 B・0600）。
   playwright は**ローカルブラウザ**（Playwright の Chromium を exec）で、`shot|html|eval` は 1 コマンド = 1 ページ読み込み（issue #47）
   （`playwright shot --url URL --out PATH [--full-page] [--playwright-version V]` / `html` / `eval --url URL --script FILE --out PATH`。出力は PNG / JS 実行後の DOM / 戻り値の JSON。
@@ -96,7 +102,7 @@ description: |
   **解決順（issue #51）**: ①`GOOGLE_TOKEN_FILE`（設定されていればそれを使う）→ ②ソース既定パス `~/.config/netloom/google-<name>.json`（**存在的きのみ** = auth google の書込先と対称。apps-script の既定名は `gas`）→ ③`GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET` / `GOOGLE_REFRESH_TOKEN`。**Google の交換が失敗したときだけ**、失敗行に「どの credential を使ったか」（パスまたは変数名。値は出さない）が 1 つ足される（切り分け用）。`env check` の門は既定パスが存在的きときも満たされる。
   交換の証跡（2 frame）は `--cassette FILE` で caller の記録置き場に置ける（例: `data/gsc/cassettes/<YYYYMMDD>-auth-gsc.jsonl`。issue #22）。
   すべての往復は VCR カセットに残り、カセットからオフライン再現できる（証跡付きの収集）。
-netloom-version: 0.12.2
+netloom-version: 0.24.0
 ---
 
 # netloom（第三者 API の収集プロキシ）
@@ -109,7 +115,7 @@ actor を curl で呼んだりしない（証跡とオフライン再現が失�
 `--replay` は同じ request の記録が複数あるとき、**その request の n 回目の要求に n 番目の記録**で答える（記録を順に消費する。**その request の記録を使い切ったら最初の記録** = issue #14 の規則）。site の mypage のように **1 コマンドが同じ URL を複数回要求する flow** はこの規則で live と同じ判定になる（設計書 §5.1）。**新しい証跡で再現したいときは `--cassette` を分ける**（`--cassette <新しいファイル>` で記録し、そのカセットを `--replay` する）。
 
 同じ request を `--cassette` で 2 回記録すると、**追記の前に stderr へ 1 行で知らされる**（`netloom: <file> already holds a record for this request: a replay answers with the first one`。値は出ない。初回記録・`--replay` では出ない。通知は答えを変えない — 答えは §5.1 の規則（その request を 1 回だけ要求するコマンドでは最初の記録）が決める。issue #17）。
-**カセットの検査はコマンドで行う**: `netloom cassette show --path FILE`（frame 一覧。payload 本文は出さず sha256 とバイト数（`N B` — 単位付き。issue #43）で示す。**URL の `key=` / `access_token=` の値は表示時だけ `[REDACTED]`** — カセットのバイトと `--replay` の照合は変わらない）と `netloom cassette check --path FILE [--path FILE ...] [--env-file FILE]` — **live 実行後のレダクト検査はこのコマンドにする**（手作業の grep ではなく。env の実値をレダクタと同じ値の集合から**変数名と件数だけで**数え、ヒット 1 件でもあれば exit 1 / credential が 1 つも解決できなければ exit 2。`grep -Fc '\[REDACTED\]'` のように -F なのにエスケープを付けると「0 件」の誤検知を起こす — issue #18 の実測。設計書 付録 A.28）。
+**カセットの検査はコマンドで行う**: `netloom cassette show --path FILE`（frame 一覧。payload 本文は出さず sha256 とバイト数（`N B` — 単位付き。issue #43）で示す。**URL の credential 名のクエリ（`key=` / `access_token=` / rakuten の `applicationId=` / `accessKey=` / `affiliateId=`）の値は表示時だけ `[REDACTED]`** — カセットのバイトと `--replay` の照合は変わらない）と `netloom cassette check --path FILE [--path FILE ...] [--env-file FILE]` — **live 実行後のレダクト検査はこのコマンドにする**（手作業の grep ではなく。env の実値をレダクタと同じ値の集合から**変数名と件数だけで**数え、ヒット 1 件でもあれば exit 1 / credential が 1 つも解決できなければ exit 2。`grep -Fc '\[REDACTED\]'` のように -F なのにエスケープを付けると「0 件」の誤検知を起こす — issue #18 の実測。設計書 付録 A.28）。
 
 **サイズの表示（issue #43）**: netloom がサイズを出すときは **UTF-8 バイト**で、**単位を必ず添える** — json はキー名に `bytes` を含める（`{"bytes": N}` か `xxx_bytes`。例 `article update --dry-run` の `fields_bytes`）、テキストは `N B`（例 `cassette show` のバイト数、`--dry-run` の `fields: citation=3 B`）。**単位なしの裸の数字を出さない**。**文字数を出す場面は今のところ無い**（出るようになったら `chars` という別キーで区別する）。
 
@@ -121,30 +127,41 @@ netloom は起動時に **cwd の env ファイルを自動で読む**（`<cwd>/
 - **GA4**（HTTP。Google Analytics Data API）: `ga4 run-report` / `ga4 run-realtime-report` / `ga4 get-metadata`（**1 コマンド = 認証 1 + データ 1 の 2 往復**。`--property` または `GA4_PROPERTY_ID`）
 - **GSC**（HTTP。Google Search Console）: `gsc query` / `gsc sites`（**1 コマンド = 認証 1 + データ 1 の 2 往復**）
 - **news / cache**（HTTP。EC-CUBE 自サイト API）: `news list|get|create|update|delete|image-upload|image-delete` / `cache clear`（**1 コマンド = 1 往復**。`--env dev|prod`）
-- **article**（HTTP。EC-CUBE ガイド記事 API）: `article list|get|create|update|delete|image-upload|image-delete`（**1 コマンド = 1 往復**。同じ環境・同じ認証）
+- **article**（HTTP。EC-CUBE ガイド記事 API）: `article list|get|create|update|gate|delete|image-upload|image-delete`（**1 コマンド = 1 往復**。同じ環境・同じ認証。`gate` はゲートの一括切り替えで、フラグは `--input` だけ）
 - **contact**（HTTP。EC-CUBE お問い合わせ API）: `contact list|get|create|update|delete`（**1 コマンド = 1 往復**。同じ環境・同じ認証。**応答に顧客の PII が入る**）
 - **ga4-orders**（HTTP。EC-CUBE GA4 受注同期 API）: `ga4-orders list|get|create|update|delete`（**1 コマンド = 1 往復**。`X-GA4-API-Key` + `GA4_API_KEY`。**GA4 Data API の `ga4` とは別物**。応答に売上が入る）
 - **landing-page**（HTTP。EC-CUBE LandingPage API）: `landing-page list|get|create|update|delete`（**1 コマンド = 1 往復**。同じ環境・同じ認証（`X-API-Key` + dev の Basic）。`--clear-cache` は create / update / delete に付く（1 往復のまま）。**prod 未デプロイ** = live 受入は dev のみ。**LP の本文（`body` / `js` / `css`）は業務データ** — カセットは `.cassettes/` のみ・コミットしない）
-- **product**（HTTP。EC-CUBE 商品 / 成分 / 資材 API。**12 コマンド**）: `product list|get|get-by-code|create|update|delete` / `product component-list|component-get|component-purchases` / `product material-list|material-get|material-purchases`（**1 コマンド = 1 往復**。同じ環境・同じ認証（`X-API-Key` + dev の Basic）。**書き込み（create / update / delete）は ContentSync42 プラグイン有効時のみ** — 無効なら 405。`--purge` は取り消し不可の物理削除。**応答は商品と購買履歴（成分 / 資材の詳細は調達原価）を含む** — カセットは `.cassettes/` のみ・コミットしない）
+- **product**（HTTP。EC-CUBE 商品 / 成分 / 資材 API。**12 コマンド**）: `product list|get|get-by-code|create|update|delete` / `product component-list|component-get|component-purchases` / `product material-list|material-get|material-purchases`（**1 コマンド = 1 往復**。同じ環境・同じ認証（`X-API-Key` + dev の Basic）。**商品・成分・資材・カテゴリ API は `Plugin\SiteOps42` が提供する（17 ルート）** — 無効なら **404**（未登録。405 ではない）。`--purge` は取り消し不可の物理削除。**応答は商品と購買履歴（成分 / 資材の詳細は調達原価）を含む** — カセットは `.cassettes/` のみ・コミットしない）
+- **category**（HTTP。EC-CUBE 商品カテゴリ API。**5 コマンド**）: `category list [--parent-id N] [--q T]` / `category get --id N` / `category create --input JSON|@FILE` / `category update --id N --input JSON|@FILE` / `category delete --id N`（**1 コマンド = 1 往復**。同じ環境・同じ認証（`X-API-Key` + dev の Basic）。**`--parent-id 0` はルートのみ、未指定は全件** — 二つは別の要求（netloom は与えたときだけ `parent_id` を載せる）。**ルートを作るときは `--input` の `parent_id` を省く**（`null`。**`create` の `parent_id: 0` は API の 400** = 一覧のフィルタとは別の入口で、netloom は書き換えない。実測 2026-11-15）。**`--input` はフラットな JSON**（`seo` で入れ子にすると 400 = 未知のキー。`cseo_title` / `cseo_description` / `cseo_robots` / `category_information` / `category_scene` をトップレベルに並べる）で、`update` は部分更新（省略 = 変更しない / `null` = その列をクリア / `faq` / `howto` = 与えたときだけ配列を丸ごと置換）。**`hierarchy` は深さ**（ルート = 1）で、netloom は解釈しない。**`list` の item には `children_count` / `product_count` もある**（2026-11-15 の API 拡張。#870 以降で `get` と同じ値。削除前の 409 判定に使える）。**400（`category_name` 必須 / 親が無い / 循環 / 階層上限 / 未知のキー）と 409（子カテゴリあり・商品が参照）はそのまま返る** — **再帰削除も `force` も無い**。`--env dev|prod`、**`--env prod` の書き込みは `--allow-prod-write` が必須**（`list` / `get` は読み取りなので取らない）。**応答はカテゴリ名と SEO 文（業務データ）を含む** — カセットは `.cassettes/` のみ・コミットしない）
+- **content**（HTTP。EC-CUBE ファイルマネージャ = `html/user_data` 配下）: `content upload --file PATH [--dir DIR] [--overwrite]` / `content list [--dir DIR]` / `content delete --path PATH`（**1 コマンド = 1 往復**。同じ環境・同じ認証（`X-API-Key` + dev の Basic）。**`upload` は multipart**で、カセットには**フィールドと sha256 / サイズだけ**を残す（バイト列もファイル名も残さない）。**netloom は判定しない**: 拡張子の allow-list・`html/user_data` のパス検査・サイズ検査（10MB はアプリ側）はせず、`dir` / `path` はエンコードだけで素通し、409（同名存在）も 413（上限超）もそのまま返る — **`overwrite` での再送は呼び出し側の判断**。**削除・上書きの直後も同じ URL が 200 を返し得る**（prod 実測で最大 60 秒程度）: **netloom はキャッシュを消さない**（店の API にその操作が無い）ので、**即時に差し替えたいファイルは名前を変えて参照側も更新する**。原因は**ホスト側のファイルキャッシュの可能性が高いが未確認**（前段の CDN ではないことは確認済み）。**`--env prod` の `upload` / `delete` は `--allow-prod-write` が必須**（`list` は読み取りなので取らない））
 - **openseo**（HTTP。ローカル OpenSEO の MCP over HTTP）: `openseo list-projects` / `keyword-metrics` / `ranked-keywords` / `domain-overview` / `serp-competitors`（**1 コマンド = 1 往復**。credential 不要。Docker コンテナは呼び出し側が起動・停止する）
 - **gmail**（MCP stdio。既存の Gmail サーバーの再利用）: `gmail send-email`（**1 コマンド = 1 MCP 往復**。**送信は副作用** — live は実メールが飛ぶ。**live は `--allow-send`（make は `ALLOW_SEND=1`）が必須** — 無ければ exit 2 で送らない。OAuth はサーバー側）
 - **meta-page / meta-instagram**（HTTP。Meta Graph API v25.0。Facebook Page / Instagram）: `meta-page posts|post|post-insights` / `meta-instagram media|media-insights`（**1 コマンド = 1 往復**。`PAGE_TOKEN` / `USER_TOKEN` は別のトークン。**ページングは回さない**。csv は無い）
 - **`auth google`**（ローカルコマンド。provider を呼ばない）: 対話専用の Google OAuth 同意フロー（ループバック + PKCE）でトークンファイルを書く。Google 5 送信元（gsc / ga4 / bigquery / calendar / apps-script）の credential をこのファイルでも渡せる（①`GOOGLE_TOKEN_FILE` → ②ソース既定パス（**存在的きのみ**。apps-script の既定名は `gas`）→ ③3 変数 = issue #51 の解決順）
 - **site**（自サイトの死活監視。HTTP）: `site check --env local|dev|prod --target front|mypage|admin|all [--product-id ID]`（**1 コマンド = 面の URL 数 + ログイン段数（+ hop）の往復**。**判定を送信元定義に持つ唯一の送信元**。exit 0 / 1 / 2）
+- **logs**（自サイトのログの**取得だけ**。ssh 1 exec。カセットなし）: `logs files --source app|pipeline [--genre G] [--date YYYYMMDD] [--env dev|prod]`（解決したディレクトリへ `cd` して `ls -l`。**ホストの `ls -l` 出力をそのまま**返す = 名前・サイズ・mtime）/ `logs read --source app|pipeline [--genre G] [--date YYYYMMDD] [--name BASENAME] [--env dev|prod] [--out FILE]`（1 ファイルを `cat`。**生バイトをそのまま**返す（**秘密を含む行だけ** `[REDACTED]`。§7.4）。`--out` は 0600 で、**失敗した run は置き換えない**）— **1 コマンド = 1 ssh exec = 1 往復**。**netloom はログを解析しない**（`--grep` / `--since` / `--until` / `--limit` / `--format` は**無い** = exit 2。解析は textloom の `log` 層（issue #44）で、`netloom logs read … | loom log …` と繋ぐ）。**カセットを持たない**（`--cassette` / `--replay` は exit 2。証跡は `--out`）。選択が 1 ファイルに解決できなければ exit 2（`logs files` で候補を見て `--name`）。`--env` は dev / prod だけ、`SSH_ALIAS` は必須。**`app` のログは 2 つのレイアウトを順に試す**（`<root>/var/log/<env>` と `<root>/public_html/var/log/<env>` — ホストで 1 段違う。1 exec のまま、`cd A || cd B && cat`）。**`pipeline` も 2 つ**（`~/python-scripts-ec/<genre>/dist/logs`（dev）→ `~/daily-econ-news/<genre>/dist/logs`（prod）を同じ順に試す。issue #92）
+- **deploy**（自サイトの**デプロイスクリプトを走らせるだけ**。ssh 1 exec。カセットなし）: `deploy run [--branch B] [--env dev|prod] [--dry-run] [--skip-plugins] [--out FILE] [--timeout SEC] [--allow-prod]`（`cd <定義のディレクトリ> && flock -n -E 75 <定義のロック> ./bin/deploy-local.sh [B] [--dry-run] [--skip-plugins]` の **1 exec**。**1 ホスト 1 本** — 二本目はロックで即 **exit 75**、ホストは変わらない。**出力はそのまま流し、netloom は終了コードだけを読む**。`--out` は stdout との **tee**。**`--env prod` は `--allow-prod` が必須**（dev に付けたら exit 2）。`--branch` は任意（省略時はスクリプトの既定。**この店のスクリプトの既定は `main`** = 実測 2026-11-08）。`--dry-run` / `--skip-plugins` は**スクリプトのフラグ名そのまま**で、**何が起きないかは netloom ではなくスクリプトが決める**（この店の `--dry-run` は**プラグイン同期が echo になるだけ**で、`git reset` とメンテナンスモードは**動く**）。`--timeout` の既定は **900 秒**（切れてもリモートは続く。**exit 124 の失敗行がそう述べる**ので、124 を見てすぐ再実行しないこと = ロックで弾かれる）。**カセットを持たない**（`--cassette` / `--replay` / `--format` は exit 2。証跡は `--out`）。`SSH_ALIAS` は必須 — **実行前にスクリプトの `--dry-run` が何を飛ばすかを読むこと**）
 - **bigquery**（BigQuery の読み取り専用クエリ。HTTP 直叩き）: `bigquery query --sql SQL|@FILE [--dry-run] [--max-rows N] [--project ID]`（**1 コマンド = 認証 1 + クエリ 1 の 2 往復**。`SELECT` / `WITH … SELECT` だけ。**書き込みは無い**。**BigQuery は課金が発生しうる** — まず `--dry-run`。project は `--project` → `GOOGLE_CLOUD_PROJECT` → `GCLOUD_PROJECT`。`--replay` はネット・credential 無し）
 - **calendar**（Google Calendar API v3。HTTP 直叩き）: `calendar list-calendars` / `list-events` / `get-event` / `create-event` / `update-event` / `delete-event`（**1 コマンド = 認証 1 + データ 1 の 2 往復**。**書き込み 3 つは副作用** — live の書き込みは owner 承認が前提。`update-event` は **PATCH = 1 往復**。`list-events` は**与えたフラグだけ**を送る（既定値は発明しない）。calendar id は `--calendar-id` → `GOOGLE_CALENDAR_ID` → `primary`。csv は無い。カセットは予定・参加者を含む — `.cassettes/` のみ・コミットしない。`--replay` はネット・credential 無し）
 - **apps-script**（Google Apps Script API v1。HTTP 直叩き）: `apps-script create-project` / `get-project` / `get-project-content` / `update-project-content` / `list-project-versions` / `create-version` / `list-deployments` / `get-deployment` / `create-deployment` / `update-deployment` / `delete-deployment` / `run-script` / `list-processes`（**1 コマンド = 認証 1 + データ 1 の 2 往復**。**書き込み 7 つと run-script は副作用** — live は owner 承認が前提（**run-script は任意の関数の実行**）。script id は `--script-id` 必須（netloom は推測しない。`list-processes` のみフィルタとして任意）。`--files` / `--parameters` は JSON であることだけを見てそのまま送る（**update-project-content は全ファイル置換**）。`pageSize` / `manifestFileName` / `devMode` は**与えたときだけ**送る（既定値は発明しない）。csv は無い。カセットはソースコード・デプロイメント・プロセスを含む — `.cassettes/` のみ・コミットしない。`--replay` はネット・credential 無し）
 - **youtube**（HTTP。YouTube Data API v3）: `youtube search` / `youtube videos`（**1 コマンド = 1 往復**。credential は query の `key` = `YOUTUBE_API_KEY`（psi / crux と同じ扱い。未設定なら 1 往復も送らず exit 2、`--replay` でも要る）。search は `part=snippet` + `type=video` 固定で **`publishedAfter` / `publishedBefore` の絶対日付範囲（年次スライス）を pass-through**（**Apify actor の rolling window では代替不可** = issue #29）、videos は `part=snippet,statistics,contentDetails` 固定（`publishedAt` / `statistics` の補完）。**quota は呼び出し側**: `search.list` は 100 units/回（`videos.list` は 1 unit）。**ページングは呼び出し側**（`--page-token` は pass-through。netloom は `nextPageToken` を追わない）。csv は無い。**キーはカセットの URL に残る** — `.cassettes/` のみ・コミットしない）
 - **zenodo**（HTTP。Zenodo REST API。**読み取り 4 コマンド + 書き込み 7 コマンド**）: `zenodo record` / `record-versions` / `deposition` / `deposition-files` と、`deposition-create` / `deposition-update` / `deposition-delete` / `deposition-upload` / `deposition-file-delete` / `deposition-newversion` / `deposition-publish`（**1 コマンド = 1 往復**。credential は **`ZENODO_TOKEN` を `Authorization: Bearer` で送る 11 コマンド共通の 1 規則** — 未設定なら 1 往復も送らず exit 2、`--replay` は不要。id は書いたまま path に入る。`--sort` / `--size` は**与えたときだけ**載る pass-through。`--input` は `{"metadata": …}` に包んで送る metadata 文書、`--file` は multipart で送るファイル。**ページング・リトライ・レート制限の待ちは作らない**。**csv は無く、`deposition-files`（配列）と `deposition-delete`（文書無し）は `text` も無い**。**publish だけが `--allow-publish` 必須**（公開 DOI は取り消せない）— 下書きの書き込みに門は無い。カセットは record / deposition の本文とファイルの証跡（field / sha256 / size。**バイトもファイル名も残さない**）を持つ — `.cassettes/` のみ・コミットしない）
+- **europepmc**（HTTP。Europe PMC REST API。2 コマンド）: `europepmc search --query Q [--limit N] [--result-type lite|core|idlist]` / `europepmc get --id SOURCE:ID`（**1 コマンド = 1 往復**。**credential 不要**で `--env` も無い（公開 API。キーもメールも送らない）。検索語は**書いたまま**（`TITLE:` / `SRC:` / `DOI:` / `sort_cited:y` の語彙は呼び出し側）、`--limit` → `pageSize` と `--result-type` → `resultType` は**与えたときだけ**載る。`get` は `MED:32123456` の形を**そのまま `EXT_ID:32123456 AND SRC:MED` に**（REST の根に 1 件取得の path は無い）。**ページング・リトライ・レート制限の待ちは無い**（`--cursor` は持たない。`nextCursorMark` は呼び出し側）。`csv` は無く、両コマンドが `json` / `text` / `verbatim`（`text` は `hitCount` / `items` / `nextCursorMark` の 1〜3 行）。**文献のメタデータは公開情報** — カセットは `.cassettes/` のみ・コミットしない）
+- **serpbear**（SerpBear の SQLite を**読み取り専用**で 1 照会。**exec（`sqlite3`）。カセットあり**）: `serpbear query --db PATH --sql SQL|@FILE [--format json|csv|text] [--out FILE]`（**1 コマンド = 1 exec = 1 往復 = カセット 2 frame**。**門は `sqlite3 -readonly` だけ**で netloom は SQL を解釈しない（語彙の allow-list も複文の検査も無い — 書き込みは SQLite が拒否し **exit 1**、ツールの status はメッセージに残る）。`--db` は**必須で存在を検査しない**（開けない DB は sqlite3 の `unable to open database file` = exit 1。既定パスを持たない）。`--format` は `json`（既定）/ `csv`（`-csv -header`）/ `text`（`-header`）で、**バイトはツールが書いたものそのまま**（整形しない。**0 行のとき SQLite はヘッダも書かない** — 列名だけの CSV が要るなら呼び出し側）。`sqlite3` が PATH に無ければ 1 回も exec せず **exit 127**（カセットも作らない。netloom はインストールしない）。`--replay` は **exec 0 回**で、照合は **SQL 本文 + db の basename**（checkout が別の機械に移っても効く。**同名の別 DB は同じ扱い**なので `--cassette` を DB ごとに分ける）。`--env` は無い（根が 1 つ）。**順位・キーワードは業務データ** — カセットは `.cassettes/` のみ・コミットしない。**月次 CSV の受入（呼び出し側）は同じ SQL を `--format csv --out` で置き換える**）
+- **rakuten**（HTTP。楽天ウェブサービス（Rakuten Web Service）の公式 JSON API。4 コマンド）: `rakuten item-search --params 'keyword=…&hits=10&sort=-reviewCount'|@FILE` / `genre-search` / `ranking` / `product-search`（**1 コマンド = 1 往復**。host は `https://openapi.rakuten.co.jp` で **path は family ごとに違う**。**パラメータは `--params` の素通し**（`keyword` / `genreId` / `hits` / `sort` / `page` の語彙は呼び出し側、値の検査なし）で、netloom が足すのは **`format=json`（付けないと XML）と認証の 2〜3 個（`applicationId` / `accessKey`、任意の `affiliateId`）だけ**。**呼び出し側が書いた `applicationId` / `accessKey` / `format` は落として env の値を 1 つだけ送る**。credential は **`RAKUTEN_APP_ID` / `RAKUTEN_ACCESS_KEY`（+ 任意の `RAKUTEN_AFFILIATE_ID`）**で、無ければ 1 往復も送らず **exit 2**（`--replay` も要る = URL が値を持つ）。**`--format` は `json`（既定）/ `verbatim` のみ**（`text` / `csv` は exit 2 = 応答は `Items[].Item` の入れ子）。**ページング・リトライ・レート制限の待ちは無い**（`page` は `--params`）、`--env` も無い。**カセットの URL に credential が載る**（psi と同じ既知の弱点）ので `cassette show` は伏せ、`cassette check` はヒットとして数える — カセットは `.cassettes/` のみ・コミットしない。**アマゾン（PA-API）は対象外**（owner 判断 2026-11-11）)
+- **sales-report**（HTTP。EC-CUBE SalesReport42 プラグイン API への**書き込み**）: `sales-report gsc-queries --input JSON [--dry-run]` / `query-page --input JSON [--dry-run]` / `openseo-keywords --input JSON [--dry-run]`（`POST /api/gsc/queries`・`POST /api/query-page`・`POST /api/openseo/keywords`。**1 コマンド = 1 往復**で、**本文もカセットに残る = 証跡**。同じ環境・同じ認証（`X-API-Key` + dev の Basic）。**3 コマンドとも書き込みなので `--env prod` は `--allow-prod-write` が必須**（`DELETE` は無い）。**netloom は判定しない**: 月・列名・値の検証も allow-list も無く、JSON であることだけ見る（400 / 401 / 500 はそのまま返る）。**`--dry-run` は送らずに method / URL / 本文を出す**（往復 0・カセット 0・credential 0、exit 0。今の `sync_seo_data_to_api.py` の dry-run 相当）。`--input` は文書そのもの（ファイルは `--input "$(cat f.json)"`）。**検索実績とキーワードの集計は業務データ** — カセットは `.cassettes/` のみ・コミットしない）
+- **competitor**（HTTP。競合サイトの商品一覧と商品ページを**取ってくるだけ**。2 コマンド）: `competitor catalog --site DOMAIN | --url URL [--page N] [--out FILE]` / `competitor product --url URL --out FILE`（**1 コマンド = 1 往復**。**credential 不要**（4 サイトは UA 無しでも 200 = 2026-11-15 の実測）。`--site` は**定義の定数**の 3 サイトだけ（`chillaxy.jp` / `geishabrands.com` / `kingchill.jp` = WordPress REST の `?per_page=100&page=N&_fields=id,title,link`）で、**未知のドメインは 1 往復も送らず exit 2**。`--url` は**任意の URL をそのまま送る**（allow-list 無し。`--page` は `--url` では exit 2 = 呼び出し側が書いた URL を書き換えない）で、**1 往復で商品一覧が取れないサイトはこちらで刻む**（`weedyyz.jp` は `/sitemap.xml` → 商品 sitemap の 2 コマンド。netloom は 2 段目を自動で辿らない）。**抽出はしない**: 商品名・価格・在庫・`{title, url}` への整形はせず、サイトの応答（JSON / XML / HTML）を**そのまま**返す（§2.2）。`catalog` の `--format` は `verbatim`（既定）/ `json`（JSON の一覧をインデント）、`product` は `--format` を持たず**生バイトを `--out`（必須）にだけ書く**（stdout には出さない。新規 0600）。UA は定義の定数 1 か所（`CompetitorMonitor42Preview/1.0 (+https://www.thch-vape.shop/)`）、429 / 4xx / 5xx / リダイレクトはそのまま返る（リトライ・待機・2 段目の追跡・ページングをしない）。**カセットは応答の本文を残す**（`--replay` が同じバイトを `--out` に書けること = 証跡の約束）ので、**1 frame が数百 KB〜1 MB 近く**になる（実測: 商品ページ 1 枚で 909,645 B。`cassette show` は本文を出さず sha256 とバイト数だけ）。**商品名・価格は競合の業務データ** — カセットは `.cassettes/` のみ・コミットしない）
+- **competitor-api**（HTTP。競合モニタ（CompetitorMonitor42）の**登録 API**。4 コマンド。**別の送信元 `competitor` とは別物** — あちらは競合サイトを取るだけで credential 無し、こちらはモニタの自テーブルを読み書きする）: `competitor-api sites` / `site --input JSON|@FILE` / `products [--site-id N] [--is-enabled 0|1]` / `product --input JSON|@FILE`（**1 コマンド = 1 往復**。EC-CUBE と同じ環境・同じ認証（`X-API-Key` + dev の Basic。`--env dev|prod`）。**`site` / `product` は書き込み**で、`--env prod` は `--allow-prod-write` が必須（`sites` / `products` は読み取りなので取ると exit 2）。**netloom はスキーマを検査しない**: `--input` は JSON であることだけ見て送り、upsert のキー（`base_url` / 競合の商品コード）、未知のキー、必須の項目は API の判定（**422**）。**201 = created / 200 = updated はどちらも成功**、**401 / 422 / 500 はそのまま返る**（リトライ・ページング無し）。`--format` は `json`（既定）/ `text`（一覧 = 封筒の計数、書き込み = `success` / `message` / `id`）/ `verbatim`（`csv` は無い）。**live は未実行**（本番はプラグイン未デプロイ = 404）
+- **openai / gemini / perplexity**（HTTP。AI 回答の引用（GEO / AEO）を取る 3 送信元。**いまは互換のためだけに残している** — AI 回答の引用計測の正本は独立ツール **`aicm`**（`routeflags/ai-citation-monitor`）で、seo-operations の呼び出しは 2026-11-15 に移行済み。削除条件は設計 §11 N52。perplexity は `aicm` に送信元が無い）: `openai ask --prompt TEXT|@FILE --model MODEL` / `gemini ask --prompt TEXT|@FILE --model MODEL` / `perplexity ask --prompt TEXT|@FILE --model MODEL`（**1 コマンド = 1 往復**。**`--model` は必須** — netloom は既定モデルを持たない（モデルは測定条件で、既定を固定すると黙って版が変わる）。**`--prompt` は質問文**で**書いたまま**本文に入る（`@FILE` は末尾の改行を 1 つだけ落とす。複数行はそのまま届く）。検索ツールは**コマンド自身の固定**でフラグは無い: openai は `tools=[{type:web_search}]`、gemini は `tools=[{google_search:{}}]` を**必ず**送り、perplexity は送らない（provider の既定が検索）。endpoint は `POST /v1/responses`（openai）/ `POST /v1beta/models/{model}:generateContent`（gemini。**model は path**）/ `POST /api/chat/completions`（perplexity）。credential は `OPENAI_API_KEY` / `GEMINI_API_KEY` / `PERPLEXITY_API_KEY`（openai / perplexity は `Authorization: Bearer`、gemini は `x-goog-api-key`）で、**未設定なら 1 往復も送らず exit 2**（`--replay` は不要）。`--format` は `json`（既定）/ `verbatim` のみ（**`text` / `csv` は exit 2** — 応答の形は provider のもの）。**引用と課金の目安は provider の形のまま**残る（openai `output[].content[].annotations[].url_citation` / gemini `candidates[].groundingMetadata.groundingChunks[].web.uri` / perplexity `citations[]`、`usage`）。**1 質問が課金対象** — カセットは `.cassettes/` のみ・コミットしない）
 - **`cassette`**（ローカルコマンド。provider を呼ばない。カセットを読むだけ）: `cassette show --path FILE`（frame 一覧: seq / direction / method or status / url（**`key=` / `access_token=` の値は表示時だけ `[REDACTED]`** — カセットのバイトと replay の照合は変わらない）/ payload の sha256 とバイト数（`N B`）/ at。**本文は出さない**）と `cassette check --path FILE [--path FILE ...] [--env-file FILE]`（カセットに env の実値が残っていないかを機械検査。**名前と件数だけ**を出して exit 1（ヒット）/ 0（0 件）/ 2（credential が 1 つも無）/ 3（読めない）。読み取り専用 — 往復しない・書き換えない。env の解決は §7.5 と同じ。設計書 付録 A.28）
-- **lighthouse**（ローカル計測。**exec。カセットなし**）: `lighthouse run --url URL --out DIR [--runs N] [--form-factor mobile|desktop] [--chrome-path PATH] [--lighthouse-version V]` — **1 コマンド = N 回の exec**（既定 5）。`run1.json` 〜 `runN.json` に **Lighthouse の生 JSON を置くだけ**（parse しない。中央値も判定もしない）。**カセットは無く `--cassette` / `--replay` / `--format` は exit 2** — 証跡は `--out`（新規は 0600）。`node` / `npx` は前提（無ければ 1 回も起動せず exit 127）。**psi / crux とは別測定系**（混ぜない = ローカル Lighthouse が正）。live は実測済み（2026-10-19: exit 0・約 21 秒・`run1.json` 921,296 B・0600）
+- **lighthouse**（ローカル計測。**exec。カセットなし**）: `lighthouse run --url URL --out DIR [--runs N] [--form-factor mobile|desktop] [--only-categories LIST] [--chrome-path PATH] [--lighthouse-version V]` — **1 コマンド = N 回の exec**（既定 5）。`run1.json` 〜 `runN.json` に **Lighthouse の生 JSON を置くだけ**（parse しない。中央値も判定もしない）。**既定のカテゴリは Lighthouse 自身の 4 つ（performance / accessibility / best-practices / seo）** — `--only-categories` を名指さなければ**引数を付けない**（ツールの既定が既定）。`--only-categories performance,seo` は**書いたまま**渡る pass-through（値も語彙も検査しない）。**プロファイルは run ごとに新規・版は `--lighthouse-version` で固定（既定 13.5.0）** — この 3 つで「同じ条件で N 回」が言い切れる。**カセットは無く `--cassette` / `--replay` / `--format` は exit 2** — 証跡は `--out`（新規は 0600）。`node` / `npx` は前提（無ければ 1 回も起動せず exit 127）。**`lighthouse doctor [--chrome-path PATH] [--lighthouse-version V] [--probe]`** は**実行前提の値を 1 行ずつ出すだけ**（`node:` / `npx:` / `chrome:` / `chrome version:` / `lighthouse version:`。**判定語を出さない**。0 = 全部読めた / 2 = 欠けている（名指しで 1 行）/ 127 = node・npx が無い。`--probe` は Chrome を 1 回 headless で起動して終わり方を出す = 失敗は exit 1）。**psi / crux とは別測定系**（混ぜない = ローカル Lighthouse が正）。live は実測済み（2026-10-19: exit 0・約 21 秒・`run1.json` 921,296 B・0600。doctor / `--only-categories` / `--probe` の live は親が実行）
 - **playwright**（ローカルブラウザ。**exec。カセットなし**）: `playwright shot --url URL --out PATH [--full-page]` / `playwright html --url URL --out PATH` / `playwright eval --url URL --script FILE --out PATH` / **`playwright flow --script FILE --out PATH [--timeout SEC] [--playwright-version V] [--env-allow NAME,...]`** — `shot|html|eval` は **1 コマンド = 1 ページ読み込み = 1 回の exec**、**`flow` は 1 コマンド = 1 セッション = 1 ブラウザ起動 = N ページ読み込み**（起票元の 5 ステップのように複数ページにまたがる操作を検証する。**「1 コマンド = 1 往復」の明示的な例外** — カートは browser context を跨げば引けない = 設計 付録 A.35 追補 2）。出力は `--out`: **PNG / JS 実行後の DOM / 戻り値の JSON**（`eval` = `page.evaluate(string)` と同じ評価 / **`flow` = async function の本体を Node コンテキストで評価し `page` / `context` を渡す。return 値が JSON**。戻り値は解釈しない。スクリプトの内容はログに出ない）。**カセットは無く `--cassette` / `--replay` / `--format` は exit 2**。ブラウザは **Playwright 自身の Chromium** で、**インストールは呼び出し側**（`npx playwright install chromium`。無ければツールのエラー = exit 1。netloom は何もインストールしない）。**版とブラウザは対** — 既定はピン 1.63.0（= chromium-1243）、導入済みに合わせて選ぶなら `--playwright-version V`（`--lighthouse-version` と同じ pass-through）
 - **devtools**（CDP の観測。**MCP stdio のまま**。カセットあり）: `devtools network|console|snapshot --url URL --out PATH [--format json|text|verbatim]` / `devtools trace --url URL --out DIR [--analyze]` — **1 コマンド = 決まった並びの `tools/call`**（1 セッション・1 `initialize`。network / console / snapshot = 2、trace = 3、`--analyze` = 4。**「1 コマンド = 1 `tools/call`」の唯一の例外** = 設計 付録 A.36）。答えは **`--out`**（network / console / snapshot = 1 ファイル、trace = DIR に `trace.json` + `--analyze` なら `insight.txt`。**stdout には出さない**。`--out` は必須 = exit 2。新規は 0600）。json（既定）= provider 自身の `structuredContent` をインデント 2 でそのまま / text = provider の描画 / verbatim = 生バイト。**csv は無く、trace は `--format` を持たない**。**`network --match REGEXP [--max-details N]`（issue #52）はマッチした要求の詳細を同一セッションで取得する**（呼び出し回数 = **2 + M**、M = min(マッチ数, `--max-details`)。既定 **10**。`--out` はリストのまま、**各詳細は `<out>-detail-<requestId>.json` に 1 文書ずつ**（provider の文書そのまま・詳細は常に json）。**reqid はセッション内の id** なのでリストしたセッション内で取る（別コマンドの id では引けない = 実測 2026-10-20 に exit 1 で確認。`request` コマンドは削除）。詳細の答えは POST ボディ・Cookie / Set-Cookie を含む。マッチ 0 件でも exit 0）。**カセットは普通に記録する**（`--replay` は並びの順に照合。同じ request の反復でも壊れない）。**`npx` / `node` が無ければ 1 往復もせず exit 127**、`isError` / JSON-RPC error = exit 1。**Chrome は `chrome-devtools-mcp` が自分で起動する**（無ければツールのエラー = exit 1。netloom は導入も分類もしない）。**サーバーは `--no-page-id-routing` で起動する**（既定の `pageIdRouting` は全 page-scoped ツールの schema に必須の `pageId` を足す — 渡さないと `navigate_page` が isError。2026-10-19 の live 実測 = A.36 判断 D23）。**計測ではない**（PageSpeed の数値と混ぜない = 観察の道具）。live は親が実行する（2026-10-19 の 1 回目で欠陥を発見・修正済み。修正後の再実行待ち）
 - **`env check`**（ローカルコマンド。provider を呼ばない。往復しない・カセットも作らない）: `env check [--source ID]... [--env local|dev|prod] [--format text|json] [--env-file FILE[:FILE…]]` — **実行の前に前提を確かめる**。netloom が読む名前ごとに「設定されているか / どこから来たか（プロセス env / どのファイル）/ 誰が読むか」を出し、**env ファイルが定義しているのに netloom が読まない名前**（typo・残骸）も出す。**値は絶対に出ない**（§7.4。ログに貼れる）。`--source` で絞ると門になり、その送信元が必要とする名前が（代替を含めて）欠けていれば exit 1。設計書 付録 A.30。**空値（`KEY=`）は `empty` と表示され、門では missing とみなす**（issue #56。「門が通るのに実行が失敗する」をなくすため。値は出さない）。**`<.env>` が `.env.d/` の同名の定義を隠しているとき**（§7.5 の解決順の帰結）は行末に `shadowed by: <ファイル>` を足す（明示リスト `NETLOOM_ENV_FILE` / `--env-file` では出さない = それは「そのリストだけ」の解決）。
 
 ---
 
-# このスキルの配布（CI での drift 検出と複数 checkout への一括配布）
+# このスキルの配布（CI での drift 検出・単一リポジトリ・複数 checkout）
 
 このスキル自身は netloom のバイナリに埋め込まれている（正本は `internal/usecase/skill/netloom/SKILL.md`。配布済みコピーが `.github/skills/netloom/SKILL.md`）。**手でコピーしない**。古いコピーは `netloom skill check` の exit code で検出できる（一致 = 0 / 不一致 = 1 / ファイルが無い・読めない = 3）。
 
@@ -161,6 +178,17 @@ netloom は起動時に **cwd の env ファイルを自動で読む**（`<cwd>/
 ```sh
 netloom skill check --path .github/skills/netloom/SKILL.md
 ```
+
+## 単一リポジトリへの配布
+
+```sh
+netloom skill install --to <repo>                    # プレビュー（既定。何も書かない）
+netloom skill install --to <repo> --write            # コピーが無ければ置く / 一致は触らない
+netloom skill install --to <repo> --write --force    # 古い・異なるコピーも置き換える
+```
+
+報告は `TARGET:` + `STATUS:`（`PREVIEW` / `INSTALLED` / `UP-TO-DATE` / `REFUSED` / `FAILED`）。**`REFUSED` は exit 1 でファイルは変わらない**。
+**`skill check` が STALE（不一致）のコピーを入れ替えるには `--force` が要る** — `--write` だけでは `refusing to overwrite it (--force replaces it)` で exit 1、ファイルは変わらない（自分で編集していなくても、版が違うだけで拒否される）。**置換の前に差分を見る**（自分で足した追記が落ちていないか）。
 
 ## 複数 checkout への一括配布
 
@@ -253,7 +281,7 @@ gate (--source): 2 of 2 sources are missing a needed name — exit 1
 
 - netloom リポジトリの root で作業する（`make build` で `bin/netloom` を作る）。PATH に置くなら
   `make install`（`bin/netloom` へのシンボリックリンク。開発用）か `make install-go`（`go install` で実体。恒久版）で、`make update` が入れ替える
-- 入っている版は `netloom version`（`--version` / `-v` も同じ）で確認できる。**版と送信元の確認は `netloom version --json`**（1 行の JSON。`sources` は常に含まれる。`--sources` は 2 行目に id を並べる。同時指定は exit 2）
+- 入っている版は `netloom version`（`--version` / `-v` も同じ）で確認できる。**版と送信元の確認は `netloom version --json`**（1 行の JSON。`sources` は常に含まれる。`commit` はビルド元の revision で、**make 経由のビルドだけが名乗れる**（`go install` / `git archive` / 素の `go build` は**空文字** = 不明。版から commit を引くのは tag の仕事）。`--sources` は 2 行目に id を並べる。同時指定は exit 2）
 - live 実行には Node / `npx` が必要（`npx --version` で確認）。**API キーは不要**
 - ネットワークが無い・再現したいときは `REPLAY=<カセット>` を使う
 
@@ -403,8 +431,8 @@ set -a; source "${APIFY_ENV:-/Users/bookair18/OS/media/06_symphony/symphony_work
 ```sh
 # 1) actor を実行（入力は JSON 文字列 or @FILE。actor は任意の ID）
 make apify-run ACTOR=gJvjeCYNraSfhIaNd INPUT='{"search_term":"CBXリキッド","max_videos":5}'
-#    → {"data":{"id","status","defaultDatasetId",…}} が返る（既定 json。FORMAT=text で要約）
-#    → defaultDatasetId を 2) に渡す。WAIT=SEC は waitForFinish（既定は TIMEOUT と同じ値）
+#    → {"data":{"id","status","defaultDatasetId",…}} が返る（既定 json は **provider の封筒を保つ**。FORMAT=text で要約 = 名前のある member は封筒 1 段下（data）でも同じ名前で出る）
+#    → defaultDatasetId の行を 2) に渡す。WAIT=SEC は waitForFinish（既定は TIMEOUT と同じ値）
 
 # 2) dataset の items を取る（provider の表現のまま）
 make apify-dataset DATASET=<defaultDatasetId> LIMIT=5
@@ -757,7 +785,7 @@ make gsc-sites            # FORMAT=csv は siteUrl,permissionLevel / FORMAT=text
 
 バイナリを直接叩く場合は `bin/netloom gsc query --site … --body …` / `bin/netloom gsc sites`。
 make 変数は `SITE` / `BODY` / `QUOTA_PROJECT`（`FORMAT` / `CASSETTE` / `OUT` / `REPLAY` / `TIMEOUT` は共通）。
-`BODY` は `INPUT` と同じ扱い（JSON を make の展開に通さない。`$` を含む値は `BODY=@body.json`）。
+`BODY` は JSON 文書なので recipe が単引用で受ける（`--body '$(BODY)'`。`$` か `'` を含む値は `BODY=@body.json`）。SQL / メール本文 / HTML は逆にシェル変数で渡す（`--sql "$$SQL"` / `--body "$$BODY"`）ので `'` も `"` もそのまま届く。`$` は JSON（単引用）では必ず消えるので `@FILE`；SQL / 本文（シェル変数）は環境変数として渡したときだけ残る。
 
 | フラグ | 意味 |
 |---|---|
@@ -866,7 +894,7 @@ GOOGLE_TOKEN_FILE="$HOME/.config/netloom/google-gsc.json" bin/netloom gsc sites
 - env ファイルは**ワークスペース外**に置く。**コミットしない**。`chmod 600` にする。値は stdout / stderr /
   カセットのどこにも出ない（`X-API-Key` と `Authorization` は名前を残して `[REDACTED]`）
 - **どれか欠けていれば netloom は 1 往復も送らず exit 2**（カセットも作らない）
-- **開発サーバーの base URL は env `EC_DEV_BASE_URL` から読む**（news / article / cache / contact / ga4-orders / landing-page / product の **7 送信元共通**。**コードに値は無い**）。未設定なら `--env dev` のコマンドは **exit 2**（メッセージに変数名が出る。1 往復も送らない）。`--replay` でも要る（URL がカセットの照合に要る）
+- **開発サーバーの base URL は env `EC_DEV_BASE_URL` から読む**（news / article / cache / contact / ga4-orders / landing-page / product / category / content / sales-report の **10 送信元共通**。**コードに値は無い**）。未設定なら `--env dev` のコマンドは **exit 2**（メッセージに変数名が出る。1 往復も送らない）。`--replay` でも要る（URL がカセットの照合に要る）
 - **値は credential ではない**ので、カセットの URL にはそのまま載る（証跡として必要。レダクトされない）。呼び出し側（seo-operations）は同じ値に `ADMIN_DEV_URL` の名前を付けて `.env.d/admin_dev.env` に置く
 - `cache clear` はニュースと記事 API の共用キャッシュクリア（同じ場所・同じ認証）
 
@@ -951,7 +979,7 @@ make news-image-upload ID=1239 FILE=thumb.jpg REPLAY=.cassettes/…-news-image-u
 
 ---
 
-# article（EC-CUBE ガイド記事 API。7 コマンド）
+# article（EC-CUBE ガイド記事 API。8 コマンド）
 
 ガイド記事（物質辞典などの本体）の CRUD と画像を、news と同じ形で扱う。環境・認証・prod ガード・
 multipart の証跡・カセットの規則は **news と同じ**（上の節）。**netloom は slug を解釈せず、slug → id の
@@ -963,17 +991,22 @@ multipart の証跡・カセットの規則は **news と同じ**（上の節）
 - 「ガイド記事を公開 / 更新 / 削除したい」（原稿 → `loom md build` → intro/body/summary/citation の 4 分割 → PUT）
 - 「公開済みの記事を slug で確かめたい」（`list` で id を引き、`get` で `status` と本文を見る）
 - 「記事のヒーロー画像 / 記事内画像を入れ替えたい、alt / caption / position を直したい」
+- 「記事のゲート（パスワード保護）を付け外ししたい・一括で切り替えたい」（`article gate --input`。下の「ゲート」節）
 
 ## 実行（1 コマンド = 1 往復 = カセット 2 frame）
 
 ```sh
 make article-list LIMIT=100                          # 一覧（`--format csv` は固定の列）
 bin/netloom article list --fields id,slug,title,status,update_date   # 返すフィールドを絞る（slug → id の引き当てを軽く。issue #38）
-make article-get ID=169                              # 1 件（text は id / title / slug / status）
+make article-get ID=169                              # 1 件（text は id / title / slug / status / is_gated）
 make article-create INPUT='{"title":"invented","slug":"invented-guide","body_html":"<p>invented</p>"}'
 make article-update ID=169 INPUT=@body.json CLEAR_CACHE=1     # 部分更新（述べたフィールドだけ）
 make article-update ID=169 INPUT=@body.json DRY_RUN=1          # 送信しない契約検査（exit 1 = 契約違反）
 make article-delete ID=169 CLEAR_CACHE=1
+# ゲートの一括切り替え（2026-10-24 追補。plugin 4.5.9 / 4.5.10。**dev で実測済み = 設計 A.16**）:
+bin/netloom article gate --input '{"slugs":["invented-guide"],"is_gated":true,"dry_run":true}'
+bin/netloom article gate --input @gate.json       # ids 優先 / 上限 100 件 / 部分成功は not_found
+make article-gate INPUT='{"slugs":["invented-guide"],"is_gated":true,"dry_run":true}'   # make からも同じ本文（コマンドライン変数をシェルへ渡すので JSON が壊れない）
 
 # 画像（--type は thumbnail（既定）/ image。type=image のメタデータは form field で送る）
 make article-image-upload ID=169 FILE=hero.webp ARTICLE_TYPE=image ALT='説明' CAPTION='キャプション' POSITION=middle
@@ -1010,8 +1043,24 @@ make cache-clear                                    # ニュースと共用（ar
 
 - **`--fields`（list のみ。issue #38）**: 返す item の member をカンマ区切りで指定（前後の空白は落とす。**provider のキー名の pass-through** — 語彙検証なし。新しい名前を足さない）。**出力側だけのフラグ** — query / request に載らず、request は `--fields` 無しと同じ（同じカセットで `--replay` できる）。json は `items` を指定どおりの順序で指定 member だけに絞る（`total` / `limit` / `offset` はそのまま。**item が述べない member は出さない**）、csv は列を同様に絞る（既定は固定列のまま）、text は変わらない（本文は既に出していない）。`get` には無い（付けたいときは別 issue）
 
-## 失敗の見分け（article）
+## ゲート（`is_gated` と `article gate`。2026-10-24 追補）
 
+ガイド記事にゲート（パスワードで守る）を付けられることがある（plugin 4.5.9 / 4.5.10。issue thch-vape.shop#731）。netloom はそれを**そのまま運ぶだけ**。
+
+- **読み取り**: `article get` / `article list` の `item` / `items[]` に `is_gated`（bool）と `gate_configured`（bool。ゲートのパスワードを**持っているかどうかだけ**。値は返らない）が増える。**text の get は `is_gated` を述べる**（`gate_configured` は述べない）、**csv の列は `is_gated` だけを足す**（`gate_configured` は列にしない）——`gate_configured` はショップの環境変数の有無で決まり、**全行が同じ値**なので表にしても情報量がゼロ。判断に使うのは**組み合わせ**（`is_gated:true` + `gate_configured:false` = 誰も解錠できない）で、これは **1 記事の json の `item`** で見る
+- **書き込み（既存）**: `article create` / `article update` の `--input` に `is_gated` を載せられる（**真偽値のみ**。`1` や `"true"` は 400）。`update` は**未指定なら現状維持**。netloom は型を見ない（400 はサーバーの答え）。**`--dry-run` の既知キーにも入っている**
+- **一括（新規）**: `bin/netloom article gate --input '{"slugs":["invented-guide"],"is_gated":true,"dry_run":true}'` → `PUT /api/article/gate`、1 往復
+  - 本文の member: `slugs` / `ids`（**`ids` 優先**）、`is_gated`、`dry_run`。**上限 100 件**・**冪等**（既に同じ値なら `unchanged`）・**部分成功**（見つからないキーは `not_found`、**全滅のときだけ 404**）
+  - `@FILE` も使える（`create` / `update` と同じ規則。JSON であることだけ見て compact する）
+  - **応答はそのまま**: `{"success":true,"is_gated":true,"updated":[235,236],"unchanged":[238],"not_found":[{"key":"slug","value":"invented-999","reason":"not_found"}],"dry_run":true}`。text は `success` / `is_gated` / `dry_run` + `updated` / `unchanged` / `not_found` の**件数**（どのキーが落ちたかは json / verbatim）
+  - **`not_found[].value` の型は `key` で変わる**（`key:"slug"` は文字列、`key:"id"` は数値）。読む側で型を決め打ちしない
+  - **フラグは `--input` だけ**（`--slugs` / `--gated` / `--dry-run` / `--id` / `--clear-cache` は無い — 付ければ exit 2）。本文は呼び出し側が書き、`dry_run` は本文の member（フラグにすると「どのキーが本文に載るか」の形を netloom が持つことになる = 薄いプロキシを崩す）。件数上限も `is_gated` の型も**検証しない**（400 / 404 はサーバーの答え）
+  - **`--env prod` は `--allow-prod-write` が要る**（書き込みの門は他の書き込みと同じ）。`--replay` は門を素通り、カセットの既定名は `.cassettes/<UTC>-article-gate.jsonl`
+- **`--dry-run`（update）と `dry_run`（gate の本文）は別物**: 前者は **netloom のローカル契約検査**（1 往復も送らない・キー名の点検）、後者は **サーバー側の dry run**（往復し、何をするはずだったかを `updated` / `unchanged` で返す）。`article gate --dry-run` は無い（exit 2）
+- **実測済み（2026-10-24。dev。状態は変えていない）**: `get` の `item` は 25 キーで `is_gated: true` / `gate_configured: true`、csv は 13 列（末尾 `is_gated`）、`gate` の `dry_run: true` = `unchanged: [235]`、`dry_run` を外すと `unchanged: [235]`（既に同じ値なので状態不変）、`is_gated: 1` = **400**。**`ids` は `slugs` に優先**、`key: id` の `not_found[].value` は**数値**、101 件は **400**（上限 100）
+- **全滅 404 の本文は `success: true`**: 「サーバーが要求を解釈できたか」（`success`）と「対象があったか」（HTTP status）は**別の層**。**netloom は HTTP status で exit code を決める**（404 = exit 1・本文は stdout に出さない）ので、`success` を見て成否を判断しないこと。**残る未確認は `gate_configured: false` の環境だけ**（構成を変える必要があるため）
+
+## 失敗の見分け（article）
 news と同じ（exit 1 / 2 / 3 / 124。付録 A.16）。**401** はキー、**404** は ID、**400** は
 「必須（title / slug / body_html）・slug 形式/重複・status 値・カテゴリ slug・citation の型/長さ（>65,535
 バイト）・画像の形式/サイズ/未設定」——どれも **API の文面がそのまま返る**ので、stderr の 1 行とカセットで読む。
@@ -1120,7 +1169,7 @@ make ga4-orders-create INPUT='{"transaction_id":"<実在する order_no>","value
 
 | 変数 | 既定 | 値 |
 |---|---|---|
-| `ID` | （get / update / delete で必須） | GA4 受注 ID（`ga4_order_id`） |
+| `ID` | （get / update / delete で必須） | **`plg_sales_report42_ga4_order.id`**（＝ `list` の `items[].id`）。**受注番号ではない**（受注番号は `transaction_id` = `dtb_order.order_no`。取り違えると 404） |
 | `INPUT` | （create / update で必須） | 本文の JSON（または `INPUT=@body.json`。create の必須は `transaction_id` / `value`） |
 | `LIMIT` / `OFFSET` | （API の既定） | 一覧の件数 / 読み飛ばし（`list` のみ） |
 | `NEWS_ENV` / `ALLOW_PROD_WRITE` / `FORMAT` / `CASSETTE` / `OUT` / `REPLAY` / `TIMEOUT` | news と同じ | |
@@ -1131,7 +1180,7 @@ make ga4-orders-create INPUT='{"transaction_id":"<実在する order_no>","value
 - **`update` / `delete` は現状 405**（ショップ側にルートが無い = `Allow: POST`。exit 1）。コマンドは残してあるので、ルートが付いた日にそのまま動く。**失敗を成功に偽装しない**（405 は本文も出力しない）
 - **`GA4_API_KEY` の値はショップの `.env` の `SEO_API_KEY` と同じもの**（サーバーが `X-GA4-API-Key` を `hash_equals` で比べる。netloom の変数名は `GA4_API_KEY`）。揃っていないと 401 `Invalid API key.`
 - `--env prod` の書き込み（create / update / delete）は `--allow-prod-write` が無ければ exit 2。読み取りは不要
-- **一覧の絞り込み（`sync_status` / `transaction_id`）は未実装**（API は受け付ける）。必要なら 1 フラグずつ足す（それまでは `--limit` / `--offset` を進める）
+- **一覧の絞り込みはサーバー側で実装済み**（`?sync_status=pending|synced|error` / `?transaction_id=<完全一致>`。PR #502。語彙外の `sync_status` は 400）。**netloom のフラグはまだ無い**（予約）— 必要になるまでは `json` で読んで `jq` で絞るか、`--limit` / `--offset` で読む
 
 ## 証跡とオフライン再現（ga4-orders）
 
@@ -1205,7 +1254,7 @@ make landing-page-update ID=3 INPUT='{"title":"x"}' CLEAR_CACHE=1 REPLAY=.casset
 
 ショップの商品（コアの `dtb_product` 系）と成分（StrainAdmin）・資材（MaterialManager42）を、news と同じ形で扱う。環境（`--env dev|prod`）・認証（`X-API-Key` + dev の Basic = `SEO_API_KEY`）・prod ガード・カセットの規則は **news と同じ**（上の節）。**product / component / material は 1 つの送信元**（同じサービス・同じキー・同じ環境で、呼び出し元のスキルは 1 つの単位）。
 
-**読み取り（v1）は常時、書き込み（C/U/D）は ContentSync42 プラグイン有効時のみ**（無効時は書き込みルートが未登録で **405**）。**商品の価格・在庫変更は通知系（`plg_price_cut` / `plg_in_stock`）と DB トリガーに波及する**（管理画面と同じ `postUpdate` 経由）。
+**商品・成分・資材・カテゴリ API は `Plugin\SiteOps42` が提供する（17 ルート = 商品 6 / 成分 3 / 資材 3 / カテゴリ 5）**。`SiteOps42` を無効にすると **17 ルートとも未登録 = 404**（`StrainAdmin` / `MaterialManager42` を無効にしてもルートは残る。2026-11-15 の dev 実測。`thch-vape.shop` PR #877）。**商品の価格・在庫変更は通知系（`plg_price_cut` / `plg_in_stock`）と DB トリガーに波及する**（管理画面と同じ `postUpdate` 経由）。
 
 **応答は商品と購買履歴（成分 / 資材の詳細は調達原価）を含む**: netloom はレダクトしない（replay の同一結果が証跡の意味。contact / ga4-orders と同じ判断）。**カセットは `.cassettes/`（gitignore）にだけ置き、コミット・共有・`raw/` 配置をしない**。**テスト fixture は偽データのみ**。
 
@@ -1243,6 +1292,7 @@ make product-get-by-code CODE=CBD-LQ-10-30                   # 重複コード�
 # 作成 → 更新 → 削除（`--purge` は取り消し不可の物理削除。既定の廃止は冪等）
 make product-create INPUT='{"name":"invented","classes":[{"price02":4980}]}'
 make product-update ID=179 INPUT='{"status":1,"classes":[{"id":541,"price02":4480,"stock":20}]}'
+make product-update ID=214 INPUT='{"status":1}' DRY_RUN=1    # **送らない**契約検査: `--input` のキーを API の契約に照らし、契約に無いキーを名指しして exit 1（往復 0・カセット 0）
 make product-delete ID=179
 make product-delete ID=179 PURGE=1                           # 参照があると 409（廃止を使って）
 
@@ -1261,7 +1311,7 @@ make product-material-purchases ID=1 LIMIT=20                 # text は一覧�
 |---|---|---|
 | `ID` | （get / update / delete / 成分・資材の get と purchases で必須） | 商品 / 成分 / 資材の ID |
 | `CODE` | （get-by-code で必須） | 商品コード（SKU）。path に入る |
-| `INPUT` | （create / update で必須） | 本文の JSON（または `INPUT=@body.json`。`name` / `classes[]` は API の必須。**未知キーは API が 400 で弾く**） |
+| `INPUT` | （create / update で必須） | 本文の JSON（または `INPUT=@body.json`。`name` / `classes[]` は API の必須。**未知キーは API が 400 で弾く**）。**書けるキーと配列の置換の意味は下の「`--input` で書けるキー」** |
 | `PURGE` | （未指定 = 廃止） | `1` で `?mode=purge`（**取り消し不可**。参照があると 409） |
 | `LIMIT` / `OFFSET` | （API の既定 = limit 20・上限 100） | 5 つの list 形コマンドの件数 / 読み飛ばし（**指定時のみ載る。limit=0 は total だけ**） |
 | `NAME` / `CODE` / `STATUS` / `STOCK` / `STOCK_STATUS` / `CATEGORY_ID` / `TAG_ID` | （未指定） | `list` のフィルタ（API のパラメータ名のまま。**`status` の既定は 1・2 で、3（廃止）は明示時のみ**） |
@@ -1272,6 +1322,31 @@ make product-material-purchases ID=1 LIMIT=20                 # text は一覧�
 - **フィルタの値は netloom が検証しない**（§2.2）: `status` / `stock` / `stock_status` / `type` / `scope` / `is_active` の嫌な値、`scope` の単独使用、`product_id` と `product_class_id` の同時指定は**API の 400 が答える**（そのまま返る）
 - **日付フィルタ（`update_date_start` / `update_date_end`）は無い**（起票元が外部同期仕様と突き合わせ未確認。必要になったら別 issue）
 - **`--clear-cache` は無い**（商品の書き込み API は `clear_cache` を受け付けず、プラグインが内部でキャッシュをクリアする。付けると exit 2）
+
+## `--input` で書けるキーと、配列の置換の意味（issue #95 / #96）
+
+`--input` は**文書をそのまま本文にする**（netloom はキーも値も検査しない。未知のキーは API の 400 が答える）。書けるキーは店側の書き込み API が決める（`thch-vape.shop` の `ProductWriteValidator::PAYLOAD_KEYS`、2026-11-15 時点）:
+
+| キー | 形 | `update` で与えたときの意味 |
+|---|---|---|
+| `name` | 文字列 | その列を書く |
+| `description_list` / `description_detail` / `search_word` / `free_area` / `note` | 文字列 | その列を書く |
+| `status` | 数値 | 商品の状態（`3` = 廃止。`product delete` はこれを書く） |
+| `categories` / `tags` | `{"id": N}` の配列 | **丸ごと置換**（列挙しなかった既存の紐付けは外れる）。`categories` は**祖先カテゴリをサーバーが付ける**（送っていない親が応答に増える） |
+| `related` / `images` | 配列 | **丸ごと置換**（要素の形は API の文書。`categories` / `tags` のように `{"id": N}` だけかは**未確認**） |
+| `classes` | 配列 | `classes[].id` で既存の SKU を更新する（`price02` / `stock` など）。**与えたときの全体の意味は未確認**（増減と置換のどちらとも書かれていない） |
+
+- **省略したキーは変更しない**（`PUT` は部分更新）。**配列のキーは「与えたときだけ丸ごと置換」**
+- **`categories` の要素は `{"id": N}`**（裸の `1` ではない — 要素の形は `ID_ENTRY_KEYS` が決める。要素の形違いは API の 400）
+- **事故を避ける手順（置換なので）**: `product get --id N` で今の集合を読み、**残したい id を全部**含めて送る。1 件足すつもりで 1 件だけ送ると、他の紐付けが静かに外れる
+- **根拠は EC 側のコード**（`PAYLOAD_KEYS` / `ID_ENTRY_KEYS` / `validateUpdatePayload` / `ProductWriteRelationService::replaceCategories`、2026-11-15）。**netloom 経由の実測は未**（dev の商品 1 件で 1 往復すれば、置換と祖先付与を数字で確かめられる。設計 §11 N53）
+- **`--dry-run`（`product update` だけ）** は**送らずに** `--input` のキーをこの契約に照らします: 契約に無いキー（`product get` の応答をそのまま `--input` にすると `id` / `create_date` など）を名指しして **exit 1**、送れるなら **exit 0**。値は出さず**サイズ（`N B`）だけ**を出し、配列のキーがあれば「**丸ごと置換（送らなかった id は外れる）**」と 1 行出します（`--cassette` / `--replay` は exit 2、`--env prod` の確認は置換と同じで必要）。
+
+```sh
+# 今の集合を読んでから、残す id を全部並べて送る（prod の書き換えは --env prod --allow-prod-write が必須。1 商品ずつ）
+make product-get ID=214
+make product-update ID=214 INPUT='{"categories":[{"id":16},{"id":17},{"id":18},{"id":19},{"id":20},{"id":49},{"id":50},{"id":58}]}'
+```
 
 ## 出力の読み方（`FORMAT`）
 
@@ -1289,7 +1364,7 @@ make product-material-purchases ID=1 LIMIT=20                 # text は一覧�
 | 400 | パラメータ不正 / 本文の検証エラー / 未知キー / `scope` の単独使用など | 送った値と本文を確かめる（エラー文面はそのまま stderr に出る） |
 | 401 | API キーが無効 | `netloom env check --source product` が読む名前を出す（失敗行にもこの 1 行が付く） |
 | 404 | 対象なし（商品 / 成分 / 資材の ID） | ID を確かめる |
-| 405 | 書き込みルート未登録（ContentSync42 無効） | プラグインの有効化を確かめる |
+| 404（商品・成分・資材・カテゴリ API） | `Plugin\SiteOps42` が無効（17 ルートとも未登録） | プラグインの有効化を確かめる（**405 ではない**） |
 | 409 | 商品コード重複（`matches` 付き）/ 参照のある商品の purge | ID で引き直す（先頭を黙って返さない安全側の仕様）/ 廃止を使う |
 | 500 | API キー未設定など（サーバー側） | `env` の `SEO_API_KEY` を確かめる |
 
@@ -1462,7 +1537,7 @@ make gmail-send-email TO='alert@example.test' SUBJECT='日次アラート' BODY=
 make gmail-send-email TO='alert@example.test' SUBJECT='日次アラート' BODY='@digest.md' HTML_BODY='@digest.html' ALLOW_SEND=1   # HTML パートも同じ 1 通で送る（表示を整えたいとき）
 
 # 記録済みカセットから再現（ネットも npx も使わない。メールは飛ばない。ALLOW_SEND 不要）
-make gmail-send-email TO='alert@example.test' SUBJECT='日次アラート' BODY='本文です' REPLAY=.cassettes/…-gmail-send-email-alert-example-test.jsonl
+make gmail-send-email TO='alert@example.test' SUBJECT='日次アラート' BODY='本文です' REPLAY=.cassettes/…-gmail-send-email-to1-d6a46423.jsonl
 ```
 
 バイナリを直接叩く場合は `bin/netloom gmail send-email --to … --subject … --body … [--html-body …] --allow-send`
@@ -1475,13 +1550,16 @@ make gmail-send-email TO='alert@example.test' SUBJECT='日次アラート' BODY=
 | `BODY` | （必須） | 本文（そのまま送る。`@FILE` 可: `BODY='@/path/to/body.txt'` — ファイルのバイトがそのまま本文になる（issue #34）。本文が `@` で始まる場合はファイルとして読まれる） |
 | `ALLOW_SEND` | （live は必須） | `1` で実送信を承認する（`--allow-send`。**無ければ live は exit 2 で 1 通も送らない・npx も起動しない**。`REPLAY` は不要） |
 | `HTML_BODY` | （任意） | **同じ 1 通の HTML パート**（`--html-body`。issue #64）。`HTML_BODY='<b>太字</b>'` または `HTML_BODY='@digest.html'`（ファイルのバイトがそのまま）。**付ければ `body` と `htmlBody` が同じ `tools/call` に載る**（往復は増えない）。**実サーバーは `mimeType` を同時に送らないと `htmlBody` を使わない**（既定 text/plain）ので、netloom は `htmlBody` を名指したときだけ **`mimeType: multipart/alternative` も同じ引数に載せる**（issue #66。付けなければ 3 メンバーのまま） |
-# mcp（任意の stdio MCP サーバー。1 コマンド = 1 tools/call）
+# mcp（任意の stdio MCP サーバー。`call` = 1 tools/call / `tools` = 1 tools/list）
 
 netloom に送信元が無い MCP サーバー（stdio）でも、**往復をカセットに残したいとき**は `mcp call` を使う（設計 **A.38**。issue #65）。**サーバーも pin もツール名も netloom は持たない** — `--server` / `--tool` が呼び出し側の表明で、netloom は `npx -y <server>` を起動し、`initialize` → `notifications/initialized` → `tools/call` 1 回を記録する。
+
+**ツール名・引数名を知りたいとき**は `mcp tools` を使う（issue #69）。`call` が名指す前にサーバーの offering（`name` / `description` / `inputSchema`）を読む — `call` 自体は今も `tools/list` を呼ばない。
 
 ## いつ使うか（トリガー）
 
 - 「MCP サーバーの取得を netloom 経由にして証跡を残したい」（`mcp call`）
+- 「このサーバーが何のツールを持っているか知りたい」（`mcp tools`。`call` の `--tool` / `--args` を書く前に 1 回読む）
 - 「失敗したときにサーバーが何を返したか知りたい」（失敗もカセットに残る）
 - 送信元があるもの（gsc / ga4 / meta / product など）は**そちらを使う**（語彙・整形・受入が済んでいる）
 
@@ -1498,6 +1576,14 @@ make mcp-call SERVER='linkedin-mcp-tools@2.0.3' TOOL=get_feed ARGS='{"count":25}
 
 # 記録済みカセットから再現（サーバーを起動しない。npx も要らない）
 netloom mcp call --server linkedin-mcp-tools@2.0.3 --tool get_feed --args '{"count":25}' --replay .cassettes/…jsonl
+
+# ツール一覧を読む（1 コマンド = initialize → initialized → tools/list の 1 往復。tools/call は呼ばない）
+netloom mcp tools --server linkedin-mcp-tools@2.0.3 --out tools.json
+# → {"tools":[…]} がそのまま（既定 json。FORMAT=text で 1 行 1 ツール: 名前[タブ]説明の 1 行目）
+
+# make から
+make mcp-tools SERVER='linkedin-mcp-tools@2.0.3' OUT=tools.json
+make mcp-tools SERVER='<同じ spec>' REPLAY=.cassettes/…-mcp-tools-<server>.jsonl   # サーバーを起動しない
 ```
 
 | 変数 | 既定 | 値 |
@@ -1513,22 +1599,23 @@ netloom mcp call --server linkedin-mcp-tools@2.0.3 --tool get_feed --args '{"cou
 
 - `json`（既定）= **ツールの文書**。結果の最初の text ブロックが JSON なら indent 2、そうでなければ**文字列としての JSON**。text ブロックが無く `structuredContent` があればそれ。**MCP の封筒（`content` / `isError`）は書かない**
 - `text` = text ブロックそのまま、`verbatim` = 受信した result のバイトそのまま（証跡用。封筒ごと見たいときはこれ）
+- `mcp tools` の `json`（既定）= **サーバーの `result`（`{"tools":[...]}`）そのまま**（indent 2。`inputSchema` もここに載っている = `call` の `--args` を書く材料）。`text` = 1 行 1 ツール（`名前[タブ]説明の 1 行目`。説明の無いツールは名前だけ）。`--filter` は無い（`json` + `jq` で足りる）
 - 迷ったら `cassette show` で生の frame を見る（`text` / `verbatim` と同じものが入っている）
 
 ## 失敗の見分け（mcp）
 
 | exit | 意味 | 次の行動 |
 |---|---|---|
-| 0 | `tools/call` 成功 | — |
-| 1 | `isError` / JSON-RPC エラー / **replay 不一致** / ツール名が存在しない | stderr の 1 行とカセットを読む（provider の文言がそのまま入っている） |
-| 2 | 引数・設定（`--server` / `--tool` の欠落・空白、`--args` が JSON オブジェクトでない、`--env` の代入・空の名前・**未設定の名前**、`--format csv`、`--replay` と `--cassette` の併用） | 引数を直す（値はコマンドラインに書かない） |
+| 0 | `tools/call` / `tools/list` 成功 | — |
+| 1 | `isError` / JSON-RPC エラー / **replay 不一致** / ツール名が存在しない / `tools` の答えが `result.tools` を持たない（捏造しない） | stderr の 1 行とカセットを読む（provider の文言がそのまま入っている） |
+| 2 | 引数・設定（`--server` / `--tool` の欠落・空白、`--args` が JSON オブジェクトでない、`--env` の代入・空の名前・**未設定の名前**、`--format csv`、`--replay` と `--cassette` の併用、`tools` に `--tool` / `--args` を付けた） | 引数を直す（値はコマンドラインに書かない） |
 | 3 | I/O（`--out` / カセット / `--args @FILE`） | パスを直す |
 | 124 | timeout（`--timeout`。既定 300 秒） | サーバーの重さを見る（ログインが要るサーバーは遅い）。再実行 |
 | 127 | `npx` / `node` が無い | Node を入れる（`--replay` は要らない） |
 
 ## 証跡・秘匿・注意
 
-- カセットは **`.cassettes/<UTC>-mcp-call-<server>-<tool>.jsonl`**（**サーバーとツールが run の identity**）。`--cassette` / `REPLAY=` で置き場を変えられる
+- カセットは **`.cassettes/<UTC>-mcp-call-<server>-<tool>.jsonl`**（**サーバーとツールが run の identity**）。`tools` は **`.cassettes/<UTC>-mcp-tools-<server>.jsonl`**（ツール名を名指さないのでサーバーだけ）。`--cassette` / `REPLAY=` で置き場を変えられる
 - **記録前にレダクト**される: `Cookie` / `set-cookie` / `authorization` / `*_token` / `*_key` は**名前で値が消える**（`internal/adapters/redact`。新しい名前は 0 行）。**`--env` で名指した値もレダクト対象**。**未確認**: cookie 名が JSON の member 名でなく生のテキストで返る場合は初回 live でカセットを確認する（A.38 / §11 N36）
 - **プロファイル（クッキーを含む）は netloom がコピーも変更もしない** — パスを `--env` で渡すだけ（子の環境は PATH / HOME + 名指した名前だけ）。**live の利用条件（LinkedIn の ToS・レート）は呼び出し側の責任**
 - カセットには**引数と provider のデータ**が入るので `.cassettes/`（gitignore）にだけ置き、**コミット・共有・`raw/` 配置をしない**（追記のみ）
@@ -1604,11 +1691,11 @@ make meta-instagram-media-insights MEDIA_ID=<media-id> METRICS='reach,likes,comm
 ## 証跡とオフライン再現（gmail）
 
 ```sh
-# 記録（live。ALLOW_SEND=1 が必須。CASSETTE 省略時は .cassettes/<UTC>-gmail-send-email-<宛先>.jsonl）
+# 記録（live。ALLOW_SEND=1 が必須。CASSETTE 省略時は .cassettes/<UTC>-gmail-send-email-to<N>-<sha8>.jsonl = 宛先数と宛先集合のハッシュ。アドレス自体は出ない（issue #70））
 make gmail-send-email TO='alert@example.test' SUBJECT='…' BODY='…' ALLOW_SEND=1
 
 # 同じ request で再生（ネットも npx も使わない。tools/call の params が一致しないと exit 1）
-make gmail-send-email TO='alert@example.test' SUBJECT='…' BODY='…' REPLAY=.cassettes/…-gmail-send-email-alert-example-test.jsonl
+make gmail-send-email TO='alert@example.test' SUBJECT='…' BODY='…' REPLAY=.cassettes/…-gmail-send-email-to1-d6a46423.jsonl
 ```
 
 - 1 コマンド = init / initialized / tools/call の send と 2 つの recv。失敗もカセットに残る
@@ -1725,6 +1812,153 @@ make mysql-query SQL='SELECT COUNT(*) AS products FROM dtb_product' FORMAT=csv R
 - **credentials はカセットに入らない**（`MYSQL_PASSWORD` の実値は stdout / stderr / カセットのどこにも出ない。接続の同一性にも password / user を入れていない）
 - **カセットはショップの行（PII・売上を含みうる）を持つ**ので `.cassettes/`（gitignore）にだけ置き、**コミット・共有しない**。`raw/` に置かない。カセットは**追記のみ**（編集・削除しない）
 - **本番 DB への読み取りは owner の承認が前提**（呼び出し側の本番 env ファイルを使う）。netloom 側の実測は DEV の読み取りだけ（2026-10-19。付録 A.23）
+
+---
+
+# logs（自サイトのログの取得だけ。ssh 1 exec。解析はしない）
+
+## いつ使うか（トリガー）
+
+- 「2026-11-07 の取り込み失敗の原因をログで確かめたい」「その日のアプリログを見たい」
+- **SSH を手で叩く代わり**（`ssh <host> 'grep …'` / `ls -l` / `tail` を手で打たない）
+- 「どのログに何があるか」を**まず一覧**したい（サイズと mtime で当たりを付ける）
+- **使わない場面**: 行の選択・時間窓・level の判定・複数ファイルのマージ・スタックトレースの追従。それは **textloom の `log` 層（issue #44）** の仕事で、netloom はバイトを渡すだけ（§2.2）
+- **log 基盤（中央集約ログ / 検索）が整うまでの一時的な取得経路**でもある（owner 決定 2026-11-07）
+
+## 前提: `SSH_ALIAS`（値は env ファイル、netloom は名前だけ知る）
+
+- `SSH_ALIAS` = ssh config の alias（**必須**。無ければ 1 往復も送らず exit 2）
+- **鍵・パスフレーズ・エージェントは ssh 側**（netloom は読まない。§7.3）。`mysql tunnel` と同じ
+- ホスト・パス・ローテーション規則・`--env` の解決は **`internal/adapters/sources` の 1 か所**。呼び出し側は `--source` / `--genre` / `--date` / `--name` / `--env` だけを知る（`env check --source logs` が `SSH_ALIAS` を申告する）
+- `--env dev|prod`（既定 dev）。**`local` は無い**（exit 2）。**値の実体は呼び出し側の env ファイル**（dev と prod で別ファイル）
+
+```sh
+# 例: env ファイルを読んでから実行（値は出力しない）
+set -a; source /path/to/.env.d/logs_dev.env; set +a && export SSH_ALIAS=<dev の alias>
+```
+
+## 実行（1 コマンド = 1 exec = 1 往復）
+
+```sh
+# 1) どのファイルがあるか（サイズと mtime）。ディレクトリのパスは出ない（cd して ls する）
+#    **下の pipeline の例のうち `LOGS_ENV=prod` の 2 つは prod ホスト側**（prod = `~/daily-econ-news/<genre>/dist/logs`）を指す。
+#    dev は `~/python-scripts-ec/<genre>/dist/logs` で、`--env` ではなく **alias** がホストを決める
+make logs-files LOGS_ENV=dev  LOGS_SOURCE=app
+make logs-files LOGS_ENV=dev  LOGS_SOURCE=app LOGS_DATE=20261107
+make logs-files LOGS_ENV=dev  LOGS_SOURCE=pipeline LOGS_GENRE=rapper
+make logs-files LOGS_ENV=prod LOGS_SOURCE=pipeline LOGS_GENRE=rapper LOGS_DATE=20261107
+
+# 2) 1 ファイルを取る（生バイト。--out は 0600。**成功時は stdout に `read <N> B -> OUT` の 1 行**。netloom が隠した箇所だけ [REDACTED] になる）
+make logs-read LOGS_ENV=prod LOGS_SOURCE=app LOGS_DATE=20261107 OUT=.cassettes/app-20261107.log
+make logs-read LOGS_ENV=prod LOGS_SOURCE=pipeline LOGS_GENRE=rapper \
+  LOGS_NAME=full_daily_rapper_20261107_170005.log OUT=.cassettes/pipeline-20261107.log
+```
+
+- **`app`** = EC-CUBE の env 別ログ（`var/log/<env>/site-YYYY-MM-DD.log`。**日付はファイル名が持つ** → `read` は `--date` か `--name`）
+- **`pipeline`** = `<genre>/dist/logs/*.log`（**dev = `~/python-scripts-ec/<genre>/dist/logs` / prod = `~/daily-econ-news/<genre>/dist/logs`** をこの順に `cd` で試す。1 exec のまま = issue #92。`--genre` 必須。**日付は 1 ファイルを決めない** → `read` は `--name`。候補は `logs files` で見る）
+- **選択が 1 ファイルに解決できないときは 1 往復も送らず exit 2**（「`logs files` で候補を見て `--name` で名指しせよ」と出る）
+- **`--name` はベース名 1 成分だけ**（`/`・`.`・`..`・先頭 `-` は exit 2）。ログのディレクトリの外へは出られない
+- **1 ファイル = 1 往復**。netloom は複数ファイルを連結しない（境界と出所は解析側 = textloom が持つ）
+
+## 解析は textloom（実測済みのパイプライン）
+
+```sh
+# 取得 = netloom、解析 = textloom（2 ファイル・2 書式を 1 コマンドで）
+netloom logs read --env prod --source pipeline --genre rapper --name full_daily_rapper_20261107_170005.log --out /tmp/pipeline-20261107.log
+netloom logs read --env prod --source app --date 20261107 --out /tmp/app-20261107.log
+
+loom log find /tmp/pipeline-20261107.log /tmp/app-20261107.log \
+  --preset bracket-plain --preset monolog-doctrine \
+  --since 2026-11-07T00:00:00+09:00 \
+  --pattern 'SQLSTATE|ALTER TABLE' --json
+```
+
+- **「なぜ壊れたか」を見る窓はその日の全体**（`--since 2026-11-07T00:00:00+09:00`。`--until` を付けるなら現在時刻以降）。**`--since 15:00 --until 17:30` のような狭い窓は取りこぼす** — この障害の DDL は **15:10:21 と 23:24:30 の 2 回**実行されていて、2 回目は翌日まで見えない
+- **実測（dev・2026-11-07）**: `inputs:2 / entries:15 / matched:3 / unparsed:0`、**`details.records[].format`** で一致した書式が分かる（textloom 0.15 系の `--json` はこの入れ子。2026-11-15 実測）。**アプリログ単体**は `--preset monolog-doctrine --pattern 'ALTER TABLE dtb_news DROP np_import_key'` = **`line 37328 / ts 2026-11-07T15:10:21.476571+09:00`**（同日 23:24:30 にもう 1 件）。**パイプライン単体**は `--preset bracket-plain --pattern 'SQLSTATE\[42S22\]'` = **`line 11 / ts 2026-11-07T17:00:45+09:00 / 継続行 205`**
+- **書式の preset は textloom 0.13.0 以降が持つ**（`bracket-plain` / `monolog-doctrine`）。netloom は書式を知らない（バイトを渡すだけ）
+- **`--grep` / `--since` / `--until` / `--limit` / `--format` は無い**（`flag provided but not defined` = exit 2）。netloom は行を読みません（§2.2）
+- **転送量は現実のコスト**（アプリログは 1 日 50〜230 MB）。`--date` で 1 日分に絞る、`--out` を使わず `| loom log …` に流す、のどちらも可
+- **答えはその時点のスナップショット**: ログは追記され得る（同じファイルを 2 回取って 17,851 B → 17,865 B を実測）。**`--out` の名前には取得時刻を含める**のが安全（上の例は `-20261107`、日付までなら `-20261107T1530`）
+
+## 失敗の見分け（logs）
+
+| exit | 意味 | 次の行動 |
+|---|---|---|
+| 0 | 取得できた（`files` = 一覧 / `read` = ファイルのバイト） | — |
+| 1 | 遠隔のコマンドが失敗（ディレクトリが無い・ファイルが無い・`ssh` の失敗 255） | stderr の 1 行（遠隔 / ssh の言葉）を読む。`logs files` で名前を確かめる。`--out` を渡していたなら**前の答えがそのまま残っている**（失敗行が `NN B arrived` と述べる） |
+| 2 | 選択が 1 ファイルに解決しない / `--name` がパス・`.`・`..`・先頭 `-` / `--env local` / `SSH_ALIAS` 未設定 / `--cassette`・`--replay`・`--format` | 引数と env を直す（**何も送っていない**） |
+| 3 | `--out` の I/O | パスを直す |
+| 124 | timeout（`--timeout`。既定 300 秒） | 遠隔の負荷・転送量を確かめる |
+| 127 | `ssh` が PATH に無い | ssh を入れるか PATH を直す |
+
+## 証跡と秘匿（logs）
+
+- **カセットは作らない**（`--cassette` / `--replay` は exit 2）。**証跡は `--out`**（新規は 0600）— 答えはファイルそのもので、カセットに入れると PII の写しが 2 つになり、大きさの上限を設けると replay が live と一致しなくなる（付録 A.39 判断 D6）
+- 出力は**ログそのもの**（PII・売上・未公開原稿を含みうる）: `--out` の置き場はワークスペース外か gitignore の場所にし、**コミットしない**
+- **答え（stdout / `--out`）もレダクトを通す**（§7.4）: env の実値と名前規則（`Authorization: Bearer …` / `name=value` / Google のトークン形 / JSON メンバー名）が `[REDACTED]` に置き換わる。**netloom が隠した箇所だけ**が変わるので（秘密が無ければ**ホストのファイルとバイト一致**）、`| loom log …` の導線はそのまま使える
+- **`[REDACTED]` は「netloom が何かを隠した」の印**（露出件数ではない）: **既にマスク済みの値**（Doctrine が自分で書く `"<redacted>"` や `null`・空）は**書き換えない**し、`ErrorException(code=8192)` のような**エラーコードも潰さない**。**`[REDACTED]` の件数を「秘密が出た件数」と読まない**（この読みで 2026-11-07 に誤検知を出した）
+- **`--out` を付けた成功は stdout に 1 行**（`read 76082835 B -> /tmp/app.log`）。自動化のため、サイズをファイルを開かずに得られる（失敗時は stderr の 1 行が `NN B arrived` と述べる）
+- **ホストは alias が決める**（`--env` ではない）: **どちらの kind も 2 つのレイアウトを順に試す** — `app` = `~/thch-vape.shop/var/log/<env>` → `~/thch-vape.shop/public_html/var/log/<env>`（issue #78）、`pipeline` = `~/python-scripts-ec/<genre>/dist/logs` → `~/daily-econ-news/<genre>/dist/logs`（issue #92）。どちらも **1 exec のまま**（`cd A || cd B && …`。redirection は使わず、空振りした `cd` の失敗は成功時に捨てる）で、**どれも無ければ最後に試したパスを名指し**して exit 1。`--env` が決めるのは `app` のディレクトリ（`var/log/<env>`）だけで、**`pipeline` のディレクトリは genre で決まる**
+- **`--out` は一時ファイルに書き、成功したときだけ rename する**: 失敗した run は `--out` を**バイトも mode も変えない**（前の成功の答えが残る）。stdout は書いたものが取り消せないので、届いた分が出たままになる
+- **失敗行もレダクトを通す**。**ホスト名（alias）は出さない**（失敗行が述べるのは「どの alias で dial したか」の**名前**だけ）。出所は `--source` / `--genre` / `--date` と、遠隔が書いたファイル名だけ
+
+---
+
+# deploy（自サイトのデプロイスクリプトを走らせるだけ。ssh 1 exec。判定はしない）
+
+## いつ使うか（トリガー）
+
+- 「dev / 本番に反映して」「デプロイして」（**呼び出し側が手で `ssh` + `./bin/deploy-local.sh` を叩く代わり**）
+- 「まず何が起きるか見たい」→ **`--dry-run`**。ただし**これはスクリプトのフラグを渡すだけ**で、netloom は「安全」を保証しない。**この店のスクリプト（`deploy-local.sh` の header を 2026-11-08 に実測）の `--dry-run` はプラグイン同期の console 実行を echo のみにするだけで、`git fetch` + `reset --hard`・サブモジュール更新・メンテナンスモードの ON/OFF は動く**（= それでもホストは変わる）。安全に確かめる手段は**スクリプトを読むこと**。
+- **使わない場面**: デプロイの合否の解釈（出力はそのまま流す。何が成功かはスクリプトと起票元が決める）、ロールバック（コマンドは無い）、プラグインの管理
+
+## 前提: `SSH_ALIAS`（値は env ファイル、netloom は名前だけ知る）と、**本番の門**
+
+- `SSH_ALIAS` = ssh config の alias（**必須**。無ければ 1 往復も送らず exit 2）。鍵・パスフレーズ・エージェントは ssh 側
+- **`--env prod` は `--allow-prod` が必須**（無ければ 1 往復も送らず exit 2）。**`--env dev` に `--allow-prod` を付けたら exit 2**
+- **同時実行は遠隔のロックが止める**（`~/.netloom-deploy.lock` を `flock -n` で取る。取れなければ **exit 75** で何も変わらない）。別のスレッド・別の人とタイミングを合わせる必要はあるが、**二本目が作業ツリーを壊すことはない**
+- パス（dev = `~/thch-vape.shop`、prod = `~/thch-vape.shop/public_html` の `bin/deploy-local.sh`）は **`internal/adapters/sources` の 1 か所**。呼び出し側は `--env` / `--branch` だけを知る（`env check --source deploy` が `SSH_ALIAS` を申告する）
+
+```sh
+# 例: env ファイルを読んでから実行（値は出力しない）
+set -a; source /path/to/.env.d/deploy_dev.env; set +a && export SSH_ALIAS=<dev の alias>
+```
+
+## 実行（1 コマンド = 1 exec = 1 往復）
+
+```sh
+# 1) まず dry-run（デプロイしない）。出力は stdout と OUT の両方へ
+make deploy-run DEPLOY_ENV=dev DEPLOY_DRY_RUN=1 OUT=/tmp/deploy-dryrun.log
+
+# 2) ブランチを名指し（任意。省略するとスクリプトの既定）
+make deploy-run DEPLOY_ENV=dev DEPLOY_BRANCH=main
+
+# 3) 本番は門を開ける（owner の指示があるときだけ）
+make deploy-run DEPLOY_ENV=prod ALLOW_PROD=1 DEPLOY_BRANCH=main
+```
+
+- **`--dry-run` / `--skip-plugins` はスクリプトのフラグ名そのまま**（netloom は字面どおり渡すだけ。写像表は無い — スクリプトのインターフェースが変われば netloom の 1 行も変わる）
+- **`--branch` は 1 語だけ**（`[A-Za-z0-9._/-]+`。先頭 `-` と `..` は exit 2）。**netloom は既定のブランチを発明しない**
+- **`--out` は tee**: 実行中も stdout で読め、終わったら証跡が残る（新規 0600）。成功時は **stderr に 1 行** `run <N> B -> <path>`（stdout はスクリプトの出力そのもの）
+- **`--timeout` の既定は 900 秒**。**切れてもリモートのデプロイは続く**（netloom はプロセスを所有しない）
+
+## 失敗の見分け（deploy）
+
+| exit | 意味 | 次の行動 |
+|---|---|---|
+| 0 | スクリプトが 0 で終わった | — |
+| 1 | スクリプトが非 0（メッセージに番号と最後の 1 行）/ **ssh 自身の失敗（255）は別の言葉** | 出力を読む。ssh の失敗なら alias・鍵・ホストを確かめる |
+| 2 | 語彙・門（prod に `--allow-prod` 無し / dev に付けた / `--branch` が語彙外 / `SSH_ALIAS` 未設定 / `--cassette`・`--replay`・`--format`） | 引数と env を直す（**何も送っていない**） |
+| 3 | `--out` の I/O | パスを直す |
+| 124 | timeout（**リモートは続いている**） | 出力を確かめ、必要なら状態を見る（netloom は待たない） |
+| 127 | `ssh` が PATH に無い | ssh を入れるか PATH を直す |
+
+## 証跡と秘匿（deploy）
+
+- **カセットは作らない**（`--cassette` / `--replay` は exit 2）。**証跡は `--out`**（新規 0600）
+- **出力もレダクトを通す**（§7.4）: スクリプトは `.env` を echo しうる。env の実値と `Authorization: Bearer …` などが `[REDACTED]` になり、**秘密を含まない行は 1 バイトも変わらない**
+- **`--out` は一時ファイルに書き、成功したときだけ rename**: 失敗した run は前の答えを残す（失敗行が `<N> B arrived` と述べる）
+- **ホスト名（alias）は出さない**（失敗行が述べるのは「どの alias で dial したか」の**名前**だけ）
 
 ---
 
@@ -2224,9 +2458,17 @@ bin/netloom zenodo record --id 123 --replay "$C" --format verbatim
 bin/netloom lighthouse run --url https://www.thch-vape.shop/ --out /tmp/lh/mobile
 bin/netloom lighthouse run --url https://www.thch-vape.shop/ --out /tmp/lh/desktop --form-factor desktop
 bin/netloom lighthouse run --url https://www.thch-vape.shop/ --out /tmp/lh/one --runs 1 --timeout 900
+# 既定のカテゴリは Lighthouse 自身の 4 つ（performance / accessibility / best-practices / seo）
+#   別のカテゴリだけ測るなら pass-through（書いたまま渡る）
+bin/netloom lighthouse run --url https://www.thch-vape.shop/ --out /tmp/lh/seo --runs 1 --only-categories performance,seo
 # make lighthouse-run LIGHTHOUSE_URL=https://www.thch-vape.shop/ LIGHTHOUSE_OUT=/tmp/lh/mobile
 
 # 前提: node / npx が PATH にあること（無ければ exit 127）。Chrome は Lighthouse が見つけたもの（--chrome-path で明示）
+
+# 計測前の前提確認: 値を 1 行ずつ出すだけ（判定しない）。--probe は Chrome を 1 回だけ headless で起動
+bin/netloom lighthouse doctor
+bin/netloom lighthouse doctor --chrome-path "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
+bin/netloom lighthouse doctor --probe    # 成功 = probe: exit 0 / 失敗 = exit 1 + ツールの 1 行
 
 # playwright: shot|html|eval は 1 コマンド = 1 ページ読み込み。出力は --out（PNG / DOM / 戻り値の JSON）
 bin/netloom playwright shot --url https://www.thch-vape.shop/ --out /tmp/pw/front.png --full-page --viewport 390x844
@@ -2265,10 +2507,12 @@ bin/netloom playwright flow --script /tmp/pw/flow.js --out /tmp/pw/flow-result.j
 |---|---|---|
 | 0 | 全部成功（lighthouse は全 run） | — |
 | 1 | ツールの非ゼロ終了（ページが開けない・**ブラウザ未導入**・**スクリプトの例外（eval / flow）**・パッケージが解決できない）。lighthouse は `netloom: run 2/5 failed (exit 3): …` の 1 行（**残りの run は実行済み**。部分結果は残る） | stderr の 1 行を読む（**スクリプトの内容は出ない = エラーは先頭 1 行だけ**）。ブラウザ未導入なら `npx playwright install chromium` は呼び出し側の手順。**`Executable doesn't exist at … chromium-<rev>` は版とブラウザの不一致** = `--playwright-version V` で導入済みに合う版を渡す（`playwright-core` の `browsers.json` で `<rev>` を確認） |
-| 2 | 引数・語彙（`--url` / `--out` / `eval`・`flow` の `--script` 欠落、**flow への `--url` / `--viewport` / `--wait-until` / `--full-page`**、`--runs` 0 以下、`--form-factor` 語彙外、**`--cassette` / `--replay` / `--format`**） | 引数を直す（**1 回も起動していない**） |
+| 2 | 引数・語彙（`--url` / `--out` / `eval`・`flow` の `--script` 欠落、**flow への `--url` / `--viewport` / `--wait-until` / `--full-page`**、`--runs` 0 以下、`--form-factor` 語彙外、**`--cassette` / `--replay` / `--format`**）。**lighthouse doctor の「値が欠けている」も 2**（stderr に欠けている名前が 1 行） | 引数を直す（**1 回も起動していない**）/ doctor なら名指された値（Chrome のパスなど）を用意する |
 | 3 | I/O（`--out` が書けない・`--script` が読めない） | パスを直す |
 | 124 | `--timeout`（**コマンド全体**の上限。既定 300 秒） | 窓を広げる（5 run は 60〜90 秒が目安） |
 | 127 | `node` / `npx` が PATH に無い（**1 回も起動しない**） | Node を入れる / PATH を通す |
+
+**lighthouse doctor の値の見方**: 出力は `node:` / `npx:` / `chrome:` / `chrome version:` / `lighthouse version:` の 5 行（`--probe` で `probe: exit 0 (http://127.0.0.1:<port>/)` が 1 行付く。probe は **netloom が 127.0.0.1 に一瞬だけ立てる自分のページ**を測る — `lighthouse@13.5.0` は `about:blank` を `INVALID_URL` で拒否するため。外部のサイトは触らない）。**netloom は「問題あり」のような判定語を出さない** — 値を見て何が問題かは呼び出し側（エージェント / 人）が決める。**`--probe` の失敗は exit 1**（「Chrome はあるが headless が成立しない」= 計測できない、という事実。欠けている の 2 とは別）。
 
 ## 証跡の形
 
@@ -2425,7 +2669,7 @@ netloom は **producer**。採用は JCT 側の staging declaration / collection
 - **OpenSEO の Docker の起動・停止は呼び出し側の作業**（netloom はプロセスを管理しない。設計書 付録 A.19）
 - OpenSEO の `initialize` の往復は**送らない**（実測で不要。1 コマンド = 1 往復を崩さない）
 - 実行時に `tools/list` は呼ばない（schema は開発時に 1 回だけ確認して設計 付録 A.7 に記録）
-- **gmail は実装済み**（`gmail send-email` の 1 コマンド。上の節。1 コマンド = 1 MCP 往復）。**送信の live は未実行**（実メールが飛ぶため owner 承認待ち。手順は `docs/plan/20261019-gmail.md` §7）。**呼び出し側（seo-operations の `daily_alert.py` / `test_gmail_mcp.py`）の載せ替えは未処理** — 証跡付きの送信への切替は seo-operations の作業（設計書 §11 N17）
+- **gmail は実装済み**（`gmail send-email` の 1 コマンド。上の節。1 コマンド = 1 MCP 往復）。**live の実送信は 2026-10-24 に受入済み**（呼び出し側の再送 1 通で、`tools/call` に `mimeType: "multipart/alternative"` が載り、受信メールで HTML が描画されることを owner が目視確認 = issue #66。**以後の実送信も owner の承認ごと**。手順は `docs/plan/20261019-gmail.md` §7）。**呼び出し側（seo-operations の `daily_alert.py` / `test_gmail_mcp.py`）の載せ替えは未処理** — 証跡付きの送信への切替は seo-operations の作業（設計書 §11 N17）
 - gmail の他のツール（`draft_email` / `read_email` / `search_emails` / `list_email_labels` / ラベル / フィルタ / 添付の 18 ツール）は**予約（作らない）**（必要になった時点で 1 コマンド = 1 ツール。設計書 付録 A.20）
 - gmail の `cc` / `bcc` / 添付は**送らない**（`htmlBody` は `--html-body` を名指したときだけ同じ往復で送り、そのときは実サーバーの要件で `mimeType: multipart/alternative` も載る。issue #64 / #66。付録 A.20）
 - **Meta Graph API の live は未実行**（このマシンに `PAGE_TOKEN` / `USER_TOKEN` / `PAGE_ID` / `IG_ACCOUNT_ID` が無い。手順は `docs/plan/20261019-meta-graph.md` §7）
