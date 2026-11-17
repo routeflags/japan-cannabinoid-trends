@@ -102,7 +102,7 @@ description: |
   **解決順（issue #51）**: ①`GOOGLE_TOKEN_FILE`（設定されていればそれを使う）→ ②ソース既定パス `~/.config/netloom/google-<name>.json`（**存在的きのみ** = auth google の書込先と対称。apps-script の既定名は `gas`）→ ③`GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET` / `GOOGLE_REFRESH_TOKEN`。**Google の交換が失敗したときだけ**、失敗行に「どの credential を使ったか」（パスまたは変数名。値は出さない）が 1 つ足される（切り分け用）。`env check` の門は既定パスが存在的きときも満たされる。
   交換の証跡（2 frame）は `--cassette FILE` で caller の記録置き場に置ける（例: `data/gsc/cassettes/<YYYYMMDD>-auth-gsc.jsonl`。issue #22）。
   すべての往復は VCR カセットに残り、カセットからオフライン再現できる（証跡付きの収集）。
-netloom-version: 0.24.2
+netloom-version: 0.24.3
 ---
 
 # netloom（第三者 API の収集プロキシ）
@@ -113,6 +113,8 @@ netloom-version: 0.24.2
 actor を curl で呼んだりしない（証跡とオフライン再現が失われるため）。
 
 `--replay` は同じ request の記録が複数あるとき、**その request の n 回目の要求に n 番目の記録**で答える（記録を順に消費する。**その request の記録を使い切ったら最初の記録** = issue #14 の規則）。site の mypage のように **1 コマンドが同じ URL を複数回要求する flow** はこの規則で live と同じ判定になる（設計書 §5.1）。**新しい証跡で再現したいときは `--cassette` を分ける**（`--cassette <新しいファイル>` で記録し、そのカセットを `--replay` する）。
+
+**記録先が git ワークツリーの中で未 ignore のときは警告が 1 行出る**（`netloom: warning: .cassettes/ is inside a git worktree and not ignored; pass --cassette or add /.cassettes to .gitignore`。既定の `<cwd>/.cassettes/` は仕様のままで、exit code も記録も変わらない。issue #99）。そのまま `git add .` すると provider の応答がコミットされ得るので、`.gitignore` に `/.cassettes` を足すか `--cassette` で外に出す。
 
 同じ request を `--cassette` で 2 回記録すると、**追記の前に stderr へ 1 行で知らされる**（`netloom: <file> already holds a record for this request: a replay answers with the first one`。値は出ない。初回記録・`--replay` では出ない。通知は答えを変えない — 答えは §5.1 の規則（その request を 1 回だけ要求するコマンドでは最初の記録）が決める。issue #17）。
 **カセットの検査はコマンドで行う**: `netloom cassette show --path FILE`（frame 一覧。payload 本文は出さず sha256 とバイト数（`N B` — 単位付き。issue #43）で示す。**URL の credential 名のクエリ（`key=` / `access_token=` / rakuten の `applicationId=` / `accessKey=` / `affiliateId=`）の値は表示時だけ `[REDACTED]`** — カセットのバイトと `--replay` の照合は変わらない）と `netloom cassette check --path FILE [--path FILE ...] [--env-file FILE]` — **live 実行後のレダクト検査はこのコマンドにする**（手作業の grep ではなく。env の実値をレダクタと同じ値の集合から**変数名と件数だけで**数え、ヒット 1 件でもあれば exit 1 / credential が 1 つも解決できなければ exit 2。`grep -Fc '\[REDACTED\]'` のように -F なのにエスケープを付けると「0 件」の誤検知を起こす — issue #18 の実測。設計書 付録 A.28）。
@@ -1324,6 +1326,10 @@ make product-material-purchases ID=1 LIMIT=20                 # text は一覧�
 - **`--clear-cache` は無い**（商品の書き込み API は `clear_cache` を受け付けず、プラグインが内部でキャッシュをクリアする。付けると exit 2）
 
 ## `--input` で書けるキーと、配列の置換の意味（issue #95 / #96）
+
+> **`categories` は全置換です — 事故が起きています（2026-11-17、prod）**。既存のカテゴリを 1 つ外すために `{"categories":[{"id":44}]}` を送ったところ、**対象商品の他のカテゴリが全部外れました**（8 商品・47 行。DB ダンプから復旧済み）。1 つ足すだけでも**現在の全カテゴリを並べて**送ってください。**子カテゴリを送れば親はサーバーが自動で付けます**（自分で足す必要はありません）。
+>
+> **送る前に現在値を読む**: `product get --id N`（現在のビルドは `item.categories` を返します。2026-11-17 の実測: dev の 158 = 4 件 / prod の 214 = 9 件）か、`product list --id N --format csv` の `categories` 列（id と名前の配列）。**どちらの応答も categories を述べない版・環境なら、部分的な配列を送らないこと**（送ると残りが外れます）。`tags` / `related` / `images` も同じで、`classes` は SKU の配列です。
 
 `--input` は**文書をそのまま本文にする**（netloom はキーも値も検査しない。未知のキーは API の 400 が答える）。書けるキーは店側の書き込み API が決める（`thch-vape.shop` の `ProductWriteValidator::PAYLOAD_KEYS`、2026-11-15 時点）:
 
