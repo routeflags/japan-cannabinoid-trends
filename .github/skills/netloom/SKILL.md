@@ -102,7 +102,7 @@ description: |
   **解決順（issue #51）**: ①`GOOGLE_TOKEN_FILE`（設定されていればそれを使う）→ ②ソース既定パス `~/.config/netloom/google-<name>.json`（**存在的きのみ** = auth google の書込先と対称。apps-script の既定名は `gas`）→ ③`GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET` / `GOOGLE_REFRESH_TOKEN`。**Google の交換が失敗したときだけ**、失敗行に「どの credential を使ったか」（パスまたは変数名。値は出さない）が 1 つ足される（切り分け用）。`env check` の門は既定パスが存在的きときも満たされる。
   交換の証跡（2 frame）は `--cassette FILE` で caller の記録置き場に置ける（例: `data/gsc/cassettes/<YYYYMMDD>-auth-gsc.jsonl`。issue #22）。
   すべての往復は VCR カセットに残り、カセットからオフライン再現できる（証跡付きの収集）。
-netloom-version: 0.24.3
+netloom-version: 0.24.4
 ---
 
 # netloom（第三者 API の収集プロキシ）
@@ -1329,7 +1329,7 @@ make product-material-purchases ID=1 LIMIT=20                 # text は一覧�
 
 > **`categories` は全置換です — 事故が起きています（2026-11-17、prod）**。既存のカテゴリを 1 つ外すために `{"categories":[{"id":44}]}` を送ったところ、**対象商品の他のカテゴリが全部外れました**（8 商品・47 行。DB ダンプから復旧済み）。1 つ足すだけでも**現在の全カテゴリを並べて**送ってください。**子カテゴリを送れば親はサーバーが自動で付けます**（自分で足す必要はありません）。
 >
-> **送る前に現在値を読む**: `product get --id N`（現在のビルドは `item.categories` を返します。2026-11-17 の実測: dev の 158 = 4 件 / prod の 214 = 9 件）か、`product list --id N --format csv` の `categories` 列（id と名前の配列）。**どちらの応答も categories を述べない版・環境なら、部分的な配列を送らないこと**（送ると残りが外れます）。`tags` / `related` / `images` も同じで、`classes` は SKU の配列です。
+> **送る前に、必ず現在値を読む**: `product get --id N` の **`item.categories`**（全カテゴリが入ります。2026-11-17 の実測: dev の 158 = 4 件 / prod の 214 = 9 件、同じ日 prod の 112 = 7 件）。`item.categories` を見ずに、`item.category` や `item.category_ids` のような別のキーで「読めない」と判断しないこと（2026-11-17 の事故はこの読み違いも重なっていました）。`product list --id N --format csv` の `categories` 列（id と名前の配列）でも読めます。**どちらの応答も categories を述べない版・環境なら、部分的な配列を送らないこと**（送ると残りが外れます）。`tags` / `related` / `images` も同じで、`classes` は SKU の配列です。
 
 `--input` は**文書をそのまま本文にする**（netloom はキーも値も検査しない。未知のキーは API の 400 が答える）。書けるキーは店側の書き込み API が決める（`thch-vape.shop` の `ProductWriteValidator::PAYLOAD_KEYS`、2026-11-15 時点）:
 
